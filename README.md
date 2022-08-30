@@ -1,6 +1,6 @@
-# ipbc_palmas
+# IPBC palmas
 
-A new Flutter project.
+Projeto de aplicativo para a Igreja Presbiteriana de Palmas, e futuramente aplicativo genérico para igrejas.
 
 ## Getting Started
 
