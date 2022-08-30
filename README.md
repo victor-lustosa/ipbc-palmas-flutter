@@ -1,6 +1,6 @@
 # IPBC palmas
 
-Projeto de aplicativo para a Igreja Presbiteriana de Palmas, e futuramente aplicativo genérico para igrejas.
+Projeto de aplicativo para a Igreja Presbiteriana Central de Palmas, e futuramente aplicativo genérico para igrejas.
 
 ## Getting Started
 
