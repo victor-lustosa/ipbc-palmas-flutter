@@ -1,0 +1,37 @@
+o culto online com videos - principal                                                          1
+
+shorts com devocionais - principal
+
+postagem por escrito - principal (parte web seria escrita na web)                              3
+	 devocionais
+	 pastorais
+	 aniversariantes do mes e da semana (mensagem automatica de feliz aniversario)
+	 avisos
+
+ter acesso a letras das musicas do culto - principal                                          4
+
+boletim eletronico - principal
+
+pequeno grupo - principal
+
+agenda mensal da igreja - principal                                                          2
+
+apresentação da igreja - principal                                                           padrao
+
+apresentaçao da liderança - principal                                                        padrao
+
+ofertas - principal                                                                          padrao
+
+escalas dos ministerios da igreja - principal
+
+avisos - principal 
+
+Pedido de oração
+
+conferencias
+
+podcast
+
+grupo --> 5
+ fulano
+
