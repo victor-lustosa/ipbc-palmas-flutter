@@ -1,14 +1,14 @@
 import '../entities/lyric_entity.dart';
 import '../repositories/lyric_repository.dart';
 
-abstract class IGetLyrics {
+abstract class ILyricsUseCases {
   Stream<List<LyricEntity>> call();
 }
 
-class GetLyrics implements IGetLyrics {
+class LyricsUseCases implements ILyricsUseCases {
   final ILyricRepository<LyricEntity> repository;
 
-  GetLyrics(this.repository);
+  LyricsUseCases(this.repository);
 
   @override
   Stream<List<LyricEntity>> call() {
