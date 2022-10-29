@@ -6,7 +6,7 @@ import '../models/lyric_model.dart';
 class LyricRepository implements ILyricRepository<LyricEntity> {
   final IGetDatasource datasource;
 
-  LyricRepository(this.datasource);
+  LyricRepository({required this.datasource});
 
   List<LyricEntity> _convert(List<Map> list) {
     return list.map(LyricModel.fromMap).toList();

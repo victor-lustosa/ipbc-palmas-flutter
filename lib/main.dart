@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:ipbc_palmas/bootstrap.dart';
 import 'app/ibpc_bloc_observer.dart';
 import 'app/app_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'app/lyric/external/datasource/lyric_firestore_datasource.dart';
 import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  Bloc.observer = IpbcBlocObserver();
-  runApp(const AppWidget());
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  final lyricDatasource =
+      LyricFirestoreDatasource(firestore: FirebaseFirestore.instance);
+  bootstrap(lyricDatasource: lyricDatasource);
 }

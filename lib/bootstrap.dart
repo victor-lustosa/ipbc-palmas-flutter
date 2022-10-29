@@ -7,6 +7,8 @@ import 'package:ipbc_palmas/app/lyric/external/datasource/lyric_firestore_dataso
 
 import 'app/app_widget.dart';
 import 'app/ibpc_bloc_observer.dart';
+import 'app/lyric/infra/datasources/lyric_datasource.dart';
+import 'app/lyric/infra/repositories/lyric_repository.dart';
 
 void bootstrap({required LyricFirestoreDatasource lyricDatasource}) {
   FlutterError.onError = (details) {
@@ -15,10 +17,10 @@ void bootstrap({required LyricFirestoreDatasource lyricDatasource}) {
 
   Bloc.observer = IpbcBlocObserver();
 
-  final todosRepository = TodosRepository(todosApi: todosApi);
+  final lyricRepository = LyricRepository(datasource: lyricDatasource);
 
   runZonedGuarded(
-    () => runApp(AppWidget(todosRepository: todosRepository)),
+    () => runApp(AppWidget(lyricRepository: lyricRepository)),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }

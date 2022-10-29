@@ -6,7 +6,7 @@ class InitialState extends LyricState {
   InitialState();
 }
 
-class SuccessLyricsState extends LyricState {
+class SuccessfullyFetchedLyricsState extends LyricState {
   final List<LyricEntity> entities;
-  SuccessLyricsState(this.entities);
+  SuccessfullyFetchedLyricsState(this.entities);
 }

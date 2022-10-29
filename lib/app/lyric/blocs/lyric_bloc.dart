@@ -10,14 +10,14 @@ part '../events/lyric_event.dart';
 part '../states/lyric_state.dart';
 
 class LyricBloc extends Bloc<LyricEvent, LyricState> {
-  final ILyricsUseCases getLyrics;
+  final ILyricsUseCases lyricsUseCase;
 
-  LyricBloc({required this.getLyrics}) : super(InitialState()) {
+  LyricBloc({required this.lyricsUseCase}) : super(InitialState()) {
     on<GetLyricsEvent>(_getLyrics);
   }
   Future<void> _getLyrics(_, emit) async {
-    await emit.onEach<List<LyricEntity>>(getLyrics.call(), onData: (rooms) {
-      emit(SuccessLyricsState(rooms));
+    await emit.onEach<List<LyricEntity>>(lyricsUseCase.get(), onData: (rooms) {
+      emit(SuccessfullyFetchedLyricsState(rooms));
     });
   }
 }

@@ -4,7 +4,7 @@ class IpbcBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    if (bloc is Cubit) print(change);
+    print(change);
   }
 
   @override
