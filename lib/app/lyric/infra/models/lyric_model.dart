@@ -28,6 +28,7 @@ class LyricModel extends LyricEntity {
     );
   }
 
+//TODO: ler a lista de versos que vem dentro do objeto lyrics e ja retornar essa lista
   static LyricEntity fromMap(dynamic json) {
     return LyricEntity(
       id: json['id'],
@@ -35,6 +36,7 @@ class LyricModel extends LyricEntity {
       group: json['group'],
       verses: [
         if (json.containsKey('verses'))
+          //...(json['verses'] as List).map((verse) => JsonToVerse.fromMap(verse)).toList(),
           ...(json['verses'] as List).map(JsonToVerse.fromMap).toList(),
       ],
     );

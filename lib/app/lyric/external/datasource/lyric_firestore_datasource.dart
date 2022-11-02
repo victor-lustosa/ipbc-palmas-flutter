@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../infra/datasources/lyric_datasource.dart';
 
+//TODO: pegar pelo id da lyric e passar pra proxima tela pra pegar a coleçao de verses daquela doc
 class LyricFirestoreDatasource implements ILyricDatasource {
   final FirebaseFirestore _firestore;
 

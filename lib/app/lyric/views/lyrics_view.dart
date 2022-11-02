@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ipbc_palmas/app/lyric/external/datasource/lyric_firestore_datasource.dart';
-import 'package:ipbc_palmas/app/lyric/infra/repositories/lyric_repository.dart';
-import 'package:ipbc_palmas/app/shared/configs/app_fonts.dart';
+
+import '../infra/repositories/lyric_repository.dart';
+import '../../shared/configs/app_fonts.dart';
 import '../../shared/configs/app_colors.dart';
 import '../../shared/configs/app_icons.dart';
 import '../../shared/configs/app_routes.dart';

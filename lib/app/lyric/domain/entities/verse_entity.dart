@@ -1,5 +1,5 @@
 class VerseEntity {
-  final String id;
+  final int id;
   final bool isChorus;
   final String textView;
 
