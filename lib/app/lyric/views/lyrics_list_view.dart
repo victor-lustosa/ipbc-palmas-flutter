@@ -11,14 +11,14 @@ import '../domain/use-cases/lyrics_use_cases.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 
-class LyricsView extends StatefulWidget {
-  const LyricsView({super.key});
+class LyricsListView extends StatefulWidget {
+  const LyricsListView({super.key});
 
   @override
-  State<LyricsView> createState() => _LyricsViewState();
+  State<LyricsListView> createState() => _LyricsListViewState();
 }
 
-class _LyricsViewState extends State<LyricsView> {
+class _LyricsListViewState extends State<LyricsListView> {
   late List lyrics;
   late LyricBloc bloc;
   @override
@@ -110,7 +110,12 @@ class _LyricsViewState extends State<LyricsView> {
                                         ),
                                         Column(children: [
                                           IconButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              Navigator.pushNamed(
+                                                  context, AppRoutes.lyricRoute,
+                                              arguments: lyrics[index]
+                                              );
+                                            },
                                             icon: const Icon(
                                               size: 30,
                                               Icons.navigate_next_rounded,
@@ -120,8 +125,7 @@ class _LyricsViewState extends State<LyricsView> {
                                         ])
                                       ]),
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                        context, AppRoutes.lyricRoute);
+
                                   });
                             }),
                       ],

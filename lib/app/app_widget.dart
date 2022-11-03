@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ipbc_palmas/app/home/views/home_view.dart';
 
 import 'lyric/infra/repositories/lyric_repository.dart';
-import 'lyric/views/lyrics_view.dart';
+import 'lyric/views/lyrics_list_view.dart';
 import 'shared/configs/app_routes.dart';
 
 class AppWidget extends StatelessWidget {
@@ -19,7 +19,7 @@ class AppWidget extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.grey,
             ),
-            home: const LyricsView(),
+            home: const LyricsListView(),
             initialRoute: "/",
             onGenerateRoute: AppRoutes.onGenerateRoute,
             debugShowCheckedModeBanner: false));
