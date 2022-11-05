@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'lyric/infra/repositories/lyric_repository.dart';
+import 'lyric/views/lyrics_list2_view.dart';
 import 'lyric/views/lyrics_list_view.dart';
 import 'shared/configs/app_colors.dart';
 import 'shared/configs/app_routes.dart';
