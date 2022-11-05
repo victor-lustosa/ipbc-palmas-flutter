@@ -6,8 +6,8 @@ import 'package:ipbc_palmas/app/lyric/domain/use-cases/lyrics_use_cases.dart';
 
 import '../domain/entities/lyric_entity.dart';
 
-part '../events/lyric_event.dart';
-part '../states/lyric_state.dart';
+part 'lyric_event.dart';
+part 'lyric_state.dart';
 
 class LyricBloc extends Bloc<LyricEvent, LyricState> {
   final ILyricsUseCases lyricsUseCase;

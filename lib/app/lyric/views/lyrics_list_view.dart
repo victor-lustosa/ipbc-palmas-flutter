@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ipbc_palmas/app/shared/components/top-bar/top_bar_widget.dart';
 
 import '../infra/repositories/lyric_repository.dart';
 import '../../shared/configs/app_fonts.dart';
@@ -36,105 +37,127 @@ class _LyricsListViewState extends State<LyricsListView> {
     return Scaffold(
       body: Container(
           decoration: const BoxDecoration(color: AppColors.white),
-          child: BlocBuilder<LyricBloc, LyricState>(
-              bloc: bloc,
-              buildWhen: (context, current) =>
-                  context.runtimeType != current.runtimeType &&
-                  (current is SuccessfullyFetchedLyricsState),
-              builder: (context, state) {
-                if (state is InitialState) {
-                  return const Center(
-                      child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                              AppColors.darkGreen)));
-                } else if (state is SuccessfullyFetchedLyricsState) {
-                  lyrics = state.entities;
-                  return RefreshIndicator(
-                    color: AppColors.darkGreen,
-                    onRefresh: () async {
-                      bloc.add(GetLyricsEvent());
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 80.0),
-                          child: Row(
-                            children: [
-                              Column(
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: BlocBuilder<LyricBloc, LyricState>(
+                  bloc: bloc,
+                  buildWhen: (context, current) =>
+                      context.runtimeType != current.runtimeType &&
+                      (current is SuccessfullyFetchedLyricsState),
+                  builder: (context, state) {
+                    if (state is InitialState) {
+                      return const Center(
+                          child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  AppColors.darkGreen)));
+                    } else if (state is SuccessfullyFetchedLyricsState) {
+                      lyrics = state.entities;
+                      return RefreshIndicator(
+                        color: AppColors.darkGreen,
+                        onRefresh: () async {
+                          bloc.add(GetLyricsEvent());
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                                padding: const EdgeInsets.only(top: 7.0),
+                                child: TopBarWidget()),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 40.0),
+                              child: Row(
                                 children: [
-                                  /*Padding(
-                                    padding: const EdgeInsets.only(bottom: 8.0),
-                                    child: IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        size: 40,
-                                        Icons.navigate_before_rounded,
-                                        color: AppColors.black,
-                                      ),
+                                  Column(
+                                    children: [
+                                      /*Padding(
+                                        padding: const EdgeInsets.only(bottom: 8.0),
+                                        child: IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                            size: 40,
+                                            Icons.navigate_before_rounded,
+                                            color: AppColors.black,
+                                          ),
+                                        ),
+                                      ),*/
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 38.0),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 28.0),
+                                          child: SvgPicture.asset(
+                                            AppIcons.lyricsIconName,
+                                            color: AppColors.black,
+                                            matchTextDirection: true,
+                                          ),
+                                        ),
+                                        Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 8),
+                                            child: Text("Músicas/Letras",
+                                                style: AppFonts.h2)),
+                                      ],
                                     ),
-                                  ),*/
+                                  ),
                                 ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 28.0),
-                                child: SvgPicture.asset(
-                                  AppIcons.lyricsIconName,
-                                  color: AppColors.black,
-                                  matchTextDirection: true,
-                                ),
-                              ),
-                              Padding(
-                                  padding: const EdgeInsets.only(left: 2),
-                                  child: Text("Músicas/Letras",
-                                      style: AppFonts.h2)),
-                            ],
-                          ),
-                        ),
-                        ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: lyrics.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                  title: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
+                            ),
+                            ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: lyrics.length,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 24, vertical: 3),
+                                      title: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                                '${lyrics[index].title} - ${lyrics[index].group}',
-                                                style: AppFonts.body),
-                                          ],
-                                        ),
-                                        Column(children: [
-                                          IconButton(
-                                            onPressed: () {
-                                              Navigator.pushNamed(
-                                                  context, AppRoutes.lyricRoute,
-                                              arguments: lyrics[index]
-                                              );
-                                            },
-                                            icon: const Icon(
-                                              size: 30,
-                                              Icons.navigate_next_rounded,
-                                              color: AppColors.darkGreen,
+                                            Column(
+                                              children: [
+                                                Text(
+                                                    '${lyrics[index].title} - ${lyrics[index].group}',
+                                                    style: AppFonts.body),
+                                              ],
                                             ),
-                                          )
-                                        ])
-                                      ]),
-                                  onTap: () {
-
-                                  });
-                            }),
-                      ],
-                    ),
-                  );
-                } else {
-                  return Text('aconteceu um erro [Establishment_page_one]');
-                }
-              })),
+                                            Column(children: [
+                                              IconButton(
+                                                onPressed: () {
+                                                  Navigator.pushNamed(context,
+                                                      AppRoutes.lyricRoute,
+                                                      arguments: lyrics[index]);
+                                                },
+                                                icon: const Icon(
+                                                  size: 33,
+                                                  Icons.navigate_next_outlined,
+                                                  color: AppColors.darkGreen,
+                                                ),
+                                              )
+                                            ])
+                                          ]),
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, AppRoutes.lyricRoute,
+                                            arguments: lyrics[index]);
+                                      });
+                                }),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return Text('aconteceu um erro [Establishment_page_one]');
+                    }
+                  }),
+            ),
+          )),
     );
   }
 }

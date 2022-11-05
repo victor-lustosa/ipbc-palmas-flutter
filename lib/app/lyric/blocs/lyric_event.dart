@@ -1,4 +1,4 @@
-part of '../blocs/lyric_bloc.dart';
+part of 'lyric_bloc.dart';
 
 @immutable
 abstract class LyricEvent {}

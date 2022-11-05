@@ -7,7 +7,7 @@ import 'package:ipbc_palmas/app/lyric/external/datasource/lyric_firestore_dataso
 
 import 'app/app_widget.dart';
 import 'app/ibpc_bloc_observer.dart';
-import 'app/lyric/infra/datasources/lyric_datasource.dart';
+
 import 'app/lyric/infra/repositories/lyric_repository.dart';
 
 void bootstrap({required LyricFirestoreDatasource lyricDatasource}) {

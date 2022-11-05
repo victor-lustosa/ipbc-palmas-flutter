@@ -5,7 +5,7 @@ class JsonToVerse {
     return VerseEntity(
       id: json['id'],
       isChorus: json['isChorus'],
-      textView: json['textView'],
+      versesList: json['versesList'],
     );
   }
 }

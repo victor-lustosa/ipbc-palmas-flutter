@@ -1,8 +1,8 @@
 class VerseEntity {
   final int id;
   final bool isChorus;
-  final String textView;
+    final List versesList;
 
   VerseEntity(
-      {required this.id, required this.isChorus, required this.textView});
+      {required this.id, required this.isChorus, required this.versesList});
 }
