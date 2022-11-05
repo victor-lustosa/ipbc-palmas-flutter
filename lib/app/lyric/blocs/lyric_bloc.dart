@@ -14,10 +14,15 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
 
   LyricBloc({required this.lyricsUseCase}) : super(InitialState()) {
     on<GetLyricsEvent>(_getLyrics);
+    on<LyricsFilterEvent>(_lyricsFilter);
   }
   Future<void> _getLyrics(_, emit) async {
-    await emit.onEach<List<LyricEntity>>(lyricsUseCase.get(), onData: (rooms) {
-      emit(SuccessfullyFetchedLyricsState(rooms));
+    await emit.onEach<List<LyricEntity>>(lyricsUseCase.get(), onData: (lyrics) {
+      emit(SuccessfullyFetchedLyricsState(lyrics));
     });
+  }
+  Future<void> _lyricsFilter(LyricsFilterEvent event, emit) async {
+    List<LyricEntity> lyricsList = await lyricsUseCase.lettersFilter(event.lyrics, event.letter);
+      emit(SuccessfullyFilteredLyricsState(lyricsList));
   }
 }

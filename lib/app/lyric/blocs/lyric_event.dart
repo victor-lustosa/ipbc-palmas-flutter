@@ -10,3 +10,9 @@ class InitialEvent extends LyricEvent {
 class GetLyricsEvent extends LyricEvent {
   GetLyricsEvent();
 }
+
+class LyricsFilterEvent extends LyricEvent {
+ final String letter;
+ final List<LyricEntity> lyrics;
+  LyricsFilterEvent({required this.letter,required this.lyrics});
+}

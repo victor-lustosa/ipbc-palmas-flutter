@@ -10,3 +10,7 @@ class SuccessfullyFetchedLyricsState extends LyricState {
   final List<LyricEntity> entities;
   SuccessfullyFetchedLyricsState(this.entities);
 }
+class SuccessfullyFilteredLyricsState extends LyricState {
+  final List<LyricEntity> entities;
+  SuccessfullyFilteredLyricsState(this.entities);
+}

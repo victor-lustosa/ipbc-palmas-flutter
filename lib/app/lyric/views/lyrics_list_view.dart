@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ipbc_palmas/app/lyric/domain/entities/lyric_entity.dart';
 import 'package:ipbc_palmas/app/shared/components/top-bar/top_bar_widget.dart';
 
 import '../infra/repositories/lyric_repository.dart';
@@ -20,10 +21,12 @@ class LyricsListView extends StatefulWidget {
 }
 
 class _LyricsListViewState extends State<LyricsListView> {
-  late List lyrics;
+  late List<LyricEntity> lyricsFetched;
+  late List<LyricEntity> lyricsFiltered;
   late List<String> lettersCarousel;
   late LyricBloc bloc;
-  String selectedValue = 'A';
+  bool isSelected = false;
+  String selectedValue = '';
   fillLettersCarousel() {
     var aCode = 'A'.codeUnitAt(0);
     var zCode = 'Z'.codeUnitAt(0);
@@ -33,13 +36,10 @@ class _LyricsListViewState extends State<LyricsListView> {
     );
   }
 
-  changeColors(element) {
-    selectedValue = element;
-  }
-
   @override
   void initState() {
-    lyrics = [];
+    lyricsFetched = [];
+    lyricsFiltered = [];
     lettersCarousel = [];
     fillLettersCarousel();
     bloc = LyricBloc(
@@ -57,17 +57,23 @@ class _LyricsListViewState extends State<LyricsListView> {
         child: SingleChildScrollView(
           child: BlocBuilder<LyricBloc, LyricState>(
               bloc: bloc,
-              buildWhen: (context, current) =>
-                  context.runtimeType != current.runtimeType &&
-                  (current is SuccessfullyFetchedLyricsState),
               builder: (context, state) {
                 if (state is InitialState) {
                   return const Center(
                       child: CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color>(
                               AppColors.darkGreen)));
-                } else if (state is SuccessfullyFetchedLyricsState) {
-                  lyrics = state.entities;
+                } else if (state is SuccessfullyFetchedLyricsState || state is SuccessfullyFilteredLyricsState) {
+                  if (state is SuccessfullyFetchedLyricsState && selectedValue == '') {
+                    lyricsFetched = state.entities;
+                    lyricsFiltered = state.entities;
+                  } else {
+                    if(state is SuccessfullyFilteredLyricsState && selectedValue != '') {
+                      lyricsFiltered = state.entities;
+                    } else{
+                      lyricsFiltered = lyricsFetched;
+                    }
+                  }
                   return RefreshIndicator(
                     color: AppColors.darkGreen,
                     onRefresh: () async {
@@ -131,23 +137,45 @@ class _LyricsListViewState extends State<LyricsListView> {
                                   itemCount: lettersCarousel.length,
                                   itemBuilder: (context, index) {
                                     return SizedBox(
-                                      width: lettersCarousel[index] == selectedValue
+                                      width: lettersCarousel[index] ==
+                                                  selectedValue &&
+                                              isSelected
                                           ? 50
                                           : 40,
                                       child: ElevatedButton(
                                           onPressed: () => {
                                                 setState(() {
-                                                  changeColors(lettersCarousel[index]);
+                                                  if (!isSelected) {
+                                                    selectedValue =
+                                                        lettersCarousel[index];
+                                                    isSelected = true;
+                                                    bloc.add(LyricsFilterEvent(
+                                                        letter: lettersCarousel[
+                                                            index],
+                                                        lyrics: lyricsFetched));
+                                                  } else {
+                                                    isSelected = false;
+                                                    selectedValue = '';
+                                                    lyricsFiltered =
+                                                        lyricsFetched;
+                                                  }
                                                 })
                                               },
                                           style: ButtonStyle(
-                                            overlayColor: MaterialStateProperty.all(AppColors.darkGreen),
-                                            elevation: const MaterialStatePropertyAll(0),
-                                            shape: MaterialStateProperty.all(const CircleBorder()),
-                                            padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
+                                            overlayColor:
+                                                MaterialStateProperty.all(
+                                                    AppColors.darkGreen),
+                                            elevation:
+                                                const MaterialStatePropertyAll(
+                                                    0),
+                                            shape: MaterialStateProperty.all(
+                                                const CircleBorder()),
+                                            padding: MaterialStateProperty.all(
+                                                const EdgeInsets.all(0)),
                                             backgroundColor: MaterialStateProperty
                                                 .all(lettersCarousel[index] ==
-                                                        selectedValue
+                                                            selectedValue &&
+                                                        isSelected
                                                     ? AppColors.darkGreen
                                                     : AppColors
                                                         .white), // <-- Button color
@@ -157,10 +185,16 @@ class _LyricsListViewState extends State<LyricsListView> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Center(
-                                                  child: Text(lettersCarousel[index],
-                                                      style: lettersCarousel[index] == selectedValue ?
-                                                      AppFonts.carouselGreen :
-                                                      AppFonts.carouselWhite)),
+                                                  child: Text(
+                                                      lettersCarousel[index],
+                                                      style: lettersCarousel[
+                                                                      index] ==
+                                                                  selectedValue &&
+                                                              isSelected
+                                                          ? AppFonts
+                                                              .carouselGreen
+                                                          : AppFonts
+                                                              .carouselWhite)),
                                             ],
                                           )),
                                     );
@@ -169,7 +203,7 @@ class _LyricsListViewState extends State<LyricsListView> {
                         ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            itemCount: lyrics.length,
+                            itemCount: lyricsFiltered.length,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               return ListTile(
@@ -182,7 +216,7 @@ class _LyricsListViewState extends State<LyricsListView> {
                                         Column(
                                           children: [
                                             Text(
-                                                '${lyrics[index].title} - ${lyrics[index].group}',
+                                                '${lyricsFiltered[index].title} - ${lyricsFiltered[index].group}',
                                                 style: AppFonts.body),
                                           ],
                                         ),
@@ -191,7 +225,8 @@ class _LyricsListViewState extends State<LyricsListView> {
                                             onPressed: () {
                                               Navigator.pushNamed(
                                                   context, AppRoutes.lyricRoute,
-                                                  arguments: lyrics[index]);
+                                                  arguments:
+                                                      lyricsFiltered[index]);
                                             },
                                             icon: const Icon(
                                               size: 33,
@@ -204,7 +239,7 @@ class _LyricsListViewState extends State<LyricsListView> {
                                   onTap: () {
                                     Navigator.pushNamed(
                                         context, AppRoutes.lyricRoute,
-                                        arguments: lyrics[index]);
+                                        arguments: lyricsFiltered[index]);
                                   });
                             }),
                       ],

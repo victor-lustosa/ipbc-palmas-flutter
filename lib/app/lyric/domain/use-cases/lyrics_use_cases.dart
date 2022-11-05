@@ -3,6 +3,7 @@ import '../repositories/lyric_repository.dart';
 
 abstract class ILyricsUseCases {
   Stream<List<LyricEntity>> get();
+  Future<List<LyricEntity>> lettersFilter(List<LyricEntity> lyrics, String letter);
 }
 
 class LyricsUseCases implements ILyricsUseCases {
@@ -13,5 +14,9 @@ class LyricsUseCases implements ILyricsUseCases {
   @override
   Stream<List<LyricEntity>> get() {
     return repository.get();
+  }
+  @override
+  Future<List<LyricEntity>> lettersFilter(List<LyricEntity> lyrics, String letter) {
+    return repository.filter(lyrics,letter);
   }
 }

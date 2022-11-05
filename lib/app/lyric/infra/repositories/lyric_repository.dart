@@ -19,6 +19,17 @@ class LyricRepository implements ILyricRepository<LyricEntity> {
   }
 
   @override
+  Future<List<LyricEntity>> filter(List<LyricEntity> lyrics, String letter) {
+    List<LyricEntity> lyricsResult = [];
+    for (LyricEntity lyric in lyrics) {
+      if (lyric.title[0].toLowerCase() == letter.toLowerCase()) {
+        lyricsResult.add(lyric);
+      }
+    }
+    return Future.value(lyricsResult);
+  }
+
+  @override
   Future<void> add(T) async {
     // TODO: implement add
   }
