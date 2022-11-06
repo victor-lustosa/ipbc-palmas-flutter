@@ -1,5 +1,5 @@
 abstract class IGetRepository <T>{
-  Stream<List<T>> get();
+  Stream<List<Map<dynamic, dynamic>>> get(String url);
 }
 abstract class IAddRepository <T>{
   Future<void> add(T);

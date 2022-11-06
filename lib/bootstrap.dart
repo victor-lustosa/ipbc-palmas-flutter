@@ -3,24 +3,25 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ipbc_palmas/app/lyric/external/datasource/lyric_firestore_datasource.dart';
 
 import 'app/app_widget.dart';
+import 'app/core/external/firestore_datasource.dart';
+import 'app/core/infra/repositories/repository.dart';
 import 'app/ibpc_bloc_observer.dart';
+import 'app/lyric/domain/entities/lyric_entity.dart';
 
-import 'app/lyric/infra/repositories/lyric_repository.dart';
 
-void bootstrap({required LyricFirestoreDatasource lyricDatasource}) {
+void bootstrap({required FirestoreDatasource firestoreDatasource}) {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
   Bloc.observer = IpbcBlocObserver();
 
-  final lyricRepository = LyricRepository(datasource: lyricDatasource);
+  final repository = Repository<LyricEntity>(getDatasource: firestoreDatasource);
 
   runZonedGuarded(
-    () => runApp(AppWidget(lyricRepository: lyricRepository)),
+    () => runApp(AppWidget(repository: repository)),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }

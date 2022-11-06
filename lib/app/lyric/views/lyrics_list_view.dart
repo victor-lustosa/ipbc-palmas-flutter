@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ipbc_palmas/app/lyric/domain/entities/lyric_entity.dart';
 import 'package:ipbc_palmas/app/shared/components/top-bar/top_bar_widget.dart';
 
-import '../infra/repositories/lyric_repository.dart';
+import '../../core/infra/repositories/repository.dart';
+
 import '../../shared/configs/app_fonts.dart';
 import '../../shared/configs/app_colors.dart';
 import '../../shared/configs/app_icons.dart';
@@ -44,7 +45,7 @@ class _LyricsListViewState extends State<LyricsListView> {
     fillLettersCarousel();
     bloc = LyricBloc(
         lyricsUseCase:
-            LyricsUseCases(repository: context.read<LyricRepository>()));
+            LyricsUseCases(repository: context.read<Repository<LyricEntity>>()));
     bloc.add(GetLyricsEvent());
     super.initState();
   }

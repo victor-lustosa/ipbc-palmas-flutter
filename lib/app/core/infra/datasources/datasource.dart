@@ -1,12 +1,12 @@
 abstract class IGetDatasource {
-  Stream<List<Map>> get();
+  Stream<List<Map>> get(String url);
 }
 abstract class IAddDatasource {
-  Stream<List<Map>> add();
+ Future<void> add(String url, data);
 }
 abstract class IDeleteDatasource {
-  Stream<List<Map>> delete();
+  Future<void> delete(String url, id);
 }
 abstract class IUpdateDatasource {
-  Stream<List<Map>> update();
+  Future<void> update(String url, id);
 }
