@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ipbc_palmas/app/lyric/domain/entities/lyric_entity.dart';
+import 'lyric/domain/entities/lyric_entity.dart';
+import 'shared/configs/no_glow_behavior.dart';
 import 'core/infra/repositories/repository.dart';
 import 'lyric/views/lyrics_list_view.dart';
 import 'shared/configs/app_colors.dart';
@@ -16,6 +17,12 @@ class AppWidget extends StatelessWidget {
     return RepositoryProvider.value(
         value: repository,
         child: MaterialApp(
+            builder: (context, Widget? child) {
+              return ScrollConfiguration(
+                behavior: NoGlowBehavior(),
+                child: child!,
+              );
+            },
             title: 'IPBC Palmas',
             theme: ThemeData(
               primaryColor: AppColors.white,
