@@ -19,10 +19,14 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
   Future<void> _getLyrics(_, emit) async {
     await emit.onEach<List<LyricEntity>>(lyricsUseCase.get(), onData: (lyrics) {
       emit(SuccessfullyFetchedLyricsState(lyrics));
+    }, onError: (error, st) {
+      emit(ExceptionLyricState(error.toString()));
     });
   }
+
   Future<void> _lyricsFilter(LyricsFilterEvent event, emit) async {
-    List<LyricEntity> lyricsList = await lyricsUseCase.lettersFilter(event.lyrics, event.letter);
-      emit(SuccessfullyFilteredLyricsState(lyricsList));
+    List<LyricEntity> lyricsList =
+        await lyricsUseCase.lettersFilter(event.lyrics, event.letter);
+    emit(SuccessfullyFilteredLyricsState(lyricsList));
   }
 }
