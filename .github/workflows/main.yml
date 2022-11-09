@@ -1,9 +1,6 @@
 name: IPBC Workflow
 
-on:
-  push:
-    branches:
-      - main
+on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: macos-latest
@@ -11,24 +8,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: '11.x'
-
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
 
-      - name: Run Flutter pub get
-        uses: flutter pub get
+      - name: Install dependencies
+        run: flutter pub get
 
       - name: Run unit tests
         run: flutter test --coverage
-
-      - name: Upload to code coverage
-        uses: codecov/codecov-action@v1.2.2
-        with:
-          token: ${{secrets.CODECOV_TOKEN}}
-          file: coverage/lcov.info
