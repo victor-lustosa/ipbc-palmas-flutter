@@ -225,23 +225,22 @@ class _LyricsListViewState extends State<LyricsListView> {
                               return Padding(
                                 padding:
                                     const EdgeInsets.only(left: 15, right: 15),
-                                child: ListTile(
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        horizontal: 0.0, vertical: 0),
-                                    title: Container(
-                                      decoration: lyricsFiltered.length ==
-                                                  index + 1 &&
-                                              lyricsFiltered.length > 1
-                                          ? const BoxDecoration(
-                                              border: Border(
-                                                  bottom:
-                                                      BorderSide(width: 0.1)))
-                                          : const BoxDecoration(
-                                              border: Border(
-                                                  top: BorderSide(width: 0.1),
-                                                  bottom:
-                                                      BorderSide(width: 0.1))),
-                                      child: Row(
+                                child: Container(
+                                  decoration: lyricsFiltered.length ==
+                                              index + 1 &&
+                                          lyricsFiltered.length > 1
+                                      ? const BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(width: 0.1)))
+                                      : const BoxDecoration(
+                                          border: Border(
+                                              top: BorderSide(width: 0.1),
+                                              bottom: BorderSide(width: 0.1))),
+                                  child: ListTile(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 0.0, vertical: 0),
+                                      title: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
@@ -273,12 +272,12 @@ class _LyricsListViewState extends State<LyricsListView> {
                                               )
                                             ])
                                           ]),
-                                    ),
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, AppRoutes.lyricRoute,
-                                          arguments: lyricsFiltered[index]);
-                                    }),
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, AppRoutes.lyricRoute,
+                                            arguments: lyricsFiltered[index]);
+                                      }),
+                                ),
                               );
                             }),
                       ],
