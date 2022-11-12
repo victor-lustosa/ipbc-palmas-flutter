@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ipbc_palmas/app/core/infra/repositories/repository.dart';
-import 'package:ipbc_palmas/app/lyric/domain/entities/lyric_entity.dart';
 import 'package:mocktail/mocktail.dart';
 import '../../../../mocks/mocks.dart';
 

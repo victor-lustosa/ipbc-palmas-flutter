@@ -1,11 +1,5 @@
-import 'package:ipbc_palmas/app/lyric/infra/models/lyric_dto.dart';
-
-import '../../../lyric/domain/entities/lyric_entity.dart';
-import '../../../lyric/domain/entities/verse_entity.dart';
-import '../../../lyric/infra/models/verse_dto.dart';
-
 class Util {
- /* static List<VerseDTO> generateVersesList(LyricEntity lyricEntity) {
+  /* static List<VerseDTO> generateVersesList(LyricEntity lyricEntity) {
 
     List<VerseDTO> verses = [];
 
@@ -21,13 +15,13 @@ class Util {
 }
 
 void main() {
-  String gfg =
-      "You say\nOne love, one life\nWhen it's one need\nIn the night\nOne love\nWe get to share\nIt leaves you, darling\nIf you don't care for it";
+  // String gfg =
+  "You say\nOne love, one life\nWhen it's one need\nIn the night\nOne love\nWe get to share\nIt leaves you, darling\nIf you don't care for it";
 
   //replace substring of the given string
-  String result = gfg.replaceAll("\n", "/n");
-  List resultList1 = gfg.split("\n");
-  print(resultList1);
-  List resultList2 = result.split("/n");
-  print(resultList2);
+  // String result = gfg.replaceAll("\n", "/n");
+  //List resultList1 = gfg.split("\n");
+  //print(resultList1);
+  // List resultList2 = result.split("/n");
+  //print(resultList2);
 }

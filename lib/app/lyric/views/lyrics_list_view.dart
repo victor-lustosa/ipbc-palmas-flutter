@@ -142,19 +142,21 @@ class _LyricsListViewState extends State<LyricsListView> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 21.0),
                           child: SizedBox(
-                              height: 50,
+                              height: 43,
                               width: MediaQuery.of(context).size.width,
                               child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   shrinkWrap: true,
                                   itemCount: lettersCarousel.length,
                                   itemBuilder: (context, index) {
-                                    return SizedBox(
+                                    return AnimatedContainer(
+                                      duration:
+                                          const Duration(milliseconds: 200),
                                       width: lettersCarousel[index] ==
                                                   selectedValue &&
                                               isSelected
                                           ? 43
-                                          : 40,
+                                          : 30,
                                       child: ElevatedButton(
                                           onPressed: () => {
                                                 setState(() {
@@ -178,6 +180,7 @@ class _LyricsListViewState extends State<LyricsListView> {
                                             overlayColor:
                                                 MaterialStateProperty.all(
                                                     AppColors.darkGreen),
+
                                             elevation:
                                                 const MaterialStatePropertyAll(
                                                     0),
@@ -221,11 +224,14 @@ class _LyricsListViewState extends State<LyricsListView> {
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding:
-                                    const EdgeInsets.only(left: 5, right: 5),
+                                    const EdgeInsets.only(left: 15, right: 15),
                                 child: ListTile(
-                                  contentPadding: const  EdgeInsets.symmetric(horizontal: 0.0,vertical: 0),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 0.0, vertical: 0),
                                     title: Container(
-                                      decoration: lyricsFiltered.length == index + 1 && lyricsFiltered.length > 1
+                                      decoration: lyricsFiltered.length ==
+                                                  index + 1 &&
+                                              lyricsFiltered.length > 1
                                           ? const BoxDecoration(
                                               border: Border(
                                                   bottom:
@@ -236,11 +242,14 @@ class _LyricsListViewState extends State<LyricsListView> {
                                                   bottom:
                                                       BorderSide(width: 0.1))),
                                       child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Column(
                                               children: [
-                                                Text('${lyricsFiltered[index].title} - ${lyricsFiltered[index].group}', style: AppFonts.body),
+                                                Text(
+                                                    '${lyricsFiltered[index].title} - ${lyricsFiltered[index].group}',
+                                                    style: AppFonts.body),
                                               ],
                                             ),
                                             Column(children: [
@@ -250,11 +259,14 @@ class _LyricsListViewState extends State<LyricsListView> {
                                                   onPressed: () {
                                                     Navigator.pushNamed(context,
                                                         AppRoutes.lyricRoute,
-                                                        arguments: lyricsFiltered[index]);
+                                                        arguments:
+                                                            lyricsFiltered[
+                                                                index]);
                                                   },
                                                   icon: const Icon(
                                                     size: 36,
-                                                    Icons.navigate_next_outlined,
+                                                    Icons
+                                                        .navigate_next_outlined,
                                                     color: AppColors.darkGreen,
                                                   ),
                                                 ),

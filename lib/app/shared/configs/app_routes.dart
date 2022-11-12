@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ipbc_palmas/app/lyric/domain/entities/lyric_entity.dart';
-import 'package:ipbc_palmas/app/lyric/infra/models/lyric_model.dart';
 import 'package:ipbc_palmas/app/lyric/views/lyric_view.dart';
 
 import '../../home/views/home_view.dart';
@@ -25,7 +24,9 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const LyricsListView());
 
       case lyricRoute:
-        return MaterialPageRoute(builder: (_) =>  LyricView(lyricEntity: (routeSettings.arguments as LyricEntity)));
+        return MaterialPageRoute(
+            builder: (_) => LyricView(
+                lyricEntity: (routeSettings.arguments as LyricEntity)));
 
       default:
         return _unknownRoute();

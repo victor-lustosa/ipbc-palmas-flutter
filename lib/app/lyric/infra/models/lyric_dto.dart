@@ -1,13 +1,12 @@
 import 'package:ipbc_palmas/app/lyric/infra/models/verse_dto.dart';
 
-class LyricDTO{
+class LyricDTO {
+  final List<VerseDTO> versesList;
 
-  final List<VerseDTO> VersesList;
-
-  LyricDTO( {required this.VersesList});
+  LyricDTO({required this.versesList});
 
   @override
   String toString() {
-    return 'LyricDTO{VersesList: $VersesList}';
+    return 'LyricDTO{VersesList: $versesList}';
   }
 }

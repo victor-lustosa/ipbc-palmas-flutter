@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/lyric/domain/entities/verse_entity.dart';
-import 'package:ipbc_palmas/app/lyric/infra/models/verse_dto.dart';
 import 'package:ipbc_palmas/app/shared/components/top-bar/top_bar_widget.dart';
 
-import '../../shared/components/utils/util.dart';
 import '../../shared/configs/app_colors.dart';
 import '../../shared/configs/app_fonts.dart';
 import '../../shared/configs/app_icons.dart';
@@ -21,8 +18,7 @@ class LyricView extends StatelessWidget {
         backgroundColor: AppColors.white,
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Column(
-                children: [
+            child: Column(children: [
               const Padding(
                 padding: EdgeInsets.only(bottom: 12),
                 child: TopBarWidget(),
@@ -33,7 +29,8 @@ class LyricView extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          SizedBox(width: 45,
+                          SizedBox(
+                            width: 45,
                             height: 45,
                             child: IconButton(
                               onPressed: () {
@@ -59,14 +56,14 @@ class LyricView extends StatelessWidget {
                       Padding(
                           padding: const EdgeInsets.only(left: 7),
                           child: Text(lyricEntity.title, style: AppFonts.h2)),
-
                     ],
-                  ),Align(alignment: const Alignment(-0.40, 0),
+                  ),
+                  Align(
+                    alignment: const Alignment(-0.40, 0),
                     child: Text(lyricEntity.group, style: AppFonts.subtitle),
                   ),
                 ],
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top: 15.0),
                 child: ListView.separated(
@@ -90,14 +87,15 @@ class LyricView extends StatelessWidget {
                               : Alignment.centerLeft,
                           decoration: lyricEntity.verses[index].isChorus == true
                               ? BoxDecoration(
-                                  borderRadius:
-                                      const BorderRadius.all(Radius.circular(10)),
-                                  border: Border.all(color: AppColors.lightGrey),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  border:
+                                      Border.all(color: AppColors.lightGrey),
                                   color: AppColors.lightGrey)
                               : BoxDecoration(
                                   color: AppColors.white,
-                                  borderRadius:
-                                      const BorderRadius.all(Radius.circular(10)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
                                   border: Border.all(
                                       color: AppColors.white,
                                       width: 1.0,
