@@ -12,7 +12,7 @@ class AppFonts {
   static TextStyle? carouselWhite =
       GoogleFonts.inter(color: AppColors.black, fontSize: 20);
   static TextStyle? carouselGreen =
-      GoogleFonts.inter(color: AppColors.white, fontSize: 29);
+      GoogleFonts.inter(color: AppColors.black, fontSize: 29);
   static TextStyle? body =
       GoogleFonts.inter(color: AppColors.darkGreen, fontSize: 18);
   static TextStyle? titleDrawer =

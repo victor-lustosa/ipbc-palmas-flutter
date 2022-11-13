@@ -17,13 +17,15 @@ class LyricsListView extends StatefulWidget {
   State<LyricsListView> createState() => _LyricsListViewState();
 }
 
-class _LyricsListViewState extends State<LyricsListView> {
+class _LyricsListViewState extends State<LyricsListView>
+    with TickerProviderStateMixin {
   late List<LyricEntity> lyricsFetched;
   late List<LyricEntity> lyricsFiltered;
   late List<String> lettersCarousel;
   late List<String> drawerNames;
   late LyricBloc bloc;
   bool isSelected = false;
+  final selectedValueNotifier = ValueNotifier('');
   String selectedValue = '';
 
   fillLettersCarousel() {
@@ -140,82 +142,99 @@ class _LyricsListViewState extends State<LyricsListView> {
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 21.0),
-                          child: SizedBox(
-                              height: 43,
-                              width: MediaQuery.of(context).size.width,
-                              child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  shrinkWrap: true,
-                                  itemCount: lettersCarousel.length,
-                                  itemBuilder: (context, index) {
-                                    return AnimatedContainer(
-                                      duration:
-                                          const Duration(milliseconds: 200),
-                                      width: lettersCarousel[index] ==
-                                                  selectedValue &&
-                                              isSelected
-                                          ? 43
-                                          : 30,
-                                      child: ElevatedButton(
-                                          onPressed: () => {
-                                                setState(() {
-                                                  if (!isSelected) {
-                                                    selectedValue =
-                                                        lettersCarousel[index];
-                                                    isSelected = true;
-                                                    bloc.add(LyricsFilterEvent(
-                                                        letter: lettersCarousel[
-                                                            index],
-                                                        lyrics: lyricsFetched));
-                                                  } else {
-                                                    isSelected = false;
-                                                    selectedValue = '';
-                                                    lyricsFiltered =
-                                                        lyricsFetched;
-                                                  }
-                                                })
+                            padding: const EdgeInsets.only(bottom: 21.0),
+                            child: ValueListenableBuilder<String>(
+                                valueListenable: selectedValueNotifier,
+                                builder: (context, value, child) {
+                                  return SizedBox(
+                                      height: 43,
+                                      width: MediaQuery.of(context).size.width,
+                                      child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          shrinkWrap: true,
+                                          itemCount: lettersCarousel.length,
+                                          itemBuilder: (context, index) {
+                                            return AnimatedSwitcher(
+                                              duration: const Duration(
+                                                  milliseconds: 250),
+                                              transitionBuilder:
+                                                  (child, animation) {
+                                                return SizeTransition(
+                                                    child: child,
+                                                    sizeFactor: animation,
+                                                    axis: Axis.vertical);
                                               },
-                                          style: ButtonStyle(
-                                            overlayColor:
-                                                MaterialStateProperty.all(
-                                                    AppColors.darkGreen),
+                                              child: ElevatedButton(
+                                                  onPressed: () => {
+                                                        setState(() {
+                                                          if (!isSelected) {
+                                                            selectedValue =
+                                                                lettersCarousel[
+                                                                    index];
+                                                            isSelected = true;
+                                                            bloc.add(LyricsFilterEvent(
+                                                                letter:
+                                                                    lettersCarousel[
+                                                                        index],
+                                                                lyrics:
+                                                                    lyricsFetched));
+                                                          } else {
+                                                            isSelected = false;
+                                                            selectedValue = '';
+                                                            lyricsFiltered =
+                                                                lyricsFetched;
+                                                          }
+                                                        })
+                                                      },
+                                                  style: ButtonStyle(
+                                                    overlayColor:
+                                                        MaterialStateProperty
+                                                            .all(AppColors
+                                                                .darkGreen),
 
-                                            elevation:
-                                                const MaterialStatePropertyAll(
-                                                    0),
-                                            shape: MaterialStateProperty.all(
-                                                const CircleBorder()),
-                                            padding: MaterialStateProperty.all(
-                                                const EdgeInsets.all(0)),
-                                            backgroundColor: MaterialStateProperty
-                                                .all(lettersCarousel[index] ==
-                                                            selectedValue &&
-                                                        isSelected
-                                                    ? AppColors.darkGreen
-                                                    : AppColors
-                                                        .white), // <-- Button color
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Center(
-                                                  child: Text(
-                                                      lettersCarousel[index],
-                                                      style: lettersCarousel[
-                                                                      index] ==
-                                                                  selectedValue &&
-                                                              isSelected
-                                                          ? AppFonts
-                                                              .carouselGreen
-                                                          : AppFonts
-                                                              .carouselWhite)),
-                                            ],
-                                          )),
-                                    );
-                                  })),
-                        ),
+                                                    elevation:
+                                                        const MaterialStatePropertyAll(
+                                                            0),
+                                                    shape: MaterialStateProperty
+                                                        .all(
+                                                            const CircleBorder()),
+                                                    padding:
+                                                        MaterialStateProperty
+                                                            .all(
+                                                                const EdgeInsets
+                                                                    .all(0)),
+                                                    backgroundColor: MaterialStateProperty
+                                                        .all(lettersCarousel[
+                                                                        index] ==
+                                                                    selectedValue &&
+                                                                isSelected
+                                                            ? AppColors
+                                                                .darkGreen
+                                                            : AppColors
+                                                                .white), // <-- Button color
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Center(
+                                                          child: Text(
+                                                              lettersCarousel[
+                                                                  index],
+                                                              style: lettersCarousel[
+                                                                              index] ==
+                                                                          selectedValue &&
+                                                                      isSelected
+                                                                  ? AppFonts
+                                                                      .carouselGreen
+                                                                  : AppFonts
+                                                                      .carouselWhite)),
+                                                    ],
+                                                  )),
+                                            );
+                                          }));
+                                })),
                         ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
@@ -237,9 +256,6 @@ class _LyricsListViewState extends State<LyricsListView> {
                                               top: BorderSide(width: 0.1),
                                               bottom: BorderSide(width: 0.1))),
                                   child: ListTile(
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 0.0, vertical: 0),
                                       title: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
