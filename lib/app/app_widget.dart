@@ -13,21 +13,25 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [...lyricModule],
-        child: MaterialApp(
-            builder: (context, Widget? child) {
-              return ScrollConfiguration(
-                behavior: NoGlowBehavior(),
-                child: child!,
-              );
-            },
-            title: 'IPBC Palmas',
-            theme: ThemeData(
-              primaryColor: AppColors.white,
-            ),
-            home: const LyricsListView(),
-            initialRoute: "/",
-            onGenerateRoute: AppRoutes.onGenerateRoute,
-            debugShowCheckedModeBanner: false));
+      providers: [
+        ...lyricModule,
+      ],
+      child: MaterialApp(
+        builder: (context, Widget? child) {
+          return ScrollConfiguration(
+            behavior: NoGlowBehavior(),
+            child: child!,
+          );
+        },
+        title: 'IPBC Palmas',
+        theme: ThemeData(
+          primaryColor: AppColors.white,
+        ),
+        home: const LyricsListView(),
+        initialRoute: "/",
+        onGenerateRoute: AppRoutes.onGenerateRoute,
+        debugShowCheckedModeBanner: false,
+      ),
+    );
   }
 }

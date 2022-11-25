@@ -10,17 +10,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class LyricView extends StatelessWidget {
   const LyricView({super.key, required this.lyricEntity});
+
   final LyricEntity lyricEntity;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.white,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(children: [
+      backgroundColor: AppColors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
               const Padding(
-                padding: EdgeInsets.only(bottom: 12),
+                padding: EdgeInsets.only(
+                  bottom: 12,
+                ),
                 child: TopBarWidget(),
               ),
               Column(
@@ -46,7 +50,10 @@ class LyricView extends StatelessWidget {
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 8.0, top: 10),
+                        padding: const EdgeInsets.only(
+                          left: 8.0,
+                          top: 10,
+                        ),
                         child: SvgPicture.asset(
                           AppIcons.lyricsIconName,
                           color: AppColors.black,
@@ -54,54 +61,77 @@ class LyricView extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                          padding: const EdgeInsets.only(left: 7),
-                          child: Text(lyricEntity.title, style: AppFonts.h2)),
+                        padding: const EdgeInsets.only(
+                          left: 7,
+                        ),
+                        child: Text(
+                          lyricEntity.title,
+                          style: AppFonts.h2,
+                        ),
+                      ),
                     ],
                   ),
                   Align(
                     alignment: const Alignment(-0.40, 0),
-                    child: Text(lyricEntity.group, style: AppFonts.subtitle),
+                    child: Text(
+                      lyricEntity.group,
+                      style: AppFonts.subtitle,
+                    ),
                   ),
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 15.0),
+                padding: const EdgeInsets.only(
+                  top: 15.0,
+                ),
                 child: ListView.separated(
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const SizedBox(
-                        height: 15,
-                      );
-                    },
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: lyricEntity.verses.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: lyricEntity.verses[index].isChorus == true
-                            ? const EdgeInsets.only(left: 18.0, right: 18)
-                            : const EdgeInsets.only(left: 8.0, right: 0.0),
-                        child: Container(
-                          alignment: lyricEntity.verses[index].isChorus == true
-                              ? Alignment.centerRight
-                              : Alignment.centerLeft,
-                          decoration: lyricEntity.verses[index].isChorus == true
-                              ? BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10)),
-                                  border:
-                                      Border.all(color: AppColors.lightGrey),
-                                  color: AppColors.lightGrey)
-                              : BoxDecoration(
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(
+                      height: 15,
+                    );
+                  },
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: lyricEntity.verses.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: lyricEntity.verses[index].isChorus == true
+                          ? const EdgeInsets.only(
+                              left: 18.0,
+                              right: 18,
+                            )
+                          : const EdgeInsets.only(
+                              left: 8.0,
+                              right: 0.0,
+                            ),
+                      child: Container(
+                        alignment: lyricEntity.verses[index].isChorus == true
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
+                        decoration: lyricEntity.verses[index].isChorus == true
+                            ? BoxDecoration(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                                border: Border.all(
+                                  color: AppColors.lightGrey,
+                                ),
+                                color: AppColors.lightGrey,
+                              )
+                            : BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                                border: Border.all(
                                   color: AppColors.white,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10)),
-                                  border: Border.all(
-                                      color: AppColors.white,
-                                      width: 1.0,
-                                      style: BorderStyle.solid)),
-                          child: ListTile(
-                              title: ListView.builder(
+                                  width: 1.0,
+                                  style: BorderStyle.solid,
+                                ),
+                              ),
+                        child: ListTile(
+                          title: ListView.builder(
                             itemCount:
                                 lyricEntity.verses[index].versesList.length,
                             scrollDirection: Axis.vertical,
@@ -109,22 +139,34 @@ class LyricView extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: ((context, position) {
                               return ListTile(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 0.0, horizontal: 0.0),
-                                  dense: true,
-                                  title: Text(
-                                      lyricEntity
-                                          .verses[index].versesList[position],
-                                      style: AppFonts.lyricTile));
+                                contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 0.0,
+                                  horizontal: 0.0,
+                                ),
+                                dense: true,
+                                title: Text(
+                                  lyricEntity
+                                      .verses[index].versesList[position],
+                                  style: AppFonts.lyricTile,
+                                ),
+                              );
                             }),
-                          )),
+                          ),
                         ),
-                      );
-                    }),
+                      ),
+                    );
+                  },
+                ),
               ),
-              const Padding(padding: EdgeInsets.only(top: 20)),
-            ]),
+              const Padding(
+                padding: EdgeInsets.only(
+                  top: 20,
+                ),
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

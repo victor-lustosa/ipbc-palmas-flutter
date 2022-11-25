@@ -8,11 +8,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 final lyricModule = [
   Provider<Repository<LyricEntity>>(
-      create: (context) => Repository(
-          getDatasource:
-              FirestoreDatasource(firestore: FirebaseFirestore.instance))),
+    create: (context) => Repository(
+      getDatasource: FirestoreDatasource(
+        firestore: FirebaseFirestore.instance,
+      ),
+    ),
+  ),
   Provider<LyricBloc>(
-      create: (context) => LyricBloc(
-          lyricsUseCase: LyricsUseCases(
-              repository: context.read<Repository<LyricEntity>>()))),
+    create: (context) => LyricBloc(
+      lyricsUseCase: LyricsUseCases(
+        repository: context.read<Repository<LyricEntity>>(),
+      ),
+    ),
+  ),
 ];

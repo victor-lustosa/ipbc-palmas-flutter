@@ -10,6 +10,7 @@ class AppRoutes {
   static const String homeRoute = "/home";
   static const String lyricsRoute = "/lyrics";
   static const String lyricRoute = "/lyric-view";
+
   static Route<dynamic>? onGenerateRoute(RouteSettings routeSettings) {
     //final arguments = routeSettings.arguments;
 
@@ -25,8 +26,10 @@ class AppRoutes {
 
       case lyricRoute:
         return MaterialPageRoute(
-            builder: (_) => LyricView(
-                lyricEntity: (routeSettings.arguments as LyricEntity)));
+          builder: (_) => LyricView(
+            lyricEntity: (routeSettings.arguments as LyricEntity),
+          ),
+        );
 
       default:
         return _unknownRoute();
@@ -34,15 +37,17 @@ class AppRoutes {
   }
 
   static Route<dynamic> _unknownRoute() {
-    return MaterialPageRoute(builder: (_) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text("Rota não encontrada"),
-        ),
-        body: const Center(
-          child: Text("tela não encontrada"),
-        ),
-      );
-    });
+    return MaterialPageRoute(
+      builder: (_) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text("Rota não encontrada"),
+          ),
+          body: const Center(
+            child: Text("tela não encontrada"),
+          ),
+        );
+      },
+    );
   }
 }

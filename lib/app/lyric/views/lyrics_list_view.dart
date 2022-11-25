@@ -25,7 +25,6 @@ class _LyricsListViewState extends State<LyricsListView>
   late List<String> drawerNames;
   late LyricBloc bloc;
   bool isSelected = false;
-  final selectedValueNotifier = ValueNotifier('');
   String selectedValue = '';
 
   fillLettersCarousel() {
@@ -61,49 +60,56 @@ class _LyricsListViewState extends State<LyricsListView>
   Widget build(BuildContext context) {
     return Scaffold(
       drawerScrimColor: Colors.black26,
-      endDrawer: SideBarWidget(drawerNames: drawerNames),
+      endDrawer: SideBarWidget(
+        drawerNames: drawerNames,
+      ),
       drawerEnableOpenDragGesture: true,
       backgroundColor: AppColors.white,
       body: SafeArea(
         child: BlocBuilder<LyricBloc, LyricState>(
-            bloc: bloc,
-            builder: (context, state) {
-              if (state is InitialState) {
-                return const Center(
-                    child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                            AppColors.darkGreen)));
-              } else if (state is SuccessfullyFetchedLyricsState ||
-                  state is SuccessfullyFilteredLyricsState) {
-                if (state is SuccessfullyFetchedLyricsState &&
-                    selectedValue == '') {
-                  lyricsFetched = state.entities;
+          bloc: bloc,
+          builder: (context, state) {
+            if (state is InitialState) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    AppColors.darkGreen,
+                  ),
+                ),
+              );
+            } else if (state is SuccessfullyFetchedLyricsState ||
+                state is SuccessfullyFilteredLyricsState) {
+              if (state is SuccessfullyFetchedLyricsState && selectedValue == '') {
+                lyricsFetched = state.entities;
+                lyricsFiltered = state.entities;
+              } else {
+                if (state is SuccessfullyFilteredLyricsState && selectedValue != '') {
                   lyricsFiltered = state.entities;
                 } else {
-                  if (state is SuccessfullyFilteredLyricsState &&
-                      selectedValue != '') {
-                    lyricsFiltered = state.entities;
-                  } else {
-                    lyricsFiltered = lyricsFetched;
-                  }
+                  lyricsFiltered = lyricsFetched;
                 }
-                //TODO: autor, ano de produçao, todos os diretos reservados
-                //TODO: ADICIONAR MENSAGEM DE NENHUM RESULTADO ENCONTRADO
-                return SingleChildScrollView(
-                  child: RefreshIndicator(
-                    color: AppColors.darkGreen,
-                    onRefresh: () async {
-                      bloc.add(GetLyricsEvent());
-                    },
-                    child: Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 18),
-                          child: TopBarWidget(),
+              }
+              //TODO: autor, ano de produçao, todos os diretos reservados
+              //TODO: ADICIONAR MENSAGEM DE NENHUM RESULTADO ENCONTRADO
+              return SingleChildScrollView(
+                child: RefreshIndicator(
+                  color: AppColors.darkGreen,
+                  onRefresh: () async {
+                    bloc.add(
+                      GetLyricsEvent(),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(
+                          bottom: 18,
                         ),
-                        Row(
-                          children: [
-                            /*Column(
+                        child: TopBarWidget(),
+                      ),
+                      Row(
+                        children: [
+                          /*Column(
                               children: const [
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 8.0),
@@ -118,192 +124,199 @@ class _LyricsListViewState extends State<LyricsListView>
                                 ),
                               ],
                             ),*/
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 0, bottom: 18.0, left: 30),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    height: 35,
-                                    width: 35,
-                                    child: SvgPicture.asset(
-                                      AppIcons.lyricsIconName,
-                                      color: AppColors.black,
-                                      matchTextDirection: true,
-                                    ),
-                                  ),
-                                  Padding(
-                                      padding: const EdgeInsets.only(left: 9),
-                                      child: Text("Músicas/Letras",
-                                          style: AppFonts.h2)),
-                                ],
-                              ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 0,
+                              bottom: 18.0,
+                              left: 30,
                             ),
-                          ],
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  height: 35,
+                                  width: 35,
+                                  child: SvgPicture.asset(
+                                    AppIcons.lyricsIconName,
+                                    color: AppColors.black,
+                                    matchTextDirection: true,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 9,
+                                  ),
+                                  child: Text(
+                                    "Músicas/Letras",
+                                    style: AppFonts.h2,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: 21.0,
                         ),
-                        Padding(
-                            padding: const EdgeInsets.only(bottom: 21.0),
-                            child: ValueListenableBuilder<String>(
-                                valueListenable: selectedValueNotifier,
-                                builder: (context, value, child) {
-                                  return SizedBox(
-                                      height: 43,
-                                      width: MediaQuery.of(context).size.width,
-                                      child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          shrinkWrap: true,
-                                          itemCount: lettersCarousel.length,
-                                          itemBuilder: (context, index) {
-                                            return AnimatedSwitcher(
-                                              duration: const Duration(
-                                                  milliseconds: 250),
-                                              transitionBuilder:
-                                                  (child, animation) {
-                                                return SizeTransition(
-                                                    child: child,
-                                                    sizeFactor: animation,
-                                                    axis: Axis.vertical);
-                                              },
-                                              child: ElevatedButton(
-                                                  onPressed: () => {
-                                                        setState(() {
-                                                          if (!isSelected) {
-                                                            selectedValue =
-                                                                lettersCarousel[
-                                                                    index];
-                                                            isSelected = true;
-                                                            bloc.add(LyricsFilterEvent(
-                                                                letter:
-                                                                    lettersCarousel[
-                                                                        index],
-                                                                lyrics:
-                                                                    lyricsFetched));
-                                                          } else {
-                                                            isSelected = false;
-                                                            selectedValue = '';
-                                                            lyricsFiltered =
-                                                                lyricsFetched;
-                                                          }
-                                                        })
-                                                      },
-                                                  style: ButtonStyle(
-                                                    overlayColor:
-                                                        MaterialStateProperty
-                                                            .all(AppColors
-                                                                .darkGreen),
-
-                                                    elevation:
-                                                        const MaterialStatePropertyAll(
-                                                            0),
-                                                    shape: MaterialStateProperty
-                                                        .all(
-                                                            const CircleBorder()),
-                                                    padding:
-                                                        MaterialStateProperty
-                                                            .all(
-                                                                const EdgeInsets
-                                                                    .all(0)),
-                                                    backgroundColor: MaterialStateProperty
-                                                        .all(lettersCarousel[
-                                                                        index] ==
-                                                                    selectedValue &&
-                                                                isSelected
-                                                            ? AppColors
-                                                                .darkGreen
-                                                            : AppColors
-                                                                .white), // <-- Button color
-                                                  ),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Center(
-                                                          child: Text(
-                                                              lettersCarousel[
-                                                                  index],
-                                                              style: lettersCarousel[
-                                                                              index] ==
-                                                                          selectedValue &&
-                                                                      isSelected
-                                                                  ? AppFonts
-                                                                      .carouselGreen
-                                                                  : AppFonts
-                                                                      .carouselWhite)),
-                                                    ],
-                                                  )),
-                                            );
-                                          }));
-                                })),
-                        ListView.builder(
-                            scrollDirection: Axis.vertical,
+                        child: SizedBox(
+                          height: 43,
+                          width: MediaQuery.of(context).size.width,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
-                            itemCount: lyricsFiltered.length,
-                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: lettersCarousel.length,
                             itemBuilder: (context, index) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 15, right: 15),
-                                child: Container(
-                                  decoration: lyricsFiltered.length ==
-                                              index + 1 &&
-                                          lyricsFiltered.length > 1
-                                      ? const BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(width: 0.1)))
-                                      : const BoxDecoration(
-                                          border: Border(
-                                              top: BorderSide(width: 0.1),
-                                              bottom: BorderSide(width: 0.1))),
-                                  child: ListTile(
-                                      title: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              children: [
-                                                Text(
-                                                    '${lyricsFiltered[index].title} - ${lyricsFiltered[index].group}',
-                                                    style: AppFonts.body),
-                                              ],
+                              return AnimatedContainer(
+                                duration: const Duration(milliseconds: 260),
+                                width:
+                                    lettersCarousel[index] == selectedValue && isSelected
+                                        ? 43
+                                        : 30,
+                                child: ElevatedButton(
+                                  onPressed: () => {
+                                    setState(
+                                      () {
+                                        if (!isSelected) {
+                                          selectedValue = lettersCarousel[index];
+                                          isSelected = true;
+                                          bloc.add(
+                                            LyricsFilterEvent(
+                                              letter: lettersCarousel[index],
+                                              lyrics: lyricsFetched,
                                             ),
-                                            Column(children: [
-                                              SizedBox(
-                                                width: 35,
-                                                child: IconButton(
-                                                  onPressed: () {
-                                                    Navigator.pushNamed(context,
-                                                        AppRoutes.lyricRoute,
-                                                        arguments:
-                                                            lyricsFiltered[
-                                                                index]);
-                                                  },
-                                                  icon: const Icon(
-                                                    size: 36,
-                                                    Icons
-                                                        .navigate_next_outlined,
-                                                    color: AppColors.darkGreen,
-                                                  ),
-                                                ),
-                                              )
-                                            ])
-                                          ]),
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                            context, AppRoutes.lyricRoute,
-                                            arguments: lyricsFiltered[index]);
-                                      }),
+                                          );
+                                        } else {
+                                          isSelected = false;
+                                          selectedValue = '';
+                                          lyricsFiltered = lyricsFetched;
+                                        }
+                                      },
+                                    ),
+                                  },
+                                  style: ButtonStyle(
+                                    overlayColor: MaterialStateProperty.all(
+                                      AppColors.darkGreen,
+                                    ),
+                                    elevation:
+                                        const MaterialStatePropertyAll(0),
+                                    shape: MaterialStateProperty.all(
+                                      const CircleBorder(),
+                                    ),
+                                    padding: MaterialStateProperty.all(
+                                      const EdgeInsets.all(0),
+                                    ),
+                                    backgroundColor: MaterialStateProperty.all(
+                                      lettersCarousel[index] == selectedValue && isSelected
+                                          ? AppColors.darkGreen
+                                          : AppColors.white,
+                                    ), // <-- Button color
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Center(
+                                        child: Text(
+                                          lettersCarousel[index],
+                                          style: lettersCarousel[index] == selectedValue && isSelected
+                                              ? AppFonts.carouselGreen
+                                              : AppFonts.carouselWhite,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
-                            }),
-                      ],
-                    ),
+                            },
+                          ),
+                        ),
+                      ),
+                      ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: lyricsFiltered.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                              left: 15,
+                              right: 15,
+                            ),
+                            child: Container(
+                              decoration: lyricsFiltered.length == index + 1 && lyricsFiltered.length > 1
+                                  ? const BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          width: 0.1,
+                                        ),
+                                      ),
+                                    )
+                                  : const BoxDecoration(
+                                      border: Border(
+                                        top: BorderSide(
+                                          width: 0.1,
+                                        ),
+                                        bottom: BorderSide(
+                                          width: 0.1,
+                                        ),
+                                      ),
+                                    ),
+                              child: ListTile(
+                                title: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(
+                                          '${lyricsFiltered[index].title} - ${lyricsFiltered[index].group}',
+                                          style: AppFonts.body,
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        SizedBox(
+                                          width: 35,
+                                          child: IconButton(
+                                            onPressed: () {
+                                              Navigator.pushNamed(
+                                                context,
+                                                AppRoutes.lyricRoute,
+                                                arguments: lyricsFiltered[index],
+                                              );
+                                            },
+                                            icon: const Icon(
+                                              size: 36,
+                                              Icons.navigate_next_outlined,
+                                              color: AppColors.darkGreen,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    AppRoutes.lyricRoute,
+                                    arguments: lyricsFiltered[index],
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                );
-              } else {
-                return Text('aconteceu um erro [Lyrics_List_view]');
-              }
-            }),
+                ),
+              );
+            } else {
+              return Text('aconteceu um erro [Lyrics_List_view]');
+            }
+          },
+        ),
       ),
     );
   }
