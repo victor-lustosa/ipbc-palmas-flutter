@@ -19,9 +19,14 @@ class AppFonts {
     color: AppColors.white,
     fontSize: 29,
   );
-  static TextStyle? body = GoogleFonts.inter(
-    color: AppColors.darkGreen,
-    fontSize: 18,
+  static TextStyle? titleTile = GoogleFonts.inter(
+    fontWeight: FontWeight.w500,
+    color: const Color(0xFF444446),
+    fontSize: 15,
+  );
+  static TextStyle? subtitleTile = GoogleFonts.inter(
+    color: const Color(0xFF444446),
+    fontSize: 13,
   );
   static TextStyle? titleDrawer = GoogleFonts.inter(
     color: AppColors.darkGreen,
@@ -35,8 +40,23 @@ class AppFonts {
     color: Colors.black,
     fontSize: 16.5,
   );
+  static TextStyle? titleLyricView = GoogleFonts.inter(
+    color: const Color(0xFF363638),
+    fontWeight: FontWeight.w500,
+    fontSize: 20,
+  );
+  static TextStyle? headline = GoogleFonts.inter(
+    color: const Color(0xFF444446),
+    fontWeight: FontWeight.w500,
+    fontSize: 17,
+  );
   static TextStyle? h2 = GoogleFonts.inter(
     color: AppColors.black,
     fontSize: 25,
+  );
+  static TextStyle? bodyPlaceholder = GoogleFonts.inter(
+    color: const Color(0xFFAEAEB2),
+    fontWeight: FontWeight.w200,
+    fontSize: 12.5,
   );
 }

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import '../../shared/components/search-bar/search_bar_widget.dart';
+import '../../shared/configs/app_images.dart';
 import '../blocs/lyric_bloc.dart';
 import '../domain/entities/lyric_entity.dart';
 import '../../shared/components/side-bar/side_bar_widget.dart';
-import '../../shared/components/top-bar/top_bar_widget.dart';
 import '../../shared/configs/app_fonts.dart';
 import '../../shared/configs/app_colors.dart';
-import '../../shared/configs/app_icons.dart';
 import '../../shared/configs/app_routes.dart';
 
 class LyricsListView extends StatefulWidget {
@@ -21,7 +20,6 @@ class _LyricsListViewState extends State<LyricsListView>
     with TickerProviderStateMixin {
   late List<LyricEntity> lyricsFetched;
   late List<LyricEntity> lyricsFiltered;
-  late List<String> lettersCarousel;
   late List<String> drawerNames;
   late LyricBloc bloc;
   bool isSelected = false;
@@ -37,19 +35,12 @@ class _LyricsListViewState extends State<LyricsListView>
       'Dízimos e Ofertas',
       'Sociedades internas'
     ];
-    var aCode = 'A'.codeUnitAt(0);
-    var zCode = 'Z'.codeUnitAt(0);
-    lettersCarousel = List<String>.generate(
-      zCode - aCode + 1,
-      (index) => String.fromCharCode(aCode + index),
-    );
   }
 
   @override
   void initState() {
     lyricsFetched = [];
     lyricsFiltered = [];
-    lettersCarousel = [];
     fillLettersCarousel();
     bloc = context.read<LyricBloc>();
     bloc.add(GetLyricsEvent());
@@ -79,11 +70,13 @@ class _LyricsListViewState extends State<LyricsListView>
               );
             } else if (state is SuccessfullyFetchedLyricsState ||
                 state is SuccessfullyFilteredLyricsState) {
-              if (state is SuccessfullyFetchedLyricsState && selectedValue == '') {
+              if (state is SuccessfullyFetchedLyricsState &&
+                  selectedValue == '') {
                 lyricsFetched = state.entities;
                 lyricsFiltered = state.entities;
               } else {
-                if (state is SuccessfullyFilteredLyricsState && selectedValue != '') {
+                if (state is SuccessfullyFilteredLyricsState &&
+                    selectedValue != '') {
                   lyricsFiltered = state.entities;
                 } else {
                   lyricsFiltered = lyricsFetched;
@@ -101,200 +94,132 @@ class _LyricsListViewState extends State<LyricsListView>
                   },
                   child: Column(
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(
-                          bottom: 18,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 29,
+                          left: 0,
                         ),
-                        child: TopBarWidget(),
-                      ),
-                      Row(
-                        children: [
-                          /*Column(
-                              children: const [
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 8.0),
-                                  child: IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      size: 40,
-                                      Icons.navigate_before_rounded,
-                                      color: AppColors.black,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            /*Column(
+                                children: const [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        size: 40,
+                                        Icons.navigate_before_rounded,
+                                        color: AppColors.black,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),*/
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: 0,
-                              bottom: 18.0,
-                              left: 30,
+                                ],
+                              ),*/
+                            Text(
+                              "Músicas/Letras",
+                              style: AppFonts.titleLyricView,
                             ),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  height: 35,
-                                  width: 35,
-                                  child: SvgPicture.asset(
-                                    AppIcons.lyricsIconName,
-                                    color: AppColors.black,
-                                    matchTextDirection: true,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 9,
-                                  ),
-                                  child: Text(
-                                    "Músicas/Letras",
-                                    style: AppFonts.h2,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(
+                          left: 19,
+                          top: 45.0,
+                        ),
+                        child: SearchBarWidget(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                          bottom: 21.0,
+                          right: 136,
+                          top: 33.0,
                         ),
-                        child: SizedBox(
-                          height: 43,
-                          width: MediaQuery.of(context).size.width,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            itemCount: lettersCarousel.length,
-                            itemBuilder: (context, index) {
-                              return AnimatedContainer(
-                                duration: const Duration(milliseconds: 260),
-                                width:
-                                    lettersCarousel[index] == selectedValue && isSelected
-                                        ? 43
-                                        : 30,
-                                child: ElevatedButton(
-                                  onPressed: () => {
-                                    setState(
-                                      () {
-                                        if (!isSelected) {
-                                          selectedValue = lettersCarousel[index];
-                                          isSelected = true;
-                                          bloc.add(
-                                            LyricsFilterEvent(
-                                              letter: lettersCarousel[index],
-                                              lyrics: lyricsFetched,
-                                            ),
-                                          );
-                                        } else {
-                                          isSelected = false;
-                                          selectedValue = '';
-                                          lyricsFiltered = lyricsFetched;
-                                        }
-                                      },
-                                    ),
-                                  },
-                                  style: ButtonStyle(
-                                    overlayColor: MaterialStateProperty.all(
-                                      AppColors.darkGreen,
-                                    ),
-                                    elevation:
-                                        const MaterialStatePropertyAll(0),
-                                    shape: MaterialStateProperty.all(
-                                      const CircleBorder(),
-                                    ),
-                                    padding: MaterialStateProperty.all(
-                                      const EdgeInsets.all(0),
-                                    ),
-                                    backgroundColor: MaterialStateProperty.all(
-                                      lettersCarousel[index] == selectedValue && isSelected
-                                          ? AppColors.darkGreen
-                                          : AppColors.white,
-                                    ), // <-- Button color
+                        child: Text(
+                          "Adicionados recentemente",
+                          style: AppFonts.headline,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 15.0,
+                        ),
+                        child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: lyricsFiltered.length,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Container(
+                              /* decoration: BoxDecoration(
+                                  border: Border.all(
+                                width: 1,
+                                color: Colors.black,
+                              )),*/
+                              child: ListTile(
+                                contentPadding: const EdgeInsets.only(
+                                  bottom: 4,
+                                  top: 4,
+                                  left: 25,
+                                  right: 17,
+                                ),
+                                dense: true,
+                                minVerticalPadding: 0,
+                                minLeadingWidth: 0,
+                                horizontalTitleGap: 8,
+                                leading: ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(10),
                                   ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                  child: SizedBox(
+                                    width: 48,
+                                    height: 48,
+                                    child: Image.asset(
+                                      AppImages.userAvatar,
+                                    ),
+                                  ),
+                                ),
+                                title: Padding(
+                                  padding: const EdgeInsets.only(
+                                    bottom: 6.0,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Center(
-                                        child: Text(
-                                          lettersCarousel[index],
-                                          style: lettersCarousel[index] == selectedValue && isSelected
-                                              ? AppFonts.carouselGreen
-                                              : AppFonts.carouselWhite,
-                                        ),
+                                      Text(
+                                        lyricsFiltered[index].title,
+                                        style: AppFonts.titleTile,
                                       ),
                                     ],
                                   ),
                                 ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                      ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: lyricsFiltered.length,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                              left: 15,
-                              right: 15,
-                            ),
-                            child: Container(
-                              decoration: lyricsFiltered.length == index + 1 && lyricsFiltered.length > 1
-                                  ? const BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          width: 0.1,
-                                        ),
-                                      ),
-                                    )
-                                  : const BoxDecoration(
-                                      border: Border(
-                                        top: BorderSide(
-                                          width: 0.1,
-                                        ),
-                                        bottom: BorderSide(
-                                          width: 0.1,
-                                        ),
-                                      ),
+                                subtitle: Text(
+                                  lyricsFiltered[index].group,
+                                  style: AppFonts.subtitleTile,
+                                ),
+                                trailing: Container(
+                                  /*  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      width: 1,
+                                      color: Colors.orange,
                                     ),
-                              child: ListTile(
-                                title: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Text(
-                                          '${lyricsFiltered[index].title} - ${lyricsFiltered[index].group}',
-                                          style: AppFonts.body,
-                                        ),
-                                      ],
+                                  ),*/
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        AppRoutes.lyricRoute,
+                                        arguments: lyricsFiltered[index],
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      size: 39,
+                                      Icons.navigate_next_sharp,
+                                      color: AppColors.darkGreen,
                                     ),
-                                    Column(
-                                      children: [
-                                        SizedBox(
-                                          width: 35,
-                                          child: IconButton(
-                                            onPressed: () {
-                                              Navigator.pushNamed(
-                                                context,
-                                                AppRoutes.lyricRoute,
-                                                arguments: lyricsFiltered[index],
-                                              );
-                                            },
-                                            icon: const Icon(
-                                              size: 36,
-                                              Icons.navigate_next_outlined,
-                                              color: AppColors.darkGreen,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ],
+                                  ),
                                 ),
                                 onTap: () {
                                   Navigator.pushNamed(
@@ -304,16 +229,16 @@ class _LyricsListViewState extends State<LyricsListView>
                                   );
                                 },
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                     ],
                   ),
                 ),
               );
             } else {
-              return Text('aconteceu um erro [Lyrics_List_view]');
+              return const Text('aconteceu um erro [Lyrics_List_view]');
             }
           },
         ),
