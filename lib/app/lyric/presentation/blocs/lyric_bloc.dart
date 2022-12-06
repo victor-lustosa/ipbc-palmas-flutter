@@ -4,11 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ipbc_palmas/app/lyric/domain/use-cases/lyrics_use_cases.dart';
 
-import '../domain/entities/lyric_entity.dart';
-
-part 'lyric_event.dart';
-
-part 'lyric_state.dart';
+import '../../domain/entities/lyric_entity.dart';
 
 class LyricBloc extends Bloc<LyricEvent, LyricState> {
   final ILyricsUseCases lyricsUseCase;
@@ -43,4 +39,42 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
       SuccessfullyFilteredLyricsState(lyricsList),
     );
   }
+}
+@immutable
+abstract class LyricEvent {}
+
+class InitialEvent extends LyricEvent {
+  InitialEvent();
+}
+
+class GetLyricsEvent extends LyricEvent {
+  GetLyricsEvent();
+}
+
+class LyricsFilterEvent extends LyricEvent {
+  final String letter;
+  final List<LyricEntity> lyrics;
+  LyricsFilterEvent({required this.letter,required this.lyrics});
+}
+@immutable
+abstract class LyricState {}
+
+class InitialState extends LyricState {
+  InitialState();
+}
+
+class ExceptionLyricState extends LyricState {
+  final String message;
+
+  ExceptionLyricState(this.message);
+}
+
+class SuccessfullyFetchedLyricsState extends LyricState {
+  final List<LyricEntity> entities;
+  SuccessfullyFetchedLyricsState(this.entities);
+}
+
+class SuccessfullyFilteredLyricsState extends LyricState {
+  final List<LyricEntity> entities;
+  SuccessfullyFilteredLyricsState(this.entities);
 }

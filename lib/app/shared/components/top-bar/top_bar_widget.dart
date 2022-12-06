@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../configs/app_colors.dart';
-import '../../configs/app_icons.dart';
+import '../../configs/app_configs.dart';
+
 
 class TopBarWidget extends StatelessWidget {
   const TopBarWidget({super.key});

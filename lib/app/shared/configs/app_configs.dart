@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'app_colors.dart';
+
+class AppColors {
+  static const Color lightBlue = Color(0xFF5D9CFB);
+  static const Color lightRed = Color(0xFFD15858);
+  static const Color lightGreen = Color(0xFF4EB798);
+  static const Color darkGreen = Color(0xFF005B40);
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color black = Color(0xFF171717);
+  static const Color darkGrey = Color(0xFF5F5F5F);
+  static const Color lightGrey = Color(0xFFEBEBEB);
+  static const Color grey = Color(0xFFA3A3A3);
+  static const Color secondLightGrey = Color(0xFFF3F3F3);
+}
 
 class AppFonts {
   static TextStyle? subtitle = GoogleFonts.inter(
@@ -59,4 +71,25 @@ class AppFonts {
     fontWeight: FontWeight.w200,
     fontSize: 12.5,
   );
+}
+class AppIcons {
+  static const String lyricsIconName = 'assets/icons/lyrics.svg';
+  static const String logo = 'assets/icons/logo.svg';
+  static const String arrowBack = 'assets/icons/arrow_back_ios_new.svg';
+  static const String accountCircle = 'assets/icons/account_circle.svg';
+  static final sideBarIcons = [
+    'assets/icons/privacy_tip.svg',
+    'assets/icons/lyrics.svg',
+    'assets/icons/event.svg',
+    'assets/icons/play_circle.svg',
+    'assets/icons/book.svg',
+    'assets/icons/volunteer_activism.svg',
+    'assets/icons/group.svg',
+  ];
+}
+class AppImages {
+  static String get userAvatar => "assets/images/user_avatar.png";
+  static String get arrowBack => "assets/images/arrow_back_ios_new.png";
+  static String get lightLogo => "assets/images/light_logo.png";
+  static String get lightUnauthorizedLogo => "assets/images/light_unauthorized_logo.png";
 }

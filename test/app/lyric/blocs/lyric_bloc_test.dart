@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:bloc_test/bloc_test.dart';
 
-import 'package:ipbc_palmas/app/lyric/blocs/lyric_bloc.dart';
+import 'package:ipbc_palmas/app/lyric/presentation/blocs/lyric_bloc.dart';
 import 'package:ipbc_palmas/app/lyric/domain/use-cases/lyrics_use_cases.dart';
 
 import 'package:mocktail/mocktail.dart';

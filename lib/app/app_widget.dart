@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'lyric/lyric_module.dart';
 import 'shared/configs/no_glow_behavior.dart';
-import 'lyric/views/lyrics_list_view.dart';
-import 'shared/configs/app_colors.dart';
+import 'lyric/presentation/views/lyrics_list_view.dart';
+import 'shared/configs/app_configs.dart';
 import 'shared/configs/app_routes.dart';
 import 'package:provider/provider.dart';
 

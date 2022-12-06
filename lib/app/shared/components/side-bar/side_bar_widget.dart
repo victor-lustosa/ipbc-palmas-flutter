@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../configs/app_colors.dart';
-import '../../configs/app_fonts.dart';
-import '../../configs/app_icons.dart';
+import '../../configs/app_configs.dart';
+
 
 class SideBarWidget extends StatelessWidget {
   final List<String> drawerNames;

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../shared/components/search-bar/search_bar_widget.dart';
-import '../../shared/configs/app_images.dart';
+import '../../../shared/components/search-bar/search_bar_widget.dart';
+import '../../../shared/configs/app_configs.dart';
 import '../blocs/lyric_bloc.dart';
-import '../domain/entities/lyric_entity.dart';
-import '../../shared/components/side-bar/side_bar_widget.dart';
-import '../../shared/configs/app_fonts.dart';
-import '../../shared/configs/app_colors.dart';
-import '../../shared/configs/app_routes.dart';
+import '../../domain/entities/lyric_entity.dart';
+import '../../../shared/components/side-bar/side_bar_widget.dart';
+
+import '../../../shared/configs/app_routes.dart';
 
 class LyricsListView extends StatefulWidget {
   const LyricsListView({super.key});

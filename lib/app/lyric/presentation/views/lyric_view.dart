@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ipbc_palmas/app/shared/components/top-bar/top_bar_widget.dart';
 
-import '../../shared/configs/app_colors.dart';
-import '../../shared/configs/app_fonts.dart';
-import '../../shared/configs/app_icons.dart';
-import '../domain/entities/lyric_entity.dart';
+import '../../../shared/configs/app_configs.dart';
+import '../../domain/entities/lyric_entity.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 
