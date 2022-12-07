@@ -48,6 +48,10 @@ class AppFonts {
     color: Colors.black,
     fontSize: 16.7,
   );
+  static TextStyle? selectedBottomNav = GoogleFonts.inter(
+    color: AppColors.darkGreen,
+    fontSize: 12,
+  );
   static TextStyle? lyricTile = GoogleFonts.inter(
     color: Colors.black,
     fontSize: 16.5,
@@ -76,6 +80,8 @@ class AppIcons {
   static const String lyricsIconName = 'assets/icons/lyrics.svg';
   static const String logo = 'assets/icons/logo.svg';
   static const String arrowBack = 'assets/icons/arrow_back_ios_new.svg';
+  static const String home = 'assets/icons/home.svg';
+  static const String volunteerActivism = 'assets/icons/volunteer_activism.svg';
   static const String accountCircle = 'assets/icons/account_circle.svg';
   static final sideBarIcons = [
     'assets/icons/privacy_tip.svg',
