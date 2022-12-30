@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../configs/app_configs.dart';
-import '../circle-avatar/circle_avatar_widget.dart';
+import '../../../shared/configs/app_configs.dart';
+import '../../../shared/components/circle-avatar/circle_avatar_widget.dart';
 
 class TopBarWidget extends StatelessWidget {
   const TopBarWidget({super.key});

@@ -1,15 +1,10 @@
 //import 'dart:io';
 
 import 'package:flutter/cupertino.dart' hide CupertinoTabBar, CupertinoTabScaffold;
-import 'package:ipbc_palmas/app/shared/components/top-bar/top_bar_widget.dart';
-//import '../../shared/components/bottom_bar/custom_bottom_tab_bar.dart';
-//import '../../shared/components/bottom_bar/custom_tab_scaffold.dart';
+import '../../core/layout/top-bar/top_bar_widget.dart';
 import 'package:flutter/material.dart';
-//import 'package:ipbc_palmas/app/lyric/presentation/views/lyric_view.dart';
-//import 'package:ipbc_palmas/app/lyric/presentation/views/lyrics_list_view.dart';
-import 'package:ipbc_palmas/app/shared/configs/app_configs.dart';
+import '../../shared/configs/app_configs.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
-//import '../../lyric/infra/models/lyric_model.dart';
 import '../../lyric/presentation/blocs/lyric_bloc.dart';
 import '../../shared/components/carousel/carousel_widget.dart';
 import '../../shared/configs/app_routes.dart';
