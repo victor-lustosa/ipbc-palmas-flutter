@@ -7,6 +7,7 @@ class AppColors {
   static const Color lightGreen = Color(0xFF4EB798);
   static const Color darkGreen = Color(0xFF005B40);
   static const Color white = Color(0xFFFFFFFF);
+  static const Color darkBlue = Color(0xFF007AFF);
   static const Color black = Color(0xFF171717);
   static const Color darkGrey = Color(0xFF5F5F5F);
   static const Color lightGrey = Color(0xFFEBEBEB);
@@ -18,6 +19,14 @@ class AppFonts {
   static TextStyle? subtitle = GoogleFonts.inter(
     fontSize: 15,
     color: Colors.black45,
+  );
+  static TextStyle? headHome = GoogleFonts.inter(
+    fontSize: 22,
+    color: AppColors.black,
+  );
+  static TextStyle? subHeadHome = GoogleFonts.inter(
+    fontSize: 15,
+    color: const Color(0xFF545456),
   );
   static TextStyle? title = GoogleFonts.inter(
     color: AppColors.darkGreen,
@@ -94,6 +103,8 @@ class AppIcons {
   ];
 }
 class AppImages {
+  static String get manha => "https://firebasestorage.googleapis.com/v0/b/ipbc-palmas.appspot.com/o/manha.png?alt=media&token=7324ea8f-fac5-4c9b-ba89-bbfa7906c27a";
+  static String get noite => "https://firebasestorage.googleapis.com/v0/b/ipbc-palmas.appspot.com/o/noite.png?alt=media&token=b4c89d89-659e-497c-b4ae-67a0d0a2d731";
   static String get userAvatar => "assets/images/user_avatar.png";
   static String get arrowBack => "assets/images/arrow_back_ios_new.png";
   static String get lightLogo => "assets/images/light_logo.png";

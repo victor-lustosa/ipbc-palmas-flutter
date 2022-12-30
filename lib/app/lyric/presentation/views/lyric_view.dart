@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/shared/components/top-bar/top_bar_widget.dart';
-
 import '../../../shared/configs/app_configs.dart';
 import '../../domain/entities/lyric_entity.dart';
 
@@ -19,12 +17,6 @@ class LyricView extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.only(
-                  bottom: 12,
-                ),
-                child: TopBarWidget(),
-              ),
               Column(
                 children: [
                   Row(

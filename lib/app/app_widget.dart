@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home/views/home_view.dart';
 import 'lyric/lyric_module.dart';
+import 'lyric/presentation/views/weekday_lyrics_list_view.dart';
 import 'shared/configs/no_glow_behavior.dart';
 import 'lyric/presentation/views/lyrics_list_view.dart';
 import 'shared/configs/app_configs.dart';
@@ -28,7 +29,7 @@ class AppWidget extends StatelessWidget {
         theme: ThemeData(
           primaryColor: AppColors.white,
         ),
-        home: const HomeView(),
+        home: WeekdayLyricsListView(),
         initialRoute: "/",
         onGenerateRoute: AppRoutes.onGenerateRoute,
         debugShowCheckedModeBanner: false,
