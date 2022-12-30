@@ -76,7 +76,7 @@ class WeekdayLyricsListView extends StatelessWidget {
                         child: NextButtonWidget(
                             route: AppRoutes.lyricRoute,
                             arguments: weekdayLyrics[index],
-                         color:AppColors.darkGreen)
+                         color:AppColors.white)
                       ),
                       onTap: () {
                         Navigator.pushNamed(
