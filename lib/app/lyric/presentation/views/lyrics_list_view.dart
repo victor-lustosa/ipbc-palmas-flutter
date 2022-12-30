@@ -198,7 +198,8 @@ class _LyricsListViewState extends State<LyricsListView>
                                 ),*/
                                 child: NextButtonWidget(
                                     route:AppRoutes.lyricRoute,
-                                    arguments: lyricsFiltered[index])
+                                    arguments: lyricsFiltered[index],
+                                    color:AppColors.darkGreen)
                               ),
                               onTap: () {
                                 Navigator.pushNamed(

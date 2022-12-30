@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../configs/app_configs.dart';
 
 class NextButtonWidget extends StatelessWidget {
-  const NextButtonWidget({Key? key, required this.route, this.arguments}) : super(key: key);
+   const NextButtonWidget({Key? key, required this.route, this.arguments, this.color}) : super(key: key);
   final String route;
   final Color? color;
   final dynamic arguments;
@@ -15,7 +14,7 @@ class NextButtonWidget extends StatelessWidget {
           arguments: arguments,
         );
       },
-      icon: const Icon(
+      icon: Icon(
         size: 39,
         Icons.navigate_next_sharp,
         color: color,
