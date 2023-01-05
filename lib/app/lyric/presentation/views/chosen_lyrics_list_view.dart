@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/layout/top-bar/top_bar_widget.dart';
+import '../../../shared/layout/top-bar/top_bar_widget.dart';
 
 import '../../../shared/components/back-button/back_button_widget.dart';
 import '../../../shared/components/next-button/next_button_widget.dart';

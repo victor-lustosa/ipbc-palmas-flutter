@@ -6,7 +6,7 @@ import '../../../shared/components/search-bar/search_bar_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../blocs/lyric_bloc.dart';
 import '../../domain/entities/lyric_entity.dart';
-import '../../../core/layout/side-bar/side_bar_widget.dart';
+import '../../../shared/layout/side-bar/side_bar_widget.dart';
 
 import '../components/lyrics_list_widget.dart';
 
