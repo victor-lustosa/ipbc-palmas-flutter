@@ -1,7 +1,7 @@
 //import 'dart:io';
 
 import 'package:flutter/cupertino.dart' hide CupertinoTabBar, CupertinoTabScaffold;
-import '../../shared/layout/top-bar/top_bar_widget.dart';
+import '../../shared/layout/top-bar/main_top_bar_widget.dart';
 import 'package:flutter/material.dart';
 import '../../shared/configs/app_configs.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
@@ -47,7 +47,7 @@ class _HomeViewState extends State<HomeView> {
       body: SafeArea(
         child: Column(
           children: [
-            const TopBarWidget(),
+            const MainTopBarWidget(),
             Padding(
               padding: const EdgeInsets.only(
                 top: 28,

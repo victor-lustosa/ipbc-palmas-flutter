@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../shared/components/back-button/back_button_widget.dart';
 import '../../../shared/components/next-button/next_button_widget.dart';
-import '../../../shared/layout/top-bar/top_bar_widget.dart';
+import '../../../shared/layout/top-bar/main_top_bar_widget.dart';
 
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
@@ -17,7 +17,7 @@ class WeekdayLyricsListView extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const TopBarWidget(),
+            const MainTopBarWidget(),
             const Padding(
               padding: EdgeInsets.only(top: 10.0),
               child: Align(

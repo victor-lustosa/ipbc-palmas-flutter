@@ -57,6 +57,16 @@ class AppFonts {
     color: Colors.black,
     fontSize: 16.7,
   );
+  static TextStyle? body2 = GoogleFonts.inter(
+    color: Colors.black,
+    fontWeight: FontWeight.w500,
+    fontSize: 17,
+  );
+  static TextStyle? botao = GoogleFonts.inter(
+    color: Colors.black,
+    fontWeight: FontWeight.w600,
+    fontSize: 18,
+  );
   static TextStyle? selectedBottomNav = GoogleFonts.inter(
     color: AppColors.darkGreen,
     fontSize: 12,
@@ -66,6 +76,11 @@ class AppFonts {
     fontSize: 16.5,
   );
   static TextStyle? titleLyricView = GoogleFonts.inter(
+    color: const Color(0xFF363638),
+    fontWeight: FontWeight.w500,
+    fontSize: 20,
+  );
+  static TextStyle? title3 = GoogleFonts.inter(
     color: const Color(0xFF363638),
     fontWeight: FontWeight.w500,
     fontSize: 20,

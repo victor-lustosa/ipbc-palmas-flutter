@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../shared/layout/top-bar/top_bar_widget.dart';
+import 'package:ipbc_palmas/app/shared/layout/top-bar/main_top_bar_widget.dart';
 
 import '../../../shared/components/back-button/back_button_widget.dart';
 import '../../../shared/components/next-button/next_button_widget.dart';
@@ -29,7 +29,7 @@ class ChosenLyricsListView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const TopBarWidget(),
+            const MainTopBarWidget(),
             const Padding(
               padding: EdgeInsets.only(top: 10.0),
               child: Align(

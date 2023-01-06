@@ -4,8 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/components/circle-avatar/circle_avatar_widget.dart';
 
-class TopBarWidget extends StatelessWidget {
-  const TopBarWidget({super.key});
+class MainTopBarWidget extends StatelessWidget {
+  const MainTopBarWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
