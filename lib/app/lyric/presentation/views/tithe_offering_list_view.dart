@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-import '../../../shared/components/back-button/back_button_widget.dart';
-import '../../../shared/components/circle-avatar/circle_avatar_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/layout/top-bar/title_top_bar_widget.dart';
 
@@ -18,35 +14,37 @@ class TitheOfferingListView extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            TitleTopBarWidget(title: "Dizimos e Ofertas"),
+            const TitleTopBarWidget(title: "Dízimos e Ofertas"),
             Padding(
-              padding: const EdgeInsets.only(top: 24.0),
-              child: Align(
-                alignment: const Alignment(-0.81, 0),
-                child: Text(
-                  "Dados bancários",
-                  style: AppFonts.title3,
-                ),
+              padding: const EdgeInsets.only(top: 24.0, left: 16),
+              child: Row(
+                children: [
+                  Text(
+                    "Dados bancários",
+                    style: AppFonts.title3,
+                  ),
+                ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 24.0),
-              child: Align(
-                alignment: const Alignment(-0.875, 0),
-                child: Text(
-                  "Pix",
-                  style: AppFonts.headline,
-                ),
+              padding: const EdgeInsets.only(top: 24.0, left: 16),
+              child: Row(
+                children: [
+                  Text(
+                    "Pix",
+                    style: AppFonts.headline,
+                  ),
+                ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 16.45),
+              padding: const EdgeInsets.only(top: 16.45, left: 16, right: 16),
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
                 child: Container(
                   height: 50,
-                  width: 350,
-                  decoration: BoxDecoration(color: AppColors.secondLightGrey),
+                  width: 720,
+                  decoration: const BoxDecoration(color: AppColors.secondLightGrey),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -69,23 +67,25 @@ class TitheOfferingListView extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 24.0),
-              child: Align(
-                alignment: const Alignment(-0.70, 0),
-                child: Text(
-                  "Igreja Presbiteriana de Palmas",
-                  style: AppFonts.body2,
-                ),
+              padding: const EdgeInsets.only(top: 24.0, left: 16),
+              child: Row(
+                children: [
+                  Text(
+                    "Igreja Presbiteriana de Palmas",
+                    style: AppFonts.body2,
+                  ),
+                ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 24.0),
-              child: Align(
-                alignment: const Alignment(-0.85, 0),
-                child: Text(
-                  "Banco do Brasil",
-                  style: AppFonts.body2,
-                ),
+              padding: const EdgeInsets.only(top: 24.0, left: 16),
+              child: Row(
+                children: [
+                  Text(
+                    "Banco do Brasil",
+                    style: AppFonts.body2,
+                  ),
+                ],
               ),
             ),
             Padding(
@@ -94,7 +94,7 @@ class TitheOfferingListView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 24.0),
+                    padding: const EdgeInsets.only(left: 16.0),
                     child: Text(
                       "Ag: 3962-4",
                       style: AppFonts.body2,
