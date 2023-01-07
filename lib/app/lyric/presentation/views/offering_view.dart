@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/layout/top-bar/title_top_bar_widget.dart';
 
-class TitheOfferingListView extends StatelessWidget {
-  const TitheOfferingListView({super.key});
+class OfferingView extends StatelessWidget {
+  const OfferingView({super.key});
 
   final String cnpj = "38.136.701/0001-25";
 
@@ -13,28 +13,21 @@ class TitheOfferingListView extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const TitleTopBarWidget(title: "Dízimos e Ofertas"),
             Padding(
               padding: const EdgeInsets.only(top: 24.0, left: 16),
-              child: Row(
-                children: [
-                  Text(
-                    "Dados bancários",
-                    style: AppFonts.title3,
-                  ),
-                ],
+              child: Text(
+                "Dados bancários",
+                style: AppFonts.title3,
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 24.0, left: 16),
-              child: Row(
-                children: [
-                  Text(
-                    "Pix",
-                    style: AppFonts.headline,
-                  ),
-                ],
+              child: Text(
+                "Pix",
+                style: AppFonts.headline,
               ),
             ),
             Padding(
@@ -44,7 +37,8 @@ class TitheOfferingListView extends StatelessWidget {
                 child: Container(
                   height: 50,
                   width: 720,
-                  decoration: const BoxDecoration(color: AppColors.secondLightGrey),
+                  decoration:
+                      const BoxDecoration(color: AppColors.secondLightGrey),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -68,24 +62,16 @@ class TitheOfferingListView extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 24.0, left: 16),
-              child: Row(
-                children: [
-                  Text(
-                    "Igreja Presbiteriana de Palmas",
-                    style: AppFonts.body2,
-                  ),
-                ],
+              child: Text(
+                "Igreja Presbiteriana de Palmas",
+                style: AppFonts.body2,
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 24.0, left: 16),
-              child: Row(
-                children: [
-                  Text(
-                    "Banco do Brasil",
-                    style: AppFonts.body2,
-                  ),
-                ],
+              child: Text(
+                "Banco do Brasil",
+                style: AppFonts.body2,
               ),
             ),
             Padding(

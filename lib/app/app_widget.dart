@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'home/views/home_view.dart';
 import 'lyric/lyric_module.dart';
 import 'lyric/presentation/views/chosen_lyrics_list_view.dart';
-import 'lyric/presentation/views/tithe_offering_list_view.dart';
-import 'lyric/presentation/views/weekday_lyrics_list_view.dart';
+import 'lyric/presentation/views/offering_view.dart';
 import 'shared/configs/no_glow_behavior.dart';
 import 'lyric/presentation/views/lyrics_list_view.dart';
 import 'shared/configs/app_configs.dart';
@@ -31,7 +30,7 @@ class AppWidget extends StatelessWidget {
         theme: ThemeData(
           primaryColor: AppColors.white,
         ),
-        home:  const TitheOfferingListView(),
+        home: const OfferingView(),
         initialRoute: "/",
         onGenerateRoute: AppRoutes.onGenerateRoute,
         debugShowCheckedModeBanner: false,
