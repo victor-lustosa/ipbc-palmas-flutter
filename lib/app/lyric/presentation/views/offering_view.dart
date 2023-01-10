@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/layout/top-bar/title_top_bar_widget.dart';
+import '../view-models/clipboard.dart';
 
 class OfferingView extends StatelessWidget {
   const OfferingView({super.key});
@@ -52,7 +53,9 @@ class OfferingView extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(right: 3),
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                             ClipboardViewModel.copy(cnpj);
+                            },
                             icon: const Icon(Icons.content_copy_rounded)),
                       )
                     ],
