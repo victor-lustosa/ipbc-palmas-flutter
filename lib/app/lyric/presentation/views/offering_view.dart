@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 
+
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/layout/top-bar/title_top_bar_widget.dart';
-import '../view-models/clipboard.dart';
+import '../../../shared/mixins/clipboard_mixin.dart';
 
-class OfferingView extends StatelessWidget {
+class OfferingView extends StatefulWidget with ClipboardMixin {
   const OfferingView({super.key});
 
+  @override
+  State<OfferingView> createState() => _OfferingViewState();
+}
+
+class _OfferingViewState extends State<OfferingView> with ClipboardMixin {
   final String cnpj = "38.136.701/0001-25";
 
   @override
@@ -54,7 +60,7 @@ class OfferingView extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 3),
                         child: IconButton(
                             onPressed: () {
-                             ClipboardViewModel.copy(cnpj);
+                             ClipboardMixin.copy(cnpj);
                             },
                             icon: const Icon(Icons.content_copy_rounded)),
                       )

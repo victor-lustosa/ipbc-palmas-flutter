@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 
-class ClipboardViewModel {
-  ClipboardViewModel._();
+mixin ClipboardMixin {
 
   static Future<void> copy(String value) async {
     await Clipboard.setData(ClipboardData(
