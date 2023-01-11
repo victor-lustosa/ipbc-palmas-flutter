@@ -1,19 +1,16 @@
 import 'package:flutter/services.dart';
 
 mixin ClipboardMixin {
-
-  static Future<void> copy(String value) async {
-    await Clipboard.setData(ClipboardData(
-      text: value
-    ));
+  Future<void> copy(String value) async {
+    await Clipboard.setData(ClipboardData(text: value));
   }
 
-  static Future<String> paste() async {
-    final ClipboardData = await Clipboard.getData(Clipboard.kTextPlain);
-    return ClipboardData?.text ?? '';
+  Future<String> paste() async {
+    final clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
+    return clipboardData?.text ?? '';
   }
 
-  static Future<bool> hasData() async {
+  Future<bool> hasData() async {
     return Clipboard.hasStrings();
   }
 }

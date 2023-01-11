@@ -1,6 +1,6 @@
 //import 'dart:io';
 
-import 'package:flutter/cupertino.dart' hide CupertinoTabBar, CupertinoTabScaffold;
+//import 'package:flutter/cupertino.dart' hide CupertinoTabBar, CupertinoTabScaffold;
 import '../../shared/layout/top-bar/main_top_bar_widget.dart';
 import 'package:flutter/material.dart';
 import '../../shared/configs/app_configs.dart';
@@ -100,7 +100,9 @@ class _HomeViewState extends State<HomeView> {
                 style: AppFonts.subHeadHome,
               ),
             ),
-            Carousel(images: [AppImages.manha, AppImages.noite],)
+            Carousel(
+              images: [AppImages.manha, AppImages.noite],
+            )
           ],
         ),
       ),
