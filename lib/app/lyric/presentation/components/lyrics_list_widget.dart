@@ -4,12 +4,13 @@ import 'package:ipbc_palmas/app/lyric/domain/entities/lyric_entity.dart';
 import '../../../shared/components/next-button/next_button_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
+
 class LyricsListWidget extends StatelessWidget {
-  const LyricsListWidget({Key? key, required this.lyricsList}) : super(key: key);
- final List<LyricEntity> lyricsList;
+  const LyricsListWidget({Key? key, required this.lyricsList})
+      : super(key: key);
+  final List<LyricEntity> lyricsList;
   @override
   Widget build(BuildContext context) {
-
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
@@ -44,8 +45,7 @@ class LyricsListWidget extends StatelessWidget {
               bottom: 6.5,
             ),
             child: Row(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   lyricsList[index].title,
@@ -59,17 +59,16 @@ class LyricsListWidget extends StatelessWidget {
             style: AppFonts.subtitleTile,
           ),
           trailing: Container(
-            /*  decoration: BoxDecoration(
+              /*  decoration: BoxDecoration(
                                   border: Border.all(
                                     width: 1,
                                     color: Colors.orange,
                                   ),
                                 ),*/
               child: NextButtonWidget(
-                  route:AppRoutes.lyricRoute,
+                  route: AppRoutes.lyricRoute,
                   arguments: lyricsList[index],
-                  color:AppColors.darkGreen)
-          ),
+                  color: AppColors.darkGreen)),
           onTap: () {
             Navigator.pushNamed(
               context,

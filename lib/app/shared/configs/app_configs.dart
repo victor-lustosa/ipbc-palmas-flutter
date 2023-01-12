@@ -5,6 +5,7 @@ class AppColors {
   static const Color lightBlue = Color(0xFF5D9CFB);
   static const Color lightRed = Color(0xFFD15858);
   static const Color lightGreen = Color(0xFF4EB798);
+    static const Color tooltipGreen = Color(0xFF00E8A2);
   static const Color darkGreen = Color(0xFF005B40);
   static const Color white = Color(0xFFFFFFFF);
   static const Color darkBlue = Color(0xFF007AFF);

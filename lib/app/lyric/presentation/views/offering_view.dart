@@ -4,10 +4,16 @@ import '../../../shared/configs/app_configs.dart';
 import '../../../shared/layout/top-bar/title_top_bar_widget.dart';
 import '../../../shared/mixins/clipboard_mixin.dart';
 
-class OfferingView extends StatelessWidget with ClipboardMixin {
+class OfferingView extends StatefulWidget {
   const OfferingView({super.key});
 
+  @override
+  State<OfferingView> createState() => _OfferingViewState();
+}
+
+class _OfferingViewState extends State<OfferingView> with ClipboardMixin {
   final String cnpj = "38.136.701/0001-25";
+  final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
 
   @override
   Widget build(BuildContext context) {
@@ -52,11 +58,26 @@ class OfferingView extends StatelessWidget with ClipboardMixin {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 3),
-                        child: IconButton(
-                            onPressed: () {
-                              copy(cnpj);
-                            },
-                            icon: const Icon(Icons.content_copy_rounded)),
+                        child: Tooltip(
+                            message: "copiado!",
+                            textStyle: AppFonts.body2,
+                            key: tooltipkey,
+                            triggerMode: TooltipTriggerMode.manual,
+                            showDuration: const Duration(seconds: 1),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: AppColors.tooltipGreen,
+                            ),
+                            preferBelow: false,
+                            child: IconButton(
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                                onPressed: () {
+                                  copy(cnpj);
+                                  tooltipkey.currentState
+                                      ?.ensureTooltipVisible();
+                                },
+                                icon: const Icon(Icons.content_copy_rounded))),
                       )
                     ],
                   ),
