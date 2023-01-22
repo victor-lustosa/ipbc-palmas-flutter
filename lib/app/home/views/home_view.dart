@@ -1,11 +1,14 @@
-//import 'dart:io';
+import 'dart:io';
 
-//import 'package:flutter/cupertino.dart' hide CupertinoTabBar, CupertinoTabScaffold;
+import 'package:ipbc_palmas/app/lyric/presentation/views/offering_view.dart';
+
+import '../../lyric/presentation/views/lyrics_list_view.dart';
+import '../../shared/layout/bottom-bar/cupertino-bottom-bar-widget.dart';
+import '../../shared/layout/bottom-bar/material-bottom-bar-widget.dart';
 import '../../shared/layout/top-bar/main_top_bar_widget.dart';
 import 'package:flutter/material.dart';
 import '../../shared/configs/app_configs.dart';
-//import 'package:flutter_svg/flutter_svg.dart';
-import '../../lyric/presentation/blocs/lyric_bloc.dart';
+//import '../../lyric/presentation/blocs/lyric_bloc.dart';
 import '../../shared/components/carousel/carousel_widget.dart';
 import '../../shared/configs/app_routes.dart';
 
@@ -17,7 +20,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  late final LyricBloc _bloc;
+  //late final LyricBloc _bloc;
   int selectedIndex = 0;
   final pageViewController = PageController();
 
@@ -45,68 +48,48 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
-        child: Column(
+        child: PageView(
+          controller: pageViewController,
           children: [
-            const MainTopBarWidget(),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 28,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 17.0,
-                      top: 2,
-                    ),
-                    child: Text(
-                      "Músicas",
-                      style: AppFonts.headHome,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      bottom: 10.0,
-                      right: 0,
-                    ),
-                    child: SizedBox(
-                      height: 30,
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.pushNamed(
-                            context,
-                            AppRoutes.lyricRoute,
-                          );
-                        },
-                        icon: const Icon(
-                          size: 32,
-                          Icons.navigate_next_sharp,
-                          color: AppColors.darkGreen,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            Container(
+              decoration: const BoxDecoration(color: AppColors.white),
+              child: const Text("Home"),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 18.0,
-                top: 3,
-              ),
-              child: Text(
-                "Acompanhe as letras das músicas cantadas no culto.",
-                style: AppFonts.subHeadHome,
-              ),
+            const LyricsListView(),
+            Container(
+              decoration: const BoxDecoration(color: AppColors.white),
+              child: const OfferingView(),
             ),
-            Carousel(
-              images: [AppImages.manha, AppImages.noite],
-            )
           ],
         ),
       ),
       extendBody: true,
+      bottomNavigationBar: AnimatedBuilder(
+        animation: pageViewController,
+        builder: (context, child) {
+          return Platform.isIOS
+              ? CupertinoBottomBarWidget(
+                  selectedIndex: selectedIndex,
+                  callback: (int index) {
+                    setState(
+                      () {
+                        onItemTapped(index);
+                      },
+                    );
+                  },
+                )
+              : MaterialBottomBarWidget(
+                  selectedIndex: selectedIndex,
+                  callback: (int index) {
+                    setState(
+                      () {
+                        onItemTapped(index);
+                      },
+                    );
+                  },
+                );
+        },
+      ),
     );
   }
 }

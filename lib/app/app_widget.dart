@@ -30,7 +30,7 @@ class AppWidget extends StatelessWidget {
         theme: ThemeData(
           primaryColor: AppColors.white,
         ),
-        home: const OfferingView(),
+        home: const HomeView(),
         initialRoute: "/",
         onGenerateRoute: AppRoutes.onGenerateRoute,
         debugShowCheckedModeBanner: false,

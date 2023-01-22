@@ -15,10 +15,10 @@ class TitleTopBarWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Padding(
+          /*const Padding(
             padding: EdgeInsets.only(left: 11.0),
             child: BackButtonWidget(),
-          ),
+          ),*/
           Padding(
             padding: const EdgeInsets.only(left: 50.0),
             child: Text(
