@@ -70,8 +70,8 @@ class _OfferingViewState extends State<OfferingView> with ClipboardMixin {
                             ),
                             preferBelow: false,
                             child: IconButton(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
                                 onPressed: () {
                                   copy(cnpj);
                                   tooltipkey.currentState

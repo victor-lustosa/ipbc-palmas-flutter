@@ -94,15 +94,7 @@ class _LyricsListViewState extends State<LyricsListView>
                     },
                     child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 17),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              TitleTopBarWidget(title: "Músicas/Letras"),
-                            ],
-                          ),
-                        ),
+                        const TitleTopBarWidget(title: "Músicas/Letras"),
                         /* const Padding(
                           padding: EdgeInsets.only(
                             left: 19,
