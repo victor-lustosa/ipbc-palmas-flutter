@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../configs/app_configs.dart';
-import '../bottom-bar/custom_bottom_tab_bar.dart';
-import '../bottom-bar/custom_tab_scaffold.dart';
+import '../../../configs/app_configs.dart';
+import 'custom_bottom_tab_bar.dart';
+import 'custom_tab_scaffold.dart';
 
 class CupertinoBottomBarWidget extends StatefulWidget {
   int selectedIndex;

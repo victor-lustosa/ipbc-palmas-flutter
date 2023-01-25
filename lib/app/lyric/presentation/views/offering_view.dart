@@ -24,23 +24,30 @@ class _OfferingViewState extends State<OfferingView> with ClipboardMixin {
           children: [
             const TitleTopBarWidget(title: "Dízimos e Ofertas"),
             Padding(
-              padding: const EdgeInsets.only(top: 24.0, left: 16),
+              padding: const EdgeInsets.only(top: 42.0, left: 16),
               child: Text(
                 "Dados bancários",
                 style: AppFonts.title3,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 24.0, left: 16),
+              padding: const EdgeInsets.only(top: 25.0, left: 16),
               child: Text(
                 "Pix",
                 style: AppFonts.headline,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 16.45, left: 16, right: 16),
+              padding: const EdgeInsets.only(
+                top: 16,
+                bottom: 6,
+                left: 16,
+                right: 16,
+              ),
               child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(16)),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(16),
+                ),
                 child: Container(
                   height: 50,
                   width: 720,
@@ -85,21 +92,21 @@ class _OfferingViewState extends State<OfferingView> with ClipboardMixin {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 24.0, left: 16),
+              padding: const EdgeInsets.only(top: 26.0, left: 16),
               child: Text(
                 "Igreja Presbiteriana de Palmas",
                 style: AppFonts.body2,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 24.0, left: 16),
+              padding: const EdgeInsets.only(top: 15.0, left: 16),
               child: Text(
                 "Banco do Brasil",
                 style: AppFonts.body2,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 24),
+              padding: const EdgeInsets.only(top: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

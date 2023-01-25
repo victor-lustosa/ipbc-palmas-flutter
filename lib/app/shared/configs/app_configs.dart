@@ -5,7 +5,7 @@ class AppColors {
   static const Color lightBlue = Color(0xFF5D9CFB);
   static const Color lightRed = Color(0xFFD15858);
   static const Color lightGreen = Color(0xFF4EB798);
-    static const Color tooltipGreen = Color(0xFF00E8A2);
+  static const Color tooltipGreen = Color(0xFF00E8A2);
   static const Color darkGreen = Color(0xFF005B40);
   static const Color white = Color(0xFFFFFFFF);
   static const Color darkBlue = Color(0xFF007AFF);
@@ -69,8 +69,7 @@ class AppFonts {
     fontSize: 18,
   );
   static TextStyle? selectedBottomNav = GoogleFonts.inter(
-    color: AppColors.darkGreen,
-    fontSize: 12,
+    fontSize: 10,
   );
   static TextStyle? lyricTile = GoogleFonts.inter(
     color: Colors.black,
@@ -101,6 +100,7 @@ class AppFonts {
     fontSize: 12.5,
   );
 }
+
 class AppIcons {
   static const String lyricsIconName = 'assets/icons/lyrics.svg';
   static const String logo = 'assets/icons/logo.svg';
@@ -118,11 +118,15 @@ class AppIcons {
     'assets/icons/group.svg',
   ];
 }
+
 class AppImages {
-  static String get manha => "https://firebasestorage.googleapis.com/v0/b/ipbc-palmas.appspot.com/o/manha.png?alt=media&token=7324ea8f-fac5-4c9b-ba89-bbfa7906c27a";
-  static String get noite => "https://firebasestorage.googleapis.com/v0/b/ipbc-palmas.appspot.com/o/noite.png?alt=media&token=b4c89d89-659e-497c-b4ae-67a0d0a2d731";
+  static String get manha =>
+      "https://firebasestorage.googleapis.com/v0/b/ipbc-palmas.appspot.com/o/manha.png?alt=media&token=7324ea8f-fac5-4c9b-ba89-bbfa7906c27a";
+  static String get noite =>
+      "https://firebasestorage.googleapis.com/v0/b/ipbc-palmas.appspot.com/o/noite.png?alt=media&token=b4c89d89-659e-497c-b4ae-67a0d0a2d731";
   static String get userAvatar => "assets/images/user_avatar.png";
   static String get arrowBack => "assets/images/arrow_back_ios_new.png";
   static String get lightLogo => "assets/images/light_logo.png";
-  static String get lightUnauthorizedLogo => "assets/images/light_unauthorized_logo.png";
+  static String get lightUnauthorizedLogo =>
+      "assets/images/light_unauthorized_logo.png";
 }

@@ -1,5 +1,5 @@
 # IPBC palmas
-
+![alt text](https://github.com/victor-lustosa/ipbc-palmas-flutter/blob/develop/docs/IPB-banner.png)
 Projeto de aplicativo para a Igreja Presbiteriana Central de Palmas, e futuramente aplicativo genérico para igrejas.
 
 ## Getting Started
@@ -14,5 +14,5 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-# ipbc-palmas
+# Arquitetura do projeto
 ![alt text](https://github.com/victor-lustosa/ipbc-palmas-flutter/blob/develop/docs/frontend-ipb.png)

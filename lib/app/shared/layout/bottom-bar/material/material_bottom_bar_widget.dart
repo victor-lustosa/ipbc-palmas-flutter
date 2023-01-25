@@ -1,15 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../configs/app_configs.dart';
+import '../../../configs/app_configs.dart';
+import '../navegation_button_widget.dart';
 
 class MaterialBottomBarWidget extends StatefulWidget {
-  int selectedIndex;
+  final int selectedIndex;
 
   final Function(int) callback;
 
-  MaterialBottomBarWidget(
+  const MaterialBottomBarWidget(
       {Key? key, required this.selectedIndex, required this.callback})
       : super(key: key);
 
@@ -41,7 +41,7 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget> {
           topRight: Radius.circular(24.0),
         ),
         child: BottomNavigationBar(
-          selectedFontSize: 12,
+          selectedFontSize: 10,
           elevation: 10,
           currentIndex: widget.selectedIndex,
           unselectedLabelStyle: AppFonts.selectedBottomNav,
@@ -52,67 +52,43 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: widget.selectedIndex == 0
-                  ? SizedBox(
-                      width: 25,
-                      height: 25,
-                      child: SvgPicture.asset(
-                        color: AppColors.darkGreen,
-                        AppIcons.home,
-                        matchTextDirection: true,
-                      ),
+                  ? const NavegationButtonWidget(
+                      iconName: AppIcons.home,
+                      size: 23,
+                      color: AppColors.darkGreen,
                     )
-                  : SizedBox(
-                      width: 25,
-                      height: 25,
-                      child: SvgPicture.asset(
-                        color: AppColors.grey,
-                        AppIcons.home,
-                        matchTextDirection: true,
-                      ),
+                  : const NavegationButtonWidget(
+                      iconName: AppIcons.home,
+                      size: 23,
+                      color: AppColors.grey,
                     ),
               label: 'Home',
             ),
             BottomNavigationBarItem(
               icon: widget.selectedIndex == 1
-                  ? SizedBox(
-                      width: 25,
-                      height: 25,
-                      child: SvgPicture.asset(
-                        color: AppColors.darkGreen,
-                        AppIcons.lyricsIconName,
-                        matchTextDirection: true,
-                      ),
+                  ? const NavegationButtonWidget(
+                      iconName: AppIcons.lyricsIconName,
+                      size: 23,
+                      color: AppColors.darkGreen,
                     )
-                  : SizedBox(
-                      width: 25,
-                      height: 25,
-                      child: SvgPicture.asset(
-                        color: AppColors.grey,
-                        AppIcons.lyricsIconName,
-                        matchTextDirection: true,
-                      ),
+                  : const NavegationButtonWidget(
+                      iconName: AppIcons.lyricsIconName,
+                      size: 23,
+                      color: AppColors.grey,
                     ),
               label: 'Músicas',
             ),
             BottomNavigationBarItem(
               icon: widget.selectedIndex == 2
-                  ? SizedBox(
-                      width: 25,
-                      height: 25,
-                      child: SvgPicture.asset(
-                        color: AppColors.darkGreen,
-                        AppIcons.volunteerActivism,
-                        matchTextDirection: true,
-                      ),
+                  ? const NavegationButtonWidget(
+                      iconName: AppIcons.volunteerActivism,
+                      size: 23,
+                      color: AppColors.darkGreen,
                     )
-                  : SizedBox(
-                      width: 25,
-                      height: 25,
-                      child: SvgPicture.asset(
-                        color: AppColors.grey,
-                        AppIcons.volunteerActivism,
-                        matchTextDirection: true,
-                      ),
+                  : const NavegationButtonWidget(
+                      iconName: AppIcons.volunteerActivism,
+                      size: 23,
+                      color: AppColors.grey,
                     ),
               label: 'Ofertas',
             ),
