@@ -1,19 +1,20 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/cupertino.dart'
     hide CupertinoTabBar, CupertinoTabScaffold;
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:ipbc_palmas/app/lyric/presentation/views/lyrics_list_view.dart';
+import 'package:ipbc_palmas/app/lyric/presentation/views/offering_view.dart';
+import 'package:ipbc_palmas/app/lyric/presentation/views/weekday_lyrics_list_view.dart';
 import '../../../configs/app_configs.dart';
+import '../navegation_button_widget.dart';
 import 'custom_bottom_tab_bar.dart';
 import 'custom_tab_scaffold.dart';
 
 class CupertinoBottomBarWidget extends StatefulWidget {
-  int selectedIndex;
+  final int selectedIndex;
 
   final Function(int) callback;
 
-  CupertinoBottomBarWidget({
+  const CupertinoBottomBarWidget({
     Key? key,
     required this.selectedIndex,
     required this.callback,
@@ -32,101 +33,79 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget> {
         currentIndex: widget.selectedIndex,
         activeColor: AppColors.darkGreen,
         backgroundColor: AppColors.white,
-        items: [
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: widget.selectedIndex == 0
-                ? SizedBox(
-                    width: 25,
-                    height: 25,
-                    child: SvgPicture.asset(
-                      color: AppColors.darkGreen,
-                      AppIcons.home,
-                      matchTextDirection: true,
-                    ),
-                  )
-                : SizedBox(
-                    width: 25,
-                    height: 25,
-                    child: SvgPicture.asset(
-                      color: AppColors.grey,
-                      AppIcons.home,
-                      matchTextDirection: true,
-                    ),
-                  ),
+            activeIcon: NavegationButtonWidget(
+              iconName: AppIcons.home,
+              color: AppColors.darkGreen,
+            ),
+            icon: NavegationButtonWidget(
+              iconName: AppIcons.home,
+              color: AppColors.grey,
+            ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: widget.selectedIndex == 1
-                ? SizedBox(
-                    width: 25,
-                    height: 25,
-                    child: SvgPicture.asset(
-                      color: AppColors.darkGreen,
-                      AppIcons.lyricsIconName,
-                      matchTextDirection: true,
-                    ),
-                  )
-                : SizedBox(
-                    width: 25,
-                    height: 25,
-                    child: SvgPicture.asset(
-                      color: AppColors.grey,
-                      AppIcons.lyricsIconName,
-                      matchTextDirection: true,
-                    ),
-                  ),
+            activeIcon: NavegationButtonWidget(
+              iconName: AppIcons.lyricsIconName,
+              color: AppColors.darkGreen,
+            ),
+            icon: NavegationButtonWidget(
+              iconName: AppIcons.lyricsIconName,
+              color: AppColors.grey,
+            ),
             label: 'Músicas',
           ),
           BottomNavigationBarItem(
-            icon: widget.selectedIndex == 2
-                ? SizedBox(
-                    width: 25,
-                    height: 25,
-                    child: SvgPicture.asset(
-                      color: AppColors.darkGreen,
-                      AppIcons.volunteerActivism,
-                      matchTextDirection: true,
-                    ),
-                  )
-                : SizedBox(
-                    width: 25,
-                    height: 25,
-                    child: SvgPicture.asset(
-                      color: AppColors.grey,
-                      AppIcons.volunteerActivism,
-                      matchTextDirection: true,
-                    ),
-                  ),
+            activeIcon: NavegationButtonWidget(
+              iconName: AppIcons.volunteerActivism,
+              color: AppColors.darkGreen,
+            ),
+            icon: NavegationButtonWidget(
+              iconName: AppIcons.volunteerActivism,
+              color: AppColors.grey,
+            ),
             label: 'Ofertas',
           ),
         ],
       ),
       tabBuilder: (context, index) {
-        return CupertinoTabView(
-          routes: {
-            //'p2': (context) => PageTwo(),
-          },
-          builder: (context) {
-            return CupertinoPageScaffold(
-              child: Center(
-                child: Column(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(
-                          () {
-                            widget.callback(widget.selectedIndex);
-                          },
-                        );
-                      },
-                      child: Text('Next Page'),
+        switch (index) {
+          case 0:
+            return CupertinoTabView(
+              builder: (context) {
+                return CupertinoPageScaffold(
+                    navigationBar: const CupertinoNavigationBar(
+                      backgroundColor: Color(0xFFFFFFFF),
                     ),
-                  ],
-                ),
-              ),
+                    child: WeekdayLyricsListView());
+              },
             );
-          },
-        );
+          case 1:
+            return CupertinoTabView(
+              builder: (_) {
+                return const CupertinoPageScaffold(
+                    navigationBar: CupertinoNavigationBar(
+                      backgroundColor: Color(0xFFFFFFFF),
+                    ),
+                    child: LyricsListView());
+              },
+            );
+          case 2:
+            return CupertinoTabView(
+              builder: (context) {
+                return const CupertinoPageScaffold(
+                    navigationBar: CupertinoNavigationBar(
+                      backgroundColor: Color(0xFFFFFFFF),
+                    ),
+                    child: OfferingView());
+              },
+            );
+          default:
+            return Center(
+              child: Text('Pagina nao encontrada'),
+            );
+        }
       },
     );
   }

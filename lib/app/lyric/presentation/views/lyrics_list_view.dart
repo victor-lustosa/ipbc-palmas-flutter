@@ -102,14 +102,16 @@ class _LyricsListViewState extends State<LyricsListView>
                           ),
                           child: SearchBarWidget(),
                         ),*/
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: 136,
-                            top: 33.0,
-                          ),
-                          child: Text(
-                            "Adicionados recentemente",
-                            style: AppFonts.headline,
+                        Align(
+                          alignment: const Alignment(-0.8, 0),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 33.0,
+                            ),
+                            child: Text(
+                              "Adicionados recentemente",
+                              style: AppFonts.headline,
+                            ),
                           ),
                         ),
                         Padding(

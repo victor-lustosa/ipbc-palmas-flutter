@@ -10,6 +10,7 @@ class NextButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      iconSize: 39,
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onPressed: () {
@@ -20,7 +21,6 @@ class NextButtonWidget extends StatelessWidget {
         );
       },
       icon: Icon(
-        size: 39,
         Icons.navigate_next_sharp,
         color: color,
       ),

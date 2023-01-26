@@ -1,16 +1,14 @@
 import 'dart:io';
 
 import 'package:ipbc_palmas/app/lyric/presentation/views/offering_view.dart';
+import 'package:ipbc_palmas/app/lyric/presentation/views/weekday_lyrics_list_view.dart';
 
 import '../../lyric/presentation/views/lyrics_list_view.dart';
-import '../../shared/layout/bottom-bar/cupertino-bottom-bar-widget.dart';
-import '../../shared/layout/bottom-bar/material-bottom-bar-widget.dart';
-import '../../shared/layout/top-bar/main_top_bar_widget.dart';
+import '../../shared/layout/bottom-bar/cupertino/cupertino_bottom_bar_widget.dart';
+import '../../shared/layout/bottom-bar/material/material_bottom_bar_widget.dart';
 import 'package:flutter/material.dart';
 import '../../shared/configs/app_configs.dart';
 //import '../../lyric/presentation/blocs/lyric_bloc.dart';
-import '../../shared/components/carousel/carousel_widget.dart';
-import '../../shared/configs/app_routes.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -51,15 +49,9 @@ class _HomeViewState extends State<HomeView> {
         child: PageView(
           controller: pageViewController,
           children: [
-            Container(
-              decoration: const BoxDecoration(color: AppColors.white),
-              child: const Text("Home"),
-            ),
+            WeekdayLyricsListView(),
             const LyricsListView(),
-            Container(
-              decoration: const BoxDecoration(color: AppColors.white),
-              child: const OfferingView(),
-            ),
+            const OfferingView(),
           ],
         ),
       ),

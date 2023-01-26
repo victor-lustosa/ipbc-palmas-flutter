@@ -19,12 +19,9 @@ class TitleTopBarWidget extends StatelessWidget {
             padding: EdgeInsets.only(left: 11.0),
             child: BackButtonWidget(),
           ),*/
-          Padding(
-            padding: const EdgeInsets.only(left: 0.0),
-            child: Text(
-              title,
-              style: AppFonts.titleLyricView,
-            ),
+          Text(
+            title,
+            style: AppFonts.titleLyricView,
           ),
           // const Padding(
           //   padding: EdgeInsets.only(left: 4.0),

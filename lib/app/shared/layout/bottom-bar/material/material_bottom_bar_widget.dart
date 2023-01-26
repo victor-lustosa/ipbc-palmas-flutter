@@ -22,17 +22,20 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 56,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(24), topLeft: Radius.circular(24)),
+          topRight: Radius.circular(24),
+          topLeft: Radius.circular(24),
+        ),
         boxShadow: [
           BoxShadow(
-              color: Colors.grey.withOpacity(0.4),
-              offset: const Offset(1, 2),
-              spreadRadius: 3,
-              blurRadius: 7,
-              blurStyle: BlurStyle.outer),
+            color: Colors.grey.withOpacity(0.4),
+            offset: const Offset(1, 2),
+            spreadRadius: 3,
+            blurRadius: 7,
+            blurStyle: BlurStyle.outer,
+          ),
         ],
       ),
       child: ClipRRect(
@@ -41,55 +44,44 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget> {
           topRight: Radius.circular(24.0),
         ),
         child: BottomNavigationBar(
-          selectedFontSize: 10,
-          elevation: 10,
           currentIndex: widget.selectedIndex,
           unselectedLabelStyle: AppFonts.selectedBottomNav,
           selectedLabelStyle: AppFonts.selectedBottomNav,
           selectedItemColor: AppColors.darkGreen,
           unselectedItemColor: AppColors.grey,
           backgroundColor: AppColors.white,
-          items: <BottomNavigationBarItem>[
+          items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: widget.selectedIndex == 0
-                  ? const NavegationButtonWidget(
-                      iconName: AppIcons.home,
-                      size: 23,
-                      color: AppColors.darkGreen,
-                    )
-                  : const NavegationButtonWidget(
-                      iconName: AppIcons.home,
-                      size: 23,
-                      color: AppColors.grey,
-                    ),
+              activeIcon: NavegationButtonWidget(
+                iconName: AppIcons.home,
+                color: AppColors.darkGreen,
+              ),
+              icon: NavegationButtonWidget(
+                iconName: AppIcons.home,
+                color: AppColors.grey,
+              ),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: widget.selectedIndex == 1
-                  ? const NavegationButtonWidget(
-                      iconName: AppIcons.lyricsIconName,
-                      size: 23,
-                      color: AppColors.darkGreen,
-                    )
-                  : const NavegationButtonWidget(
-                      iconName: AppIcons.lyricsIconName,
-                      size: 23,
-                      color: AppColors.grey,
-                    ),
+              activeIcon: NavegationButtonWidget(
+                iconName: AppIcons.lyricsIconName,
+                color: AppColors.darkGreen,
+              ),
+              icon: NavegationButtonWidget(
+                iconName: AppIcons.lyricsIconName,
+                color: AppColors.grey,
+              ),
               label: 'Músicas',
             ),
             BottomNavigationBarItem(
-              icon: widget.selectedIndex == 2
-                  ? const NavegationButtonWidget(
-                      iconName: AppIcons.volunteerActivism,
-                      size: 23,
-                      color: AppColors.darkGreen,
-                    )
-                  : const NavegationButtonWidget(
-                      iconName: AppIcons.volunteerActivism,
-                      size: 23,
-                      color: AppColors.grey,
-                    ),
+              activeIcon: NavegationButtonWidget(
+                iconName: AppIcons.volunteerActivism,
+                color: AppColors.darkGreen,
+              ),
+              icon: NavegationButtonWidget(
+                iconName: AppIcons.volunteerActivism,
+                color: AppColors.grey,
+              ),
               label: 'Ofertas',
             ),
           ],

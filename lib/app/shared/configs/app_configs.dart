@@ -22,11 +22,11 @@ class AppFonts {
     color: Colors.black45,
   );
   static TextStyle? headHome = GoogleFonts.inter(
-    fontSize: 22,
+    fontSize: 24,
     color: AppColors.black,
   );
   static TextStyle? subHeadHome = GoogleFonts.inter(
-    fontSize: 15,
+    fontSize: 16,
     color: const Color(0xFF545456),
   );
   static TextStyle? title = GoogleFonts.inter(
@@ -43,8 +43,8 @@ class AppFonts {
   );
   static TextStyle? titleTile = GoogleFonts.inter(
     fontWeight: FontWeight.w500,
-    color: const Color(0xFF444446),
-    fontSize: 15,
+    color: AppColors.white,
+    fontSize: 18,
   );
   static TextStyle? subtitleTile = GoogleFonts.inter(
     color: const Color(0xFF444446),
@@ -69,7 +69,7 @@ class AppFonts {
     fontSize: 18,
   );
   static TextStyle? selectedBottomNav = GoogleFonts.inter(
-    fontSize: 10,
+    fontSize: 11,
   );
   static TextStyle? lyricTile = GoogleFonts.inter(
     color: Colors.black,
