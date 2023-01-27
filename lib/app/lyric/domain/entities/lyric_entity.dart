@@ -4,6 +4,7 @@ class LyricEntity {
   final String id;
   final String title;
   final String group;
+  final String albumCover;
   final List<VerseEntity> verses;
 
   @override
@@ -12,7 +13,8 @@ class LyricEntity {
   }
 
   LyricEntity(
-      {required this.id,
+      {required this.albumCover,
+      required this.id,
       required this.title,
       required this.group,
       required this.verses});

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart'
 import 'package:ipbc_palmas/app/lyric/presentation/views/lyrics_list_view.dart';
 import 'package:ipbc_palmas/app/lyric/presentation/views/offering_view.dart';
 import 'package:ipbc_palmas/app/lyric/presentation/views/weekday_lyrics_list_view.dart';
+import 'package:ipbc_palmas/app/shared/configs/app_routes.dart';
 import '../../../configs/app_configs.dart';
 import '../navegation_button_widget.dart';
 import 'custom_bottom_tab_bar.dart';
@@ -73,6 +74,7 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget> {
         switch (index) {
           case 0:
             return CupertinoTabView(
+              onGenerateRoute: AppRoutes.onGenerateRoute,
               builder: (context) {
                 return CupertinoPageScaffold(
                     navigationBar: const CupertinoNavigationBar(
@@ -82,25 +84,19 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget> {
               },
             );
           case 1:
-            return CupertinoTabView(
-              builder: (_) {
-                return const CupertinoPageScaffold(
-                    navigationBar: CupertinoNavigationBar(
-                      backgroundColor: Color(0xFFFFFFFF),
-                    ),
-                    child: LyricsListView());
-              },
-            );
+            return const CupertinoPageScaffold(
+                navigationBar: CupertinoNavigationBar(
+                  backgroundColor: Color(0xFFFFFFFF),
+                ),
+                child: LyricsListView());
+
           case 2:
-            return CupertinoTabView(
-              builder: (context) {
-                return const CupertinoPageScaffold(
-                    navigationBar: CupertinoNavigationBar(
-                      backgroundColor: Color(0xFFFFFFFF),
-                    ),
-                    child: OfferingView());
-              },
-            );
+            return const CupertinoPageScaffold(
+                navigationBar: CupertinoNavigationBar(
+                  backgroundColor: Color(0xFFFFFFFF),
+                ),
+                child: OfferingView());
+
           default:
             return Center(
               child: Text('Pagina nao encontrada'),

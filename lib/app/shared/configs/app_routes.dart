@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ipbc_palmas/app/lyric/domain/entities/lyric_entity.dart';
 import 'package:ipbc_palmas/app/lyric/presentation/views/lyric_view.dart';
@@ -22,14 +25,36 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const HomeView());
 
       case lyricsRoute:
-        return MaterialPageRoute(builder: (_) => const LyricsListView());
-
+        if (Platform.isIOS) {
+          return CupertinoPageRoute(
+              builder: (_) => const CupertinoPageScaffold(
+                    navigationBar: CupertinoNavigationBar(
+                      backgroundColor: Colors.white,
+                    ),
+                    child: LyricsListView(),
+                  ));
+        } else {
+          return MaterialPageRoute(builder: (_) => const LyricsListView());
+        }
       case lyricRoute:
-        return MaterialPageRoute(
-          builder: (_) => LyricView(
-            lyricEntity: (routeSettings.arguments as LyricEntity),
-          ),
-        );
+        if (Platform.isIOS) {
+          return CupertinoPageRoute(
+            builder: (_) => CupertinoPageScaffold(
+              navigationBar: const CupertinoNavigationBar(
+                backgroundColor: Colors.white,
+              ),
+              child: LyricView(
+                lyricEntity: (routeSettings.arguments as LyricEntity),
+              ),
+            ),
+          );
+        } else {
+          return MaterialPageRoute(
+            builder: (_) => LyricView(
+              lyricEntity: (routeSettings.arguments as LyricEntity),
+            ),
+          );
+        }
 
       default:
         return _unknownRoute();

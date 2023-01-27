@@ -11,7 +11,7 @@ class TitleTopBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 36),
+      padding: const EdgeInsets.only(top: 37),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -21,7 +21,7 @@ class TitleTopBarWidget extends StatelessWidget {
           ),*/
           Text(
             title,
-            style: AppFonts.titleLyricView,
+            style: AppFonts.titleLyricsView,
           ),
           // const Padding(
           //   padding: EdgeInsets.only(left: 4.0),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ipbc_palmas/app/shared/components/back-button/back_button_widget.dart';
 import '../../../shared/configs/app_configs.dart';
+import '../../../shared/configs/app_routes.dart';
 import '../../domain/entities/lyric_entity.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,23 +23,10 @@ class LyricView extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Column(
-                        children: [
-                          SizedBox(
-                            width: 45,
-                            height: 45,
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: const Icon(
-                                size: 47,
-                                Icons.navigate_before_sharp,
-                                color: AppColors.darkGreen,
-                              ),
-                            ),
-                          ),
-                        ],
+                      const BackButtonWidget(
+                        color: AppColors.darkGreen,
+                        size: 30,
+                        router: AppRoutes.lyricsRoute,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(

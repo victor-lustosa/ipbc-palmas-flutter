@@ -106,17 +106,17 @@ class _LyricsListViewState extends State<LyricsListView>
                           alignment: const Alignment(-0.8, 0),
                           child: Padding(
                             padding: const EdgeInsets.only(
-                              top: 33.0,
+                              top: 40.0,
                             ),
                             child: Text(
                               "Adicionados recentemente",
-                              style: AppFonts.headline,
+                              style: AppFonts.headlineLyrics,
                             ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
-                            top: 15.0,
+                            top: 27.0,
                           ),
                           child: LyricsListWidget(
                             lyricsList: lyricsFiltered,

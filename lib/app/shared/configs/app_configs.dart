@@ -44,11 +44,16 @@ class AppFonts {
   static TextStyle? titleTile = GoogleFonts.inter(
     fontWeight: FontWeight.w500,
     color: AppColors.white,
-    fontSize: 18,
+    fontSize: 19,
+  );
+  static TextStyle? lyricsTitleTile = GoogleFonts.inter(
+    fontWeight: FontWeight.w500,
+    color: const Color(0xFF444446),
+    fontSize: 17,
   );
   static TextStyle? subtitleTile = GoogleFonts.inter(
     color: const Color(0xFF444446),
-    fontSize: 13,
+    fontSize: 14,
   );
   static TextStyle? titleDrawer = GoogleFonts.inter(
     color: AppColors.darkGreen,
@@ -80,6 +85,11 @@ class AppFonts {
     fontWeight: FontWeight.w500,
     fontSize: 20,
   );
+  static TextStyle? titleLyricsView = GoogleFonts.inter(
+    color: const Color(0xFF363638),
+    fontWeight: FontWeight.w500,
+    fontSize: 23,
+  );
   static TextStyle? title3 = GoogleFonts.inter(
     color: const Color(0xFF363638),
     fontWeight: FontWeight.w500,
@@ -89,6 +99,11 @@ class AppFonts {
     color: const Color(0xFF444446),
     fontWeight: FontWeight.w500,
     fontSize: 17,
+  );
+  static TextStyle? headlineLyrics = GoogleFonts.inter(
+    color: const Color(0xFF444446),
+    fontWeight: FontWeight.w500,
+    fontSize: 19,
   );
   static TextStyle? h2 = GoogleFonts.inter(
     color: AppColors.black,
@@ -103,6 +118,7 @@ class AppFonts {
 
 class AppIcons {
   static const String lyricsIconName = 'assets/icons/lyrics.svg';
+
   static const String logo = 'assets/icons/logo.svg';
   static const String arrowBack = 'assets/icons/arrow_back_ios_new.svg';
   static const String home = 'assets/icons/home.svg';
@@ -120,6 +136,11 @@ class AppIcons {
 }
 
 class AppImages {
+  static final listImagesWeekday = [
+    'https://firebasestorage.googleapis.com/v0/b/ipbc-palmas.appspot.com/o/sabado.png?alt=media&token=47031ae5-09e4-4f97-8353-ad14f180b7e2',
+    'https://firebasestorage.googleapis.com/v0/b/ipbc-palmas.appspot.com/o/domingo-manha.jpg?alt=media&token=0b63d49b-2f61-4e47-a42a-5ab023d84874',
+    'https://firebasestorage.googleapis.com/v0/b/ipbc-palmas.appspot.com/o/domingo-noite.png?alt=media&token=4ac77e89-c72a-40ef-9c23-6cc38d002ced'
+  ];
   static String get manha =>
       "https://firebasestorage.googleapis.com/v0/b/ipbc-palmas.appspot.com/o/manha.png?alt=media&token=7324ea8f-fac5-4c9b-ba89-bbfa7906c27a";
   static String get noite =>

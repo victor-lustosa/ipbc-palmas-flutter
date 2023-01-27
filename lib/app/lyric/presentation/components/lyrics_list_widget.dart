@@ -11,7 +11,12 @@ class LyricsListWidget extends StatelessWidget {
   final List<LyricEntity> lyricsList;
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.separated(
+      separatorBuilder: (BuildContext context, int index) {
+        return const SizedBox(
+          height: 12,
+        );
+      },
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       itemCount: lyricsList.length,
@@ -19,37 +24,39 @@ class LyricsListWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         return ListTile(
           contentPadding: const EdgeInsets.only(
-            top: 4,
-            bottom: 4,
             left: 25,
-            right: 17,
+            right: 8,
           ),
           dense: true,
           minVerticalPadding: 0,
           minLeadingWidth: 0,
           horizontalTitleGap: 8,
-          leading: ClipRRect(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(12),
-            ),
-            child: SizedBox(
-              width: 50,
-              height: 50,
-              child: Image.asset(
-                AppImages.userAvatar,
+          leading: Container(
+            //  decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(11),
+              ),
+              child: SizedBox(
+                width: 50,
+                height: 80,
+                child: Image.network(
+                  fit: BoxFit.fill,
+                  lyricsList[index].albumCover,
+                ),
               ),
             ),
           ),
           title: Padding(
             padding: const EdgeInsets.only(
-              bottom: 6.5,
+              bottom: 6,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   lyricsList[index].title,
-                  style: AppFonts.titleTile,
+                  style: AppFonts.lyricsTitleTile,
                 ),
               ],
             ),
@@ -58,17 +65,12 @@ class LyricsListWidget extends StatelessWidget {
             lyricsList[index].group,
             style: AppFonts.subtitleTile,
           ),
-          trailing: Container(
-              /*  decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 1,
-                                    color: Colors.orange,
-                                  ),
-                                ),*/
-              child: NextButtonWidget(
-                  route: AppRoutes.lyricRoute,
-                  arguments: lyricsList[index],
-                  color: AppColors.darkGreen)),
+          trailing: NextButtonWidget(
+              size: 32,
+              width: 58,
+              route: AppRoutes.lyricRoute,
+              arguments: lyricsList[index],
+              color: AppColors.darkGreen),
           onTap: () {
             Navigator.pushNamed(
               context,
