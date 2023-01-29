@@ -1,8 +1,7 @@
 import 'dart:io';
 
+import 'package:ipbc_palmas/app/home/views/weekdays_lyrics_routers.dart';
 import 'package:ipbc_palmas/app/lyric/presentation/views/offering_view.dart';
-import 'package:ipbc_palmas/app/lyric/presentation/views/weekday_lyrics_list_view.dart';
-
 import '../../lyric/presentation/views/lyrics_list_view.dart';
 import '../../shared/layout/bottom-bar/cupertino/cupertino_bottom_bar_widget.dart';
 import '../../shared/layout/bottom-bar/material/material_bottom_bar_widget.dart';
@@ -20,7 +19,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   //late final LyricBloc _bloc;
   int selectedIndex = 0;
-  final pageViewController = PageController();
+  final pageViewController = PageController(initialPage: 0);
 
   @override
   void initState() {
@@ -49,7 +48,7 @@ class _HomeViewState extends State<HomeView> {
         child: PageView(
           controller: pageViewController,
           children: [
-            WeekdayLyricsListView(),
+            const WeekdaysLyricsRouters(),
             const LyricsListView(),
             OfferingView(),
           ],
@@ -59,7 +58,9 @@ class _HomeViewState extends State<HomeView> {
       bottomNavigationBar: AnimatedBuilder(
         animation: pageViewController,
         builder: (context, child) {
-          switch (pageViewController.page?.toInt()) {
+          switch (pageViewController.hasClients
+              ? pageViewController.page?.toInt()
+              : pageViewController.initialPage) {
             case 0:
               selectedIndex = 0;
               break;

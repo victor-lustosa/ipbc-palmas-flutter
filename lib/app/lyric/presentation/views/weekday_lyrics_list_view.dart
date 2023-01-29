@@ -95,13 +95,16 @@ class WeekdayLyricsListView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return Container(
                       decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(18),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(18),
+                        ),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage(
+                            AppImages.listImagesWeekday[index],
                           ),
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage(
-                                  AppImages.listImagesWeekday[index]))),
+                        ),
+                      ),
                       child: ListTile(
                         contentPadding: const EdgeInsets.only(
                           top: 13,
@@ -121,10 +124,7 @@ class WeekdayLyricsListView extends StatelessWidget {
                         ),
                         onTap: () {
                           Navigator.pushNamed(
-                            context,
-                            AppRoutes.lyricRoute,
-                            arguments: weekdayLyrics[index],
-                          );
+                              context, AppRoutes.chosenLyricsRoute);
                         },
                       ),
                     );

@@ -5,13 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:ipbc_palmas/app/lyric/domain/entities/lyric_entity.dart';
 import 'package:ipbc_palmas/app/lyric/presentation/views/lyric_view.dart';
 
-import '../../home/views/home_view.dart';
-import '../../lyric/presentation/views/lyrics_list_view.dart';
-
 class AppRoutes {
   static const String initialRoute = "/";
-  static const String homeRoute = "/home";
-  static const String lyricsRoute = "/lyrics";
+  static const String chosenLyricsRoute = "/chosen-lyrics";
   static const String lyricRoute = "/lyric-view";
 
   static Route<dynamic>? onGenerateRoute(RouteSettings routeSettings) {

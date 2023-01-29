@@ -26,7 +26,6 @@ class LyricView extends StatelessWidget {
                       const BackButtonWidget(
                         color: AppColors.darkGreen,
                         size: 30,
-                        router: AppRoutes.lyricsRoute,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(

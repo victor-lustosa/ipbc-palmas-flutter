@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/shared/configs/app_routes.dart';
 import 'package:ipbc_palmas/app/shared/layout/top-bar/main_top_bar_widget.dart';
 
 import '../../../shared/components/back-button/back_button_widget.dart';
@@ -18,18 +17,21 @@ class ChosenLyricsListView extends StatelessWidget {
         title: "Vim para adorar-te",
         group: "Vineyard",
         verses: [],
-        albumCover: ''),
+        albumCover:
+            'http://coverartarchive.org/release/ce82afc5-f866-400e-adcd-4a23c01dd877/4433492734-500.jpg'),
     LyricEntity(
         id: "1",
         title: "Redenção",
         group: 'Projeto Sola',
         verses: [],
-        albumCover: ''),
+        albumCover:
+            'http://coverartarchive.org/release/ce82afc5-f866-400e-adcd-4a23c01dd877/4433492734-500.jpg'),
     LyricEntity(
         id: "2",
         title: "Oh quão lindo esse nome é",
         group: 'Ana Nóbrega',
-        albumCover: '',
+        albumCover:
+            'http://coverartarchive.org/release/ce82afc5-f866-400e-adcd-4a23c01dd877/4433492734-500.jpg',
         verses: [])
   ];
 
@@ -48,7 +50,6 @@ class ChosenLyricsListView extends StatelessWidget {
                 child: BackButtonWidget(
                   color: AppColors.darkGreen,
                   size: 30,
-                  router: AppRoutes.homeRoute,
                 ),
               ),
             ),
