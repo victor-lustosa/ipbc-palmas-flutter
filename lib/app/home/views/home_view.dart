@@ -51,7 +51,7 @@ class _HomeViewState extends State<HomeView> {
           children: [
             WeekdayLyricsListView(),
             const LyricsListView(),
-            const OfferingView(),
+            OfferingView(),
           ],
         ),
       ),
@@ -59,6 +59,19 @@ class _HomeViewState extends State<HomeView> {
       bottomNavigationBar: AnimatedBuilder(
         animation: pageViewController,
         builder: (context, child) {
+          switch (pageViewController.page?.toInt()) {
+            case 0:
+              selectedIndex = 0;
+              break;
+            case 1:
+              selectedIndex = 1;
+              break;
+            case 2:
+              selectedIndex = 2;
+              break;
+            default:
+              break;
+          }
           return Platform.isIOS
               ? CupertinoBottomBarWidget(
                   selectedIndex: selectedIndex,

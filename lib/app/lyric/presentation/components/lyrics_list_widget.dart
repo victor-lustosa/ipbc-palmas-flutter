@@ -11,75 +11,85 @@ class LyricsListWidget extends StatelessWidget {
   final List<LyricEntity> lyricsList;
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      separatorBuilder: (BuildContext context, int index) {
-        return const SizedBox(
-          height: 12,
-        );
-      },
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: lyricsList.length,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        return ListTile(
-          contentPadding: const EdgeInsets.only(
-            left: 25,
-            right: 8,
-          ),
-          dense: true,
-          minVerticalPadding: 0,
-          minLeadingWidth: 0,
-          horizontalTitleGap: 8,
-          leading: Container(
-            //  decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-            child: ClipRRect(
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.93,
+      child: ListView.separated(
+        separatorBuilder: (BuildContext context, int index) {
+          return const SizedBox(
+            height: 12,
+          );
+        },
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: lyricsList.length,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          return Container(
+            decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(
-                Radius.circular(11),
-              ),
-              child: SizedBox(
-                width: 50,
-                height: 80,
-                child: Image.network(
-                  fit: BoxFit.fill,
-                  lyricsList[index].albumCover,
-                ),
+                Radius.circular(18),
               ),
             ),
-          ),
-          title: Padding(
-            padding: const EdgeInsets.only(
-              bottom: 6,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  lyricsList[index].title,
-                  style: AppFonts.lyricsTitleTile,
+            child: ListTile(
+              contentPadding: const EdgeInsets.only(
+                left: 8,
+                right: 0,
+              ),
+              dense: true,
+              minVerticalPadding: 0,
+              minLeadingWidth: 0,
+              horizontalTitleGap: 8,
+              leading: Container(
+                //  decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(11),
+                  ),
+                  child: SizedBox(
+                    width: 50,
+                    height: 80,
+                    child: Image.network(
+                      fit: BoxFit.fill,
+                      lyricsList[index].albumCover,
+                    ),
+                  ),
                 ),
-              ],
+              ),
+              title: Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 6,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      lyricsList[index].title,
+                      style: AppFonts.lyricsTitleTile,
+                    ),
+                  ],
+                ),
+              ),
+              subtitle: Text(
+                lyricsList[index].group,
+                style: AppFonts.subtitleTile,
+              ),
+              trailing: NextButtonWidget(
+                  size: 32,
+                  width: 48,
+                  route: AppRoutes.lyricRoute,
+                  arguments: lyricsList[index],
+                  color: AppColors.darkGreen),
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  AppRoutes.lyricRoute,
+                  arguments: lyricsList[index],
+                );
+              },
             ),
-          ),
-          subtitle: Text(
-            lyricsList[index].group,
-            style: AppFonts.subtitleTile,
-          ),
-          trailing: NextButtonWidget(
-              size: 32,
-              width: 58,
-              route: AppRoutes.lyricRoute,
-              arguments: lyricsList[index],
-              color: AppColors.darkGreen),
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              AppRoutes.lyricRoute,
-              arguments: lyricsList[index],
-            );
-          },
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

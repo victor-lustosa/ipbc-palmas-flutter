@@ -32,16 +32,16 @@ class BackButtonWidget extends StatelessWidget {
                 color: color,
                 CupertinoIcons.chevron_back,
               ),
-              onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                  context, AppRoutes.lyricsRoute, ModalRoute.withName(router)),
+              onPressed: () => Navigator.pop(
+                context,
+              ),
             ),
           )
         : IconButton(
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
-            onPressed: () => Navigator.popUntil(
+            onPressed: () => Navigator.pop(
               context,
-              ModalRoute.withName(router),
             ),
             icon: Icon(
               size: size,

@@ -100,7 +100,7 @@ class WeekdayLyricsListView extends StatelessWidget {
                           ),
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(
+                              image: AssetImage(
                                   AppImages.listImagesWeekday[index]))),
                       child: ListTile(
                         contentPadding: const EdgeInsets.only(

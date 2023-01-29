@@ -137,14 +137,11 @@ class AppIcons {
 
 class AppImages {
   static final listImagesWeekday = [
-    'https://firebasestorage.googleapis.com/v0/b/ipbc-palmas.appspot.com/o/sabado.png?alt=media&token=47031ae5-09e4-4f97-8353-ad14f180b7e2',
-    'https://firebasestorage.googleapis.com/v0/b/ipbc-palmas.appspot.com/o/domingo-manha.jpg?alt=media&token=0b63d49b-2f61-4e47-a42a-5ab023d84874',
-    'https://firebasestorage.googleapis.com/v0/b/ipbc-palmas.appspot.com/o/domingo-noite.png?alt=media&token=4ac77e89-c72a-40ef-9c23-6cc38d002ced'
+    'assets/images/sabado.png',
+    'assets/images/domingo-manha.jpg',
+    'assets/images/domingo-noite.png'
   ];
-  static String get manha =>
-      "https://firebasestorage.googleapis.com/v0/b/ipbc-palmas.appspot.com/o/manha.png?alt=media&token=7324ea8f-fac5-4c9b-ba89-bbfa7906c27a";
-  static String get noite =>
-      "https://firebasestorage.googleapis.com/v0/b/ipbc-palmas.appspot.com/o/noite.png?alt=media&token=b4c89d89-659e-497c-b4ae-67a0d0a2d731";
+
   static String get userAvatar => "assets/images/user_avatar.png";
   static String get arrowBack => "assets/images/arrow_back_ios_new.png";
   static String get lightLogo => "assets/images/light_logo.png";

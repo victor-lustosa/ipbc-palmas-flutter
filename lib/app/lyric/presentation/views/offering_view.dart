@@ -5,7 +5,7 @@ import '../../../shared/layout/top-bar/title_top_bar_widget.dart';
 import '../../../shared/mixins/clipboard_mixin.dart';
 
 class OfferingView extends StatefulWidget {
-  const OfferingView({super.key});
+  OfferingView({super.key});
 
   @override
   State<OfferingView> createState() => _OfferingViewState();
@@ -13,10 +13,12 @@ class OfferingView extends StatefulWidget {
 
 class _OfferingViewState extends State<OfferingView> with ClipboardMixin {
   final String cnpj = "38.136.701/0001-25";
+
   final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
 
   @override
   Widget build(BuildContext context) {
+    print(tooltipkey.currentState);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -85,7 +87,7 @@ class _OfferingViewState extends State<OfferingView> with ClipboardMixin {
                                       ?.ensureTooltipVisible();
                                 },
                                 icon: const Icon(Icons.content_copy_rounded))),
-                      )
+                      ),
                     ],
                   ),
                 ),

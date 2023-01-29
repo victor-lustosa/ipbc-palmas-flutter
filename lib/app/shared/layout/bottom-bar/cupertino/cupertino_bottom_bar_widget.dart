@@ -91,7 +91,7 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget> {
                 child: LyricsListView());
 
           case 2:
-            return const CupertinoPageScaffold(
+            return CupertinoPageScaffold(
                 navigationBar: CupertinoNavigationBar(
                   backgroundColor: Color(0xFFFFFFFF),
                 ),

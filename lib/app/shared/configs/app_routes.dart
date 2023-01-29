@@ -21,28 +21,10 @@ class AppRoutes {
       //case homeRoute:
       //return MaterialPageRoute(builder: (_) => const HomeView());
 
-      case initialRoute:
-        return MaterialPageRoute(builder: (_) => const HomeView());
-
-      case lyricsRoute:
-        if (Platform.isIOS) {
-          return CupertinoPageRoute(
-              builder: (_) => const CupertinoPageScaffold(
-                    navigationBar: CupertinoNavigationBar(
-                      backgroundColor: Colors.white,
-                    ),
-                    child: LyricsListView(),
-                  ));
-        } else {
-          return MaterialPageRoute(builder: (_) => const LyricsListView());
-        }
       case lyricRoute:
         if (Platform.isIOS) {
           return CupertinoPageRoute(
             builder: (_) => CupertinoPageScaffold(
-              navigationBar: const CupertinoNavigationBar(
-                backgroundColor: Colors.white,
-              ),
               child: LyricView(
                 lyricEntity: (routeSettings.arguments as LyricEntity),
               ),
