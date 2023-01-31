@@ -5,6 +5,7 @@ import '../../../shared/layout/top-bar/main_top_bar_widget.dart';
 
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
+import 'dart:io';
 
 class WeekdayLyricsListView extends StatelessWidget {
   //const WeekdayLyricsList({Key? key, required this.weekdayLyrics}) : super(key: key);
@@ -84,8 +85,8 @@ class WeekdayLyricsListView extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.93,
                 child: ListView.separated(
                   separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      height: 18,
+                    return SizedBox(
+                      height: Platform.isIOS ? 17 : 15,
                     );
                   },
                   scrollDirection: Axis.vertical,
@@ -106,9 +107,9 @@ class WeekdayLyricsListView extends StatelessWidget {
                         ),
                       ),
                       child: ListTile(
-                        contentPadding: const EdgeInsets.only(
-                          top: 13,
-                          bottom: 13,
+                        contentPadding: EdgeInsets.only(
+                          top: Platform.isIOS ? 13 : 11,
+                          bottom: Platform.isIOS ? 13 : 11,
                           left: 25,
                           right: 0,
                         ),
@@ -117,7 +118,7 @@ class WeekdayLyricsListView extends StatelessWidget {
                           style: AppFonts.titleTile,
                         ),
                         trailing: NextButtonWidget(
-                          size: 29,
+                          size: Platform.isIOS ? 29 : 32,
                           route: AppRoutes.lyricRoute,
                           arguments: weekdayLyrics[index],
                           color: AppColors.white,

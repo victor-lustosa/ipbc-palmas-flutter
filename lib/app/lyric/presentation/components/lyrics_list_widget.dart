@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ipbc_palmas/app/lyric/domain/entities/lyric_entity.dart';
-
+import 'dart:io';
 import '../../../shared/components/next-button/next_button_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
@@ -99,8 +99,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                 style: AppFonts.subtitleTile,
               ),
               trailing: NextButtonWidget(
-                  size: 32,
-                  height: 80,
+                  size: Platform.isIOS ? 29 : 36,
                   route: AppRoutes.lyricRoute,
                   arguments: widget.lyricsList[index],
                   color: AppColors.darkGreen),
