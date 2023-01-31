@@ -13,7 +13,7 @@ class ButtonsBarMixin {
   List<BottomNavigationBarItem> buttons = [];
 
   List<BottomNavigationBarItem> buildButtonsBar() {
-    List<MenuItem> menuItensList = const <MenuItem>[
+    const List<MenuItem> menuItensList = <MenuItem>[
       MenuItem(AppIcons.home, 'Home'),
       MenuItem(AppIcons.lyricsIconName, 'Músicas'),
       MenuItem(AppIcons.volunteerActivism, 'Ofertas')

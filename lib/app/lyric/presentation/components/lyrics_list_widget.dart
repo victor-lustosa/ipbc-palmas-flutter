@@ -19,100 +19,108 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.93,
-      child: ListView.separated(
-        separatorBuilder: (BuildContext context, int index) {
-          return const SizedBox(
-            height: 12,
-          );
-        },
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: widget.lyricsList.length,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          return Material(
-            borderRadius: BorderRadius.circular(10),
-            clipBehavior: Clip.hardEdge,
-            color: Theme.of(context).scaffoldBackgroundColor,
-            child: ListTile(
-              contentPadding: const EdgeInsets.only(
-                left: 8,
-                right: 0,
-              ),
-              dense: true,
-              minVerticalPadding: 0,
-              minLeadingWidth: 0,
-              horizontalTitleGap: 8,
-              leading: ClipRRect(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(11),
+    return Theme(
+      data: ThemeData(
+        splashColor: const Color(0x66C8C8C8),
+        highlightColor: const Color(0x66BCBCBC),
+      ),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.93,
+        child: ListView.separated(
+          separatorBuilder: (BuildContext context, int index) {
+            return const SizedBox(
+              height: 2,
+            );
+          },
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: widget.lyricsList.length,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            return Material(
+              borderRadius: BorderRadius.circular(10),
+              clipBehavior: Clip.hardEdge,
+              color: AppColors.white,
+              child: ListTile(
+                contentPadding: const EdgeInsets.only(
+                  top: 2,
+                  bottom: 2,
+                  left: 8,
+                  right: 0,
                 ),
-                child: SizedBox(
-                  width: 50,
-                  height: 80,
-                  child: Image.network(
-                    fit: BoxFit.fill,
-                    frameBuilder: (BuildContext context, Widget child,
-                        int? frame, bool wasSynchronouslyLoaded) {
-                      if (wasSynchronouslyLoaded) {
-                        return child;
-                      }
-                      return Container(
-                        color: AppColors.lightGrey,
-                        width: 50,
-                        height: 80,
-                      );
-                    },
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      }
+                dense: true,
+                minVerticalPadding: 0,
+                minLeadingWidth: 0,
+                horizontalTitleGap: 8,
+                leading: ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(11),
+                  ),
+                  child: SizedBox(
+                    width: 50,
+                    height: 80,
+                    child: Image.network(
+                      fit: BoxFit.fill,
+                      frameBuilder: (BuildContext context, Widget child,
+                          int? frame, bool wasSynchronouslyLoaded) {
+                        if (wasSynchronouslyLoaded) {
+                          return child;
+                        }
+                        return Container(
+                          color: AppColors.lightGrey,
+                          width: 50,
+                          height: 80,
+                        );
+                      },
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
 
-                      return Container(
-                        color: AppColors.lightGrey,
-                        width: 50,
-                        height: 80,
-                      );
-                    },
-                    widget.lyricsList[index].albumCover,
+                        return Container(
+                          color: AppColors.lightGrey,
+                          width: 50,
+                          height: 80,
+                        );
+                      },
+                      widget.lyricsList[index].albumCover,
+                    ),
                   ),
                 ),
-              ),
-              title: Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 6,
+                title: Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 6,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.lyricsList[index].title,
+                        style: AppFonts.lyricsTitleTile,
+                      ),
+                    ],
+                  ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      widget.lyricsList[index].title,
-                      style: AppFonts.lyricsTitleTile,
-                    ),
-                  ],
+                subtitle: Text(
+                  widget.lyricsList[index].group,
+                  style: AppFonts.subtitleTile,
                 ),
+                trailing: NextButtonWidget(
+                    size: Platform.isIOS ? 29 : 36,
+                    route: AppRoutes.lyricRoute,
+                    arguments: widget.lyricsList[index],
+                    color: AppColors.darkGreen),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.lyricRoute,
+                    arguments: widget.lyricsList[index],
+                  );
+                },
               ),
-              subtitle: Text(
-                widget.lyricsList[index].group,
-                style: AppFonts.subtitleTile,
-              ),
-              trailing: NextButtonWidget(
-                  size: Platform.isIOS ? 29 : 36,
-                  route: AppRoutes.lyricRoute,
-                  arguments: widget.lyricsList[index],
-                  color: AppColors.darkGreen),
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  AppRoutes.lyricRoute,
-                  arguments: widget.lyricsList[index],
-                );
-              },
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
