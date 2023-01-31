@@ -28,6 +28,7 @@ class AppWidget extends StatelessWidget {
         },
         title: 'IPBC Palmas',
         theme: ThemeData(
+          scaffoldBackgroundColor: AppColors.white,
           primaryColor: AppColors.white,
         ),
         home: const HomeView(),

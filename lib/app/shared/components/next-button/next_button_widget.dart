@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 class NextButtonWidget extends StatelessWidget {
   const NextButtonWidget(
       {Key? key,
-      this.width,
+      this.height,
       required this.route,
       required this.arguments,
       required this.color,
@@ -14,14 +14,14 @@ class NextButtonWidget extends StatelessWidget {
       : super(key: key);
   final String route;
   final double size;
-  final double? width;
+  final double? height;
   final Color? color;
   final dynamic arguments;
   @override
   Widget build(BuildContext context) {
     return Platform.isIOS
         ? Container(
-            width: width,
+            height: height,
             //decoration: BoxDecoration(border: Border.all(color: Colors.red)),
             child: CupertinoButton(
               padding: const EdgeInsets.only(bottom: 0),
@@ -40,6 +40,7 @@ class NextButtonWidget extends StatelessWidget {
             ),
           )
         : IconButton(
+            padding: const EdgeInsets.only(bottom: 0),
             iconSize: 39,
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,

@@ -35,7 +35,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
           return Material(
             borderRadius: BorderRadius.circular(10),
             clipBehavior: Clip.hardEdge,
-            color: AppColors.white,
+            color: Theme.of(context).scaffoldBackgroundColor,
             child: ListTile(
               contentPadding: const EdgeInsets.only(
                 left: 8,
@@ -45,34 +45,39 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
               minVerticalPadding: 0,
               minLeadingWidth: 0,
               horizontalTitleGap: 8,
-              leading: SizedBox(
-                width: 50,
-                height: 80,
-                child: Image.network(
-                  fit: BoxFit.fill,
-                  frameBuilder: (BuildContext context, Widget child, int? frame,
-                      bool wasSynchronouslyLoaded) {
-                    if (wasSynchronouslyLoaded) {
-                      return child;
-                    }
-                    return Container(
-                      color: AppColors.lightGrey,
-                      width: 50,
-                      height: 80,
-                    );
-                  },
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
+              leading: ClipRRect(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(11),
+                ),
+                child: SizedBox(
+                  width: 50,
+                  height: 80,
+                  child: Image.network(
+                    fit: BoxFit.fill,
+                    frameBuilder: (BuildContext context, Widget child,
+                        int? frame, bool wasSynchronouslyLoaded) {
+                      if (wasSynchronouslyLoaded) {
+                        return child;
+                      }
+                      return Container(
+                        color: AppColors.lightGrey,
+                        width: 50,
+                        height: 80,
+                      );
+                    },
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
 
-                    return Container(
-                      color: AppColors.lightGrey,
-                      width: 50,
-                      height: 80,
-                    );
-                  },
-                  widget.lyricsList[index].albumCover,
+                      return Container(
+                        color: AppColors.lightGrey,
+                        width: 50,
+                        height: 80,
+                      );
+                    },
+                    widget.lyricsList[index].albumCover,
+                  ),
                 ),
               ),
               title: Padding(
@@ -95,7 +100,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
               ),
               trailing: NextButtonWidget(
                   size: 32,
-                  width: 48,
+                  height: 80,
                   route: AppRoutes.lyricRoute,
                   arguments: widget.lyricsList[index],
                   color: AppColors.darkGreen),
