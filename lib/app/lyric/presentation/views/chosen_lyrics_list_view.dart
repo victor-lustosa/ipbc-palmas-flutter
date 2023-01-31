@@ -39,39 +39,41 @@ class ChosenLyricsListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const MainTopBarWidget(),
-            const Padding(
-              padding: EdgeInsets.only(top: 10.0),
-              child: Align(
-                alignment: Alignment(-0.97, 0),
-                child: BackButtonWidget(
-                  color: AppColors.darkGreen,
-                  size: 30,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const MainTopBarWidget(),
+              const Padding(
+                padding: EdgeInsets.only(top: 10.0),
+                child: Align(
+                  alignment: Alignment(-0.97, 0),
+                  child: BackButtonWidget(
+                    color: AppColors.darkGreen,
+                    size: 30,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 24.0),
-              child: Align(
-                alignment: const Alignment(-0.74, 0),
-                child: Text(
-                  "Músicas de domingo de manhã",
-                  style: AppFonts.headline,
+              Padding(
+                padding: const EdgeInsets.only(top: 24.0),
+                child: Align(
+                  alignment: const Alignment(-0.74, 0),
+                  child: Text(
+                    "Músicas de domingo de manhã",
+                    style: AppFonts.headline,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 15.0,
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 15.0,
+                ),
+                child: LyricsListWidget(
+                  lyricsList: lyricsFetched,
+                ),
               ),
-              child: LyricsListWidget(
-                lyricsList: lyricsFetched,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
