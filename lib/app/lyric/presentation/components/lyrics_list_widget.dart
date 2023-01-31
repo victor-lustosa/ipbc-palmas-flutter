@@ -5,10 +5,18 @@ import '../../../shared/components/next-button/next_button_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
 
-class LyricsListWidget extends StatelessWidget {
+class LyricsListWidget extends StatefulWidget {
   const LyricsListWidget({Key? key, required this.lyricsList})
       : super(key: key);
   final List<LyricEntity> lyricsList;
+
+  @override
+  State<LyricsListWidget> createState() => _LyricsListWidgetState();
+}
+
+class _LyricsListWidgetState extends State<LyricsListWidget> {
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -21,7 +29,7 @@ class LyricsListWidget extends StatelessWidget {
         },
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: lyricsList.length,
+        itemCount: widget.lyricsList.length,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           return Container(
@@ -50,7 +58,29 @@ class LyricsListWidget extends StatelessWidget {
                     height: 80,
                     child: Image.network(
                       fit: BoxFit.fill,
-                      lyricsList[index].albumCover,
+                      frameBuilder: (BuildContext context, Widget child,
+                          int? frame, bool wasSynchronouslyLoaded) {
+                        if (wasSynchronouslyLoaded) {
+                          return child;
+                        }
+                        return Container(
+                          color: AppColors.lightGrey,
+                          width: 50,
+                          height: 80,
+                        );
+                      },
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+
+                        return Container(
+                          color: AppColors.lightGrey,
+                          width: 50,
+                          height: 80,
+                        );
+                      },
+                      widget.lyricsList[index].albumCover,
                     ),
                   ),
                 ),
@@ -63,27 +93,27 @@ class LyricsListWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      lyricsList[index].title,
+                      widget.lyricsList[index].title,
                       style: AppFonts.lyricsTitleTile,
                     ),
                   ],
                 ),
               ),
               subtitle: Text(
-                lyricsList[index].group,
+                widget.lyricsList[index].group,
                 style: AppFonts.subtitleTile,
               ),
               trailing: NextButtonWidget(
                   size: 32,
                   width: 48,
                   route: AppRoutes.lyricRoute,
-                  arguments: lyricsList[index],
+                  arguments: widget.lyricsList[index],
                   color: AppColors.darkGreen),
               onTap: () {
                 Navigator.pushNamed(
                   context,
                   AppRoutes.lyricRoute,
-                  arguments: lyricsList[index],
+                  arguments: widget.lyricsList[index],
                 );
               },
             ),

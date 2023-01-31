@@ -8,6 +8,7 @@ import 'package:ipbc_palmas/app/lyric/presentation/views/lyric_view.dart';
 class AppRoutes {
   static const String initialRoute = "/";
   static const String chosenLyricsRoute = "/chosen-lyrics";
+  static const String lyricsListRoute = "/lyrics-list";
   static const String lyricRoute = "/lyric-view";
 
   static Route<dynamic>? onGenerateRoute(RouteSettings routeSettings) {

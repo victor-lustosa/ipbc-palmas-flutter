@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:ipbc_palmas/app/shared/mixins/buttons_bar_mixin.dart';
 
 import '../../../configs/app_configs.dart';
-import '../navegation_button_widget.dart';
 
 class MaterialBottomBarWidget extends StatefulWidget {
   final int selectedIndex;
@@ -18,7 +18,14 @@ class MaterialBottomBarWidget extends StatefulWidget {
       _MaterialBottomBarWidgetState();
 }
 
-class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget> {
+class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
+    with ButtonsBarMixin {
+  @override
+  initState() {
+    super.initState();
+    buildButtonsBar();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,41 +57,7 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget> {
           selectedItemColor: AppColors.darkGreen,
           unselectedItemColor: AppColors.grey,
           backgroundColor: AppColors.white,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              activeIcon: NavegationButtonWidget(
-                iconName: AppIcons.home,
-                color: AppColors.darkGreen,
-              ),
-              icon: NavegationButtonWidget(
-                iconName: AppIcons.home,
-                color: AppColors.grey,
-              ),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              activeIcon: NavegationButtonWidget(
-                iconName: AppIcons.lyricsIconName,
-                color: AppColors.darkGreen,
-              ),
-              icon: NavegationButtonWidget(
-                iconName: AppIcons.lyricsIconName,
-                color: AppColors.grey,
-              ),
-              label: 'Músicas',
-            ),
-            BottomNavigationBarItem(
-              activeIcon: NavegationButtonWidget(
-                iconName: AppIcons.volunteerActivism,
-                color: AppColors.darkGreen,
-              ),
-              icon: NavegationButtonWidget(
-                iconName: AppIcons.volunteerActivism,
-                color: AppColors.grey,
-              ),
-              label: 'Ofertas',
-            ),
-          ],
+          items: buttons,
           onTap: (newValue) {
             setState(
               () {
