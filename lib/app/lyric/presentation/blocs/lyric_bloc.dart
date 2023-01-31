@@ -30,6 +30,22 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
     );
   }
 
+  Future<void> _getWeekdaysLyrics(_, emit) async {
+    await emit.onEach<List<LyricEntity>>(
+      lyricsUseCase.get(),
+      onData: (lyrics) {
+        emit(
+          SuccessfullyFetchedLyricsState(lyrics),
+        );
+      },
+      onError: (error, st) {
+        emit(
+          ExceptionLyricState(error.toString()),
+        );
+      },
+    );
+  }
+
   Future<void> _lyricsFilter(LyricsFilterEvent event, emit) async {
     List<LyricEntity> lyricsList = await lyricsUseCase.lettersFilter(
       event.lyrics,
@@ -40,6 +56,7 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
     );
   }
 }
+
 @immutable
 abstract class LyricEvent {}
 
@@ -51,11 +68,16 @@ class GetLyricsEvent extends LyricEvent {
   GetLyricsEvent();
 }
 
+class GetWeekdaysLyricsEvent extends LyricEvent {
+  GetWeekdaysLyricsEvent();
+}
+
 class LyricsFilterEvent extends LyricEvent {
   final String letter;
   final List<LyricEntity> lyrics;
-  LyricsFilterEvent({required this.letter,required this.lyrics});
+  LyricsFilterEvent({required this.letter, required this.lyrics});
 }
+
 @immutable
 abstract class LyricState {}
 

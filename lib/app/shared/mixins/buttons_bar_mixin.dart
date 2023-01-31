@@ -3,33 +3,35 @@ import 'package:flutter/cupertino.dart';
 import '../configs/app_configs.dart';
 import '../layout/bottom-bar/navegation_button_widget.dart';
 
+class MenuItem {
+  const MenuItem(this.iconData, this.label);
+  final String iconData;
+  final String label;
+}
+
 class ButtonsBarMixin {
   List<BottomNavigationBarItem> buttons = [];
 
   List<BottomNavigationBarItem> buildButtonsBar() {
-    List<String> appIcons = [
-      AppIcons.home,
-      AppIcons.lyricsIconName,
-      AppIcons.volunteerActivism
+    List<MenuItem> menuItensList = const <MenuItem>[
+      MenuItem(AppIcons.home, 'Home'),
+      MenuItem(AppIcons.lyricsIconName, 'Músicas'),
+      MenuItem(AppIcons.volunteerActivism, 'Ofertas')
     ];
 
-    List<String> appLabels = ['Home', 'Músicas', 'Ofertas'];
-
-    for (int i = 0; i < appIcons.length; i++) {
-      buttons.add(
-        BottomNavigationBarItem(
-          activeIcon: NavegationButtonWidget(
-            iconName: appIcons[i],
-            color: AppColors.darkGreen,
-          ),
-          icon: NavegationButtonWidget(
-            iconName: appIcons[i],
-            color: AppColors.grey,
-          ),
-          label: appLabels[i],
-        ),
-      );
-    }
+    buttons = menuItensList
+        .map((MenuItem menuItem) => BottomNavigationBarItem(
+              activeIcon: NavegationButtonWidget(
+                iconName: menuItem.iconData,
+                color: AppColors.darkGreen,
+              ),
+              icon: NavegationButtonWidget(
+                iconName: menuItem.iconData,
+                color: AppColors.grey,
+              ),
+              label: menuItem.label,
+            ))
+        .toList();
     return buttons;
   }
 }
