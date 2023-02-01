@@ -27,10 +27,10 @@ class _WeekdaysLyricsRouterState extends State<WeekdaysLyricsRouters> {
           builder: (BuildContext context) {
             switch (settings.name) {
               case AppRoutes.initialRoute:
-                return WeekdayLyricsListView();
+                return const WeekdayLyricsListView();
 
               case AppRoutes.chosenLyricsRoute:
-                return ChosenLyricsListView();
+                return ChosenLyricsListView(url: settings.arguments as String);
 
               case AppRoutes.lyricRoute:
                 return LyricView(

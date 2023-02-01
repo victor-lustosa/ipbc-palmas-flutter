@@ -43,7 +43,7 @@ class _LyricsListViewState extends State<LyricsListView>
     lyricsFiltered = [];
     fillLettersCarousel();
     bloc = context.read<LyricBloc>();
-    bloc.add(GetLyricsEvent());
+    bloc.add(GetLyricsEvent(url: 'lyrics'));
     super.initState();
   }
 
@@ -89,7 +89,7 @@ class _LyricsListViewState extends State<LyricsListView>
                     color: AppColors.darkGreen,
                     onRefresh: () async {
                       bloc.add(
-                        GetLyricsEvent(),
+                        GetLyricsEvent(url: 'lyrics'),
                       );
                     },
                     child: Column(

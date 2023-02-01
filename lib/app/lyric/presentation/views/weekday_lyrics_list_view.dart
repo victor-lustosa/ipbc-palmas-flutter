@@ -7,13 +7,25 @@ import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
 import 'dart:io';
 
+class WeekdaysModel {
+  const WeekdaysModel({required this.title, required this.url});
+  final String title;
+  final String url;
+}
+
 class WeekdayLyricsListView extends StatelessWidget {
   //const WeekdayLyricsList({Key? key, required this.weekdayLyrics}) : super(key: key);
-  WeekdayLyricsListView({super.key});
-  final List<String> weekdayLyrics = [
-    'Sábado',
-    'Domingo pela manhã',
-    'Domingo à noite'
+  const WeekdayLyricsListView({super.key});
+  final List<WeekdaysModel> weekdayLyrics = const [
+    WeekdaysModel(
+        title: 'Sábado',
+        url: 'weekday-lyrics/raVXYTMhxE622P75AUzv/evening-saturday'),
+    WeekdaysModel(
+        title: 'Domingo pela manhã',
+        url: 'weekday-lyrics/raVXYTMhxE622P75AUzv/morning-sunday'),
+    WeekdaysModel(
+        title: 'Domingo à noite',
+        url: 'weekday-lyrics/raVXYTMhxE622P75AUzv/evening-sunday'),
   ];
 
   @override
@@ -115,18 +127,19 @@ class WeekdayLyricsListView extends StatelessWidget {
                             right: 0,
                           ),
                           title: Text(
-                            weekdayLyrics[index],
+                            weekdayLyrics[index].title,
                             style: AppFonts.titleTile,
                           ),
                           trailing: NextButtonWidget(
                             size: Platform.isIOS ? 29 : 32,
                             route: AppRoutes.lyricRoute,
-                            arguments: weekdayLyrics[index],
+                            arguments: weekdayLyrics[index].url,
                             color: AppColors.white,
                           ),
                           onTap: () {
                             Navigator.pushNamed(
-                                context, AppRoutes.chosenLyricsRoute);
+                                context, AppRoutes.chosenLyricsRoute,
+                                arguments: weekdayLyrics[index].url);
                           },
                         ),
                       );

@@ -1,8 +1,12 @@
 import '../infra/datasources/datasource.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirestoreDatasource implements IGetDatasource,IAddDatasource,IUpdateDatasource,IDeleteDatasource{
-
+class FirestoreDatasource
+    implements
+        IGetDatasource,
+        IAddDatasource,
+        IUpdateDatasource,
+        IDeleteDatasource {
   FirestoreDatasource({required FirebaseFirestore firestore})
       : _firestore = firestore;
   final FirebaseFirestore _firestore;
@@ -10,14 +14,25 @@ class FirestoreDatasource implements IGetDatasource,IAddDatasource,IUpdateDataso
   List<Map> _convert(List<QueryDocumentSnapshot<Map<String, dynamic>>> docs) {
     return docs
         .map((document) => {
-      'id': document.id,
-      ...document.data(),
-    }).toList();
+              'id': document.id,
+              ...document.data(),
+            })
+        .toList();
   }
 
   @override
   Stream<List<Map>> get(String url) {
-    final snapshot = _firestore.collection(url).snapshots();
+    List urls = url.split('/');
+    Stream<QuerySnapshot<Map<String, dynamic>>> snapshot;
+    if (urls.length > 1) {
+      snapshot = _firestore
+          .collection(urls[0])
+          .doc(urls[1])
+          .collection(urls[2])
+          .snapshots();
+    } else {
+      snapshot = _firestore.collection(urls[0]).snapshots();
+    }
     return snapshot.map((entity) => entity.docs).map(_convert);
   }
 
@@ -38,5 +53,4 @@ class FirestoreDatasource implements IGetDatasource,IAddDatasource,IUpdateDataso
     // TODO: implement delete
     throw UnimplementedError();
   }
-
 }
