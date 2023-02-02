@@ -19,7 +19,7 @@ class NextButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Platform.isIOS
         ? CupertinoButton(
-            padding: const EdgeInsets.only(bottom: 0),
+            padding: const EdgeInsets.only(bottom: 0, right: 2),
             child: Icon(
               size: size,
               color: color,
@@ -34,7 +34,7 @@ class NextButtonWidget extends StatelessWidget {
             },
           )
         : IconButton(
-            padding: const EdgeInsets.only(bottom: 0),
+            padding: const EdgeInsets.only(bottom: 0, left: 5),
             iconSize: size,
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,

@@ -29,9 +29,9 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 6.0),
+      padding: const EdgeInsets.only(bottom: 7.0),
       child: Container(
-        height: 47,
+        height: 50,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
             topRight: Radius.circular(22),

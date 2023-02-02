@@ -215,7 +215,7 @@ class CupertinoTabBar extends StatelessWidget implements PreferredSizeWidget {
                       blurStyle: BlurStyle.outer),
                 ],
               ),
-              padding: EdgeInsets.only(bottom: bottomPadding + 14, top: 3),
+              padding: EdgeInsets.only(bottom: bottomPadding + 16, top: 4),
               child: Semantics(
                 explicitChildNodes: true,
                 child: Row(

@@ -23,7 +23,7 @@ class AppFonts {
     color: Colors.black45,
   );
   static TextStyle? headHome = GoogleFonts.inter(
-    fontSize: Platform.isIOS ? 24 : 22,
+    fontSize: 24,
     color: AppColors.black,
   );
   static TextStyle? subHeadHome = GoogleFonts.inter(
@@ -45,7 +45,7 @@ class AppFonts {
   static TextStyle? titleTile = GoogleFonts.inter(
     fontWeight: FontWeight.w500,
     color: AppColors.white,
-    fontSize: Platform.isIOS ? 19 : 17,
+    fontSize: Platform.isIOS ? 19 : 18,
   );
   static TextStyle? lyricsTitleTile = GoogleFonts.inter(
     fontWeight: FontWeight.w500,

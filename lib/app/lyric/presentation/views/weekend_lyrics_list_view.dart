@@ -103,7 +103,7 @@ class WeekendLyricsListView extends StatelessWidget {
                   child: ListView.separated(
                     separatorBuilder: (BuildContext context, int index) {
                       return SizedBox(
-                        height: Platform.isIOS ? 17 : 14.8,
+                        height: Platform.isIOS ? 17 : 15,
                       );
                     },
                     scrollDirection: Axis.vertical,
@@ -125,8 +125,8 @@ class WeekendLyricsListView extends StatelessWidget {
                         ),
                         child: ListTile(
                           contentPadding: EdgeInsets.only(
-                            top: Platform.isIOS ? 13 : 9.3,
-                            bottom: Platform.isIOS ? 13 : 9.3,
+                            top: Platform.isIOS ? 13 : 12,
+                            bottom: Platform.isIOS ? 13 : 12,
                             left: 25,
                             right: 0,
                           ),

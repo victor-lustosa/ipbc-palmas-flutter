@@ -5,7 +5,7 @@ import 'dart:io';
 class NavegationButtonWidget extends StatelessWidget {
   const NavegationButtonWidget(
       {super.key, double? size, this.color, required this.iconName})
-      : size = size ?? 22.0;
+      : size = size ?? 23.0;
 
   final double size;
   final Color? color;
@@ -16,8 +16,8 @@ class NavegationButtonWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: Platform.isIOS ? 0 : 2.3),
       child: SizedBox(
-        width: Platform.isIOS ? 23 : size,
-        height: Platform.isIOS ? 23 : size,
+        width: size,
+        height: size,
         child: SvgPicture.asset(
           color: color,
           iconName,
