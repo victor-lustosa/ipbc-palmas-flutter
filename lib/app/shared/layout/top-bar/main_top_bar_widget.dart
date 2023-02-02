@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'dart:io';
 import '../../../shared/configs/app_configs.dart';
 //import '../../../shared/components/circle-avatar/circle_avatar_widget.dart';
 
@@ -14,12 +14,12 @@ class MainTopBarWidget extends StatelessWidget {
         return Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 18.0),
+              padding: EdgeInsets.only(top: Platform.isIOS ? 18.0 : 23),
               child: Align(
                 alignment: const Alignment(-0.885, 0),
                 child: SizedBox(
-                  width: 76,
-                  height: 41,
+                  width: Platform.isIOS ? 76 : 70,
+                  height: Platform.isIOS ? 41 : 37,
                   child: SvgPicture.asset(
                     AppIcons.logo,
                     color: AppColors.darkGreen,

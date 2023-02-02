@@ -28,43 +28,46 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 56,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(24),
-          topLeft: Radius.circular(24),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.4),
-            offset: const Offset(1, 2),
-            spreadRadius: 3,
-            blurRadius: 7,
-            blurStyle: BlurStyle.outer,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 6.0),
+      child: Container(
+        height: 47,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(22),
+            topLeft: Radius.circular(22),
           ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(24.0),
-          topRight: Radius.circular(24.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.4),
+              offset: const Offset(1, 2),
+              spreadRadius: 3,
+              blurRadius: 7,
+              blurStyle: BlurStyle.outer,
+            ),
+          ],
         ),
-        child: BottomNavigationBar(
-          currentIndex: widget.selectedIndex,
-          unselectedLabelStyle: AppFonts.selectedBottomNav,
-          selectedLabelStyle: AppFonts.selectedBottomNav,
-          selectedItemColor: AppColors.darkGreen,
-          unselectedItemColor: AppColors.grey,
-          backgroundColor: AppColors.white,
-          items: buttons,
-          onTap: (newValue) {
-            setState(
-              () {
-                widget.callback(newValue);
-              },
-            );
-          },
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(22),
+            topRight: Radius.circular(22),
+          ),
+          child: BottomNavigationBar(
+            currentIndex: widget.selectedIndex,
+            unselectedLabelStyle: AppFonts.selectedBottomNav,
+            selectedLabelStyle: AppFonts.selectedBottomNav,
+            selectedItemColor: AppColors.darkGreen,
+            unselectedItemColor: AppColors.grey,
+            backgroundColor: AppColors.white,
+            items: buttons,
+            onTap: (newValue) {
+              setState(
+                () {
+                  widget.callback(newValue);
+                },
+              );
+            },
+          ),
         ),
       ),
     );

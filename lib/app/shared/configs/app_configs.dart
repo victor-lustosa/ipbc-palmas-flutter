@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:io';
 
 class AppColors {
   static const Color lightBlue = Color(0xFF5D9CFB);
@@ -22,11 +23,11 @@ class AppFonts {
     color: Colors.black45,
   );
   static TextStyle? headHome = GoogleFonts.inter(
-    fontSize: 24,
+    fontSize: Platform.isIOS ? 24 : 22,
     color: AppColors.black,
   );
   static TextStyle? subHeadHome = GoogleFonts.inter(
-    fontSize: 16,
+    fontSize: Platform.isIOS ? 16 : 15,
     color: const Color(0xFF545456),
   );
   static TextStyle? title = GoogleFonts.inter(
@@ -44,7 +45,7 @@ class AppFonts {
   static TextStyle? titleTile = GoogleFonts.inter(
     fontWeight: FontWeight.w500,
     color: AppColors.white,
-    fontSize: 19,
+    fontSize: Platform.isIOS ? 19 : 17,
   );
   static TextStyle? lyricsTitleTile = GoogleFonts.inter(
     fontWeight: FontWeight.w500,
@@ -74,7 +75,7 @@ class AppFonts {
     fontSize: 18,
   );
   static TextStyle? selectedBottomNav = GoogleFonts.inter(
-    fontSize: 11,
+    fontSize: 10,
   );
   static TextStyle? lyricTile = GoogleFonts.inter(
     color: Colors.black,
@@ -141,10 +142,4 @@ class AppImages {
     'assets/images/domingo-manha.jpg',
     'assets/images/domingo-noite.png'
   ];
-
-  static String get userAvatar => "assets/images/user_avatar.png";
-  static String get arrowBack => "assets/images/arrow_back_ios_new.png";
-  static String get lightLogo => "assets/images/light_logo.png";
-  static String get lightUnauthorizedLogo =>
-      "assets/images/light_unauthorized_logo.png";
 }

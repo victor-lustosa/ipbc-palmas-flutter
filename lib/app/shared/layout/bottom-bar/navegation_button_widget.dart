@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class NavegationButtonWidget extends StatelessWidget {
   const NavegationButtonWidget(
       {super.key, double? size, this.color, required this.iconName})
-      : size = size ?? 24.0;
+      : size = size ?? 22.0;
 
   final double size;
   final Color? color;
@@ -12,13 +12,16 @@ class NavegationButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: size,
-      height: size,
-      child: SvgPicture.asset(
-        color: color,
-        iconName,
-        matchTextDirection: true,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 2.3),
+      child: SizedBox(
+        width: size,
+        height: size,
+        child: SvgPicture.asset(
+          color: color,
+          iconName,
+          matchTextDirection: true,
+        ),
       ),
     );
   }

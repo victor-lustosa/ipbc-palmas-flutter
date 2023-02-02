@@ -40,10 +40,12 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
-          currentIndex: widget.selectedIndex,
-          activeColor: AppColors.darkGreen,
-          backgroundColor: AppColors.white,
-          items: buttons),
+        height: 60,
+        currentIndex: widget.selectedIndex,
+        activeColor: AppColors.darkGreen,
+        backgroundColor: AppColors.white,
+        items: buttons,
+      ),
       tabBuilder: (context, index) {
         switch (index) {
           case 0:
