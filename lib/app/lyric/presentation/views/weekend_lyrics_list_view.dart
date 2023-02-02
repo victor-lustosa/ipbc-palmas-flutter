@@ -15,8 +15,15 @@ class WeekendModel {
   final String url;
 }
 
-class WeekendLyricsListView extends StatelessWidget {
+class WeekendLyricsListView extends StatefulWidget {
   const WeekendLyricsListView({super.key});
+
+  @override
+  State<WeekendLyricsListView> createState() => _WeekendLyricsListViewState();
+}
+
+class _WeekendLyricsListViewState extends State<WeekendLyricsListView>
+    with AutomaticKeepAliveClientMixin {
   final List<WeekendModel> weekendLyrics = const [
     WeekendModel(
         title: 'Sábado',
@@ -33,7 +40,11 @@ class WeekendLyricsListView extends StatelessWidget {
   ];
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

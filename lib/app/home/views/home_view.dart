@@ -47,6 +47,11 @@ class _HomeViewState extends State<HomeView> {
       body: SafeArea(
         child: PageView(
           controller: pageViewController,
+          onPageChanged: (index) {
+            setState(() {
+              selectedIndex = index;
+            });
+          },
           children: const [
             WeekdendLyricsRouters(),
             LyricsListView(),
@@ -57,22 +62,7 @@ class _HomeViewState extends State<HomeView> {
       extendBody: true,
       bottomNavigationBar: AnimatedBuilder(
         animation: pageViewController,
-        builder: (context, child) {
-          switch (pageViewController.hasClients
-              ? pageViewController.page?.toInt()
-              : pageViewController.initialPage) {
-            case 0:
-              selectedIndex = 0;
-              break;
-            case 1:
-              selectedIndex = 1;
-              break;
-            case 2:
-              selectedIndex = 2;
-              break;
-            default:
-              break;
-          }
+        builder: (__, _) {
           return Platform.isIOS
               ? CupertinoBottomBarWidget(
                   selectedIndex: selectedIndex,
