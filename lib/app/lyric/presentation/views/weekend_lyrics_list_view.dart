@@ -7,24 +7,28 @@ import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
 import 'dart:io';
 
-class WeekdaysModel {
-  const WeekdaysModel({required this.title, required this.url});
+class WeekendModel {
+  const WeekendModel(
+      {required this.title, required this.url, required this.heading});
   final String title;
+  final String heading;
   final String url;
 }
 
-class WeekdayLyricsListView extends StatelessWidget {
-  //const WeekdayLyricsList({Key? key, required this.weekdayLyrics}) : super(key: key);
-  const WeekdayLyricsListView({super.key});
-  final List<WeekdaysModel> weekdayLyrics = const [
-    WeekdaysModel(
+class WeekendLyricsListView extends StatelessWidget {
+  const WeekendLyricsListView({super.key});
+  final List<WeekendModel> weekendLyrics = const [
+    WeekendModel(
         title: 'Sábado',
+        heading: 'sábado',
         url: 'weekday-lyrics/raVXYTMhxE622P75AUzv/evening-saturday'),
-    WeekdaysModel(
+    WeekendModel(
         title: 'Domingo pela manhã',
+        heading: 'domingo pela manhã',
         url: 'weekday-lyrics/raVXYTMhxE622P75AUzv/morning-sunday'),
-    WeekdaysModel(
+    WeekendModel(
         title: 'Domingo à noite',
+        heading: 'domingo à noite',
         url: 'weekday-lyrics/raVXYTMhxE622P75AUzv/evening-sunday'),
   ];
 
@@ -104,7 +108,7 @@ class WeekdayLyricsListView extends StatelessWidget {
                     },
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: weekdayLyrics.length,
+                    itemCount: weekendLyrics.length,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Container(
@@ -115,7 +119,7 @@ class WeekdayLyricsListView extends StatelessWidget {
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             image: AssetImage(
-                              AppImages.listImagesWeekday[index],
+                              AppImages.listImagesWeekend[index],
                             ),
                           ),
                         ),
@@ -127,19 +131,19 @@ class WeekdayLyricsListView extends StatelessWidget {
                             right: 0,
                           ),
                           title: Text(
-                            weekdayLyrics[index].title,
+                            weekendLyrics[index].title,
                             style: AppFonts.titleTile,
                           ),
                           trailing: NextButtonWidget(
                             size: Platform.isIOS ? 29 : 32,
                             route: AppRoutes.lyricRoute,
-                            arguments: weekdayLyrics[index].url,
+                            arguments: weekendLyrics[index].url,
                             color: AppColors.white,
                           ),
                           onTap: () {
                             Navigator.pushNamed(
                                 context, AppRoutes.chosenLyricsRoute,
-                                arguments: weekdayLyrics[index].url);
+                                arguments: weekendLyrics[index]);
                           },
                         ),
                       );

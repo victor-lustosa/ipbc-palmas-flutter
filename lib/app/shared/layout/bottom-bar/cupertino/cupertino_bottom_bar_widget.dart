@@ -1,9 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/cupertino.dart'
     hide CupertinoTabBar, CupertinoTabScaffold;
+import 'package:ipbc_palmas/app/home/views/weekend_lyrics_routers.dart';
 import 'package:ipbc_palmas/app/lyric/presentation/views/lyrics_list_view.dart';
 import 'package:ipbc_palmas/app/lyric/presentation/views/offering_view.dart';
-import 'package:ipbc_palmas/app/lyric/presentation/views/weekday_lyrics_list_view.dart';
+import 'package:ipbc_palmas/app/lyric/presentation/views/weekend_lyrics_list_view.dart';
 import 'package:ipbc_palmas/app/shared/configs/app_routes.dart';
 import 'package:ipbc_palmas/app/shared/mixins/buttons_bar_mixin.dart';
 import '../../../configs/app_configs.dart';
@@ -49,11 +50,11 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
             return CupertinoTabView(
               onGenerateRoute: AppRoutes.onGenerateRoute,
               builder: (context) {
-                return CupertinoPageScaffold(
-                    navigationBar: const CupertinoNavigationBar(
+                return const CupertinoPageScaffold(
+                    navigationBar: CupertinoNavigationBar(
                       backgroundColor: Color(0xFFFFFFFF),
                     ),
-                    child: WeekdayLyricsListView());
+                    child: WeekdendLyricsRouters());
               },
             );
           case 1:
@@ -64,8 +65,8 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
                 child: LyricsListView());
 
           case 2:
-            return CupertinoPageScaffold(
-                navigationBar: const CupertinoNavigationBar(
+            return const CupertinoPageScaffold(
+                navigationBar: CupertinoNavigationBar(
                   backgroundColor: Color(0xFFFFFFFF),
                 ),
                 child: OfferingView());

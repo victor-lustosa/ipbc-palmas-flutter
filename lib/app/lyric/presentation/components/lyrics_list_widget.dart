@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/lyric/domain/entities/lyric_entity.dart';
 import 'dart:io';
 import '../../../shared/components/next-button/next_button_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
+import '../../domain/entities/lyric_entity.dart';
 
 class LyricsListWidget extends StatefulWidget {
   const LyricsListWidget({Key? key, required this.lyricsList})

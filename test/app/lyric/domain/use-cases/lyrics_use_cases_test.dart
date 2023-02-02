@@ -35,7 +35,7 @@ void main() {
 
     final usecase = LyricsUseCases(repository: repository);
 
-    final result = usecase.get();
+    final result = usecase.get('');
 
     expect(result, emits(isA<List<LyricEntity>>()));
   });

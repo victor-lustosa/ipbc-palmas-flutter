@@ -136,7 +136,7 @@ class AppIcons {
 }
 
 class AppImages {
-  static final listImagesWeekday = [
+  static final listImagesWeekend = [
     'assets/images/sabado.png',
     'assets/images/domingo-manha.jpg',
     'assets/images/domingo-noite.png'

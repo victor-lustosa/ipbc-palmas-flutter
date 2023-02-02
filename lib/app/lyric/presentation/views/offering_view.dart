@@ -5,7 +5,7 @@ import '../../../shared/layout/top-bar/title_top_bar_widget.dart';
 import '../../../shared/mixins/clipboard_mixin.dart';
 
 class OfferingView extends StatefulWidget {
-  OfferingView({super.key});
+  const OfferingView({super.key});
 
   @override
   State<OfferingView> createState() => _OfferingViewState();

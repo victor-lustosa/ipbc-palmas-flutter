@@ -10,7 +10,7 @@ class FirestoreDatasource
   FirestoreDatasource({required FirebaseFirestore firestore})
       : _firestore = firestore;
   final FirebaseFirestore _firestore;
-
+  late List<String> params;
   List<Map> _convert(List<QueryDocumentSnapshot<Map<String, dynamic>>> docs) {
     return docs
         .map((document) => {
@@ -22,16 +22,16 @@ class FirestoreDatasource
 
   @override
   Stream<List<Map>> get(String url) {
-    List urls = url.split('/');
+    params = url.split('/');
     Stream<QuerySnapshot<Map<String, dynamic>>> snapshot;
-    if (urls.length > 1) {
+    if (params.length > 1) {
       snapshot = _firestore
-          .collection(urls[0])
-          .doc(urls[1])
-          .collection(urls[2])
+          .collection(params[0])
+          .doc(params[1])
+          .collection(params[2])
           .snapshots();
     } else {
-      snapshot = _firestore.collection(urls[0]).snapshots();
+      snapshot = _firestore.collection(params[0]).snapshots();
     }
     return snapshot.map((entity) => entity.docs).map(_convert);
   }

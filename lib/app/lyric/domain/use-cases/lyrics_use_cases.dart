@@ -4,7 +4,6 @@ import '../entities/lyric_entity.dart';
 
 abstract class ILyricsUseCases {
   Stream<List<LyricEntity>> get(String url);
-  // Stream<List<LyricEntity>> getWeekdaysLyrics(String url);
   Future<List<LyricEntity>> lettersFilter(
       List<LyricEntity> lyrics, String letter);
 }
@@ -22,12 +21,6 @@ class LyricsUseCases implements ILyricsUseCases {
     var lyrics = repository.get(url);
     return lyrics.map(_convert);
   }
-
-  /*@override
-  Stream<List<LyricEntity>> getWeekdaysLyrics(String url) {
-    var lyrics = repository.get(url);
-    return lyrics.map(_convert);
-  }*/
 
   @override
   Future<List<LyricEntity>> lettersFilter(

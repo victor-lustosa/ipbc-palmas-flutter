@@ -21,10 +21,10 @@ void main() {
   blocTest<LyricBloc, LyricState>(
     'Fetching lyrics of firestore',
     build: () {
-      when(() => useCases.get()).thenAnswer((_) => Stream.value([]));
+      when(() => useCases.get('')).thenAnswer((_) => Stream.value([]));
       return bloc;
     },
-    act: (bloc) => bloc.add(GetLyricsEvent()),
+    act: (bloc) => bloc.add(GetLyricsEvent(url: '')),
     expect: () => [
       isA<SuccessfullyFetchedLyricsState>(),
     ],
@@ -32,11 +32,11 @@ void main() {
   blocTest<LyricBloc, LyricState>(
     'Fetching lyrics of firestore and occorring an error',
     build: () {
-      when(() => useCases.get())
+      when(() => useCases.get(''))
           .thenAnswer((_) => Stream.error(Exception('Error')));
       return bloc;
     },
-    act: (bloc) => bloc.add(GetLyricsEvent()),
+    act: (bloc) => bloc.add(GetLyricsEvent(url: '')),
     expect: () => [
       isA<ExceptionLyricState>(),
     ],
