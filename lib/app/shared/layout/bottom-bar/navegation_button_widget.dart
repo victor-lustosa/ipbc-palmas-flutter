@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:io';
 
 class NavegationButtonWidget extends StatelessWidget {
   const NavegationButtonWidget(
@@ -13,10 +14,10 @@ class NavegationButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 2.3),
+      padding: EdgeInsets.only(bottom: Platform.isIOS ? 0 : 2.3),
       child: SizedBox(
-        width: size,
-        height: size,
+        width: Platform.isIOS ? 23 : size,
+        height: Platform.isIOS ? 23 : size,
         child: SvgPicture.asset(
           color: color,
           iconName,

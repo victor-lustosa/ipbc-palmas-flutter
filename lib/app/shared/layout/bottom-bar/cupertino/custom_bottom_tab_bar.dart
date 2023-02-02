@@ -200,12 +200,12 @@ class CupertinoTabBar extends StatelessWidget implements PreferredSizeWidget {
             style: CupertinoTheme.of(context)
                 .textTheme
                 .tabLabelTextStyle
-                .copyWith(color: inactive, fontSize: 12),
+                .copyWith(color: inactive, fontSize: 11.5),
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(22),
-                    topLeft: Radius.circular(22)),
+                    topLeft: Radius.circular(24)),
                 boxShadow: [
                   BoxShadow(
                       color: Colors.grey.withOpacity(0.4),
@@ -215,7 +215,7 @@ class CupertinoTabBar extends StatelessWidget implements PreferredSizeWidget {
                       blurStyle: BlurStyle.outer),
                 ],
               ),
-              padding: EdgeInsets.only(bottom: bottomPadding + 14, top: 4),
+              padding: EdgeInsets.only(bottom: bottomPadding + 14, top: 3),
               child: Semantics(
                 explicitChildNodes: true,
                 child: Row(
