@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ipbc_palmas/app/lyric/infra/converts/json_to_verse.dart';
 import 'package:intl/intl.dart';
+
+import 'package:ipbc_palmas/app/lyric/infra/converts/json_to_verse.dart';
+
 import '../../domain/entities/lyric_entity.dart';
 import '../../domain/entities/verse_entity.dart';
 
@@ -44,7 +46,7 @@ class LyricModel extends LyricEntity {
 //TODO: ler a lista de versos que vem dentro do objeto lyrics e ja retornar essa lista
   static LyricEntity fromMap(dynamic json) {
     return LyricEntity(
-      albumCover: json['album-cover'],
+      albumCover: json['albumCover'],
       id: json['id'],
       createAt: DateFormat('dd/MM/yyyy, HH:mm')
           .format((json['createAt'] as Timestamp).toDate()),

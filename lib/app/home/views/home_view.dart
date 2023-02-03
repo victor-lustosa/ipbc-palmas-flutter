@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:ipbc_palmas/app/home/views/weekend_lyrics_routers.dart';
 import 'package:ipbc_palmas/app/lyric/presentation/views/offering_view.dart';
 import '../../lyric/presentation/views/lyrics_list_view.dart';
+import '../../shared/configs/app_routes.dart';
 import '../../shared/layout/bottom-bar/cupertino/cupertino_bottom_bar_widget.dart';
 import '../../shared/layout/bottom-bar/material/material_bottom_bar_widget.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +55,7 @@ class _HomeViewState extends State<HomeView> {
             );
           },
           children: const [
-            WeekdendLyricsRouters(),
+            WeekdendLyricsRoutes(),
             LyricsListView(),
             OfferingView(),
           ],

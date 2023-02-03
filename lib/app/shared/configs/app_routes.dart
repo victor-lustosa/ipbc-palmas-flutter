@@ -1,9 +1,12 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/lyric/domain/entities/lyric_entity.dart';
-import 'package:ipbc_palmas/app/lyric/presentation/views/lyric_view.dart';
+
+import '../../lyric/domain/entities/lyric_entity.dart';
+import '../../lyric/presentation/views/chosen_lyrics_list_view.dart';
+import '../../lyric/presentation/views/lyric_view.dart';
+import '../../lyric/presentation/views/weekend_lyrics_list_view.dart';
 
 class AppRoutes {
   static const String initialRoute = "/";
@@ -36,11 +39,84 @@ class AppRoutes {
         }
 
       default:
-        return _unknownRoute();
+        return UnknownRoute._get();
     }
   }
+}
 
-  static Route<dynamic> _unknownRoute() {
+class WeekdendLyricsRoutes extends StatefulWidget {
+  const WeekdendLyricsRoutes({super.key});
+
+  @override
+  State<WeekdendLyricsRoutes> createState() => _WeekendLyricsRoutesState();
+}
+
+class _WeekendLyricsRoutesState extends State<WeekdendLyricsRoutes> {
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Navigator(
+      key: _navigatorKey,
+      onGenerateRoute: (RouteSettings settings) {
+        switch (settings.name) {
+          case AppRoutes.initialRoute:
+            if (Platform.isIOS) {
+              return CupertinoPageRoute(
+                builder: (_) => const CupertinoPageScaffold(
+                  child: WeekendLyricsListView(),
+                ),
+              );
+            } else {
+              return MaterialPageRoute(
+                settings: settings,
+                builder: (_) => const WeekendLyricsListView(),
+              );
+            }
+          case AppRoutes.chosenLyricsRoute:
+            if (Platform.isIOS) {
+              return CupertinoPageRoute(
+                builder: (_) => CupertinoPageScaffold(
+                  child: ChosenLyricsListView(
+                    url: (settings.arguments as WeekendModel).url,
+                    heading: (settings.arguments as WeekendModel).heading,
+                  ),
+                ),
+              );
+            } else {
+              return MaterialPageRoute(
+                settings: settings,
+                builder: (_) => ChosenLyricsListView(
+                  url: (settings.arguments as WeekendModel).url,
+                  heading: (settings.arguments as WeekendModel).heading,
+                ),
+              );
+            }
+          case AppRoutes.lyricRoute:
+            if (Platform.isIOS) {
+              return CupertinoPageRoute(
+                builder: (_) => CupertinoPageScaffold(
+                  child:
+                      LyricView(lyricEntity: settings.arguments as LyricEntity),
+                ),
+              );
+            } else {
+              return MaterialPageRoute(
+                settings: settings,
+                builder: (_) =>
+                    LyricView(lyricEntity: settings.arguments as LyricEntity),
+              );
+            }
+          default:
+            return UnknownRoute._get();
+        }
+      },
+    );
+  }
+}
+
+class UnknownRoute {
+  static Route<dynamic> _get() {
     return MaterialPageRoute(
       builder: (_) {
         return Scaffold(
