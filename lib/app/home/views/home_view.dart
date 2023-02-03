@@ -48,9 +48,11 @@ class _HomeViewState extends State<HomeView> {
         child: PageView(
           controller: pageViewController,
           onPageChanged: (index) {
-            setState(() {
-              selectedIndex = index;
-            });
+            setState(
+              () {
+                selectedIndex = index;
+              },
+            );
           },
           children: const [
             WeekdendLyricsRouters(),

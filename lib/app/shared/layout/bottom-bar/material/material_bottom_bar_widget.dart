@@ -1,8 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BottomNavigationBar;
 import 'package:ipbc_palmas/app/shared/mixins/buttons_bar_mixin.dart';
 
 import '../../../configs/app_configs.dart';
+import 'custom_bottom_navigation_bar.dart';
 
 class MaterialBottomBarWidget extends StatefulWidget {
   final int selectedIndex;
@@ -29,9 +30,9 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 7.0),
+      padding: const EdgeInsets.only(bottom: 4.0),
       child: Container(
-        height: 50,
+        height: 55,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
             topRight: Radius.circular(22),

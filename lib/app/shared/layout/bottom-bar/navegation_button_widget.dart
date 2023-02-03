@@ -7,14 +7,14 @@ class NavegationButtonWidget extends StatelessWidget {
       {super.key, double? size, this.color, required this.iconName})
       : size = size ?? 23.0;
 
-  final double size;
+  final double? size;
   final Color? color;
   final String iconName;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: Platform.isIOS ? 0 : 2.3),
+      padding: EdgeInsets.only(bottom: Platform.isIOS ? 0 : 1.3),
       child: SizedBox(
         width: size,
         height: size,

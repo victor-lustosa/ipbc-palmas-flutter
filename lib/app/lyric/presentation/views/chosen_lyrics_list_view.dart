@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../shared/components/back-button/back_button_widget.dart';
@@ -6,6 +7,7 @@ import '../../../shared/layout/top-bar/main_top_bar_widget.dart';
 import '../../domain/entities/lyric_entity.dart';
 import '../blocs/weekend_lyrics_bloc.dart';
 import '../components/lyrics_list_widget.dart';
+import 'dart:io';
 
 class ChosenLyricsListView extends StatefulWidget {
   const ChosenLyricsListView(
@@ -60,28 +62,37 @@ class _ChosenLyricsListViewState extends State<ChosenLyricsListView> {
                     children: [
                       const MainTopBarWidget(),
                       const Padding(
-                        padding: EdgeInsets.only(top: 10.0),
+                        padding: EdgeInsets.only(top: 15.0),
                         child: Align(
                           alignment: Alignment(-0.97, 0),
                           child: BackButtonWidget(
+                            iOSIcon: CupertinoIcons.chevron_back,
+                            androidIcon: Icons.arrow_back_rounded,
                             color: AppColors.darkGreen,
                             size: 30,
                           ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 24.0),
+                        padding: EdgeInsets.only(top: Platform.isIOS ? 24 : 20),
                         child: Align(
-                          alignment: const Alignment(-0.74, 0),
-                          child: Text(
-                            "Músicas de ${widget.heading}.",
-                            style: AppFonts.headline,
+                          alignment: Alignment(Platform.isIOS ? -0.4 : -0.3, 0),
+                          child: SizedBox(
+                            height: 25,
+                            width: 350,
+                            child: Align(
+                              alignment: const Alignment(-1, 0),
+                              child: Text(
+                                "Músicas de ${widget.heading}.",
+                                style: AppFonts.headline,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(
-                          top: 15.0,
+                        padding: EdgeInsets.only(
+                          top: Platform.isIOS ? 16.0 : 11,
                         ),
                         child: LyricsListWidget(
                           lyricsList: lyricsFetched,

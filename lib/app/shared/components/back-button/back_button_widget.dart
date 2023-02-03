@@ -10,10 +10,14 @@ class BackButtonWidget extends StatelessWidget {
       required this.size,
       this.width,
       required this.color,
+      required this.iOSIcon,
+      required this.androidIcon,
       this.arguments})
       : super(key: key);
   final double size;
   final double? width;
+  final IconData? iOSIcon;
+  final IconData? androidIcon;
   final Color? color;
   final dynamic arguments;
   @override
@@ -24,7 +28,7 @@ class BackButtonWidget extends StatelessWidget {
             child: Icon(
               size: size,
               color: color,
-              CupertinoIcons.chevron_back,
+              iOSIcon,
             ),
             onPressed: () => Navigator.pop(
               context,
@@ -38,7 +42,7 @@ class BackButtonWidget extends StatelessWidget {
             ),
             icon: Icon(
               size: size,
-              Icons.arrow_back_rounded,
+              androidIcon,
               color: AppColors.darkGreen,
             ),
           );

@@ -29,7 +29,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
         child: ListView.separated(
           separatorBuilder: (BuildContext context, int index) {
             return const SizedBox(
-              height: 2,
+              height: 4,
             );
           },
           scrollDirection: Axis.vertical,
@@ -89,7 +89,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                 ),
                 title: Padding(
                   padding: const EdgeInsets.only(
-                    bottom: 6,
+                    bottom: 4,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

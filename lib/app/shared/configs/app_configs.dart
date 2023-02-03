@@ -20,7 +20,7 @@ class AppColors {
 class AppFonts {
   static TextStyle? subtitle = GoogleFonts.inter(
     fontSize: 15,
-    color: Colors.black45,
+    color: const Color(0xFF444446),
   );
   static TextStyle? headHome = GoogleFonts.inter(
     fontSize: 24,
@@ -78,8 +78,8 @@ class AppFonts {
     fontSize: 10,
   );
   static TextStyle? lyricTile = GoogleFonts.inter(
-    color: Colors.black,
-    fontSize: 16.5,
+    color: const Color(0xFF363638),
+    fontSize: 17,
   );
   static TextStyle? titleLyricView = GoogleFonts.inter(
     color: const Color(0xFF363638),
@@ -99,7 +99,7 @@ class AppFonts {
   static TextStyle? headline = GoogleFonts.inter(
     color: const Color(0xFF444446),
     fontWeight: FontWeight.w500,
-    fontSize: 17,
+    fontSize: 18,
   );
   static TextStyle? headlineLyrics = GoogleFonts.inter(
     color: const Color(0xFF444446),
@@ -107,8 +107,9 @@ class AppFonts {
     fontSize: 19,
   );
   static TextStyle? h2 = GoogleFonts.inter(
-    color: AppColors.black,
-    fontSize: 25,
+    color: const Color(0xFF444446),
+    fontWeight: FontWeight.w500,
+    fontSize: 21,
   );
   static TextStyle? bodyPlaceholder = GoogleFonts.inter(
     color: const Color(0xFFAEAEB2),

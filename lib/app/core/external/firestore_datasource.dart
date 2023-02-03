@@ -29,9 +29,15 @@ class FirestoreDatasource
           .collection(params[0])
           .doc(params[1])
           .collection(params[2])
+          .orderBy("createAt", descending: true)
+          .limit(20)
           .snapshots();
     } else {
-      snapshot = _firestore.collection(params[0]).snapshots();
+      snapshot = _firestore
+          .collection(params[0])
+          .orderBy("createAt", descending: true)
+          .limit(20)
+          .snapshots();
     }
     return snapshot.map((entity) => entity.docs).map(_convert);
   }
