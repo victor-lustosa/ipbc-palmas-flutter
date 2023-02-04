@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../lyric/domain/entities/lyric_entity.dart';
-import '../../lyric/presentation/views/chosen_lyrics_list_view.dart';
+import '../../lyric/infra/models/weekend_dto.dart';
+import '../../lyric/presentation/views/liturgy_view.dart';
 import '../../lyric/presentation/views/lyric_view.dart';
 import '../../lyric/presentation/views/weekend_lyrics_list_view.dart';
 
@@ -77,18 +78,16 @@ class _WeekendLyricsRoutesState extends State<WeekdendLyricsRoutes> {
             if (Platform.isIOS) {
               return CupertinoPageRoute(
                 builder: (_) => CupertinoPageScaffold(
-                  child: ChosenLyricsListView(
-                    url: (settings.arguments as WeekendModel).url,
-                    heading: (settings.arguments as WeekendModel).heading,
+                  child: LiturgyView(
+                    weekendDTO: (settings.arguments as WeekendDTO),
                   ),
                 ),
               );
             } else {
               return MaterialPageRoute(
                 settings: settings,
-                builder: (_) => ChosenLyricsListView(
-                  url: (settings.arguments as WeekendModel).url,
-                  heading: (settings.arguments as WeekendModel).heading,
+                builder: (_) => LiturgyView(
+                  weekendDTO: (settings.arguments as WeekendDTO),
                 ),
               );
             }

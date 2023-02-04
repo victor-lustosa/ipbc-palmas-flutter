@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
-import 'package:ipbc_palmas/app/lyric/infra/converts/json_to_verse.dart';
+import '../../infra/converts/json_to_verse.dart';
 
 import '../../domain/entities/lyric_entity.dart';
 import '../../domain/entities/verse_entity.dart';

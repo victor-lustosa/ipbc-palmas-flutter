@@ -1,4 +1,4 @@
-import 'package:ipbc_palmas/app/lyric/infra/models/verse_dto.dart';
+import '../../infra/models/verse_dto.dart';
 
 class LyricDTO {
   final List<VerseDTO> versesList;

@@ -6,8 +6,13 @@ class AppColors {
   static const Color lightBlue = Color(0xFF5D9CFB);
   static const Color lightRed = Color(0xFFD15858);
   static const Color lightGreen = Color(0xFF4EB798);
+  static const Color timelinePrimary = Color(0xFF444446);
+  static const Color timelineSecondary = Color(0xFF545456);
+  static const Color timelineCircleGreen = Color(0xFF00A876);
+  static const Color timelineGuideTGreen = Color.fromARGB(100, 163, 200, 189);
   static const Color tooltipGreen = Color(0xFF00E8A2);
-  static const Color darkGreen = Color(0xFF005B40);
+  static const Color darkGreen = Color.fromARGB(255, 0, 83, 58);
+  static const Color badgeGreen = Color(0xFFE4F5F0);
   static const Color white = Color(0xFFFFFFFF);
   static const Color darkBlue = Color(0xFF007AFF);
   static const Color black = Color(0xFF171717);
@@ -103,6 +108,11 @@ class AppFonts {
     color: const Color(0xFF444446),
     fontWeight: FontWeight.w500,
     fontSize: 18,
+  );
+  static TextStyle? liturgyBadge = GoogleFonts.inter(
+    color: AppColors.darkGreen,
+    fontWeight: FontWeight.w400,
+    fontSize: 13,
   );
   static TextStyle? headlineLyrics = GoogleFonts.inter(
     color: const Color(0xFF444446),

@@ -7,13 +7,7 @@ import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
 import 'dart:io';
 
-class WeekendModel {
-  const WeekendModel(
-      {required this.title, required this.url, required this.heading});
-  final String title;
-  final String heading;
-  final String url;
-}
+import '../../infra/models/weekend_dto.dart';
 
 class WeekendLyricsListView extends StatefulWidget {
   const WeekendLyricsListView({super.key});
@@ -24,16 +18,16 @@ class WeekendLyricsListView extends StatefulWidget {
 
 class _WeekendLyricsListViewState extends State<WeekendLyricsListView>
     with AutomaticKeepAliveClientMixin {
-  final List<WeekendModel> weekendLyrics = const [
-    WeekendModel(
+  final List<WeekendDTO> weekendLyrics = const [
+    WeekendDTO(
         title: 'Sábado',
         heading: 'sábado',
         url: 'weekday-lyrics/raVXYTMhxE622P75AUzv/evening-saturday'),
-    WeekendModel(
+    WeekendDTO(
         title: 'Domingo pela manhã',
         heading: 'domingo pela manhã',
         url: 'weekday-lyrics/raVXYTMhxE622P75AUzv/morning-sunday'),
-    WeekendModel(
+    WeekendDTO(
         title: 'Domingo à noite',
         heading: 'domingo à noite',
         url: 'weekday-lyrics/raVXYTMhxE622P75AUzv/evening-sunday'),
@@ -148,7 +142,7 @@ class _WeekendLyricsListViewState extends State<WeekendLyricsListView>
                           trailing: NextButtonWidget(
                             size: Platform.isIOS ? 29 : 35,
                             route: AppRoutes.lyricRoute,
-                            arguments: weekendLyrics[index].url,
+                            arguments: weekendLyrics[index],
                             color: AppColors.white,
                           ),
                           onTap: () {

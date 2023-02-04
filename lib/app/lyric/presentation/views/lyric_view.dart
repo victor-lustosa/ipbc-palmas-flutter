@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/shared/components/back-button/back_button_widget.dart';
-import 'package:ipbc_palmas/app/shared/mixins/launch_url_mixin.dart';
+import '../../../shared/components/back-button/back_button_widget.dart';
+import '../../../shared/mixins/launch_url_mixin.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../domain/entities/lyric_entity.dart';
 import 'dart:io';
@@ -187,9 +187,8 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 40.0, left: 0, bottom: 30),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.85,
+                padding: const EdgeInsets.only(top: 60.0, left: 0, bottom: 20),
+                child: Center(
                   child: RichText(
                     text: TextSpan(
                       children: [
@@ -225,9 +224,9 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      child: const Image(
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 5.0),
+                      child: Image(
                         width: 90,
                         height: 35,
                         fit: BoxFit.contain,
