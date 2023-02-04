@@ -2,14 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// ignore_for_file: implementation_imports, unused_import, unnecessary_null_comparison
+
 import 'dart:collection' show Queue;
 import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
+// ignore: depend_on_referenced_packages
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 import 'package:flutter/src/cupertino/colors.dart';
 import 'package:flutter/src/cupertino/localizations.dart';
-import 'package:flutter/src/cupertino/theme.dart';
 import 'package:flutter/src/material/bottom_navigation_bar_theme.dart';
 import 'package:flutter/src/material/constants.dart';
 import 'package:flutter/src/material/debug.dart';

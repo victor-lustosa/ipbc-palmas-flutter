@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../shared/configs/app_configs.dart';
-import '../../components/back-button/back_button_widget.dart';
 
 class TitleTopBarWidget extends StatelessWidget {
   const TitleTopBarWidget({super.key, required this.title});

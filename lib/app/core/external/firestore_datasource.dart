@@ -44,18 +44,21 @@ class FirestoreDatasource
 
   @override
   Future<void> add(String url, data) {
+    // ignore: todo
     // TODO: implement add
     throw UnimplementedError();
   }
 
   @override
   Future<void> update(String url, id) {
+    // ignore: todo
     // TODO: implement update
     throw UnimplementedError();
   }
 
   @override
   Future<void> delete(String url, id) {
+    // ignore: todo
     // TODO: implement delete
     throw UnimplementedError();
   }

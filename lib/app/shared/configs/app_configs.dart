@@ -14,7 +14,10 @@ class AppColors {
   static const Color darkGrey = Color(0xFF5F5F5F);
   static const Color lightGrey = Color(0xFFEBEBEB);
   static const Color grey = Color(0xFFA3A3A3);
-  static const Color secondLightGrey = Color(0xFFF3F3F3);
+  //buscar no github esse valor
+  static const Color secondLightGrey = Color.fromARGB(255, 242, 242, 242);
+
+  static const Color logoGrey = Color.fromARGB(108, 238, 238, 238);
 }
 
 class AppFonts {
@@ -116,6 +119,21 @@ class AppFonts {
     fontWeight: FontWeight.w200,
     fontSize: 12.5,
   );
+  static TextStyle? copyright = GoogleFonts.inter(
+    color: const Color(0xFFAEAEB2),
+    fontWeight: FontWeight.w300,
+    fontSize: 13,
+  );
+  static TextStyle? learnMore = GoogleFonts.inter(
+    color: AppColors.darkGreen,
+    fontWeight: FontWeight.w300,
+    fontSize: 13,
+  );
+  static TextStyle? logoVagalume = GoogleFonts.inter(
+    color: AppColors.darkGreen,
+    fontWeight: FontWeight.w400,
+    fontSize: 13,
+  );
 }
 
 class AppIcons {
@@ -138,9 +156,10 @@ class AppIcons {
 }
 
 class AppImages {
+  static const String vagalumeImage = 'assets/images/vagalume_image.png';
   static final listImagesWeekend = [
-    'assets/images/sabado.png',
-    'assets/images/domingo-manha.jpg',
-    'assets/images/domingo-noite.png'
+    'assets/images/evening_saturday.png',
+    'assets/images/morning_sunday.jpg',
+    'assets/images/evening_sunday.png'
   ];
 }

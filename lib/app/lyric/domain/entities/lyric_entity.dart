@@ -8,11 +8,6 @@ class LyricEntity {
   final String createAt;
   final List<VerseEntity> verses;
 
-  @override
-  String toString() {
-    return 'LyricEntity{id: $id, title: $title, group: $group, verses: $verses}';
-  }
-
   LyricEntity(
       {required this.albumCover,
       required this.id,

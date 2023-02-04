@@ -1,14 +1,26 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:ipbc_palmas/app/shared/components/back-button/back_button_widget.dart';
+import 'package:ipbc_palmas/app/shared/mixins/launch_url_mixin.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../domain/entities/lyric_entity.dart';
 import 'dart:io';
 
-class LyricView extends StatelessWidget {
+class LyricView extends StatefulWidget {
   const LyricView({super.key, required this.lyricEntity});
 
   final LyricEntity lyricEntity;
+
+  @override
+  State<LyricView> createState() => _LyricViewState();
+}
+
+class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
+  final Uri toLaunch =
+      Uri(scheme: 'https', host: 'api.vagalume.com.br', path: 'terms/');
+  // ignore: unused_field
+  Future<void>? _launched;
 
   @override
   Widget build(BuildContext context) {
@@ -26,25 +38,26 @@ class LyricView extends StatelessWidget {
                     Align(
                       alignment: const Alignment(-0.86, 0),
                       child: Padding(
-                          padding: const EdgeInsets.only(
-                            top: 20,
+                        padding: const EdgeInsets.only(
+                          top: 20,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(11),
                           ),
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(11),
-                            ),
-                            child: Container(
-                              color: AppColors.lightGrey,
-                              width: 75,
-                              height: 75,
-                            ),
-                          )),
+                          child: Container(
+                            color: AppColors.lightGrey,
+                            width: 75,
+                            height: 75,
+                          ),
+                        ),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 22.0),
                       child: Align(
                         alignment: Alignment(Platform.isIOS ? 0.01 : 0.1, 0),
-                        child: Container(
+                        child: SizedBox(
                           height: 55,
                           width: 200,
                           /*decoration: BoxDecoration(
@@ -57,12 +70,12 @@ class LyricView extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 6),
                                   child: Text(
-                                    lyricEntity.title,
+                                    widget.lyricEntity.title,
                                     style: AppFonts.h2,
                                   ),
                                 ),
                                 Text(
-                                  lyricEntity.group,
+                                  widget.lyricEntity.group,
                                   style: AppFonts.subtitle,
                                 ),
                               ],
@@ -72,9 +85,9 @@ class LyricView extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(right: 0, top: 21),
+                      padding: const EdgeInsets.only(right: 0, top: 21),
                       child: Align(
-                        alignment: Alignment(0.9, 0),
+                        alignment: const Alignment(0.9, 0),
                         child: SizedBox(
                           height: 50,
                           width: 50,
@@ -95,7 +108,7 @@ class LyricView extends StatelessWidget {
                     //top: 15.0, sem a validacao de se é refrao ou nao
                     top: 30),
                 child: ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) {
+                  separatorBuilder: (__, _) {
                     return const SizedBox(
                       height: 0,
                     );
@@ -103,10 +116,10 @@ class LyricView extends StatelessWidget {
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: lyricEntity.verses.length,
-                  itemBuilder: (context, index) {
+                  itemCount: widget.lyricEntity.verses.length,
+                  itemBuilder: (_, index) {
                     return Padding(
-                      padding: lyricEntity.verses[index].isChorus == true
+                      padding: widget.lyricEntity.verses[index].isChorus == true
                           ? const EdgeInsets.only(
                               left: 18.0,
                               right: 18,
@@ -116,50 +129,52 @@ class LyricView extends StatelessWidget {
                               right: 0.0,
                             ),
                       child: Container(
-                        alignment: lyricEntity.verses[index].isChorus == true
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
-                        decoration: lyricEntity.verses[index].isChorus == true
-                            ? const BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                                //color: Color.fromARGB(143, 210, 238, 229),
-                                color: Color.fromARGB(143, 196, 239, 225),
-                              )
-                            : const BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
+                        alignment:
+                            widget.lyricEntity.verses[index].isChorus == true
+                                ? Alignment.centerRight
+                                : Alignment.centerLeft,
+                        decoration:
+                            widget.lyricEntity.verses[index].isChorus == true
+                                ? const BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
+                                    //color: Color.fromARGB(143, 210, 238, 229),
+                                    color: Color.fromARGB(143, 196, 239, 225),
+                                  )
+                                : const BoxDecoration(
+                                    color: AppColors.white,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
+                                  ),
                         child: Padding(
                           //TODO: Averiguar se é possivel um refrao ser a primeira caixinha
                           padding: EdgeInsets.only(
-                              top: lyricEntity.verses[index].isChorus == true
+                              top: widget.lyricEntity.verses[index].isChorus ==
+                                      true
                                   ? 20
                                   : 0,
                               bottom: 20,
                               right: 5),
                           child: ListView.separated(
-                            separatorBuilder:
-                                (BuildContext context, int index) {
+                            separatorBuilder: (__, _) {
                               return const SizedBox(
                                 height: 10,
                               );
                             },
-                            itemCount:
-                                lyricEntity.verses[index].versesList.length,
+                            itemCount: widget
+                                .lyricEntity.verses[index].versesList.length,
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: ((context, position) {
+                            itemBuilder: ((__, position) {
                               return Padding(
                                 padding: const EdgeInsets.only(
                                     left: 18.0, top: 2, bottom: 2),
                                 child: Text(
-                                  lyricEntity
-                                      .verses[index].versesList[position],
+                                  widget.lyricEntity.verses[index]
+                                      .versesList[position],
                                   style: AppFonts.lyricTile,
                                 ),
                               );
@@ -169,6 +184,66 @@ class LyricView extends StatelessWidget {
                       ),
                     );
                   },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 40.0, left: 0, bottom: 30),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text:
+                              "Esse sistema não possui fins lucrativos sobre a obra representada a cima. Todos os direitos reservados aos autores da letra. ",
+                          style: AppFonts.copyright,
+                        ),
+                        TextSpan(
+                          style: AppFonts.learnMore,
+                          text: "Saiba mais.",
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => setState(
+                                  () {
+                                    _launched = launchInWebViewOrVC(toLaunch);
+                                  },
+                                ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                height: 77,
+                width: 145,
+                decoration: const BoxDecoration(
+                  color: AppColors.logoGrey,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      child: const Image(
+                        width: 90,
+                        height: 35,
+                        fit: BoxFit.contain,
+                        image: AssetImage(
+                          AppImages.vagalumeImage,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 3.0),
+                      child: Text(
+                        'Lyrics by Vagalume',
+                        style: AppFonts.logoVagalume,
+                      ),
+                    )
+                  ],
                 ),
               ),
             ],

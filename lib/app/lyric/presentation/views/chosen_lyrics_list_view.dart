@@ -46,8 +46,7 @@ class _ChosenLyricsListViewState extends State<ChosenLyricsListView> {
             );
           } else if (state is SuccessfullyFetchedWeekendLyricsState) {
             lyricsFetched = state.entities;
-            //TODO: autor, ano de produçao
-            //TODO: ADICIONAR MENSAGEM DE NENHUM RESULTADO ENCONTRADO
+
             return SafeArea(
               child: SingleChildScrollView(
                 child: RefreshIndicator(
@@ -104,7 +103,7 @@ class _ChosenLyricsListViewState extends State<ChosenLyricsListView> {
               ),
             );
           } else {
-            return Center(
+            return const Center(
               child: Text("erro na tela [chosen lyrics list view]"),
             );
           }

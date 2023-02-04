@@ -81,7 +81,9 @@ class _LyricsListViewState extends State<LyricsListView>
                   lyricsFiltered = lyricsFetched;
                 }
               }
+              // ignore: todo
               //TODO: autor, ano de produçao
+              // ignore: todo
               //TODO: ADICIONAR MENSAGEM DE NENHUM RESULTADO ENCONTRADO
               return SafeArea(
                 child: SingleChildScrollView(

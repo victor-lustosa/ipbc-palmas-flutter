@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// ignore_for_file: unnecessary_null_comparison, implementation_imports
+
 import 'package:flutter/widgets.dart';
 import 'custom_bottom_tab_bar.dart';
 import 'package:flutter/src/cupertino/colors.dart';
@@ -137,9 +139,9 @@ class CupertinoTabScaffold extends StatefulWidget {
   })  : assert(tabBar != null),
         assert(tabBuilder != null),
         assert(
-        controller == null || controller.index < tabBar.items.length,
-        "The CupertinoTabController's current index ${controller.index} is "
-            'out of bounds for the tab bar with ${tabBar.items.length} tabs',
+          controller == null || controller.index < tabBar.items.length,
+          "The CupertinoTabController's current index ${controller.index} is "
+          'out of bounds for the tab bar with ${tabBar.items.length} tabs',
         );
 
   /// The [tabBar] is a [CupertinoTabBar] drawn at the bottom of the screen
@@ -286,9 +288,9 @@ class _CupertinoTabScaffoldState extends State<CupertinoTabScaffold>
 
   void _onCurrentIndexChange() {
     assert(
-    _controller.index >= 0 && _controller.index < widget.tabBar.items.length,
-    "The $runtimeType's current index ${_controller.index} is "
-        'out of bounds for the tab bar with ${widget.tabBar.items.length} tabs',
+      _controller.index >= 0 && _controller.index < widget.tabBar.items.length,
+      "The $runtimeType's current index ${_controller.index} is "
+      'out of bounds for the tab bar with ${widget.tabBar.items.length} tabs',
     );
 
     // The value of `_controller.index` has already been updated at this point.
@@ -334,6 +336,7 @@ class _CupertinoTabScaffoldState extends State<CupertinoTabScaffold>
         (!widget.resizeToAvoidBottomInset ||
             widget.tabBar.preferredSize.height >
                 existingMediaQuery.viewInsets.bottom)) {
+      // ignore: todo
       // TODO(xster): Use real size after partial layout instead of preferred size.
       // https://github.com/flutter/flutter/issues/12912
       final double bottomPadding = widget.tabBar.preferredSize.height +
@@ -365,7 +368,7 @@ class _CupertinoTabScaffoldState extends State<CupertinoTabScaffold>
     return DecoratedBox(
       decoration: BoxDecoration(
         color: CupertinoDynamicColor.maybeResolve(
-            widget.backgroundColor, context) ??
+                widget.backgroundColor, context) ??
             CupertinoTheme.of(context).scaffoldBackgroundColor,
       ),
       child: Stack(
@@ -474,9 +477,9 @@ class _TabSwitchingViewState extends State<_TabSwitchingView> {
         tabFocusNodes.addAll(
           List<FocusScopeNode>.generate(
             widget.tabCount - tabFocusNodes.length,
-                (int index) => FocusScopeNode(
+            (int index) => FocusScopeNode(
                 debugLabel:
-                '$CupertinoTabScaffold Tab ${index + tabFocusNodes.length}'),
+                    '$CupertinoTabScaffold Tab ${index + tabFocusNodes.length}'),
           ),
         );
       }

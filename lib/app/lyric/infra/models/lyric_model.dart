@@ -1,5 +1,7 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 import 'package:ipbc_palmas/app/lyric/infra/converts/json_to_verse.dart';
 
@@ -43,7 +45,6 @@ class LyricModel extends LyricEntity {
     );
   }
 
-//TODO: ler a lista de versos que vem dentro do objeto lyrics e ja retornar essa lista
   static LyricEntity fromMap(dynamic json) {
     return LyricEntity(
       albumCover: json['albumCover'],

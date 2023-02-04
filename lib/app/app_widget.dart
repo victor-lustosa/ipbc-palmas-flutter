@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home/views/home_view.dart';
 import 'lyric/lyric_module.dart';
-import 'lyric/presentation/views/chosen_lyrics_list_view.dart';
-import 'lyric/presentation/views/offering_view.dart';
 import 'shared/configs/no_glow_behavior.dart';
-import 'lyric/presentation/views/lyrics_list_view.dart';
 import 'shared/configs/app_configs.dart';
 import 'shared/configs/app_routes.dart';
 import 'package:provider/provider.dart';

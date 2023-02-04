@@ -44,6 +44,7 @@ dependencies:
   firebase_storage: ^11.0.4 #Armazenamento arquivos
   cloud_firestore: ^4.0.4 #Banco de dados
   flutter_svg: ^1.1.6
+  url_launcher: ^6.1.8
 
 dev_dependencies:
   flutter_test:

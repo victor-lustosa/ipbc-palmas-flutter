@@ -31,9 +31,9 @@ class CarouselState extends State<Carousel> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-        //  decoration:
-        //      BoxDecoration(border: Border.all(width: 1, color: Colors.black)),
+        SizedBox(
+          //  decoration:
+          //      BoxDecoration(border: Border.all(width: 1, color: Colors.black)),
           width: MediaQuery.of(context).size.width,
           height: 200,
           child: PageView.builder(
@@ -59,13 +59,14 @@ class CarouselState extends State<Carousel> {
                 child: Material(
                     borderRadius: const BorderRadius.all(Radius.circular(30)),
                     child: ClipRRect(
-                        borderRadius: const BorderRadius.all(Radius.circular(30)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(30)),
                         child: InkWell(
                           splashColor: Colors.black26,
-                          onTap: (){},
+                          onTap: () {},
                           child: Column(
                             children: [
-                             // Ink.image(image: NetWorkingImage(widget.images[pagePosition]))
+                              // Ink.image(image: NetWorkingImage(widget.images[pagePosition]))
                             ],
                           ),
                         ))),
