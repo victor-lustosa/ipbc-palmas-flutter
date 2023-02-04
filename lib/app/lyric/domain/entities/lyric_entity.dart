@@ -1,4 +1,4 @@
-import 'package:ipbc_palmas/app/lyric/domain/entities/verse_entity.dart';
+import '../../domain/entities/verse_entity.dart';
 
 class LyricEntity {
   final String id;

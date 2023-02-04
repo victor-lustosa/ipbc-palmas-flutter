@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/shared/configs/app_configs.dart';
+import '../../../shared/configs/app_configs.dart';
 
 class Carousel extends StatefulWidget {
   final List<String> images;
@@ -65,7 +65,7 @@ class CarouselState extends State<Carousel> {
                           splashColor: Colors.black26,
                           onTap: () {},
                           child: Column(
-                            children: [
+                            children: const [
                               // Ink.image(image: NetWorkingImage(widget.images[pagePosition]))
                             ],
                           ),

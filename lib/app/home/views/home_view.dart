@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:ipbc_palmas/app/lyric/presentation/views/offering_view.dart';
+import '../../lyric/presentation/views/offering_view.dart';
 import '../../lyric/presentation/views/lyrics_list_view.dart';
 import '../../shared/configs/app_routes.dart';
 import '../../shared/layout/bottom-bar/cupertino/cupertino_bottom_bar_widget.dart';

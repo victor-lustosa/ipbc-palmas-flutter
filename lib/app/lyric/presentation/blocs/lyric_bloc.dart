@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ipbc_palmas/app/lyric/domain/use-cases/lyrics_use_cases.dart';
-
+import '../../domain/use-cases/lyrics_use_cases.dart';
 import '../../domain/entities/lyric_entity.dart';
 
 class LyricBloc extends Bloc<LyricEvent, LyricState> {

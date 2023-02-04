@@ -18,7 +18,6 @@ class _OfferingViewState extends State<OfferingView> with ClipboardMixin {
 
   @override
   Widget build(BuildContext context) {
-    print(tooltipkey.currentState);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

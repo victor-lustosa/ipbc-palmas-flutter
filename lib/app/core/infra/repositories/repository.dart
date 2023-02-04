@@ -1,11 +1,10 @@
-import 'package:ipbc_palmas/app/core/domain/repositories/repository.dart';
+import '../../../core/domain/repositories/repository.dart';
 
 import '../datasources/datasource.dart';
-abstract class IRepository<T> implements IGetRepository<T>{
 
-}
-class Repository <T> implements IRepository<T>{
+abstract class IRepository<T> implements IGetRepository<T> {}
 
+class Repository<T> implements IRepository<T> {
   Repository({required this.getDatasource});
 
   final IGetDatasource getDatasource;

@@ -149,6 +149,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                     ),
                                   ),
                         child: Padding(
+                          // ignore: todo
                           //TODO: Averiguar se é possivel um refrao ser a primeira caixinha
                           padding: EdgeInsets.only(
                               top: widget.lyricEntity.verses[index].isChorus ==
