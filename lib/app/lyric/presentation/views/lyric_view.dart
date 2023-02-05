@@ -188,27 +188,30 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 60.0, left: 0, bottom: 20),
+                padding: const EdgeInsets.only(top: 60.0, left: 10, bottom: 30),
                 child: Center(
-                  child: RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text:
-                              "Esse sistema não possui fins lucrativos sobre a obra representada a cima. Todos os direitos reservados aos autores da letra. ",
-                          style: AppFonts.copyright,
-                        ),
-                        TextSpan(
-                          style: AppFonts.learnMore,
-                          text: "Saiba mais.",
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () => setState(
-                                  () {
-                                    _launched = launchInWebViewOrVC(toLaunch);
-                                  },
-                                ),
-                        ),
-                      ],
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text:
+                                "  Esse sistema não possui fins lucrativos sobre a obra representada a cima. Todos os direitos reservados aos autores da letra. ",
+                            style: AppFonts.copyright,
+                          ),
+                          TextSpan(
+                            style: AppFonts.learnMore,
+                            text: "Saiba mais.",
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () => setState(
+                                    () {
+                                      _launched = launchInWebViewOrVC(toLaunch);
+                                    },
+                                  ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -246,6 +249,9 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                   ],
                 ),
               ),
+              const SizedBox(
+                height: 35,
+              )
             ],
           ),
         ),

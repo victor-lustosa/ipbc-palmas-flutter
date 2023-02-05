@@ -83,7 +83,7 @@ class AppFonts {
     fontSize: 18,
   );
   static TextStyle? selectedBottomNav = GoogleFonts.inter(
-    fontSize: 10,
+    fontSize: 10.5,
   );
   static TextStyle? lyricTile = GoogleFonts.inter(
     color: const Color(0xFF363638),
@@ -112,7 +112,7 @@ class AppFonts {
   static TextStyle? liturgyBadge = GoogleFonts.inter(
     color: AppColors.darkGreen,
     fontWeight: FontWeight.w400,
-    fontSize: 13,
+    fontSize: Platform.isIOS ? 13 : 12,
   );
   static TextStyle? headlineLyrics = GoogleFonts.inter(
     color: const Color(0xFF444446),

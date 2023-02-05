@@ -108,7 +108,7 @@ class _WeekendLyricsListViewState extends State<WeekendLyricsListView>
                   child: ListView.separated(
                     separatorBuilder: (BuildContext context, int index) {
                       return SizedBox(
-                        height: Platform.isIOS ? 17 : 15,
+                        height: Platform.isIOS ? 17 : 16,
                       );
                     },
                     scrollDirection: Axis.vertical,
@@ -130,8 +130,8 @@ class _WeekendLyricsListViewState extends State<WeekendLyricsListView>
                         ),
                         child: ListTile(
                           contentPadding: EdgeInsets.only(
-                            top: Platform.isIOS ? 13 : 12,
-                            bottom: Platform.isIOS ? 13 : 12,
+                            top: Platform.isIOS ? 13 : 12.2,
+                            bottom: Platform.isIOS ? 13 : 12.2,
                             left: 25,
                             right: 0,
                           ),

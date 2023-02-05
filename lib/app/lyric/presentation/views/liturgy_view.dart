@@ -201,8 +201,7 @@ class _LiturgyViewState extends State<LiturgyView> {
                                                 liturgyList[index].isAdditional,
                                             child: Padding(
                                               padding: const EdgeInsets.only(
-                                                left: 13,
-                                              ),
+                                                  left: 13, top: 2),
                                               child: Text(
                                                 liturgyList[index].additional,
                                                 style: const TextStyle(
@@ -224,7 +223,8 @@ class _LiturgyViewState extends State<LiturgyView> {
                       Padding(
                         padding: EdgeInsets.only(top: Platform.isIOS ? 24 : 20),
                         child: Align(
-                          alignment: Alignment(Platform.isIOS ? -0.4 : -0.3, 0),
+                          alignment:
+                              Alignment(Platform.isIOS ? -0.4 : -0.15, 0),
                           child: SizedBox(
                             height: 25,
                             width: 350,
@@ -246,6 +246,9 @@ class _LiturgyViewState extends State<LiturgyView> {
                           lyricsList: lyricsFetched,
                         ),
                       ),
+                      const SizedBox(
+                        height: 40,
+                      )
                     ],
                   ),
                 ),

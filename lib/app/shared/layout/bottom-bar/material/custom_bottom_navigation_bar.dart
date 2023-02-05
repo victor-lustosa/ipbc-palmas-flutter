@@ -539,7 +539,7 @@ class _BottomNavigationTile extends StatelessWidget {
       mouseCursor: mouseCursor,
       enableFeedback: enableFeedback,
       child: Padding(
-        padding: EdgeInsets.only(top: topPadding, bottom: bottomPadding + 9),
+        padding: EdgeInsets.only(top: topPadding, bottom: bottomPadding + 7),
         child: _Tile(
           layout: layout,
           icon: _TileIcon(

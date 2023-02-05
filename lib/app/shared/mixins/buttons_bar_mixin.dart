@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 import '../configs/app_configs.dart';
 import '../layout/bottom-bar/navegation_button_widget.dart';
 
@@ -23,12 +22,12 @@ class ButtonsBarMixin {
     buttons = menuItensList
         .map((MenuItem menuItem) => BottomNavigationBarItem(
               activeIcon: NavegationButtonWidget(
-                size: Platform.isIOS ? 23 : 22,
+                size: 23,
                 iconName: menuItem.iconData,
                 color: AppColors.darkGreen,
               ),
               icon: NavegationButtonWidget(
-                size: Platform.isIOS ? 23 : 22,
+                size: 23,
                 iconName: menuItem.iconData,
                 color: AppColors.grey,
               ),
