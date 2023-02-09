@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ipbc_palmas/app/lyric/domain/entities/verse_entity.dart';
-import 'package:ipbc_palmas/app/lyric/infra/converts/json_to_verse.dart';
+import 'package:ipbc_palmas/app/lyric/infra/adapters/lyric_adapter.dart';
 
 void main() {
   test('converting json in a verse entity', () {
-    final verse = JsonToVerse.fromMap({
+    final verse = VerseAdapter.fromMap({
       'id': 0,
       'isChorus': true,
       'versesList': [

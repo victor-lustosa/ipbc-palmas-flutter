@@ -1,5 +1,6 @@
+import 'package:ipbc_palmas/app/lyric/infra/adapters/lyric_adapter.dart';
+
 import '../../../core/infra/repositories/repository.dart';
-import '../../infra/models/lyric_model.dart';
 import '../entities/lyric_entity.dart';
 
 abstract class ILyricsUseCases {
@@ -13,7 +14,7 @@ class LyricsUseCases implements ILyricsUseCases {
   LyricsUseCases({required this.repository});
 
   List<LyricEntity> _convert(List<Map> list) {
-    return list.map(LyricModel.fromMap).toList();
+    return list.map(LyricAdapter.fromMap).toList();
   }
 
   @override

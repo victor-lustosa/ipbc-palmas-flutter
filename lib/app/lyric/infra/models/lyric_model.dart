@@ -1,10 +1,5 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart' show DateFormat;
-
-import '../../infra/converts/json_to_verse.dart';
-
 import '../../domain/entities/lyric_entity.dart';
 import '../../domain/entities/verse_entity.dart';
 
@@ -45,19 +40,5 @@ class LyricModel extends LyricEntity {
     );
   }
 
-  static LyricEntity fromMap(dynamic json) {
-    return LyricEntity(
-      albumCover: json['albumCover'],
-      id: json['id'],
-      createAt: DateFormat('dd/MM/yyyy, HH:mm')
-          .format((json['createAt'] as Timestamp).toDate()),
-      title: json['title'],
-      group: json['group'],
-      verses: [
-        if (json.containsKey('verses'))
-          //...(json['verses'] as List).map((verse) => JsonToVerse.fromMap(verse)).toList(),
-          ...(json['verses'] as List).map(JsonToVerse.fromMap).toList(),
-      ],
-    );
-  }
+
 }

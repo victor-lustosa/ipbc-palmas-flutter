@@ -112,7 +112,7 @@ class AppFonts {
   static TextStyle? liturgyBadge = GoogleFonts.inter(
     color: AppColors.darkGreen,
     fontWeight: FontWeight.w400,
-    fontSize: Platform.isIOS ? 13 : 12,
+    fontSize: Platform.isIOS ? 12 : 11,
   );
   static TextStyle? headlineLyrics = GoogleFonts.inter(
     color: const Color(0xFF444446),

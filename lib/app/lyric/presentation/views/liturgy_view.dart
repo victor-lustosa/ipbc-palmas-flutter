@@ -104,7 +104,7 @@ class _LiturgyViewState extends State<LiturgyView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
+                              padding: const EdgeInsets.only(left: 12.0),
                               child: Align(
                                 alignment: const Alignment(-1, 0),
                                 child: Text(
@@ -138,7 +138,6 @@ class _LiturgyViewState extends State<LiturgyView> {
                         ),
                       ),
                       SizedBox(
-                        // color: Colors.cyan,
                         width: MediaQuery.of(context).size.width * 0.955,
                         child: ListView.builder(
                             scrollDirection: Axis.vertical,

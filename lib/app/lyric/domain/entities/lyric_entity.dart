@@ -15,4 +15,9 @@ class LyricEntity {
       required this.createAt,
       required this.group,
       required this.verses});
+
+  @override
+  String toString() {
+    return 'LyricEntity{id: $id, title: $title, group: $group, albumCover: $albumCover, createAt: $createAt, verses: $verses}';
+  }
 }
