@@ -1,89 +1,66 @@
 import 'dart:convert';
 
+import 'package:ipbc_palmas/app/lyric/infra/adapters/verse_adapter.dart';
+
+import 'dtos/verse_dto_adapter.dart';
 import '../../domain/entities/lyric_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart' show DateFormat;
 
-import '../../domain/entities/verse_entity.dart';
-import '../models/lyric_model.dart';
-
 class LyricAdapter {
 
-  static List<LyricModel> listFromJson(String source) => listFromMap(json.decode(source));
-
-  static LyricEntity fromJson(String source) => fromMap(json.decode(source));
-
-  static List<LyricModel> listFromMap(dynamic json) {
-    List<LyricModel> results = [];
-    LyricModel lyricModel = LyricModel.empty();
-    for(int i = 0; i < json['lyrics'].length ; i++){
-      LyricEntity entity = fromMap(json['lyrics'][0]);
-      results.add(lyricModel.copyWith(
-          id:entity.id,
-          title: entity.title,
-          createAt: entity.createAt,
-          group: entity.group,
-          albumCover: entity.albumCover,
-          verses: entity.verses));
-    }
-    return results;
-  }
-  static LyricEntity fromMap(dynamic json) {
+  static LyricEntity fromMap(Map<dynamic, dynamic> json) {
     return LyricEntity(
       albumCover: json['albumCover'],
       id: json['id'],
       createAt: json['createAt'] == ''
           ? ''
           : DateFormat('dd/MM/yyyy, HH:mm')
-              .format((json['createAt'] as Timestamp).toDate()),
+          .format((json['createAt'] as Timestamp).toDate()),
       title: json['title'],
       group: json['group'],
       verses: [
         if (json.containsKey('verses'))
-          //...(json['verses'] as List).map((verse) => JsonToVerse.fromMap(verse)).toList(),
+        //...(json['verses'] as List).map((verse) => JsonToVerse.fromMap(verse)).toList(),
           ...(json['verses'] as List).map(VerseAdapter.fromMap).toList(),
       ],
     );
   }
-
-  static Map<String, dynamic> toMap(LyricEntity data) {
-    return {
-      'id': data.id,
-      'title': data.title,
-      'createAt': data.createAt,
-      'albumCover': data.albumCover,
-      'group': data.group,
-      'verses': VerseAdapter.toMap(data.verses),
-    };
-  }
-}
-
-class VerseAdapter {
-
-  static List verseDecode(dynamic json){
-    List results = [];
-    for(int i = 0; i < json[0].length ; i++){
-      results.add(json[0]['verse$i']);
+  static List<LyricEntity> fromListMap(dynamic json) {
+    List<LyricEntity> lyricsList = [];
+    for (dynamic lyric in json) {
+      lyricsList.add(
+          LyricEntity(
+      albumCover: lyric['albumCover'],
+      id: lyric['id'],
+      createAt: lyric['createAt'] == ''
+          ? ''
+          : DateFormat('dd/MM/yyyy, HH:mm')
+          .format((lyric['createAt'] as Timestamp).toDate()),
+      title: lyric['title'],
+      group: lyric['group'],
+      verses: [
+        if (lyric.containsKey('verses'))
+        //...(json['verses'] as List).map((verse) => JsonToVerse.fromMap(verse)).toList(),
+          ...(lyric['verses'] as List).map(VerseAdapter.fromMap).toList(),
+      ],
+    ));
     }
-    return results;
+    return lyricsList;
   }
-
-  static VerseEntity fromMap(dynamic json) {
-    return VerseEntity(
-      id: json['id'],
-      isChorus: json['isChorus'],
-      versesList: json['versesList'][0]['verse0'] != null ? verseDecode(json['versesList']) : json['versesList'],
-    );
-  }
-
-  static List<Map<String, dynamic>> toMap(List<VerseEntity> data) {
+  static List<Map<String, dynamic>> toListMap(List<LyricEntity> data) {
     return data
         .map((entity) => {
-              'id': entity.id,
-              'title': entity.isChorus,
-              'createAt': entity.versesList,
-            })
+      'id': entity.id,
+      'title': entity.title,
+      'createAt': entity.createAt,
+      'albumCover': entity.albumCover,
+      'group': entity.group,
+      'verses': VerseAdapter.toMapList(entity.verses),
+    })
         .toList();
   }
 }
+
+

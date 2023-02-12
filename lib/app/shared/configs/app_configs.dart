@@ -168,8 +168,8 @@ class AppIcons {
 class AppImages {
   static const String vagalumeImage = 'assets/images/vagalume_image.png';
   static final listImagesWeekend = [
-    'assets/images/evening_saturday.png',
-    'assets/images/morning_sunday.jpg',
-    'assets/images/evening_sunday.png'
+    'assets/images/saturday_evening.png',
+    'assets/images/sunday_morning.jpg',
+    'assets/images/sunday_evening.png'
   ];
 }

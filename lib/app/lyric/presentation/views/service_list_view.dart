@@ -7,7 +7,7 @@ import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
 import 'dart:io';
 
-import '../../infra/models/weekend_dto.dart';
+import '../../infra/models/dtos/service_param.dart';
 
 class WeekendLyricsListView extends StatefulWidget {
   const WeekendLyricsListView({super.key});
@@ -18,19 +18,19 @@ class WeekendLyricsListView extends StatefulWidget {
 
 class _WeekendLyricsListViewState extends State<WeekendLyricsListView>
     with AutomaticKeepAliveClientMixin {
-  final List<WeekendDTO> weekendLyrics = const [
-    WeekendDTO(
+  final List<ServiceParam> weekendLyrics = const [
+    ServiceParam(
         title: 'Sábado',
         heading: 'sábado',
-        url: 'weekday-lyrics/raVXYTMhxE622P75AUzv/evening-saturday'),
-    WeekendDTO(
+        url: 'services/vthPis6Awr1bNrsZl8KL/saturday-evening'),
+    ServiceParam(
         title: 'Domingo pela manhã',
         heading: 'domingo pela manhã',
-        url: 'weekday-lyrics/raVXYTMhxE622P75AUzv/morning-sunday'),
-    WeekendDTO(
+        url: 'services/vthPis6Awr1bNrsZl8KL/sunday-morning'),
+    ServiceParam(
         title: 'Domingo à noite',
         heading: 'domingo à noite',
-        url: 'weekday-lyrics/raVXYTMhxE622P75AUzv/evening-sunday'),
+        url: 'services/vthPis6Awr1bNrsZl8KL/sunday-evening'),
   ];
 
   @override

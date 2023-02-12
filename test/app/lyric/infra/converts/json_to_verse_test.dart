@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ipbc_palmas/app/lyric/domain/entities/verse_entity.dart';
-import 'package:ipbc_palmas/app/lyric/infra/adapters/lyric_adapter.dart';
+import 'package:ipbc_palmas/app/lyric/infra/adapters/verse_adapter.dart';
 
 void main() {
   test('converting json in a verse entity', () {

@@ -13,7 +13,7 @@ class LyricsUseCases implements ILyricsUseCases {
   final IRepository<LyricEntity> repository;
   LyricsUseCases({required this.repository});
 
-  List<LyricEntity> _convert(List<Map> list) {
+  List<LyricEntity> _convert(List<Map<dynamic, dynamic>> list) {
     return list.map(LyricAdapter.fromMap).toList();
   }
 

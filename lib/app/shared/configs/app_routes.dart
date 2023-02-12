@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../lyric/domain/entities/lyric_entity.dart';
-import '../../lyric/infra/models/weekend_dto.dart';
-import '../../lyric/presentation/views/liturgy_view.dart';
+import '../../lyric/infra/models/dtos/service_param.dart';
+import '../../lyric/presentation/views/service_view.dart';
 import '../../lyric/presentation/views/lyric_view.dart';
-import '../../lyric/presentation/views/weekend_lyrics_list_view.dart';
+import '../../lyric/presentation/views/service_list_view.dart';
 
 class AppRoutes {
   static const String initialRoute = "/";
@@ -78,16 +78,16 @@ class _WeekendLyricsRoutesState extends State<WeekdendLyricsRoutes> {
             if (Platform.isIOS) {
               return CupertinoPageRoute(
                 builder: (_) => CupertinoPageScaffold(
-                  child: LiturgyView(
-                    weekendDTO: (settings.arguments as WeekendDTO),
+                  child: ServiceView(
+                    weekendDTO: (settings.arguments as ServiceParam),
                   ),
                 ),
               );
             } else {
               return MaterialPageRoute(
                 settings: settings,
-                builder: (_) => LiturgyView(
-                  weekendDTO: (settings.arguments as WeekendDTO),
+                builder: (_) => ServiceView(
+                  weekendDTO: (settings.arguments as ServiceParam),
                 ),
               );
             }
