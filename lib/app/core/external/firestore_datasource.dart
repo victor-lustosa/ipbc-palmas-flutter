@@ -10,7 +10,7 @@ class FirestoreDatasource
   FirestoreDatasource({required FirebaseFirestore firestore})
       : _firestore = firestore;
   final FirebaseFirestore _firestore;
-  late List<String> params;
+  List<String> params = [];
   List<Map> _convert(List<QueryDocumentSnapshot<Map<String, dynamic>>> docs) {
     return docs
         .map((document) => {
@@ -30,23 +30,29 @@ class FirestoreDatasource
           .doc(params[1])
           .collection(params[2])
           .orderBy("createAt", descending: true)
-          .limit(20)
+          .limit(int.parse(params[3]))
           .snapshots();
     } else {
       snapshot = _firestore
           .collection(params[0])
           .orderBy("createAt", descending: true)
-          .limit(20)
+          .limit(int.parse(params[1]))
           .snapshots();
     }
     return snapshot.map((entity) => entity.docs).map(_convert);
   }
-
   @override
-  Future<void> add(String url, data) {
-    // ignore: todo
-    // TODO: implement add
-    throw UnimplementedError();
+  Future<void> add(String url, data) async {
+    params = url.split('/');
+    if (params.length > 1) {
+      _firestore
+          .collection(params[0])
+          .doc(params[1])
+          .collection(params[2])
+          .add(data);
+    } else {
+      _firestore.collection(params[0]).add(data);
+    }
   }
 
   @override

@@ -9,28 +9,28 @@ import 'dart:io';
 
 import '../../infra/models/dtos/service_param.dart';
 
-class WeekendLyricsListView extends StatefulWidget {
-  const WeekendLyricsListView({super.key});
+class ServicesListView extends StatefulWidget {
+  const ServicesListView({super.key});
 
   @override
-  State<WeekendLyricsListView> createState() => _WeekendLyricsListViewState();
+  State<ServicesListView> createState() => _ServicesListViewState();
 }
 
-class _WeekendLyricsListViewState extends State<WeekendLyricsListView>
+class _ServicesListViewState extends State<ServicesListView>
     with AutomaticKeepAliveClientMixin {
-  final List<ServiceParam> weekendLyrics = const [
+  final List<ServiceParam> services = const [
     ServiceParam(
         title: 'Sábado',
         heading: 'sábado',
-        url: 'services/vthPis6Awr1bNrsZl8KL/saturday-evening'),
+        url: 'services/vthPis6Awr1bNrsZl8KL/saturday-evening/1'),
     ServiceParam(
         title: 'Domingo pela manhã',
         heading: 'domingo pela manhã',
-        url: 'services/vthPis6Awr1bNrsZl8KL/sunday-morning'),
+        url: 'services/vthPis6Awr1bNrsZl8KL/sunday-morning/1'),
     ServiceParam(
         title: 'Domingo à noite',
         heading: 'domingo à noite',
-        url: 'services/vthPis6Awr1bNrsZl8KL/sunday-evening'),
+        url: 'services/vthPis6Awr1bNrsZl8KL/sunday-evening/1'),
   ];
 
   @override
@@ -113,7 +113,7 @@ class _WeekendLyricsListViewState extends State<WeekendLyricsListView>
                     },
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: weekendLyrics.length,
+                    itemCount: services.length,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Container(
@@ -136,19 +136,19 @@ class _WeekendLyricsListViewState extends State<WeekendLyricsListView>
                             right: 0,
                           ),
                           title: Text(
-                            weekendLyrics[index].title,
+                            services[index].title,
                             style: AppFonts.titleTile,
                           ),
                           trailing: NextButtonWidget(
                             size: Platform.isIOS ? 29 : 35,
                             route: AppRoutes.lyricRoute,
-                            arguments: weekendLyrics[index],
+                            arguments: services[index],
                             color: AppColors.white,
                           ),
                           onTap: () {
                             Navigator.pushNamed(
                                 context, AppRoutes.chosenLyricsRoute,
-                                arguments: weekendLyrics[index]);
+                                arguments: services[index]);
                           },
                         ),
                       );

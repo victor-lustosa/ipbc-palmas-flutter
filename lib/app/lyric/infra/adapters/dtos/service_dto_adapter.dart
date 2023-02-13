@@ -14,12 +14,16 @@ class ServiceDTOAdapter{
     return ServiceDTO(
         liturgyList: LiturgyAdapter.fromMap(json['liturgyList']),
         lyricsList: LyricDTOAdapter.fromMap(json['lyricsList']),
-        createAt: DateTime.now());
+        createAt: DateTime.now(),
+        heading: json['heading'],
+        title: json['title']);
   }
 
   static Map<String, dynamic> toMap(ServiceDTO data) {
     return {
       'createAt': data.createAt,
+      'heading': data.heading,
+      'title': data.title,
       'lyricsList': LyricDTOAdapter.toMapList(data.lyricsList),
       'liturgyList': LiturgyAdapter.toMap(data.liturgyList),
     };

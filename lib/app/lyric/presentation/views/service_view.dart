@@ -111,7 +111,7 @@ class _ServiceViewState extends State<ServiceView> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 13),
                                     child: Text(
-                                      "${widget.weekendDTO.title} ${service.createAt}",
+                                      "${service.title} ${service.createAt}",
                                       style: AppFonts.liturgyBadge,
                                     ),
                                   ),
@@ -136,7 +136,7 @@ class _ServiceViewState extends State<ServiceView> {
                             child: Align(
                               alignment: const Alignment(-1, 0),
                               child: Text(
-                                "Músicas de ${widget.weekendDTO.heading}",
+                                "Músicas de ${service.heading}",
                                 style: AppFonts.headline,
                               ),
                             ),

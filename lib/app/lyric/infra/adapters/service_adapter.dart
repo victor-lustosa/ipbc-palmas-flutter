@@ -12,7 +12,9 @@ class ServiceAdapter{
         liturgyList: LiturgyAdapter.fromMap(json[0]['liturgyList']),
         lyricsList: LyricAdapter.fromListMap(json[0]['lyricsList']),
         createAt: DateFormat('dd/MM/yyyy')
-        .format((json[0]['createAt'] as Timestamp).toDate()).toString());
+        .format((json[0]['createAt'] as Timestamp).toDate()).toString(),
+        heading:json[0]['heading'],
+        title: json[0]['title']);
   }
 
   static Map<String, dynamic> toMap(ServiceEntity data) {

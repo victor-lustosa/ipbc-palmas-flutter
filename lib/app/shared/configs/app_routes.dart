@@ -7,7 +7,7 @@ import '../../lyric/domain/entities/lyric_entity.dart';
 import '../../lyric/infra/models/dtos/service_param.dart';
 import '../../lyric/presentation/views/service_view.dart';
 import '../../lyric/presentation/views/lyric_view.dart';
-import '../../lyric/presentation/views/service_list_view.dart';
+import '../../lyric/presentation/views/services_list_view.dart';
 
 class AppRoutes {
   static const String initialRoute = "/";
@@ -65,13 +65,13 @@ class _WeekendLyricsRoutesState extends State<WeekdendLyricsRoutes> {
             if (Platform.isIOS) {
               return CupertinoPageRoute(
                 builder: (_) => const CupertinoPageScaffold(
-                  child: WeekendLyricsListView(),
+                  child: ServicesListView(),
                 ),
               );
             } else {
               return MaterialPageRoute(
                 settings: settings,
-                builder: (_) => const WeekendLyricsListView(),
+                builder: (_) => const ServicesListView(),
               );
             }
           case AppRoutes.chosenLyricsRoute:
