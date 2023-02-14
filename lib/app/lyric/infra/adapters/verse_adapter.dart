@@ -12,12 +12,10 @@ class VerseAdapter {
   }
 
   static List<Map<String, dynamic>> toMapList(List<VerseEntity> data) {
-    return data
-        .map((entity) => {
+    return data.map((entity) => {
       'id': entity.id,
       'isChorus': entity.isChorus,
       'versesList': entity.versesList,
-    })
-        .toList();
+    }).toList();
   }
 }

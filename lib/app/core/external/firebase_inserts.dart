@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 
 import '../../lyric/infra/adapters/dtos/service_dto_adapter.dart';
 import '../../../firebase_options.dart';
-import '../../lyric/infra/models/dtos/lyric_dto.dart';
 import '../../lyric/infra/models/dtos/service_dto.dart';
 import 'firestore_datasource.dart';
 
@@ -24,42 +23,25 @@ Future<void> firebaseInitialize() async {
   };
 }
 
-/*** SABADO ***/
-/*Future<void> main() async {
-
-  await firebaseInitialize();
-  FirebaseInserts fire = FirebaseInserts();
-
-  String lyricsUrl = 'lyrics';
-  String saturdayUrl = 'weekend-lyrics/UskDQoSEFcZMljOtf7ab/saturday-evening';
-  final String saturdayResponse = await rootBundle.loadString('assets/data/saturday-lyrics.json');
-  List<InsertDTO> saturdayLyrics = InsertDTO.fromJson(saturdayResponse);
-
-}*/
-/**** DOMINGO DE MANHA ****/
-/*void main() async {
-
-  firebaseInitialize();
-  FirebaseInserts fire = FirebaseInserts();
-  String sundayMorningUrl = 'weekend-lyrics/lbDmsvEuUmo92fYN9sXR/sunday-morning';
-  final String sundayMorningResponse = await rootBundle.loadString('assets/data/sunday-morning-lyrics.json');
-  List<LyricModel> sundayMorningLyrics = LyricAdapter.listFromJson(sundayMorningResponse);
-
-}*/
-
-/**** DOMINGO DE NOITE ****/
 void main() async {
 
   await firebaseInitialize();
   FirestoreDatasource fire = FirestoreDatasource(firestore: FirebaseFirestore.instance);
 
   String lyricsUrl = 'lyrics';
-  String sundayEveningUrl = 'services/vthPis6Awr1bNrsZl8KL/sunday-evening';
-
+  String servicesUrl = 'services/XTfqjbcVEwSgSy2WqNnU';
+  final String saturdayResponse = await rootBundle.loadString('assets/data/saturday-lyrics.json');
   final String sundayEveningResponse = await rootBundle.loadString('assets/data/sunday-evening-lyrics.json');
+  final String sundayMorningResponse = await rootBundle.loadString('assets/data/sunday-morning-lyrics.json');
 
-  ServiceDTO sundayEveningService = ServiceDTOAdapter.fromJson(sundayEveningResponse);
-  List<LyricDTO> lyrics = sundayEveningService.lyricsList;
+  List<ServiceDTO> services = [];
+
+  services.add(ServiceDTOAdapter.fromJson(saturdayResponse));
+  services.add(ServiceDTOAdapter.fromJson(sundayEveningResponse));
+  services.add(ServiceDTOAdapter.fromJson(sundayMorningResponse));
+ // print(services.toString());
+  //List<LyricDTO> lyrics = services[0].lyricsList;
   //lyrics.map((lyric) => fire.add(lyricsUrl,LyricDTOAdapter.toMap(lyric)));
-  fire.add(sundayEveningUrl, ServiceDTOAdapter.toMap(sundayEveningService));
+  fire.update(servicesUrl, ServiceDTOAdapter.toMapList(services));
+
 }

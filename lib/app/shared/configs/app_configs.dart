@@ -167,7 +167,7 @@ class AppIcons {
 
 class AppImages {
   static const String vagalumeImage = 'assets/images/vagalume_image.png';
-  static final listImagesWeekend = [
+  static final listServicesImages = [
     'assets/images/saturday_evening.png',
     'assets/images/sunday_morning.jpg',
     'assets/images/sunday_evening.png'

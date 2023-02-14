@@ -12,15 +12,22 @@ class LyricModel extends LyricEntity {
       required String group,
       required List<VerseEntity> verses})
       : super(
-            id: id,
-            title: title,
-            createAt: createAt,
-            group: group,
-            verses: verses,
-            albumCover: albumCover);
+          id: id,
+          title: title,
+          createAt: createAt,
+          group: group,
+          verses: verses,
+          albumCover: albumCover,
+        );
 
   factory LyricModel.empty() => LyricModel(
-      id: '', createAt: '', title: '', group: '', albumCover: '', verses: []);
+        id: '',
+        createAt: '',
+        title: '',
+        group: '',
+        albumCover: '',
+        verses: [],
+      );
 
   LyricModel copyWith({
     String? id,
@@ -39,6 +46,4 @@ class LyricModel extends LyricEntity {
       verses: verses ?? this.verses,
     );
   }
-
-
 }

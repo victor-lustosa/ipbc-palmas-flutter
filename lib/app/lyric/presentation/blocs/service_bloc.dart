@@ -14,7 +14,7 @@ class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
   }
 
   Future<void> _getService(GetServiceEvent event, emit) async {
-    await emit.onEach<ServiceEntity>(
+    await emit.onEach<List<ServiceEntity>>(
       servicesUseCases.get(event.url),
       onData: (service) {
         emit(
@@ -56,6 +56,6 @@ class ServiceExceptionState extends ServicesState {
 }
 
 class SuccessfullyFetchedServiceState extends ServicesState {
-  final ServiceEntity entities;
+  final List<ServiceEntity> entities;
   SuccessfullyFetchedServiceState(this.entities);
 }

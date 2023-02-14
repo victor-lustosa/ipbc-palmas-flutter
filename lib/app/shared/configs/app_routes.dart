@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../lyric/domain/entities/lyric_entity.dart';
-import '../../lyric/infra/models/dtos/service_param.dart';
+import '../../lyric/domain/entities/service_entity.dart';
 import '../../lyric/presentation/views/service_view.dart';
 import '../../lyric/presentation/views/lyric_view.dart';
 import '../../lyric/presentation/views/services_list_view.dart';
@@ -79,7 +79,7 @@ class _WeekendLyricsRoutesState extends State<WeekdendLyricsRoutes> {
               return CupertinoPageRoute(
                 builder: (_) => CupertinoPageScaffold(
                   child: ServiceView(
-                    weekendDTO: (settings.arguments as ServiceParam),
+                    service: (settings.arguments as ServiceEntity),
                   ),
                 ),
               );
@@ -87,7 +87,7 @@ class _WeekendLyricsRoutesState extends State<WeekdendLyricsRoutes> {
               return MaterialPageRoute(
                 settings: settings,
                 builder: (_) => ServiceView(
-                  weekendDTO: (settings.arguments as ServiceParam),
+                  service: (settings.arguments as ServiceEntity),
                 ),
               );
             }

@@ -1,5 +1,5 @@
-
 import '../../../domain/entities/verse_entity.dart';
+
 class LyricDTO {
   final String id;
   final String title;
@@ -9,14 +9,19 @@ class LyricDTO {
   final List<VerseEntity> verses;
   LyricDTO(
       {required this.id,
-        required this.title,
-        required this.createAt,
-        required this.albumCover,
-        required this.group,
-        required this.verses});
+      required this.title,
+      required this.createAt,
+      required this.albumCover,
+      required this.group,
+      required this.verses});
 
   factory LyricDTO.empty() => LyricDTO(
-      id: '', createAt: DateTime.now(), title: '', group: '', albumCover: '', verses: []);
+      id: '',
+      createAt: DateTime.now(),
+      title: '',
+      group: '',
+      albumCover: '',
+      verses: []);
 
   LyricDTO copyWith({
     String? id,
@@ -34,10 +39,5 @@ class LyricDTO {
       group: group ?? this.group,
       verses: verses ?? this.verses,
     );
-  }
-
-  @override
-  String toString() {
-    return 'LyricDTO{id: $id, title: $title, group: $group, albumCover: $albumCover, createAt: $createAt, verses: $verses}';
   }
 }

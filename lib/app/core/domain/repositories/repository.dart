@@ -1,4 +1,5 @@
 abstract class IGetRepository <T>{
+  Stream<List<Map<dynamic, dynamic>>> getByCreateAt(String url);
   Stream<List<Map<dynamic, dynamic>>> get(String url);
 }
 abstract class IAddRepository <T>{

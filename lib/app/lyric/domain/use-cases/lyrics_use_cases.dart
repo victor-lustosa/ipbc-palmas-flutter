@@ -19,7 +19,7 @@ class LyricsUseCases implements ILyricsUseCases {
 
   @override
   Stream<List<LyricEntity>> get(String url) {
-    var lyrics = repository.get(url);
+    var lyrics = repository.getByCreateAt(url);
     return lyrics.map(_convert);
   }
 
