@@ -49,7 +49,7 @@ class LyricAdapter {
     return lyricsList;
   }
 
-  static List<Map<String, dynamic>> toListMap(List<LyricEntity> data) {
+  static List<Map<String, dynamic>> toMapList(List<LyricEntity> data) {
     return data.map((entity) => {
               'id': entity.id,
               'title': entity.title,

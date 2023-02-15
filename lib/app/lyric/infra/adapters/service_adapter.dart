@@ -53,8 +53,8 @@ class ServiceAdapter {
 
   static Map<String, dynamic> toMap(ServiceEntity data) {
     return {
-      'lyricsList': LyricAdapter.toListMap(data.lyricsList),
-      'liturgyList': LiturgyAdapter.toMap(data.liturgyList),
+      'lyricsList': LyricAdapter.toMapList(data.lyricsList),
+      'liturgyList': LiturgyAdapter.toMapList(data.liturgyList),
       'createAt': data.createAt,
       'heading': data.heading,
       'title': data.title,

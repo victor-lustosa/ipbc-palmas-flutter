@@ -35,7 +35,7 @@ class ServiceDTOAdapter {
       'heading': data.heading,
       'title': data.title,
       'lyricsList': LyricDTOAdapter.toMapList(data.lyricsList),
-      'liturgyList': LiturgyAdapter.toMap(data.liturgyList),
+      'liturgyList': LiturgyAdapter.toMapList(data.liturgyList),
       'guideIsVisible': data.guideIsVisible
     };
   }

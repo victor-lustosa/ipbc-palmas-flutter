@@ -15,7 +15,7 @@ class LiturgyAdapter {
     return liturgyList;
   }
 
-  static List<Map<String, dynamic>> toMap(List<LiturgyDTO> data) {
+  static List<Map<String, dynamic>> toMapList(List<LiturgyDTO> data) {
     return data.map((entity) => {
               'isAdditional': entity.isAdditional,
               'sequence': entity.sequence,

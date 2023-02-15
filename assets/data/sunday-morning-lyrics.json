@@ -60,66 +60,27 @@
       "title": "agua viva",
       "group": "oficina g3",
       "albumCover":
-      "http://coverartarchive.org/release/ce82afc5-f866-400e-adcd-4a23c01dd877/4433492734-500.jpg",
+      "",
       "createAt": "",
-      "verses": [
-        {
-          "id": 0,
-          "isChorus": false,
-          "versesList": [
-            {
-              "verse0":"Vejo em Seu rosto uma luz",
-              "verse1":  "E o convido a ficar",
-              "verse2":  "Sua voz me constrange",
-              "verse3": "Anseio escutar"
-            }
-          ]
-        }
-      ]
+      "verses": []
     },
     {
       "id": "dfsdfsd",
       "title": "agua viva",
       "group": "oficina g3",
       "albumCover":
-      "http://coverartarchive.org/release/ce82afc5-f866-400e-adcd-4a23c01dd877/4433492734-500.jpg",
+      "",
       "createAt": "",
-      "verses": [
-        {
-          "id": 0,
-          "isChorus": false,
-          "versesList": [
-            {
-              "verse0":"Vejo em Seu rosto uma luz",
-              "verse1":  "E o convido a ficar",
-              "verse2":  "Sua voz me constrange",
-              "verse3": "Anseio escutar"
-            }
-          ]
-        }
-      ]
+      "verses": []
     },
     {
       "id": "dfsdfsd",
       "title": "agua viva",
       "group": "oficina g3",
       "albumCover":
-      "http://coverartarchive.org/release/ce82afc5-f866-400e-adcd-4a23c01dd877/4433492734-500.jpg",
+      "",
       "createAt": "",
-      "verses": [
-        {
-          "id": 0,
-          "isChorus": false,
-          "versesList": [
-            {
-              "verse0":"Vejo em Seu rosto uma luz",
-              "verse1":  "E o convido a ficar",
-              "verse2":  "Sua voz me constrange",
-              "verse3": "Anseio escutar"
-            }
-          ]
-        }
-      ]
+      "verses": []
     }
   ]}
 

@@ -79,7 +79,7 @@ class FirestoreDatasource implements IFirestoreDatasource {
   @override
   Future<void> update(String url, data) async {
     params = url.split('/');
-    if (params.length > 1) {
+    if (params.length > 2) {
       _firestore
           .collection(params[0])
           .doc(params[1])

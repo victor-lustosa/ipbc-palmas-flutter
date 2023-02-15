@@ -40,4 +40,9 @@ class LyricDTO {
       verses: verses ?? this.verses,
     );
   }
+
+  @override
+  String toString() {
+    return 'LyricDTO{id: $id, title: $title, group: $group, albumCover: $albumCover, createAt: $createAt, verses: $verses}';
+  }
 }
