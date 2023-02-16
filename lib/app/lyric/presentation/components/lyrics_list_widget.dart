@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../shared/components/next-button/next_button_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
@@ -59,7 +60,11 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                   child: SizedBox(
                     width: 50,
                     height: 80,
-                    child: Image.network(
+                    child: widget.lyricsList[index].albumCover == '' ? SvgPicture.asset(
+                      AppIcons.defaultCover,
+                      //color: Color(0xFF92E9D9,),
+                      //  height: 75,width: 75,
+                    ) : Image.network(
                       fit: BoxFit.fill,
                       frameBuilder: (BuildContext context, Widget child,
                           int? frame, bool wasSynchronouslyLoaded) {

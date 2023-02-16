@@ -148,7 +148,7 @@ class AppFonts {
 
 class AppIcons {
   static const String lyricsIconName = 'assets/icons/lyrics.svg';
-
+  static const String defaultCover = 'assets/images/default_cover.svg';
   static const String logo = 'assets/icons/logo.svg';
   static const String arrowBack = 'assets/icons/arrow_back_ios_new.svg';
   static const String home = 'assets/icons/home.svg';

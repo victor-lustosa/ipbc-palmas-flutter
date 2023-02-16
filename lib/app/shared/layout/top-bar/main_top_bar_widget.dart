@@ -18,8 +18,8 @@ class MainTopBarWidget extends StatelessWidget {
               child: Align(
                 alignment: const Alignment(-0.885, 0),
                 child: SizedBox(
-                  width: Platform.isIOS ? 76 : 76,
-                  height: Platform.isIOS ? 41 : 41,
+                  width: 76,
+                  height: 41,
                   child: SvgPicture.asset(
                     AppIcons.logo,
                     color: AppColors.darkGreen,

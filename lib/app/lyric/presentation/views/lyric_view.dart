@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import '../../../shared/components/back-button/back_button_widget.dart';
 import '../../../shared/mixins/launch_url_mixin.dart';
@@ -48,7 +49,11 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                           child: Container(
                             color: AppColors.lightGrey,
                             width: 75,
-                            height: 75,
+                            height: 75,child: SvgPicture.asset(
+                            AppIcons.defaultCover,
+                            //color: Color(0xFF92E9D9,),
+                            //  height: 75,width: 75,
+                          ) ,
                           ),
                         ),
                       ),
@@ -56,12 +61,9 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                     Padding(
                       padding: const EdgeInsets.only(top: 22.0),
                       child: Align(
-                        alignment: Alignment(Platform.isIOS ? 0.01 : 0.1, 0),
+                        alignment: Alignment(Platform.isIOS ? 0.25 : 0.1, 0),
                         child: SizedBox(
-                          height: 55,
-                          width: 200,
-                          /*decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black)),*/
+                          width: 240,
                           child: Align(
                             alignment: const Alignment(-1, 0),
                             child: Column(
