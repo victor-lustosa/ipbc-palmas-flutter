@@ -72,7 +72,7 @@ class _ServicesListViewState extends State<ServicesListView>
                             top: 33,
                           ),
                           child: Text(
-                            "Músicas",
+                            "Cultos",
                             style: AppFonts.headHome,
                           ),
                         ), /*
@@ -106,7 +106,7 @@ class _ServicesListViewState extends State<ServicesListView>
                         top: 8,
                       ),
                       child: Text(
-                        "Acompanhe as letras das músicas cantadas no cultos.",
+                        "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
                         style: AppFonts.subHeadHome,
                       ),
                     ),

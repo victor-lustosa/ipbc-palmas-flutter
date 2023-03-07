@@ -34,16 +34,16 @@ void main() async {
   FirestoreDatasource fire = FirestoreDatasource(firestore: FirebaseFirestore.instance);
   VersesUtil verseUtil = VersesUtil();
   String lyricsUrl = 'lyrics';
-  String servicesUrl = 'services/XTfqjbcVEwSgSy2WqNnU';
+  String servicesUrl = 'services/vn240AmALCG9Jm513f1B';
   final String saturdayResponse = await rootBundle.loadString('assets/data/saturday-lyrics.json');
-  //final String sundayEveningResponse = await rootBundle.loadString('assets/data/sunday-evening-lyrics.json');
+  final String sundayEveningResponse = await rootBundle.loadString('assets/data/sunday-evening-lyrics.json');
   //final String sundayMorningResponse = await rootBundle.loadString('assets/data/sunday-morning-lyrics.json');
 
   List<ServiceDTO> services = [];
   List<ServiceDTO> servicesAux = [];
   List<LyricDTO> lyricsAux = [];
   services.add(ServiceDTOAdapter.fromJson(saturdayResponse));
-  //services.add(ServiceDTOAdapter.fromJson(sundayEveningResponse));
+  services.add(ServiceDTOAdapter.fromJson(sundayEveningResponse));
  // services.add(ServiceDTOAdapter.fromJson(sundayMorningResponse));
 
   for(int column = 0; services.length > column; column++){

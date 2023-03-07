@@ -55,32 +55,29 @@
   }
 ],
   "lyricsList": [
-  {
-    "id": "dfsdfsd",
-    "title": "agua viva",
-    "group": "oficina g3",
-    "albumCover":
-    "",
-    "createAt": "",
-    "verses": []
-  },
-  {
-    "id": "dfsdfsd",
-    "title": "agua viva",
-    "group": "oficina g3",
-    "albumCover":
-    "",
-    "createAt": "",
-    "verses": []
-  },
     {
-      "id": "dfsdfsd",
-      "title": "agua viva",
-      "group": "oficina g3",
-      "albumCover":
-      "",
+      "id": "",
+      "title": "Quem e",
+      "group": "diante do trono",
+      "albumCover": "",
+      "createAt": "",
+      "verses": []
+    },
+    {
+      "id": "",
+      "title": "Eu me rendo",
+      "group": "Renascer Praise",
+      "albumCover": "",
+      "createAt": "",
+      "verses": []
+    },
+    {
+      "id": "",
+      "title": "Te louvarei",
+      "group": "Toque no altar",
+      "albumCover": "",
       "createAt": "",
       "verses": []
     }
-]}
+  ]}
 
