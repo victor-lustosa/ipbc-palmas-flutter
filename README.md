@@ -16,14 +16,14 @@ $ flutter run lib/main.dart
 ```
 
 ### Google Drive
-
+---
 - [Documentação até o momento - Google Drive](https://drive.google.com/drive/folders/14hMQTKQDkKlj2iBuQUMvcYcF_1K0i79o?usp=sharing)
 
 ### Prototipação
-
+---
 - [Prototipação do projeto - figma](https://www.figma.com/file/ynwf4IxDmaymB1RfynJdow/IPB-app-0.0.4?t=fiow2g3IIoUpaiY1-0)
 
 ### Arquitetura
-
+---
 ![alt text](https://github.com/victor-lustosa/ipbc-palmas-flutter/blob/develop/docs/arquitetura-frontend-ipb.png)
 
