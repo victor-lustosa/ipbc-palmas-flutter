@@ -4,10 +4,10 @@ Projeto de aplicativo para a Igreja Presbiteriana Central de Palmas, e futuramen
 
 ## Documentação do Projeto
 
-### Installation
+### Execução
 ---
 
-> **Warning**
+> **Atenção**
 > Verifique a versão do Flutter e do Dart, Flutter ^3.7.x e Dart ^2.19.x, porque algumas classes possuem dependências de novas versões.
 
 ```bash
