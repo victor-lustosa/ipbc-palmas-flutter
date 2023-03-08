@@ -34,6 +34,5 @@ class VerseDTOAdapter {
     } else{
       return [];
     }
-
   }
 }

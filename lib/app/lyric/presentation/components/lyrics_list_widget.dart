@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../../shared/components/next-button/next_button_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
@@ -60,36 +59,37 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                   child: SizedBox(
                     width: 50,
                     height: 80,
-                    child: widget.lyricsList[index].albumCover == '' ? SvgPicture.asset(
-                      AppIcons.defaultCover,
-                      //color: Color(0xFF92E9D9,),
-                      //  height: 75,width: 75,
-                    ) : Image.network(
-                      fit: BoxFit.fill,
-                      frameBuilder: (BuildContext context, Widget child,
-                          int? frame, bool wasSynchronouslyLoaded) {
-                        if (wasSynchronouslyLoaded) {
-                          return child;
-                        }
-                        return Container(
-                          color: AppColors.lightGrey,
-                          width: 50,
-                          height: 80,
-                        );
-                      },
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
-
-                        return Container(
-                          color: AppColors.lightGrey,
-                          width: 50,
-                          height: 80,
-                        );
-                      },
-                      widget.lyricsList[index].albumCover,
-                    ),
+                    child: widget.lyricsList[index].albumCover.contains("assets")
+                        ? Image.asset(
+                            widget.lyricsList[index].albumCover,
+                            width: 50,
+                            height: 80,
+                          )
+                        : Image.network(
+                            fit: BoxFit.fill,
+                            frameBuilder: (BuildContext context, Widget child,
+                                int? frame, bool wasSynchronouslyLoaded) {
+                              if (wasSynchronouslyLoaded) {
+                                return child;
+                              }
+                              return Container(
+                                color: AppColors.lightGrey,
+                                width: 50,
+                                height: 80,
+                              );
+                            },
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+                              return Container(
+                                color: AppColors.lightGrey,
+                                width: 50,
+                                height: 80,
+                              );
+                            },
+                            widget.lyricsList[index].albumCover,
+                          ),
                   ),
                 ),
                 title: Padding(

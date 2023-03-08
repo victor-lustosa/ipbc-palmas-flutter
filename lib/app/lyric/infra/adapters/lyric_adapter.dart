@@ -1,4 +1,6 @@
-import 'dart:convert';
+import 'dart:math';
+
+import 'package:ipbc_palmas/app/shared/configs/app_configs.dart';
 
 import '../../infra/adapters/verse_adapter.dart';
 import '../../domain/entities/lyric_entity.dart';
@@ -7,9 +9,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
 class LyricAdapter {
+
+  static final Random random = Random();
+
   static LyricEntity fromMap(Map<dynamic, dynamic> json) {
+
     return LyricEntity(
-      albumCover: json['albumCover'],
+      albumCover: json['albumCover'] == '' ? AppImages.defaultCoversList[random.nextInt(4)] : json['albumCover'],
       id: json['id'],
       createAt: json['createAt'] == ''
           ? ''
@@ -26,11 +32,12 @@ class LyricAdapter {
   }
 
   static List<LyricEntity> fromListMap(dynamic json) {
+
     List<LyricEntity> lyricsList = [];
     for (dynamic lyric in json) {
       lyricsList.add(
         LyricEntity(
-          albumCover: lyric['albumCover'],
+          albumCover: lyric['albumCover'] == '' ? AppImages.defaultCoversList[random.nextInt(4)]: lyric['albumCover'],
           id: lyric['id'],
           createAt: lyric['createAt'] == ''
               ? ''
@@ -50,13 +57,15 @@ class LyricAdapter {
   }
 
   static List<Map<String, dynamic>> toMapList(List<LyricEntity> data) {
-    return data.map((entity) => {
+    return data
+        .map((entity) => {
               'id': entity.id,
               'title': entity.title,
               'createAt': entity.createAt,
               'albumCover': entity.albumCover,
               'group': entity.group,
               'verses': VerseAdapter.toMapList(entity.verses),
-            }).toList();
+            })
+        .toList();
   }
 }

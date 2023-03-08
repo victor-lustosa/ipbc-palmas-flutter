@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/services_list.dart';
 import 'liturgy_adapter.dart';
 import 'lyric_adapter.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart' show DateFormat;
 
 class ServiceAdapter {

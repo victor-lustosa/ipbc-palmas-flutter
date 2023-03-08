@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import '../../../shared/components/back-button/back_button_widget.dart';
 import '../../../shared/mixins/launch_url_mixin.dart';
@@ -12,7 +11,6 @@ class LyricView extends StatefulWidget {
   const LyricView({super.key, required this.lyricEntity});
 
   final LyricEntity lyricEntity;
-
   @override
   State<LyricView> createState() => _LyricViewState();
 }
@@ -46,14 +44,11 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                           borderRadius: const BorderRadius.all(
                             Radius.circular(11),
                           ),
-                          child: Container(
-                            color: AppColors.lightGrey,
+                          child: Image.asset(
+                            height: 75,
                             width: 75,
-                            height: 75,child: SvgPicture.asset(
-                            AppIcons.defaultCover,
+                            widget.lyricEntity.albumCover,
                             //color: Color(0xFF92E9D9,),
-                            //  height: 75,width: 75,
-                          ) ,
                           ),
                         ),
                       ),

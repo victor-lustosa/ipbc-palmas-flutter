@@ -136,7 +136,7 @@ class _ServicesListViewState extends State<ServicesListView>
                                 image: DecorationImage(
                                   fit: BoxFit.cover,
                                   image: AssetImage(
-                                    AppImages.listServicesImages[index],
+                                    AppImages.servicesImagesList[index],
                                   ),
                                 ),
                               ),

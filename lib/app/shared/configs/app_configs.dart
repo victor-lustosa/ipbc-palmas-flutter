@@ -148,13 +148,12 @@ class AppFonts {
 
 class AppIcons {
   static const String lyricsIconName = 'assets/icons/lyrics.svg';
-  static const String defaultCover = 'assets/images/default_cover.svg';
   static const String logo = 'assets/icons/logo.svg';
   static const String arrowBack = 'assets/icons/arrow_back_ios_new.svg';
   static const String home = 'assets/icons/home.svg';
   static const String volunteerActivism = 'assets/icons/volunteer_activism.svg';
   static const String accountCircle = 'assets/icons/account_circle.svg';
-  static final sideBarIcons = [
+  static final sideBarIconsList = [
     'assets/icons/privacy_tip.svg',
     'assets/icons/lyrics.svg',
     'assets/icons/event.svg',
@@ -167,9 +166,15 @@ class AppIcons {
 
 class AppImages {
   static const String vagalumeImage = 'assets/images/vagalume_image.png';
-  static final listServicesImages = [
+  static final servicesImagesList = [
     'assets/images/saturday_evening.png',
     'assets/images/sunday_morning.jpg',
     'assets/images/sunday_evening.png'
+  ];
+  static final List<String> defaultCoversList = [
+    'assets/images/default_cover_1.png',
+    'assets/images/default_cover_2.png',
+    'assets/images/default_cover_3.png',
+    'assets/images/default_cover_4.png'
   ];
 }

@@ -92,7 +92,7 @@ class SideBarWidget extends StatelessWidget {
                                 height: 25,
                                 width: 25,
                                 child: SvgPicture.asset(
-                                  AppIcons.sideBarIcons[index],
+                                  AppIcons.sideBarIconsList[index],
                                   color: AppColors.black,
                                   matchTextDirection: true,
                                 ),
