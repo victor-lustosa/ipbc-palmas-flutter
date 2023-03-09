@@ -10,12 +10,10 @@ import 'package:intl/intl.dart' show DateFormat;
 
 class LyricAdapter {
 
-  static final Random random = Random();
-
   static LyricEntity fromMap(Map<dynamic, dynamic> json) {
 
     return LyricEntity(
-      albumCover: json['albumCover'] == '' ? AppImages.defaultCoversList[random.nextInt(4)] : json['albumCover'],
+      albumCover: json['albumCover'],
       id: json['id'],
       createAt: json['createAt'] == ''
           ? ''
@@ -37,7 +35,7 @@ class LyricAdapter {
     for (dynamic lyric in json) {
       lyricsList.add(
         LyricEntity(
-          albumCover: lyric['albumCover'] == '' ? AppImages.defaultCoversList[random.nextInt(4)]: lyric['albumCover'],
+          albumCover: lyric['albumCover'],
           id: lyric['id'],
           createAt: lyric['createAt'] == ''
               ? ''

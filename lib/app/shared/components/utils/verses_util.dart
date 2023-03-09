@@ -1,9 +1,13 @@
+import 'dart:math';
+
 import 'package:ipbc_palmas/app/lyric/infra/adapters/dtos/verse_dto_adapter.dart';
 import 'package:uno/uno.dart';
 import '../../../lyric/infra/models/dtos/lyric_dto.dart';
+import '../../configs/app_configs.dart';
 
 class VersesUtil {
   final uno = Uno();
+  final Random random = Random();
 
   Future<dynamic> getLyric(String title, String group) async {
     String titleParam = title.replaceAll(' ', '%20');
@@ -25,7 +29,7 @@ class VersesUtil {
       results.add(
         LyricDTO(
           verses: VerseDTOAdapter.fromVagalume(result),
-          albumCover: '',
+          albumCover: AppImages.defaultCoversList[random.nextInt(4)],
           id: '$i',
           title: '',
           createAt: DateTime.now(),
