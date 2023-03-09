@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ipbc_palmas/app/core/infra/repositories/repository.dart';
 import 'package:ipbc_palmas/app/lyric/domain/entities/lyric_entity.dart';
-import 'package:ipbc_palmas/app/lyric/domain/use-cases/lyrics_use_cases.dart';
+import 'package:ipbc_palmas/app/lyric/infra/use-cases/lyrics_use_cases.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../../mocks/mocks.dart';
@@ -33,12 +33,12 @@ void main() {
         },
       ],
     };
-    when(() => repository.get('lyrics'))
+    when(() => repository.get('lyrics/1'))
         .thenAnswer((_) => Stream.value([entity]));
 
-    final usecase = LyricsUseCases(repository: repository);
+    final lyricUsecase = LyricsUseCases(repository: repository);
 
-    final result = usecase.get('lyrics');
+    final result = lyricUsecase.get('lyrics/1');
 
     expect(result, emits(isA<List<LyricEntity>>()));
   });

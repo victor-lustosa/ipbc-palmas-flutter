@@ -18,11 +18,18 @@ class LyricView extends StatefulWidget {
 class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
   final Uri toLaunch =
       Uri(scheme: 'https', host: 'api.vagalume.com.br', path: 'terms/');
-  // ignore: unused_field
+  double widthDevice = 370;
   Future<void>? _launched;
-
+  double resolutionDeviceProportion(double width) {
+    if(width > widthDevice){
+      return 0.55;
+    } else{
+      return 0.52;
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.width);
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
@@ -42,7 +49,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                         ),
                         child: ClipRRect(
                           borderRadius: const BorderRadius.all(
-                            Radius.circular(11),
+                            Radius.circular(20),
                           ),
                           child: Image.asset(
                             height: 75,
@@ -56,9 +63,9 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                     Padding(
                       padding: const EdgeInsets.only(top: 22.0),
                       child: Align(
-                        alignment: Alignment(Platform.isIOS ? 0.25 : 0.1, 0),
+                        alignment: const Alignment(0.25, 0),
                         child: SizedBox(
-                          width: 240,
+                          width: MediaQuery.of(context).size.width * resolutionDeviceProportion(MediaQuery.of(context).size.width),
                           child: Align(
                             alignment: const Alignment(-1, 0),
                             child: Column(
@@ -68,7 +75,10 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                   padding: const EdgeInsets.only(bottom: 6),
                                   child: Text(
                                     widget.lyricEntity.title,
-                                    style: AppFonts.h2,
+                                    style: MediaQuery.of(context).size.width >
+                                            widthDevice
+                                        ? AppFonts.h2
+                                        : AppFonts.h2Reduced,
                                   ),
                                 ),
                                 Text(
@@ -119,7 +129,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                       padding: widget.lyricEntity.verses[index].isChorus == true
                           ? const EdgeInsets.only(
                               left: 18.0,
-                              right: 18,
+                              right: 16,
                             )
                           : const EdgeInsets.only(
                               left: 8.0,
@@ -140,21 +150,19 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                     color: Color.fromARGB(143, 196, 239, 225),
                                   )
                                 : const BoxDecoration(
-                                    color: AppColors.white,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10),
-                                    ),
+                                    color: AppColors.white
                                   ),
                         child: Padding(
                           // ignore: todo
                           //TODO: Averiguar se é possivel um refrao ser a primeira caixinha
                           padding: EdgeInsets.only(
-                              top: widget.lyricEntity.verses[index].isChorus ==
-                                      true
-                                  ? 20
-                                  : 0,
-                              bottom: 20,
-                              right: 5),
+                              top: 14,
+                              bottom: 14,
+                              right:
+                                  widget.lyricEntity.verses[index].isChorus ==
+                                          false
+                                      ? 15
+                                      : 5),
                           child: ListView.separated(
                             separatorBuilder: (__, _) {
                               return const SizedBox(
@@ -173,7 +181,10 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                 child: Text(
                                   widget.lyricEntity.verses[index]
                                       .versesList[position],
-                                  style: AppFonts.lyricTile,
+                                  style: MediaQuery.of(context).size.width >
+                                          widthDevice
+                                      ? AppFonts.lyricTile
+                                      : AppFonts.lyricTileReduced,
                                 ),
                               );
                             }),
@@ -195,7 +206,10 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                           TextSpan(
                             text:
                                 "  Esse sistema não possui fins lucrativos sobre a obra representada a cima. Todos os direitos reservados aos autores da letra. ",
-                            style: AppFonts.copyright,
+                            style:
+                                MediaQuery.of(context).size.width > widthDevice
+                                    ? AppFonts.copyright
+                                    : AppFonts.copyrightReduced,
                           ),
                           TextSpan(
                             style: AppFonts.learnMore,
@@ -255,4 +269,6 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
       ),
     );
   }
+
+
 }

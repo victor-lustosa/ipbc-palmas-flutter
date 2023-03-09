@@ -15,9 +15,4 @@ class Repository<T> implements IRepository<T> {
     final stream = getDatasource.get(url);
     return stream;
   }
-  @override
-  Stream<List<Map<dynamic, dynamic>>> getByCreateAt(String url) {
-    final stream = getDatasource.getByCreateAt(url);
-    return stream;
-  }
 }

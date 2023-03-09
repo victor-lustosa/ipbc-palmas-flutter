@@ -51,7 +51,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                 dense: true,
                 minVerticalPadding: 0,
                 minLeadingWidth: 0,
-                horizontalTitleGap: 8,
+                horizontalTitleGap: 4,
                 leading: ClipRRect(
                   borderRadius: const BorderRadius.all(
                     Radius.circular(11),
@@ -94,21 +94,21 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                 ),
                 title: Padding(
                   padding: const EdgeInsets.only(
-                    bottom: 4,
+                    bottom: 4, left: 4
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        widget.lyricsList[index].title,
-                        style: AppFonts.lyricsTitleTile,
-                      ),
-                    ],
+                  child: Text(
+                    widget.lyricsList[index].title,
+                    style: AppFonts.lyricsTitleTile,
                   ),
                 ),
-                subtitle: Text(
-                  widget.lyricsList[index].group,
-                  style: AppFonts.subtitleTile,
+                subtitle: Padding(
+                  padding: const EdgeInsets.only(
+                       left: 4
+                  ),
+                  child: Text(
+                    widget.lyricsList[index].group,
+                    style: AppFonts.subtitleTile,
+                  ),
                 ),
                 trailing: NextButtonWidget(
                     size: Platform.isIOS ? 29 : 36,

@@ -1,6 +1,5 @@
 abstract class IGetDatasource {
   Stream<List<Map>> get(String url);
-  Stream<List<Map>> getByCreateAt(String url);
 }
 abstract class IAddDatasource {
  Future<void> add(String url, data);

@@ -29,26 +29,6 @@ class FirestoreDatasource implements IFirestoreDatasource {
           .collection(params[0])
           .doc(params[1])
           .collection(params[2])
-          .limit(int.parse(params[3]))
-          .snapshots();
-    } else {
-      snapshot = _firestore
-          .collection(params[0])
-          .limit(int.parse(params[1]))
-          .snapshots();
-    }
-    return snapshot.map((entity) => entity.docs).map(_convert);
-  }
-
-  @override
-  Stream<List<Map>> getByCreateAt(String url) {
-    params = url.split('/');
-    Stream<QuerySnapshot<Map<String, dynamic>>> snapshot;
-    if (params.length > 2) {
-      snapshot = _firestore
-          .collection(params[0])
-          .doc(params[1])
-          .collection(params[2])
           .orderBy("createAt", descending: true)
           .limit(int.parse(params[3]))
           .snapshots();

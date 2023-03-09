@@ -8,7 +8,7 @@ void main() {
 
     final datasource = FirestoreDatasource(firestore: firestore);
 
-    final result = datasource.get('lyrics');
+    final result = datasource.get('lyrics/1');
 
     expect(result, emits(isA<List<Map>>()));
   });

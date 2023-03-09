@@ -89,6 +89,10 @@ class AppFonts {
     color: const Color(0xFF363638),
     fontSize: 17,
   );
+  static TextStyle? lyricTileReduced = GoogleFonts.inter(
+    color: const Color(0xFF363638),
+    fontSize: 16,
+  );
   static TextStyle? titleLyricView = GoogleFonts.inter(
     color: const Color(0xFF363638),
     fontWeight: FontWeight.w500,
@@ -124,6 +128,11 @@ class AppFonts {
     fontWeight: FontWeight.w500,
     fontSize: 21,
   );
+  static TextStyle? h2Reduced = GoogleFonts.inter(
+    color: const Color(0xFF444446),
+    fontWeight: FontWeight.w500,
+    fontSize: 19,
+  );
   static TextStyle? bodyPlaceholder = GoogleFonts.inter(
     color: const Color(0xFFAEAEB2),
     fontWeight: FontWeight.w200,
@@ -133,6 +142,11 @@ class AppFonts {
     color: const Color(0xFFAEAEB2),
     fontWeight: FontWeight.w300,
     fontSize: 13,
+  );
+  static TextStyle? copyrightReduced = GoogleFonts.inter(
+    color: const Color(0xFFAEAEB2),
+    fontWeight: FontWeight.w300,
+    fontSize: 12,
   );
   static TextStyle? learnMore = GoogleFonts.inter(
     color: AppColors.darkGreen,
