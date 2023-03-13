@@ -95,15 +95,12 @@ class _WeekendLyricsRoutesState extends State<WeekdendLyricsRoutes> {
             if (Platform.isIOS) {
               return CupertinoPageRoute(
                 builder: (_) => CupertinoPageScaffold(
-                  child:
-                      LyricView(lyricEntity: settings.arguments as LyricEntity),
+                  child: LyricView(lyricEntity: settings.arguments as LyricEntity),
                 ),
               );
             } else {
               return MaterialPageRoute(
-                settings: settings,
-                builder: (_) =>
-                    LyricView(lyricEntity: settings.arguments as LyricEntity),
+                builder: (_) => LyricView(lyricEntity: settings.arguments as LyricEntity),
               );
             }
           default:

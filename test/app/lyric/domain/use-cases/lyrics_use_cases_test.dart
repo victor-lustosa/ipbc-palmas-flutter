@@ -8,7 +8,7 @@ import '../../../../mocks/mocks.dart';
 
 void main() {
   test('getting lyrics in use case', () {
-    Repository<LyricEntity> repository = RepositoryMock();
+    Repository<Stream<List<Map<dynamic, dynamic>>>> repository = RepositoryMock();
     Timestamp timestamp = Timestamp.now();
     //final entity = LyricEntityMock();
     Map<dynamic, dynamic> entity = {

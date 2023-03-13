@@ -1,10 +1,8 @@
 
-import '../entities/lyric_entity.dart';
-
-abstract class ILyricsUseCases {
-  Stream<List<LyricEntity>> get(String url);
-  Future<List<LyricEntity>> lettersFilter(
-      List<LyricEntity> lyrics, String letter);
+abstract class ILyricsUseCases <T> {
+  Stream<List<T>> get(String url);
+  Future<List<T>> lettersFilter(
+      List<T> lyrics, String letter);
 }
 
 

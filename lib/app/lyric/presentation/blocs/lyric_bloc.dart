@@ -30,12 +30,12 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
   }
 
   Future<void> _lyricsFilter(LyricsFilterEvent event, emit) async {
-    List<LyricEntity> lyricsList = await lyricsUseCase.lettersFilter(
+    List<dynamic> lyricsList = await lyricsUseCase.lettersFilter(
       event.lyrics,
       event.letter,
     );
     emit(
-      SuccessfullyFilteredLyricsState(lyricsList),
+      SuccessfullyFilteredLyricsState(lyricsList as List<LyricEntity>),
     );
   }
 }

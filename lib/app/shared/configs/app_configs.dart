@@ -77,7 +77,7 @@ class AppFonts {
     fontWeight: FontWeight.w500,
     fontSize: 17,
   );
-  static TextStyle? botao = GoogleFonts.inter(
+  static TextStyle? cnpjLabel = GoogleFonts.inter(
     color: Colors.black,
     fontWeight: FontWeight.w600,
     fontSize: 18,

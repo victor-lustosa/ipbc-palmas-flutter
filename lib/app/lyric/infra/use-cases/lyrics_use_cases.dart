@@ -1,10 +1,10 @@
-import '../../../core/infra/repositories/repository.dart';
+import '../../../core/domain/repositories/repository.dart';
 import '../../domain/entities/lyric_entity.dart';
 import '../../domain/use-cases/lyrics_use_cases.dart';
 import '../adapters/lyric_adapter.dart';
 
-class LyricsUseCases implements ILyricsUseCases {
-  final IRepository<LyricEntity> repository;
+class LyricsUseCases implements ILyricsUseCases<LyricEntity> {
+  final IRepository<Stream<List<Map<dynamic, dynamic>>>> repository;
   LyricsUseCases({required this.repository});
 
   List<LyricEntity> _convert(List<Map<dynamic, dynamic>> list) {

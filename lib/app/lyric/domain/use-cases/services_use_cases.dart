@@ -1,7 +1,5 @@
 
-import '../entities/service_entity.dart';
-
-abstract class IServicesUseCases {
-  Stream<List<ServiceEntity>> get(String url);
+abstract class IServicesUseCases <T>{
+  Stream<List<T>> get(String url);
 }
 

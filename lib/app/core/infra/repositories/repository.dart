@@ -2,17 +2,28 @@ import '../../../core/domain/repositories/repository.dart';
 
 import '../datasources/datasource.dart';
 
-abstract class IRepository<T> implements IGetRepository<T> {
-}
+class Repository<R> implements IRepository<R> {
+  Repository({required this.datasource});
 
-class Repository<T> implements IRepository<T> {
-  Repository({required this.getDatasource});
-
-  final IGetDatasource getDatasource;
+  final IDatasource datasource;
 
   @override
-  Stream<List<Map<dynamic, dynamic>>> get(String url) {
-    final stream = getDatasource.get(url);
-    return stream;
+  R get(path) {
+    return datasource.get(path);
+  }
+
+  @override
+  Future<void> add(path, data) {
+    return datasource.add(path, data);
+  }
+
+  @override
+  Future<void> delete(path, data) {
+    return datasource.delete(path, data);
+  }
+
+  @override
+  Future<void> update(path, data) {
+    return datasource.update(path, data);
   }
 }

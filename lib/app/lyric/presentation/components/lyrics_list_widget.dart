@@ -97,6 +97,8 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                     bottom: 4, left: 4
                   ),
                   child: Text(
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     widget.lyricsList[index].title,
                     style: AppFonts.lyricsTitleTile,
                   ),
@@ -116,8 +118,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                     arguments: widget.lyricsList[index],
                     color: AppColors.darkGreen),
                 onTap: () {
-                  Navigator.pushNamed(
-                    context,
+                  Navigator.of(context, rootNavigator: true).pushNamed(
                     AppRoutes.lyricRoute,
                     arguments: widget.lyricsList[index],
                   );

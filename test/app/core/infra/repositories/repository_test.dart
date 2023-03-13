@@ -5,7 +5,7 @@ import '../../../../mocks/mocks.dart';
 
 void main() {
   test('getting lyrics in repository', () {
-    final datasource = IGetDatasourceMock();
+    final datasource = IDatasourceMock();
     when(() => datasource.get('lyrics/1')).thenAnswer(
       (_) => Stream.value(
         [
@@ -32,7 +32,7 @@ void main() {
       ),
     );
 
-    final repository = Repository(getDatasource: datasource);
+    final repository = Repository(datasource: datasource);
 
     final result = repository.get('lyrics/1');
     expect(result, emits(isA<List<dynamic>>()));

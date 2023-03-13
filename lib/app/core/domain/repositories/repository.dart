@@ -1,12 +1,22 @@
-abstract class IGetRepository <T>{
-  Stream<List<Map<dynamic, dynamic>>> get(String url);
+abstract class IRepository<R>
+    implements
+        IGetRepository<R>,
+        IAddRepository,
+        IUpdateRepository,
+        IDeleteRepository {}
+
+abstract class IGetRepository<R> {
+  R get(String path);
 }
-abstract class IAddRepository <T>{
-  Future<void> add(T);
+
+abstract class IAddRepository {
+  Future<void> add(String path, data);
 }
-abstract class IUpdateRepository <T>{
-  Future<void> update(T);
+
+abstract class IUpdateRepository {
+  Future<void> update(String path, data);
 }
-abstract class IDeleteRepository <T>{
-  Future<void> delete(T);
+
+abstract class IDeleteRepository {
+  Future<void> delete(String path, data);
 }

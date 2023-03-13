@@ -62,7 +62,7 @@ class _OfferingViewState extends State<OfferingView> with ClipboardMixin {
                           padding: const EdgeInsets.only(left: 16),
                           child: Text(
                             "CNPJ: $cnpj",
-                            style: AppFonts.botao,
+                            style: AppFonts.cnpjLabel,
                           ),
                         ),
                         Padding(

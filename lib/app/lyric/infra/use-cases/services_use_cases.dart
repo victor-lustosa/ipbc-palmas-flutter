@@ -1,10 +1,10 @@
-import '../../../core/infra/repositories/repository.dart';
+import '../../../core/domain/repositories/repository.dart';
 import '../../domain/entities/service_entity.dart';
 import '../../domain/use-cases/services_use_cases.dart';
 import '../adapters/service_adapter.dart';
 
-class ServicesUseCases implements IServicesUseCases {
-  final IRepository<ServiceEntity> repository;
+class ServicesUseCases implements IServicesUseCases <ServiceEntity> {
+  final IRepository<Stream<List<Map<dynamic, dynamic>>>> repository;
   ServicesUseCases({required this.repository});
 
   List<ServiceEntity> _convert(List<Map<dynamic, dynamic>> entity) {

@@ -1,14 +1,7 @@
 import '../infra/datasources/datasource.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-abstract class IFirestoreDatasource
-    implements
-        IGetDatasource,
-        IAddDatasource,
-        IUpdateDatasource,
-        IDeleteDatasource {}
-
-class FirestoreDatasource implements IFirestoreDatasource {
+class FirestoreDatasource implements IDatasource {
   FirestoreDatasource({required FirebaseFirestore firestore})
       : _firestore = firestore;
   final FirebaseFirestore _firestore;
@@ -72,7 +65,7 @@ class FirestoreDatasource implements IFirestoreDatasource {
   }
 
   @override
-  Future<void> delete(String url, id) {
+  Future<void> delete(String url, data) {
     throw UnimplementedError();
   }
 }
