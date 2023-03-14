@@ -6,8 +6,9 @@ import 'package:hive/hive.dart';
 
 import '../../../../../../lyric/infra/models/dtos/liturgy_dto.dart';
 
+part 'service_hive_dto.g.dart';
 @HiveType(typeId: 1)
-class ServiceHiveDTO extends HiveObject {
+class ServiceHiveDTO {
   @HiveField(0)
   String id;
 

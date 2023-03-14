@@ -49,6 +49,7 @@ dependencies:
   upgrader: ^6.0.1
   uno: ^1.0.1+5
   hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +58,8 @@ dev_dependencies:
   fake_cloud_firestore: ^2.0.1
   bloc_test: ^9.0.3
   mocktail: ^0.3.0
+  hive_generator: ^1.1.0 # <-- this line
+  build_runner: ^2.0.3   # <-- and make sure that is also there
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
