@@ -2,19 +2,18 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:ipbc_palmas/app/shared/components/splash/infra/models/hive-dtos/database_configs_hive_dto.dart';
 import '../../../../../core/domain/use-cases/use_cases.dart';
-import '../../infra/models/hive-dtos/service_hive_dto.dart';
-
 
 class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
-  final IUseCases databasesUseCases;
+  final IUseCases<Stream<DatabaseConfigsHiveDTO>> databasesUseCases;
 
   DatabaseBloc({required this.databasesUseCases}) : super(InitialState()) {
     on<GetDataEvent>(_getData);
   }
 
   Future<void> _getData(GetDataEvent event, emit) async {
-    await emit.onEach<List<ServiceHiveDTO>>(
+   await  emit.onEach<DatabaseConfigsHiveDTO>(
       databasesUseCases.get(event.path),
       onData: (service) {
         emit(
@@ -56,6 +55,6 @@ class ServiceExceptionState extends DatabasesState {
 }
 
 class SuccessfullyFetchedDataState extends DatabasesState {
-  final List<ServiceHiveDTO> entities;
+  final DatabaseConfigsHiveDTO entities;
   SuccessfullyFetchedDataState(this.entities);
 }

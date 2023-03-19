@@ -1,13 +1,10 @@
 
 import '../../../../splash/infra/models/hive-dtos/verse_hive_dto.dart';
-import 'package:uuid/uuid.dart';
 import 'package:hive/hive.dart';
-
-import '../generic_hive_dto.dart';
-
 part 'lyric_hive_dto.g.dart';
+
 @HiveType(typeId: 0)
-class LyricHiveDTO extends GenericHiveDTO{
+class LyricHiveDTO {
   @HiveField(0)
   String id;
 
@@ -25,20 +22,6 @@ class LyricHiveDTO extends GenericHiveDTO{
 
   @HiveField(5)
   List<VerseHiveDTO> verses;
-
-  factory LyricHiveDTO.create(
-          {required String albumCover,
-          required String title,
-          required String createAt,
-          required String group,
-          required List<VerseHiveDTO> verses}) =>
-      LyricHiveDTO(
-          albumCover: albumCover,
-          id: const Uuid().v1(),
-          title: title,
-          createAt: createAt,
-          group: group,
-          verses: verses);
 
   LyricHiveDTO({
     required this.albumCover,

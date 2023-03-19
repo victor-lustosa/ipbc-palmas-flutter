@@ -8,8 +8,8 @@ class Repository<R> implements IRepository<R> {
   final IDatasource datasource;
 
   @override
-  R? get(path) {
-    return datasource.get(path);
+  R get(path) {
+    return datasource.get(path) as R;
   }
 
   @override

@@ -1,3 +1,0 @@
-class GenericHiveDTO{
-  GenericHiveDTO();
-}

@@ -4,7 +4,7 @@ import 'package:ipbc_palmas/app/shared/components/splash/infra/models/hive-dtos/
 import '../../../../../core/domain/repositories/repository.dart';
 import '../../../../../core/domain/use-cases/use_cases.dart';
 
-class DatabasesUseCases implements IUseCases<DatabaseConfigsHiveDTO> {
+class DatabasesUseCases implements IUseCases<Stream<DatabaseConfigsHiveDTO>> {
   final IRepository<DatabaseConfigsHiveDTO> repository;
   DatabasesUseCases({required this.repository});
 
@@ -13,7 +13,7 @@ class DatabasesUseCases implements IUseCases<DatabaseConfigsHiveDTO> {
   }*/
 
   @override
-  DatabaseConfigsHiveDTO? get(String path) {
-    return repository.get(path);
+  Stream<DatabaseConfigsHiveDTO> get(String path) {
+      return Stream.value(repository.get(path));
   }
 }

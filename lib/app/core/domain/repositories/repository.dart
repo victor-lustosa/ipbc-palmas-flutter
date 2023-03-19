@@ -6,7 +6,7 @@ abstract class IRepository<R>
         IDeleteRepository {}
 
 abstract class IGetRepository<R> {
-  R? get(String path);
+  R get(String path);
 }
 
 abstract class IAddRepository {

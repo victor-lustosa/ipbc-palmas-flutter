@@ -1,10 +1,9 @@
 import 'package:ipbc_palmas/app/shared/components/splash/infra/models/hive-dtos/verse_hive_dto.dart';
-
-import '../../shared/components/splash/infra/models/generic_hive_dto.dart';
 import '../../shared/components/splash/infra/models/hive-dtos/lyric_hive_dto.dart';
 import '../../shared/components/splash/infra/models/hive-dtos/database_configs_hive_dto.dart';
 import '../../shared/components/splash/infra/models/hive-dtos/service_hive_dto.dart';
 import '../infra/datasources/datasource.dart';
+
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HiveDatasource<R> implements IDatasource<R> {

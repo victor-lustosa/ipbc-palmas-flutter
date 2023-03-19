@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:ipbc_palmas/app/shared/components/splash/presentation/views/splash_view.dart';
 import 'package:upgrader/upgrader.dart';
 import 'home/views/home_view.dart';
 import 'lyric/lyric_module.dart';
@@ -39,7 +40,7 @@ class AppWidget extends StatelessWidget {
             durationUntilAlertAgain: const Duration(days: 3),
             dialogStyle: Platform.isIOS ? UpgradeDialogStyle.cupertino : UpgradeDialogStyle.material,
           ),
-          child: const HomeView(),
+          child: const SplashView(),
         ),
         initialRoute: "/",
         onGenerateRoute: AppRoutes.onGenerateRoute,

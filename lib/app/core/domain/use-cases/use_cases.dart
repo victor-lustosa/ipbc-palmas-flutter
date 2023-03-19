@@ -1,3 +1,3 @@
 abstract class IUseCases <R> {
-  R? get(String url);
+  R get(String url);
 }

@@ -14,13 +14,15 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
-  late final DatabaseBloc databaseBloc;
+  late final DatabaseBloc bloc;
   @override
   initState() {
     super.initState();
+
+    bloc = context.read<DatabaseBloc>();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
-        databaseBloc.add(
+        bloc.add(
           GetDataEvent(path: 'database-configs'),
         );
       },
@@ -67,14 +69,20 @@ class _SplashViewState extends State<SplashView> {
             },
             bloc: context.read<DatabaseBloc>(),
             builder: (context, state) {
+              if(state is SuccessfullyFetchedDataState){
+                return Center(
+                  child: Text(state.entities.updateAt.toString()),
+                );
+              }else{
               return const Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(
                     AppColors.darkGreen,
                   ),
                 ),
-              );
-            },
+               );
+             }
+           },
           ),
       //  )
     );
