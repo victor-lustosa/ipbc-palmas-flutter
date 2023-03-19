@@ -6,7 +6,7 @@ abstract class IDatasource<R>
         IUpdateDatasource {}
 
 abstract class IGetDatasource<R> {
-  R get(String path);
+  R? get(String path);
 }
 
 abstract class IAddDatasource {
@@ -14,7 +14,7 @@ abstract class IAddDatasource {
 }
 
 abstract class IDeleteDatasource {
-  Future<void> delete(String path, data);
+  Future<void> delete(String path);
 }
 
 abstract class IUpdateDatasource {

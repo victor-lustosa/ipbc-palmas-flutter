@@ -1,9 +1,11 @@
 import 'package:uuid/uuid.dart';
 import 'package:hive/hive.dart';
 
+import '../generic_hive_dto.dart';
+
 part 'verse_hive_dto.g.dart';
 @HiveType(typeId: 2)
-class VerseHiveDTO {
+class VerseHiveDTO extends GenericHiveDTO {
 
   @HiveField(0)
   String id;

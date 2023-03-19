@@ -1,20 +1,19 @@
 
-import '../../../../../core/domain/repositories/repository.dart';
-import '../../domain/use-cases/databases_use_cases.dart';
-import '../adapters/service_adapter.dart';
-import '../models/hive-dtos/service_hive_dto.dart';
+import 'package:ipbc_palmas/app/shared/components/splash/infra/models/hive-dtos/database_configs_hive_dto.dart';
 
-class DatabasesUseCases implements IDatabasesUseCases<ServiceHiveDTO> {
-  final IRepository<Stream<List<Map<dynamic, dynamic>>>> repository;
+import '../../../../../core/domain/repositories/repository.dart';
+import '../../../../../core/domain/use-cases/use_cases.dart';
+
+class DatabasesUseCases implements IUseCases<DatabaseConfigsHiveDTO> {
+  final IRepository<DatabaseConfigsHiveDTO> repository;
   DatabasesUseCases({required this.repository});
 
-  List<ServiceHiveDTO> _convert(List<Map<dynamic, dynamic>> entity) {
+  /*List<ServiceEntity> _convert(List<Map<dynamic, dynamic>> entity) {
     return ServiceAdapter.servicesListDecode(entity);
-  }
+  }*/
 
   @override
-  Stream<List<ServiceHiveDTO>> get() {
-    var services = repository.get('hive');
-    return services.map(_convert);
+  DatabaseConfigsHiveDTO? get(String path) {
+    return repository.get(path);
   }
 }

@@ -5,10 +5,11 @@ import 'package:uuid/uuid.dart';
 import 'package:hive/hive.dart';
 
 import '../../../../../../lyric/infra/models/dtos/liturgy_dto.dart';
+import '../generic_hive_dto.dart';
 
 part 'service_hive_dto.g.dart';
 @HiveType(typeId: 1)
-class ServiceHiveDTO {
+class ServiceHiveDTO extends GenericHiveDTO {
   @HiveField(0)
   String id;
 

@@ -1,5 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ipbc_palmas/app/lyric/domain/entities/service_entity.dart';
 import 'package:ipbc_palmas/app/shared/components/splash/infra/models/hive-dtos/service_hive_dto.dart';
 
 import '../../infra/models/services_list.dart';
@@ -9,8 +10,8 @@ import 'lyric_adapter.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
 class ServiceAdapter {
-  static List<ServiceHiveDTO> servicesListDecode(
-      List<Map<dynamic, dynamic>> data) {
+ /* static List<ServiceEntity> servicesListDecode(
+      List<ServiceHiveDTO> data) {
     ServicesList services = ServicesList(
       createAt: DateFormat('dd/MM/yyyy')
           .format((data[0]['createAt'] as Timestamp).toDate())
@@ -38,9 +39,9 @@ class ServiceAdapter {
     }
     return services;
   }
-
-  static ServiceHiveDTO fromMap(dynamic json) {
-    return ServiceHiveDTO.create(
+*/
+  /*static ServiceEntity fromMap(dynamic json) {
+    return ServiceEntity(
       liturgyList: json.containsKey('liturgyList')
           ? LiturgyAdapter.fromMap(json['liturgyList'])
           : [],
@@ -52,16 +53,6 @@ class ServiceAdapter {
       title: json['title'],
       guideIsVisible: json['guideIsVisible'],
     );
-  }
+  }*/
 
-  static Map<String, dynamic> toMap(ServiceHiveDTO data) {
-    return {
-      'lyricsList': LyricAdapter.toMapList(data.lyricsList),
-      'liturgyList': LiturgyAdapter.toMapList(data.liturgyList),
-      'createAt': data.createAt,
-      'heading': data.heading,
-      'title': data.title,
-      'guideIsVisible': data.guideIsVisible,
-    };
-  }
 }

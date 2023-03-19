@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../core/domain/use-cases/use_cases.dart';
 import '../../domain/entities/service_entity.dart';
-import '../../domain/use-cases/services_use_cases.dart';
 
 class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
-  final IServicesUseCases servicesUseCases;
+  final IUseCases servicesUseCases;
 
   ServiceBloc({required this.servicesUseCases}) : super(InitialState()) {
     on<GetServiceEvent>(_getService);

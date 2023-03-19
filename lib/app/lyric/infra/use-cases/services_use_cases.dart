@@ -1,9 +1,9 @@
 import '../../../core/domain/repositories/repository.dart';
+import '../../../core/domain/use-cases/use_cases.dart';
 import '../../domain/entities/service_entity.dart';
-import '../../domain/use-cases/services_use_cases.dart';
 import '../adapters/service_adapter.dart';
 
-class ServicesUseCases implements IServicesUseCases <ServiceEntity> {
+class ServicesUseCases implements IUseCases <Stream<List<ServiceEntity>>> {
   final IRepository<Stream<List<Map<dynamic, dynamic>>>> repository;
   ServicesUseCases({required this.repository});
 
@@ -14,6 +14,6 @@ class ServicesUseCases implements IServicesUseCases <ServiceEntity> {
   @override
   Stream<List<ServiceEntity>> get(String url) {
     var services = repository.get(url);
-    return services.map(_convert);
+    return services!.map(_convert);
   }
 }

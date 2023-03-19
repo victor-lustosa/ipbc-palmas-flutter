@@ -3,9 +3,11 @@ import '../../../../splash/infra/models/hive-dtos/verse_hive_dto.dart';
 import 'package:uuid/uuid.dart';
 import 'package:hive/hive.dart';
 
+import '../generic_hive_dto.dart';
+
 part 'lyric_hive_dto.g.dart';
 @HiveType(typeId: 0)
-class LyricHiveDTO {
+class LyricHiveDTO extends GenericHiveDTO{
   @HiveField(0)
   String id;
 

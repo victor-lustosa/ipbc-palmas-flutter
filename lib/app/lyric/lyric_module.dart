@@ -16,13 +16,6 @@ final lyricModule = [
       ),
     ),
   ),
-  Provider<Repository<Stream<List<Map<dynamic, dynamic>>>>>(
-    create: (context) => Repository(
-      datasource: FirestoreDatasource(
-        firestore: FirebaseFirestore.instance,
-      ),
-    ),
-  ),
   Provider<LyricBloc>(
     create: (context) => LyricBloc(
       lyricsUseCase: LyricsUseCases(

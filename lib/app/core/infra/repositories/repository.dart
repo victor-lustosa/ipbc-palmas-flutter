@@ -8,7 +8,7 @@ class Repository<R> implements IRepository<R> {
   final IDatasource datasource;
 
   @override
-  R get(path) {
+  R? get(path) {
     return datasource.get(path);
   }
 
@@ -19,7 +19,7 @@ class Repository<R> implements IRepository<R> {
 
   @override
   Future<void> delete(path, data) {
-    return datasource.delete(path, data);
+    return datasource.delete(path);
   }
 
   @override

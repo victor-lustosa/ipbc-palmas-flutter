@@ -21,7 +21,7 @@ class _SplashViewState extends State<SplashView> {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         databaseBloc.add(
-          GetDataEvent(),
+          GetDataEvent(path: 'database-configs'),
         );
       },
     );

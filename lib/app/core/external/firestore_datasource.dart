@@ -65,7 +65,7 @@ class FirestoreDatasource implements IDatasource {
   }
 
   @override
-  Future<void> delete(String url, data) {
+  Future<void> delete(String url) {
     throw UnimplementedError();
   }
 }
