@@ -1,8 +1,7 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/shared/main_module.dart';
-import 'shared/components/splash/presentation/views/splash_view.dart';
+import 'splash/main_module.dart';
+import 'splash/presentation/views/splash_view.dart';
 import 'package:upgrader/upgrader.dart';
 import 'shared/configs/no_glow_behavior.dart';
 import 'shared/configs/app_configs.dart';
@@ -32,15 +31,7 @@ class AppWidget extends StatelessWidget {
           scaffoldBackgroundColor: AppColors.white,
           primaryColor: AppColors.white,
         ),
-        home: UpgradeAlert(
-          upgrader: Upgrader(
-            canDismissDialog: true,
-            shouldPopScope: () => true,
-            durationUntilAlertAgain: const Duration(days: 3),
-            dialogStyle: Platform.isIOS ? UpgradeDialogStyle.cupertino : UpgradeDialogStyle.material,
-          ),
-          child: const SplashView(),
-        ),
+        home: const SplashView(),
         initialRoute: "/",
         onGenerateRoute: AppRoutes.onGenerateRoute,
         debugShowCheckedModeBanner: false,

@@ -8,7 +8,7 @@ import 'package:intl/intl.dart' show DateFormat;
 
 class ServiceAdapter {
   static List<ServiceEntity> servicesListDecode(
-      List<Map<dynamic, dynamic>> data) {
+      List<Map> data) {
     ServicesList services = ServicesList(
       createAt: DateFormat('dd/MM/yyyy')
           .format((data[0]['createAt'] as Timestamp).toDate())

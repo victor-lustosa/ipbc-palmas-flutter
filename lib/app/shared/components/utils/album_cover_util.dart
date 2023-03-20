@@ -23,7 +23,7 @@ class AlbumCoverUtil {
   Future<List<LyricDTO>> gettingAlbumCoversList(List<LyricDTO> lyricsList) async {
     List<LyricDTO> results = [];
     for (int i = 0; lyricsList.length > i; i++) {
-      Map<dynamic, dynamic> result = await getAlbumCover(lyricsList[i].title, lyricsList[i].group);
+      Map result = await getAlbumCover(lyricsList[i].title, lyricsList[i].group);
       results.add(
         LyricDTO(
           verses: VerseDTOAdapter.fromVagalume(result),

@@ -4,10 +4,10 @@ import '../../domain/use-cases/lyrics_use_cases.dart';
 import '../adapters/lyric_adapter.dart';
 
 class LyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
-  final IRepository<Stream<List<Map<dynamic, dynamic>>>> repository;
+  final IRepository<Stream<List<Map>>> repository;
   LyricsUseCases({required this.repository});
 
-  List<LyricEntity> _convert(List<Map<dynamic, dynamic>> list) {
+  List<LyricEntity> _convert(List<Map> list) {
     return list.map(LyricAdapter.fromMap).toList();
   }
 

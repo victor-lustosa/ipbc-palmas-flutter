@@ -1,10 +1,8 @@
 
-import '../../../../../../shared/components/splash/infra/models/hive-dtos/lyric_hive_dto.dart';
-import '../../../../../../lyric/infra/models/dtos/liturgy_dto.dart';
-
 import 'package:hive/hive.dart';
 
 import 'liturgy_hive_dto.dart';
+import 'lyric_hive_dto.dart';
 part 'service_hive_dto.g.dart';
 
 @HiveType(typeId: 1)

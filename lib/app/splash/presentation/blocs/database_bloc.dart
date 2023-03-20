@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import '../../../../../shared/components/splash/infra/models/hive-dtos/database_configs_hive_dto.dart';
-import '../../../../../core/domain/use-cases/use_cases.dart';
+import '../../../core/domain/use-cases/use_cases.dart';
+import '../../../lyric/infra/models/hive-dtos/database_configs_hive_dto.dart';
 
 class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
   final IUseCases databasesUseCases;

@@ -1,14 +1,12 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../../../../lyric/domain/entities/service_entity.dart';
-import '../../../../../shared/components/splash/infra/models/hive-dtos/service_hive_dto.dart';
 
 import 'liturgy_hive_adapter.dart';
 import 'lyric_hive_adapter.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart' show DateFormat;
 
-class ServiceAdapter {
+class ServiceHiveAdapter {
  /* static List<ServiceEntity> servicesListDecode(
       List<ServiceHiveDTO> data) {
     ServicesList services = ServicesList(

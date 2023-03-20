@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import '../../../lyric/infra/adapters/dtos/verse_dto_adapter.dart';
+import '../../../lyric/infra/adapters/firestore-dtos/verse_dto_adapter.dart';
 import 'package:uno/uno.dart';
-import '../../../lyric/infra/models/dtos/lyric_dto.dart';
+import '../../../lyric/infra/models/firestore-dtos/lyric_dto.dart';
 import '../../configs/app_configs.dart';
 
 class VersesUtil {
@@ -25,7 +25,7 @@ class VersesUtil {
   Future<List<LyricDTO>> generateVersesList(List<LyricDTO> lyricsList) async {
     List<LyricDTO> results = [];
     for (int i = 0; lyricsList.length > i; i++) {
-      Map<dynamic, dynamic> result = await getLyric(lyricsList[i].title, lyricsList[i].group);
+      Map result = await getLyric(lyricsList[i].title, lyricsList[i].group);
       results.add(
         LyricDTO(
           verses: VerseDTOAdapter.fromVagalume(result),

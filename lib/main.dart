@@ -10,7 +10,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'app/app_widget.dart';
 import 'app/core/external/hive_datasource.dart';
 import 'app/ibpc_bloc_observer.dart';
-import 'app/shared/components/splash/infra/models/hive-dtos/database_configs_hive_dto.dart';
+import 'app/lyric/infra/models/hive-dtos/database_configs_hive_dto.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {

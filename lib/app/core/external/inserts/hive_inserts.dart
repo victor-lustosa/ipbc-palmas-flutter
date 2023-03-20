@@ -1,11 +1,11 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
-import '../../shared/components/splash/infra/models/hive-dtos/database_configs_hive_dto.dart';
-import '../../shared/components/splash/infra/use-cases/databases_use_cases.dart';
-import '../../shared/components/splash/presentation/blocs/database_bloc.dart';
-import '../../shared/configs/app_configs.dart';
-import '../infra/repositories/repository.dart';
-import 'hive_datasource.dart';
+import '../../../lyric/infra/models/hive-dtos/database_configs_hive_dto.dart';
+import '../../../shared/configs/app_configs.dart';
+import '../../../splash/infra/use-cases/databases_use_cases.dart';
+import '../../../splash/presentation/blocs/database_bloc.dart';
+import '../../infra/repositories/repository.dart';
+import '../hive_datasource.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 //command to map hive entities
 // flutter packages pub run build_runner build --delete-conflicting-outputs
@@ -30,7 +30,7 @@ Future<void> main() async {
   hive.delete('database-configs');
   DatabaseBloc bloc = DatabaseBloc(
       databasesUseCases: DatabasesUseCases(
-          repository: Repository<Stream<List<Map<dynamic, dynamic>>>>(
+          repository: Repository<Stream<List<Map>>>(
               datasource: hive)));
   //DatabaseConfigsHiveDTO? aa = hive.get('database-configs');
   //print('data: ${aa!.updateAt}');

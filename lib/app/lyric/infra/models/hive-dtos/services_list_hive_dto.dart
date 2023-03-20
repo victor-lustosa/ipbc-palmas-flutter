@@ -4,7 +4,7 @@ import 'service_hive_dto.dart';
 import 'package:hive/hive.dart';
 part 'services_list_hive_dto.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 5)
 class ServicesListHiveDTO {
   @HiveField(0)
   String createAt;

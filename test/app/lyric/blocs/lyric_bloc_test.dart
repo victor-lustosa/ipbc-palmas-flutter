@@ -10,11 +10,11 @@ import 'package:mocktail/mocktail.dart';
 import '../../../mocks/mocks.dart';
 
 void main() {
-  late ILyricsUseCases useCases;
+  late ILyricsUseCases<Stream<List<LyricEntityMock>>> useCases;
   late LyricBloc bloc;
 
   setUp(() {
-    useCases = ILyricsUseCasesMock();
+    useCases = ILyricsUseCasesMock<Stream<List<LyricEntityMock>>>();
     bloc = LyricBloc(lyricsUseCase: useCases);
   });
 

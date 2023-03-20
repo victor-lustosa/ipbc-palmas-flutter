@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ipbc_palmas/app/home/views/home_view.dart';
+import '../../../home/views/home_view.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../lyric/firestore_lyric_module.dart';
-import '../../../../../lyric/hive_lyric_module.dart';
-import '../../../../configs/app_configs.dart';
-import '../../../../main_module.dart';
+import '../../../lyric/firestore_lyric_module.dart';
+import '../../../shared/configs/app_configs.dart';
+import '../../main_module.dart';
 import '../blocs/database_bloc.dart';
 
 class SplashView extends StatefulWidget {

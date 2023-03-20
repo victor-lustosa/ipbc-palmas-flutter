@@ -1,6 +1,5 @@
 
-import 'package:ipbc_palmas/app/shared/components/splash/infra/models/hive-dtos/liturgy_hive_dto.dart';
-
+import '../../models/hive-dtos/liturgy_hive_dto.dart';
 
 class LiturgyHiveAdapter {
 

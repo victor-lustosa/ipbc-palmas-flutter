@@ -8,7 +8,7 @@ part of 'services_list_hive_dto.dart';
 
 class ServicesListHiveDTOAdapter extends TypeAdapter<ServicesListHiveDTO> {
   @override
-  final int typeId = 1;
+  final int typeId = 5;
 
   @override
   ServicesListHiveDTO read(BinaryReader reader) {

@@ -8,7 +8,7 @@ import 'package:intl/intl.dart' show DateFormat;
 
 class LyricAdapter {
 
-  static LyricEntity fromMap(Map<dynamic, dynamic> json) {
+  static LyricEntity fromMap(Map json) {
 
     return LyricEntity(
       albumCover: json['albumCover'],

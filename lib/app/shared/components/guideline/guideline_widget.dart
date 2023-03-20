@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../configs/app_configs.dart';
-import '../../../lyric/infra/models/dtos/liturgy_dto.dart';
+import '../../../lyric/infra/models/firestore-dtos/liturgy_dto.dart';
 
 class GuidelineWidget extends StatelessWidget {
   const GuidelineWidget({Key? key, required this.liturgyList})

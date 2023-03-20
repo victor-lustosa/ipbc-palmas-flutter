@@ -5,13 +5,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../lyric/infra/adapters/dtos/lyric_dto_adapter.dart';
-import '../../lyric/infra/adapters/dtos/service_dto_adapter.dart';
-import '../../../firebase_options.dart';
-import '../../lyric/infra/models/dtos/lyric_dto.dart';
-import '../../lyric/infra/models/dtos/service_dto.dart';
-import '../../shared/components/utils/verses_util.dart';
-import 'firestore_datasource.dart';
+import '../../../lyric/infra/adapters/firestore-dtos/lyric_dto_adapter.dart';
+import '../../../lyric/infra/adapters/firestore-dtos/service_dto_adapter.dart';
+import '../../../../firebase_options.dart';
+import '../../../lyric/infra/models/firestore-dtos/lyric_dto.dart';
+import '../../../lyric/infra/models/firestore-dtos/service_dto.dart';
+import '../../../shared/components/utils/verses_util.dart';
+import '../firestore_datasource.dart';
 
 Future<void> firebaseInitialize() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,4 +1,4 @@
-import '../models/dtos/liturgy_dto.dart';
+import '../models/firestore-dtos/liturgy_dto.dart';
 
 class LiturgyAdapter {
   static List<LiturgyDTO> fromMap(dynamic json) {

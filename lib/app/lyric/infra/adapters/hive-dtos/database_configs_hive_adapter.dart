@@ -1,5 +1,5 @@
 
-import 'package:ipbc_palmas/app/shared/components/splash/infra/models/hive-dtos/database_configs_hive_dto.dart';
+import '../../models/hive-dtos/database_configs_hive_dto.dart';
 
 class DatabaseConfigsHiveAdapter {
 
@@ -8,7 +8,7 @@ class DatabaseConfigsHiveAdapter {
     map.add({'updateAt': data.updateAt});
     return map;
   }
-  static DatabaseConfigsHiveDTO fromMap(List<Map<dynamic, dynamic>> json) {
+  static DatabaseConfigsHiveDTO fromMap(List<Map> json) {
     return DatabaseConfigsHiveDTO(
       updateAt: json[0]['updateAt'],
     );

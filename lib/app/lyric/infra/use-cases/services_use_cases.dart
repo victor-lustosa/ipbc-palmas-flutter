@@ -5,10 +5,10 @@ import '../adapters/service_adapter.dart';
 
 
 class ServicesUseCases implements IUseCases<Stream<List<ServiceEntity>>> {
-  final IRepository<Stream<List<Map<dynamic, dynamic>>>> repository;
+  final IRepository<Stream<List<Map>>> repository;
   ServicesUseCases({required this.repository});
 
-  List<ServiceEntity> _convert(List<Map<dynamic, dynamic>> entity) {
+  List<ServiceEntity> _convert(List<Map> entity) {
     return ServiceAdapter.servicesListDecode(entity);
   }
 

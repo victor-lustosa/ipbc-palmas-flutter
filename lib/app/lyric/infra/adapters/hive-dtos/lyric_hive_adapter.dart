@@ -1,12 +1,11 @@
 
-import '../../../../../lyric/domain/entities/lyric_entity.dart';
-import '../../infra/adapters/verse_hive_adapter.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart' show DateFormat;
+import 'verse_hive_adapter.dart';
 
-import '../models/hive-dtos/lyric_hive_dto.dart';
+import '../../../domain/entities/lyric_entity.dart';
+import '../../models/hive-dtos/lyric_hive_dto.dart';
 
 class LyricHiveAdapter {
 
@@ -24,7 +23,7 @@ class LyricHiveAdapter {
       verses: [
         if (lyric.verses.isNotEmpty)
           //...(json['verses'] as List).map((verse) => JsonToVerse.fromMap(verse)).toList(),
-          ...lyric.verses.map(VerseAdapter.fromDTO).toList(),
+          ...lyric.verses.map(VerseHiveAdapter.fromDTO).toList(),
       ],
     );
   }
@@ -36,7 +35,7 @@ class LyricHiveAdapter {
       'createAt': entity.createAt,
       'albumCover': entity.albumCover,
       'group': entity.group,
-      'verses': VerseAdapter.toMapList(entity.verses),
+      'verses': VerseHiveAdapter.toMapList(entity.verses),
     }).toList();
   }
   static LyricHiveDTO fromEntity(LyricEntity lyric) {
@@ -53,7 +52,7 @@ class LyricHiveAdapter {
       verses: [
         if (lyric.verses.isNotEmpty)
         //...(json['verses'] as List).map((verse) => JsonToVerse.fromMap(verse)).toList(),
-          ...lyric.verses.map(VerseAdapter.fromEntity).toList(),
+          ...lyric.verses.map(VerseHiveAdapter.fromEntity).toList(),
       ],
     );
   }
