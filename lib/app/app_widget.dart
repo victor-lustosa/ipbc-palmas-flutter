@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/shared/splash_module.dart';
+import 'package:ipbc_palmas/app/shared/main_module.dart';
 import 'shared/components/splash/presentation/views/splash_view.dart';
 import 'package:upgrader/upgrader.dart';
 import 'shared/configs/no_glow_behavior.dart';
@@ -16,7 +16,7 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ...splashModule,
+        ...mainModule,
       ],
       child: MaterialApp(
         builder: (context, Widget? child) {

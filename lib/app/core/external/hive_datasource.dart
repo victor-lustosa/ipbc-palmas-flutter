@@ -1,3 +1,6 @@
+import 'package:ipbc_palmas/app/shared/components/splash/infra/models/hive-dtos/services_list_hive_dto.dart';
+
+import '../../shared/components/splash/infra/adapters/database_configs_hive_adapter.dart';
 import '../../shared/components/splash/infra/adapters/lyric_hive_adapter.dart';
 import '../../shared/components/splash/infra/models/hive-dtos/verse_hive_dto.dart';
 import '../../shared/components/splash/infra/models/hive-dtos/lyric_hive_dto.dart';
@@ -28,14 +31,14 @@ class HiveDatasource<R> implements IDatasource {
     Hive.registerAdapter(
       VerseHiveDTOAdapter(),
     );
+    Hive.registerAdapter(
+      ServicesListHiveDTOAdapter(),
+    );
   }
 
   @override
   Stream<List<Map>> get(String path) {
-
-    List<R> result = [];
-    result.add(box.get(path) as R);
-    return Stream.value(LyricHiveAdapter.toMapList(result as List<LyricHiveDTO>));
+    return Stream.value(_convertToMap(box.get(path) as R));
   }
 
   @override
@@ -49,5 +52,15 @@ class HiveDatasource<R> implements IDatasource {
   @override
   Future<void> delete(String path) async {
     box.delete(path);
+  }
+
+  List<Map<String, dynamic>> _convertToMap(entities){
+    switch(R){
+      case List<LyricHiveDTO>:
+        return LyricHiveAdapter.toMapList(entities as List<LyricHiveDTO>);
+      case DatabaseConfigsHiveDTO:
+        return DatabaseConfigsHiveAdapter.toMapList(entities as DatabaseConfigsHiveDTO);
+    }
+    return List.empty();
   }
 }

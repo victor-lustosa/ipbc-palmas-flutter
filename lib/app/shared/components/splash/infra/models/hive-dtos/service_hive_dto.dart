@@ -3,6 +3,8 @@ import '../../../../../../shared/components/splash/infra/models/hive-dtos/lyric_
 import '../../../../../../lyric/infra/models/dtos/liturgy_dto.dart';
 
 import 'package:hive/hive.dart';
+
+import 'liturgy_hive_dto.dart';
 part 'service_hive_dto.g.dart';
 
 @HiveType(typeId: 1)
@@ -26,7 +28,7 @@ class ServiceHiveDTO {
   List<LyricHiveDTO> lyricsList;
 
   @HiveField(6)
-  List<LiturgyDTO> liturgyList;
+  List<LiturgyHiveDTO> liturgyList;
 
   ServiceHiveDTO(
       {required this.id,

@@ -1,4 +1,3 @@
-
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
 import '../../shared/components/splash/infra/models/hive-dtos/database_configs_hive_dto.dart';
@@ -24,21 +23,24 @@ Future<void> main() async {
   //insert Service Hive DTO
 //database configs insert
   await Hive.openBox<DatabaseConfigsHiveDTO>('database-configs');
-  HiveDatasource hive = HiveDatasource<Stream<List<DatabaseConfigsHiveDTO?>>>(boxLabel: 'database-configs');
-  //HiveDatasource hive1 = HiveDatasource<ServiceHiveDTO>(boxLabel: 'services');
-  hive.add('database-configs', DatabaseConfigsHiveDTO(updateAt: DateTime.now()));
-  //hive.delete('database-configs');
+  HiveDatasource hive =
+      HiveDatasource<DatabaseConfigsHiveDTO?>(boxLabel: 'database-configs');
+  hive.add(
+      'database-configs', DatabaseConfigsHiveDTO(updateAt: DateTime.now()));
+  hive.delete('database-configs');
   DatabaseBloc bloc = DatabaseBloc(
       databasesUseCases: DatabasesUseCases(
-      repository: Repository<Stream<List<DatabaseConfigsHiveDTO>>>(
-          datasource: hive
-      )));
-  //DatabaseConfigsHiveDTO? aa = data.get('database-configs');
+          repository: Repository<Stream<List<Map<dynamic, dynamic>>>>(
+              datasource: hive)));
+  //DatabaseConfigsHiveDTO? aa = hive.get('database-configs');
   //print('data: ${aa!.updateAt}');
-  runApp(HiveTest(bloc: bloc,));
+  runApp(HiveTest(
+    bloc: bloc,
+  ));
 }
+
 class HiveTest extends StatelessWidget {
-   HiveTest({Key? key,required this.bloc}) : super(key: key);
+  HiveTest({Key? key, required this.bloc}) : super(key: key);
   DatabaseBloc bloc;
   @override
   Widget build(BuildContext context) {

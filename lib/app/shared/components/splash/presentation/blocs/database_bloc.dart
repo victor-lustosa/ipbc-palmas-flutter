@@ -6,14 +6,14 @@ import '../../../../../shared/components/splash/infra/models/hive-dtos/database_
 import '../../../../../core/domain/use-cases/use_cases.dart';
 
 class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
-  final IUseCases<Stream<List<DatabaseConfigsHiveDTO>>> databasesUseCases;
+  final IUseCases databasesUseCases;
 
   DatabaseBloc({required this.databasesUseCases}) : super(InitialState()) {
     on<GetDataEvent>(_getData);
   }
 
   Future<void> _getData(GetDataEvent event, emit) async {
-   await  emit.onEach<List<DatabaseConfigsHiveDTO>>(
+   await  emit.onEach<DatabaseConfigsHiveDTO>(
        databasesUseCases.get(event.path),
       onData: (service) {
         emit(

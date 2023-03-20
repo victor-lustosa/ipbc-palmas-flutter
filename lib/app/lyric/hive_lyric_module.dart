@@ -1,26 +1,27 @@
 
-import 'package:ipbc_palmas/app/lyric/presentation/blocs/lyric_bloc.dart';
-import 'package:ipbc_palmas/app/lyric/presentation/blocs/service_bloc.dart';
+import 'presentation/blocs/lyric_bloc.dart';
+import 'presentation/blocs/service_bloc.dart';
+import '../shared/components/splash/infra/models/hive-dtos/lyric_hive_dto.dart';
+import '../shared/components/splash/infra/models/hive-dtos/service_hive_dto.dart';
 
 import '../core/external/hive_datasource.dart';
 import '../core/infra/repositories/repository.dart';
-import 'domain/entities/lyric_entity.dart';
-import 'domain/entities/service_entity.dart';
+
 import 'package:provider/provider.dart';
 
 import 'infra/use-cases/lyrics_use_cases.dart';
 import 'infra/use-cases/services_use_cases.dart';
 
-final hiveModule = [
+final hiveLyricModule = [
   Provider<Repository<List<Map<dynamic, dynamic>>>>(
     create: (context) => Repository(
-      datasource: HiveDatasource(boxLabel: 'lyric'),
+      datasource: HiveDatasource<LyricHiveDTO>(boxLabel: 'lyric'),
     ),
   ),
 
   Provider<Repository<List<Map<dynamic, dynamic>>>>(
     create: (context) => Repository(
-      datasource: HiveDatasource(boxLabel: 'service'),
+      datasource: HiveDatasource<ServiceHiveDTO>(boxLabel: 'service'),
     ),
   ),
   Provider<LyricBloc>(

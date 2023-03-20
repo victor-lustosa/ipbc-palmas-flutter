@@ -21,7 +21,7 @@ class ServiceHiveDTOAdapter extends TypeAdapter<ServiceHiveDTO> {
       title: fields[3] as String,
       guideIsVisible: fields[2] as bool,
       heading: fields[4] as String,
-      liturgyList: (fields[6] as List).cast<LiturgyDTO>(),
+      liturgyList: (fields[6] as List).cast<LiturgyHiveDTO>(),
       lyricsList: (fields[5] as List).cast<LyricHiveDTO>(),
       createAt: fields[1] as String,
     );

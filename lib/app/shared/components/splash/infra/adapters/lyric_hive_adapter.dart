@@ -1,6 +1,6 @@
 
 import '../../../../../lyric/domain/entities/lyric_entity.dart';
-import '../../infra/adapters/verse_adapter.dart';
+import '../../infra/adapters/verse_hive_adapter.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 // ignore: depend_on_referenced_packages

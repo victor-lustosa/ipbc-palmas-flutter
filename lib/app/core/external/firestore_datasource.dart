@@ -2,7 +2,7 @@
 import '../infra/datasources/datasource.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirestoreDatasource<R> implements IDatasource{
+class FirestoreDatasource implements IDatasource{
   FirestoreDatasource({required FirebaseFirestore firestore})
       : _firestore = firestore;
 

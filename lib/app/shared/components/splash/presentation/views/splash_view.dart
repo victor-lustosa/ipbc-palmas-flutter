@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../../../lyric/firestore_lyric_module.dart';
 import '../../../../../lyric/hive_lyric_module.dart';
 import '../../../../configs/app_configs.dart';
-import '../../../../splash_module.dart';
+import '../../../../main_module.dart';
 import '../blocs/database_bloc.dart';
 
 class SplashView extends StatefulWidget {
@@ -38,7 +38,7 @@ class _SplashViewState extends State<SplashView> {
       body: BlocConsumer<DatabaseBloc, DatabasesState>(
           listener: (context, state) {
             if (state is SuccessfullyFetchedDataState) {
-                 state.entity.updateAt.toString() != "" ? instances = [...lyricModule] : [...splashModule];
+                 state.entity.updateAt.toString() != "" ? instances = [...firestoreLyricModule] : [...mainModule];
              }
           },
           bloc: context.read<DatabaseBloc>(),

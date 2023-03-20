@@ -1,9 +1,10 @@
 
-import '../../../../../lyric/infra/models/dtos/liturgy_dto.dart';
+import 'package:ipbc_palmas/app/shared/components/splash/infra/models/hive-dtos/liturgy_hive_dto.dart';
 
-class LiturgyAdapter {
 
-  static List<Map<String, dynamic>> toMapList(List<LiturgyDTO> data) {
+class LiturgyHiveAdapter {
+
+  static List<Map<String, dynamic>> toMapList(List<LiturgyHiveDTO> data) {
     return data.map((entity) => {
               'isAdditional': entity.isAdditional,
               'sequence': entity.sequence,

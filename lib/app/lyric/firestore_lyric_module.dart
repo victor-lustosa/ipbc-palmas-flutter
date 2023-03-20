@@ -11,10 +11,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'infra/use-cases/lyrics_use_cases.dart';
 import 'infra/use-cases/services_use_cases.dart';
 
-final lyricModule = [
-  Provider<Repository<Map<dynamic, dynamic>>>(
-    create: (context) => Repository<Map<dynamic, dynamic>>(
-      datasource: FirestoreDatasource<Repository<Map<dynamic, dynamic>>>(
+final firestoreLyricModule = [
+  Provider<Repository<Stream<List<Map<dynamic, dynamic>>>>>(
+    create: (context) => Repository<Stream<List<Map<dynamic, dynamic>>>>(
+      datasource: FirestoreDatasource(
         firestore: FirebaseFirestore.instance,
       ),
     ),
