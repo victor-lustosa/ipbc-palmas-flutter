@@ -1,12 +1,14 @@
+
+
 abstract class IDatasource<R>
     implements
-        IGetDatasource<R>,
+        IGetDatasource,
         IAddDatasource,
         IDeleteDatasource,
         IUpdateDatasource {}
 
-abstract class IGetDatasource<R> {
-  R? get(String path);
+abstract class IGetDatasource {
+  Stream<List<Map>> get(String path);
 }
 
 abstract class IAddDatasource {
@@ -14,7 +16,7 @@ abstract class IAddDatasource {
 }
 
 abstract class IDeleteDatasource {
-  Future<void> delete(String path);
+  Future<void> delete(String path );
 }
 
 abstract class IUpdateDatasource {

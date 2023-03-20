@@ -1,10 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/shared/components/splash/presentation/views/splash_view.dart';
+import 'package:ipbc_palmas/app/shared/splash_module.dart';
+import 'shared/components/splash/presentation/views/splash_view.dart';
 import 'package:upgrader/upgrader.dart';
-import 'home/views/home_view.dart';
-import 'lyric/lyric_module.dart';
 import 'shared/configs/no_glow_behavior.dart';
 import 'shared/configs/app_configs.dart';
 import 'shared/configs/app_routes.dart';
@@ -17,7 +16,7 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ...lyricModule,
+        ...splashModule,
       ],
       child: MaterialApp(
         builder: (context, Widget? child) {

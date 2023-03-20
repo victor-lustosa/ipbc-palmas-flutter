@@ -6,7 +6,7 @@ abstract class IRepository<R>
         IDeleteRepository {}
 
 abstract class IGetRepository<R> {
-  R get(String path);
+ R get(String path);
 }
 
 abstract class IAddRepository {
@@ -18,5 +18,5 @@ abstract class IUpdateRepository {
 }
 
 abstract class IDeleteRepository {
-  Future<void> delete(String path, data);
+  Future<void> delete(String path);
 }

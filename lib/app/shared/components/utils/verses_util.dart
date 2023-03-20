@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:ipbc_palmas/app/lyric/infra/adapters/dtos/verse_dto_adapter.dart';
+import '../../../lyric/infra/adapters/dtos/verse_dto_adapter.dart';
 import 'package:uno/uno.dart';
 import '../../../lyric/infra/models/dtos/lyric_dto.dart';
 import '../../configs/app_configs.dart';

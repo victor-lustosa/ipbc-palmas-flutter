@@ -3,7 +3,7 @@ import '../../domain/entities/lyric_entity.dart';
 import '../../domain/use-cases/lyrics_use_cases.dart';
 import '../adapters/lyric_adapter.dart';
 
-class LyricsUseCases implements ILyricsUseCases<LyricEntity, Stream<List<LyricEntity>>> {
+class LyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
   final IRepository<Stream<List<Map<dynamic, dynamic>>>> repository;
   LyricsUseCases({required this.repository});
 
@@ -13,8 +13,7 @@ class LyricsUseCases implements ILyricsUseCases<LyricEntity, Stream<List<LyricEn
 
   @override
   Stream<List<LyricEntity>> get(String url) {
-    var lyrics = repository.get(url);
-    return lyrics!.map(_convert);
+    return repository.get(url).map(_convert);
   }
 
   @override

@@ -1,10 +1,9 @@
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/shared/components/splash/infra/models/hive-dtos/service_hive_dto.dart';
-import 'package:ipbc_palmas/app/shared/components/splash/presentation/blocs/database_bloc.dart';
 import '../../shared/components/splash/infra/models/hive-dtos/database_configs_hive_dto.dart';
 import '../../shared/components/splash/infra/use-cases/databases_use_cases.dart';
+import '../../shared/components/splash/presentation/blocs/database_bloc.dart';
 import '../../shared/configs/app_configs.dart';
 import '../infra/repositories/repository.dart';
 import 'hive_datasource.dart';
@@ -25,12 +24,13 @@ Future<void> main() async {
   //insert Service Hive DTO
 //database configs insert
   await Hive.openBox<DatabaseConfigsHiveDTO>('database-configs');
-  HiveDatasource hive = HiveDatasource<DatabaseConfigsHiveDTO>(boxLabel: 'database-configs');
+  HiveDatasource hive = HiveDatasource<Stream<List<DatabaseConfigsHiveDTO?>>>(boxLabel: 'database-configs');
   //HiveDatasource hive1 = HiveDatasource<ServiceHiveDTO>(boxLabel: 'services');
   hive.add('database-configs', DatabaseConfigsHiveDTO(updateAt: DateTime.now()));
   //hive.delete('database-configs');
-  DatabaseBloc bloc = DatabaseBloc(databasesUseCases: DatabasesUseCases(
-      repository: Repository<DatabaseConfigsHiveDTO>(
+  DatabaseBloc bloc = DatabaseBloc(
+      databasesUseCases: DatabasesUseCases(
+      repository: Repository<Stream<List<DatabaseConfigsHiveDTO>>>(
           datasource: hive
       )));
   //DatabaseConfigsHiveDTO? aa = data.get('database-configs');
@@ -65,7 +65,7 @@ class HiveTest extends StatelessWidget {
               );
             } else if (state is SuccessfullyFetchedDataState) {
               return Center(
-                child: Text(state.entities.updateAt.toString()),
+                child: Text(state.entity.updateAt.toString()),
               );
             } else {
               return const Center(

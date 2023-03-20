@@ -1,9 +1,11 @@
 
-import 'package:ipbc_palmas/app/core/domain/use-cases/use_cases.dart';
+import 'package:ipbc_palmas/app/lyric/domain/entities/lyric_entity.dart';
 
-abstract class ILyricsUseCases <T,R> extends IUseCases<R>{
-  Future<List<T>> lettersFilter(
-      List<T> lyrics, String letter);
+import '../../../core/domain/use-cases/use_cases.dart';
+
+abstract class ILyricsUseCases <R> extends IUseCases<R>{
+  Future<List<LyricEntity>> lettersFilter(
+      List<LyricEntity> lyrics, String letter);
 }
 
 

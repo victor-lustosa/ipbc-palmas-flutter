@@ -1,8 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart' hide BottomNavigationBar;
-import 'package:ipbc_palmas/app/shared/mixins/buttons_bar_mixin.dart';
-
 import '../../../configs/app_configs.dart';
+import '../../../mixins/buttons_bar_mixin.dart';
 import 'custom_bottom_navigation_bar.dart';
 
 class MaterialBottomBarWidget extends StatefulWidget {

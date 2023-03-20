@@ -18,7 +18,7 @@ class Repository<R> implements IRepository<R> {
   }
 
   @override
-  Future<void> delete(path, data) {
+  Future<void> delete(path) {
     return datasource.delete(path);
   }
 

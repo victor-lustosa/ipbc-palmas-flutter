@@ -1,4 +1,5 @@
-import 'package:ipbc_palmas/app/shared/components/splash/infra/models/hive-dtos/verse_hive_dto.dart';
+import '../../shared/components/splash/infra/adapters/lyric_hive_adapter.dart';
+import '../../shared/components/splash/infra/models/hive-dtos/verse_hive_dto.dart';
 import '../../shared/components/splash/infra/models/hive-dtos/lyric_hive_dto.dart';
 import '../../shared/components/splash/infra/models/hive-dtos/database_configs_hive_dto.dart';
 import '../../shared/components/splash/infra/models/hive-dtos/service_hive_dto.dart';
@@ -6,7 +7,7 @@ import '../infra/datasources/datasource.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 
-class HiveDatasource<R> implements IDatasource<R> {
+class HiveDatasource<R> implements IDatasource {
   String boxLabel;
   late Box<R> box;
 
@@ -30,8 +31,11 @@ class HiveDatasource<R> implements IDatasource<R> {
   }
 
   @override
-  R? get(String path) {
-    return box.get(path);
+  Stream<List<Map>> get(String path) {
+
+    List<R> result = [];
+    result.add(box.get(path) as R);
+    return Stream.value(LyricHiveAdapter.toMapList(result as List<LyricHiveDTO>));
   }
 
   @override

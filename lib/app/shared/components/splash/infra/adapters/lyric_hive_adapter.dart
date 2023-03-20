@@ -8,7 +8,7 @@ import 'package:intl/intl.dart' show DateFormat;
 
 import '../models/hive-dtos/lyric_hive_dto.dart';
 
-class LyricAdapter {
+class LyricHiveAdapter {
 
   static LyricEntity fromDTO(LyricHiveDTO lyric) {
 
@@ -27,6 +27,17 @@ class LyricAdapter {
           ...lyric.verses.map(VerseAdapter.fromDTO).toList(),
       ],
     );
+  }
+  static List<Map<String, dynamic>> toMapList(List<LyricHiveDTO> data) {
+    return data
+        .map((entity) => {
+      'id': entity.id,
+      'title': entity.title,
+      'createAt': entity.createAt,
+      'albumCover': entity.albumCover,
+      'group': entity.group,
+      'verses': VerseAdapter.toMapList(entity.verses),
+    }).toList();
   }
   static LyricHiveDTO fromEntity(LyricEntity lyric) {
 

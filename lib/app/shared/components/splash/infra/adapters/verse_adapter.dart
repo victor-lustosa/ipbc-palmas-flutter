@@ -4,6 +4,13 @@ import '../models/hive-dtos/verse_hive_dto.dart';
 
 class VerseAdapter {
 
+  static List<Map<String, dynamic>> toMapList(List<VerseHiveDTO> data) {
+    return data.map((entity) => {
+      'id': entity.id,
+      'isChorus': entity.isChorus,
+      'versesList': entity.versesList,
+    }).toList();
+  }
   static VerseEntity fromDTO(VerseHiveDTO data) {
     return VerseEntity(
       id: int.parse(data.id),

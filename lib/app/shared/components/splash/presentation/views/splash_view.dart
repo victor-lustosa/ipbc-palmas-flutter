@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ipbc_palmas/app/home/views/home_view.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../lyric/firestore_lyric_module.dart';
+import '../../../../../lyric/hive_lyric_module.dart';
 import '../../../../configs/app_configs.dart';
+import '../../../../splash_module.dart';
 import '../blocs/database_bloc.dart';
-
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -15,10 +18,10 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> {
   late final DatabaseBloc bloc;
+  late final List instances;
   @override
   initState() {
     super.initState();
-
     bloc = context.read<DatabaseBloc>();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
@@ -31,60 +34,38 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   Widget build(BuildContext context) {
-    return
-      //MultiBlocProvider(
-      /*providers: [ Provider<LyricBloc>(
-        create: (context) => LyricBloc(
-          lyricsUseCase: LyricsUseCases(
-            repository: context.read<Repository<LyricEntity>>(),
-          ),
-        ),
-      ),
-        Provider<ServiceBloc>(
-          create: (context) => ServiceBloc(
-            servicesUseCases: ServicesUseCases(
-              repository: context.read<Repository<ServiceEntity>>(),
-            ),
-          ),
-        ),],*/
-     // child:
-      Scaffold(
-          body: BlocConsumer<DatabaseBloc, DatabasesState>(
-            listener: (context, state) {
-              if (state is SuccessfullyFetchedDataState) {
-               /* if (state.user != null) {
-                  context.read<EstablishmentViewModel>().user =
-                      UserAdapter.user(state.user!);
-                  Navigator.pushReplacementNamed(
-                    context,
-                    AppRoutes.establishmentRoute,
-                  );
-                } else {
-                  Navigator.pushReplacementNamed(
-                    context,
-                    AppRoutes.homeRoute,
-                  );
-                }*/
-              }
-            },
-            bloc: context.read<DatabaseBloc>(),
-            builder: (context, state) {
-              if(state is SuccessfullyFetchedDataState){
-                return Center(
-                  child: Text(state.entities.updateAt.toString()),
-                );
-              }else{
+    return Scaffold(
+      body: BlocConsumer<DatabaseBloc, DatabasesState>(
+          listener: (context, state) {
+            if (state is SuccessfullyFetchedDataState) {
+                 state.entity.updateAt.toString() != "" ? instances = [...lyricModule] : [...splashModule];
+             }
+          },
+          bloc: context.read<DatabaseBloc>(),
+          builder: (context, state) {
+            if (state is LoadingState) {
               return const Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(
                     AppColors.darkGreen,
                   ),
                 ),
-               );
-             }
-           },
-          ),
-      //  )
+              );
+            } else if (state is SuccessfullyFetchedDataState){
+              return MultiProvider(
+                  providers: [...instances],
+                  child: const HomeView());
+            } else{
+              return const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    AppColors.darkGreen,
+                  ),
+                ),
+              );
+            }
+          }
+       ),
     );
   }
 }

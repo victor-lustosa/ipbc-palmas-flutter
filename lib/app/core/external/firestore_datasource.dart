@@ -1,11 +1,14 @@
+
 import '../infra/datasources/datasource.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirestoreDatasource implements IDatasource {
+class FirestoreDatasource<R> implements IDatasource{
   FirestoreDatasource({required FirebaseFirestore firestore})
       : _firestore = firestore;
+
   final FirebaseFirestore _firestore;
   List<String> params = [];
+
   List<Map> _convert(List<QueryDocumentSnapshot<Map<String, dynamic>>> docs) {
     return docs.map((document) => {
               'id': document.id,
@@ -14,7 +17,7 @@ class FirestoreDatasource implements IDatasource {
   }
 
   @override
-  Stream<List<Map>> get(String url) {
+  Stream<List<Map>> get(String url)  {
     params = url.split('/');
     Stream<QuerySnapshot<Map<String, dynamic>>> snapshot;
     if (params.length > 2) {
@@ -68,4 +71,5 @@ class FirestoreDatasource implements IDatasource {
   Future<void> delete(String url) {
     throw UnimplementedError();
   }
+
 }
