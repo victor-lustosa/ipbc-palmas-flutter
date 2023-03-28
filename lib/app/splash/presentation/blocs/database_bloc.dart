@@ -2,18 +2,19 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import '../../../core/domain/use-cases/use_cases.dart';
 import '../../../lyric/infra/models/hive-dtos/database_configs_hive_dto.dart';
+import '../../domain/use-cases/database_use_case.dart';
 
 class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
-  final IUseCases databasesUseCases;
+  final IDatabaseUseCases databasesUseCases;
 
-  DatabaseBloc({required this.databasesUseCases}) : super(InitialState()) {
+  DatabaseBloc({required this.databasesUseCases}) : super(InitialDatasourceState()) {
     on<GetDataEvent>(_getData);
+    on<AddDataEvent>(_addData);
   }
 
   Future<void> _getData(GetDataEvent event, emit) async {
-   await  emit.onEach<DatabaseConfigsHiveDTO>(
+   await emit.onEach<DatabaseConfigsHiveDTO?>(
        databasesUseCases.get(event.path),
       onData: (service) {
         emit(
@@ -26,6 +27,10 @@ class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
         );
       },
     );
+  }
+
+  Future<void> _addData(AddDataEvent event, emit) async {
+    databasesUseCases.add(event.path, event.data);
   }
 }
 
@@ -41,11 +46,17 @@ class GetDataEvent extends DatabasesEvent {
   GetDataEvent({required this.path});
 }
 
+class AddDataEvent extends DatabasesEvent {
+  final String path;
+  final dynamic data;
+  AddDataEvent({required this.path, required this.data});
+}
+
 @immutable
 abstract class DatabasesState {}
 
-class InitialState extends DatabasesState {
-  InitialState();
+class InitialDatasourceState extends DatabasesState {
+  InitialDatasourceState();
 }
 
 class LoadingState extends DatabasesState {

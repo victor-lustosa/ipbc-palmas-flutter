@@ -1,6 +1,14 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:ipbc_palmas/app/lyric/infra/use-cases/lyrics_use_cases.dart';
+import 'package:ipbc_palmas/app/lyric/infra/use-cases/services_use_cases.dart';
+import 'package:ipbc_palmas/app/lyric/presentation/blocs/service_bloc.dart';
+import '../../../lyric/infra/adapters/hive-dtos/database_configs_hive_adapter.dart';
+import '../../../lyric/infra/adapters/hive-dtos/service_hive_adapter.dart';
 import '../../../lyric/infra/models/hive-dtos/database_configs_hive_dto.dart';
+import '../../../lyric/infra/models/hive-dtos/lyric_hive_dto.dart';
+import '../../../lyric/infra/models/hive-dtos/service_hive_dto.dart';
+import '../../../lyric/presentation/blocs/lyric_bloc.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../splash/infra/use-cases/databases_use_cases.dart';
 import '../../../splash/presentation/blocs/database_bloc.dart';
@@ -23,20 +31,59 @@ Future<void> main() async {
   //insert Service Hive DTO
 //database configs insert
   await Hive.openBox<DatabaseConfigsHiveDTO>('database-configs');
-  HiveDatasource hive =
-      HiveDatasource<DatabaseConfigsHiveDTO?>(boxLabel: 'database-configs');
-  hive.add(
-      'database-configs', DatabaseConfigsHiveDTO(updateAt: DateTime.now()));
-  hive.delete('database-configs');
-  DatabaseBloc bloc = DatabaseBloc(
+  await Hive.openBox<ServiceHiveDTO>('services');
+  await Hive.openBox<LyricHiveDTO>('lyrics');
+  HiveDatasource dataHive = HiveDatasource<DatabaseConfigsHiveDTO>(boxLabel: 'database-configs');
+  HiveDatasource serviceHive = HiveDatasource<ServiceHiveDTO>(boxLabel: 'services');
+  HiveDatasource lyricHive = HiveDatasource<LyricHiveDTO>(boxLabel: 'lyrics');
+/*  dataHive.add('database-configs',
+    DatabaseConfigsHiveDTO(
+      updateAt: DateTime.now(),
+     ),
+  );*/
+  dataHive.delete('database-configs');
+  serviceHive.delete('lyrics');
+  lyricHive.delete('services');
+
+  DatabaseBloc databaseBloc = DatabaseBloc(
       databasesUseCases: DatabasesUseCases(
           repository: Repository<Stream<List<Map>>>(
-              datasource: hive)));
-  //DatabaseConfigsHiveDTO? aa = hive.get('database-configs');
-  //print('data: ${aa!.updateAt}');
-  runApp(HiveTest(
-    bloc: bloc,
-  ));
+              datasource: dataHive,
+          ),
+      ),
+  );
+  /*ServiceBloc serviceBloc = ServiceBloc(
+    servicesUseCases: ServicesUseCases(
+      repository: Repository<Stream<List<Map>>>(
+        datasource: serviceHive,
+      ),
+    ),
+  );
+  LyricBloc lyricBloc = LyricBloc(
+    lyricsUseCase: LyricsUseCases(
+      repository: Repository<Stream<List<Map>>>(
+        datasource: lyricHive,
+      ),
+    ),
+  );
+  Stream<List<Map>> aa = dataHive.get('database-configs');
+  Stream<List<Map>> se = dataHive.get('services');
+  DatabaseConfigsHiveDTO? entity;
+  aa.listen((event) { }).onData((data) {
+    entity = DatabaseConfigsHiveAdapter.fromMap(data);
+  });
+  //print('data: ${entity!.updateAt}');
+  List<ServiceHiveDTO>? servi;
+  /*se.listen((event) { }).onData((data) {
+    servi = serviceHive.getAdapter(data);
+  });*/
+  print('data: ${servi![0].title}');
+  */
+  runApp(
+    HiveTest(
+    bloc: databaseBloc,
+     ),
+  );
 }
 
 class HiveTest extends StatelessWidget {
@@ -57,7 +104,7 @@ class HiveTest extends StatelessWidget {
         body: BlocBuilder<DatabaseBloc, DatabasesState>(
           bloc: bloc,
           builder: (context, state) {
-            if (state is InitialState) {
+            if (state is InitialDatasourceState) {
               return const Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(
@@ -67,7 +114,7 @@ class HiveTest extends StatelessWidget {
               );
             } else if (state is SuccessfullyFetchedDataState) {
               return Center(
-                child: Text(state.entity.updateAt.toString()),
+                child: Text(state.entity.updateAt.toString() ?? ''),
               );
             } else {
               return const Center(

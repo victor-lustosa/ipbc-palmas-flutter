@@ -1,4 +1,5 @@
 
+import '../../lyric/infra/models/firestore-dtos/settings_dto.dart';
 import '../infra/datasources/datasource.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -36,6 +37,15 @@ class FirestoreDatasource implements IDatasource{
           .snapshots();
     }
     return snapshot.map((entity) => entity.docs).map(_convert);
+  }
+  Future<Stream<List>> verifyUpdateDatasource(String url) async  {
+    Stream<QuerySnapshot<Map<String, dynamic>>> snapshot;
+    snapshot = _firestore.collection(url).snapshots();
+    List<Map> result = [];
+    return snapshot.map((entity) => entity.docs.map(
+        (doc) =>  SettingsDTO(updateAt: doc.get('updateAt'))
+
+    ).toList());
   }
 
   @override

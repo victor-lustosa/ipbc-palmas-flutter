@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 //import '../../../shared/components/search-bar/search_bar_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/layout/top-bar/title_top_bar_widget.dart';
+import '../../../splash/presentation/blocs/database_bloc.dart';
+import '../../../splash/utils/validation_util.dart';
 import '../blocs/lyric_bloc.dart';
 import '../../domain/entities/lyric_entity.dart';
 import '../../../shared/layout/side-bar/side_bar_widget.dart';
-
 import '../components/lyrics_list_widget.dart';
 
 class LyricsListView extends StatefulWidget {
@@ -18,12 +19,17 @@ class LyricsListView extends StatefulWidget {
 
 class _LyricsListViewState extends State<LyricsListView>
     with TickerProviderStateMixin {
+
   late List<LyricEntity> lyricsFetched;
   late List<LyricEntity> lyricsFiltered;
   late List<String> drawerNames;
-  late LyricBloc bloc;
+  late final LyricBloc lyricBloc;
+  late final DatabaseBloc databaseBloc;
   bool isSelected = false;
   String selectedValue = '';
+  late final String database;
+  final String firebaseDatabase = 'firebase';
+  final String url = 'lyrics/20';
 
   fillLettersCarousel() {
     drawerNames = [
@@ -42,8 +48,10 @@ class _LyricsListViewState extends State<LyricsListView>
     lyricsFetched = [];
     lyricsFiltered = [];
     fillLettersCarousel();
-    bloc = context.read<LyricBloc>();
-    bloc.add(GetLyricsEvent(url: 'lyrics/20'));
+    lyricBloc = context.read<LyricBloc>();
+    databaseBloc= context.read<DatabaseBloc>();
+    lyricBloc.add(GetLyricsEvent(url: url));
+    database = ValidationUtil.validationDatasource();
     super.initState();
   }
 
@@ -57,7 +65,7 @@ class _LyricsListViewState extends State<LyricsListView>
         drawerEnableOpenDragGesture: true,
         backgroundColor: AppColors.white,
         body: BlocBuilder<LyricBloc, LyricState>(
-          bloc: bloc,
+          bloc: lyricBloc,
           builder: (context, state) {
             if (state is InitialState) {
               return const Center(
@@ -73,10 +81,16 @@ class _LyricsListViewState extends State<LyricsListView>
                   selectedValue == '') {
                 lyricsFetched = state.entities;
                 lyricsFiltered = state.entities;
+                if (database == firebaseDatabase) {
+                  databaseBloc.add(AddDataEvent(path: url, data: state.entities));
+                }
               } else {
                 if (state is SuccessfullyFilteredLyricsState &&
                     selectedValue != '') {
                   lyricsFiltered = state.entities;
+                  if (database == firebaseDatabase) {
+                    databaseBloc.add(AddDataEvent(path: url, data: state.entities));
+                  }
                 } else {
                   lyricsFiltered = lyricsFetched;
                 }
@@ -90,8 +104,8 @@ class _LyricsListViewState extends State<LyricsListView>
                   child: RefreshIndicator(
                     color: AppColors.darkGreen,
                     onRefresh: () async {
-                      bloc.add(
-                        GetLyricsEvent(url: 'lyrics/20'),
+                      lyricBloc.add(
+                        GetLyricsEvent(url: url),
                       );
                     },
                     child: Column(

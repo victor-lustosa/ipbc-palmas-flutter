@@ -1,18 +1,21 @@
-import '../firestore-dtos/liturgy_dto.dart';
+import '../../../domain/entities/liturgy_entity.dart';
 import '../firestore-dtos/lyric_dto.dart';
 
 class ServiceDTO {
   ServiceDTO(
-      {required this.guideIsVisible,
-      required this.liturgyList,
-      required this.lyricsList,
-      required this.createAt,
-      required this.heading,
-      required this.title});
+        {
+        required this.guideIsVisible,
+        required this.liturgyList,
+        required this.lyricsList,
+        required this.createAt,
+        required this.heading,
+        required this.title
+        }
+      );
   final bool guideIsVisible;
   final DateTime createAt;
   final List<LyricDTO> lyricsList;
-  final List<LiturgyDTO> liturgyList;
+  final List<LiturgyEntity> liturgyList;
   final String title;
   final String heading;
 
@@ -30,7 +33,7 @@ class ServiceDTO {
       String? heading,
       bool? guideIsVisible,
       List<LyricDTO>? lyricsList,
-      List<LiturgyDTO>? liturgyList}) {
+      List<LiturgyEntity>? liturgyList}) {
     return ServiceDTO(
         title: title ?? this.title,
         heading: heading ?? this.heading,

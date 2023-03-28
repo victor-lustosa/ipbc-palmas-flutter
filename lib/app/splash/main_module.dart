@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-
+import '../core/external/firestore_datasource.dart';
 import 'presentation/blocs/database_bloc.dart';
 
 import '../core/external/hive_datasource.dart';
@@ -11,16 +12,22 @@ import 'package:provider/provider.dart';
 import 'infra/use-cases/databases_use_cases.dart';
 
 final mainModule = [
+  Provider<FirestoreDatasource>(
+    create: (_) => FirestoreDatasource(
+      firestore: FirebaseFirestore.instance,
+    ),
+  ),
   Provider<Repository<Stream<List<Map>>>>(
-    create: (context) => Repository<Stream<List<Map>>>(
-      datasource: HiveDatasource<DatabaseConfigsHiveDTO>(boxLabel: 'database-configs'),
+    create: (_) => Repository<Stream<List<Map>>>(
+      datasource:
+          HiveDatasource<DatabaseConfigsHiveDTO>(boxLabel: 'database-configs'),
     ),
   ),
   Provider<DatabaseBloc>(
     create: (context) => DatabaseBloc(
       databasesUseCases: DatabasesUseCases(
         repository: context.read<Repository<Stream<List<Map>>>>(),
-        ),
       ),
     ),
+  ),
 ];

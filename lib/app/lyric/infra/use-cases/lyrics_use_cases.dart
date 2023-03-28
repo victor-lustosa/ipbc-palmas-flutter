@@ -28,5 +28,4 @@ class LyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
     return Future.value(lyricsResult);
   }
 
-
 }

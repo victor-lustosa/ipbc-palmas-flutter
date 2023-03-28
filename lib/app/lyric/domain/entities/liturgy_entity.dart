@@ -1,9 +1,9 @@
-class LiturgyDTO {
+class LiturgyEntity {
   final bool isAdditional;
   final String sequence;
   final String additional;
 
-  LiturgyDTO({
+  LiturgyEntity({
     required this.isAdditional,
     required this.sequence,
     required this.additional,

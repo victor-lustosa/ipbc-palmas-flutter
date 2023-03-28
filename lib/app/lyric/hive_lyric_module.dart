@@ -13,23 +13,23 @@ import 'package:provider/provider.dart';
 final hiveLyricModule = [
 
   Provider<LyricBloc>(
-    create: (context) => LyricBloc(
+    create: (_) => LyricBloc(
       lyricsUseCase: LyricsUseCases(
         repository: Repository(
-          datasource: HiveDatasource<LyricHiveDTO>(boxLabel: 'lyric'),
-        ),
-      ),
-    ),
-  ),
-  Provider<ServiceBloc>(
-    create: (context) => ServiceBloc(
-      servicesUseCases: ServicesUseCases(
-        repository: Repository(
-          datasource: HiveDatasource<ServiceHiveDTO>(boxLabel: 'service'),
+          datasource: HiveDatasource<LyricHiveDTO>(boxLabel: 'lyrics'),
         ),
       ),
     ),
   ),
 
+  Provider<ServiceBloc>(
+    create: (_) => ServiceBloc(
+      servicesUseCases: ServicesUseCases(
+        repository: Repository(
+          datasource: HiveDatasource<ServiceHiveDTO>(boxLabel: 'services'),
+        ),
+      ),
+    ),
+  ),
 
 ];

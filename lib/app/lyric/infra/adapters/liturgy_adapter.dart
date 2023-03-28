@@ -1,11 +1,12 @@
-import '../models/firestore-dtos/liturgy_dto.dart';
+import '../../domain/entities/liturgy_entity.dart';
 
 class LiturgyAdapter {
-  static List<LiturgyDTO> fromMap(dynamic json) {
-    List<LiturgyDTO> liturgyList = [];
+
+  static List<LiturgyEntity> fromMap(dynamic json) {
+    List<LiturgyEntity> liturgyList = [];
     for (dynamic liturgy in json) {
       liturgyList.add(
-        LiturgyDTO(
+        LiturgyEntity(
           isAdditional: liturgy['isAdditional'],
           sequence: liturgy['sequence'],
           additional: liturgy['additional'],
@@ -15,11 +16,12 @@ class LiturgyAdapter {
     return liturgyList;
   }
 
-  static List<Map<String, dynamic>> toMapList(List<LiturgyDTO> data) {
+  static List<Map<String, dynamic>> toMapList(List<LiturgyEntity> data) {
     return data.map((entity) => {
               'isAdditional': entity.isAdditional,
               'sequence': entity.sequence,
               'additional': entity.additional,
             }).toList();
   }
+
 }

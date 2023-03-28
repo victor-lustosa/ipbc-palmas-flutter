@@ -1,5 +1,5 @@
 import 'lyric_entity.dart';
-import '../../infra/models/firestore-dtos/liturgy_dto.dart';
+import 'liturgy_entity.dart';
 
 class ServiceEntity {
   ServiceEntity(
@@ -14,5 +14,5 @@ class ServiceEntity {
   final String title;
   final String heading;
   final List<LyricEntity> lyricsList;
-  final List<LiturgyDTO> liturgyList;
+  final List<LiturgyEntity> liturgyList;
 }

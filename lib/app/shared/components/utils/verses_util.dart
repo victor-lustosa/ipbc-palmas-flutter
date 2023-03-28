@@ -1,9 +1,10 @@
-import 'dart:math';
 
 import '../../../lyric/infra/adapters/firestore-dtos/verse_dto_adapter.dart';
-import 'package:uno/uno.dart';
 import '../../../lyric/infra/models/firestore-dtos/lyric_dto.dart';
 import '../../configs/app_configs.dart';
+
+import 'dart:math';
+import 'package:uno/uno.dart';
 
 class VersesUtil {
   final uno = Uno();
@@ -14,8 +15,7 @@ class VersesUtil {
     String groupParam = group.replaceAll(' ', '%20');
     String apikey = 'a34faccfb8ad3edc6ddcc978e34802ef';
     try {
-      final response = await uno.get(
-          'https://api.vagalume.com.br/search.php?art=$groupParam&mus=$titleParam&apikey=$apikey');
+      final response = await uno.get('https://api.vagalume.com.br/search.php?art=$groupParam&mus=$titleParam&apikey=$apikey');
       return response.data;
     } on UnoError catch (error) {
       print(error);

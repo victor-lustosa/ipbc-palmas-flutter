@@ -1,11 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../splash/presentation/blocs/database_bloc.dart';
 //import '../../../shared/components/back-button/back_button_widget.dart';
 import '../../../shared/components/next-button/next_button_widget.dart';
 import '../../../shared/layout/top-bar/main_top_bar_widget.dart';
+import '../../../splash/utils/validation_util.dart';
 import '../../domain/entities/service_entity.dart';
 import '../blocs/service_bloc.dart';
 import '../../../shared/configs/app_configs.dart';
@@ -20,13 +21,20 @@ class ServicesListView extends StatefulWidget {
 
 class _ServicesListViewState extends State<ServicesListView>
     with AutomaticKeepAliveClientMixin {
-  late final ServiceBloc bloc;
+
+  late final ServiceBloc serviceBloc;
+  late final DatabaseBloc databaseBloc;
   late List<ServiceEntity> services;
-  late String url = 'services/1';
+  late final String database;
+  final String firebaseDatabase = 'firebase';
+  final String url = 'services/1';
+
   @override
   void initState() {
-    bloc = context.read<ServiceBloc>();
-    bloc.add(GetServiceEvent(url: url));
+    serviceBloc = context.read<ServiceBloc>();
+    databaseBloc= context.read<DatabaseBloc>();
+    serviceBloc.add(GetServiceEvent(url: url));
+    database = ValidationUtil.validationDatasource();
     super.initState();
   }
 
@@ -38,7 +46,7 @@ class _ServicesListViewState extends State<ServicesListView>
     super.build(context);
     return Scaffold(
       body: BlocBuilder<ServiceBloc, ServicesState>(
-        bloc: bloc,
+        bloc: serviceBloc,
         builder: (context, state) {
           if (state is InitialState) {
             return const Center(
@@ -50,6 +58,9 @@ class _ServicesListViewState extends State<ServicesListView>
             );
           } else if (state is SuccessfullyFetchedServiceState) {
             services = state.entities;
+            //if (database == firebaseDatabase) {
+              databaseBloc.add(AddDataEvent(path: url, data: state.entities));
+           // }
             return SafeArea(
               child: SingleChildScrollView(
                 child: Column(

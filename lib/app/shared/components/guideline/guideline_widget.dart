@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../configs/app_configs.dart';
-import '../../../lyric/infra/models/firestore-dtos/liturgy_dto.dart';
+import '../../../lyric/domain/entities/liturgy_entity.dart';
 
 class GuidelineWidget extends StatelessWidget {
   const GuidelineWidget({Key? key, required this.liturgyList})
       : super(key: key);
-  final List<LiturgyDTO> liturgyList;
+  final List<LiturgyEntity> liturgyList;
 
   @override
   Widget build(BuildContext context) {

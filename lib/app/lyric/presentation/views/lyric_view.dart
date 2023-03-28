@@ -1,11 +1,13 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import '../../../shared/components/back-button/back_button_widget.dart';
 import '../../../shared/mixins/launch_url_mixin.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../domain/entities/lyric_entity.dart';
-import 'dart:io';
+
 
 class LyricView extends StatefulWidget {
   const LyricView({super.key, required this.lyricEntity});

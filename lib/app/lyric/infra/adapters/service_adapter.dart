@@ -1,6 +1,6 @@
 import '../../domain/entities/service_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/services_list.dart';
+import '../models/firestore-dtos/services_list_dto.dart';
 import 'liturgy_adapter.dart';
 import 'lyric_adapter.dart';
 // ignore: depend_on_referenced_packages
@@ -9,7 +9,7 @@ import 'package:intl/intl.dart' show DateFormat;
 class ServiceAdapter {
   static List<ServiceEntity> servicesListDecode(
       List<Map> data) {
-    ServicesList services = ServicesList(
+    ServicesListDTO services = ServicesListDTO(
       createAt: DateFormat('dd/MM/yyyy')
           .format((data[0]['createAt'] as Timestamp).toDate())
           .toString(),
@@ -61,5 +61,15 @@ class ServiceAdapter {
       'title': data.title,
       'guideIsVisible': data.guideIsVisible,
     };
+  }
+  static List<Map<String, dynamic>> toMapList(List<ServiceEntity> data) {
+    return data.map((entity) => {
+      'lyricsList': LyricAdapter.toMapList(entity.lyricsList),
+      'liturgyList': LiturgyAdapter.toMapList(entity.liturgyList),
+      'createAt': entity.createAt,
+      'heading': entity.heading,
+      'title': entity.title,
+      'guideIsVisible': entity.guideIsVisible,
+    }).toList();
   }
 }
