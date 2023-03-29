@@ -19,7 +19,7 @@ class HiveLyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
   }
 
   List<LyricEntity> _convert(List<Map> list) {
-    return list.map(LyricAdapter.fromMap).toList();
+    return LyricAdapter.fromListMap(list);
   }
 
   @override

@@ -11,6 +11,7 @@ class VerseHiveAdapter {
       'versesList': entity.versesList,
     }).toList();
   }
+
   static VerseHiveDTO toDTO(VerseEntity data) {
     return
         VerseHiveDTO(

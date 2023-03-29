@@ -8,24 +8,6 @@ import 'package:intl/intl.dart' show DateFormat;
 
 class LyricAdapter {
 
-  static LyricEntity fromMap(Map json) {
-    return LyricEntity(
-      albumCover: json['albumCover'],
-      id: json['id'],
-      createAt: json['createAt'] == ''
-          ? ''
-          : DateFormat('dd/MM/yyyy, HH:mm')
-              .format((json['createAt'] as Timestamp).toDate()),
-      title: json['title'],
-      group: json['group'],
-      verses: [
-        if (json.containsKey('verses'))
-          //...(json['verses'] as List).map((verse) => JsonToVerse.fromMap(verse)).toList(),
-          ...(json['verses'] as List).map(VerseAdapter.fromMap).toList(),
-      ],
-    );
-  }
-
   static List<LyricEntity> fromListMap(dynamic json) {
     List<LyricEntity> lyricsList = [];
     for (dynamic lyric in json) {

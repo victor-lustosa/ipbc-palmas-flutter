@@ -25,23 +25,7 @@ class ServiceHiveAdapter {
     }
     return [{'servicesList':map, 'createAt': data.createAt}];
   }
-  /*static List<ServiceHiveDTO> toDTOList(List<ServiceEntity> entities) {
-    List<ServiceHiveDTO> services = [];
-    for (ServiceEntity service in entities) {
-      services.add(
-        ServiceHiveDTO(
-          id: '',
-          liturgyList: LiturgyHiveAdapter.toDTOList(service.liturgyList),
-          lyricsList: LyricHiveAdapter.toDTOList(service.lyricsList),
-          createAt: service.createAt,
-          heading: service.heading,
-          title: service.title,
-          guideIsVisible: service.guideIsVisible,
-        ),
-      );
-    }
-    return services;
-  }*/
+
   static HiveServicesListDTO toDTOList(ServicesListEntity entities) {
     List<ServiceHiveDTO> services = [];
     for (ServiceEntity service in entities.servicesList) {

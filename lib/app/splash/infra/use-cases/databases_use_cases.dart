@@ -6,10 +6,6 @@ class DatabasesUseCases implements IUseCases<Stream<DatabaseConfigsHiveDTO>> {
   final IRepository<DatabaseConfigsHiveDTO> repository;
   DatabasesUseCases({required this.repository});
 
-  /*DatabaseConfigsHiveDTO _convert(List<Map> entity) {
-    return DatabaseConfigsHiveAdapter.fromMap(entity);
-  }*/
-
   @override
   Future<Stream<DatabaseConfigsHiveDTO>> get(String path) async {
    DatabaseConfigsHiveDTO? result = await repository.get(path);
