@@ -4,11 +4,11 @@ import 'package:cloud_firestore_platform_interface/src/timestamp.dart';
 import 'package:flutter/cupertino.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart' show DateFormat;
-import '../../core/external/firestore_datasource.dart';
-import '../../lyric/infra/adapters/firestore-dtos/settings_dto_adapter.dart';
+import '../../../core/external/firestore_datasource.dart';
+import '../../../lyric/infra/adapters/firestore-dtos/settings_dto_adapter.dart';
 import 'package:provider/provider.dart';
 
-import '../../lyric/infra/models/firestore-dtos/settings_dto.dart';
+import '../../../lyric/infra/models/firestore-dtos/settings_dto.dart';
 class ValidationUtil {
 
   static Future<DateTime> verifyUpdateFirebase(BuildContext context, DateTime updateAt)  async {

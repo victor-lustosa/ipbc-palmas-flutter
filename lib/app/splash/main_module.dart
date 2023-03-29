@@ -17,16 +17,15 @@ final mainModule = [
       firestore: FirebaseFirestore.instance,
     ),
   ),
-  Provider<Repository<Stream<List<Map>>>>(
-    create: (_) => Repository<Stream<List<Map>>>(
-      datasource:
-          HiveDatasource<DatabaseConfigsHiveDTO>(boxLabel: 'database-configs'),
+  Provider<Repository<DatabaseConfigsHiveDTO>>(
+    create: (_) => Repository<DatabaseConfigsHiveDTO>(
+      datasource: HiveDatasource<DatabaseConfigsHiveDTO>(boxLabel: 'database-configs'),
     ),
   ),
   Provider<DatabaseBloc>(
     create: (context) => DatabaseBloc(
       databasesUseCases: DatabasesUseCases(
-        repository: context.read<Repository<Stream<List<Map>>>>(),
+        repository: context.read<Repository<DatabaseConfigsHiveDTO>>(),
       ),
     ),
   ),

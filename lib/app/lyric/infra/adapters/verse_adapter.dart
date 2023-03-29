@@ -5,7 +5,7 @@ class VerseAdapter {
 
   static VerseEntity fromMap(dynamic json) {
     return VerseEntity(
-      id: json['id'],
+      id: json['id'].runtimeType == String ? int.parse(json['id']) : json['id'],
       isChorus: json['isChorus'],
       versesList: json['versesList'],
     );

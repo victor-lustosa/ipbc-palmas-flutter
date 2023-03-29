@@ -3,17 +3,27 @@ import '../../domain/entities/lyric_entity.dart';
 import '../../domain/use-cases/lyrics_use_cases.dart';
 import '../adapters/lyric_adapter.dart';
 
-class LyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
+class FireLyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
   final IRepository<Stream<List<Map>>> repository;
-  LyricsUseCases({required this.repository});
+
+  FireLyricsUseCases({required this.repository});
+
+  @override
+  Future<Stream<List<LyricEntity>>> get(String url) async {
+    var result = await repository.get(url);
+    if(result != null){
+      return result.map(_convert);
+    }
+    return Stream.value([]);
+  }
 
   List<LyricEntity> _convert(List<Map> list) {
     return list.map(LyricAdapter.fromMap).toList();
   }
 
   @override
-  Stream<List<LyricEntity>> get(String url) {
-    return repository.get(url).map(_convert);
+  Future<void> add(path, data) async {
+    repository.add(path, data);
   }
 
   @override
@@ -27,5 +37,4 @@ class LyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
     }
     return Future.value(lyricsResult);
   }
-
 }

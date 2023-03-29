@@ -18,7 +18,7 @@ class FirestoreDatasource implements IDatasource{
   }
 
   @override
-  Stream<List<Map>> get(String url)  {
+  Future<Stream<List<Map>>> get(String url) async {
     params = url.split('/');
     Stream<QuerySnapshot<Map<String, dynamic>>> snapshot;
     if (params.length > 2) {

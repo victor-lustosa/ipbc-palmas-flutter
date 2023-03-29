@@ -1,29 +1,29 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'services_list_hive_dto.dart';
+part of 'hive_services_list_dto.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ServicesListHiveDTOAdapter extends TypeAdapter<ServicesListHiveDTO> {
+class HiveServicesListDTOAdapter extends TypeAdapter<HiveServicesListDTO> {
   @override
   final int typeId = 5;
 
   @override
-  ServicesListHiveDTO read(BinaryReader reader) {
+  HiveServicesListDTO read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ServicesListHiveDTO(
+    return HiveServicesListDTO(
       servicesList: (fields[1] as List).cast<ServiceHiveDTO>(),
       createAt: fields[0] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, ServicesListHiveDTO obj) {
+  void write(BinaryWriter writer, HiveServicesListDTO obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
@@ -38,7 +38,7 @@ class ServicesListHiveDTOAdapter extends TypeAdapter<ServicesListHiveDTO> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ServicesListHiveDTOAdapter &&
+      other is HiveServicesListDTOAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

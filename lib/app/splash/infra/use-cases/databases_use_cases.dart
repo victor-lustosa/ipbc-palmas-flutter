@@ -1,11 +1,9 @@
-import '../../domain/use-cases/database_use_case.dart';
+import '../../../core/domain/use-cases/use_cases.dart';
 import '../../../lyric/infra/models/hive-dtos/database_configs_hive_dto.dart';
 import '../../../core/domain/repositories/repository.dart';
-import '../../../lyric/infra/adapters/hive-dtos/database_configs_hive_adapter.dart';
 
-class DatabasesUseCases
-    implements IDatabaseUseCases<Stream<DatabaseConfigsHiveDTO>> {
-  final IRepository<Stream<List<Map>>> repository;
+class DatabasesUseCases implements IUseCases<Stream<DatabaseConfigsHiveDTO>> {
+  final IRepository<DatabaseConfigsHiveDTO> repository;
   DatabasesUseCases({required this.repository});
 
   /*DatabaseConfigsHiveDTO _convert(List<Map> entity) {
@@ -13,23 +11,12 @@ class DatabasesUseCases
   }*/
 
   @override
-  Stream<DatabaseConfigsHiveDTO> get(String path) {
-    var result = repository.get(path);
-    dynamic entity;
-    result.listen((event) {}).onData(
-      (data) {
-        if (data.isNotEmpty) {
-          entity = DatabaseConfigsHiveAdapter.fromMap(data);
-        }
-      },
-    );
-    return entity != null
-        ? Stream.value(entity)
-        : Stream.value(
-            DatabaseConfigsHiveDTO(
-              updateAt: DateTime.parse('2000-01-01'),
-            ),
-          );
+  Future<Stream<DatabaseConfigsHiveDTO>> get(String path) async {
+   DatabaseConfigsHiveDTO? result = await repository.get(path);
+   if(result != null){
+    return Stream.value(result);
+    }
+   return Stream.value(DatabaseConfigsHiveDTO(updateAt: DateTime.parse('2000-01-01')));
   }
 
   @override

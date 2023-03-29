@@ -7,8 +7,8 @@ abstract class IDatasource<R>
         IDeleteDatasource,
         IUpdateDatasource {}
 
-abstract class IGetDatasource {
-  Stream<List<Map>> get(String path);
+abstract class IGetDatasource <R> {
+  Future<R?> get(String path);
 }
 
 abstract class IAddDatasource {

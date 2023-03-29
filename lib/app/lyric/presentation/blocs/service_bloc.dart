@@ -5,28 +5,45 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../core/domain/use-cases/use_cases.dart';
 import '../../domain/entities/service_entity.dart';
+import '../../domain/entities/services_list_entity.dart';
 
 class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
-  final IUseCases servicesUseCases;
 
-  ServiceBloc({required this.servicesUseCases}) : super(InitialState()) {
-    on<GetServiceEvent>(_getService);
+  final IUseCases fireServicesUseCases;
+  final IUseCases hiveServicesUseCases;
+
+  ServiceBloc({required this.fireServicesUseCases, required this.hiveServicesUseCases}) : super(InitialState()) {
+    on<GetServiceInFireEvent>(_getServiceInFire);
+    on<AddServiceInHiveEvent>(_addServiceInHive);
+    on<GetServiceInHiveEvent>(_getServiceInHive);
   }
 
-  Future<void> _getService(GetServiceEvent event, emit) async {
-    await emit.onEach<List<ServiceEntity>>(
-      servicesUseCases.get(event.url),
+  Future<void> _getServiceInFire(GetServiceInFireEvent event, emit) async {
+    await emit.onEach<ServicesListEntity>(
+      await fireServicesUseCases.get(event.path),
       onData: (service) {
-        emit(
-          SuccessfullyFetchedServiceState(service),
-        );
+        emit(SuccessfullyFetchedServiceState(service));
       },
       onError: (error, st) {
-        emit(
-          ServiceExceptionState(error.toString()),
-        );
+        emit(ServiceExceptionState(error.toString()));
       },
     );
+  }
+
+  Future<void> _getServiceInHive(GetServiceInHiveEvent event, emit) async {
+    await emit.onEach<ServicesListEntity>(
+      await hiveServicesUseCases.get(event.path),
+      onData: (service) {
+        emit(SuccessfullyFetchedServiceState(service));
+      },
+      onError: (error, st) {
+        emit(ServiceExceptionState(error.toString()));
+      },
+    );
+  }
+
+  Future<void> _addServiceInHive(AddServiceInHiveEvent event, emit) async {
+    await hiveServicesUseCases.add(event.path, event.data);
   }
 }
 
@@ -37,9 +54,20 @@ class InitialEvent extends ServicesEvent {
   InitialEvent();
 }
 
-class GetServiceEvent extends ServicesEvent {
-  final String url;
-  GetServiceEvent({required this.url});
+class GetServiceInFireEvent extends ServicesEvent {
+  final String path;
+  GetServiceInFireEvent({required this.path});
+}
+
+class GetServiceInHiveEvent extends ServicesEvent {
+  final String path;
+  GetServiceInHiveEvent({required this.path});
+}
+
+class AddServiceInHiveEvent extends ServicesEvent {
+  final String path;
+  final dynamic data;
+  AddServiceInHiveEvent({required this.path, required this.data});
 }
 
 @immutable
@@ -51,11 +79,10 @@ class InitialState extends ServicesState {
 
 class ServiceExceptionState extends ServicesState {
   final String message;
-
   ServiceExceptionState(this.message);
 }
 
 class SuccessfullyFetchedServiceState extends ServicesState {
-  final List<ServiceEntity> entities;
+  final ServicesListEntity entities;
   SuccessfullyFetchedServiceState(this.entities);
 }

@@ -24,18 +24,4 @@ class LiturgyHiveAdapter {
     }
     return liturgyList;
   }
-  static List<LiturgyHiveDTO> fromMap(dynamic json) {
-    List<LiturgyHiveDTO> liturgyList = [];
-    for (dynamic liturgy in json) {
-      liturgyList.add(
-        LiturgyHiveDTO(
-          isAdditional: liturgy['isAdditional'],
-          sequence: liturgy['sequence'],
-          additional: liturgy['additional'],
-        ),
-      );
-    }
-    return liturgyList;
-  }
-
 }

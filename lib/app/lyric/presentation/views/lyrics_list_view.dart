@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/layout/top-bar/title_top_bar_widget.dart';
 import '../../../splash/presentation/blocs/database_bloc.dart';
-import '../../../splash/utils/validation_util.dart';
+import '../../../shared/components/utils/validation_util.dart';
 import '../blocs/lyric_bloc.dart';
 import '../../domain/entities/lyric_entity.dart';
 import '../../../shared/layout/side-bar/side_bar_widget.dart';
@@ -29,7 +29,7 @@ class _LyricsListViewState extends State<LyricsListView>
   String selectedValue = '';
   late final String database;
   final String firebaseDatabase = 'firebase';
-  final String url = 'lyrics/20';
+  final String path = 'lyrics/20';
 
   fillLettersCarousel() {
     drawerNames = [
@@ -50,7 +50,7 @@ class _LyricsListViewState extends State<LyricsListView>
     fillLettersCarousel();
     lyricBloc = context.read<LyricBloc>();
     databaseBloc= context.read<DatabaseBloc>();
-    lyricBloc.add(GetLyricsEvent(url: url));
+    lyricBloc.add(GetLyricsInHiveEvent(path: path));
     database = ValidationUtil.validationDatasource();
     super.initState();
   }
@@ -82,14 +82,14 @@ class _LyricsListViewState extends State<LyricsListView>
                 lyricsFetched = state.entities;
                 lyricsFiltered = state.entities;
                 if (database == firebaseDatabase) {
-                  databaseBloc.add(AddDataEvent(path: url, data: state.entities));
+                  lyricBloc.add(AddLyricsInHiveEvent(path: path, data: state.entities));
                 }
               } else {
                 if (state is SuccessfullyFilteredLyricsState &&
                     selectedValue != '') {
                   lyricsFiltered = state.entities;
                   if (database == firebaseDatabase) {
-                    databaseBloc.add(AddDataEvent(path: url, data: state.entities));
+                    databaseBloc.add(AddDataEvent(path: path, data: state.entities));
                   }
                 } else {
                   lyricsFiltered = lyricsFetched;
@@ -105,7 +105,7 @@ class _LyricsListViewState extends State<LyricsListView>
                     color: AppColors.darkGreen,
                     onRefresh: () async {
                       lyricBloc.add(
-                        GetLyricsEvent(url: url),
+                        GetLyricsInFireEvent(path: path),
                       );
                     },
                     child: Column(

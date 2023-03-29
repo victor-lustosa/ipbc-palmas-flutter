@@ -1,7 +1,7 @@
-import '../../../domain/entities/service_entity.dart';
+import 'service_entity.dart';
 
-class ServicesListDTO {
-  const ServicesListDTO({
+class ServicesListEntity {
+  const ServicesListEntity({
     required this.servicesList,
     required this.createAt,
   });

@@ -6,7 +6,7 @@ import '../../../splash/presentation/blocs/database_bloc.dart';
 //import '../../../shared/components/back-button/back_button_widget.dart';
 import '../../../shared/components/next-button/next_button_widget.dart';
 import '../../../shared/layout/top-bar/main_top_bar_widget.dart';
-import '../../../splash/utils/validation_util.dart';
+import '../../../shared/components/utils/validation_util.dart';
 import '../../domain/entities/service_entity.dart';
 import '../blocs/service_bloc.dart';
 import '../../../shared/configs/app_configs.dart';
@@ -27,13 +27,13 @@ class _ServicesListViewState extends State<ServicesListView>
   late List<ServiceEntity> services;
   late final String database;
   final String firebaseDatabase = 'firebase';
-  final String url = 'services/1';
+  final String path = 'services/1';
 
   @override
   void initState() {
     serviceBloc = context.read<ServiceBloc>();
     databaseBloc= context.read<DatabaseBloc>();
-    serviceBloc.add(GetServiceEvent(url: url));
+    serviceBloc.add(GetServiceInHiveEvent(path: path));
     database = ValidationUtil.validationDatasource();
     super.initState();
   }
@@ -57,10 +57,10 @@ class _ServicesListViewState extends State<ServicesListView>
               ),
             );
           } else if (state is SuccessfullyFetchedServiceState) {
-            services = state.entities;
+            services = state.entities.servicesList;
             //if (database == firebaseDatabase) {
-              databaseBloc.add(AddDataEvent(path: url, data: state.entities));
-           // }
+             //serviceBloc.add(AddServiceInHiveEvent(path: path, data: state.entities));
+            // }
             return SafeArea(
               child: SingleChildScrollView(
                 child: Column(

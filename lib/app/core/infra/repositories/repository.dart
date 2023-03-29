@@ -8,8 +8,9 @@ class Repository<R> implements IRepository<R> {
   final IDatasource datasource;
 
   @override
-  R get(path) {
-    return datasource.get(path) as R;
+  Future<R> get(path) async {
+    var result = await datasource.get(path);
+    return result;
   }
 
   @override

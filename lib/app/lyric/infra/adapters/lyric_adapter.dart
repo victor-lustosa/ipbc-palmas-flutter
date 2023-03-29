@@ -33,9 +33,10 @@ class LyricAdapter {
         LyricEntity(
           albumCover: lyric['albumCover'],
           id: lyric['id'],
-          createAt: lyric['createAt'] == ''
-              ? ''
-              : DateFormat('dd/MM/yyyy, HH:mm')
+          createAt:
+            lyric['createAt'].runtimeType == String
+            ? lyric['createAt']
+            : DateFormat('dd/MM/yyyy, HH:mm')
                   .format((lyric['createAt'] as Timestamp).toDate()),
           title: lyric['title'],
           group: lyric['group'],

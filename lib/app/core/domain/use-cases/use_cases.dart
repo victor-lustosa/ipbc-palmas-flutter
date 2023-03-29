@@ -1,3 +1,4 @@
 abstract class IUseCases <R> {
-  R? get(String url);
+  Future<R> get(String url);
+  Future<void> add(String path, dynamic data);
 }

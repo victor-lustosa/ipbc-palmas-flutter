@@ -7,7 +7,7 @@ void main() {
   test('getting lyrics in repository', () {
     final datasource = IDatasourceMock();
     when(() => datasource.get('lyrics/1')).thenAnswer(
-      (_) => Stream.value(
+      (_) => Future.value(Stream.value(
         [
           {
             'id': 'dfsdfsd',
@@ -30,7 +30,7 @@ void main() {
           }
         ],
       ),
-    );
+    ));
 
     final repository = Repository(datasource: datasource);
 

@@ -10,21 +10,23 @@ import 'package:mocktail/mocktail.dart';
 import '../../../mocks/mocks.dart';
 
 void main() {
-  late ILyricsUseCases<Stream<List<LyricEntityMock>>> useCases;
+  late ILyricsUseCases<Stream<List<LyricEntityMock>>> fireUseCases;
+  late ILyricsUseCases<Stream<List<LyricEntityMock>>> HiveUseCases;
   late LyricBloc bloc;
 
   setUp(() {
-    useCases = ILyricsUseCasesMock<Stream<List<LyricEntityMock>>>();
-    bloc = LyricBloc(lyricsUseCase: useCases);
+    fireUseCases = ILyricsUseCasesMock<Stream<List<LyricEntityMock>>>();
+    HiveUseCases = ILyricsUseCasesMock<Stream<List<LyricEntityMock>>>();
+    bloc = LyricBloc(fireLyricsUseCase: fireUseCases, hiveLyricsUseCase: HiveUseCases);
   });
 
   blocTest<LyricBloc, LyricState>(
     'Fetching lyrics of firestore',
     build: () {
-      when(() => useCases.get('')).thenAnswer((_) => Stream.value([]));
+      when(() => fireUseCases.get('')).thenAnswer((_) => Future.value(Stream.value([])));
       return bloc;
     },
-    act: (bloc) => bloc.add(GetLyricsEvent(url: '')),
+    act: (bloc) => bloc.add(GetLyricsInFireEvent(path: '')),
     expect: () => [
       isA<SuccessfullyFetchedLyricsState>(),
     ],
@@ -32,11 +34,11 @@ void main() {
   blocTest<LyricBloc, LyricState>(
     'Fetching lyrics of firestore and occorring an error',
     build: () {
-      when(() => useCases.get(''))
-          .thenAnswer((_) => Stream.error(Exception('Error')));
+      when(() => fireUseCases.get(''))
+          .thenAnswer((_) => Future.value(Stream.error(Exception('Error'))));
       return bloc;
     },
-    act: (bloc) => bloc.add(GetLyricsEvent(url: '')),
+    act: (bloc) => bloc.add(GetLyricsInFireEvent(path: '')),
     expect: () => [
       isA<ExceptionLyricState>(),
     ],

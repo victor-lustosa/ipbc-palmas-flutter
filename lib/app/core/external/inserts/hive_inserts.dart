@@ -1,18 +1,26 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/lyric/infra/use-cases/lyrics_use_cases.dart';
-import 'package:ipbc_palmas/app/lyric/infra/use-cases/services_use_cases.dart';
+import 'package:ipbc_palmas/app/lyric/infra/models/hive-dtos/liturgy_hive_dto.dart';
+import 'package:ipbc_palmas/app/lyric/infra/models/hive-dtos/verse_hive_dto.dart';
+import 'package:ipbc_palmas/app/lyric/infra/use-cases/fire_lyrics_use_cases.dart';
+import 'package:ipbc_palmas/app/lyric/infra/use-cases/fire_services_use_cases.dart';
 import 'package:ipbc_palmas/app/lyric/presentation/blocs/service_bloc.dart';
+import '../../../../firebase_options.dart';
 import '../../../lyric/infra/adapters/hive-dtos/database_configs_hive_adapter.dart';
 import '../../../lyric/infra/adapters/hive-dtos/service_hive_adapter.dart';
 import '../../../lyric/infra/models/hive-dtos/database_configs_hive_dto.dart';
 import '../../../lyric/infra/models/hive-dtos/lyric_hive_dto.dart';
 import '../../../lyric/infra/models/hive-dtos/service_hive_dto.dart';
-import '../../../lyric/presentation/blocs/lyric_bloc.dart';
+import '../../../lyric/infra/use-cases/hive_services_use_cases.dart';
 import '../../../shared/configs/app_configs.dart';
-import '../../../splash/infra/use-cases/databases_use_cases.dart';
-import '../../../splash/presentation/blocs/database_bloc.dart';
+//import '../../../splash/infra/use-cases/databases_use_cases.dart';
+//import '../../../splash/presentation/blocs/database_bloc.dart';
 import '../../infra/repositories/repository.dart';
+import '../firestore_datasource.dart';
 import '../hive_datasource.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 //command to map hive entities
@@ -25,33 +33,88 @@ Future<DateTime> dateNow() async {
   );
 }
 
+Future<void> firebaseInitialize() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FlutterError.onError = (details) {
+    log(
+      details.exceptionAsString(),
+      stackTrace: details.stack,
+    );
+  };
+}
+
 Future<void> main() async {
+  firebaseInitialize();
   await Hive.initFlutter();
   HiveDatasource.initHive();
   //insert Service Hive DTO
 //database configs insert
-  await Hive.openBox<DatabaseConfigsHiveDTO>('database-configs');
-  await Hive.openBox<ServiceHiveDTO>('services');
-  await Hive.openBox<LyricHiveDTO>('lyrics');
-  HiveDatasource dataHive = HiveDatasource<DatabaseConfigsHiveDTO>(boxLabel: 'database-configs');
-  HiveDatasource serviceHive = HiveDatasource<ServiceHiveDTO>(boxLabel: 'services');
-  HiveDatasource lyricHive = HiveDatasource<LyricHiveDTO>(boxLabel: 'lyrics');
+  // await Hive.openBox<DatabaseConfigsHiveDTO>('database-configs');
+  await Hive.openBox<List<ServiceHiveDTO>>('services');
+//  await Hive.openBox<LyricHiveDTO>('lyrics');
+  //HiveDatasource dataHive = HiveDatasource<DatabaseConfigsHiveDTO>(boxLabel: 'database-configs');
+  HiveDatasource serviceHive =
+      HiveDatasource<List<ServiceHiveDTO>>(boxLabel: 'services');
+  // HiveDatasource lyricHive = HiveDatasource<LyricHiveDTO>(boxLabel: 'lyrics');
 /*  dataHive.add('database-configs',
     DatabaseConfigsHiveDTO(
       updateAt: DateTime.now(),
      ),
   );*/
-  dataHive.delete('database-configs');
-  serviceHive.delete('lyrics');
-  lyricHive.delete('services');
+  //dataHive.delete('database-configs');
+  serviceHive.delete('services');
+  // lyricHive.delete('lyrics');
+  var entities = [
+    ServiceHiveDTO(
+        id: '1',
+        title: 'dsfsf',
+        guideIsVisible: true,
+        heading: 'sdfd',
+        liturgyList: [
+          LiturgyHiveDTO(
+              isAdditional: true,
+              sequence: 'sequence',
+              additional: 'additional',
+          )
+        ],
+        lyricsList: [
+          LyricHiveDTO(
+              albumCover: 'albumCover',
+              title: 'title',
+              createAt: 'createAt',
+              group: 'group',
+              verses: [
+                VerseHiveDTO(
+                  id: '',
+                  isChorus: true,
+                  versesList: [],
+                ),
+              ],
+              id: '1')
+        ],
+        createAt: '2000-01-01'),
+  ];
+  serviceHive.add('services', entities);
 
-  DatabaseBloc databaseBloc = DatabaseBloc(
-      databasesUseCases: DatabasesUseCases(
-          repository: Repository<Stream<List<Map>>>(
-              datasource: dataHive,
-          ),
+  ServiceBloc serviceBloc = ServiceBloc(
+    fireServicesUseCases: FireServicesUseCases(
+      repository: Repository<Stream<List<Map>>>(
+        datasource: FirestoreDatasource(
+          firestore: FirebaseFirestore.instance,
+        ),
       ),
+    ),
+    hiveServicesUseCases: HiveServicesUseCases(
+      repository: Repository(
+        datasource: HiveDatasource<List<ServiceHiveDTO>>(boxLabel: 'services'),
+      ),
+    ),
   );
+
   /*ServiceBloc serviceBloc = ServiceBloc(
     servicesUseCases: ServicesUseCases(
       repository: Repository<Stream<List<Map>>>(
@@ -81,12 +144,69 @@ Future<void> main() async {
   */
   runApp(
     HiveTest(
-    bloc: databaseBloc,
-     ),
+      bloc: serviceBloc,
+    ),
   );
 }
 
 class HiveTest extends StatelessWidget {
+  HiveTest({Key? key, required this.bloc}) : super(key: key);
+  final ServiceBloc bloc;
+  late final List entitiesList;
+  @override
+  Widget build(BuildContext context) {
+    bloc.add(GetServiceInHiveEvent(path: 'services'));
+    return MaterialApp(
+      title: 'IPBC Palmas',
+      theme: ThemeData(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        scaffoldBackgroundColor: AppColors.white,
+        primaryColor: AppColors.white,
+      ),
+      home: Scaffold(
+        body: BlocBuilder<ServiceBloc, ServicesState>(
+          bloc: bloc,
+          builder: (context, state) {
+            if (state is InitialState) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    AppColors.darkGreen,
+                  ),
+                ),
+              );
+            } else if (state is SuccessfullyFetchedServiceState) {
+              entitiesList = state.entities.servicesList;
+              return Center(
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: entitiesList.length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(
+                        entitiesList[index].title,
+                        style: AppFonts.lyricsTitleTile,
+                      ),
+                      onTap: () {},
+                    );
+                  },
+                ),
+              );
+            } else {
+              return const Center(
+                child: Text("error screen [services_list_view]"),
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+/*class HiveTest extends StatelessWidget {
   HiveTest({Key? key, required this.bloc}) : super(key: key);
   DatabaseBloc bloc;
   @override
@@ -114,7 +234,7 @@ class HiveTest extends StatelessWidget {
               );
             } else if (state is SuccessfullyFetchedDataState) {
               return Center(
-                child: Text(state.entity.updateAt.toString() ?? ''),
+                child: Text(state.entity.updateAt.toString()),
               );
             } else {
               return const Center(
@@ -126,4 +246,4 @@ class HiveTest extends StatelessWidget {
       ),
     );
   }
-}
+}*/

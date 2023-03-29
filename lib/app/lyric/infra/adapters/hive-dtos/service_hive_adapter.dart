@@ -1,28 +1,31 @@
 
+import 'package:ipbc_palmas/app/lyric/domain/entities/services_list_entity.dart';
+
 import '../../../domain/entities/service_entity.dart';
 import '../../models/hive-dtos/service_hive_dto.dart';
+import '../../models/hive-dtos/hive_services_list_dto.dart';
 import 'liturgy_hive_adapter.dart';
 import 'lyric_hive_adapter.dart';
 
 class ServiceHiveAdapter {
 
-  static List<Map<String, dynamic>> toMapList(List<ServiceHiveDTO> data) {
+  static List<Map<String, dynamic>> toMapList(HiveServicesListDTO data) {
     List<Map<String, dynamic>> map = [];
-    for (int i = 0; data.length > i; i++) {
+    for (int i = 0; data.servicesList.length > i; i++) {
       map.add({
-            'id': data[i].id,
-            'liturgyList': LiturgyHiveAdapter.toMapList(data[i].liturgyList),
-            'lyricsList': LyricHiveAdapter.toMapList(data[i].lyricsList),
-            'createAt': data[i].createAt,
-            'heading': data[i].heading,
-            'title': data[i].title,
-            'guideIsVisible': data[i].guideIsVisible,
+            'id': data.servicesList[i].id,
+            'liturgyList': LiturgyHiveAdapter.toMapList(data.servicesList[i].liturgyList),
+            'lyricsList': LyricHiveAdapter.toMapList(data.servicesList[i].lyricsList),
+            'createAt': data.servicesList[i].createAt,
+            'heading': data.servicesList[i].heading,
+            'title': data.servicesList[i].title,
+            'guideIsVisible': data.servicesList[i].guideIsVisible,
           }
       );
     }
-    return map;
+    return [{'servicesList':map, 'createAt': data.createAt}];
   }
-  static List<ServiceHiveDTO> toDTOList(List<ServiceEntity> entities) {
+  /*static List<ServiceHiveDTO> toDTOList(List<ServiceEntity> entities) {
     List<ServiceHiveDTO> services = [];
     for (ServiceEntity service in entities) {
       services.add(
@@ -38,22 +41,23 @@ class ServiceHiveAdapter {
       );
     }
     return services;
-  }
- /* static List<ServiceHiveDTO> fromMapList(dynamic data) {
+  }*/
+  static HiveServicesListDTO toDTOList(ServicesListEntity entities) {
     List<ServiceHiveDTO> services = [];
-    for (int i = 0; data.length > i; i++) {
+    for (ServiceEntity service in entities.servicesList) {
       services.add(
         ServiceHiveDTO(
           id: '',
-          liturgyList: LiturgyHiveAdapter.fromMap(data[i]['liturgyList']),
-          lyricsList: LyricHiveAdapter.fromListMap(data[i]['lyricsList']),
-          createAt: data[i]['createAt'],
-          heading: data[i]['heading'],
-          title: data[i]['title'],
-          guideIsVisible: data[i]['guideIsVisible'],
+          liturgyList: LiturgyHiveAdapter.toDTOList(service.liturgyList),
+          lyricsList: LyricHiveAdapter.toDTOList(service.lyricsList),
+          createAt: service.createAt,
+          heading: service.heading,
+          title: service.title,
+          guideIsVisible: service.guideIsVisible,
         ),
       );
     }
-    return services;
-  }*/
+    return HiveServicesListDTO(servicesList: services, createAt: entities.createAt);
+  }
+
 }
