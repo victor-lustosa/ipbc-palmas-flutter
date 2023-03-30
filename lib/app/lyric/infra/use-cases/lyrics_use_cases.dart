@@ -3,11 +3,10 @@ import '../../domain/entities/lyric_entity.dart';
 import '../../domain/use-cases/lyrics_use_cases.dart';
 import '../adapters/lyric_adapter.dart';
 
-class HiveLyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
-
+class LyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
   final IRepository<Stream<List<Map>>> repository;
 
-  HiveLyricsUseCases({required this.repository});
+  LyricsUseCases({required this.repository});
 
   @override
   Future<Stream<List<LyricEntity>>> get(String url) async {
@@ -23,6 +22,11 @@ class HiveLyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
   }
 
   @override
+  Future<void> add(path, data) async {
+    repository.add(path, data);
+  }
+
+  @override
   Future<List<LyricEntity>> lettersFilter(
       List<LyricEntity> lyrics, String letter) {
     List<LyricEntity> lyricsResult = [];
@@ -32,10 +36,5 @@ class HiveLyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
       }
     }
     return Future.value(lyricsResult);
-  }
-
-  @override
-  Future<void> add(path, data) async {
-    repository.add(path, data);
   }
 }

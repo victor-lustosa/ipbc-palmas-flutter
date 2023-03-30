@@ -6,16 +6,16 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:ipbc_palmas/app/lyric/infra/models/hive-dtos/liturgy_hive_dto.dart';
 import 'package:ipbc_palmas/app/lyric/infra/models/hive-dtos/verse_hive_dto.dart';
-import 'package:ipbc_palmas/app/lyric/infra/use-cases/fire_lyrics_use_cases.dart';
-import 'package:ipbc_palmas/app/lyric/infra/use-cases/fire_services_use_cases.dart';
-import 'package:ipbc_palmas/app/lyric/presentation/blocs/service_bloc.dart';
+import 'package:ipbc_palmas/app/lyric/infra/use-cases/lyrics_use_cases.dart';
+import 'package:ipbc_palmas/app/lyric/infra/use-cases/services_use_cases.dart';
+//import 'package:ipbc_palmas/app/lyric/presentation/blocs/service_bloc.dart';
 import '../../../../firebase_options.dart';
 import '../../../lyric/infra/adapters/hive-dtos/database_configs_hive_adapter.dart';
 import '../../../lyric/infra/adapters/hive-dtos/service_hive_adapter.dart';
 import '../../../lyric/infra/models/hive-dtos/database_configs_hive_dto.dart';
 import '../../../lyric/infra/models/hive-dtos/lyric_hive_dto.dart';
 import '../../../lyric/infra/models/hive-dtos/service_hive_dto.dart';
-import '../../../lyric/infra/use-cases/hive_services_use_cases.dart';
+import '../../../lyric/presentation/blocs/lyric_bloc.dart';
 import '../../../shared/configs/app_configs.dart';
 //import '../../../splash/infra/use-cases/databases_use_cases.dart';
 //import '../../../splash/presentation/blocs/database_bloc.dart';
@@ -54,21 +54,20 @@ Future<void> main() async {
   //insert Service Hive DTO
 //database configs insert
   // await Hive.openBox<DatabaseConfigsHiveDTO>('database-configs');
-  await Hive.openBox<List<ServiceHiveDTO>>('services');
-//  await Hive.openBox<LyricHiveDTO>('lyrics');
+ // await Hive.openBox<List<ServiceHiveDTO>>('services');
+  await Hive.openBox<List<LyricHiveDTO>>('lyrics');
   //HiveDatasource dataHive = HiveDatasource<DatabaseConfigsHiveDTO>(boxLabel: 'database-configs');
-  HiveDatasource serviceHive =
-      HiveDatasource<List<ServiceHiveDTO>>(boxLabel: 'services');
-  // HiveDatasource lyricHive = HiveDatasource<LyricHiveDTO>(boxLabel: 'lyrics');
+ // HiveDatasource serviceHive = HiveDatasource<List<ServiceHiveDTO>>(boxLabel: 'services');
+  HiveDatasource lyricHive = HiveDatasource<List<LyricHiveDTO>>(boxLabel: 'lyrics');
 /*  dataHive.add('database-configs',
     DatabaseConfigsHiveDTO(
       updateAt: DateTime.now(),
      ),
   );*/
   //dataHive.delete('database-configs');
-  serviceHive.delete('services');
-  // lyricHive.delete('lyrics');
-  var entities = [
+  //serviceHive.delete('services');
+  lyricHive.delete('lyrics');
+  /*var entities = [
     ServiceHiveDTO(
         id: '1',
         title: 'dsfsf',
@@ -97,10 +96,12 @@ Future<void> main() async {
               id: '1')
         ],
         createAt: '2000-01-01'),
-  ];
-  serviceHive.add('services', entities);
+  ];*/
 
-  ServiceBloc serviceBloc = ServiceBloc(
+  //lyricHive.add('services', entities);
+  //serviceHive.add('services', entities);
+
+  /*ServiceBloc lyricBloc = ServiceBloc(
     fireServicesUseCases: FireServicesUseCases(
       repository: Repository<Stream<List<Map>>>(
         datasource: FirestoreDatasource(
@@ -113,9 +114,23 @@ Future<void> main() async {
         datasource: HiveDatasource<List<ServiceHiveDTO>>(boxLabel: 'services'),
       ),
     ),
+  );*/
+  LyricBloc lyricBloc = LyricBloc(
+    fireLyricsUseCase: LyricsUseCases(
+      repository: Repository<Stream<List<Map>>>(
+        datasource: FirestoreDatasource(
+          firestore: FirebaseFirestore.instance,
+        ),
+      ),
+    ),
+    hiveLyricsUseCase: LyricsUseCases(
+      repository: Repository(
+        datasource: HiveDatasource<List<LyricHiveDTO>>(boxLabel: 'lyrics'),
+      ),
+    ),
   );
 
-  /*ServiceBloc serviceBloc = ServiceBloc(
+  /*ServiceBloc lyricBloc = ServiceBloc(
     servicesUseCases: ServicesUseCases(
       repository: Repository<Stream<List<Map>>>(
         datasource: serviceHive,
@@ -144,18 +159,58 @@ Future<void> main() async {
   */
   runApp(
     HiveTest(
-      bloc: serviceBloc,
+      bloc: lyricBloc,
     ),
   );
 }
 
-class HiveTest extends StatelessWidget {
+class HiveTest extends StatefulWidget {
   HiveTest({Key? key, required this.bloc}) : super(key: key);
-  final ServiceBloc bloc;
+  final LyricBloc bloc;
+
+  @override
+  State<HiveTest> createState() => _HiveTestState();
+}
+
+class _HiveTestState extends State<HiveTest> {
   late final List entitiesList;
   @override
+  void initState() {
+    //outra forma é passar list lyricEntity
+    List<LyricHiveDTO> entities = [
+      LyricHiveDTO(
+          albumCover: 'albumCover',
+          title: 'title',
+          createAt: 'createAt',
+          group: 'group',
+          verses: [
+            VerseHiveDTO(
+              id: '1',
+              isChorus: true,
+              versesList: [],
+            ),
+          ],
+          id: '1'),
+      LyricHiveDTO(
+          albumCover: 'albumCover',
+          title: 'title',
+          createAt: 'createAt',
+          group: 'group',
+          verses: [
+            VerseHiveDTO(
+              id: '2',
+              isChorus: true,
+              versesList: [],
+            ),
+          ],
+          id: '2')
+    ];
+    widget.bloc.add(AddLyricsInHiveEvent(path: 'lyrics', data: entities));
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    bloc.add(GetServiceInHiveEvent(path: 'services'));
+    widget.bloc.add(GetLyricsInHiveEvent(path: 'lyrics'));
     return MaterialApp(
       title: 'IPBC Palmas',
       theme: ThemeData(
@@ -165,8 +220,8 @@ class HiveTest extends StatelessWidget {
         primaryColor: AppColors.white,
       ),
       home: Scaffold(
-        body: BlocBuilder<ServiceBloc, ServicesState>(
-          bloc: bloc,
+        body: BlocBuilder<LyricBloc, LyricState>(
+          bloc: widget.bloc,
           builder: (context, state) {
             if (state is InitialState) {
               return const Center(
@@ -176,8 +231,8 @@ class HiveTest extends StatelessWidget {
                   ),
                 ),
               );
-            } else if (state is SuccessfullyFetchedServiceState) {
-              entitiesList = state.entities.servicesList;
+            } else if (state is SuccessfullyFetchedLyricsState) {
+              entitiesList = state.entities;
               return Center(
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,

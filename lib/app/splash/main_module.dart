@@ -8,7 +8,6 @@ import '../core/infra/repositories/repository.dart';
 import '../lyric/infra/models/hive-dtos/database_configs_hive_dto.dart';
 
 import 'package:provider/provider.dart';
-
 import 'infra/use-cases/databases_use_cases.dart';
 
 final mainModule = [

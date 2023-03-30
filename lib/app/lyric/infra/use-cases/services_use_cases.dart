@@ -3,9 +3,9 @@ import '../../../core/domain/use-cases/use_cases.dart';
 import '../../domain/entities/services_list_entity.dart';
 import '../adapters/service_adapter.dart';
 
-class FireServicesUseCases implements IUseCases<Stream<ServicesListEntity>> {
+class ServicesUseCases implements IUseCases<Stream<ServicesListEntity>> {
   final IRepository<Stream<List<Map>>> repository;
-  FireServicesUseCases({required this.repository});
+  ServicesUseCases({required this.repository});
 
   @override
   Future<Stream<ServicesListEntity>> get(String url) async {

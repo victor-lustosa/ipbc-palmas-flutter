@@ -81,9 +81,9 @@ class _LyricsListViewState extends State<LyricsListView>
                   selectedValue == '') {
                 lyricsFetched = state.entities;
                 lyricsFiltered = state.entities;
-                if (database == firebaseDatabase) {
-                  lyricBloc.add(AddLyricsInHiveEvent(path: path, data: state.entities));
-                }
+                //if (database == firebaseDatabase) {
+                  //lyricBloc.add(AddLyricsInHiveEvent(path: path, data: state.entities));
+                //}
               } else {
                 if (state is SuccessfullyFilteredLyricsState &&
                     selectedValue != '') {

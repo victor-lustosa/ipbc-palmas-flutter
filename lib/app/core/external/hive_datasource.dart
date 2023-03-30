@@ -44,17 +44,14 @@ class HiveDatasource<R> implements IDatasource {
   @override
   Future<Stream<List<Map>>> get(String path) async {
     params = path.split('/');
-    R? entities = box.get(params[0]) as R;
-    var result = getAdapter(entities);
-      return Stream.value(result);
+    return Stream.value(getAdapter(box.get(params[0]) as R));
   }
 
   @override
   Future<void> add(String path, data) async {
     params = path.split('/');
     String hivePath = params[0];
-    R? entity = addAdapter(hivePath, data);
-    box.put(hivePath, entity as R);
+    box.put(hivePath, addAdapter(hivePath, data) as R);
   }
 
   @override

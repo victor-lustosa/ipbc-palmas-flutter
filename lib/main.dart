@@ -25,7 +25,7 @@ Future<void> main() async {
 
   await Hive.openBox<DatabaseConfigsHiveDTO>('database-configs');
   await Hive.openBox<HiveServicesListDTO>('services');
-  await Hive.openBox<List<LyricHiveDTO>>('lyrics');
+  await Hive.openBox<List<dynamic>>('lyrics');
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

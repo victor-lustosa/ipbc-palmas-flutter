@@ -11,7 +11,8 @@ class LiturgyHiveAdapter {
               'additional': entity.additional,
             }).toList();
   }
-  static List<LiturgyHiveDTO> toDTOList(List<LiturgyEntity> entities) {
+
+  static Future<List<LiturgyHiveDTO>> toDTOList(List<LiturgyEntity> entities) async{
     List<LiturgyHiveDTO> liturgyList = [];
     for (LiturgyEntity liturgy in entities) {
       liturgyList.add(

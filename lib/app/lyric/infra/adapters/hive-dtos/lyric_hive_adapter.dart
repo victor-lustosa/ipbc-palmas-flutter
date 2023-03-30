@@ -17,7 +17,7 @@ class LyricHiveAdapter {
     }).toList();
   }
 
-  static List<LyricHiveDTO> toDTOList(List<LyricEntity> entities) {
+  static Future<List<LyricHiveDTO>> toDTOList(List<LyricEntity> entities) async{
     List<LyricHiveDTO> lyricsList = [];
     for (LyricEntity lyric in entities) {
       lyricsList.add(

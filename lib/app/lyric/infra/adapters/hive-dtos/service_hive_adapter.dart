@@ -26,14 +26,14 @@ class ServiceHiveAdapter {
     return [{'servicesList':map, 'createAt': data.createAt}];
   }
 
-  static HiveServicesListDTO toDTOList(ServicesListEntity entities) {
+  static Future<HiveServicesListDTO> toDTOList(ServicesListEntity entities) async {
     List<ServiceHiveDTO> services = [];
     for (ServiceEntity service in entities.servicesList) {
       services.add(
         ServiceHiveDTO(
           id: '',
-          liturgyList: LiturgyHiveAdapter.toDTOList(service.liturgyList),
-          lyricsList: LyricHiveAdapter.toDTOList(service.lyricsList),
+          liturgyList: await LiturgyHiveAdapter.toDTOList(service.liturgyList),
+          lyricsList: await LyricHiveAdapter.toDTOList(service.lyricsList),
           createAt: service.createAt,
           heading: service.heading,
           title: service.title,
