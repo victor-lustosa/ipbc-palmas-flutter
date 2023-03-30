@@ -33,7 +33,7 @@ class _ServicesListViewState extends State<ServicesListView>
   void initState() {
     serviceBloc = context.read<ServiceBloc>();
     databaseBloc= context.read<DatabaseBloc>();
-    serviceBloc.add(GetServiceInFireEvent(path: path));
+    serviceBloc.add(GetServiceInHiveEvent(path: path));
     database = ValidationUtil.validationDatasource();
     super.initState();
   }

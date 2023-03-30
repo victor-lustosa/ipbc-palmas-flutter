@@ -1,4 +1,3 @@
-
 import 'service_hive_dto.dart';
 
 import 'package:hive/hive.dart';
@@ -12,7 +11,5 @@ class HiveServicesListDTO {
   @HiveField(1)
   List<ServiceHiveDTO> servicesList;
 
-  HiveServicesListDTO(
-      {required this.servicesList,
-      required this.createAt});
+  HiveServicesListDTO({required this.servicesList, required this.createAt});
 }

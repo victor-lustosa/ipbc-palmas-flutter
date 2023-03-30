@@ -11,14 +11,10 @@ class LyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
   @override
   Future<Stream<List<LyricEntity>>> get(String url) async {
     var result = await repository.get(url);
-    if(result != null){
-      return result.map(_convert);
+    if (result != null) {
+      return result.map(LyricAdapter.fromListMap);
     }
     return Stream.value([]);
-  }
-
-  List<LyricEntity> _convert(List<Map> list) {
-    return LyricAdapter.fromListMap(list);
   }
 
   @override

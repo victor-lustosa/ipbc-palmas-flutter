@@ -8,11 +8,12 @@ import '../../domain/entities/service_entity.dart';
 import '../../domain/entities/services_list_entity.dart';
 
 class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
-
   final IUseCases fireServicesUseCases;
   final IUseCases hiveServicesUseCases;
 
-  ServiceBloc({required this.fireServicesUseCases, required this.hiveServicesUseCases}) : super(InitialState()) {
+  ServiceBloc(
+      {required this.fireServicesUseCases, required this.hiveServicesUseCases})
+      : super(InitialState()) {
     on<GetServiceInFireEvent>(_getServiceInFire);
     on<AddServiceInHiveEvent>(_addServiceInHive);
     on<GetServiceInHiveEvent>(_getServiceInHive);

@@ -1,7 +1,6 @@
 import '../../domain/entities/liturgy_entity.dart';
 
 class LiturgyAdapter {
-
   static List<LiturgyEntity> fromMap(dynamic json) {
     List<LiturgyEntity> liturgyList = [];
     for (dynamic liturgy in json) {
@@ -17,11 +16,12 @@ class LiturgyAdapter {
   }
 
   static List<Map<String, dynamic>> toMapList(List<LiturgyEntity> data) {
-    return data.map((entity) => {
+    return data
+        .map((entity) => {
               'isAdditional': entity.isAdditional,
               'sequence': entity.sequence,
               'additional': entity.additional,
-            }).toList();
+            })
+        .toList();
   }
-
 }

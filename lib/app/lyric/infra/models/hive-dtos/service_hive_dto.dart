@@ -1,4 +1,3 @@
-
 import 'package:hive/hive.dart';
 
 import 'liturgy_hive_dto.dart';

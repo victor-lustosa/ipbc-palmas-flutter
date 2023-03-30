@@ -10,14 +10,17 @@ class ServiceAdapter {
   static ServicesListEntity servicesListFromMapList(List<Map> data) {
     ServicesListEntity services = ServicesListEntity(
       createAt: data[0]['createAt'].runtimeType == String
-      ? data[0]['createAt']
-      : DateFormat('dd/MM/yyyy').format((data[0]['createAt'] as Timestamp).toDate())
-          .toString(),
+          ? data[0]['createAt']
+          : DateFormat('dd/MM/yyyy')
+              .format((data[0]['createAt'] as Timestamp).toDate())
+              .toString(),
       servicesList: fromMapList(data[0]['servicesList']),
     );
     return services;
   }
-  static List<Map<String, dynamic>> servicesListToMapList(ServicesListEntity data) {
+
+  static List<Map<String, dynamic>> servicesListToMapList(
+      ServicesListEntity data) {
     List<Map<String, dynamic>> map = [];
     for (int i = 0; data.servicesList.length > i; i++) {
       map.add({
@@ -27,11 +30,13 @@ class ServiceAdapter {
         'heading': data.servicesList[i].heading,
         'title': data.servicesList[i].title,
         'guideIsVisible': data.servicesList[i].guideIsVisible,
-       }
-      );
+      });
     }
-    return [{'servicesList':map, 'createAt': data.createAt}];
+    return [
+      {'servicesList': map, 'createAt': data.createAt}
+    ];
   }
+
   static List<ServiceEntity> fromMapList(dynamic data) {
     List<ServiceEntity> services = [];
     for (int i = 0; data.length > i; i++) {
@@ -39,11 +44,11 @@ class ServiceAdapter {
         ServiceEntity(
           liturgyList: LiturgyAdapter.fromMap(data[i]['liturgyList']),
           lyricsList: LyricAdapter.fromListMap(data[i]['lyricsList']),
-          createAt:  data[i]['createAt'].runtimeType == String
+          createAt: data[i]['createAt'].runtimeType == String
               ? data[i]['createAt']
               : DateFormat('dd/MM/yyyy')
-              .format((data[i]['createAt'] as Timestamp).toDate())
-              .toString(),
+                  .format((data[i]['createAt'] as Timestamp).toDate())
+                  .toString(),
           heading: data[i]['heading'],
           title: data[i]['title'],
           guideIsVisible: data[i]['guideIsVisible'],
@@ -54,13 +59,15 @@ class ServiceAdapter {
   }
 
   static List<Map<String, dynamic>> toMapList(List<ServiceEntity> data) {
-    return data.map((entity) => {
-      'lyricsList': LyricAdapter.toMapList(entity.lyricsList),
-      'liturgyList': LiturgyAdapter.toMapList(entity.liturgyList),
-      'createAt': entity.createAt,
-      'heading': entity.heading,
-      'title': entity.title,
-      'guideIsVisible': entity.guideIsVisible,
-    }).toList();
+    return data
+        .map((entity) => {
+              'lyricsList': LyricAdapter.toMapList(entity.lyricsList),
+              'liturgyList': LiturgyAdapter.toMapList(entity.liturgyList),
+              'createAt': entity.createAt,
+              'heading': entity.heading,
+              'title': entity.title,
+              'guideIsVisible': entity.guideIsVisible,
+            })
+        .toList();
   }
 }

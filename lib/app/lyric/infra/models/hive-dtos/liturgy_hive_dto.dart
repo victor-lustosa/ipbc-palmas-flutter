@@ -1,4 +1,3 @@
-
 import 'package:hive/hive.dart';
 part 'liturgy_hive_dto.g.dart';
 
@@ -18,5 +17,4 @@ class LiturgyHiveDTO {
     required this.sequence,
     required this.additional,
   });
-
 }

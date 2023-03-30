@@ -6,11 +6,11 @@ import '../../domain/use-cases/lyrics_use_cases.dart';
 import '../../domain/entities/lyric_entity.dart';
 
 class LyricBloc extends Bloc<LyricEvent, LyricState> {
-
   final ILyricsUseCases fireLyricsUseCase;
   final ILyricsUseCases hiveLyricsUseCase;
 
-  LyricBloc({required this.fireLyricsUseCase, required this.hiveLyricsUseCase}) : super(InitialState()) {
+  LyricBloc({required this.fireLyricsUseCase, required this.hiveLyricsUseCase})
+      : super(InitialState()) {
     on<GetLyricsInFireEvent>(_getLyricsInFire);
     on<GetLyricsInHiveEvent>(_getLyricsInHive);
     on<AddLyricsInHiveEvent>(_addLyricsInHive);
@@ -19,7 +19,7 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
 
   Future<void> _getLyricsInFire(GetLyricsInFireEvent event, emit) async {
     await emit.onEach<List<LyricEntity>>(
-     await fireLyricsUseCase.get(event.path),
+      await fireLyricsUseCase.get(event.path),
       onData: (lyrics) {
         emit(SuccessfullyFetchedLyricsState(lyrics));
       },
@@ -46,7 +46,8 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
   }
 
   Future<void> _lyricsFilter(LyricsFilterEvent event, emit) async {
-    List<dynamic> lyricsList = await fireLyricsUseCase.lettersFilter(event.lyrics, event.letter);
+    List<dynamic> lyricsList =
+        await fireLyricsUseCase.lettersFilter(event.lyrics, event.letter);
     emit(SuccessfullyFilteredLyricsState(lyricsList as List<LyricEntity>));
   }
 }

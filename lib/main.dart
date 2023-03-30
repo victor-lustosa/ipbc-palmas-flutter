@@ -6,6 +6,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:ipbc_palmas/app/lyric/infra/models/hive-dtos/hive_lyrics_list_dto.dart';
 
 import 'app/lyric/infra/models/hive-dtos/lyric_hive_dto.dart';
 import 'app/app_widget.dart';
@@ -25,7 +26,7 @@ Future<void> main() async {
 
   await Hive.openBox<DatabaseConfigsHiveDTO>('database-configs');
   await Hive.openBox<HiveServicesListDTO>('services');
-  await Hive.openBox<List<dynamic>>('lyrics');
+  await Hive.openBox<HiveLyricsListDTO>('lyrics');
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

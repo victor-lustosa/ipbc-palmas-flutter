@@ -11,13 +11,9 @@ class ServicesUseCases implements IUseCases<Stream<ServicesListEntity>> {
   Future<Stream<ServicesListEntity>> get(String url) async {
     var result = await repository.get(url);
     if(result != null){
-      return result.map(_convert);
+      return result.map(ServiceAdapter.servicesListFromMapList);
     }
     return Stream.value(const ServicesListEntity(servicesList: [],createAt: '2000-01-01'));
-  }
-
-  ServicesListEntity _convert(List<Map> entity) {
-    return ServiceAdapter.servicesListFromMapList(entity);
   }
 
   @override

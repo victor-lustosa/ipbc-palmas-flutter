@@ -34,7 +34,6 @@ Future<DateTime> dateNow() async {
 }
 
 void main() async {
-
   await firebaseInitialize();
 
   FirestoreDatasource fire = FirestoreDatasource(firestore: FirebaseFirestore.instance);
@@ -42,8 +41,10 @@ void main() async {
   String lyricsUrl = 'lyrics';
   String servicesUrl = 'services/rAQy5wpQEFTdSz3Ah0SY';
 
-  final String saturdayResponse = await rootBundle.loadString('assets/data/saturday-lyrics.json');
-  final String sundayEveningResponse = await rootBundle.loadString('assets/data/sunday-evening-lyrics.json');
+  final String saturdayResponse =
+      await rootBundle.loadString('assets/data/saturday-lyrics.json');
+  final String sundayEveningResponse =
+      await rootBundle.loadString('assets/data/sunday-evening-lyrics.json');
   //final String sundayMorningResponse = await rootBundle.loadString('assets/data/sunday-morning-lyrics.json');
 
   List<ServiceDTO> services = [];
@@ -54,15 +55,16 @@ void main() async {
   //services.add(ServiceDTOAdapter.fromJson(sundayMorningResponse));
 
   for (int column = 0; services.length > column; column++) {
-    List<LyricDTO> lyricsConverted = await verseUtil.generateVersesList(services[column].lyricsList);
+    List<LyricDTO> lyricsConverted =
+        await verseUtil.generateVersesList(services[column].lyricsList);
     //aqui vai o codigo para alterar a capa do album
     for (int line = 0; services[column].lyricsList.length > line; line++) {
       lyricsAux.add(
         services[column].lyricsList[line].copyWith(
-          id: lyricsConverted[line].id,
-          verses: lyricsConverted[line].verses,
-          albumCover: lyricsConverted[line].albumCover,
-        ),
+              id: lyricsConverted[line].id,
+              verses: lyricsConverted[line].verses,
+              albumCover: lyricsConverted[line].albumCover,
+            ),
       );
     }
 

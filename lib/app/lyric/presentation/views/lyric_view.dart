@@ -150,8 +150,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(10),
                                       ),
-                                      //color: Color.fromARGB(143, 210, 238, 229),
-                                      color: Color.fromARGB(143, 196, 239, 225),
+                                      color: Color.fromRGBO(0, 168, 118, 0.1),
                                     )
                                   : const BoxDecoration(
                                       color: AppColors.white
@@ -163,8 +162,8 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                 top: 14,
                                 bottom: 14,
                                 right:
-                                    widget.lyricEntity.verses[index].isChorus ==
-                                            false
+                                    widget.lyricEntity.verses[index]
+                                        .isChorus == false
                                         ? 15
                                         : 5),
                             child: ListView.separated(
