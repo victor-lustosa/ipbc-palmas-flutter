@@ -34,56 +34,59 @@ Future<DateTime> dateNow() async {
 }
 
 void main() async {
+
   await firebaseInitialize();
 
   FirestoreDatasource fire = FirestoreDatasource(firestore: FirebaseFirestore.instance);
-  VersesUtil verseUtil = VersesUtil();
+
   String lyricsUrl = 'lyrics';
-  String servicesUrl = 'services/rAQy5wpQEFTdSz3Ah0SY';
+  String saturdayServiceUrl = 'saturday-services';
+  String morningSundayServiceUrl = 'morning-sunday-services';
+  String eveningSundayServiceUrl = 'evening-sunday-services';
 
-  final String saturdayResponse =
-      await rootBundle.loadString('assets/data/saturday-lyrics.json');
-  final String sundayEveningResponse =
-      await rootBundle.loadString('assets/data/sunday-evening-lyrics.json');
-  //final String sundayMorningResponse = await rootBundle.loadString('assets/data/sunday-morning-lyrics.json');
+  try {
 
-  List<ServiceDTO> services = [];
-  List<ServiceDTO> servicesAux = [];
-  List<LyricDTO> lyricsAux = [];
-  services.add(ServiceDTOAdapter.fromJson(saturdayResponse));
-  services.add(ServiceDTOAdapter.fromJson(sundayEveningResponse));
-  //services.add(ServiceDTOAdapter.fromJson(sundayMorningResponse));
+    final String saturdayJson = await rootBundle.loadString('assets/data/saturday-service.json');
+    final String sundayEveningJson = await rootBundle.loadString('assets/data/sunday-evening-service.json');
+    //final String sundayMorningJson = await rootBundle.loadString('assets/data/sunday-morning-service.json');
 
-  for (int column = 0; services.length > column; column++) {
-    List<LyricDTO> lyricsConverted =
-        await verseUtil.generateVersesList(services[column].lyricsList);
-    //aqui vai o codigo para alterar a capa do album
-    for (int line = 0; services[column].lyricsList.length > line; line++) {
-      lyricsAux.add(
-        services[column].lyricsList[line].copyWith(
-              id: lyricsConverted[line].id,
-              verses: lyricsConverted[line].verses,
-              albumCover: lyricsConverted[line].albumCover,
-            ),
-      );
+    List<ServiceDTO> services = [];
+    List<ServiceDTO> servicesAux = [];
+    List<LyricDTO> lyricsAux = [];
+    List<LyricDTO> allLyricsInserted = [];
+    services.add(ServiceDTOAdapter.fromJson(saturdayJson));
+    services.add(ServiceDTOAdapter.fromJson(sundayEveningJson));
+    //services.add(ServiceDTOAdapter.fromJson(sundayMorningJson));
+
+    for (ServiceDTO service in services) {
+      List<LyricDTO> lyricsConverted = await VersesUtil.generateVersesList(service.lyricsList);
+      lyricsAux = [];
+      //aqui vai o codigo para alterar a capa do album
+      for (int i = 0; service.lyricsList.length > i; i++) {
+        lyricsAux.add(
+          service.lyricsList[i].copyWith(
+            id: lyricsConverted[i].id,
+            verses: lyricsConverted[i].verses,
+            albumCover: lyricsConverted[i].albumCover,
+          ),
+        );
+      }
+      allLyricsInserted.addAll(lyricsAux);
+      servicesAux.add(service.copyWith(lyricsList: lyricsAux));
     }
 
-    servicesAux.add(
-      services[column].copyWith(lyricsList: lyricsAux),
-    );
+    for (LyricDTO lyric in allLyricsInserted) {
+    fire.add(lyricsUrl, LyricDTOAdapter.toMap(lyric));
+    }
+
+    print('Total number of lyrics inserted: ${allLyricsInserted.length}');
+
+    fire.add(saturdayServiceUrl, ServiceDTOAdapter.toMap(servicesAux[0]));
+    fire.add(morningSundayServiceUrl, ServiceDTOAdapter.toMap(servicesAux[1]));
+
+    print('Services and lyrics have been added successfully');
+
+  }catch(e){
+    print('$e');
   }
-
-  for (LyricDTO lyric in lyricsAux) {
-    fire.add(
-      lyricsUrl,
-      LyricDTOAdapter.toMap(lyric),
-    );
-  }
-
-  print('total de musicas inseridas: ${lyricsAux.length}');
-
-  fire.update(
-    servicesUrl,
-    ServiceDTOAdapter.toMapList(servicesAux),
-  );
 }

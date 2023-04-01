@@ -11,10 +11,11 @@ class FirestoreDatasource implements IDatasource{
   List<String> params = [];
 
   List<Map> _convert(List<QueryDocumentSnapshot<Map<String, dynamic>>> docs) {
-    return docs.map((document) => {
-              'id': document.id,
-              ...document.data(),
-            }).toList();
+    var entities = docs.map((document) => {
+      'id': document.id,
+      ...document.data(),
+    }).toList();
+    return entities;
   }
 
   @override

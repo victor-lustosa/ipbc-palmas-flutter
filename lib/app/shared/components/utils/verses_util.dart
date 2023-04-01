@@ -7,29 +7,27 @@ import 'dart:math';
 import 'package:uno/uno.dart';
 
 class VersesUtil {
-  final uno = Uno();
-  final Random random = Random();
 
-  Future<dynamic> getLyric(String title, String group) async {
+  static Future<dynamic> getLyric(String title, String group) async {
     String titleParam = title.replaceAll(' ', '%20');
     String groupParam = group.replaceAll(' ', '%20');
     String apikey = 'a34faccfb8ad3edc6ddcc978e34802ef';
     try {
-      final response = await uno.get('https://api.vagalume.com.br/search.php?art=$groupParam&mus=$titleParam&apikey=$apikey');
+      final response = await Uno().get('https://api.vagalume.com.br/search.php?art=$groupParam&mus=$titleParam&apikey=$apikey');
       return response.data;
     } on UnoError catch (error) {
       print(error);
     }
   }
 
-  Future<List<LyricDTO>> generateVersesList(List<LyricDTO> lyricsList) async {
+  static Future<List<LyricDTO>> generateVersesList(List<LyricDTO> lyricsList) async {
     List<LyricDTO> results = [];
     for (int i = 0; lyricsList.length > i; i++) {
       Map result = await getLyric(lyricsList[i].title, lyricsList[i].group);
       results.add(
         LyricDTO(
           verses: VerseDTOAdapter.fromVagalume(result),
-          albumCover: AppImages.defaultCoversList[random.nextInt(4)],
+          albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
           id: '$i',
           title: '',
           createAt: DateTime.now(),

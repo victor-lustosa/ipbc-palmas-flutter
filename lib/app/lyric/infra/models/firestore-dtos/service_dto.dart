@@ -19,6 +19,11 @@ class ServiceDTO {
   final String title;
   final String heading;
 
+  @override
+  String toString() {
+    return 'ServiceDTO{guideIsVisible: $guideIsVisible, createAt: $createAt, lyricsList: $lyricsList, liturgyList: $liturgyList, title: $title, heading: $heading}';
+  }
+
   factory ServiceDTO.empty() => ServiceDTO(
       createAt: DateTime.now(),
       lyricsList: [],

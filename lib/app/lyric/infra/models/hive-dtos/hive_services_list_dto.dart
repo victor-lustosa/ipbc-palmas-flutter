@@ -5,11 +5,9 @@ part 'hive_services_list_dto.g.dart';
 
 @HiveType(typeId: 5)
 class HiveServicesListDTO {
-  @HiveField(0)
-  String createAt;
 
-  @HiveField(1)
+  @HiveField(0)
   List<ServiceHiveDTO> servicesList;
 
-  HiveServicesListDTO({required this.servicesList, required this.createAt});
+  HiveServicesListDTO({required this.servicesList});
 }

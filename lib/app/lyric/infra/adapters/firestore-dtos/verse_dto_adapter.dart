@@ -1,6 +1,7 @@
 import '../../../domain/entities/verse_entity.dart';
 
 class VerseDTOAdapter {
+
   static List verseJsonDecode(dynamic json) {
     List results = [];
     for (int i = 0; i < json[0].length; i++) {

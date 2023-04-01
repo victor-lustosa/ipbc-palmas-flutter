@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../core/domain/use-cases/use_cases.dart';
 import '../../domain/entities/service_entity.dart';
-import '../../domain/entities/services_list_entity.dart';
 
 class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
   final IUseCases fireServicesUseCases;
@@ -20,7 +19,7 @@ class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
   }
 
   Future<void> _getServiceInFire(GetServiceInFireEvent event, emit) async {
-    await emit.onEach<ServicesListEntity>(
+    await emit.onEach<List<ServiceEntity>>(
       await fireServicesUseCases.get(event.path),
       onData: (service) {
         emit(SuccessfullyFetchedServiceState(service));
@@ -32,7 +31,7 @@ class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
   }
 
   Future<void> _getServiceInHive(GetServiceInHiveEvent event, emit) async {
-    await emit.onEach<ServicesListEntity>(
+    await emit.onEach<List<ServiceEntity>>(
       await hiveServicesUseCases.get(event.path),
       onData: (service) {
         emit(SuccessfullyFetchedServiceState(service));
@@ -84,6 +83,6 @@ class ServiceExceptionState extends ServicesState {
 }
 
 class SuccessfullyFetchedServiceState extends ServicesState {
-  final ServicesListEntity entities;
+  final List<ServiceEntity> entities;
   SuccessfullyFetchedServiceState(this.entities);
 }

@@ -1,4 +1,4 @@
-import '../../../domain/entities/services_list_entity.dart';
+import '../../models/firestore-dtos/services_list_dto.dart';
 import '../../../domain/entities/service_entity.dart';
 import '../../models/hive-dtos/service_hive_dto.dart';
 import '../../models/hive-dtos/hive_services_list_dto.dart';
@@ -20,11 +20,11 @@ class ServiceHiveAdapter {
       });
     }
     return [
-      {'servicesList': map, 'createAt': data.createAt},
+      {'servicesList': map},
     ];
   }
 
-  static HiveServicesListDTO toDTOList(ServicesListEntity entities) {
+  static HiveServicesListDTO toDTOList(ServicesListDTO entities) {
     List<ServiceHiveDTO> services = [];
     for (ServiceEntity service in entities.servicesList) {
       services.add(
@@ -41,7 +41,6 @@ class ServiceHiveAdapter {
     }
     return HiveServicesListDTO(
         servicesList: services,
-        createAt: entities.createAt,
     );
   }
 }

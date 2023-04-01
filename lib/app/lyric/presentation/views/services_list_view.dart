@@ -33,7 +33,7 @@ class _ServicesListViewState extends State<ServicesListView>
   void initState() {
     serviceBloc = context.read<ServiceBloc>();
     databaseBloc= context.read<DatabaseBloc>();
-    serviceBloc.add(GetServiceInHiveEvent(path: path));
+    serviceBloc.add(GetServiceInFireEvent(path: path));
     database = ValidationUtil.validationDatasource();
     super.initState();
   }
@@ -57,7 +57,7 @@ class _ServicesListViewState extends State<ServicesListView>
               ),
             );
           } else if (state is SuccessfullyFetchedServiceState) {
-            services = state.entities.servicesList;
+            services = state.entities;
             //if (database == firebaseDatabase) {
              //serviceBloc.add(AddServiceInHiveEvent(path: path, data: state.entities));
             // }
