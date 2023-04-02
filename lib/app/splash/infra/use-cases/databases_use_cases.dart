@@ -1,18 +1,18 @@
 import '../../../core/domain/use-cases/use_cases.dart';
-import '../../../lyric/infra/models/hive-dtos/database_configs_hive_dto.dart';
+import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 import '../../../core/domain/repositories/repository.dart';
 
-class DatabasesUseCases implements IUseCases<Stream<DatabaseConfigsHiveDTO>> {
-  final IRepository<DatabaseConfigsHiveDTO> repository;
+class DatabasesUseCases implements IUseCases<Stream<HiveDatabaseConfigsDTO>> {
+  final IRepository<HiveDatabaseConfigsDTO> repository;
   DatabasesUseCases({required this.repository});
 
   @override
-  Future<Stream<DatabaseConfigsHiveDTO>> get(String path) async {
-   DatabaseConfigsHiveDTO? result = await repository.get(path);
+  Future<Stream<HiveDatabaseConfigsDTO>> get(String path) async {
+   HiveDatabaseConfigsDTO? result = await repository.get(path);
    if(result != null){
     return Stream.value(result);
     }
-   return Stream.value(DatabaseConfigsHiveDTO(updateAt: DateTime.parse('2000-01-01')));
+   return Stream.value(HiveDatabaseConfigsDTO(updateAt: DateTime.parse('2000-01-01')));
   }
 
   @override

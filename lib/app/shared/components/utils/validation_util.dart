@@ -11,6 +11,8 @@ import 'package:provider/provider.dart';
 import '../../../lyric/infra/models/firestore-dtos/settings_dto.dart';
 class ValidationUtil {
 
+  final String firebaseDatabase = 'firebase';
+
   static Future<DateTime> verifyUpdateFirebase(BuildContext context, DateTime updateAt)  async {
     SettingsDTO settings = SettingsDTO(updateAt: Timestamp.now());
     FirestoreDatasource fire = context.read<FirestoreDatasource>();

@@ -32,7 +32,7 @@ Future<DateTime> dateNow() async {
     () => Timestamp.now().toDate(),
   );
 }
-
+//alterar IDS que estao como String para int
 void main() async {
 
   await firebaseInitialize();
@@ -48,7 +48,7 @@ void main() async {
 
     final String saturdayJson = await rootBundle.loadString('assets/data/saturday-service.json');
     final String sundayEveningJson = await rootBundle.loadString('assets/data/sunday-evening-service.json');
-    //final String sundayMorningJson = await rootBundle.loadString('assets/data/sunday-morning-service.json');
+    final String sundayMorningJson = await rootBundle.loadString('assets/data/sunday-morning-service.json');
 
     List<ServiceDTO> services = [];
     List<ServiceDTO> servicesAux = [];
@@ -56,7 +56,7 @@ void main() async {
     List<LyricDTO> allLyricsInserted = [];
     services.add(ServiceDTOAdapter.fromJson(saturdayJson));
     services.add(ServiceDTOAdapter.fromJson(sundayEveningJson));
-    //services.add(ServiceDTOAdapter.fromJson(sundayMorningJson));
+    services.add(ServiceDTOAdapter.fromJson(sundayMorningJson));
 
     for (ServiceDTO service in services) {
       List<LyricDTO> lyricsConverted = await VersesUtil.generateVersesList(service.lyricsList);
@@ -75,14 +75,15 @@ void main() async {
       servicesAux.add(service.copyWith(lyricsList: lyricsAux));
     }
 
-    for (LyricDTO lyric in allLyricsInserted) {
+    /*for (LyricDTO lyric in allLyricsInserted) {
     fire.add(lyricsUrl, LyricDTOAdapter.toMap(lyric));
-    }
+    }*/
 
     print('Total number of lyrics inserted: ${allLyricsInserted.length}');
 
     fire.add(saturdayServiceUrl, ServiceDTOAdapter.toMap(servicesAux[0]));
     fire.add(morningSundayServiceUrl, ServiceDTOAdapter.toMap(servicesAux[1]));
+    fire.add(eveningSundayServiceUrl, ServiceDTOAdapter.toMap(servicesAux[2]));
 
     print('Services and lyrics have been added successfully');
 

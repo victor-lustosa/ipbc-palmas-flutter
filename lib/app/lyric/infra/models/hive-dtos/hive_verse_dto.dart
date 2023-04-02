@@ -1,8 +1,8 @@
 import 'package:hive/hive.dart';
-part 'verse_hive_dto.g.dart';
+part 'hive_verse_dto.g.dart';
 
 @HiveType(typeId: 2)
-class VerseHiveDTO {
+class HiveVerseDTO {
   @HiveField(0)
   String id;
 
@@ -12,7 +12,7 @@ class VerseHiveDTO {
   @HiveField(2)
   List versesList;
 
-  VerseHiveDTO({
+  HiveVerseDTO({
     required this.id,
     required this.isChorus,
     required this.versesList,

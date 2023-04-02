@@ -1,13 +1,15 @@
+import 'package:ipbc_palmas/app/lyric/domain/entities/service_entity.dart';
+import 'package:ipbc_palmas/app/lyric/infra/adapters/hive-dtos/hive_database_configs_adapter.dart';
+import 'package:ipbc_palmas/app/lyric/infra/models/hive-dtos/hive_services_list_dto.dart';
 
-import '../../lyric/infra/adapters/hive-dtos/lyric_hive_adapter.dart';
-import '../../lyric/infra/adapters/hive-dtos/service_hive_adapter.dart';
-import '../../lyric/infra/models/hive-dtos/database_configs_hive_dto.dart';
+import '../../lyric/infra/adapters/hive-dtos/hive_lyric_adapter.dart';
+import '../../lyric/infra/adapters/hive-dtos/hive_service_adapter.dart';
+import '../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_lyrics_list_dto.dart';
-import '../../lyric/infra/models/hive-dtos/liturgy_hive_dto.dart';
-import '../../lyric/infra/models/hive-dtos/lyric_hive_dto.dart';
-import '../../lyric/infra/models/hive-dtos/service_hive_dto.dart';
-import '../../lyric/infra/models/hive-dtos/hive_services_list_dto.dart';
-import '../../lyric/infra/models/hive-dtos/verse_hive_dto.dart';
+import '../../lyric/infra/models/hive-dtos/hive_service_dto.dart';
+import '../../lyric/infra/models/hive-dtos/hive_liturgy_dto.dart';
+import '../../lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
+import '../../lyric/infra/models/hive-dtos/hive_verse_dto.dart';
 import '../infra/datasources/datasource.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
@@ -23,22 +25,20 @@ class HiveDatasource<R> implements IDatasource {
 
   static Future initHive() async {
     Hive.registerAdapter(
-      DatabaseConfigsHiveDTOAdapter(),
+      HiveDatabaseConfigsDTOAdapter(),
     );
     Hive.registerAdapter(
-      LyricHiveDTOAdapter(),
+      HiveLyricDTOAdapter(),
     );
     Hive.registerAdapter(
-      ServiceHiveDTOAdapter(),
+      HiveServiceDTOAdapter(),
     );
     Hive.registerAdapter(
-      VerseHiveDTOAdapter(),
+      HiveVerseDTOAdapter(),
     );
+
     Hive.registerAdapter(
-      HiveServicesListDTOAdapter(),
-    );
-    Hive.registerAdapter(
-      LiturgyHiveDTOAdapter(),
+      HiveLiturgyDTOAdapter(),
     );
     Hive.registerAdapter(
       HiveLyricsListDTOAdapter(),
@@ -48,13 +48,33 @@ class HiveDatasource<R> implements IDatasource {
   @override
   Future<Stream<List<Map>>> get(String path) async {
     params = path.split('/');
-    return Stream.value(_getAdapter(box.get(params[0]) as R));
+    switch (params[0]) {
+      case 'services':
+        var result = box.values.where((entity) => (entity as HiveServiceDTO).type == params[1]).toList();
+       // (result as List<HiveServiceDTO>).sort((a,b) => a.createAt.compareTo(b.createAt));
+        return Stream.value(result.map(HiveServiceAdapter.toMapList).toList());
+      case 'lyrics':
+        return Stream.value(HiveLyricAdapter.toHiveLyricsMapList(box.get(params[0]) as HiveLyricsListDTO));
+      default:
+        return Stream.value(HiveDatabaseConfigsAdapter.toMapList(box.get(params[0]) as HiveDatabaseConfigsDTO));
+    }
   }
 
   @override
   Future<void> add(String path, data) async {
     params = path.split('/');
-    box.put(params[0], _addAdapter(data) as R);
+  //  R? list = _addAdapter(data, params[1]);
+    switch (params[0]) {
+      case 'lyrics':
+        box.put(params[0], HiveLyricAdapter.toHiveLyricsList(data).lyricsList as R);
+        break;
+      case 'services':
+        box.put(params[0], (data as List<ServiceEntity>).map((e) => HiveServiceAdapter.toDTOList(e, params[1])).toList() as R);
+        break;
+      case 'database-configs':
+        box.put(params[0], data as R);
+    }
+  //  return box.put(params[0], list as R);
   }
 
   @override
@@ -65,26 +85,4 @@ class HiveDatasource<R> implements IDatasource {
     box.delete(path);
   }
 
-  R? _addAdapter(entities) {
-    switch (R) {
-      case HiveLyricsListDTO:
-        return LyricHiveAdapter.toHiveLyricsListDTO(entities) as R;
-      case HiveServicesListDTO:
-        return ServiceHiveAdapter.toDTOList(entities) as R;
-      case DatabaseConfigsHiveDTO:
-        return entities;
-    }
-    return null;
-  }
-
-  dynamic _getAdapter(R? entities)  {
-    switch (R) {
-      case HiveLyricsListDTO:
-        return LyricHiveAdapter.toMapHiveLyricsListDTO(entities as HiveLyricsListDTO);
-      case HiveServicesListDTO:
-        return ServiceHiveAdapter.toMapList(entities as HiveServicesListDTO);
-      case DatabaseConfigsHiveDTO:
-        return entities;
-    }
-  }
 }

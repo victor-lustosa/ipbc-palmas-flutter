@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import '../../../core/domain/use-cases/use_cases.dart';
-import '../../../lyric/infra/models/hive-dtos/database_configs_hive_dto.dart';
+import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 
 class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
   final IUseCases databasesUseCases;
@@ -14,7 +14,7 @@ class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
   }
 
   _getData(GetDataEvent event, emit) async {
-    await emit.onEach<DatabaseConfigsHiveDTO?>(
+    await emit.onEach<HiveDatabaseConfigsDTO?>(
       await databasesUseCases.get(event.path),
       onData: (service) {
         emit(
@@ -69,6 +69,6 @@ class ServiceExceptionState extends DatabasesState {
 }
 
 class SuccessfullyFetchedDataState extends DatabasesState {
-  final DatabaseConfigsHiveDTO entity;
+  final HiveDatabaseConfigsDTO entity;
   SuccessfullyFetchedDataState(this.entity);
 }

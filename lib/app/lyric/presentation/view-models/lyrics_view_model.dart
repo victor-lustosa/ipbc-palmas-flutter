@@ -3,7 +3,7 @@ import '../../../shared/components/utils/validation_util.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
 import '../../../splash/presentation/blocs/database_bloc.dart';
-import '../../infra/models/hive-dtos/database_configs_hive_dto.dart';
+import '../../infra/models/hive-dtos/hive_database_configs_dto.dart';
 
 class LyricsViewModel{
   final String database = 'firebase';

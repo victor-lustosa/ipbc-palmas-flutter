@@ -17,16 +17,19 @@ class HiveServicesListDTOAdapter extends TypeAdapter<HiveServicesListDTO> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return HiveServicesListDTO(
-      servicesList: (fields[0] as List).cast<ServiceHiveDTO>(),
+      servicesList: (fields[0] as List).cast<HiveServiceDTO>(),
+      type: fields[1] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, HiveServicesListDTO obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.servicesList);
+      ..write(obj.servicesList)
+      ..writeByte(1)
+      ..write(obj.type);
   }
 
   @override

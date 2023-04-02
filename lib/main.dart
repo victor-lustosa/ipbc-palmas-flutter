@@ -6,14 +6,12 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:ipbc_palmas/app/lyric/infra/models/hive-dtos/hive_lyrics_list_dto.dart';
-
-import 'app/lyric/infra/models/hive-dtos/lyric_hive_dto.dart';
+import 'app/lyric/infra/models/hive-dtos/hive_lyrics_list_dto.dart';
 import 'app/app_widget.dart';
 import 'app/core/external/hive_datasource.dart';
 import 'app/ipbc_bloc_observer.dart';
-import 'app/lyric/infra/models/hive-dtos/database_configs_hive_dto.dart';
-import 'app/lyric/infra/models/hive-dtos/hive_services_list_dto.dart';
+import 'app/lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
+import 'app/lyric/infra/models/hive-dtos/hive_service_dto.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -24,8 +22,8 @@ Future<void> main() async {
 
   HiveDatasource.initHive();
 
-  await Hive.openBox<DatabaseConfigsHiveDTO>('database-configs');
-  await Hive.openBox<HiveServicesListDTO>('services');
+  await Hive.openBox<HiveDatabaseConfigsDTO>('database-configs');
+  await Hive.openBox<List<dynamic>>('services');
   await Hive.openBox<HiveLyricsListDTO>('lyrics');
 
   await Firebase.initializeApp(

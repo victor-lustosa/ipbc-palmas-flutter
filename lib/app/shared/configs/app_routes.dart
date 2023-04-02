@@ -7,21 +7,17 @@ import '../../lyric/domain/entities/lyric_entity.dart';
 import '../../lyric/domain/entities/service_entity.dart';
 import '../../lyric/presentation/views/service_view.dart';
 import '../../lyric/presentation/views/lyric_view.dart';
+import '../../lyric/presentation/views/services_colletions_view.dart';
 import '../../lyric/presentation/views/services_list_view.dart';
 
 class AppRoutes {
   static const String initialRoute = "/";
-  static const String chosenLyricsRoute = "/chosen-lyrics";
-  static const String lyricsListRoute = "/lyrics-list";
+  static const String serviceRoute = "/service-view";
+  static const String lyricsListRoute = "/lyrics-list-view";
   static const String lyricRoute = "/lyric-view";
-
+  static const String servicesCollectionsRoute = "/services-collections-view";
   static Route<dynamic>? onGenerateRoute(RouteSettings routeSettings) {
-    //final arguments = routeSettings.arguments;
-
     switch (routeSettings.name) {
-      //case homeRoute:
-      //return MaterialPageRoute(builder: (_) => const HomeView());
-
       case lyricRoute:
         if (Platform.isIOS) {
           return CupertinoPageRoute(
@@ -38,21 +34,20 @@ class AppRoutes {
             ),
           );
         }
-
       default:
         return UnknownRoute._get();
     }
   }
 }
 
-class WeekdendLyricsRoutes extends StatefulWidget {
-  const WeekdendLyricsRoutes({super.key});
+class ServicesListRoutes extends StatefulWidget {
+  const ServicesListRoutes({super.key});
 
   @override
-  State<WeekdendLyricsRoutes> createState() => _WeekendLyricsRoutesState();
+  State<ServicesListRoutes> createState() => _WeekendLyricsRoutesState();
 }
 
-class _WeekendLyricsRoutesState extends State<WeekdendLyricsRoutes> {
+class _WeekendLyricsRoutesState extends State<ServicesListRoutes> {
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
@@ -74,12 +69,29 @@ class _WeekendLyricsRoutesState extends State<WeekdendLyricsRoutes> {
                 builder: (_) => const ServicesListView(),
               );
             }
-          case AppRoutes.chosenLyricsRoute:
+          case AppRoutes.serviceRoute:
             if (Platform.isIOS) {
               return CupertinoPageRoute(
                 builder: (_) => CupertinoPageScaffold(
                   child: ServiceView(
                     service: (settings.arguments as ServiceEntity),
+                  ),
+                ),
+              );
+            } else {
+              return MaterialPageRoute(
+                settings: settings,
+                builder: (_) => ServiceView(
+                  service: (settings.arguments as ServiceEntity),
+                ),
+              );
+            }
+          case AppRoutes.servicesCollectionsRoute:
+            if (Platform.isIOS) {
+              return CupertinoPageRoute(
+                builder: (_) => CupertinoPageScaffold(
+                  child: ServicesCollectionsView(
+                    serviceCollections: (settings.arguments as ServiceCollectionsDTO)
                   ),
                 ),
               );

@@ -1,11 +1,11 @@
 import 'package:hive/hive.dart';
 
-import 'liturgy_hive_dto.dart';
-import 'lyric_hive_dto.dart';
-part 'service_hive_dto.g.dart';
+import 'hive_liturgy_dto.dart';
+import 'hive_lyric_dto.dart';
+part 'hive_service_dto.g.dart';
 
 @HiveType(typeId: 1)
-class ServiceHiveDTO {
+class HiveServiceDTO {
   @HiveField(0)
   String id;
 
@@ -22,14 +22,18 @@ class ServiceHiveDTO {
   String heading;
 
   @HiveField(5)
-  List<LyricHiveDTO> lyricsList;
+  List<HiveLyricDTO> lyricsList;
 
   @HiveField(6)
-  List<LiturgyHiveDTO> liturgyList;
+  List<HiveLiturgyDTO> liturgyList;
 
-  ServiceHiveDTO(
+  @HiveField(7)
+  String? type;
+
+  HiveServiceDTO(
       {required this.id,
       required this.title,
+      required this.type,
       required this.guideIsVisible,
       required this.heading,
       required this.liturgyList,

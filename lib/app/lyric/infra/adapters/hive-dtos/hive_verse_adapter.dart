@@ -1,8 +1,8 @@
 import '../../../domain/entities/verse_entity.dart';
-import '../../models/hive-dtos/verse_hive_dto.dart';
+import '../../models/hive-dtos/hive_verse_dto.dart';
 
-class VerseHiveAdapter {
-  static List<Map<String, dynamic>> toMapList(List<VerseHiveDTO> data) {
+class HiveVerseAdapter {
+  static List<Map<String, dynamic>> toMapList(List<HiveVerseDTO> data) {
     return data
         .map((entity) => {
               'id': entity.id,
@@ -12,8 +12,8 @@ class VerseHiveAdapter {
         .toList();
   }
 
-  static VerseHiveDTO toDTO(VerseEntity data) {
-    return VerseHiveDTO(
+  static HiveVerseDTO toDTO(VerseEntity data) {
+    return HiveVerseDTO(
       id: data.id.toString(),
       isChorus: data.isChorus,
       versesList: data.versesList,

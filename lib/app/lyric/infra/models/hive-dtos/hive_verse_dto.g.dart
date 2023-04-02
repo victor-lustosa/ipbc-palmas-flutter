@@ -1,47 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'lyric_hive_dto.dart';
+part of 'hive_verse_dto.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class LyricHiveDTOAdapter extends TypeAdapter<LyricHiveDTO> {
+class HiveVerseDTOAdapter extends TypeAdapter<HiveVerseDTO> {
   @override
-  final int typeId = 0;
+  final int typeId = 2;
 
   @override
-  LyricHiveDTO read(BinaryReader reader) {
+  HiveVerseDTO read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return LyricHiveDTO(
-      albumCover: fields[3] as String,
-      title: fields[1] as String,
-      createAt: fields[4] as String,
-      group: fields[2] as String,
-      verses: (fields[5] as List).cast<VerseHiveDTO>(),
+    return HiveVerseDTO(
       id: fields[0] as String,
+      isChorus: fields[1] as bool,
+      versesList: (fields[2] as List).cast<dynamic>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, LyricHiveDTO obj) {
+  void write(BinaryWriter writer, HiveVerseDTO obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.title)
+      ..write(obj.isChorus)
       ..writeByte(2)
-      ..write(obj.group)
-      ..writeByte(3)
-      ..write(obj.albumCover)
-      ..writeByte(4)
-      ..write(obj.createAt)
-      ..writeByte(5)
-      ..write(obj.verses);
+      ..write(obj.versesList);
   }
 
   @override
@@ -50,7 +41,7 @@ class LyricHiveDTOAdapter extends TypeAdapter<LyricHiveDTO> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is LyricHiveDTOAdapter &&
+      other is HiveVerseDTOAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

@@ -4,17 +4,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/lyric/infra/models/hive-dtos/liturgy_hive_dto.dart';
-import 'package:ipbc_palmas/app/lyric/infra/models/hive-dtos/verse_hive_dto.dart';
+import 'package:ipbc_palmas/app/lyric/infra/models/hive-dtos/hive_liturgy_dto.dart';
+import 'package:ipbc_palmas/app/lyric/infra/models/hive-dtos/hive_verse_dto.dart';
 import 'package:ipbc_palmas/app/lyric/infra/use-cases/lyrics_use_cases.dart';
 import 'package:ipbc_palmas/app/lyric/infra/use-cases/services_use_cases.dart';
 //import 'package:ipbc_palmas/app/lyric/presentation/blocs/service_bloc.dart';
 import '../../../../firebase_options.dart';
-import '../../../lyric/infra/adapters/hive-dtos/database_configs_hive_adapter.dart';
-import '../../../lyric/infra/adapters/hive-dtos/service_hive_adapter.dart';
-import '../../../lyric/infra/models/hive-dtos/database_configs_hive_dto.dart';
-import '../../../lyric/infra/models/hive-dtos/lyric_hive_dto.dart';
-import '../../../lyric/infra/models/hive-dtos/service_hive_dto.dart';
+import '../../../lyric/infra/adapters/hive-dtos/hive_database_configs_adapter.dart';
+import '../../../lyric/infra/adapters/hive-dtos/hive_service_adapter.dart';
+import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
+import '../../../lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
+import '../../../lyric/infra/models/hive-dtos/hive_service_dto.dart';
 import '../../../lyric/presentation/blocs/lyric_bloc.dart';
 import '../../../shared/configs/app_configs.dart';
 //import '../../../splash/infra/use-cases/databases_use_cases.dart';
@@ -55,10 +55,10 @@ Future<void> main() async {
 //database configs insert
   // await Hive.openBox<DatabaseConfigsHiveDTO>('database-configs');
  // await Hive.openBox<List<ServiceHiveDTO>>('services');
-  await Hive.openBox<List<LyricHiveDTO>>('lyrics');
+  await Hive.openBox<List<HiveLyricDTO>>('lyrics');
   //HiveDatasource dataHive = HiveDatasource<DatabaseConfigsHiveDTO>(boxLabel: 'database-configs');
  // HiveDatasource serviceHive = HiveDatasource<List<ServiceHiveDTO>>(boxLabel: 'services');
-  HiveDatasource lyricHive = HiveDatasource<List<LyricHiveDTO>>(boxLabel: 'lyrics');
+  HiveDatasource lyricHive = HiveDatasource<List<HiveLyricDTO>>(boxLabel: 'lyrics');
 /*  dataHive.add('database-configs',
     DatabaseConfigsHiveDTO(
       updateAt: DateTime.now(),
@@ -124,7 +124,7 @@ Future<void> main() async {
     ),
     hiveLyricsUseCase: LyricsUseCases(
       repository: Repository(
-        datasource: HiveDatasource<List<LyricHiveDTO>>(boxLabel: 'lyrics'),
+        datasource: HiveDatasource<List<HiveLyricDTO>>(boxLabel: 'lyrics'),
       ),
     ),
   );
@@ -176,27 +176,27 @@ class _HiveTestState extends State<HiveTest> {
   @override
   void initState() {
     //outra forma é passar list lyricEntity
-    List<LyricHiveDTO> entities = [
-      LyricHiveDTO(
+    List<HiveLyricDTO> entities = [
+      HiveLyricDTO(
           albumCover: 'albumCover',
           title: 'title',
           createAt: 'createAt',
           group: 'group',
           verses: [
-            VerseHiveDTO(
+            HiveVerseDTO(
               id: '1',
               isChorus: true,
               versesList: [],
             ),
           ],
           id: '1'),
-      LyricHiveDTO(
+      HiveLyricDTO(
           albumCover: 'albumCover',
           title: 'title',
           createAt: 'createAt',
           group: 'group',
           verses: [
-            VerseHiveDTO(
+            HiveVerseDTO(
               id: '2',
               isChorus: true,
               versesList: [],
@@ -241,7 +241,7 @@ class _HiveTestState extends State<HiveTest> {
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: Text(
-                        entitiesList[index].title,
+                        entitiesList[index].heading,
                         style: AppFonts.lyricsTitleTile,
                       ),
                       onTap: () {},

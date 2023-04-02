@@ -1,9 +1,9 @@
 import 'package:hive/hive.dart';
-import 'verse_hive_dto.dart';
-part 'lyric_hive_dto.g.dart';
+import 'hive_verse_dto.dart';
+part 'hive_lyric_dto.g.dart';
 
 @HiveType(typeId: 0)
-class LyricHiveDTO {
+class HiveLyricDTO {
   @HiveField(0)
   String id;
 
@@ -20,9 +20,9 @@ class LyricHiveDTO {
   String createAt;
 
   @HiveField(5)
-  List<VerseHiveDTO> verses;
+  List<HiveVerseDTO> verses;
 
-  LyricHiveDTO({
+  HiveLyricDTO({
     required this.albumCover,
     required this.title,
     required this.createAt,

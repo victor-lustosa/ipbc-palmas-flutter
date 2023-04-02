@@ -54,7 +54,7 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
                     navigationBar: CupertinoNavigationBar(
                       backgroundColor: Color(0xFFFFFFFF),
                     ),
-                    child: WeekdendLyricsRoutes());
+                    child: ServicesListRoutes());
               },
             );
           case 1:

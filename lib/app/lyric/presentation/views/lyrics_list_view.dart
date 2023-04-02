@@ -50,7 +50,7 @@ class _LyricsListViewState extends State<LyricsListView>
     fillLettersCarousel();
     lyricBloc = context.read<LyricBloc>();
     databaseBloc= context.read<DatabaseBloc>();
-    lyricBloc.add(GetLyricsInHiveEvent(path: path));
+    lyricBloc.add(GetLyricsInFireEvent(path: path));
     database = ValidationUtil.validationDatasource();
     super.initState();
   }

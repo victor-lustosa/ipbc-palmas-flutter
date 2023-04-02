@@ -1,33 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'database_configs_hive_dto.dart';
+part of 'hive_liturgy_dto.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class DatabaseConfigsHiveDTOAdapter
-    extends TypeAdapter<DatabaseConfigsHiveDTO> {
+class HiveLiturgyDTOAdapter extends TypeAdapter<HiveLiturgyDTO> {
   @override
-  final int typeId = 3;
+  final int typeId = 4;
 
   @override
-  DatabaseConfigsHiveDTO read(BinaryReader reader) {
+  HiveLiturgyDTO read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return DatabaseConfigsHiveDTO(
-      updateAt: fields[0] as DateTime,
+    return HiveLiturgyDTO(
+      isAdditional: fields[0] as bool,
+      sequence: fields[1] as String,
+      additional: fields[2] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, DatabaseConfigsHiveDTO obj) {
+  void write(BinaryWriter writer, HiveLiturgyDTO obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.updateAt);
+      ..write(obj.isAdditional)
+      ..writeByte(1)
+      ..write(obj.sequence)
+      ..writeByte(2)
+      ..write(obj.additional);
   }
 
   @override
@@ -36,7 +41,7 @@ class DatabaseConfigsHiveDTOAdapter
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DatabaseConfigsHiveDTOAdapter &&
+      other is HiveLiturgyDTOAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

@@ -1,38 +1,33 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'verse_hive_dto.dart';
+part of 'hive_database_configs_dto.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class VerseHiveDTOAdapter extends TypeAdapter<VerseHiveDTO> {
+class HiveDatabaseConfigsDTOAdapter
+    extends TypeAdapter<HiveDatabaseConfigsDTO> {
   @override
-  final int typeId = 2;
+  final int typeId = 3;
 
   @override
-  VerseHiveDTO read(BinaryReader reader) {
+  HiveDatabaseConfigsDTO read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return VerseHiveDTO(
-      id: fields[0] as String,
-      isChorus: fields[1] as bool,
-      versesList: (fields[2] as List).cast<dynamic>(),
+    return HiveDatabaseConfigsDTO(
+      updateAt: fields[0] as DateTime,
     );
   }
 
   @override
-  void write(BinaryWriter writer, VerseHiveDTO obj) {
+  void write(BinaryWriter writer, HiveDatabaseConfigsDTO obj) {
     writer
-      ..writeByte(3)
-      ..writeByte(0)
-      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.isChorus)
-      ..writeByte(2)
-      ..write(obj.versesList);
+      ..writeByte(0)
+      ..write(obj.updateAt);
   }
 
   @override
@@ -41,7 +36,7 @@ class VerseHiveDTOAdapter extends TypeAdapter<VerseHiveDTO> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is VerseHiveDTOAdapter &&
+      other is HiveDatabaseConfigsDTOAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

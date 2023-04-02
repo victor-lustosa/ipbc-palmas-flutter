@@ -51,7 +51,7 @@ class _HomeViewState extends State<HomeView> {
             );
           },
           children: const [
-            WeekdendLyricsRoutes(),
+            ServicesListRoutes(),
             LyricsListView(),
             OfferingView(),
           ],

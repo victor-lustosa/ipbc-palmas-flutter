@@ -1,8 +1,8 @@
 import 'package:hive/hive.dart';
-part 'liturgy_hive_dto.g.dart';
+part 'hive_liturgy_dto.g.dart';
 
 @HiveType(typeId: 4)
-class LiturgyHiveDTO {
+class HiveLiturgyDTO {
   @HiveField(0)
   bool isAdditional;
 
@@ -12,7 +12,7 @@ class LiturgyHiveDTO {
   @HiveField(2)
   String additional;
 
-  LiturgyHiveDTO({
+  HiveLiturgyDTO({
     required this.isAdditional,
     required this.sequence,
     required this.additional,

@@ -1,12 +1,12 @@
 import 'package:hive/hive.dart';
-part 'database_configs_hive_dto.g.dart';
+part 'hive_database_configs_dto.g.dart';
 
 @HiveType(typeId: 3)
-class DatabaseConfigsHiveDTO {
+class HiveDatabaseConfigsDTO {
   @HiveField(0)
   DateTime updateAt;
 
-  DatabaseConfigsHiveDTO({
+  HiveDatabaseConfigsDTO({
     required this.updateAt,
   });
 }

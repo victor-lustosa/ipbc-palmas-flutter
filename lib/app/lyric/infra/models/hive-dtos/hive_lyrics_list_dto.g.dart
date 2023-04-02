@@ -17,7 +17,7 @@ class HiveLyricsListDTOAdapter extends TypeAdapter<HiveLyricsListDTO> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return HiveLyricsListDTO(
-      lyricsList: (fields[0] as List).cast<LyricHiveDTO>(),
+      lyricsList: (fields[0] as List).cast<HiveLyricDTO>(),
     );
   }
 

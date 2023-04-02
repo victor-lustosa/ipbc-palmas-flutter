@@ -1,8 +1,8 @@
 import '../../../domain/entities/liturgy_entity.dart';
-import '../../models/hive-dtos/liturgy_hive_dto.dart';
+import '../../models/hive-dtos/hive_liturgy_dto.dart';
 
-class LiturgyHiveAdapter {
-  static List<Map<String, dynamic>> toMapList(List<LiturgyHiveDTO> data) {
+class HiveLiturgyAdapter {
+  static List<Map<String, dynamic>> toMapList(List<HiveLiturgyDTO> data) {
     return data
         .map((entity) => {
               'isAdditional': entity.isAdditional,
@@ -12,11 +12,11 @@ class LiturgyHiveAdapter {
         .toList();
   }
 
-  static List<LiturgyHiveDTO> toDTOList(List<LiturgyEntity> entities) {
-    List<LiturgyHiveDTO> liturgyList = [];
+  static List<HiveLiturgyDTO> toDTOList(List<LiturgyEntity> entities) {
+    List<HiveLiturgyDTO> liturgyList = [];
     for (LiturgyEntity liturgy in entities) {
       liturgyList.add(
-        LiturgyHiveDTO(
+        HiveLiturgyDTO(
           isAdditional: liturgy.isAdditional,
           sequence: liturgy.sequence,
           additional: liturgy.additional,

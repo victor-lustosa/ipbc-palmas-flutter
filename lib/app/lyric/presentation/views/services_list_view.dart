@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'services_colletions_view.dart';
 import '../../../splash/presentation/blocs/database_bloc.dart';
 //import '../../../shared/components/back-button/back_button_widget.dart';
 import '../../../shared/components/next-button/next_button_widget.dart';
@@ -22,21 +22,27 @@ class ServicesListView extends StatefulWidget {
 class _ServicesListViewState extends State<ServicesListView>
     with AutomaticKeepAliveClientMixin {
 
-  late final ServiceBloc serviceBloc;
-  late final DatabaseBloc databaseBloc;
-  late List<ServiceEntity> services;
-  late final String database;
-  final String firebaseDatabase = 'firebase';
-  final String path = 'services/1';
+  final String saturdayServicePath = 'saturday-services';
+  final String morningSundayServicePath = 'morning-sunday-services';
+  final String eveningSundayServicePath = 'evening-sunday-services';
 
-  @override
-  void initState() {
-    serviceBloc = context.read<ServiceBloc>();
-    databaseBloc= context.read<DatabaseBloc>();
-    serviceBloc.add(GetServiceInFireEvent(path: path));
-    database = ValidationUtil.validationDatasource();
-    super.initState();
-  }
+  final List<Map> servicesList = const [
+      {
+      'title': 'Sábado',
+      'heading': 'sábado à noite (UMP)',
+      'path': 'saturday-services/20'
+      },
+     {
+      'title': 'Domingo pela manhã',
+      'heading': 'domingo pela manhã',
+      'path': 'morning-sunday-services/20'
+     },
+     {
+      'title': 'Domingo à noite',
+       'heading': 'domingo pela manhã',
+      'path': 'evening-sunday-services/20'
+     },
+  ];
 
   @override
   bool get wantKeepAlive => true;
@@ -45,23 +51,7 @@ class _ServicesListViewState extends State<ServicesListView>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      body: BlocBuilder<ServiceBloc, ServicesState>(
-        bloc: serviceBloc,
-        builder: (context, state) {
-          if (state is InitialState) {
-            return const Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  AppColors.darkGreen,
-                ),
-              ),
-            );
-          } else if (state is SuccessfullyFetchedServiceState) {
-            services = state.entities;
-            //if (database == firebaseDatabase) {
-             //serviceBloc.add(AddServiceInHiveEvent(path: path, data: state.entities));
-            // }
-            return SafeArea(
+      body: SafeArea(
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -135,7 +125,7 @@ class _ServicesListViewState extends State<ServicesListView>
                           },
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
-                          itemCount: services.length,
+                          itemCount: servicesList.length,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             return Container(
@@ -158,19 +148,23 @@ class _ServicesListViewState extends State<ServicesListView>
                                   right: 0,
                                 ),
                                 title: Text(
-                                  services[index].title,
+                                  servicesList[index]['title'],
                                   style: AppFonts.titleTile,
                                 ),
                                 trailing: NextButtonWidget(
                                   size: Platform.isIOS ? 29 : 35,
                                   route: AppRoutes.lyricRoute,
-                                  arguments: services[index],
+                                  arguments: servicesList[index],
                                   color: AppColors.white,
                                 ),
                                 onTap: () {
                                   Navigator.pushNamed(
-                                      context, AppRoutes.chosenLyricsRoute,
-                                      arguments: services[index]);
+                                      context, AppRoutes.servicesCollectionsRoute,
+                                      arguments: ServiceCollectionsDTO(
+                                          path: servicesList[index]['path'],
+                                          heading: servicesList[index]['heading'],
+                                      )
+                                  );
                                 },
                               ),
                             );
@@ -180,15 +174,7 @@ class _ServicesListViewState extends State<ServicesListView>
                     ),
                   ],
                 ),
-              ),
-            );
-          } else {
-            return const Center(
-              child: Text("error screen [services_list_view]"),
-            );
-          }
-        },
-      ),
-    );
-  }
+              )));
+
+}
 }
