@@ -6,7 +6,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'app/lyric/infra/models/hive-dtos/hive_lyrics_list_dto.dart';
+import 'app/lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
 import 'app/app_widget.dart';
 import 'app/core/external/hive_datasource.dart';
 import 'app/ipbc_bloc_observer.dart';
@@ -23,8 +23,8 @@ Future<void> main() async {
   HiveDatasource.initHive();
 
   await Hive.openBox<HiveDatabaseConfigsDTO>('database-configs');
-  await Hive.openBox<List<dynamic>>('services');
-  await Hive.openBox<HiveLyricsListDTO>('lyrics');
+  await Hive.openBox<HiveServiceDTO>('services');
+  await Hive.openBox<HiveLyricDTO>('lyrics');
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

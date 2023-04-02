@@ -50,7 +50,8 @@ class _LyricsListViewState extends State<LyricsListView>
     fillLettersCarousel();
     lyricBloc = context.read<LyricBloc>();
     databaseBloc= context.read<DatabaseBloc>();
-    lyricBloc.add(GetLyricsInFireEvent(path: path));
+    //lyricBloc.add(GetLyricsInFireEvent(path: path));
+    lyricBloc.add(GetLyricsInHiveEvent(path: path));
     database = ValidationUtil.validationDatasource();
     super.initState();
   }
@@ -82,15 +83,13 @@ class _LyricsListViewState extends State<LyricsListView>
                 lyricsFetched = state.entities;
                 lyricsFiltered = state.entities;
                 //if (database == firebaseDatabase) {
-               //   lyricBloc.add(AddLyricsInHiveEvent(path: path, data: state.entities));
+
                 //}
               } else {
                 if (state is SuccessfullyFilteredLyricsState &&
                     selectedValue != '') {
                   lyricsFiltered = state.entities;
-                  if (database == firebaseDatabase) {
-                   // databaseBloc.add(AddDataEvent(path: path, data: state.entities));
-                  }
+
                 } else {
                   lyricsFiltered = lyricsFetched;
                 }

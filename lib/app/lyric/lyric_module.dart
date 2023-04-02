@@ -1,8 +1,7 @@
 import '../core/external/firestore_datasource.dart';
 import '../core/external/hive_datasource.dart';
-import 'infra/models/hive-dtos/hive_lyrics_list_dto.dart';
+import 'infra/models/hive-dtos/hive_lyric_dto.dart';
 import 'infra/models/hive-dtos/hive_service_dto.dart';
-import 'infra/models/hive-dtos/hive_services_list_dto.dart';
 import 'presentation/blocs/lyric_bloc.dart';
 import 'presentation/blocs/service_bloc.dart';
 import 'infra/use-cases/lyrics_use_cases.dart';
@@ -22,7 +21,7 @@ final lyricModule = [
       ),
       hiveLyricsUseCase: LyricsUseCases(
         repository: Repository(
-          datasource: HiveDatasource<HiveLyricsListDTO>(boxLabel: 'lyrics'),
+          datasource: HiveDatasource<HiveLyricDTO>(boxLabel: 'lyrics'),
         ),
       ),
     ),
@@ -34,7 +33,7 @@ final lyricModule = [
       ),
       hiveServicesUseCases: ServicesUseCases(
         repository: Repository(
-          datasource: HiveDatasource<List<dynamic>>(boxLabel: 'services'),
+          datasource: HiveDatasource<HiveServiceDTO>(boxLabel: 'services'),
         ),
       ),
     ),

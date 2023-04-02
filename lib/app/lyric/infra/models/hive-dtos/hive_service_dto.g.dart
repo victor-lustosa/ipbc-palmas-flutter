@@ -19,7 +19,9 @@ class HiveServiceDTOAdapter extends TypeAdapter<HiveServiceDTO> {
     return HiveServiceDTO(
       id: fields[0] as String,
       title: fields[3] as String,
-      type: fields[7] as String?,
+      theme: fields[8] as String,
+      preacher: fields[9] as String,
+      type: fields[7] as String,
       guideIsVisible: fields[2] as bool,
       heading: fields[4] as String,
       liturgyList: (fields[6] as List).cast<HiveLiturgyDTO>(),
@@ -31,7 +33,7 @@ class HiveServiceDTOAdapter extends TypeAdapter<HiveServiceDTO> {
   @override
   void write(BinaryWriter writer, HiveServiceDTO obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -47,7 +49,11 @@ class HiveServiceDTOAdapter extends TypeAdapter<HiveServiceDTO> {
       ..writeByte(6)
       ..write(obj.liturgyList)
       ..writeByte(7)
-      ..write(obj.type);
+      ..write(obj.type)
+      ..writeByte(8)
+      ..write(obj.theme)
+      ..writeByte(9)
+      ..write(obj.preacher);
   }
 
   @override

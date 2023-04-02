@@ -58,21 +58,21 @@ void main() async {
     services.add(ServiceDTOAdapter.fromJson(sundayEveningJson));
     services.add(ServiceDTOAdapter.fromJson(sundayMorningJson));
 
-    for (ServiceDTO service in services) {
-      List<LyricDTO> lyricsConverted = await VersesUtil.generateVersesList(service.lyricsList);
+    for (int column = 0; services.length > column ; column++){
+      List<LyricDTO> lyricsConverted = await VersesUtil.generateVersesList(services[column].lyricsList);
       lyricsAux = [];
       //aqui vai o codigo para alterar a capa do album
-      for (int i = 0; service.lyricsList.length > i; i++) {
+      for (int line = 0; services[column].lyricsList.length > line; line++) {
         lyricsAux.add(
-          service.lyricsList[i].copyWith(
-            id: lyricsConverted[i].id,
-            verses: lyricsConverted[i].verses,
-            albumCover: lyricsConverted[i].albumCover,
+          services[column].lyricsList[line].copyWith(
+            id: lyricsConverted[line].id,
+            verses: lyricsConverted[line].verses,
+            albumCover: lyricsConverted[line].albumCover,
           ),
         );
       }
       allLyricsInserted.addAll(lyricsAux);
-      servicesAux.add(service.copyWith(lyricsList: lyricsAux));
+      servicesAux.add(services[column].copyWith(id: '$column',lyricsList: lyricsAux));
     }
 
     /*for (LyricDTO lyric in allLyricsInserted) {
@@ -82,8 +82,8 @@ void main() async {
     print('Total number of lyrics inserted: ${allLyricsInserted.length}');
 
     fire.add(saturdayServiceUrl, ServiceDTOAdapter.toMap(servicesAux[0]));
-    fire.add(morningSundayServiceUrl, ServiceDTOAdapter.toMap(servicesAux[1]));
-    fire.add(eveningSundayServiceUrl, ServiceDTOAdapter.toMap(servicesAux[2]));
+    fire.add(eveningSundayServiceUrl, ServiceDTOAdapter.toMap(servicesAux[1]));
+    fire.add(morningSundayServiceUrl, ServiceDTOAdapter.toMap(servicesAux[2]));
 
     print('Services and lyrics have been added successfully');
 

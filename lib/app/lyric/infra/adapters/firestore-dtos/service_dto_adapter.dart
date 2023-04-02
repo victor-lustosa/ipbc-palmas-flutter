@@ -17,9 +17,13 @@ class ServiceDTOAdapter {
             : [],
         lyricsList: LyricDTOAdapter.fromMap(json['lyricsList']),
         createAt: DateTime.now(),
+        type:json['type'],
+        theme: json['theme'],
+        preacher: json['preacher'],
         heading: json['heading'],
         title: json['title'],
-        guideIsVisible: json['guideIsVisible']);
+        guideIsVisible: json['guideIsVisible'],
+        id: json['id'],);
   }
 
   static Map<String, dynamic> toMapList(List<ServiceDTO> data) {
@@ -34,6 +38,7 @@ class ServiceDTOAdapter {
       'createAt': data.createAt,
       'heading': data.heading,
       'title': data.title,
+      'id': data.id,
       'lyricsList': LyricDTOAdapter.toMapList(data.lyricsList),
       'liturgyList': LiturgyAdapter.toMapList(data.liturgyList),
       'guideIsVisible': data.guideIsVisible

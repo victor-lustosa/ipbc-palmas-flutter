@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -18,14 +20,11 @@ class ServiceCollectionsDTO{
   final String path;
 }
 class ServicesCollectionsView extends StatefulWidget {
-  const ServicesCollectionsView(
-      {Key? key, required this.serviceCollections})
-      : super(key: key);
+  const ServicesCollectionsView({Key? key, required this.serviceCollections}) : super(key: key);
   final ServiceCollectionsDTO serviceCollections;
 
   @override
-  State<ServicesCollectionsView> createState() =>
-      _ServicesCollectionsViewState();
+  State<ServicesCollectionsView> createState() => _ServicesCollectionsViewState();
 }
 
 class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
@@ -39,7 +38,7 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
   void initState() {
     serviceBloc = context.read<ServiceBloc>();
     databaseBloc = context.read<DatabaseBloc>();
-    //serviceBloc.add(GetServiceInFireEvent(path: widget.serviceCollections.path));
+    // serviceBloc.add(GetServiceInFireEvent(path: widget.serviceCollections.path));
     serviceBloc.add(GetServiceInHiveEvent(path:'services/${widget.serviceCollections.path}'));
     database = ValidationUtil.validationDatasource();
     super.initState();
@@ -54,7 +53,7 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
       ),
       child: BlocBuilder<ServiceBloc, ServicesState>(
         bloc: serviceBloc,
-        builder: (context, state) {
+          builder: (context, state) {
           if (state is InitialState) {
             return const Center(
               child: CircularProgressIndicator(
@@ -66,8 +65,6 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
           } else if (state is SuccessfullyFetchedServiceState) {
             servicesList = state.entities;
             //if (database == firebaseDatabase) {
-
-            // serviceBloc.add(AddServiceInHiveEvent(path: 'services/${widget.serviceCollections.path}', data: state.entities));
             // }
             return Column(
               children: [

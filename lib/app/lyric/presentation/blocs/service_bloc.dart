@@ -22,6 +22,9 @@ class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
     await emit.onEach<List<ServiceEntity>>(
       await fireServicesUseCases.get(event.path),
       onData: (service) {
+         for(ServiceEntity entity in service){
+            add(AddServiceInHiveEvent(path: 'services/${entity.type}', data: entity));
+         }
         emit(SuccessfullyFetchedServiceState(service));
       },
       onError: (error, st) {

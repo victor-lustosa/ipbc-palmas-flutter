@@ -6,12 +6,12 @@ import 'lyric_adapter.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
 class ServiceAdapter {
-
   static List<ServiceEntity> fromMapList(dynamic data) {
     List<ServiceEntity> services = [];
     for (int i = 0; data.length > i; i++) {
       services.add(
         ServiceEntity(
+          type: data[i]['type'],
           liturgyList: LiturgyAdapter.fromMap(data[i]['liturgyList']),
           lyricsList: LyricAdapter.fromListMap(data[i]['lyricsList']),
           createAt: data[i]['createAt'].runtimeType == String
@@ -23,6 +23,7 @@ class ServiceAdapter {
           title: data[i]['title'],
           guideIsVisible: data[i]['guideIsVisible'],
           theme: data[i]['theme'],
+          id: data[i]['id'],
           preacher: data[i]['preacher'],
         ),
       );
@@ -40,6 +41,8 @@ class ServiceAdapter {
               'title': entity.title,
               'guideIsVisible': entity.guideIsVisible,
               'theme': entity.theme,
+              'id': entity.id,
+              'type': entity.type,
               'preacher': entity.preacher,
             })
         .toList();

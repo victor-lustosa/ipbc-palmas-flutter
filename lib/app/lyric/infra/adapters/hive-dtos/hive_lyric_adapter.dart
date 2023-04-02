@@ -1,4 +1,3 @@
-import '../../../infra/models/hive-dtos/hive_lyrics_list_dto.dart';
 import '../../../domain/entities/lyric_entity.dart';
 import 'hive_verse_adapter.dart';
 import '../../models/hive-dtos/hive_lyric_dto.dart';
@@ -37,36 +36,27 @@ class HiveLyricAdapter {
     return lyricsList;
   }
 
-  static List<Map<String, dynamic>> toHiveLyricsMapList(HiveLyricsListDTO data) {
-    return data.lyricsList
-        .map((entity) => {
-              'id': entity.id,
-              'title': entity.title,
-              'createAt': entity.createAt,
-              'albumCover': entity.albumCover,
-              'group': entity.group,
-              'verses': HiveVerseAdapter.toMapList(entity.verses),
-            })
-        .toList();
+  static Map<String, dynamic> toMap(HiveLyricDTO data) {
+    return {
+      'id': data.id,
+      'title': data.title,
+      'createAt': data.createAt,
+      'albumCover': data.albumCover,
+      'group': data.group,
+      'verses': HiveVerseAdapter.toMapList(data.verses),
+    };
   }
-
-  static HiveLyricsListDTO toHiveLyricsList(List<LyricEntity> entities) {
-    List<HiveLyricDTO> lyricsList = [];
-    for (LyricEntity lyric in entities) {
-      lyricsList.add(
-        HiveLyricDTO(
-          albumCover: lyric.albumCover,
-          id: lyric.id,
-          createAt: lyric.createAt,
-          title: lyric.title,
-          group: lyric.group,
+  static HiveLyricDTO toDTO(LyricEntity entity) {
+    return  HiveLyricDTO(
+          albumCover: entity.albumCover,
+          id: entity.id,
+          createAt: entity.createAt,
+          title: entity.title,
+          group: entity.group,
           verses: [
-            if (lyric.verses.isNotEmpty)
-              ...lyric.verses.map(HiveVerseAdapter.toDTO).toList(),
+            if (entity.verses.isNotEmpty)
+              ...entity.verses.map(HiveVerseAdapter.toDTO).toList(),
           ],
-        ),
-      );
+        );
     }
-    return HiveLyricsListDTO(lyricsList: lyricsList);
-  }
 }

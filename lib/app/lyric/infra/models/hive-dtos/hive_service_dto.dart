@@ -28,11 +28,19 @@ class HiveServiceDTO {
   List<HiveLiturgyDTO> liturgyList;
 
   @HiveField(7)
-  String? type;
+  String type;
+
+  @HiveField(8)
+  String theme;
+
+  @HiveField(9)
+  String preacher;
 
   HiveServiceDTO(
       {required this.id,
       required this.title,
+      required this.theme,
+      required this.preacher,
       required this.type,
       required this.guideIsVisible,
       required this.heading,

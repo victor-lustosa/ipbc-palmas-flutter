@@ -6,9 +6,6 @@ import '../../../splash/presentation/blocs/database_bloc.dart';
 //import '../../../shared/components/back-button/back_button_widget.dart';
 import '../../../shared/components/next-button/next_button_widget.dart';
 import '../../../shared/layout/top-bar/main_top_bar_widget.dart';
-import '../../../shared/components/utils/validation_util.dart';
-import '../../domain/entities/service_entity.dart';
-import '../blocs/service_bloc.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
 
@@ -22,9 +19,6 @@ class ServicesListView extends StatefulWidget {
 class _ServicesListViewState extends State<ServicesListView>
     with AutomaticKeepAliveClientMixin {
 
-  final String saturdayServicePath = 'saturday-services';
-  final String morningSundayServicePath = 'morning-sunday-services';
-  final String eveningSundayServicePath = 'evening-sunday-services';
 
   final List<Map> servicesList = const [
       {
@@ -39,7 +33,7 @@ class _ServicesListViewState extends State<ServicesListView>
      },
      {
       'title': 'Domingo à noite',
-       'heading': 'domingo pela manhã',
+       'heading': 'domingo à noite',
       'path': 'evening-sunday-services/20'
      },
   ];

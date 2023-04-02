@@ -21,6 +21,9 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
     await emit.onEach<List<LyricEntity>>(
       await fireLyricsUseCase.get(event.path),
       onData: (lyrics) {
+        for(LyricEntity entity in lyrics){
+          add(AddLyricsInHiveEvent(path: 'lyrics', data: entity));
+        }
         emit(SuccessfullyFetchedLyricsState(lyrics));
       },
       onError: (error, st) {
