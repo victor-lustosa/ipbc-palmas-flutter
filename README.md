@@ -1,8 +1,16 @@
+
 # IPBC Palmas
 ![alt text](https://github.com/victor-lustosa/ipbc-palmas-flutter/blob/develop/docs/IPB-banner.png)
 Projeto de aplicativo para a Igreja Presbiteriana Central de Palmas, e futuramente aplicativo genérico para igrejas.
 
 ## Documentação do Projeto
+### Pacotes e plugins usados no projeto
+
+- Gerência de estado: Bloc Pattern 
+- Injeção de dependência: Provider
+- Databases noSQL: Hive e Firestore
+- Análise de dados: firebase crashanalitics
+
 
 ### Execução
 ---
