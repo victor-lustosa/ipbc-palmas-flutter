@@ -15,9 +15,11 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
     on<GetLyricsInHiveEvent>(_getLyricsInHive);
     on<AddLyricsInHiveEvent>(_addLyricsInHive);
     on<LyricsFilterEvent>(_lyricsFilter);
+    on<LoadingEvent>(_loadingEvent);
   }
 
   Future<void> _getLyricsInFire(GetLyricsInFireEvent event, emit) async {
+    add(LoadingEvent());
     await emit.onEach<List<LyricEntity>>(
       await fireLyricsUseCase.get(event.path),
       onData: (lyrics) {
@@ -33,6 +35,7 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
   }
 
   Future<void> _getLyricsInHive(GetLyricsInHiveEvent event, emit) async {
+    add(LoadingEvent());
     await emit.onEach<List<LyricEntity>>(
       await hiveLyricsUseCase.get(event.path),
       onData: (lyrics) {
@@ -47,7 +50,9 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
   Future<void> _addLyricsInHive(AddLyricsInHiveEvent event, emit) async {
     hiveLyricsUseCase.add(event.path, event.data);
   }
-
+  Future<void> _loadingEvent(event, emit) async {
+    emit(LoadingLyricsState());
+  }
   Future<void> _lyricsFilter(LyricsFilterEvent event, emit) async {
     List<dynamic> lyricsList =
         await fireLyricsUseCase.lettersFilter(event.lyrics, event.letter);
@@ -61,7 +66,9 @@ abstract class LyricEvent {}
 class InitialEvent extends LyricEvent {
   InitialEvent();
 }
-
+class LoadingEvent extends LyricEvent {
+  LoadingEvent();
+}
 class GetLyricsInFireEvent extends LyricEvent {
   final String path;
   GetLyricsInFireEvent({required this.path});
@@ -90,7 +97,9 @@ abstract class LyricState {}
 class InitialState extends LyricState {
   InitialState();
 }
-
+class LoadingLyricsState extends LyricState {
+  LoadingLyricsState();
+}
 class ExceptionLyricState extends LyricState {
   final String message;
   ExceptionLyricState(this.message);

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:ipbc_palmas/app/splash/presentation/blocs/database_bloc.dart';
 
 import '../../../core/domain/use-cases/use_cases.dart';
 import '../../domain/entities/service_entity.dart';
@@ -16,12 +17,15 @@ class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
     on<GetServiceInFireEvent>(_getServiceInFire);
     on<AddServiceInHiveEvent>(_addServiceInHive);
     on<GetServiceInHiveEvent>(_getServiceInHive);
+    on<LoadingEvent>(_loadingEvent);
   }
 
   Future<void> _getServiceInFire(GetServiceInFireEvent event, emit) async {
+    add(LoadingEvent());
     await emit.onEach<List<ServiceEntity>>(
       await fireServicesUseCases.get(event.path),
       onData: (service) {
+
          for(ServiceEntity entity in service){
             add(AddServiceInHiveEvent(path: 'services/${entity.type}', data: entity));
          }
@@ -34,6 +38,7 @@ class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
   }
 
   Future<void> _getServiceInHive(GetServiceInHiveEvent event, emit) async {
+    add(LoadingEvent());
     await emit.onEach<List<ServiceEntity>>(
       await hiveServicesUseCases.get(event.path),
       onData: (service) {
@@ -44,7 +49,9 @@ class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
       },
     );
   }
-
+  Future<void> _loadingEvent(event, emit) async {
+   emit(LoadingServiceState());
+  }
   Future<void> _addServiceInHive(AddServiceInHiveEvent event, emit) async {
     await hiveServicesUseCases.add(event.path, event.data);
   }
@@ -56,7 +63,9 @@ abstract class ServicesEvent {}
 class InitialEvent extends ServicesEvent {
   InitialEvent();
 }
-
+class LoadingEvent extends ServicesEvent {
+  LoadingEvent();
+}
 class GetServiceInFireEvent extends ServicesEvent {
   final String path;
   GetServiceInFireEvent({required this.path});
@@ -75,7 +84,9 @@ class AddServiceInHiveEvent extends ServicesEvent {
 
 @immutable
 abstract class ServicesState {}
-
+class LoadingServiceState extends ServicesState {
+  LoadingServiceState();
+}
 class InitialState extends ServicesState {
   InitialState();
 }

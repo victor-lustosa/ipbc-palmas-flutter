@@ -223,10 +223,14 @@ class _HiveTestState extends State<HiveTest> {
           bloc: widget.bloc,
           builder: (context, state) {
             if (state is InitialState) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    AppColors.darkGreen,
+              return SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height *0.85,
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColors.darkGreen,
+                    ),
                   ),
                 ),
               );
@@ -279,13 +283,17 @@ class _HiveTestState extends State<HiveTest> {
           bloc: bloc,
           builder: (context, state) {
             if (state is InitialDatasourceState) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    AppColors.darkGreen,
+              return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height *0.85,
+                  child: const Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        AppColors.darkGreen,
+                      ),
+                    ),
                   ),
-                ),
-              );
+                );
             } else if (state is SuccessfullyFetchedDataState) {
               return Center(
                 child: Text(state.entity.updateAt.toString()),

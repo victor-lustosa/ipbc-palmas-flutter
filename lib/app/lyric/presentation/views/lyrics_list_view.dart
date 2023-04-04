@@ -51,7 +51,7 @@ class _LyricsListViewState extends State<LyricsListView>
     lyricBloc = context.read<LyricBloc>();
     databaseBloc= context.read<DatabaseBloc>();
     //lyricBloc.add(GetLyricsInFireEvent(path: path));
-    lyricBloc.add(GetLyricsInHiveEvent(path: path));
+    lyricBloc.add(GetLyricsInFireEvent(path: path));
     database = ValidationUtil.validationDatasource();
     super.initState();
   }
@@ -69,10 +69,26 @@ class _LyricsListViewState extends State<LyricsListView>
           bloc: lyricBloc,
           builder: (context, state) {
             if (state is InitialState) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    AppColors.darkGreen,
+              return SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height *0.85,
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColors.darkGreen,
+                    ),
+                  ),
+                ),
+              );
+            } if (state is LoadingLyricsState) {
+              return SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height *0.85,
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColors.darkGreen,
+                    ),
                   ),
                 ),
               );

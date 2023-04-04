@@ -47,18 +47,26 @@ class _SplashViewState extends State<SplashView> {
         bloc: context.read<DatabaseBloc>(),
         builder: (context, state) {
           if (state is LoadingState) {
-            return const Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  AppColors.darkGreen,
+            return SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height *0.85,
+              child: const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    AppColors.darkGreen,
+                  ),
                 ),
               ),
             );
           } else if (state is SuccessfullyFetchedDataState) {
-            return const Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  AppColors.darkGreen,
+            return SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height *0.85,
+              child: const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    AppColors.darkGreen,
+                  ),
                 ),
               ),
             );

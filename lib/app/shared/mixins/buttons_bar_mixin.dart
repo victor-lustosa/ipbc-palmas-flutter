@@ -21,12 +21,12 @@ class ButtonsBarMixin {
 
     buttons = menuItensList
         .map((MenuItem menuItem) => BottomNavigationBarItem(
-              activeIcon: NavegationButtonWidget(
+              activeIcon: NavigationButtonWidget(
                 size: 23,
                 iconName: menuItem.iconData,
                 color: AppColors.darkGreen,
               ),
-              icon: NavegationButtonWidget(
+              icon: NavigationButtonWidget(
                 size: 23,
                 iconName: menuItem.iconData,
                 color: AppColors.grey,

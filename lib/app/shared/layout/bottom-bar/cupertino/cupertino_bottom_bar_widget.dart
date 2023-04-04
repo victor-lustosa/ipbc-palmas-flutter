@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/cupertino.dart'
     hide CupertinoTabBar, CupertinoTabScaffold;
+import 'package:ipbc_palmas/app/exception/view/no_connection_view.dart';
 import '../../../../lyric/presentation/views/lyrics_list_view.dart';
 import '../../../../offering/views/offering_view.dart';
 import '../../../../shared/configs/app_routes.dart';
@@ -69,7 +70,7 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
                 navigationBar: CupertinoNavigationBar(
                   backgroundColor: Color(0xFFFFFFFF),
                 ),
-                child: OfferingView());
+                child: NoConnectionView(bloc: null,));
 
           default:
             return const Center(

@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import '../../../shared/components/next-button/next_button_widget.dart';
+import '../../../shared/components/button/button_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
 import '../../domain/entities/lyric_entity.dart';
@@ -112,11 +113,19 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                     style: AppFonts.subtitleTile,
                   ),
                 ),
-                trailing: NextButtonWidget(
+                trailing:IconButtonWidget(
                     size: Platform.isIOS ? 29 : 36,
-                    route: AppRoutes.lyricRoute,
-                    arguments: widget.lyricsList[index],
-                    color: AppColors.darkGreen),
+                    color: AppColors.darkGreen,
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    iOSIcon: CupertinoIcons.chevron_forward,
+                    androidIcon: Icons.navigate_next_sharp,
+                    action: () => Navigator.of(context, rootNavigator: true).pushNamed(
+                          AppRoutes.lyricRoute,
+                          arguments: widget.lyricsList[index],
+                        )
+                ),
+
                 onTap: () {
                   Navigator.of(context, rootNavigator: true).pushNamed(
                     AppRoutes.lyricRoute,

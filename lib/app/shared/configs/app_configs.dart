@@ -19,6 +19,7 @@ class AppColors {
   static const Color darkGrey = Color(0xFF5F5F5F);
   static const Color lightGrey = Color(0xFFEBEBEB);
   static const Color grey = Color(0xFFA3A3A3);
+  static const Color secondaryLightGrey = Color(0xFFF3F3F3);
   //buscar no github esse valor
   static const Color secondLightGrey = Color.fromARGB(255, 242, 242, 242);
 
@@ -60,6 +61,16 @@ class AppFonts {
     color: const Color(0xFF444446),
     fontSize: 17,
   );
+
+  static TextStyle? servicesTitleTile = GoogleFonts.inter(
+    fontWeight: FontWeight.w600,
+    color: const Color(0xFF444446),
+    fontSize: 15,
+  );
+  static TextStyle? serviceSubtitleTile = GoogleFonts.inter(
+    color: const Color(0xFF545456),
+    fontSize: 13,
+  );
   static TextStyle? subtitleTile = GoogleFonts.inter(
     color: const Color(0xFF444446),
     fontSize: 14,
@@ -76,6 +87,10 @@ class AppFonts {
     color: Colors.black,
     fontWeight: FontWeight.w500,
     fontSize: 17,
+  );
+  static TextStyle? wifiLabel = GoogleFonts.inter(
+    color: Colors.black,
+    fontSize: 13,
   );
   static TextStyle? cnpjLabel = GoogleFonts.inter(
     color: Colors.black,
@@ -108,15 +123,34 @@ class AppFonts {
     fontWeight: FontWeight.w500,
     fontSize: 20,
   );
+  static TextStyle? titleNoConnection = GoogleFonts.inter(
+    color: const Color(0xFF242426),
+    fontWeight: FontWeight.w500,
+    fontSize: 17,
+  );
   static TextStyle? headline = GoogleFonts.inter(
     color: const Color(0xFF444446),
     fontWeight: FontWeight.w500,
     fontSize: 18,
   );
+  static TextStyle? checkConnectionLabel = GoogleFonts.inter(
+    color: const Color(0xFF242426),
+    fontSize: 15,
+  );
+  static TextStyle? checkConnectionButtonLabel = GoogleFonts.inter(
+    color:  AppColors.white,
+    fontWeight: FontWeight.w500,
+    fontSize: 18,
+  );
+  static TextStyle? headlineServices = GoogleFonts.inter(
+    color: AppColors.white,
+    fontWeight: FontWeight.w500,
+    fontSize: 18,
+  );
   static TextStyle? liturgyBadge = GoogleFonts.inter(
-    color: AppColors.darkGreen,
+    color: const Color(0xFF005B40),
     fontWeight: FontWeight.w400,
-    fontSize: Platform.isIOS ? 12 : 11,
+    fontSize: Platform.isIOS ? 13 : 13,
   );
   static TextStyle? headlineLyrics = GoogleFonts.inter(
     color: const Color(0xFF444446),
@@ -180,6 +214,8 @@ class AppIcons {
 
 class AppImages {
   static const String vagalumeImage = 'assets/images/vagalume_image.png';
+  static const String wifiIconImage = 'assets/images/wifi_icon.png';
+  static const String noConnectionImage = 'assets/images/perm_scan_wifi.png';
   static final servicesImagesList = [
     'assets/images/saturday_evening.png',
     'assets/images/sunday_morning.jpg',

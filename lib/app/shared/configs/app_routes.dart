@@ -44,10 +44,10 @@ class ServicesListRoutes extends StatefulWidget {
   const ServicesListRoutes({super.key});
 
   @override
-  State<ServicesListRoutes> createState() => _WeekendLyricsRoutesState();
+  State<ServicesListRoutes> createState() => _ServicesListRoutesState();
 }
 
-class _WeekendLyricsRoutesState extends State<ServicesListRoutes> {
+class _ServicesListRoutesState extends State<ServicesListRoutes> {
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
@@ -74,7 +74,7 @@ class _WeekendLyricsRoutesState extends State<ServicesListRoutes> {
               return CupertinoPageRoute(
                 builder: (_) => CupertinoPageScaffold(
                   child: ServiceView(
-                    service: (settings.arguments as ServiceEntity),
+                    entity: (settings.arguments as ServiceViewDTO),
                   ),
                 ),
               );
@@ -82,7 +82,7 @@ class _WeekendLyricsRoutesState extends State<ServicesListRoutes> {
               return MaterialPageRoute(
                 settings: settings,
                 builder: (_) => ServiceView(
-                  service: (settings.arguments as ServiceEntity),
+                  entity: (settings.arguments as ServiceViewDTO),
                 ),
               );
             }
@@ -98,8 +98,8 @@ class _WeekendLyricsRoutesState extends State<ServicesListRoutes> {
             } else {
               return MaterialPageRoute(
                 settings: settings,
-                builder: (_) => ServiceView(
-                  service: (settings.arguments as ServiceEntity),
+                builder: (_) => ServicesCollectionsView(
+                    serviceCollections: (settings.arguments as ServiceCollectionsDTO)
                 ),
               );
             }
@@ -139,3 +139,18 @@ class UnknownRoute {
     );
   }
 }
+/* Route pushServicesCollectionsRoutes(ServiceCollectionsDTO service) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) =>  ServicesCollectionsView(serviceCollections: service),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}*/

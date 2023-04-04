@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../../../shared/components/back-button/back_button_widget.dart';
+import '../../../shared/components/button/button_widget.dart';
 import '../../../shared/mixins/launch_url_mixin.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../domain/entities/lyric_entity.dart';
@@ -102,12 +102,17 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                           child: SizedBox(
                             height: 50,
                             width: 50,
-                            child: BackButtonWidget(
-                              iOSIcon: CupertinoIcons.clear_thick,
-                              androidIcon: Icons.close_rounded,
-                              color: AppColors.darkGreen,
-                              size: Platform.isIOS ? 30 : 33,
-                            ),
+                            child:  IconButtonWidget(
+                                color: AppColors.darkGreen,
+                                size: Platform.isIOS ? 30 : 33,
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                iOSIcon: CupertinoIcons.clear_thick,
+                                androidIcon: Icons.close_rounded,
+                                action: () => Navigator.pop(
+                                  context,
+                                ),
+                            )
                           ),
                         ),
                       ),

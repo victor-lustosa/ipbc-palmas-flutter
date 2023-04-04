@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:io';
 
-class NavegationButtonWidget extends StatelessWidget {
-  const NavegationButtonWidget(
+class NavigationButtonWidget extends StatelessWidget {
+  const NavigationButtonWidget(
       {super.key, double? size, this.color, required this.iconName})
       : size = size ?? 23.0;
 
