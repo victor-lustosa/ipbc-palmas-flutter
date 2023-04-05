@@ -1,17 +1,17 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import '../../home/view-models/home_view_model.dart';
 import '../../shared/configs/app_configs.dart';
-
-class NoConnectionView<T> extends StatefulWidget {
-  const NoConnectionView({super.key, required this.bloc});
-  final dynamic bloc;
+import 'package:provider/provider.dart';
+class NoConnectionView extends StatefulWidget {
+  const NoConnectionView({super.key, required this.index});
+  final int index;
   @override
   State<NoConnectionView> createState() => _NoConnectionViewState();
 }
 
 class _NoConnectionViewState extends State<NoConnectionView> {
-  final String cnpj = "38.136.701/0001-25";
 
   final GlobalKey<TooltipState> tooltipKey = GlobalKey<TooltipState>();
 
@@ -97,7 +97,10 @@ class _NoConnectionViewState extends State<NoConnectionView> {
                 height: 48,
                 width: 186,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                  final homeViewModel =  context.read<HomeViewModel>();
+                  homeViewModel.jumpToPage(widget.index);
+                  },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
                       AppColors.darkGreen,

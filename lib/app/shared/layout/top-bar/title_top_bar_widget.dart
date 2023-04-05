@@ -9,8 +9,8 @@ class TitleTopBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 37),
+    return Container(
+      margin: const EdgeInsets.only(top: 37),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

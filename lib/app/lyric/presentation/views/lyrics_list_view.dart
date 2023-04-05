@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 //import '../../../shared/components/search-bar/search_bar_widget.dart';
+import '../../../shared/components/loading/loading_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/layout/top-bar/title_top_bar_widget.dart';
 import '../../../splash/presentation/blocs/database_bloc.dart';
@@ -19,7 +20,6 @@ class LyricsListView extends StatefulWidget {
 
 class _LyricsListViewState extends State<LyricsListView>
     with TickerProviderStateMixin {
-
   late List<LyricEntity> lyricsFetched;
   late List<LyricEntity> lyricsFiltered;
   late List<String> drawerNames;
@@ -49,7 +49,7 @@ class _LyricsListViewState extends State<LyricsListView>
     lyricsFiltered = [];
     fillLettersCarousel();
     lyricBloc = context.read<LyricBloc>();
-    databaseBloc= context.read<DatabaseBloc>();
+    databaseBloc = context.read<DatabaseBloc>();
     //lyricBloc.add(GetLyricsInFireEvent(path: path));
     lyricBloc.add(GetLyricsInFireEvent(path: path));
     database = ValidationUtil.validationDatasource();
@@ -69,29 +69,10 @@ class _LyricsListViewState extends State<LyricsListView>
           bloc: lyricBloc,
           builder: (context, state) {
             if (state is InitialState) {
-              return SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height *0.85,
-                child: const Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      AppColors.darkGreen,
-                    ),
-                  ),
-                ),
-              );
-            } if (state is LoadingLyricsState) {
-              return SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height *0.85,
-                child: const Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      AppColors.darkGreen,
-                    ),
-                  ),
-                ),
-              );
+              return const LoadingWidget();
+            }
+            if (state is LoadingLyricsState) {
+              return const LoadingWidget();
             } else if (state is SuccessfullyFetchedLyricsState ||
                 state is SuccessfullyFilteredLyricsState) {
               if (state is SuccessfullyFetchedLyricsState &&
@@ -105,7 +86,6 @@ class _LyricsListViewState extends State<LyricsListView>
                 if (state is SuccessfullyFilteredLyricsState &&
                     selectedValue != '') {
                   lyricsFiltered = state.entities;
-
                 } else {
                   lyricsFiltered = lyricsFetched;
                 }
@@ -133,20 +113,17 @@ class _LyricsListViewState extends State<LyricsListView>
                           ),
                           child: SearchBarWidget(),
                         ),*/
-                        Align(
-                          alignment: const Alignment(-0.8, 0),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              top: 40.0,
-                            ),
-                            child: Text(
-                              "Adicionados recentemente",
-                              style: AppFonts.headlineLyrics,
-                            ),
+                        Container(
+                          margin: const EdgeInsets.only(
+                            top: 40.0,left: 17
+                          ),
+                          child: Text(
+                            "Adicionados recentemente",
+                            style: AppFonts.headlineLyrics,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
+                        Container(
+                          margin: const EdgeInsets.only(
                             top: 27.0,
                           ),
                           child: LyricsListWidget(

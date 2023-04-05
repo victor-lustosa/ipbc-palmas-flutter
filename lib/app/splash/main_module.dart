@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ipbc_palmas/app/home/view-models/home_view_model.dart';
 
 import '../core/external/firestore_datasource.dart';
 import 'presentation/blocs/database_bloc.dart';
@@ -15,6 +16,9 @@ final mainModule = [
     create: (_) => FirestoreDatasource(
       firestore: FirebaseFirestore.instance,
     ),
+  ),
+  ChangeNotifierProvider<HomeViewModel>(
+    create: (_) => HomeViewModel(),
   ),
   Provider<Repository<HiveDatabaseConfigsDTO>>(
     create: (_) => Repository<HiveDatabaseConfigsDTO>(

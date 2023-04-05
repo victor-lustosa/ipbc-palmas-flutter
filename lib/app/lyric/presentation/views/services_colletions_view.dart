@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ipbc_palmas/app/lyric/presentation/views/service_view.dart';
+import '../../../exception/view/no_connection_view.dart';
+import 'service_view.dart';
+import '../../../shared/components/loading/loading_widget.dart';
 import '../../../shared/components/button/button_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
@@ -48,7 +50,8 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
   void initState() {
     serviceBloc = context.read<ServiceBloc>();
     databaseBloc = context.read<DatabaseBloc>();
-    serviceBloc.add(GetServiceInFireEvent(path: widget.serviceCollections.path));
+    serviceBloc
+        .add(GetServiceInFireEvent(path: widget.serviceCollections.path));
     //serviceBloc.add(GetServiceInHiveEvent(path: 'services/${widget.serviceCollections.path}'));
     database = ValidationUtil.validationDatasource();
     super.initState();
@@ -68,43 +71,20 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
               bloc: serviceBloc,
               builder: (context, state) {
                 if (state is InitialState) {
-                  return SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.85,
-                    child: const Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          AppColors.darkGreen,
-                        ),
-                      ),
-                    ),
-                  );
+                  return const LoadingWidget();
                 }
                 if (state is LoadingServiceState) {
-                  return SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.85,
-                    child: const Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          AppColors.darkGreen,
-                        ),
-                      ),
-                    ),
-                  );
+                  return const LoadingWidget();
                 } else if (state is SuccessfullyFetchedServiceState) {
                   servicesList = state.entities;
                   //if (database == firebaseDatabase) {
                   // }
                   return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        height: 188,
+                        height: 186,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          //    border: Border.all(color: Colors.black),
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(18),
                             bottomRight: Radius.circular(18),
@@ -117,14 +97,13 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
                           ),
                         ),
                         child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
-                              margin: const EdgeInsets.only(left: 13, top: 129),
+                              margin: const EdgeInsets.only(top: 125, left: 8),
                               child: IconButtonWidget(
+                                size: 32,
                                 color: AppColors.white,
-                                size: 30,
                                 splashColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 iOSIcon: CupertinoIcons.chevron_back,
@@ -134,10 +113,10 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
                                 ),
                               ),
                             ),
-                            Container(
-                              margin: const EdgeInsets.only(left: 7, top: 141),
-                              child: SizedBox(
-                                height: 25,
+                            Align(
+                              alignment: const Alignment(-0.15, 0),
+                              child: Container(
+                                margin: const EdgeInsets.only(top: 126,  left: 2),
                                 child: Text(
                                   "Cultos de ${widget.serviceCollections.heading}",
                                   style: AppFonts.headlineServices,
@@ -148,108 +127,112 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 25),
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 16),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: ListView.separated(
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return const SizedBox(
-                                  height: 16,
-                                );
-                              },
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: servicesList.length,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return Material(
-                                  borderRadius: BorderRadius.circular(16),
-                                  clipBehavior: Clip.hardEdge,
-                                  color: index == 0
-                                      ? const Color.fromRGBO(0, 232, 162, 0.1)
-                                      : AppColors.secondaryLightGrey,
-                                  child: ListTile(
-                                    contentPadding: const EdgeInsets.only(),
-                                    title: Container(
-                                      margin:
-                                          const EdgeInsets.only(left: 16, top: 8),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            '${servicesList[index].title} ${servicesList[index].createAt} | ${widget.serviceCollections.hour}',
-                                            style: AppFonts.servicesTitleTile,
-                                          ),
-                                        ],
-                                      ),
+                        margin: const EdgeInsets.only(
+                          top: 25,
+                          left: 16,
+                          right: 16,
+                        ),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: ListView.separated(
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return const SizedBox(
+                                height: 16,
+                              );
+                            },
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: servicesList.length,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Material(
+                                borderRadius: BorderRadius.circular(16),
+                                clipBehavior: Clip.hardEdge,
+                                color: index == 0
+                                    ? const Color.fromRGBO(0, 232, 162, 0.1)
+                                    : AppColors.secondaryLightGrey,
+                                child: ListTile(
+                                  horizontalTitleGap: 2,
+                                  contentPadding: EdgeInsets.zero,
+                                  title: Container(
+                                    margin: const EdgeInsets.only(
+                                      left: 16,
+                                      bottom: 5,
+                                      top: 8,
                                     ),
-                                    subtitle: Container(
-                                      margin: const EdgeInsets.only(left: 16),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            margin: const EdgeInsets.only(
-                                                bottom: 5, top: 6),
-                                            child: Text(
-                                              'Messagem: ${servicesList[index].theme}',
-                                              style: AppFonts.subtitleTile,
-                                            ),
-                                          ),
-                                          Container(
-                                            margin:
-                                                const EdgeInsets.only(bottom: 8),
-                                            child: Text(
-                                              servicesList[index].preacher,
-                                              style: AppFonts.subtitleTile,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                    child: Text(
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      '${servicesList[index].title} ${servicesList[index].createAt} | ${widget.serviceCollections.hour}',
+                                      style: AppFonts.servicesTitleTile,
                                     ),
-                                    trailing: Container(
-                                      margin: const EdgeInsets.only(top: 4),
-                                      child: IconButtonWidget(
-                                        size: Platform.isIOS ? 29 : 36,
-                                        color: AppColors.darkGreen,
-                                        splashColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        iOSIcon: CupertinoIcons.chevron_forward,
-                                        androidIcon: Icons.navigate_next_sharp,
-                                        action: () => Navigator.pushNamed(
-                                          context,
-                                          AppRoutes.serviceRoute,
-                                          arguments: ServiceViewDTO(
-                                              service: servicesList[index],
-                                              image: widget.serviceCollections.image),
+                                  ),
+                                  subtitle: Container(
+                                    margin: const EdgeInsets.only(left: 16),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(bottom: 4),
+                                          child: Text(
+                                            'Messagem: ${servicesList[index].theme}',
+                                            style: AppFonts.subtitleTile,
+                                          ),
                                         ),
-                                      ),
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(bottom: 8),
+                                          child: Text(
+                                            servicesList[index].preacher,
+                                            style: AppFonts.subtitleTile,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    onTap: () {
-                                      Navigator.pushNamed(
+                                  ),
+                                  trailing: SizedBox(
+                                    width: 50,
+                                    child: IconButtonWidget(
+                                      size: 33,
+                                      color: AppColors.darkGreen,
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      iOSIcon: CupertinoIcons.chevron_forward,
+                                      androidIcon: Icons.navigate_next_sharp,
+                                      action: () => Navigator.pushNamed(
                                         context,
                                         AppRoutes.serviceRoute,
                                         arguments: ServiceViewDTO(
-                                            service: servicesList[index],
-                                            image: widget.serviceCollections.image),
-                                      );
-                                    },
+                                          service: servicesList[index],
+                                          image:
+                                              widget.serviceCollections.image,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                );
-                              },
-                            ),
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      AppRoutes.serviceRoute,
+                                      arguments: ServiceViewDTO(
+                                        service: servicesList[index],
+                                        image: widget.serviceCollections.image,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ),
                     ],
                   );
                 } else {
-                  return const Center(
-                    child: Text("error screen [services_list_view]"),
-                  );
+                  return const NoConnectionView(index: 0);
                 }
               },
             ),

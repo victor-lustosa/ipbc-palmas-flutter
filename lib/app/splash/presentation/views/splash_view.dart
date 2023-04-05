@@ -5,6 +5,7 @@ import 'package:ipbc_palmas/app/lyric/presentation/view-models/lyrics_view_model
 import 'package:provider/provider.dart';
 import '../../../home/views/home_view.dart';
 import '../../../lyric/lyric_module.dart';
+import '../../../shared/components/loading/loading_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../blocs/database_bloc.dart';
 
@@ -33,8 +34,6 @@ class _SplashViewState extends State<SplashView> {
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,30 +46,9 @@ class _SplashViewState extends State<SplashView> {
         bloc: context.read<DatabaseBloc>(),
         builder: (context, state) {
           if (state is LoadingState) {
-            return SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height *0.85,
-              child: const Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    AppColors.darkGreen,
-                  ),
-                ),
-              ),
-            );
+            return const LoadingWidget();
           } else if (state is SuccessfullyFetchedDataState) {
-            return SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height *0.85,
-              child: const Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    AppColors.darkGreen,
-                  ),
-                ),
-              ),
-            );
-
+            return const LoadingWidget();
           } else {
             return MultiProvider(
               providers: [...lyricModule],

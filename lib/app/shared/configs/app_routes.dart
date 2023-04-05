@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 import '../../lyric/domain/entities/lyric_entity.dart';
 import '../../lyric/domain/entities/service_entity.dart';
@@ -11,6 +12,14 @@ import '../../lyric/presentation/views/services_colletions_view.dart';
 import '../../lyric/presentation/views/services_list_view.dart';
 
 class AppRoutes {
+  AppRoutes._();
+
+  static final GlobalKey<NavigatorState> _androidNavigatorKey = GlobalKey<NavigatorState>();
+
+  static GlobalKey<NavigatorState> getAndroidNavigatorKey(){
+    return _androidNavigatorKey;
+  }
+
   static const String initialRoute = "/";
   static const String serviceRoute = "/service-view";
   static const String lyricsListRoute = "/lyrics-list-view";
@@ -48,12 +57,11 @@ class ServicesListRoutes extends StatefulWidget {
 }
 
 class _ServicesListRoutesState extends State<ServicesListRoutes> {
-  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      key: _navigatorKey,
+      key: Platform.isIOS ? null : AppRoutes.getAndroidNavigatorKey(),
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
           case AppRoutes.initialRoute:

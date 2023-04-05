@@ -106,7 +106,7 @@ class AppFonts {
   );
   static TextStyle? lyricTileReduced = GoogleFonts.inter(
     color: const Color(0xFF363638),
-    fontSize: 16,
+    fontSize: 15,
   );
   static TextStyle? titleLyricView = GoogleFonts.inter(
     color: const Color(0xFF363638),
@@ -165,7 +165,7 @@ class AppFonts {
   static TextStyle? h2Reduced = GoogleFonts.inter(
     color: const Color(0xFF444446),
     fontWeight: FontWeight.w500,
-    fontSize: 19,
+    fontSize: 18,
   );
   static TextStyle? bodyPlaceholder = GoogleFonts.inter(
     color: const Color(0xFFAEAEB2),

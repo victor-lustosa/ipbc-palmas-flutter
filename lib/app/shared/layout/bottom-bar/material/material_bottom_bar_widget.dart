@@ -9,17 +9,14 @@ class MaterialBottomBarWidget extends StatefulWidget {
 
   final Function(int) callback;
 
-  const MaterialBottomBarWidget(
-      {Key? key, required this.selectedIndex, required this.callback})
+  const MaterialBottomBarWidget({Key? key, required this.selectedIndex, required this.callback})
       : super(key: key);
 
   @override
-  State<MaterialBottomBarWidget> createState() =>
-      _MaterialBottomBarWidgetState();
+  State<MaterialBottomBarWidget> createState() => _MaterialBottomBarWidgetState();
 }
 
-class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
-    with ButtonsBarMixin {
+class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget> with ButtonsBarMixin {
   @override
   initState() {
     super.initState();

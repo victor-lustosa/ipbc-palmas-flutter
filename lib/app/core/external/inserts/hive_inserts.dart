@@ -16,6 +16,7 @@ import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 import '../../../lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
 import '../../../lyric/infra/models/hive-dtos/hive_service_dto.dart';
 import '../../../lyric/presentation/blocs/lyric_bloc.dart';
+import '../../../shared/components/loading/loading_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 //import '../../../splash/infra/use-cases/databases_use_cases.dart';
 //import '../../../splash/presentation/blocs/database_bloc.dart';
@@ -223,17 +224,7 @@ class _HiveTestState extends State<HiveTest> {
           bloc: widget.bloc,
           builder: (context, state) {
             if (state is InitialState) {
-              return SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height *0.85,
-                child: const Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      AppColors.darkGreen,
-                    ),
-                  ),
-                ),
-              );
+              return const LoadingWidget();
             } else if (state is SuccessfullyFetchedLyricsState) {
               entitiesList = state.entities;
               return Center(
@@ -283,17 +274,7 @@ class _HiveTestState extends State<HiveTest> {
           bloc: bloc,
           builder: (context, state) {
             if (state is InitialDatasourceState) {
-              return SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height *0.85,
-                  child: const Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        AppColors.darkGreen,
-                      ),
-                    ),
-                  ),
-                );
+              return const LoadingWidget();
             } else if (state is SuccessfullyFetchedDataState) {
               return Center(
                 child: Text(state.entity.updateAt.toString()),

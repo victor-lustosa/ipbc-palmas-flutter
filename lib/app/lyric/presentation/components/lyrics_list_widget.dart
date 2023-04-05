@@ -25,41 +25,32 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
         splashColor: const Color(0x66C8C8C8),
         highlightColor: const Color(0x66BCBCBC),
       ),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.93,
-        child: ListView.separated(
-          separatorBuilder: (BuildContext context, int index) {
-            return const SizedBox(
-              height: 4,
-            );
-          },
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: widget.lyricsList.length,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            return Material(
-              borderRadius: BorderRadius.circular(10),
-              clipBehavior: Clip.hardEdge,
-              color: AppColors.white,
-              child: ListTile(
-                contentPadding: const EdgeInsets.only(
-                  top: 2,
-                  bottom: 2,
-                  left: 8,
-                  right: 0,
-                ),
-                dense: true,
-                minVerticalPadding: 0,
-                minLeadingWidth: 0,
-                horizontalTitleGap: 4,
-                leading: ClipRRect(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(11),
-                  ),
-                  child: SizedBox(
-                    width: 50,
-                    height: 80,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: ListView.separated(
+            separatorBuilder: (BuildContext context, int index) {
+              return const SizedBox(
+                height: 6,
+              );
+            },
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: widget.lyricsList.length,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return Material(
+                borderRadius: BorderRadius.circular(10),
+                clipBehavior: Clip.hardEdge,
+                color: AppColors.white,
+                child: ListTile(
+                  horizontalTitleGap: 0,
+                  contentPadding: const EdgeInsets.only(left: 11),
+                  leading: ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(11),
+                    ),
                     child: widget.lyricsList[index].albumCover.contains("assets")
                         ? Image.asset(
                             widget.lyricsList[index].albumCover,
@@ -92,49 +83,52 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                             widget.lyricsList[index].albumCover,
                           ),
                   ),
-                ),
-                title: Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 4, left: 4
+                  title: Container(
+                    margin: const EdgeInsets.only(bottom: 4,left: 12),
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 14),
+                      child: Text(
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        widget.lyricsList[index].title,
+                        style: AppFonts.lyricsTitleTile,
+                      ),
+                    ),
                   ),
-                  child: Text(
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    widget.lyricsList[index].title,
-                    style: AppFonts.lyricsTitleTile,
+                  subtitle: Container(
+                    margin: const EdgeInsets.only(
+                         left: 12
+                    ),
+                    child: Text(
+                      widget.lyricsList[index].group,
+                      style: AppFonts.subtitleTile,
+                    ),
                   ),
-                ),
-                subtitle: Padding(
-                  padding: const EdgeInsets.only(
-                       left: 4
+                  trailing:SizedBox(
+                    width: 45,
+                    child: IconButtonWidget(
+                      size: 32,
+                        color: AppColors.darkGreen,
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        iOSIcon: CupertinoIcons.chevron_forward,
+                        androidIcon: Icons.navigate_next_sharp,
+                        action: () => Navigator.of(context, rootNavigator: true).pushNamed(
+                              AppRoutes.lyricRoute,
+                              arguments: widget.lyricsList[index],
+                            )
+                    ),
                   ),
-                  child: Text(
-                    widget.lyricsList[index].group,
-                    style: AppFonts.subtitleTile,
-                  ),
+                  onTap: () {
+                    Navigator.of(context, rootNavigator: true).pushNamed(
+                      AppRoutes.lyricRoute,
+                      arguments: widget.lyricsList[index],
+                    );
+                  },
                 ),
-                trailing:IconButtonWidget(
-                    size: Platform.isIOS ? 29 : 36,
-                    color: AppColors.darkGreen,
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    iOSIcon: CupertinoIcons.chevron_forward,
-                    androidIcon: Icons.navigate_next_sharp,
-                    action: () => Navigator.of(context, rootNavigator: true).pushNamed(
-                          AppRoutes.lyricRoute,
-                          arguments: widget.lyricsList[index],
-                        )
-                ),
-
-                onTap: () {
-                  Navigator.of(context, rootNavigator: true).pushNamed(
-                    AppRoutes.lyricRoute,
-                    arguments: widget.lyricsList[index],
-                  );
-                },
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

@@ -59,8 +59,8 @@ class _ServicesListViewState extends State<ServicesListView>
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
+                  Container(
+                    margin: const EdgeInsets.only(
                       left: 17.0,
                       top: 33,
                     ),
@@ -93,8 +93,8 @@ class _ServicesListViewState extends State<ServicesListView>
                         ),*/
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(
+              Container(
+                margin: const EdgeInsets.only(
                   left: 18.0,
                   top: 8,
                 ),
@@ -103,73 +103,76 @@ class _ServicesListViewState extends State<ServicesListView>
                   style: AppFonts.subHeadHome,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 28.0,
-                ),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.93,
-                  child: ListView.separated(
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                        height: Platform.isIOS ? 17 : 16,
-                      );
-                    },
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: servicesList.length,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      ServiceCollectionsDTO service = ServiceCollectionsDTO(
-                                                        path: servicesList[index]['path'],
-                                                        heading: servicesList[index]['heading'],
-                                                        image: AppImages.servicesImagesList[index],
-                                                        hour: servicesList[index]['hour'],
-                                                      );
-                      return Container(
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(18),
-                          ),
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage(
-                              AppImages.servicesImagesList[index],
-                            ),
+              Container(
+                margin: const EdgeInsets.only(top: 28.0,left: 16,right: 16),
+                width: MediaQuery.of(context).size.width,
+                child: ListView.separated(
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(
+                      height: 17,
+                    );
+                  },
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+
+                  itemCount: servicesList.length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    ServiceCollectionsDTO service = ServiceCollectionsDTO(
+                                                      path: servicesList[index]['path'],
+                                                      heading: servicesList[index]['heading'],
+                                                      image: AppImages.servicesImagesList[index],
+                                                      hour: servicesList[index]['hour'],
+                                                    );
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(18),
+                        ),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage(
+                            AppImages.servicesImagesList[index],
                           ),
                         ),
+                      ),
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 13),
                         child: ListTile(
-                          contentPadding: EdgeInsets.only(
-                            top: Platform.isIOS ? 13 : 12.2,
-                            bottom: Platform.isIOS ? 13 : 12.2,
-                            left: 25,
-                            right: 0,
+                          contentPadding:EdgeInsets.zero,
+                          title: Container(
+                            margin: const EdgeInsets.only(left: 17),
+                            child: Text(
+                              servicesList[index]['title'],
+                              style: AppFonts.titleTile,
+                            ),
                           ),
-                          title: Text(
-                            servicesList[index]['title'],
-                            style: AppFonts.titleTile,
-                          ),
-                          trailing: IconButtonWidget(
-                              size: Platform.isIOS ? 29 : 35,
-                              color: AppColors.white,
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              iOSIcon: CupertinoIcons.chevron_forward,
-                              androidIcon: Icons.navigate_next_sharp,
-                              action: () =>
-                                  Navigator.of(context).pushNamed(
-                                  AppRoutes.servicesCollectionsRoute,
-                                  arguments: service)
+                          trailing: Container(
+                            margin: const EdgeInsets.only(right: 3),
+                            child: IconButtonWidget(
+                              size: 34,
+                                color: AppColors.white,
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                iOSIcon: CupertinoIcons.chevron_forward,
+                                androidIcon: Icons.navigate_next_sharp,
+                                action: () =>
+                                    Navigator.of(context).pushNamed(
+                                    AppRoutes.servicesCollectionsRoute,
+                                    arguments: service,
+                                    ),
+                            ),
                           ),
                           onTap: () {
                             Navigator.of(context).pushNamed(
                                  AppRoutes.servicesCollectionsRoute,
-                                arguments: service);
+                                arguments: service,
+                            );
                           },
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

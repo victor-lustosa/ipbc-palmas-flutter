@@ -23,8 +23,7 @@ class CupertinoBottomBarWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CupertinoBottomBarWidget> createState() =>
-      _CupertinoBottomBarWidgetState();
+  State<CupertinoBottomBarWidget> createState() => _CupertinoBottomBarWidgetState();
 }
 
 class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
@@ -70,7 +69,7 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
                 navigationBar: CupertinoNavigationBar(
                   backgroundColor: Color(0xFFFFFFFF),
                 ),
-                child: NoConnectionView(bloc: null,));
+                child: NoConnectionView(index: 0,));
 
           default:
             return const Center(
