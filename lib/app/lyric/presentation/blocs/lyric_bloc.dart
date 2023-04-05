@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import '../../domain/use-cases/lyrics_use_cases.dart';
 import '../../domain/entities/lyric_entity.dart';
@@ -23,12 +24,13 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
     await emit.onEach<List<LyricEntity>>(
       await fireLyricsUseCase.get(event.path),
       onData: (lyrics) {
-        for(LyricEntity entity in lyrics){
+       /* for(LyricEntity entity in lyrics){
           add(AddLyricsInHiveEvent(path: 'lyrics', data: entity));
-        }
+        }*/
         emit(SuccessfullyFetchedLyricsState(lyrics));
       },
-      onError: (error, st) {
+      onError: (error, st) async {
+        await FirebaseCrashlytics.instance.recordError(error, st, reason: 'a non-fatal error');
         emit(ExceptionLyricState(error.toString()));
       },
     );
@@ -41,7 +43,8 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
       onData: (lyrics) {
         emit(SuccessfullyFetchedLyricsState(lyrics));
       },
-      onError: (error, st) {
+      onError: (error, st) async {
+        await FirebaseCrashlytics.instance.recordError(error, st, reason: 'a non-fatal error');
         emit(ExceptionLyricState(error.toString()));
       },
     );
@@ -54,8 +57,7 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
     emit(LoadingLyricsState());
   }
   Future<void> _lyricsFilter(LyricsFilterEvent event, emit) async {
-    List<dynamic> lyricsList =
-        await fireLyricsUseCase.lettersFilter(event.lyrics, event.letter);
+    List<dynamic> lyricsList = await fireLyricsUseCase.lettersFilter(event.lyrics, event.letter);
     emit(SuccessfullyFilteredLyricsState(lyricsList as List<LyricEntity>));
   }
 }

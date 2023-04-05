@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/shared/components/utils/responsibility_util.dart';
+import 'package:ipbc_palmas/app/shared/components/utils/responsivity_util.dart';
 
 import '../../../shared/components/button/button_widget.dart';
 import '../../../shared/mixins/launch_url_mixin.dart';
@@ -59,7 +59,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                           alignment: const Alignment(0.25, 0),
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width *
-                                ResponsibilityUtil.resolutionDeviceProportion(MediaQuery.of(context).size.width, 0.55, 0.52),
+                                ResponsivityUtil.resolutionDeviceProportion(MediaQuery.of(context).size.width, 0.55, 0.52),
                             child: Align(
                               alignment: const Alignment(-1, 0),
                               child: Column(
@@ -70,7 +70,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                     child: Text(
                                       widget.lyricEntity.title,
                                       style: MediaQuery.of(context).size.width >
-                                          ResponsibilityUtil.widthDevice
+                                          ResponsivityUtil.widthDevice
                                           ? AppFonts.h2
                                           : AppFonts.h2Reduced,
                                     ),
@@ -110,7 +110,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                 Container(
                   margin: const EdgeInsets.only(
                       //top: 15.0, sem a validacao de se é refrao ou nao
-                      top: 30),
+                       top: 30),
                   child: ListView.separated(
                     separatorBuilder: (__, _) {
                       return const SizedBox(
@@ -178,7 +178,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                     widget.lyricEntity.verses[index]
                                         .versesList[position],
                                     style: MediaQuery.of(context).size.width >
-                                        ResponsibilityUtil.widthDevice
+                                        ResponsivityUtil.widthDevice
                                         ? AppFonts.lyricTile
                                         : AppFonts.lyricTileReduced,
                                   ),
@@ -203,7 +203,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                               text:
                                   "  Esse sistema não possui fins lucrativos sobre a obra representada a cima. Todos os direitos reservados aos autores da letra. ",
                               style:
-                                  MediaQuery.of(context).size.width > ResponsibilityUtil.widthDevice
+                                  MediaQuery.of(context).size.width > ResponsivityUtil.widthDevice
                                       ? AppFonts.copyright
                                       : AppFonts.copyrightReduced,
                             ),

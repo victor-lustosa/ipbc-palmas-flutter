@@ -100,7 +100,7 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
-                              margin: const EdgeInsets.only(top: 125, left: 8),
+                              margin: EdgeInsets.only(top: Platform.isIOS ? 123 : 125, left: 8),
                               child: IconButtonWidget(
                                 size: 32,
                                 color: AppColors.white,
@@ -116,7 +116,8 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
                             Align(
                               alignment: const Alignment(-0.15, 0),
                               child: Container(
-                                margin: const EdgeInsets.only(top: 126,  left: 2),
+                                margin:
+                                    const EdgeInsets.only(top: 126, left: 2),
                                 child: Text(
                                   "Cultos de ${widget.serviceCollections.heading}",
                                   style: AppFonts.headlineServices,
@@ -196,31 +197,36 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
                                   trailing: SizedBox(
                                     width: 50,
                                     child: IconButtonWidget(
-                                      size: 33,
+                                      size: Platform.isIOS ? null : 33,
                                       color: AppColors.darkGreen,
                                       splashColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       iOSIcon: CupertinoIcons.chevron_forward,
                                       androidIcon: Icons.navigate_next_sharp,
-                                      action: () => Navigator.pushNamed(
-                                        context,
-                                        AppRoutes.serviceRoute,
-                                        arguments: ServiceViewDTO(
-                                          service: servicesList[index],
-                                          image:
-                                              widget.serviceCollections.image,
+                                      action: () => Navigator.of(context).push(
+                                        CustomTransitionPageRoute(
+                                          child: ServiceView(
+                                            entity: ServiceViewDTO(
+                                              service: servicesList[index],
+                                              image: widget
+                                                  .serviceCollections.image,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      AppRoutes.serviceRoute,
-                                      arguments: ServiceViewDTO(
-                                        service: servicesList[index],
-                                        image: widget.serviceCollections.image,
-                                      ),
+                                    Navigator.of(context).push(
+                                        CustomTransitionPageRoute(
+                                          child: ServiceView(
+                                            entity: ServiceViewDTO(
+                                              service: servicesList[index],
+                                              image: widget
+                                                  .serviceCollections.image,
+                                            ),
+                                          ),
+                                        )
                                     );
                                   },
                                 ),

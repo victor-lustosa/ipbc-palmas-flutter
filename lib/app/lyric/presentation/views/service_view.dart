@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/components/button/button_widget.dart';
-import '../../../shared/components/utils/responsibility_util.dart';
+import '../../../shared/components/utils/responsivity_util.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../domain/entities/service_entity.dart';
 import '../../../shared/components/guideline/guideline_widget.dart';
@@ -59,9 +59,14 @@ class _ServiceViewState extends State<ServiceView> {
                     Container(
                       alignment: const Alignment(-0.96, 0),
                       child: Container(
-                        margin: const EdgeInsets.only(top: 125),
+                     //   decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+                        margin:  EdgeInsets.only(
+                          top: Platform.isIOS
+                            ? 123
+                            : 125,
+                        ),
                         child: IconButtonWidget(
-                          size: 32,
+                          size: 33,
                           color: AppColors.white,
                           splashColor: Colors.transparent,
                           highlightColor: Colors.transparent,
@@ -74,9 +79,16 @@ class _ServiceViewState extends State<ServiceView> {
                       ),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width *
-                          ResponsibilityUtil.resolutionDeviceProportion(MediaQuery.of(context).size.width, 0.585, 0.52),
-                      margin: const EdgeInsets.only(top: 126,  left: 2),
+                      width: MediaQuery.of(context).size.width
+                          * ResponsivityUtil.resolutionDeviceProportion(
+                              MediaQuery.of(context).size.width,
+                              0.56,
+                              0.535,
+                          ),
+                      margin: const EdgeInsets.only(
+                          top: 126,
+                          left: 2,
+                      ),
                       child: Text(
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -89,18 +101,21 @@ class _ServiceViewState extends State<ServiceView> {
                       child: Align(
                       alignment: const Alignment(0.3, 0),
                       child: Container(
-                        margin: const EdgeInsets.only( top: 126),
+                        margin: const EdgeInsets.only(top: 128),
                         child: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: AppColors.badgeGreen,
-                            border: Border.all(color: Colors.black),
-                            borderRadius: const BorderRadius.all(
+                            borderRadius: BorderRadius.all(
                               Radius.circular(34.7),
                             ),
                           ),
                           child: Container(
                             margin: const EdgeInsets.only(
-                                left: 13.0, right: 13, bottom: 4, top: 4),
+                                left: 13.0,
+                                right: 13,
+                                bottom: 4,
+                                top: 4,
+                            ),
                             child: Text(
                               widget.entity.service.createAt,
                               style: AppFonts.liturgyBadge,

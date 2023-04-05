@@ -107,7 +107,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                   trailing:SizedBox(
                     width: 45,
                     child: IconButtonWidget(
-                      size: 32,
+                      size: Platform.isIOS ? null : 33,
                         color: AppColors.darkGreen,
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,

@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ipbc_palmas/app/splash/presentation/blocs/database_bloc.dart';
-
+import '../../../splash/presentation/blocs/database_bloc.dart';
 import '../../../core/domain/use-cases/use_cases.dart';
 import '../../domain/entities/service_entity.dart';
 
@@ -26,12 +26,13 @@ class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
       await fireServicesUseCases.get(event.path),
       onData: (service) {
 
-         for(ServiceEntity entity in service){
+      /*for(ServiceEntity entity in service){
             add(AddServiceInHiveEvent(path: 'services/${entity.type}', data: entity));
-         }
+         }*/
         emit(SuccessfullyFetchedServiceState(service));
       },
-      onError: (error, st) {
+      onError: (error, st) async {
+        await FirebaseCrashlytics.instance.recordError(error, st, reason: 'a non-fatal error');
         emit(ServiceExceptionState(error.toString()));
       },
     );
@@ -44,7 +45,8 @@ class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
       onData: (service) {
         emit(SuccessfullyFetchedServiceState(service));
       },
-      onError: (error, st) {
+      onError: (error, st) async {
+        await FirebaseCrashlytics.instance.recordError(error, st, reason: 'a non-fatal error');
         emit(ServiceExceptionState(error.toString()));
       },
     );

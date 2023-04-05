@@ -150,23 +150,21 @@ class _ServicesListViewState extends State<ServicesListView>
                           trailing: Container(
                             margin: const EdgeInsets.only(right: 3),
                             child: IconButtonWidget(
-                              size: 34,
+                              size: Platform.isIOS ? null : 33,
                                 color: AppColors.white,
                                 splashColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 iOSIcon: CupertinoIcons.chevron_forward,
                                 androidIcon: Icons.navigate_next_sharp,
                                 action: () =>
-                                    Navigator.of(context).pushNamed(
-                                    AppRoutes.servicesCollectionsRoute,
-                                    arguments: service,
+                                    Navigator.of(context).push(
+                                      CustomTransitionPageRoute(child: ServicesCollectionsView(serviceCollections:service)),
                                     ),
                             ),
                           ),
                           onTap: () {
-                            Navigator.of(context).pushNamed(
-                                 AppRoutes.servicesCollectionsRoute,
-                                arguments: service,
+                            Navigator.of(context).push(
+                              CustomTransitionPageRoute(child: ServicesCollectionsView(serviceCollections:service)),
                             );
                           },
                         ),
