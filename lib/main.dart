@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'app/lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
@@ -16,12 +17,8 @@ import 'app/lyric/infra/models/hive-dtos/hive_service_dto.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  if (kDebugMode) {
-    // Force disable Crashlytics collection while doing every day development.
-    // Temporarily toggle this to true if you want to test crash reporting in your app.
-    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
-  }
-  runZonedGuarded<Future<void>>(() async{
+
+  runZonedGuarded<Future<void>>(() async {
 
     WidgetsFlutterBinding.ensureInitialized();
 
@@ -35,15 +32,22 @@ void main() async {
     await Hive.openBox<HiveServiceDTO>('services');
     await Hive.openBox<HiveLyricDTO>('lyrics');
 
-    FirebaseCrashlytics.instance.crash();
+    if (kDebugMode) {
+      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+    }
 
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
     Bloc.observer = IpbcBlocObserver();
 
-    runApp(const AppWidget());
-  },
-    (error, stackTrace) => FirebaseCrashlytics.instance.recordError(error, stackTrace)
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]).then(
+          (_) => runApp(
+        const AppWidget(),
+      ),
+    );
+  }, (error, stackTrace) => FirebaseCrashlytics.instance.recordError(error, stackTrace),
   );
-
 }
