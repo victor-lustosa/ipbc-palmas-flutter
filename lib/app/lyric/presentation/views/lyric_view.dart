@@ -85,23 +85,20 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                           ),
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(right: 0, top: 0),
-                        child: Align(
-                          alignment: const Alignment(1, 0),
-                          child: SizedBox(
-                              child:  IconButtonWidget(
-                                size: Platform.isIOS ? 30 : 33,
-                                color: AppColors.darkGreen,
-                                splashColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                iOSIcon: CupertinoIcons.clear_thick,
-                                androidIcon: Icons.close_rounded,
-                                action: () => Navigator.pop(
-                                  context,
-                                ),
-                              )
-                          ),
+                      Align(
+                        alignment: const Alignment(1, 0),
+                        child: SizedBox(
+                            child:  IconButtonWidget(
+                              size: Platform.isIOS ? 30 : 33,
+                              color: AppColors.darkGreen,
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              iOSIcon: CupertinoIcons.clear_thick,
+                              androidIcon: Icons.close_rounded,
+                              action: () => Navigator.pop(
+                                context,
+                              ),
+                            )
                         ),
                       ),
                     ],
@@ -113,9 +110,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                        top: 30),
                   child: ListView.separated(
                     separatorBuilder: (__, _) {
-                      return const SizedBox(
-                        height: 0,
-                      );
+                      return const SizedBox();
                     },
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
@@ -130,7 +125,6 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                               )
                             : const EdgeInsets.only(
                                 left: 8.0,
-                                right: 0.0,
                               ),
                         child: Container(
                           alignment:

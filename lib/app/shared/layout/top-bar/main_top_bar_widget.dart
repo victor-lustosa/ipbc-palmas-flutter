@@ -11,20 +11,18 @@ class MainTopBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        return Stack(
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.only(top: Platform.isIOS ? 18.0 : 23),
-              child: Align(
-                alignment: const Alignment(-0.885, 0),
-                child: SizedBox(
-                  width: 76,
-                  height: 41,
-                  child: SvgPicture.asset(
-                    AppIcons.logo,
-                    color: AppColors.darkGreen,
-                    //  height: 75,width: 75,
-                  ),
+            Container(
+              margin: const EdgeInsets.only(top: 23, left: 16),
+              child: SizedBox(
+                width: 76,
+                height: 41,
+                child: SvgPicture.asset(
+                  AppIcons.logo,
+                  color: AppColors.darkGreen,
+                  //  height: 75,width: 75,
                 ),
               ),
             ),

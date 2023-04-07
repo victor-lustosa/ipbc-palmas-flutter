@@ -28,7 +28,8 @@ class _HomeViewState extends State<HomeView> {
     _homeViewModel.addListener(() {
       setState(() {
         pageViewController.animateToPage(_homeViewModel.selectedIndex,
-            duration: const Duration(milliseconds: 500), curve: Curves.bounceOut);
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.bounceOut);
       });
     });
   }
@@ -38,20 +39,20 @@ class _HomeViewState extends State<HomeView> {
     pageViewController.dispose();
     super.dispose();
   }
+
   void onItemTapped(int index) {
     selectedIndex = index;
     pageViewController.animateToPage(
       index,
-      duration: const Duration(milliseconds: 1400),
-      curve: Curves.bounceOut,
+      duration: const Duration(milliseconds: 700),
+      curve: Curves.easeInOutQuint,
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: Platform.isIOS
-          ? null
-          : _homeViewModel.systemBackButtonPressed,
+      onWillPop: Platform.isIOS ? null : _homeViewModel.systemBackButtonPressed,
       child: Scaffold(
         backgroundColor: AppColors.white,
         body: SafeArea(
@@ -91,7 +92,7 @@ class _HomeViewState extends State<HomeView> {
                     callback: (int index) {
                       setState(
                         () {
-                           onItemTapped(index);
+                          onItemTapped(index);
                         },
                       );
                     },

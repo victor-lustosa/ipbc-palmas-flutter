@@ -21,8 +21,8 @@ class GuidelineWidget extends StatelessWidget {
             Column(
               children: <Widget>[
                 Container(
-                  width: 2,
-                  height: 21,
+                  width: 1.7,
+                  height: liturgyList[index].isAdditional ? 29: 18,
                   color:
                       index == 0 ? Colors.white : AppColors.timelineGuideTGreen,
                 ),
@@ -36,7 +36,7 @@ class GuidelineWidget extends StatelessWidget {
                 ),
                 Container(
                   width: 2,
-                  height: 21,
+                  height: liturgyList[index].isAdditional ? 28: 18,
                   color: index == liturgyList.length - 1
                       ? Colors.white
                       : AppColors.timelineGuideTGreen,
@@ -49,29 +49,20 @@ class GuidelineWidget extends StatelessWidget {
                 decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
-                height: 32.5,
-                child: Row(
+                child: Column(
+                  crossAxisAlignment:CrossAxisAlignment.start,
                   children: <Widget>[
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        liturgyList[index].sequence,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          color: AppColors.timelinePrimary,
-                        ),
-                      ),
+                    Text(
+                      liturgyList[index].sequence,
+                      style: AppFonts.timelineTitle
                     ),
                     Visibility(
                       visible: liturgyList[index].isAdditional,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 13, top: 2),
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 4),
                         child: Text(
                           liturgyList[index].additional,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: AppColors.timelineSecondary,
-                          ),
+                          style: AppFonts.timelineAdditional
                         ),
                       ),
                     ),

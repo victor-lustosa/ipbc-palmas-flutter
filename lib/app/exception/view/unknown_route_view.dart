@@ -1,16 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-
+import '../../home/view-models/home_view_model.dart';
 import '../../shared/configs/app_configs.dart';
-import '../../shared/mixins/clipboard_mixin.dart';
-
-class GenericErrorView extends StatefulWidget {
-  const GenericErrorView({super.key});
+import 'package:provider/provider.dart';
+class UnknownRouteView extends StatefulWidget {
+  const UnknownRouteView({super.key});
 
   @override
-  State<GenericErrorView> createState() => _GenericErrorViewState();
+  State<UnknownRouteView> createState() => _UnknownRouteViewState();
 }
 
-class _GenericErrorViewState extends State<GenericErrorView> with ClipboardMixin {
+class _UnknownRouteViewState extends State<UnknownRouteView> {
 
   @override
   Widget build(BuildContext context) {

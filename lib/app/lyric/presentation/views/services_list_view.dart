@@ -18,7 +18,7 @@ class _ServicesListViewState extends State<ServicesListView>
     with AutomaticKeepAliveClientMixin {
   final List<Map> servicesList = const [
     {
-      'title': 'Sábado',
+      'title': 'Sábado à noite',
       'heading': 'sábado à noite (UMP)',
       'path': 'saturday-services/20',
       'hour': '19h30'
@@ -60,10 +60,7 @@ class _ServicesListViewState extends State<ServicesListView>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(
-                      left: 17.0,
-                      top: 33,
-                    ),
+                    margin: const EdgeInsets.only(left: 17.0, top: 33),
                     child: Text(
                       "Cultos",
                       style: AppFonts.headHome,
@@ -72,7 +69,6 @@ class _ServicesListViewState extends State<ServicesListView>
                         Padding(
                           padding: const EdgeInsets.only(
                             bottom: 10.0,
-                            right: 0,
                           ),
                           child: SizedBox(
                             height: 30,
@@ -94,36 +90,34 @@ class _ServicesListViewState extends State<ServicesListView>
                 ],
               ),
               Container(
-                margin: const EdgeInsets.only(
-                  left: 18.0,
-                  top: 8,
-                ),
+                margin: const EdgeInsets.only(left: 18.0, top: 8),
                 child: Text(
                   "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
                   style: AppFonts.subHeadHome,
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 28.0,left: 16,right: 16),
+                margin: const EdgeInsets.only(
+                  top: 28.0,
+                  left: 16,
+                  right: 16,
+                ),
                 width: MediaQuery.of(context).size.width,
                 child: ListView.separated(
                   separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      height: 17,
-                    );
+                    return const SizedBox(height: 17);
                   },
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-
                   itemCount: servicesList.length,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     ServiceCollectionsDTO service = ServiceCollectionsDTO(
-                                                      path: servicesList[index]['path'],
-                                                      heading: servicesList[index]['heading'],
-                                                      image: AppImages.servicesImagesList[index],
-                                                      hour: servicesList[index]['hour'],
-                                                    );
+                      path: servicesList[index]['path'],
+                      heading: servicesList[index]['heading'],
+                      image: AppImages.servicesImagesList[index],
+                      hour: servicesList[index]['hour'],
+                    );
                     return Container(
                       decoration: BoxDecoration(
                         borderRadius: const BorderRadius.all(
@@ -139,11 +133,10 @@ class _ServicesListViewState extends State<ServicesListView>
                       child: Container(
                         margin: const EdgeInsets.symmetric(vertical: 13),
                         child: ListTile(
-                          contentPadding:EdgeInsets.zero,
+                          contentPadding: EdgeInsets.zero,
                           title: Container(
                             margin: const EdgeInsets.only(left: 17),
-                            child: Text(
-                              servicesList[index]['title'],
+                            child: Text('${servicesList[index]['title']} | ${servicesList[index]['hour']}',
                               style: AppFonts.titleTile,
                             ),
                           ),
@@ -151,20 +144,23 @@ class _ServicesListViewState extends State<ServicesListView>
                             margin: const EdgeInsets.only(right: 3),
                             child: IconButtonWidget(
                               size: Platform.isIOS ? null : 33,
-                                color: AppColors.white,
-                                splashColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                iOSIcon: CupertinoIcons.chevron_forward,
-                                androidIcon: Icons.navigate_next_sharp,
-                                action: () =>
-                                    Navigator.of(context).push(
-                                      CustomTransitionPageRoute(child: ServicesCollectionsView(serviceCollections:service)),
-                                    ),
+                              color: AppColors.white,
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              iOSIcon: CupertinoIcons.chevron_forward,
+                              androidIcon: Icons.navigate_next_sharp,
+                              action: () => Navigator.of(context).push(
+                                CustomTransitionPageRoute(
+                                    child: ServicesCollectionsView(
+                                        serviceCollections: service)),
+                              ),
                             ),
                           ),
                           onTap: () {
                             Navigator.of(context).push(
-                              CustomTransitionPageRoute(child: ServicesCollectionsView(serviceCollections:service)),
+                              CustomTransitionPageRoute(
+                                  child: ServicesCollectionsView(
+                                      serviceCollections: service)),
                             );
                           },
                         ),

@@ -10,7 +10,7 @@ import '../../../lyric/infra/adapters/firestore-dtos/service_dto_adapter.dart';
 import '../../../../firebase_options.dart';
 import '../../../lyric/infra/models/firestore-dtos/lyric_dto.dart';
 import '../../../lyric/infra/models/firestore-dtos/service_dto.dart';
-import '../../../shared/components/utils/verses_util.dart';
+import '../../../shared/components/utils/service_util.dart';
 import '../firestore_datasource.dart';
 
 Future<void> firebaseInitialize() async {
@@ -46,38 +46,27 @@ void main() async {
 
   try {
 
-    final String saturdayJson = await rootBundle.loadString('assets/data/saturday-service.json');
-    final String sundayEveningJson = await rootBundle.loadString('assets/data/sunday-evening-service.json');
-    final String sundayMorningJson = await rootBundle.loadString('assets/data/sunday-morning-service.json');
+    final String saturdayJson = await rootBundle.loadString('assets/data/saturday-services/saturday-service.json');
+    final String sundayEveningJson = await rootBundle.loadString('assets/data/sunday-evening-services/sunday-evening-service.json');
+    final String sundayMorningJson = await rootBundle.loadString('assets/data/sunday-morning-services/sunday-morning-service.json');
 
     List<ServiceDTO> services = [];
     List<ServiceDTO> servicesAux = [];
-    List<LyricDTO> lyricsAux = [];
     List<LyricDTO> allLyricsInserted = [];
+
     services.add(ServiceDTOAdapter.fromJson(saturdayJson));
     services.add(ServiceDTOAdapter.fromJson(sundayEveningJson));
     services.add(ServiceDTOAdapter.fromJson(sundayMorningJson));
 
-    for (int column = 0; services.length > column ; column++){
-      List<LyricDTO> lyricsConverted = await VersesUtil.generateVersesList(services[column].lyricsList);
-      lyricsAux = [];
-      //aqui vai o codigo para alterar a capa do album
-      for (int line = 0; services[column].lyricsList.length > line; line++) {
-        lyricsAux.add(
-          services[column].lyricsList[line].copyWith(
-            id: lyricsConverted[line].id,
-            verses: lyricsConverted[line].verses,
-            albumCover: lyricsConverted[line].albumCover,
-          ),
-        );
-      }
-      allLyricsInserted.addAll(lyricsAux);
-      servicesAux.add(services[column].copyWith(id: '$column',lyricsList: lyricsAux));
+    for (int column = 0; services.length > column ; column++) {
+      ServiceDTO service = await ServiceUtil.generateService(services[column], column);
+      allLyricsInserted.addAll(service.lyricsList);
+      servicesAux.add(service);
     }
 
-    /*for (LyricDTO lyric in allLyricsInserted) {
+    for (LyricDTO lyric in allLyricsInserted) {
     fire.add(lyricsUrl, LyricDTOAdapter.toMap(lyric));
-    }*/
+    }
 
     print('Total number of lyrics inserted: ${allLyricsInserted.length}');
 

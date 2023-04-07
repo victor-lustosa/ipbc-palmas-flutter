@@ -13,8 +13,6 @@ class NoConnectionView extends StatefulWidget {
 
 class _NoConnectionViewState extends State<NoConnectionView> {
 
-  final GlobalKey<TooltipState> tooltipKey = GlobalKey<TooltipState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

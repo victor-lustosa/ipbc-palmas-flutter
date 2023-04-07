@@ -113,14 +113,19 @@ class _LyricsListViewState extends State<LyricsListView>
                           ),
                           child: SearchBarWidget(),
                         ),*/
-                        Container(
-                          margin: const EdgeInsets.only(
-                            top: 40.0,left: 17
-                          ),
-                          child: Text(
-                            "Adicionados recentemente",
-                            style: AppFonts.headlineLyrics,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                top: 40.0,left: 17
+                              ),
+                              child: Text(
+                                "Adicionados recentemente",
+                                style: AppFonts.headlineLyrics,
+                              ),
+                            ),
+                          ],
                         ),
                         Container(
                           margin: const EdgeInsets.only(

@@ -16,6 +16,7 @@ class HomeViewModel extends ChangeNotifier{
     }
     throw Exception();
   }
+
   jumpToPage(int index){
     selectedIndex = index;
     notifyListeners();

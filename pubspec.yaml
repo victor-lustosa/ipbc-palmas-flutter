@@ -83,6 +83,9 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/data/
+    - assets/data/saturday-services/
+    - assets/data/sunday-morning-services/
+    - assets/data/sunday-evening-services/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

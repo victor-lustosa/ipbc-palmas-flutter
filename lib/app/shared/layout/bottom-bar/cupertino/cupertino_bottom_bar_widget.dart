@@ -69,7 +69,9 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
                 navigationBar: CupertinoNavigationBar(
                   backgroundColor: Color(0xFFFFFFFF),
                 ),
-                child: NoConnectionView(index: 0,));
+                //child: NoConnectionView(index: 0,)
+                child: OfferingView()
+            );
 
           default:
             return const Center(

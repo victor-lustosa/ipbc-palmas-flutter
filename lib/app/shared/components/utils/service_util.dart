@@ -1,12 +1,13 @@
 
 import '../../../lyric/infra/adapters/firestore-dtos/verse_dto_adapter.dart';
 import '../../../lyric/infra/models/firestore-dtos/lyric_dto.dart';
+import '../../../lyric/infra/models/firestore-dtos/service_dto.dart';
 import '../../configs/app_configs.dart';
 
 import 'dart:math';
 import 'package:uno/uno.dart';
 
-class VersesUtil {
+class ServiceUtil {
 
   static Future<dynamic> getLyric(String title, String group) async {
     String titleParam = title.replaceAll(' ', '%20');
@@ -19,6 +20,22 @@ class VersesUtil {
       print(error);
     }
   }
+
+ static generateService(ServiceDTO service, int index) async {
+   List<LyricDTO> lyricsConverted = await generateVersesList(service.lyricsList);
+   List<LyricDTO> lyricsAux = [];
+   //aqui vai o codigo para alterar a capa do album
+     for (int line = 0; service.lyricsList.length > line; line++) {
+       lyricsAux.add(
+         service.lyricsList[line].copyWith(
+           id: lyricsConverted[line].id,
+           verses: lyricsConverted[line].verses,
+           albumCover: lyricsConverted[line].albumCover,
+         ),
+       );
+     }
+     return service.copyWith(id: '$index',lyricsList: lyricsAux);
+   }
 
   static Future<List<LyricDTO>> generateVersesList(List<LyricDTO> lyricsList) async {
     List<LyricDTO> results = [];

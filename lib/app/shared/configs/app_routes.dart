@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:ipbc_palmas/app/exception/view/unknown_route_view.dart';
 
 import '../../lyric/domain/entities/lyric_entity.dart';
 import '../../lyric/domain/entities/service_entity.dart';
@@ -14,9 +15,10 @@ import '../../lyric/presentation/views/services_list_view.dart';
 class AppRoutes {
   AppRoutes._();
 
-  static final GlobalKey<NavigatorState> _androidNavigatorKey = GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> _androidNavigatorKey =
+      GlobalKey<NavigatorState>();
 
-  static GlobalKey<NavigatorState> getAndroidNavigatorKey(){
+  static GlobalKey<NavigatorState> getAndroidNavigatorKey() {
     return _androidNavigatorKey;
   }
 
@@ -44,7 +46,17 @@ class AppRoutes {
           );
         }
       default:
-        return UnknownRoute._get();
+        if (Platform.isIOS) {
+          return CupertinoPageRoute(
+            builder: (_) => const CupertinoPageScaffold(
+              child: UnknownRouteView(),
+            ),
+          );
+        } else {
+          return MaterialPageRoute(
+            builder: (_) => const UnknownRouteView(),
+          );
+        }
     }
   }
 }
@@ -57,7 +69,6 @@ class ServicesListRoutes extends StatefulWidget {
 }
 
 class _ServicesListRoutesState extends State<ServicesListRoutes> {
-
   @override
   Widget build(BuildContext context) {
     return Navigator(
@@ -77,40 +88,6 @@ class _ServicesListRoutesState extends State<ServicesListRoutes> {
                 builder: (_) => const ServicesListView(),
               );
             }
-          case AppRoutes.serviceRoute:
-            if (Platform.isIOS) {
-              return CupertinoPageRoute(
-                builder: (_) => CupertinoPageScaffold(
-                  child: ServiceView(
-                    entity: (settings.arguments as ServiceViewDTO),
-                  ),
-                ),
-              );
-            } else {
-              return MaterialPageRoute(
-                settings: settings,
-                builder: (_) => ServiceView(
-                  entity: (settings.arguments as ServiceViewDTO),
-                ),
-              );
-            }
-          case AppRoutes.servicesCollectionsRoute:
-            if (Platform.isIOS) {
-              return CupertinoPageRoute(
-                builder: (_) => CupertinoPageScaffold(
-                  child: ServicesCollectionsView(
-                    serviceCollections: (settings.arguments as ServiceCollectionsDTO)
-                  ),
-                ),
-              );
-            } else {
-              return MaterialPageRoute(
-                settings: settings,
-                builder: (_) => ServicesCollectionsView(
-                    serviceCollections: (settings.arguments as ServiceCollectionsDTO)
-                ),
-              );
-            }
           case AppRoutes.lyricRoute:
             if (Platform.isIOS) {
               return CupertinoPageRoute(
@@ -124,41 +101,47 @@ class _ServicesListRoutesState extends State<ServicesListRoutes> {
               );
             }
           default:
-            return UnknownRoute._get();
+            if (Platform.isIOS) {
+              return CupertinoPageRoute(
+                builder: (_) => const CupertinoPageScaffold(
+                  child: UnknownRouteView(),
+                ),
+              );
+            } else {
+              return MaterialPageRoute(
+                builder: (_) => const UnknownRouteView(),
+              );
+            }
         }
       },
     );
   }
 }
 
-class UnknownRoute {
-  static Route<dynamic> _get() {
-    return MaterialPageRoute(
-      builder: (_) {
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text("Rota não encontrada"),
-          ),
-          body: const Center(
-            child: Text("tela não encontrada"),
-          ),
-        );
-      },
-    );
+class CustomTransitionPageRoute extends PageRouteBuilder {
+  final Widget child;
+  late Animatable<Offset> tween;
+  CustomTransitionPageRoute({required this.child})
+      : super(
+            reverseTransitionDuration: const Duration(milliseconds: 800),
+            transitionDuration: const Duration(milliseconds: 800),
+            pageBuilder: (context, animation, secondaryAnimation) => child) {
+    const begin = Offset(1.0, 0.0);
+    const end = Offset.zero;
+
+    const curve = Curves.easeInOutQuint;
+    tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
   }
-}
-/* Route pushServicesCollectionsRoutes(ServiceCollectionsDTO service) {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) =>  ServicesCollectionsView(serviceCollections: service),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 1.0);
-      const end = Offset.zero;
-      const curve = Curves.ease;
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-      return SlideTransition(
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) =>
+      SlideTransition(
         position: animation.drive(tween),
         child: child,
       );
-    },
-  );
-}*/
+/*  ScaleTransition(
+        scale : animation,
+        child: child,
+     );*/
+}

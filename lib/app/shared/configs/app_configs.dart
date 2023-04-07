@@ -43,6 +43,14 @@ class AppFonts {
     color: AppColors.darkGreen,
     fontSize: 16,
   );
+  static TextStyle? timelineTitle = GoogleFonts.inter(
+    color: AppColors.timelinePrimary,
+    fontSize: 17,
+  );
+  static TextStyle? timelineAdditional = GoogleFonts.inter(
+    color: AppColors.timelineSecondary,
+    fontSize: 13,
+  );
   static TextStyle? carouselWhite = GoogleFonts.inter(
     color: AppColors.black,
     fontSize: 20,

@@ -12,18 +12,19 @@ class ServiceDTOAdapter {
 
   static ServiceDTO fromMap(dynamic json) {
     return ServiceDTO(
-        liturgyList: json.containsKey('liturgyList')
-            ? LiturgyAdapter.fromMap(json['liturgyList'])
-            : [],
-        lyricsList: LyricDTOAdapter.fromMap(json['lyricsList']),
-        createAt: DateTime.now(),
-        type:json['type'],
-        theme: json['theme'],
-        preacher: json['preacher'],
-        heading: json['heading'],
-        title: json['title'],
-        guideIsVisible: json['guideIsVisible'],
-        id: json['id'],);
+      id: json['id'],
+      createAt: DateTime.now(),
+      type:json['type'],
+      theme: json['theme'],
+      preacher: json['preacher'],
+      heading: json['heading'],
+      title: json['title'],
+      guideIsVisible: json['guideIsVisible'],
+      liturgyList: json.containsKey('liturgyList')
+        ? LiturgyAdapter.fromMap(json['liturgyList'])
+        : [],
+      lyricsList: LyricDTOAdapter.fromMap(json['lyricsList']),
+    );
   }
 
   static Map<String, dynamic> toMapList(List<ServiceDTO> data) {
@@ -35,10 +36,13 @@ class ServiceDTOAdapter {
 
   static Map<String, dynamic> toMap(ServiceDTO data) {
     return {
+      'id': data.id,
       'createAt': data.createAt,
       'heading': data.heading,
       'title': data.title,
-      'id': data.id,
+      'type':data.type,
+      'theme': data.theme,
+      'preacher': data.preacher,
       'lyricsList': LyricDTOAdapter.toMapList(data.lyricsList),
       'liturgyList': LiturgyAdapter.toMapList(data.liturgyList),
       'guideIsVisible': data.guideIsVisible
