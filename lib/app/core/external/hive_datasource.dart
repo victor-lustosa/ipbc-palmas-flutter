@@ -1,3 +1,6 @@
+import '../../lyric/infra/adapters/hive-dtos/hive_services_collection_adapter.dart';
+import '../../lyric/infra/models/firestore-dtos/services_collection_dto.dart';
+
 import '../../lyric/infra/adapters/hive-dtos/hive_database_configs_adapter.dart';
 import '../../lyric/infra/adapters/hive-dtos/hive_lyric_adapter.dart';
 import '../../lyric/infra/adapters/hive-dtos/hive_service_adapter.dart';
@@ -5,6 +8,7 @@ import '../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_service_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_liturgy_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
+import '../../lyric/infra/models/hive-dtos/hive_services_collection_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_verse_dto.dart';
 import '../infra/datasources/datasource.dart';
 
@@ -30,6 +34,9 @@ class HiveDatasource<R> implements IDatasource {
       HiveServiceDTOAdapter(),
     );
     Hive.registerAdapter(
+      HiveServicesCollectionDTOAdapter(),
+    );
+    Hive.registerAdapter(
       HiveVerseDTOAdapter(),
     );
 
@@ -50,6 +57,9 @@ class HiveDatasource<R> implements IDatasource {
         var result =  box.values.toList();
         (result as List<HiveLyricDTO>).sort((a,b) => a.createAt.compareTo(b.createAt));
         return Stream.value(HiveLyricAdapter.toMapList(result as List<HiveLyricDTO>));
+      case 'services-collection':
+        var result =  box.values.toList();
+        return Stream.value(result.map(HiveServicesCollectionAdapter.toMap).toList());
       case 'database-configs':
         return Stream.value(HiveDatabaseConfigsAdapter.toMapList(box.get(params[0]) as HiveDatabaseConfigsDTO));
       default:
@@ -67,6 +77,9 @@ class HiveDatasource<R> implements IDatasource {
       case 'services':
         box.add(HiveServiceAdapter.toDTO(data) as R);
         break;
+      case 'services-collection':
+        box.add(HiveServicesCollectionAdapter.toDTO(data) as R);
+        break;
       case 'database-configs':
         box.put(params[0], data as R);
     }
@@ -81,6 +94,9 @@ class HiveDatasource<R> implements IDatasource {
         break;
       case 'services':
         box.put(params[0], HiveServiceAdapter.toDTO(data) as R);
+        break;
+      case 'services-collection':
+        box.put(params[0], HiveServicesCollectionAdapter.toDTO(data) as R);
         break;
       case 'database-configs':
         box.put(params[0], data as R);

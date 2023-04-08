@@ -1,3 +1,7 @@
+import 'package:ipbc_palmas/app/lyric/infra/models/hive-dtos/hive_services_collection_dto.dart';
+import 'package:ipbc_palmas/app/lyric/infra/use-cases/collections_use_cases.dart';
+import 'package:ipbc_palmas/app/lyric/presentation/blocs/services_collection_bloc.dart';
+
 import '../core/external/firestore_datasource.dart';
 import '../core/external/hive_datasource.dart';
 import 'infra/models/hive-dtos/hive_lyric_dto.dart';
@@ -34,6 +38,18 @@ final lyricModule = [
       hiveServicesUseCases: ServicesUseCases(
         repository: Repository(
           datasource: HiveDatasource<HiveServiceDTO>(boxLabel: 'services'),
+        ),
+      ),
+    ),
+  ),
+  Provider<ServicesCollectionBloc>(
+    create: (context) => ServicesCollectionBloc(
+      fireCollectionUseCases: CollectionsUseCases(
+        repository: context.read<Repository<Stream<List<Map>>>>(),
+      ),
+      hiveCollectionUseCases: CollectionsUseCases(
+        repository: Repository(
+          datasource: HiveDatasource<HiveServicesCollectionDTO>(boxLabel: 'services-collection'),
         ),
       ),
     ),

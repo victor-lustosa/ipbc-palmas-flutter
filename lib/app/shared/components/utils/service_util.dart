@@ -1,4 +1,6 @@
 
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
 import '../../../lyric/infra/adapters/firestore-dtos/verse_dto_adapter.dart';
 import '../../../lyric/infra/models/firestore-dtos/lyric_dto.dart';
 import '../../../lyric/infra/models/firestore-dtos/service_dto.dart';
@@ -17,7 +19,7 @@ class ServiceUtil {
       final response = await Uno().get('https://api.vagalume.com.br/search.php?art=$groupParam&mus=$titleParam&apikey=$apikey');
       return response.data;
     } on UnoError catch (error) {
-      print(error);
+      await FirebaseCrashlytics.instance.recordError(error.message, error.stackTrace, reason: 'a non-fatal error');
     }
   }
 

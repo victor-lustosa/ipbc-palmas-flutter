@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/components/button/button_widget.dart';
-import '../../../shared/components/utils/responsivity_util.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../domain/entities/service_entity.dart';
 import '../../../shared/components/guideline/guideline_widget.dart';
@@ -34,8 +33,6 @@ class _ServiceViewState extends State<ServiceView> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
                 height: 186,
@@ -53,111 +50,86 @@ class _ServiceViewState extends State<ServiceView> {
                     ),
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      alignment: const Alignment(-0.96, 0),
-                      child: Container(
-                     //   decoration: BoxDecoration(border: Border.all(color: Colors.red)),
-                        margin:  EdgeInsets.only(
-                          top: Platform.isIOS
-                            ? 123
-                            : 125,
-                        ),
-                        child: IconButtonWidget(
-                          size: 33,
-                          color: AppColors.white,
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          iOSIcon: CupertinoIcons.chevron_back,
-                          androidIcon: Icons.arrow_back_rounded,
-                          action: () => Navigator.pop(
-                            context,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 5,right: 12,bottom: 8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              IconButtonWidget(
+                                size: 33,
+                                color: AppColors.white,
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                iOSIcon: CupertinoIcons.chevron_back,
+                                androidIcon: Icons.arrow_back_rounded,
+                                action: () => Navigator.pop(
+                                  context,
+                                ),
+                              ),
+                              Text(
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                widget.entity.service.title,
+                                style: AppFonts.headlineServices,
+                              ),
+                            ],
                           ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width
-                          * ResponsivityUtil.resolutionDeviceProportion(
-                              MediaQuery.of(context).size.width,
-                              0.56,
-                              0.535,
-                          ),
-                      margin: const EdgeInsets.only(
-                          top: 126,
-                          left: 2,
-                      ),
-                      child: Text(
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        widget.entity.service.title,
-                        style: AppFonts.headlineServices,
-                      ),
-                    ),
-                    Visibility(
-                      visible: widget.entity.service.guideIsVisible,
-                      child: Align(
-                      alignment: const Alignment(0.3, 0),
-                      child: Container(
-                        margin: const EdgeInsets.only(top: 128),
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: AppColors.badgeGreen,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(34.7),
+                          Visibility(
+                            visible: widget.entity.service.guideIsVisible,
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                color: AppColors.badgeGreen,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(34.7),
+                                ),
+                              ),
+                              child: Container(
+                                margin: const EdgeInsets.only(
+                                    left: 13,
+                                    right: 13,
+                                    bottom: 4,
+                                    top: 4,
+                                ),
+                                child: Text(
+                                  widget.entity.service.createAt,
+                                  style: AppFonts.liturgyBadge,
+                                ),
+                              ),
                             ),
                           ),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                left: 13.0,
-                                right: 13,
-                                bottom: 4,
-                                top: 4,
-                            ),
-                            child: Text(
-                              widget.entity.service.createAt,
-                              style: AppFonts.liturgyBadge,
-                            ),
-                          ),
-                        ),
+                        ],
                       ),
-                     ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Visibility(
                 visible: widget.entity.service.guideIsVisible,
                 child: Container(
-                  margin: const EdgeInsets.only(top: 24, left: 16),
+                  margin: const EdgeInsets.only(top: 18, left: 16),
                   child: GuidelineWidget(
                       liturgyList: widget.entity.service.liturgyList),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: Platform.isIOS ? 24 : 20),
-                child: Align(
-                  alignment: Alignment(Platform.isIOS ? -0.4 : -0.15, 0),
-                  child: SizedBox(
-                    height: 25,
-                    width: 350,
-                    child: Align(
-                      alignment: const Alignment(-1, 0),
-                      child: Text(
-                        "Músicas de ${widget.entity.service.heading}",
-                        style: AppFonts.headline,
-                      ),
-                    ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  margin: const EdgeInsets.only(top:24 ,left: 15, bottom: 20),
+                  height: 25,
+                  width: 350,
+                  child: Text(
+                    "Músicas de ${widget.entity.service.heading}",
+                    style: AppFonts.headline,
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 24),
-                child: LyricsListWidget(
-                  lyricsList: widget.entity.service.lyricsList,
-                ),
+              LyricsListWidget(
+                lyricsList: widget.entity.service.lyricsList,
               ),
               const SizedBox(
                 height: 40,

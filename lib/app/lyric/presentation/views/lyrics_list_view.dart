@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../exception/view/generic_error_view.dart';
 //import '../../../shared/components/search-bar/search_bar_widget.dart';
 import '../../../shared/components/loading/loading_widget.dart';
 import '../../../shared/configs/app_configs.dart';
@@ -141,7 +142,7 @@ class _LyricsListViewState extends State<LyricsListView>
                 ),
               );
             } else {
-              return const Text('aconteceu um erro [Lyrics_List_view]');
+              return const GenericErrorView();
             }
           },
         )

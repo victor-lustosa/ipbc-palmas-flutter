@@ -9,7 +9,7 @@ import '../../lyric/domain/entities/lyric_entity.dart';
 import '../../lyric/domain/entities/service_entity.dart';
 import '../../lyric/presentation/views/service_view.dart';
 import '../../lyric/presentation/views/lyric_view.dart';
-import '../../lyric/presentation/views/services_colletions_view.dart';
+import '../../lyric/presentation/views/services_colletion_view.dart';
 import '../../lyric/presentation/views/services_list_view.dart';
 
 class AppRoutes {
@@ -26,7 +26,7 @@ class AppRoutes {
   static const String serviceRoute = "/service-view";
   static const String lyricsListRoute = "/lyrics-list-view";
   static const String lyricRoute = "/lyric-view";
-  static const String servicesCollectionsRoute = "/services-collections-view";
+  static const String servicesCollectionRoute = "/services-collection-view";
   static Route<dynamic>? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case lyricRoute:

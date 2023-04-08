@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../exception/view/generic_error_view.dart';
 import '../../../exception/view/no_connection_view.dart';
+import '../../infra/models/firestore-dtos/services_collection_dto.dart';
 import 'service_view.dart';
 import '../../../shared/components/loading/loading_widget.dart';
 import '../../../shared/components/button/button_widget.dart';
@@ -17,30 +19,18 @@ import '../blocs/service_bloc.dart';
 import '../../../splash/presentation/blocs/database_bloc.dart';
 import '../../../shared/components/utils/validation_util.dart';
 
-class ServiceCollectionsDTO {
-  ServiceCollectionsDTO(
-      {required this.image,
-      required this.hour,
-      required this.heading,
-      required this.path});
-  final String heading;
-  final String path;
-  final String image;
-  final String hour;
-}
-
-class ServicesCollectionsView extends StatefulWidget {
-  const ServicesCollectionsView({Key? key, required this.serviceCollections})
+class ServicesCollectionView extends StatefulWidget {
+  const ServicesCollectionView({Key? key, required this.servicesCollection})
       : super(key: key);
-  final ServiceCollectionsDTO serviceCollections;
+  final ServicesCollectionDTO servicesCollection;
 
   @override
-  State<ServicesCollectionsView> createState() =>
-      _ServicesCollectionsViewState();
+  State<ServicesCollectionView> createState() =>
+      _ServicesCollectionViewState();
 }
 
-class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
-  bool loading = false;
+class _ServicesCollectionViewState extends State<ServicesCollectionView> {
+
   late final ServiceBloc serviceBloc;
   late final String database;
   late List<ServiceEntity> servicesList;
@@ -51,7 +41,7 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
     serviceBloc = context.read<ServiceBloc>();
     databaseBloc = context.read<DatabaseBloc>();
     serviceBloc
-        .add(GetServiceInFireEvent(path: widget.serviceCollections.path));
+        .add(GetServiceInFireEvent(path: widget.servicesCollection.path));
     //serviceBloc.add(GetServiceInHiveEvent(path: 'services/${widget.serviceCollections.path}'));
     database = ValidationUtil.validationDatasource();
     super.initState();
@@ -92,39 +82,41 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             image: AssetImage(
-                              widget.serviceCollections.image,
+                              widget.servicesCollection.image,
                             ),
                           ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: Platform.isIOS ? 123 : 125, left: 8),
-                              child: IconButtonWidget(
-                                size: 32,
-                                color: AppColors.white,
-                                splashColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                iOSIcon: CupertinoIcons.chevron_back,
-                                androidIcon: Icons.arrow_back_rounded,
-                                action: () => Navigator.pop(
-                                  context,
-                                ),
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 5,right: 8,bottom: 8),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      IconButtonWidget(
+                                        size: 32,
+                                        color: AppColors.white,
+                                        splashColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        iOSIcon: CupertinoIcons.chevron_back,
+                                        androidIcon: Icons.arrow_back_rounded,
+                                        action: () => Navigator.pop(
+                                          context,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Cultos de ${widget.servicesCollection.heading}",
+                                        style: AppFonts.headlineServices,
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ),
-                            Align(
-                              alignment: const Alignment(-0.15, 0),
-                              child: Container(
-                                margin:
-                                    const EdgeInsets.only(top: 126, left: 2),
-                                child: Text(
-                                  "Cultos de ${widget.serviceCollections.heading}",
-                                  style: AppFonts.headlineServices,
-                                ),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Container(
@@ -165,7 +157,7 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
                                     child: Text(
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
-                                      '${servicesList[index].title} ${servicesList[index].createAt} | ${widget.serviceCollections.hour}',
+                                      '${servicesList[index].title} ${servicesList[index].createAt} | ${widget.servicesCollection.hour}',
                                       style: AppFonts.servicesTitleTile,
                                     ),
                                   ),
@@ -209,7 +201,7 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
                                             entity: ServiceViewDTO(
                                               service: servicesList[index],
                                               image: widget
-                                                  .serviceCollections.image,
+                                                  .servicesCollection.image,
                                             ),
                                           ),
                                         ),
@@ -223,7 +215,7 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
                                             entity: ServiceViewDTO(
                                               service: servicesList[index],
                                               image: widget
-                                                  .serviceCollections.image,
+                                                  .servicesCollection.image,
                                             ),
                                           ),
                                         )
@@ -238,7 +230,7 @@ class _ServicesCollectionsViewState extends State<ServicesCollectionsView> {
                     ],
                   );
                 } else {
-                  return const NoConnectionView(index: 0);
+                  return const GenericErrorView();
                 }
               },
             ),

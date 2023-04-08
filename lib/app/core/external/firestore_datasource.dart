@@ -22,7 +22,12 @@ class FirestoreDatasource implements IDatasource{
   Future<Stream<List<Map>>> get(String url) async {
     params = url.split('/');
     Stream<QuerySnapshot<Map<String, dynamic>>> snapshot;
-    if (params.length > 2) {
+    if (params[1] == 'id') {
+      snapshot = _firestore
+          .collection(params[0])
+          .orderBy("id", descending: false)
+          .snapshots();
+    }else if (params.length > 2) {
       snapshot = _firestore
           .collection(params[0])
           .doc(params[1])

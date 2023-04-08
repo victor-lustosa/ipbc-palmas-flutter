@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ipbc.ipbc_palmas">
    <application
-        android:label="ipbc_palmas"
+        android:label="IPBC Palmas"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

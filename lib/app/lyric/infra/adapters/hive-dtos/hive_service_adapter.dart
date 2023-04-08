@@ -15,6 +15,8 @@ class HiveServiceAdapter {
       'title': data.title,
       'type': data.type,
       'theme': data.theme,
+      'image': data.image,
+      'hour': data.hour,
       'preacher': data.preacher,
       'guideIsVisible': data.guideIsVisible,
     };
@@ -32,6 +34,8 @@ class HiveServiceAdapter {
         preacher: entity.preacher,
         guideIsVisible: entity.guideIsVisible,
         type: entity.type,
+        image: entity.image,
+        hour: entity.hour,
     );
   }
 }

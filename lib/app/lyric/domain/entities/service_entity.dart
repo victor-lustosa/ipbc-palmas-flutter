@@ -3,10 +3,11 @@ import 'liturgy_entity.dart';
 
 class ServiceEntity {
   ServiceEntity(
-      {
-      required this.id,
+      {required this.id,
       required this.type,
+      required this.hour,
       required this.theme,
+      required this.image,
       required this.preacher,
       required this.title,
       required this.guideIsVisible,
@@ -16,6 +17,8 @@ class ServiceEntity {
       required this.createAt});
   final String id;
   final String type;
+  final String image;
+  final String hour;
   final String createAt;
   final String theme;
   final String preacher;

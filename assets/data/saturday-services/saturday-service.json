@@ -4,8 +4,10 @@
   "theme": "avivamento do Espirito",
   "preacher": "Pr Isaías",
   "title": "Sábado",
+  "hour": "19h30",
   "type": "saturday-services",
   "heading": "sábado",
+  "image": "assets/images/saturday_evening.png",
   "guideIsVisible": false,
   "lyricsList": [
     {

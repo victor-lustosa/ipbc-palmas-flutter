@@ -36,15 +36,23 @@ class HiveServiceDTO {
   @HiveField(9)
   String preacher;
 
-  HiveServiceDTO(
-      {required this.id,
-      required this.title,
-      required this.theme,
-      required this.preacher,
-      required this.type,
-      required this.guideIsVisible,
-      required this.heading,
-      required this.liturgyList,
-      required this.lyricsList,
-      required this.createAt});
+  @HiveField(10)
+  String image;
+
+  @HiveField(11)
+  String hour;
+
+  HiveServiceDTO({
+        required this.id,
+        required this.title,
+        required this.image,
+        required this.hour,
+        required this.theme,
+        required this.preacher,
+        required this.type,
+        required this.guideIsVisible,
+        required this.heading,
+        required this.liturgyList,
+        required this.lyricsList,
+        required this.createAt});
 }

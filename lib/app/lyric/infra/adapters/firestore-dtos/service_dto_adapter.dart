@@ -1,9 +1,6 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import './lyric_dto_adapter.dart';
-
 import '../../models/firestore-dtos/service_dto.dart';
 import '../liturgy_adapter.dart';
 
@@ -13,6 +10,7 @@ class ServiceDTOAdapter {
   static ServiceDTO fromMap(dynamic json) {
     return ServiceDTO(
       id: json['id'],
+      image: json['image'],
       createAt: DateTime.now(),
       type:json['type'],
       theme: json['theme'],
@@ -24,6 +22,7 @@ class ServiceDTOAdapter {
         ? LiturgyAdapter.fromMap(json['liturgyList'])
         : [],
       lyricsList: LyricDTOAdapter.fromMap(json['lyricsList']),
+      hour: json['hour'],
     );
   }
 
@@ -37,6 +36,8 @@ class ServiceDTOAdapter {
   static Map<String, dynamic> toMap(ServiceDTO data) {
     return {
       'id': data.id,
+      'hour': data.hour,
+      'image': data.image,
       'createAt': data.createAt,
       'heading': data.heading,
       'title': data.title,

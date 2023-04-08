@@ -14,27 +14,27 @@ class _GenericErrorViewState extends State<GenericErrorView> with ClipboardMixin
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Center(
-              child: Icon(Icons.not_listed_location_outlined, size: 40, color: Colors.red,),
-            ),
-            Center(
-              child: Container(
-                width: 226.31,
-                margin: const EdgeInsets.only(top: 30, bottom: 59.8),
-                child: Text(
-                  "Ops! Rota não encontrada.",
-                  style: AppFonts.titleNoConnection,
-                  textAlign: TextAlign.center,
-                ),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height * 0.85,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Center(
+            child: Icon(Icons.error_outline_outlined, size: 50, color: Colors.red,),
+          ),
+          Center(
+            child: Container(
+              width: 226.31,
+              margin: const EdgeInsets.only(top: 30, bottom: 59.8),
+              child: Text(
+                "Ops! Ocorreu um erro no Sistema.",
+                style: AppFonts.titleNoConnection,
+                textAlign: TextAlign.center,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -1,9 +1,11 @@
 {
   "id": "1",
   "createAt": "",
+  "image": "assets/images/sunday_morning.jpg",
   "title": "Domingo de manhã",
   "theme": "avivamento do Espirito",
-  "preacher": "Pr Danilo",
+  "preacher": "Rev Danilo",
+  "hour": "9h",
   "heading": "domingo de manhã",
   "type": "morning-sunday-services",
   "guideIsVisible": true,

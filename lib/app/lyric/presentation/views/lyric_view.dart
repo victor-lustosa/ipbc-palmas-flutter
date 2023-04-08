@@ -35,70 +35,60 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
             child: Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 35.0,left: 17,right: 24),
-                  child: Stack(
-                    alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(top: 35.0,left: 17,right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Align(
-                        alignment: const Alignment(-1.0, 0),
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                          child: Image.asset(
-                            height: 75,
-                            width: 75,
-                            widget.lyricEntity.albumCover,
-                            //color: Color(0xFF92E9D9,),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 2.0),
-                        child: Align(
-                          alignment: const Alignment(0.25, 0),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width *
-                                ResponsivityUtil.resolutionDeviceProportion(MediaQuery.of(context).size.width, 0.55, 0.52),
+                      Row(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(right: 13),
                             child: Align(
-                              alignment: const Alignment(-1, 0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(bottom: 6),
-                                    child: Text(
-                                      widget.lyricEntity.title,
-                                      style: MediaQuery.of(context).size.width >
-                                          ResponsivityUtil.widthDevice
-                                          ? AppFonts.h2
-                                          : AppFonts.h2Reduced,
-                                    ),
-                                  ),
-                                  Text(
-                                    widget.lyricEntity.group,
-                                    style: AppFonts.subtitle,
-                                  ),
-                                ],
+                              alignment: Alignment.centerLeft,
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(20),
+                                ),
+                                child: Image.asset(
+                                  height: 75,
+                                  width: 75,
+                                  widget.lyricEntity.albumCover,
+                                  //color: Color(0xFF92E9D9,),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      Align(
-                        alignment: const Alignment(1, 0),
-                        child: SizedBox(
-                            child:  IconButtonWidget(
-                              size: Platform.isIOS ? 30 : 33,
-                              color: AppColors.darkGreen,
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              iOSIcon: CupertinoIcons.clear_thick,
-                              androidIcon: Icons.close_rounded,
-                              action: () => Navigator.pop(
-                                context,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 6),
+                                child: Text(
+                                  widget.lyricEntity.title,
+                                  style: MediaQuery.of(context).size.width >
+                                      ResponsivityUtil.widthDevice
+                                      ? AppFonts.h2
+                                      : AppFonts.h2Reduced,
+                                ),
                               ),
-                            )
+                              Text(
+                                widget.lyricEntity.group,
+                                style: AppFonts.subtitle,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      IconButtonWidget(
+                        size: Platform.isIOS ? 30 : 33,
+                        color: AppColors.darkGreen,
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        iOSIcon: CupertinoIcons.clear_thick,
+                        androidIcon: Icons.close_rounded,
+                        action: () => Navigator.pop(
+                          context,
                         ),
                       ),
                     ],
