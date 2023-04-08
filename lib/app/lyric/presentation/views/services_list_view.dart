@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ipbc_palmas/app/exception/view/no_connection_view.dart';
+import 'package:ipbc_palmas/app/lyric/presentation/view-models/lyrics_view_model.dart';
+
 import '../../../exception/view/generic_error_view.dart';
 import '../../../shared/components/button/button_widget.dart';
 import '../../../shared/components/loading/loading_widget.dart';
@@ -32,7 +35,7 @@ class _ServicesListViewState extends State<ServicesListView>
   void initState() {
     servicesCollectionBloc = context.read<ServicesCollectionBloc>();
     databaseBloc = context.read<DatabaseBloc>();
-    servicesCollectionBloc.add(GetCollectionInFireEvent(path: 'services-collection/id'));
+    servicesCollectionBloc.add(CheckConnectivityEvent());
     //servicesCollectionBloc.add(GetCollectionInHiveEvent(path: ''));
     database = ValidationUtil.validationDatasource();
     super.initState();
@@ -47,7 +50,10 @@ class _ServicesListViewState extends State<ServicesListView>
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: BlocBuilder<ServicesCollectionBloc, ServicesCollectionState>(
+          child: BlocConsumer<ServicesCollectionBloc, ServicesCollectionState>(
+            listener:(context, state) {
+
+            },
             bloc: servicesCollectionBloc,
             builder: (context, state) {
               if (state is InitialState) {
@@ -55,6 +61,8 @@ class _ServicesListViewState extends State<ServicesListView>
               }
               if (state is LoadingCollectionState) {
                 return const LoadingWidget();
+              } if (state is NoConnectionAvailableState) {
+                return const NoConnectionView(index: 0);
               } else if (state is SuccessfullyFetchedCollectionState) {
                 servicesCollection = state.entities;
                 return Column(

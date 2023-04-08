@@ -7,18 +7,19 @@ import '../../../lyric/infra/models/firestore-dtos/services_collection_dto.dart'
 import '../../../splash/presentation/blocs/database_bloc.dart';
 import '../../../core/domain/use-cases/use_cases.dart';
 import '../../domain/entities/service_entity.dart';
+import '../view-models/lyrics_view_model.dart';
 
 class ServicesCollectionBloc extends Bloc<ServicesCollectionEvent, ServicesCollectionState> {
   final IUseCases fireCollectionUseCases;
   final IUseCases hiveCollectionUseCases;
-
-  ServicesCollectionBloc(
-      {required this.fireCollectionUseCases, required this.hiveCollectionUseCases})
+  final LyricsViewModel lyricsViewModel;
+  ServicesCollectionBloc({ required this.lyricsViewModel, required this.fireCollectionUseCases, required this.hiveCollectionUseCases})
       : super(InitialState()) {
     on<GetCollectionInFireEvent>(_getCollectionInFire);
     on<AddCollectionInHiveEvent>(_addCollectionInHive);
     on<GetCollectionInHiveEvent>(_getCollectionInHive);
     on<LoadingEvent>(_loadingEvent);
+    on<CheckConnectivityEvent>(_checkConnectivityEvent);
   }
 
   Future<void> _getCollectionInFire(GetCollectionInFireEvent event, emit) async {
@@ -55,6 +56,14 @@ class ServicesCollectionBloc extends Bloc<ServicesCollectionEvent, ServicesColle
   Future<void> _loadingEvent(event, emit) async {
    emit(LoadingCollectionState());
   }
+  Future<void> _checkConnectivityEvent(event, emit) async {
+    final isConnected = await lyricsViewModel.isConnected();
+    if(isConnected){
+      add(GetCollectionInFireEvent(path: 'services-collection/id'));
+    } else {
+      emit(NoConnectionAvailableState());
+    }
+  }
   Future<void> _addCollectionInHive(AddCollectionInHiveEvent event, emit) async {
     await hiveCollectionUseCases.add(event.path, event.data);
   }
@@ -68,6 +77,9 @@ class InitialEvent extends ServicesCollectionEvent {
 }
 class LoadingEvent extends ServicesCollectionEvent {
   LoadingEvent();
+}
+class CheckConnectivityEvent extends ServicesCollectionEvent {
+  CheckConnectivityEvent();
 }
 class GetCollectionInFireEvent extends ServicesCollectionEvent {
   final String path;
@@ -89,6 +101,9 @@ class AddCollectionInHiveEvent extends ServicesCollectionEvent {
 abstract class ServicesCollectionState {}
 class LoadingCollectionState extends ServicesCollectionState {
   LoadingCollectionState();
+}
+class NoConnectionAvailableState extends ServicesCollectionState {
+  NoConnectionAvailableState();
 }
 class InitialState extends ServicesCollectionState {
   InitialState();
