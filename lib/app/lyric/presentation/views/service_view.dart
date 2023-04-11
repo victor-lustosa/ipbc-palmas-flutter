@@ -51,25 +51,27 @@ class _ServiceViewState extends State<ServiceView> {
                   ),
                 ),
                 child: Container(
-                  margin: const EdgeInsets.only(left: 5,right: 12,bottom: 8),
+                  margin: const EdgeInsets.only(
+                    left: 5,
+                    right: 12,
+                    bottom: 8,
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
-                     children: [
+                    children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
                             children: [
                               IconButtonWidget(
-                                size: 33,
+                                size: Platform.isIOS ? null : 28,
                                 color: AppColors.white,
                                 splashColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 iOSIcon: CupertinoIcons.chevron_back,
                                 androidIcon: Icons.arrow_back_rounded,
-                                action: () => Navigator.pop(
-                                  context,
-                                ),
+                                action: () => Navigator.pop(context),
                               ),
                               Text(
                                 maxLines: 1,
@@ -90,10 +92,10 @@ class _ServiceViewState extends State<ServiceView> {
                               ),
                               child: Container(
                                 margin: const EdgeInsets.only(
-                                    left: 13,
-                                    right: 13,
-                                    bottom: 4,
-                                    top: 4,
+                                  left: 13,
+                                  right: 13,
+                                  bottom: 4,
+                                  top: 4,
                                 ),
                                 child: Text(
                                   widget.entity.service.createAt,
@@ -119,7 +121,11 @@ class _ServiceViewState extends State<ServiceView> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  margin: const EdgeInsets.only(top:24 ,left: 15, bottom: 20),
+                  margin: const EdgeInsets.only(
+                    top: 24,
+                    left: 15,
+                    bottom: 20,
+                  ),
                   height: 25,
                   width: 350,
                   child: Text(
@@ -128,9 +134,7 @@ class _ServiceViewState extends State<ServiceView> {
                   ),
                 ),
               ),
-              LyricsListWidget(
-                lyricsList: widget.entity.service.lyricsList,
-              ),
+              LyricsListWidget(lyricsList: widget.entity.service.lyricsList),
               const SizedBox(
                 height: 40,
               )

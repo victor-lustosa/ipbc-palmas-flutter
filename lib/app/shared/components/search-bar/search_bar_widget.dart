@@ -51,7 +51,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 5.0),
+          padding: const EdgeInsets.only(left: 5),
           child: Container(
             height: 48,
             width: 100,

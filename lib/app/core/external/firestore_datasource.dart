@@ -48,7 +48,7 @@ class FirestoreDatasource implements IDatasource{
   Future<Stream<List>> verifyUpdateDatasource(String url) async  {
     Stream<QuerySnapshot<Map<String, dynamic>>> snapshot;
     snapshot = _firestore.collection(url).snapshots();
-    List<Map> result = [];
+    //List<Map> result = [];
     return snapshot.map((entity) => entity.docs.map((doc) =>  SettingsDTO(updateAt: doc.get('updateAt'))
 
     ).toList());

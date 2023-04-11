@@ -1,8 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/exception/view/no_connection_view.dart';
-import 'package:ipbc_palmas/app/lyric/presentation/view-models/lyrics_view_model.dart';
+import '../../../exception/view/no_connection_view.dart';
 
 import '../../../exception/view/generic_error_view.dart';
 import '../../../shared/components/button/button_widget.dart';
@@ -11,7 +10,6 @@ import '../../../shared/components/utils/validation_util.dart';
 import '../../../splash/presentation/blocs/database_bloc.dart';
 import '../../infra/models/firestore-dtos/services_collection_dto.dart';
 import '../blocs/services_collection_bloc.dart';
-import 'services_colletion_view.dart';
 import '../../../shared/layout/top-bar/main_top_bar_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
@@ -35,7 +33,7 @@ class _ServicesListViewState extends State<ServicesListView>
   void initState() {
     servicesCollectionBloc = context.read<ServicesCollectionBloc>();
     databaseBloc = context.read<DatabaseBloc>();
-    servicesCollectionBloc.add(CheckConnectivityEvent());
+    servicesCollectionBloc.add(CheckConnectivityEvent(path: 'services-collection/id'));
     //servicesCollectionBloc.add(GetCollectionInHiveEvent(path: ''));
     database = ValidationUtil.validationDatasource();
     super.initState();
@@ -50,18 +48,14 @@ class _ServicesListViewState extends State<ServicesListView>
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: BlocConsumer<ServicesCollectionBloc, ServicesCollectionState>(
-            listener:(context, state) {
-
-            },
+          child: BlocBuilder<ServicesCollectionBloc, ServicesCollectionState>(
             bloc: servicesCollectionBloc,
             builder: (context, state) {
               if (state is InitialState) {
                 return const LoadingWidget();
-              }
-              if (state is LoadingCollectionState) {
+              } else if (state is LoadingCollectionState) {
                 return const LoadingWidget();
-              } if (state is NoConnectionAvailableState) {
+              } else if (state is NoConnectionAvailableState) {
                 return const NoConnectionView(index: 0);
               } else if (state is SuccessfullyFetchedCollectionState) {
                 servicesCollection = state.entities;
@@ -69,7 +63,7 @@ class _ServicesListViewState extends State<ServicesListView>
                   children: [
                     const MainTopBarWidget(),
                     /*const Padding(
-                      padding: EdgeInsets.only(top: 10.0),
+                      padding: EdgeInsets.only(top: 10),
                       child: Align(
                         alignment: Alignment(-0.97, 0),
                         child: BackButtonWidget(),
@@ -79,7 +73,7 @@ class _ServicesListViewState extends State<ServicesListView>
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
-                          margin: const EdgeInsets.only(left: 17.0, top: 33),
+                          margin: const EdgeInsets.only(left: 17, top: 33),
                           child: Text(
                             "Cultos",
                             style: AppFonts.headHome,
@@ -87,7 +81,7 @@ class _ServicesListViewState extends State<ServicesListView>
                         ), /*
                         Padding(
                           padding: const EdgeInsets.only(
-                            bottom: 10.0,
+                            bottom: 10,
                           ),
                           child: SizedBox(
                             height: 30,
@@ -111,7 +105,7 @@ class _ServicesListViewState extends State<ServicesListView>
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        margin: const EdgeInsets.only(left: 18.0, top: 8),
+                        margin: const EdgeInsets.only(left: 18, top: 8),
                         child: Text(
                           "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
                           style: AppFonts.subHeadHome,
@@ -120,7 +114,7 @@ class _ServicesListViewState extends State<ServicesListView>
                     ),
                     Container(
                       margin: const EdgeInsets.only(
-                        top: 28.0,
+                        top: 28,
                         left: 16,
                         right: 16,
                       ),
@@ -134,12 +128,6 @@ class _ServicesListViewState extends State<ServicesListView>
                         itemCount: servicesCollection.length,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          /*ServiceCollectionsDTO service = ServiceCollectionsDTO(
-                      path: servicesList[index]['path'],
-                      heading: servicesList[index]['heading'],
-                      image: AppImages.servicesImagesList[index],
-                      hour: servicesList[index]['hour'],
-                    );*/
                           return Container(
                             decoration: BoxDecoration(
                               borderRadius: const BorderRadius.all(
@@ -172,24 +160,16 @@ class _ServicesListViewState extends State<ServicesListView>
                                     highlightColor: Colors.transparent,
                                     iOSIcon: CupertinoIcons.chevron_forward,
                                     androidIcon: Icons.navigate_next_sharp,
-                                    action: () => Navigator.of(context).push(
-                                      CustomTransitionPageRoute(
-                                        child: ServicesCollectionView(
-                                          servicesCollection:
-                                              servicesCollection[index],
-                                        ),
-                                      ),
-                                    ),
+                                   // action: () => Navigator.of(context).pushNamed(
+                                    // AppRoutes.servicesCollectionRoute,
+                                    // arguments: servicesCollection[index]);
+                                    // ),
                                   ),
                                 ),
                                 onTap: () {
-                                  Navigator.of(context).push(
-                                    CustomTransitionPageRoute(
-                                      child: ServicesCollectionView(
-                                        servicesCollection:
-                                            servicesCollection[index],
-                                      ),
-                                    ),
+                                  Navigator.of(context).pushNamed(
+                                      AppRoutes.servicesCollectionRoute,
+                                      arguments: servicesCollection[index]
                                   );
                                 },
                               ),

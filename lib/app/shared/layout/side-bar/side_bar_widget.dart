@@ -37,7 +37,7 @@ class SideBarWidget extends StatelessWidget {
                     width: 34,
                     child: SvgPicture.asset(
                       AppIcons.accountCircle,
-                      color: AppColors.darkGreen,
+                      colorFilter: const ColorFilter.mode(AppColors.darkGreen, BlendMode.srcIn),
                       matchTextDirection: true,
                     ),
                   ),
@@ -93,7 +93,7 @@ class SideBarWidget extends StatelessWidget {
                                 width: 25,
                                 child: SvgPicture.asset(
                                   AppIcons.sideBarIconsList[index],
-                                  color: AppColors.black,
+                                  colorFilter: const ColorFilter.mode(AppColors.black, BlendMode.srcIn),
                                   matchTextDirection: true,
                                 ),
                               ),

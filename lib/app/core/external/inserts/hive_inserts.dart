@@ -4,18 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/lyric/infra/models/hive-dtos/hive_liturgy_dto.dart';
-import 'package:ipbc_palmas/app/lyric/infra/models/hive-dtos/hive_verse_dto.dart';
-import 'package:ipbc_palmas/app/lyric/infra/use-cases/lyrics_use_cases.dart';
-import 'package:ipbc_palmas/app/lyric/infra/use-cases/services_use_cases.dart';
-//import 'package:ipbc_palmas/app/lyric/presentation/blocs/service_bloc.dart';
+import '../../../lyric/infra/models/hive-dtos/hive_verse_dto.dart';
+import '../../../lyric/infra/use-cases/lyrics_use_cases.dart';
 import '../../../../firebase_options.dart';
-import '../../../lyric/infra/adapters/hive-dtos/hive_database_configs_adapter.dart';
-import '../../../lyric/infra/adapters/hive-dtos/hive_service_adapter.dart';
-import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 import '../../../lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
-import '../../../lyric/infra/models/hive-dtos/hive_service_dto.dart';
 import '../../../lyric/presentation/blocs/lyric_bloc.dart';
+import '../../../lyric/presentation/view-models/lyrics_view_model.dart';
 import '../../../shared/components/loading/loading_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 //import '../../../splash/infra/use-cases/databases_use_cases.dart';
@@ -127,7 +121,7 @@ Future<void> main() async {
       repository: Repository(
         datasource: HiveDatasource<List<HiveLyricDTO>>(boxLabel: 'lyrics'),
       ),
-    ),
+    ),lyricsViewModel: LyricsViewModel()
   );
 
   /*ServiceBloc lyricBloc = ServiceBloc(
@@ -165,7 +159,7 @@ Future<void> main() async {
 }
 
 class HiveTest extends StatefulWidget {
-  HiveTest({Key? key, required this.bloc}) : super(key: key);
+  const HiveTest({Key? key, required this.bloc}) : super(key: key);
   final LyricBloc bloc;
 
   @override

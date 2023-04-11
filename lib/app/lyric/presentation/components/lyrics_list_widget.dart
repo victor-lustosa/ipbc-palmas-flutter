@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../../lyric/presentation/components/album_cover_widget.dart';
 import 'dart:io';
 import '../../../shared/components/button/button_widget.dart';
 import '../../../shared/configs/app_configs.dart';
@@ -16,6 +17,7 @@ class LyricsListWidget extends StatefulWidget {
 }
 
 class _LyricsListWidgetState extends State<LyricsListWidget> {
+
   bool loading = false;
 
   @override
@@ -32,7 +34,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
           child: ListView.separated(
             separatorBuilder: (BuildContext context, int index) {
               return const SizedBox(
-                height: 6,
+                height: 4,
               );
             },
             scrollDirection: Axis.vertical,
@@ -46,59 +48,23 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                 color: AppColors.white,
                 child: ListTile(
                   horizontalTitleGap: 0,
-                  contentPadding: const EdgeInsets.only(left: 11),
-                  leading: ClipRRect(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(11),
-                    ),
-                    child: widget.lyricsList[index].albumCover.contains("assets")
-                        ? Image.asset(
-                            widget.lyricsList[index].albumCover,
-                            width: 50,
-                            height: 80,
-                          )
-                        : Image.network(
-                            fit: BoxFit.fill,
-                            frameBuilder: (BuildContext context, Widget child,
-                                int? frame, bool wasSynchronouslyLoaded) {
-                              if (wasSynchronouslyLoaded) {
-                                return child;
-                              }
-                              return Container(
-                                color: AppColors.lightGrey,
-                                width: 50,
-                                height: 80,
-                              );
-                            },
-                            loadingBuilder: (context, child, loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              }
-                              return Container(
-                                color: AppColors.lightGrey,
-                                width: 50,
-                                height: 80,
-                              );
-                            },
-                            widget.lyricsList[index].albumCover,
-                          ),
+                  contentPadding: const EdgeInsets.only(left: 10),
+                  leading: AlbumCoverWidget(
+                    albumCover: widget.lyricsList[index].albumCover,
+                    height: 50,
+                    width: 50,
                   ),
                   title: Container(
-                    margin: const EdgeInsets.only(bottom: 4,left: 12),
-                    child: Container(
-                      margin: const EdgeInsets.only(right: 14),
-                      child: Text(
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        widget.lyricsList[index].title,
-                        style: AppFonts.lyricsTitleTile,
-                      ),
+                    margin: const EdgeInsets.only(bottom: 2.5, left: 10),
+                    child: Text(
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      widget.lyricsList[index].title,
+                      style: AppFonts.lyricsTitleTile,
                     ),
                   ),
                   subtitle: Container(
-                    margin: const EdgeInsets.only(
-                         left: 12
-                    ),
+                    margin: const EdgeInsets.only(left: 10),
                     child: Text(
                       widget.lyricsList[index].group,
                       style: AppFonts.subtitleTile,
@@ -113,10 +79,9 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                         highlightColor: Colors.transparent,
                         iOSIcon: CupertinoIcons.chevron_forward,
                         androidIcon: Icons.navigate_next_sharp,
-                        action: () => Navigator.of(context, rootNavigator: true).pushNamed(
-                              AppRoutes.lyricRoute,
-                              arguments: widget.lyricsList[index],
-                            )
+                        //action: () => Navigator.of(context, rootNavigator: true).push(
+                      //      transitionRoute(widget.lyricsList[index])
+                       // )
                     ),
                   ),
                   onTap: () {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'dart:io';
 import '../../../shared/configs/app_configs.dart';
 //import '../../../shared/components/circle-avatar/circle_avatar_widget.dart';
 
@@ -21,7 +20,7 @@ class MainTopBarWidget extends StatelessWidget {
                 height: 41,
                 child: SvgPicture.asset(
                   AppIcons.logo,
-                  color: AppColors.darkGreen,
+                  colorFilter: const ColorFilter.mode(AppColors.darkGreen, BlendMode.srcIn)
                   //  height: 75,width: 75,
                 ),
               ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:io';
 
+import 'package:ipbc_palmas/app/shared/configs/app_configs.dart';
+
 class NavigationButtonWidget extends StatelessWidget {
   const NavigationButtonWidget(
       {super.key, double? size, this.color, required this.iconName})
@@ -19,7 +21,7 @@ class NavigationButtonWidget extends StatelessWidget {
         width: size,
         height: size,
         child: SvgPicture.asset(
-          color: color,
+          colorFilter:  ColorFilter.mode(color ?? AppColors.darkGreen , BlendMode.srcIn),
           iconName,
           matchTextDirection: true,
         ),

@@ -4,22 +4,22 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import '../../../lyric/infra/models/firestore-dtos/services_collection_dto.dart';
-import '../../../splash/presentation/blocs/database_bloc.dart';
 import '../../../core/domain/use-cases/use_cases.dart';
-import '../../domain/entities/service_entity.dart';
 import '../view-models/lyrics_view_model.dart';
 
 class ServicesCollectionBloc extends Bloc<ServicesCollectionEvent, ServicesCollectionState> {
+
   final IUseCases fireCollectionUseCases;
   final IUseCases hiveCollectionUseCases;
   final LyricsViewModel lyricsViewModel;
+
   ServicesCollectionBloc({ required this.lyricsViewModel, required this.fireCollectionUseCases, required this.hiveCollectionUseCases})
       : super(InitialState()) {
     on<GetCollectionInFireEvent>(_getCollectionInFire);
     on<AddCollectionInHiveEvent>(_addCollectionInHive);
     on<GetCollectionInHiveEvent>(_getCollectionInHive);
-    on<LoadingEvent>(_loadingEvent);
-    on<CheckConnectivityEvent>(_checkConnectivityEvent);
+    on<LoadingEvent>(_loading);
+    on<CheckConnectivityEvent>(_checkConnectivity);
   }
 
   Future<void> _getCollectionInFire(GetCollectionInFireEvent event, emit) async {
@@ -53,17 +53,20 @@ class ServicesCollectionBloc extends Bloc<ServicesCollectionEvent, ServicesColle
       },
     );
   }
-  Future<void> _loadingEvent(event, emit) async {
+
+  Future<void> _loading(event, emit) async {
    emit(LoadingCollectionState());
   }
-  Future<void> _checkConnectivityEvent(event, emit) async {
+
+  Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
     final isConnected = await lyricsViewModel.isConnected();
     if(isConnected){
-      add(GetCollectionInFireEvent(path: 'services-collection/id'));
+      add(GetCollectionInFireEvent(path: event.path));
     } else {
       emit(NoConnectionAvailableState());
     }
   }
+
   Future<void> _addCollectionInHive(AddCollectionInHiveEvent event, emit) async {
     await hiveCollectionUseCases.add(event.path, event.data);
   }
@@ -79,7 +82,8 @@ class LoadingEvent extends ServicesCollectionEvent {
   LoadingEvent();
 }
 class CheckConnectivityEvent extends ServicesCollectionEvent {
-  CheckConnectivityEvent();
+  final String path;
+  CheckConnectivityEvent({required this.path});
 }
 class GetCollectionInFireEvent extends ServicesCollectionEvent {
   final String path;

@@ -1,15 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
-import 'package:ipbc_palmas/app/exception/view/unknown_route_view.dart';
 
+import '../../../app/exception/view/unknown_route_view.dart';
 import '../../lyric/domain/entities/lyric_entity.dart';
-import '../../lyric/domain/entities/service_entity.dart';
+import '../../lyric/infra/models/firestore-dtos/services_collection_dto.dart';
 import '../../lyric/presentation/views/service_view.dart';
 import '../../lyric/presentation/views/lyric_view.dart';
-import '../../lyric/presentation/views/services_colletion_view.dart';
+import '../../lyric/presentation/views/services_collection_view.dart';
 import '../../lyric/presentation/views/services_list_view.dart';
 
 class AppRoutes {
@@ -27,36 +25,20 @@ class AppRoutes {
   static const String lyricsListRoute = "/lyrics-list-view";
   static const String lyricRoute = "/lyric-view";
   static const String servicesCollectionRoute = "/services-collection-view";
-  static Route<dynamic>? onGenerateRoute(RouteSettings routeSettings) {
-    switch (routeSettings.name) {
+
+  static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
+    switch (settings.name) {
       case lyricRoute:
-        if (Platform.isIOS) {
-          return CupertinoPageRoute(
-            builder: (_) => CupertinoPageScaffold(
-              child: LyricView(
-                lyricEntity: (routeSettings.arguments as LyricEntity),
-              ),
-            ),
-          );
-        } else {
-          return MaterialPageRoute(
-            builder: (_) => LyricView(
-              lyricEntity: (routeSettings.arguments as LyricEntity),
-            ),
-          );
-        }
+        return CustomTransitionPageRoute(
+          transitionSpeed: const Duration(milliseconds: 500),
+          reverseSpeed: const Duration(milliseconds: 500),
+          child: LyricView(lyricEntity: settings.arguments as LyricEntity),
+          tween: Tween(begin: const Offset(0, 1), end: Offset.zero)
+              .chain(CurveTween(curve: Curves.easeIn)),
+        );
+
       default:
-        if (Platform.isIOS) {
-          return CupertinoPageRoute(
-            builder: (_) => const CupertinoPageScaffold(
-              child: UnknownRouteView(),
-            ),
-          );
-        } else {
-          return MaterialPageRoute(
-            builder: (_) => const UnknownRouteView(),
-          );
-        }
+        return unknownRoute();
     }
   }
 }
@@ -88,50 +70,63 @@ class _ServicesListRoutesState extends State<ServicesListRoutes> {
                 builder: (_) => const ServicesListView(),
               );
             }
-          case AppRoutes.lyricRoute:
-            if (Platform.isIOS) {
-              return CupertinoPageRoute(
-                builder: (_) => CupertinoPageScaffold(
-                  child: LyricView(lyricEntity: settings.arguments as LyricEntity),
-                ),
-              );
-            } else {
-              return MaterialPageRoute(
-                builder: (_) => LyricView(lyricEntity: settings.arguments as LyricEntity),
-              );
-            }
+
+          case AppRoutes.serviceRoute:
+            return CustomTransitionPageRoute(
+              transitionSpeed: const Duration(milliseconds: 800),
+              reverseSpeed: const Duration(milliseconds: 800),
+              child: ServiceView(entity: settings.arguments as ServiceViewDTO),
+              tween: Tween(begin: const Offset(1, 0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOutQuint)),
+            );
+
+          case AppRoutes.servicesCollectionRoute:
+            return CustomTransitionPageRoute(
+              transitionSpeed: const Duration(milliseconds: 800),
+              reverseSpeed: const Duration(milliseconds: 800),
+              child: ServicesCollectionView(
+                servicesCollection: settings.arguments as ServicesCollectionDTO,
+              ),
+              tween: Tween(begin: const Offset(1, 0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOutQuint)),
+            );
+
           default:
-            if (Platform.isIOS) {
-              return CupertinoPageRoute(
-                builder: (_) => const CupertinoPageScaffold(
-                  child: UnknownRouteView(),
-                ),
-              );
-            } else {
-              return MaterialPageRoute(
-                builder: (_) => const UnknownRouteView(),
-              );
-            }
+            return unknownRoute();
         }
       },
     );
   }
 }
 
+unknownRoute() {
+  if (Platform.isIOS) {
+    return CupertinoPageRoute(
+      builder: (_) => const CupertinoPageScaffold(
+        child: UnknownRouteView(),
+      ),
+    );
+  } else {
+    return MaterialPageRoute(
+      builder: (_) => const UnknownRouteView(),
+    );
+  }
+}
+
 class CustomTransitionPageRoute extends PageRouteBuilder {
   final Widget child;
-  late Animatable<Offset> tween;
-  CustomTransitionPageRoute({required this.child})
-      : super(
-            reverseTransitionDuration: const Duration(milliseconds: 800),
-            transitionDuration: const Duration(milliseconds: 800),
-            pageBuilder: (context, animation, secondaryAnimation) => child) {
-    const begin = Offset(1.0, 0.0);
-    const end = Offset.zero;
+  final Animatable<Offset> tween;
+  final Duration transitionSpeed;
+  final Duration reverseSpeed;
 
-    const curve = Curves.easeInOutQuint;
-    tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-  }
+  CustomTransitionPageRoute({
+      required this.transitionSpeed,
+      required this.reverseSpeed,
+      required this.tween,
+      required this.child}) : super(
+            reverseTransitionDuration: reverseSpeed,
+            transitionDuration: transitionSpeed,
+            pageBuilder: (context, animation, secondaryAnimation) => child);
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,

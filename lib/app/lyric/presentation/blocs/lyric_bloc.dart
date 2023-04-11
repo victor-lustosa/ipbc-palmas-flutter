@@ -5,18 +5,20 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import '../../domain/use-cases/lyrics_use_cases.dart';
 import '../../domain/entities/lyric_entity.dart';
+import '../view-models/lyrics_view_model.dart';
 
 class LyricBloc extends Bloc<LyricEvent, LyricState> {
   final ILyricsUseCases fireLyricsUseCase;
   final ILyricsUseCases hiveLyricsUseCase;
-
-  LyricBloc({required this.fireLyricsUseCase, required this.hiveLyricsUseCase})
+  final LyricsViewModel lyricsViewModel;
+  LyricBloc({ required this.lyricsViewModel, required this.fireLyricsUseCase, required this.hiveLyricsUseCase})
       : super(InitialState()) {
     on<GetLyricsInFireEvent>(_getLyricsInFire);
     on<GetLyricsInHiveEvent>(_getLyricsInHive);
     on<AddLyricsInHiveEvent>(_addLyricsInHive);
     on<LyricsFilterEvent>(_lyricsFilter);
-    on<LoadingEvent>(_loadingEvent);
+    on<LoadingEvent>(_loading);
+    on<CheckConnectivityEvent>(_checkConnectivity);
   }
 
   Future<void> _getLyricsInFire(GetLyricsInFireEvent event, emit) async {
@@ -35,7 +37,14 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
       },
     );
   }
-
+  Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
+    final isConnected = await lyricsViewModel.isConnected();
+    if(isConnected){
+      add(GetLyricsInFireEvent(path: event.path));
+    } else {
+      emit(NoConnectionAvailableState());
+    }
+  }
   Future<void> _getLyricsInHive(GetLyricsInHiveEvent event, emit) async {
     add(LoadingEvent());
     await emit.onEach<List<LyricEntity>>(
@@ -53,7 +62,7 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
   Future<void> _addLyricsInHive(AddLyricsInHiveEvent event, emit) async {
     hiveLyricsUseCase.add(event.path, event.data);
   }
-  Future<void> _loadingEvent(event, emit) async {
+  Future<void> _loading(_, emit) async {
     emit(LoadingLyricsState());
   }
   Future<void> _lyricsFilter(LyricsFilterEvent event, emit) async {
@@ -75,7 +84,10 @@ class GetLyricsInFireEvent extends LyricEvent {
   final String path;
   GetLyricsInFireEvent({required this.path});
 }
-
+class CheckConnectivityEvent extends LyricEvent {
+  final String path;
+  CheckConnectivityEvent({required this.path});
+}
 class GetLyricsInHiveEvent extends LyricEvent {
   final String path;
   GetLyricsInHiveEvent({required this.path});
@@ -106,7 +118,9 @@ class ExceptionLyricState extends LyricState {
   final String message;
   ExceptionLyricState(this.message);
 }
-
+class NoConnectionAvailableState extends LyricState {
+  NoConnectionAvailableState();
+}
 class SuccessfullyFetchedLyricsState extends LyricState {
   final List<LyricEntity> entities;
   SuccessfullyFetchedLyricsState(this.entities);

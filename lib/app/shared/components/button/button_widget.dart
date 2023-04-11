@@ -7,7 +7,7 @@ class IconButtonWidget extends StatelessWidget {
   const IconButtonWidget(
       {Key? key,
        this.size,
-      required this.action,
+       this.action,
       required this.color,
       this.splashColor,
       this.highlightColor,

@@ -1,5 +1,4 @@
 import '../../lyric/infra/adapters/hive-dtos/hive_services_collection_adapter.dart';
-import '../../lyric/infra/models/firestore-dtos/services_collection_dto.dart';
 
 import '../../lyric/infra/adapters/hive-dtos/hive_database_configs_adapter.dart';
 import '../../lyric/infra/adapters/hive-dtos/hive_lyric_adapter.dart';

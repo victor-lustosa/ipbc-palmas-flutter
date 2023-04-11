@@ -1,12 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ipbc_palmas/app/lyric/presentation/view-models/lyrics_view_model.dart';
-import 'package:provider/provider.dart';
+import '../../../lyric/presentation/view-models/lyrics_view_model.dart';
 import '../../../home/views/home_view.dart';
-import '../../../lyric/lyric_module.dart';
 import '../../../shared/components/loading/loading_widget.dart';
-import '../../../shared/configs/app_configs.dart';
 import '../blocs/database_bloc.dart';
 
 
@@ -25,7 +22,6 @@ class _SplashViewState extends State<SplashView> {
   @override
   initState() {
     super.initState();
-    lyricsViewModel = LyricsViewModel();
     databaseBloc = context.read<DatabaseBloc>();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
@@ -50,11 +46,7 @@ class _SplashViewState extends State<SplashView> {
           } else if (state is SuccessfullyFetchedDataState) {
             return const LoadingWidget();
           } else {
-            return MultiProvider(
-              providers: [...lyricModule],
-              child: const HomeView(),
-            
-            );
+            return const HomeView();
           }
         },
       ),

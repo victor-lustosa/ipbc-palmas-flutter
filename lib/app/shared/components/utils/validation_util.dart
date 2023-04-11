@@ -1,6 +1,5 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_firestore_platform_interface/src/timestamp.dart';
 import 'package:flutter/cupertino.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart' show DateFormat;

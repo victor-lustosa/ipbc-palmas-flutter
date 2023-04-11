@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,6 @@ import '../../../shared/configs/app_routes.dart';
 import '../../../splash/presentation/blocs/database_bloc.dart';
 import '../../domain/entities/service_entity.dart';
 import '../blocs/service_bloc.dart';
-import '../../../splash/presentation/blocs/database_bloc.dart';
 import '../../../shared/components/utils/validation_util.dart';
 
 class ServicesCollectionView extends StatefulWidget {
@@ -25,12 +23,10 @@ class ServicesCollectionView extends StatefulWidget {
   final ServicesCollectionDTO servicesCollection;
 
   @override
-  State<ServicesCollectionView> createState() =>
-      _ServicesCollectionViewState();
+  State<ServicesCollectionView> createState() => _ServicesCollectionViewState();
 }
 
 class _ServicesCollectionViewState extends State<ServicesCollectionView> {
-
   late final ServiceBloc serviceBloc;
   late final String database;
   late List<ServiceEntity> servicesList;
@@ -40,12 +36,13 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
   void initState() {
     serviceBloc = context.read<ServiceBloc>();
     databaseBloc = context.read<DatabaseBloc>();
-    serviceBloc
-        .add(GetServiceInFireEvent(path: widget.servicesCollection.path));
+    serviceBloc.add(CheckConnectivityEvent(path: widget.servicesCollection.path));
     //serviceBloc.add(GetServiceInHiveEvent(path: 'services/${widget.serviceCollections.path}'));
     database = ValidationUtil.validationDatasource();
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +59,10 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
               builder: (context, state) {
                 if (state is InitialState) {
                   return const LoadingWidget();
-                }
-                if (state is LoadingServiceState) {
+                } else if (state is LoadingServiceState) {
                   return const LoadingWidget();
+                } else if (state is NoConnectionAvailableState) {
+                  return const NoConnectionView(index: 0);
                 } else if (state is SuccessfullyFetchedServiceState) {
                   servicesList = state.entities;
                   //if (database == firebaseDatabase) {
@@ -87,17 +85,22 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                           ),
                         ),
                         child: Container(
-                          margin: const EdgeInsets.only(left: 5,right: 8,bottom: 8),
+                          margin: const EdgeInsets.only(
+                            left: 5,
+                            right: 8,
+                            bottom: 8,
+                          ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
                                       IconButtonWidget(
-                                        size: 32,
+                                        size: Platform.isIOS ? null : 28,
                                         color: AppColors.white,
                                         splashColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
@@ -195,30 +198,25 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                       highlightColor: Colors.transparent,
                                       iOSIcon: CupertinoIcons.chevron_forward,
                                       androidIcon: Icons.navigate_next_sharp,
-                                      action: () => Navigator.of(context).push(
-                                        CustomTransitionPageRoute(
-                                          child: ServiceView(
-                                            entity: ServiceViewDTO(
-                                              service: servicesList[index],
-                                              image: widget
-                                                  .servicesCollection.image,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                      //action: () => Navigator.pushNamed(
+                                      //                                       context,
+                                      //                                       AppRoutes.serviceRoute,
+                                      //                                       arguments: ServiceViewDTO(
+                                      //                                         service: servicesList[index],
+                                      //                                         image: widget.servicesCollection.image,
+                                      //                                       )
+                                      //                                     ),
+                                      //),
                                     ),
                                   ),
                                   onTap: () {
-                                    Navigator.of(context).push(
-                                        CustomTransitionPageRoute(
-                                          child: ServiceView(
-                                            entity: ServiceViewDTO(
-                                              service: servicesList[index],
-                                              image: widget
-                                                  .servicesCollection.image,
-                                            ),
-                                          ),
-                                        )
+                                    Navigator.pushNamed(
+                                      context,
+                                      AppRoutes.serviceRoute,
+                                      arguments: ServiceViewDTO(
+                                        service: servicesList[index],
+                                        image: widget.servicesCollection.image,
+                                      )
                                     );
                                   },
                                 ),

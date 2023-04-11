@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../exception/view/generic_error_view.dart';
 //import '../../../shared/components/search-bar/search_bar_widget.dart';
+import '../../../exception/view/no_connection_view.dart';
 import '../../../shared/components/loading/loading_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/layout/top-bar/title_top_bar_widget.dart';
@@ -52,7 +53,7 @@ class _LyricsListViewState extends State<LyricsListView>
     lyricBloc = context.read<LyricBloc>();
     databaseBloc = context.read<DatabaseBloc>();
     //lyricBloc.add(GetLyricsInFireEvent(path: path));
-    lyricBloc.add(GetLyricsInFireEvent(path: path));
+    lyricBloc.add(CheckConnectivityEvent(path: path));
     database = ValidationUtil.validationDatasource();
     super.initState();
   }
@@ -71,9 +72,10 @@ class _LyricsListViewState extends State<LyricsListView>
           builder: (context, state) {
             if (state is InitialState) {
               return const LoadingWidget();
-            }
-            if (state is LoadingLyricsState) {
+            } else if (state is LoadingLyricsState) {
               return const LoadingWidget();
+            } else if (state is NoConnectionAvailableState) {
+              return const NoConnectionView(index: 0);
             } else if (state is SuccessfullyFetchedLyricsState ||
                 state is SuccessfullyFilteredLyricsState) {
               if (state is SuccessfullyFetchedLyricsState &&
@@ -118,9 +120,7 @@ class _LyricsListViewState extends State<LyricsListView>
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
-                              margin: const EdgeInsets.only(
-                                top: 40.0,left: 17
-                              ),
+                              margin: const EdgeInsets.only(top: 40, left: 17),
                               child: Text(
                                 "Adicionados recentemente",
                                 style: AppFonts.headlineLyrics,
@@ -129,12 +129,8 @@ class _LyricsListViewState extends State<LyricsListView>
                           ],
                         ),
                         Container(
-                          margin: const EdgeInsets.only(
-                            top: 27.0,
-                          ),
-                          child: LyricsListWidget(
-                            lyricsList: lyricsFiltered,
-                          ),
+                          margin: const EdgeInsets.only(top: 27),
+                          child: LyricsListWidget(lyricsList: lyricsFiltered),
                         ),
                       ],
                     ),

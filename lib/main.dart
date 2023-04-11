@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'dart:async';
-import 'dart:developer';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -22,6 +22,8 @@ void main() async {
   runZonedGuarded<Future<void>>(() async {
 
     WidgetsFlutterBinding.ensureInitialized();
+
+    RendererBinding.instance.setSemanticsEnabled(true);
 
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 

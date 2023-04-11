@@ -1,4 +1,3 @@
-import '../../../domain/entities/verse_entity.dart';
 import '../../models/firestore-dtos/services_collection_dto.dart';
 
 class ServicesCollectionDTOAdapter {

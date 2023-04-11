@@ -1,7 +1,4 @@
 import 'package:hive/hive.dart';
-
-import 'hive_liturgy_dto.dart';
-import 'hive_lyric_dto.dart';
 part 'hive_services_collection_dto.g.dart';
 
 @HiveType(typeId: 5)
