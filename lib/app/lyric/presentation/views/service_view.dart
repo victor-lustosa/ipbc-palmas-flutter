@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../shared/components/button/button_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../domain/entities/service_entity.dart';
@@ -26,7 +24,8 @@ class ServiceView extends StatefulWidget {
 }
 
 class _ServiceViewState extends State<ServiceView> {
-  final double guideWidthPercent = 0.955;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -3,52 +3,68 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
+
 import '../../../lyric/infra/models/firestore-dtos/services_collection_dto.dart';
-import '../../../core/domain/use-cases/use_cases.dart';
+import '../../infra/models/hive-dtos/hive_database_configs_dto.dart';
+import '../../infra/use-cases/collections_use_cases.dart';
 import '../view-models/lyrics_view_model.dart';
 
 class ServicesCollectionBloc extends Bloc<ServicesCollectionEvent, ServicesCollectionState> {
 
-  final IUseCases fireCollectionUseCases;
-  final IUseCases hiveCollectionUseCases;
+  final CollectionsUseCases fireCollectionUseCases;
+  final CollectionsUseCases hiveCollectionUseCases;
   final LyricsViewModel lyricsViewModel;
+
+  final String path = 'services-collection/id';
 
   ServicesCollectionBloc({ required this.lyricsViewModel, required this.fireCollectionUseCases, required this.hiveCollectionUseCases})
       : super(InitialState()) {
     on<GetCollectionInFireEvent>(_getCollectionInFire);
     on<AddCollectionInHiveEvent>(_addCollectionInHive);
+    on<UpdateCollectionInHiveEvent>(_updateCollectionInHive);
     on<GetCollectionInHiveEvent>(_getCollectionInHive);
     on<LoadingEvent>(_loading);
     on<CheckConnectivityEvent>(_checkConnectivity);
   }
 
-  Future<void> _getCollectionInFire(GetCollectionInFireEvent event, emit) async {
+  Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
     add(LoadingEvent());
-    await emit.onEach<List<ServicesCollectionDTO>>(
-      await fireCollectionUseCases.get(event.path),
-      onData: (service) {
+    if(event.database.isServicesUpdated || (event.database.hiveUpdateId == event.database.fireUpdateId)){
+      add(GetCollectionInHiveEvent());
+    } else {
+      final isConnected = await lyricsViewModel.isConnected();
+      if(isConnected){
+        add(GetCollectionInFireEvent(database: event.database));
+      } else {
+        emit(NoConnectionAvailableState());
+      }
+    }
+  }
 
-      /*for(ServicesCollectionDTO entity in service){
-            add(AddCollectionInHiveEvent(path: 'services-collections', data: entity));
-         }*/
-        emit(SuccessfullyFetchedCollectionState(service));
+  Future<void> _getCollectionInFire(GetCollectionInFireEvent event, emit) async {
+    await emit.onEach<List<ServicesCollectionDTO>>(
+      await fireCollectionUseCases.get(path),
+      onData: (service) {
+           add(UpdateCollectionInHiveEvent(data: service));
+           emit(SuccessfullyFetchedCollectionState(service));
       },
       onError: (error, st) async {
         await FirebaseCrashlytics.instance.recordError(error, st, reason: 'a non-fatal error');
+        FirebaseCrashlytics.instance.setCustomKey('get fire collection bloc', error.toString());
         emit(CollectionExceptionState(error.toString()));
       },
     );
   }
 
   Future<void> _getCollectionInHive(GetCollectionInHiveEvent event, emit) async {
-    add(LoadingEvent());
     await emit.onEach<List<ServicesCollectionDTO>>(
-      await hiveCollectionUseCases.get(event.path),
+      await hiveCollectionUseCases.get(path),
       onData: (service) {
         emit(SuccessfullyFetchedCollectionState(service));
       },
       onError: (error, st) async {
         await FirebaseCrashlytics.instance.recordError(error, st, reason: 'a non-fatal error');
+        FirebaseCrashlytics.instance.setCustomKey('get hive collection bloc', error.toString());
         emit(CollectionExceptionState(error.toString()));
       },
     );
@@ -58,17 +74,12 @@ class ServicesCollectionBloc extends Bloc<ServicesCollectionEvent, ServicesColle
    emit(LoadingCollectionState());
   }
 
-  Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
-    final isConnected = await lyricsViewModel.isConnected();
-    if(isConnected){
-      add(GetCollectionInFireEvent(path: event.path));
-    } else {
-      emit(NoConnectionAvailableState());
-    }
+  Future<void> _addCollectionInHive(AddCollectionInHiveEvent event, emit) async {
+    await hiveCollectionUseCases.add(path, event.data);
   }
 
-  Future<void> _addCollectionInHive(AddCollectionInHiveEvent event, emit) async {
-    await hiveCollectionUseCases.add(event.path, event.data);
+  Future<void> _updateCollectionInHive(UpdateCollectionInHiveEvent event, emit) async {
+    await hiveCollectionUseCases.update(path, event.data);
   }
 }
 
@@ -82,23 +93,24 @@ class LoadingEvent extends ServicesCollectionEvent {
   LoadingEvent();
 }
 class CheckConnectivityEvent extends ServicesCollectionEvent {
-  final String path;
-  CheckConnectivityEvent({required this.path});
+  final HiveDatabaseConfigsDTO database;
+  CheckConnectivityEvent({required this.database});
 }
 class GetCollectionInFireEvent extends ServicesCollectionEvent {
-  final String path;
-  GetCollectionInFireEvent({required this.path});
+  final HiveDatabaseConfigsDTO database;
+  GetCollectionInFireEvent({required this.database});
 }
 
 class GetCollectionInHiveEvent extends ServicesCollectionEvent {
-  final String path;
-  GetCollectionInHiveEvent({required this.path});
+  GetCollectionInHiveEvent();
 }
-
-class AddCollectionInHiveEvent extends ServicesCollectionEvent {
-  final String path;
+class UpdateCollectionInHiveEvent extends ServicesCollectionEvent {
   final dynamic data;
-  AddCollectionInHiveEvent({required this.path, required this.data});
+  UpdateCollectionInHiveEvent({required this.data});
+}
+class AddCollectionInHiveEvent extends ServicesCollectionEvent {
+  final dynamic data;
+  AddCollectionInHiveEvent({required this.data});
 }
 
 @immutable

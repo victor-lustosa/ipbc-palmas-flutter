@@ -7,7 +7,7 @@ import '../../../shared/components/loading/loading_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/layout/top-bar/title_top_bar_widget.dart';
 import '../../../splash/presentation/blocs/database_bloc.dart';
-import '../../../shared/components/utils/validation_util.dart';
+import '../../infra/models/hive-dtos/hive_database_configs_dto.dart';
 import '../blocs/lyric_bloc.dart';
 import '../../domain/entities/lyric_entity.dart';
 import '../../../shared/layout/side-bar/side_bar_widget.dart';
@@ -26,13 +26,9 @@ class _LyricsListViewState extends State<LyricsListView>
   late List<LyricEntity> lyricsFiltered;
   late List<String> drawerNames;
   late final LyricBloc lyricBloc;
-  late final DatabaseBloc databaseBloc;
   bool isSelected = false;
   String selectedValue = '';
-  late final String database;
-  final String firebaseDatabase = 'firebase';
-  final String path = 'lyrics/20';
-
+  late HiveDatabaseConfigsDTO data;
   fillLettersCarousel() {
     drawerNames = [
       'Sobre IPB Palmas',
@@ -47,15 +43,13 @@ class _LyricsListViewState extends State<LyricsListView>
 
   @override
   void initState() {
+    super.initState();
     lyricsFetched = [];
     lyricsFiltered = [];
     fillLettersCarousel();
     lyricBloc = context.read<LyricBloc>();
-    databaseBloc = context.read<DatabaseBloc>();
-    //lyricBloc.add(GetLyricsInFireEvent(path: path));
-    lyricBloc.add(CheckConnectivityEvent(path: path));
-    database = ValidationUtil.validationDatasource();
-    super.initState();
+    data = context.read<HiveDatabaseConfigsDTO>();
+    lyricBloc.add(CheckConnectivityEvent(database: data));
   }
 
   @override
@@ -76,15 +70,18 @@ class _LyricsListViewState extends State<LyricsListView>
               return const LoadingWidget();
             } else if (state is NoConnectionAvailableState) {
               return const NoConnectionView(index: 0);
-            } else if (state is SuccessfullyFetchedLyricsState ||
-                state is SuccessfullyFilteredLyricsState) {
-              if (state is SuccessfullyFetchedLyricsState &&
-                  selectedValue == '') {
+            } else if (state is SuccessfullyFetchedLyricsState || state is SuccessfullyFilteredLyricsState) {
+
+              if (!(data.isLyricsUpdated) || (data.fireUpdateId != data.hiveUpdateId)) {
+                data = data.copyWith(isLyricsUpdated: true, hiveUpdateId: data.fireUpdateId);
+                context.read<DatabaseBloc>().add(UpdateDataEvent(data: data));
+              }
+
+              if (state is SuccessfullyFetchedLyricsState && selectedValue == '') {
+
                 lyricsFetched = state.entities;
                 lyricsFiltered = state.entities;
-                //if (database == firebaseDatabase) {
 
-                //}
               } else {
                 if (state is SuccessfullyFilteredLyricsState &&
                     selectedValue != '') {
@@ -102,9 +99,7 @@ class _LyricsListViewState extends State<LyricsListView>
                   child: RefreshIndicator(
                     color: AppColors.darkGreen,
                     onRefresh: () async {
-                      lyricBloc.add(
-                        GetLyricsInFireEvent(path: path),
-                      );
+                      lyricBloc.add(GetLyricsInFireEvent());
                     },
                     child: Column(
                       children: [

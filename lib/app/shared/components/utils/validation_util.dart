@@ -1,29 +1,24 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart' show DateFormat;
 import '../../../core/external/firestore_datasource.dart';
-import '../../../lyric/infra/adapters/firestore-dtos/settings_dto_adapter.dart';
-import 'package:provider/provider.dart';
 
-import '../../../lyric/infra/models/firestore-dtos/settings_dto.dart';
 class ValidationUtil {
 
   final String firebaseDatabase = 'firebase';
 
-  static Future<DateTime> verifyUpdateFirebase(BuildContext context, DateTime updateAt)  async {
-    SettingsDTO settings = SettingsDTO(updateAt: Timestamp.now());
-    FirestoreDatasource fire = context.read<FirestoreDatasource>();
-
-    Stream<List> data = await fire.verifyUpdateDatasource('settings');
-    data.map((entity) => settings = SettingsDTOAdapter.fromMap(entity));
-    return settings.updateAt.toDate();
+  static Future<String> verifyUpdateFirebase(BuildContext context)  async {
+    String fireUpdateId = await context.read<FirestoreDatasource>().verifyUpdateDatasource('settings');
+    return fireUpdateId;
   }
 
  static String validationDatasource()  {
     switch (DateFormat('EEEE').format(DateTime.now())) {
       case 'Friday':
+        return 'firebase';
+      case 'Thursday':
         return 'firebase';
       case 'Saturday':
         return 'firebase';
@@ -34,8 +29,3 @@ class ValidationUtil {
     }
   }
  }
-
-main() async{
-// var result = await ValidationUtil.validationDatasource(DateTime.parse('2023-04-01 00:00:00.000'));
-// print(result.toString());
-}

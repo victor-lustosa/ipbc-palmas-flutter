@@ -1,7 +1,6 @@
-import '../../../lyric/infra/models/firestore-dtos/services_collection_dto.dart';
-
-import '../../../core/domain/repositories/repository.dart';
 import '../../../core/domain/use-cases/use_cases.dart';
+import '../../../lyric/infra/models/firestore-dtos/services_collection_dto.dart';
+import '../../../core/domain/repositories/repository.dart';
 import '../adapters/services_collection_adapter.dart';
 
 class CollectionsUseCases implements IUseCases<Stream<List<ServicesCollectionDTO>>> {
@@ -21,4 +20,10 @@ class CollectionsUseCases implements IUseCases<Stream<List<ServicesCollectionDTO
   Future<void> add(path, data) async {
     repository.add(path, data);
   }
+
+  @override
+  Future<void> update(String path, data) async {
+    repository.update(path, data);
+  }
+
 }

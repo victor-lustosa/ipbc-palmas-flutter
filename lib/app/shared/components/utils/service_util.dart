@@ -1,4 +1,5 @@
-
+import 'dart:math';
+import 'package:uno/uno.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import '../../../lyric/infra/adapters/firestore-dtos/verse_dto_adapter.dart';
@@ -6,10 +7,13 @@ import '../../../lyric/infra/models/firestore-dtos/lyric_dto.dart';
 import '../../../lyric/infra/models/firestore-dtos/service_dto.dart';
 import '../../configs/app_configs.dart';
 
-import 'dart:math';
-import 'package:uno/uno.dart';
-
 class ServiceUtil {
+  static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  static final Random _rnd = Random();
+//utilizar pra criar o codigo no firestore
+ static String createId(int length) => String.fromCharCodes(
+     Iterable.generate(length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length)))
+ );
 
   static Future<dynamic> getLyric(String title, String group) async {
     String titleParam = title.replaceAll(' ', '%20');

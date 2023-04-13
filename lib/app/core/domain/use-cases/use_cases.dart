@@ -1,4 +1,4 @@
-abstract class IUseCases<R> implements IGetUseCases<R>, IAddUseCases {}
+abstract class IUseCases<R> implements IGetUseCases<R>, IAddUseCases ,IUpdateUseCases{}
 
 abstract class IGetUseCases<R> {
   Future<R> get(String url);
@@ -6,4 +6,8 @@ abstract class IGetUseCases<R> {
 
 abstract class IAddUseCases {
   Future<void> add(String path, dynamic data);
+}
+
+abstract class IUpdateUseCases {
+  Future<void> update(String path, dynamic data);
 }

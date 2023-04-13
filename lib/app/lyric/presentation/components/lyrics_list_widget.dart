@@ -18,8 +18,6 @@ class LyricsListWidget extends StatefulWidget {
 
 class _LyricsListWidgetState extends State<LyricsListWidget> {
 
-  bool loading = false;
-
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -79,9 +77,6 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                         highlightColor: Colors.transparent,
                         iOSIcon: CupertinoIcons.chevron_forward,
                         androidIcon: Icons.navigate_next_sharp,
-                        //action: () => Navigator.of(context, rootNavigator: true).push(
-                      //      transitionRoute(widget.lyricsList[index])
-                       // )
                     ),
                   ),
                   onTap: () {

@@ -21,6 +21,10 @@ class LyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
   Future<void> add(path, data) async {
     repository.add(path, data);
   }
+  @override
+  Future<void> update(String path, data) async{
+    repository.update(path, data);
+  }
 
   @override
   Future<List<LyricEntity>> lettersFilter(
@@ -33,4 +37,6 @@ class LyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
     }
     return Future.value(lyricsResult);
   }
+
+
 }

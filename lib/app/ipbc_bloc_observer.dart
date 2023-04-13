@@ -19,7 +19,6 @@ class IpbcBlocObserver extends BlocObserver {
   @override
   Future<void> onError(BlocBase bloc, Object error, StackTrace stackTrace) async {
     print('onError -- bloc: ${bloc.runtimeType}, error: $error');
-
     await FirebaseCrashlytics.instance.recordError(error, stackTrace, reason: 'a non-fatal error');
     super.onError(bloc, error, stackTrace);
   }

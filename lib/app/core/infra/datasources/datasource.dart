@@ -1,5 +1,3 @@
-
-
 abstract class IDatasource<R>
     implements
         IGetDatasource,

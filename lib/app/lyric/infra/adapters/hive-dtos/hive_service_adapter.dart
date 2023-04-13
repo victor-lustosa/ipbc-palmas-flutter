@@ -1,4 +1,3 @@
-
 import '../../../domain/entities/service_entity.dart';
 import '../../models/hive-dtos/hive_service_dto.dart';
 import 'hive_liturgy_adapter.dart';

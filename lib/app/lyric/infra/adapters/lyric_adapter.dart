@@ -1,4 +1,3 @@
-
 import '../../infra/adapters/verse_adapter.dart';
 import '../../domain/entities/lyric_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

@@ -1,8 +1,7 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../firestore-dtos/verse_dto_adapter.dart';
 
+import '../firestore-dtos/verse_dto_adapter.dart';
 import '../../models/firestore-dtos/lyric_dto.dart';
 import '../verse_adapter.dart';
 

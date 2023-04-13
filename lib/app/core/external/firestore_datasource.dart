@@ -1,9 +1,9 @@
-
-import '../../lyric/infra/models/firestore-dtos/settings_dto.dart';
-import '../infra/datasources/datasource.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirestoreDatasource implements IDatasource{
+import '../infra/datasources/datasource.dart';
+
+
+class FirestoreDatasource implements IDatasource {
   FirestoreDatasource({required FirebaseFirestore firestore})
       : _firestore = firestore;
 
@@ -11,10 +11,12 @@ class FirestoreDatasource implements IDatasource{
   List<String> params = [];
 
   List<Map> _convert(List<QueryDocumentSnapshot<Map<String, dynamic>>> docs) {
-    var entities = docs.map((document) => {
-      'id': document.id,
-      ...document.data(),
-    }).toList();
+    var entities = docs
+        .map((document) => {
+              'id': document.id,
+              ...document.data(),
+            })
+        .toList();
     return entities;
   }
 
@@ -27,7 +29,7 @@ class FirestoreDatasource implements IDatasource{
           .collection(params[0])
           .orderBy("id", descending: false)
           .snapshots();
-    }else if (params.length > 2) {
+    } else if (params.length > 2) {
       snapshot = _firestore
           .collection(params[0])
           .doc(params[1])
@@ -45,13 +47,16 @@ class FirestoreDatasource implements IDatasource{
     return snapshot.map((entity) => entity.docs).map(_convert);
   }
 
-  Future<Stream<List>> verifyUpdateDatasource(String url) async  {
-    Stream<QuerySnapshot<Map<String, dynamic>>> snapshot;
-    snapshot = _firestore.collection(url).snapshots();
-    //List<Map> result = [];
-    return snapshot.map((entity) => entity.docs.map((doc) =>  SettingsDTO(updateAt: doc.get('updateAt'))
+  Future<String> verifyUpdateDatasource(String path) async {
+    String fireUpdateId = '';
+    await _firestore
+        .collection(path)
+        .get()
+        .then((QuerySnapshot<Map<String, dynamic>> snapshot) {
+      fireUpdateId = snapshot.docs.first.get('fireUpdateId');
+    });
 
-    ).toList());
+    return fireUpdateId;
   }
 
   @override

@@ -1,9 +1,10 @@
 import 'dart:developer';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
+
 import '../../../lyric/infra/models/hive-dtos/hive_verse_dto.dart';
 import '../../../lyric/infra/use-cases/lyrics_use_cases.dart';
 import '../../../../firebase_options.dart';
@@ -12,12 +13,9 @@ import '../../../lyric/presentation/blocs/lyric_bloc.dart';
 import '../../../lyric/presentation/view-models/lyrics_view_model.dart';
 import '../../../shared/components/loading/loading_widget.dart';
 import '../../../shared/configs/app_configs.dart';
-//import '../../../splash/infra/use-cases/databases_use_cases.dart';
-//import '../../../splash/presentation/blocs/database_bloc.dart';
 import '../../infra/repositories/repository.dart';
 import '../firestore_datasource.dart';
 import '../hive_datasource.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 //command to map hive entities
 // flutter packages pub run build_runner build --delete-conflicting-outputs
 
@@ -199,12 +197,12 @@ class _HiveTestState extends State<HiveTest> {
           ],
           id: '2')
     ];
-    widget.bloc.add(AddLyricsInHiveEvent(path: 'lyrics', data: entities));
+    widget.bloc.add(AddLyricsInHiveEvent(data: entities));
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    widget.bloc.add(GetLyricsInHiveEvent(path: 'lyrics'));
+    widget.bloc.add(GetLyricsInHiveEvent());
     return MaterialApp(
       title: 'IPBC Palmas',
       theme: ThemeData(

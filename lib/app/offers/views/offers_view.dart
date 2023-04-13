@@ -4,14 +4,14 @@ import '../../shared/configs/app_configs.dart';
 import '../../shared/layout/top-bar/title_top_bar_widget.dart';
 import '../../shared/mixins/clipboard_mixin.dart';
 
-class OfferingView extends StatefulWidget {
-  const OfferingView({super.key});
+class OffersView extends StatefulWidget {
+  const OffersView({super.key});
 
   @override
-  State<OfferingView> createState() => _OfferingViewState();
+  State<OffersView> createState() => _OffersViewState();
 }
 
-class _OfferingViewState extends State<OfferingView> with ClipboardMixin {
+class _OffersViewState extends State<OffersView> with ClipboardMixin {
   final String cnpj = "38.136.701/0001-25";
 
   final GlobalKey<TooltipState> tooltipKey = GlobalKey<TooltipState>();

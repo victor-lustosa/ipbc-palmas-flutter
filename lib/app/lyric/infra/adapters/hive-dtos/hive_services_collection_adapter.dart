@@ -4,6 +4,7 @@ import '../../models/hive-dtos/hive_services_collection_dto.dart';
 class HiveServicesCollectionAdapter {
   static Map<String, dynamic> toMap(dynamic data) {
     return {
+      'id': data.id,
       'heading': data.heading,
       'title': data.title,
       'path': data.path,

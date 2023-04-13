@@ -1,9 +1,7 @@
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class SettingsDTO {
   const SettingsDTO({
-    required this.updateAt,
+    required this.fireUpdateId,
   });
-  final Timestamp updateAt;
+  final String fireUpdateId;
 }

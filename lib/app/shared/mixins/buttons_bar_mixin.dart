@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../configs/app_configs.dart';
 import '../layout/bottom-bar/navegation_button_widget.dart';
 
@@ -19,20 +20,21 @@ class ButtonsBarMixin {
       MenuItem(AppIcons.volunteerActivism, 'Ofertas')
     ];
 
-    buttons = menuItensList
-        .map((MenuItem menuItem) => BottomNavigationBarItem(
-              activeIcon: NavigationButtonWidget(
-                size: 23,
-                iconName: menuItem.iconData,
-                color: AppColors.darkGreen,
-              ),
-              icon: NavigationButtonWidget(
-                size: 23,
-                iconName: menuItem.iconData,
-                color: AppColors.grey,
-              ),
-              label: menuItem.label,
-            ))
+    buttons = menuItensList.map(
+          (MenuItem menuItem) => BottomNavigationBarItem(
+            activeIcon: NavigationButtonWidget(
+              size: 23,
+              iconName: menuItem.iconData,
+              color: AppColors.darkGreen,
+            ),
+            icon: NavigationButtonWidget(
+              size: 23,
+              iconName: menuItem.iconData,
+              color: AppColors.grey,
+            ),
+            label: menuItem.label,
+          ),
+        )
         .toList();
     return buttons;
   }

@@ -1,21 +1,21 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ipbc_palmas/app/lyric/presentation/view-models/lyrics_view_model.dart';
+import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 import '../../../exception/view/generic_error_view.dart';
 import '../../../exception/view/no_connection_view.dart';
+import '../../../splash/presentation/blocs/database_bloc.dart';
 import '../../infra/models/firestore-dtos/services_collection_dto.dart';
 import 'service_view.dart';
 import '../../../shared/components/loading/loading_widget.dart';
 import '../../../shared/components/button/button_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
-import '../../../splash/presentation/blocs/database_bloc.dart';
 import '../../domain/entities/service_entity.dart';
 import '../blocs/service_bloc.dart';
-import '../../../shared/components/utils/validation_util.dart';
 
 class ServicesCollectionView extends StatefulWidget {
   const ServicesCollectionView({Key? key, required this.servicesCollection})
@@ -28,24 +28,48 @@ class ServicesCollectionView extends StatefulWidget {
 
 class _ServicesCollectionViewState extends State<ServicesCollectionView> {
   late final ServiceBloc serviceBloc;
-  late final String database;
   late List<ServiceEntity> servicesList;
-  late final DatabaseBloc databaseBloc;
-
+  late HiveDatabaseConfigsDTO data;
   @override
   void initState() {
-    serviceBloc = context.read<ServiceBloc>();
-    databaseBloc = context.read<DatabaseBloc>();
-    serviceBloc.add(CheckConnectivityEvent(path: widget.servicesCollection.path));
-    //serviceBloc.add(GetServiceInHiveEvent(path: 'services/${widget.serviceCollections.path}'));
-    database = ValidationUtil.validationDatasource();
     super.initState();
+    serviceBloc = context.read<ServiceBloc>();
+    data = context.read<HiveDatabaseConfigsDTO>();
+    serviceBloc.add(
+      CheckConnectivityEvent(
+          path: widget.servicesCollection.path, database: data),
+    );
   }
 
-
+  serviceType(BuildContext context) {
+    switch (widget.servicesCollection.path) {
+      case 'saturday-services':
+        data = data.copyWith(
+            isSaturdayCollectionUpdated: true, hiveUpdateId: data.fireUpdateId);
+        break;
+      case 'morning-sunday-services':
+        data = data.copyWith(
+            isSundayMorningCollectionUpdated: true,
+            hiveUpdateId: data.fireUpdateId);
+        break;
+      case 'evening-sunday-services':
+        data = data.copyWith(
+            isSundayEveningCollectionUpdated: true,
+            hiveUpdateId: data.fireUpdateId);
+        break;
+    }
+    context.read<DatabaseBloc>().add(UpdateDataEvent(data: data));
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (!(data.isSaturdayCollectionUpdated) ||
+        !(data.isSundayEveningCollectionUpdated) ||
+        !(data.isSundayMorningCollectionUpdated) ||
+        (data.fireUpdateId != data.hiveUpdateId)) {
+      serviceType(context);
+    }
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -65,8 +89,6 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                   return const NoConnectionView(index: 0);
                 } else if (state is SuccessfullyFetchedServiceState) {
                   servicesList = state.entities;
-                  //if (database == firebaseDatabase) {
-                  // }
                   return Column(
                     children: [
                       Container(
@@ -198,26 +220,16 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                       highlightColor: Colors.transparent,
                                       iOSIcon: CupertinoIcons.chevron_forward,
                                       androidIcon: Icons.navigate_next_sharp,
-                                      //action: () => Navigator.pushNamed(
-                                      //                                       context,
-                                      //                                       AppRoutes.serviceRoute,
-                                      //                                       arguments: ServiceViewDTO(
-                                      //                                         service: servicesList[index],
-                                      //                                         image: widget.servicesCollection.image,
-                                      //                                       )
-                                      //                                     ),
-                                      //),
                                     ),
                                   ),
                                   onTap: () {
                                     Navigator.pushNamed(
-                                      context,
-                                      AppRoutes.serviceRoute,
-                                      arguments: ServiceViewDTO(
-                                        service: servicesList[index],
-                                        image: widget.servicesCollection.image,
-                                      )
-                                    );
+                                        context, AppRoutes.serviceRoute,
+                                        arguments: ServiceViewDTO(
+                                          service: servicesList[index],
+                                          image:
+                                              widget.servicesCollection.image,
+                                        ));
                                   },
                                 ),
                               );

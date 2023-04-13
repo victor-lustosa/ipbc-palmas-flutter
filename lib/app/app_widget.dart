@@ -1,12 +1,12 @@
-
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+
 import 'splash/main_module.dart';
 import 'splash/presentation/views/splash_view.dart';
 //import 'package:upgrader/upgrader.dart';
 import 'shared/configs/no_glow_behavior.dart';
 import 'shared/configs/app_configs.dart';
 import 'shared/configs/app_routes.dart';
-import 'package:provider/provider.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({Key? key}) : super(key: key);

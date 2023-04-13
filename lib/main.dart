@@ -1,13 +1,14 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'dart:async';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
 import 'app/lyric/infra/models/hive-dtos/hive_services_collection_dto.dart';
 import 'app/lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
 import 'app/app_widget.dart';

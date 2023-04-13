@@ -1,19 +1,19 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../exception/view/no_connection_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../exception/view/no_connection_view.dart';
 import '../../../exception/view/generic_error_view.dart';
 import '../../../shared/components/button/button_widget.dart';
 import '../../../shared/components/loading/loading_widget.dart';
-import '../../../shared/components/utils/validation_util.dart';
 import '../../../splash/presentation/blocs/database_bloc.dart';
 import '../../infra/models/firestore-dtos/services_collection_dto.dart';
+import '../../infra/models/hive-dtos/hive_database_configs_dto.dart';
 import '../blocs/services_collection_bloc.dart';
 import '../../../shared/layout/top-bar/main_top_bar_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ServicesListView extends StatefulWidget {
   const ServicesListView({super.key});
@@ -24,18 +24,15 @@ class ServicesListView extends StatefulWidget {
 
 class _ServicesListViewState extends State<ServicesListView>
     with AutomaticKeepAliveClientMixin {
+
   late final ServicesCollectionBloc servicesCollectionBloc;
-  late final String database;
-  late final DatabaseBloc databaseBloc;
   late List<ServicesCollectionDTO> servicesCollection;
 
   @override
   void initState() {
     servicesCollectionBloc = context.read<ServicesCollectionBloc>();
-    databaseBloc = context.read<DatabaseBloc>();
-    servicesCollectionBloc.add(CheckConnectivityEvent(path: 'services-collection/id'));
-    //servicesCollectionBloc.add(GetCollectionInHiveEvent(path: ''));
-    database = ValidationUtil.validationDatasource();
+    final data = context.read<HiveDatabaseConfigsDTO>();
+    servicesCollectionBloc.add(CheckConnectivityEvent(database: data));
     super.initState();
   }
 
@@ -59,6 +56,11 @@ class _ServicesListViewState extends State<ServicesListView>
                 return const NoConnectionView(index: 0);
               } else if (state is SuccessfullyFetchedCollectionState) {
                 servicesCollection = state.entities;
+                HiveDatabaseConfigsDTO data = context.read<HiveDatabaseConfigsDTO>();
+                if(!(data.isServicesUpdated) || (data.fireUpdateId != data.hiveUpdateId)){
+                  data = data.copyWith(isServicesUpdated: true, hiveUpdateId: data.fireUpdateId);
+                  context.read<DatabaseBloc>().add(UpdateDataEvent(data: data));
+                }
                 return Column(
                   children: [
                     const MainTopBarWidget(),
@@ -160,17 +162,12 @@ class _ServicesListViewState extends State<ServicesListView>
                                     highlightColor: Colors.transparent,
                                     iOSIcon: CupertinoIcons.chevron_forward,
                                     androidIcon: Icons.navigate_next_sharp,
-                                   // action: () => Navigator.of(context).pushNamed(
-                                    // AppRoutes.servicesCollectionRoute,
-                                    // arguments: servicesCollection[index]);
-                                    // ),
                                   ),
                                 ),
                                 onTap: () {
                                   Navigator.of(context).pushNamed(
                                       AppRoutes.servicesCollectionRoute,
-                                      arguments: servicesCollection[index]
-                                  );
+                                      arguments: servicesCollection[index]);
                                 },
                               ),
                             ),

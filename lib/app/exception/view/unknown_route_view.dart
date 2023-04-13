@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../../shared/configs/app_configs.dart';
 

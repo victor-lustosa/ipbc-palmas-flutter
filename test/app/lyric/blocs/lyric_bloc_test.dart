@@ -28,7 +28,7 @@ void main() {
       when(() => fireUseCases.get('')).thenAnswer((_) => Future.value(Stream.value([])));
       return bloc;
     },
-    act: (bloc) => bloc.add(GetLyricsInFireEvent(path: '')),
+    act: (bloc) => bloc.add(GetLyricsInFireEvent()),
     expect: () => [
       isA<LoadingLyricsState>(),
       isA<SuccessfullyFetchedLyricsState>(),
@@ -41,7 +41,7 @@ void main() {
           .thenAnswer((_) => Future.value(Stream.error(Exception('Error'))));
       return bloc;
     },
-    act: (bloc) => bloc.add(GetLyricsInFireEvent(path: '')),
+    act: (bloc) => bloc.add(GetLyricsInFireEvent()),
     expect: () => [
       isA<LoadingLyricsState>(),
       isA<ExceptionLyricState>(),

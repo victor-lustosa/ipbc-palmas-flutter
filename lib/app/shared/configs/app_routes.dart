@@ -34,7 +34,7 @@ class AppRoutes {
           reverseSpeed: const Duration(milliseconds: 500),
           child: LyricView(lyricEntity: settings.arguments as LyricEntity),
           tween: Tween(begin: const Offset(0, 1), end: Offset.zero)
-              .chain(CurveTween(curve: Curves.easeIn)),
+              .chain(CurveTween(curve: Curves.ease)),
         );
 
       default:
@@ -73,22 +73,22 @@ class _ServicesListRoutesState extends State<ServicesListRoutes> {
 
           case AppRoutes.serviceRoute:
             return CustomTransitionPageRoute(
-              transitionSpeed: const Duration(milliseconds: 800),
-              reverseSpeed: const Duration(milliseconds: 800),
+              transitionSpeed: const Duration(milliseconds: 700),
+              reverseSpeed: const Duration(milliseconds: 700),
               child: ServiceView(entity: settings.arguments as ServiceViewDTO),
               tween: Tween(begin: const Offset(1, 0), end: Offset.zero)
-                  .chain(CurveTween(curve: Curves.easeInOutQuint)),
+                  .chain(CurveTween(curve: Curves.ease)),
             );
 
           case AppRoutes.servicesCollectionRoute:
             return CustomTransitionPageRoute(
-              transitionSpeed: const Duration(milliseconds: 800),
-              reverseSpeed: const Duration(milliseconds: 800),
+              transitionSpeed: const Duration(milliseconds: 700),
+              reverseSpeed: const Duration(milliseconds: 700),
               child: ServicesCollectionView(
                 servicesCollection: settings.arguments as ServicesCollectionDTO,
               ),
               tween: Tween(begin: const Offset(1, 0), end: Offset.zero)
-                  .chain(CurveTween(curve: Curves.easeInOutQuint)),
+                  .chain(CurveTween(curve: Curves.ease)),
             );
 
           default:
@@ -119,11 +119,12 @@ class CustomTransitionPageRoute extends PageRouteBuilder {
   final Duration transitionSpeed;
   final Duration reverseSpeed;
 
-  CustomTransitionPageRoute({
-      required this.transitionSpeed,
+  CustomTransitionPageRoute(
+      {required this.transitionSpeed,
       required this.reverseSpeed,
       required this.tween,
-      required this.child}) : super(
+      required this.child})
+      : super(
             reverseTransitionDuration: reverseSpeed,
             transitionDuration: transitionSpeed,
             pageBuilder: (context, animation, secondaryAnimation) => child);
