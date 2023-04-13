@@ -3,17 +3,19 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../core/domain/use-cases/use_cases.dart';
+import '../../../splash/infra/use-cases/databases_use_cases.dart';
 import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 
 class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
-  final IUseCases databasesUseCases;
+
+  final DatabasesUseCases databasesUseCases;
   final FirebaseCrashlytics crash;
   final String path = 'database-configs';
+
   DatabaseBloc({required this.databasesUseCases, required this.crash}) : super(InitialDatasourceState()) {
     on<GetDataEvent>(_getData);
-    on<AddDataEvent>(_addData);
     on<UpdateDataEvent>(_updateData);
+    // on<AddDataEvent>(_addData);
   }
 
   _getData(GetDataEvent event, emit) async {
@@ -29,16 +31,17 @@ class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
       },
     );
   }
-  Future<void> _addData(AddDataEvent event, emit) async {
-    databasesUseCases.add(path, event.data);
-    emit(SuccessfullyFetchedDataState());
-  }
+
   Future<void> _updateData(UpdateDataEvent event, emit) async {
-   if(!event.data.isSystemUpdated){
-     databasesUseCases.update(path, event.data);
+    if(!event.data.isSystemUpdated){
+      databasesUseCases.update(path, event.data);
     }
     emit(SuccessfullyFetchedDataState());
   }
+ /* Future<void> _addData(AddDataEvent event, emit) async {
+    databasesUseCases.add(path, event.data);
+    emit(SuccessfullyFetchedDataState());
+  }*/
 }
 
 @immutable
@@ -55,10 +58,10 @@ class UpdateDataEvent extends DatabasesEvent {
   final HiveDatabaseConfigsDTO data;
   UpdateDataEvent({required this.data});
 }
-class AddDataEvent extends DatabasesEvent {
+/* class AddDataEvent extends DatabasesEvent {
   final HiveDatabaseConfigsDTO data;
   AddDataEvent({required this.data});
-}
+}*/
 
 @immutable
 abstract class DatabasesState {}

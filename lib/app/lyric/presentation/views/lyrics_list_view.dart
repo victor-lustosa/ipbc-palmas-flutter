@@ -22,13 +22,15 @@ class LyricsListView extends StatefulWidget {
 
 class _LyricsListViewState extends State<LyricsListView>
     with TickerProviderStateMixin {
+
   late List<LyricEntity> lyricsFetched;
   late List<LyricEntity> lyricsFiltered;
   late List<String> drawerNames;
-  late final LyricBloc lyricBloc;
+  late final LyricBloc bloc;
   bool isSelected = false;
   String selectedValue = '';
   late HiveDatabaseConfigsDTO data;
+
   fillLettersCarousel() {
     drawerNames = [
       'Sobre IPB Palmas',
@@ -47,9 +49,9 @@ class _LyricsListViewState extends State<LyricsListView>
     lyricsFetched = [];
     lyricsFiltered = [];
     fillLettersCarousel();
-    lyricBloc = context.read<LyricBloc>();
+    bloc = context.read<LyricBloc>();
     data = context.read<HiveDatabaseConfigsDTO>();
-    lyricBloc.add(CheckConnectivityEvent(database: data));
+    bloc.add(CheckConnectivityEvent(data: data));
   }
 
   @override
@@ -62,7 +64,7 @@ class _LyricsListViewState extends State<LyricsListView>
         drawerEnableOpenDragGesture: true,
         backgroundColor: AppColors.white,
         body: BlocBuilder<LyricBloc, LyricState>(
-          bloc: lyricBloc,
+          bloc: bloc,
           builder: (context, state) {
             if (state is InitialState) {
               return const LoadingWidget();
@@ -73,7 +75,7 @@ class _LyricsListViewState extends State<LyricsListView>
             } else if (state is SuccessfullyFetchedLyricsState || state is SuccessfullyFilteredLyricsState) {
 
               if (!(data.isLyricsUpdated) || (data.fireUpdateId != data.hiveUpdateId)) {
-                data = data.copyWith(isLyricsUpdated: true, hiveUpdateId: data.fireUpdateId);
+                data = data.copyWith(isLyricsUpdated: true);
                 context.read<DatabaseBloc>().add(UpdateDataEvent(data: data));
               }
 
@@ -99,7 +101,7 @@ class _LyricsListViewState extends State<LyricsListView>
                   child: RefreshIndicator(
                     color: AppColors.darkGreen,
                     onRefresh: () async {
-                      lyricBloc.add(GetLyricsInFireEvent());
+                      bloc.add(CheckConnectivityEvent(data: data));
                     },
                     child: Column(
                       children: [

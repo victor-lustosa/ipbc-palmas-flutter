@@ -56,7 +56,7 @@ class _SplashViewState extends State<SplashView> {
                 data.isSaturdayCollectionUpdated &&
                 data.isSundayEveningCollectionUpdated &&
                 data.isServicesUpdated) {
-              data = data.copyWith(isSystemUpdated: true);
+              data = data.copyWith(isSystemUpdated: true, hiveUpdateId: data.fireUpdateId);
             }
             bloc.add(UpdateDataEvent(data: data));
           }

@@ -25,14 +25,14 @@ class ServicesListView extends StatefulWidget {
 class _ServicesListViewState extends State<ServicesListView>
     with AutomaticKeepAliveClientMixin {
 
-  late final ServicesCollectionBloc servicesCollectionBloc;
+  late final ServicesCollectionBloc bloc;
   late List<ServicesCollectionDTO> servicesCollection;
 
   @override
   void initState() {
-    servicesCollectionBloc = context.read<ServicesCollectionBloc>();
+    bloc = context.read<ServicesCollectionBloc>();
     final data = context.read<HiveDatabaseConfigsDTO>();
-    servicesCollectionBloc.add(CheckConnectivityEvent(database: data));
+    bloc.add(CheckConnectivityEvent(data: data));
     super.initState();
   }
 
@@ -46,7 +46,7 @@ class _ServicesListViewState extends State<ServicesListView>
       body: SafeArea(
         child: SingleChildScrollView(
           child: BlocBuilder<ServicesCollectionBloc, ServicesCollectionState>(
-            bloc: servicesCollectionBloc,
+            bloc: bloc,
             builder: (context, state) {
               if (state is InitialState) {
                 return const LoadingWidget();
@@ -58,7 +58,7 @@ class _ServicesListViewState extends State<ServicesListView>
                 servicesCollection = state.entities;
                 HiveDatabaseConfigsDTO data = context.read<HiveDatabaseConfigsDTO>();
                 if(!(data.isServicesUpdated) || (data.fireUpdateId != data.hiveUpdateId)){
-                  data = data.copyWith(isServicesUpdated: true, hiveUpdateId: data.fireUpdateId);
+                  data = data.copyWith(isServicesUpdated: true);
                   context.read<DatabaseBloc>().add(UpdateDataEvent(data: data));
                 }
                 return Column(

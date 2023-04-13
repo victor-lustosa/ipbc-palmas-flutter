@@ -19,7 +19,7 @@ class ValidationUtil {
       case 'Friday':
         return 'firebase';
       case 'Thursday':
-        return 'firebase';
+        return 'hive';
       case 'Saturday':
         return 'firebase';
       case 'Sunday':

@@ -3,16 +3,20 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ipbc_palmas/app/lyric/infra/use-cases/services_use_cases.dart';
 
+import '../../../core/domain/use-cases/use_cases.dart';
 import '../../domain/entities/service_entity.dart';
 import '../../infra/models/hive-dtos/hive_database_configs_dto.dart';
 import '../view-models/lyrics_view_model.dart';
 
 class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
-  final ServicesUseCases fireServicesUseCases;
-  final ServicesUseCases hiveServicesUseCases;
+  final IUseCases fireServicesUseCases;
+  final IUseCases hiveServicesUseCases;
   final LyricsViewModel lyricsViewModel;
+  final String initialId = 'fdg33f345';
+  late HiveDatabaseConfigsDTO data;
+  bool addController = false;
+
   ServiceBloc(
       {required this.lyricsViewModel,
       required this.fireServicesUseCases,
@@ -26,39 +30,47 @@ class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
     on<CheckConnectivityEvent>(_checkConnectivity);
   }
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
+    data = event.data;
     add(LoadingEvent());
-    if (checkServiceType(event.path, event.database) || (event.database.hiveUpdateId != event.database.fireUpdateId)) {
-      add(GetServiceInHiveEvent(path: event.path));
-    } else {
+    if (checkUpdate(event.path, data)) {
       final isConnected = await lyricsViewModel.isConnected();
       if (isConnected) {
         add(GetServiceInFireEvent(path: event.path));
       } else {
         emit(NoConnectionAvailableState());
       }
+    } else {
+      add(GetServiceInHiveEvent(path: event.path));
     }
   }
 
-  bool checkServiceType(String type, HiveDatabaseConfigsDTO database) {
+  checkUpdate(String path, HiveDatabaseConfigsDTO data) {
+    if (!checkServiceType(path, data) || (data.hiveUpdateId != data.fireUpdateId)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool checkServiceType(String type, HiveDatabaseConfigsDTO data) {
     switch (type) {
       case 'saturday-services':
-        return database.isSaturdayCollectionUpdated;
+        return data.isSaturdayCollectionUpdated;
       case 'morning-sunday-services':
-        return database.isSundayMorningCollectionUpdated;
+        return data.isSundayMorningCollectionUpdated;
       case 'evening-sunday-services':
-        return database.isSundayEveningCollectionUpdated;
+        return data.isSundayEveningCollectionUpdated;
       default:
         return false;
     }
   }
 
   Future<void> _getServiceInFire(GetServiceInFireEvent event, emit) async {
-
     await emit.onEach<List<ServiceEntity>>(
       await fireServicesUseCases.get(event.path),
-      onData: (service) {
-        add(UpdateServiceInHiveEvent(path: 'services', data: service));
-        emit(SuccessfullyFetchedServiceState(service));
+      onData: (services) {
+        add(UpdateServiceInHiveEvent(path: event.path, entities: services));
+        emit(SuccessfullyFetchedServiceState(services));
       },
       onError: (error, st) async {
         await FirebaseCrashlytics.instance
@@ -73,8 +85,8 @@ class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
   Future<void> _getServiceInHive(GetServiceInHiveEvent event, emit) async {
     await emit.onEach<List<ServiceEntity>>(
       await hiveServicesUseCases.get(event.path),
-      onData: (service) {
-        emit(SuccessfullyFetchedServiceState(service));
+      onData: (services) {
+        emit(SuccessfullyFetchedServiceState(services));
       },
       onError: (error, st) async {
         await FirebaseCrashlytics.instance
@@ -91,10 +103,12 @@ class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
   }
 
   Future<void> _addServiceInHive(AddServiceInHiveEvent event, emit) async {
-    await hiveServicesUseCases.add(event.path, event.data);
+    await hiveServicesUseCases.add(event.path, event.entities);
   }
-  Future<void> _updateServiceInHive(UpdateServiceInHiveEvent event, emit) async {
-    await hiveServicesUseCases.update(event.path, event.data);
+
+  Future<void> _updateServiceInHive(
+      UpdateServiceInHiveEvent event, emit) async {
+    await hiveServicesUseCases.update(event.path, event.entities);
   }
 }
 
@@ -111,8 +125,8 @@ class LoadingEvent extends ServicesEvent {
 
 class CheckConnectivityEvent extends ServicesEvent {
   final String path;
-  final HiveDatabaseConfigsDTO database;
-  CheckConnectivityEvent({required this.path, required this.database});
+  final HiveDatabaseConfigsDTO data;
+  CheckConnectivityEvent({required this.path, required this.data});
 }
 
 class GetServiceInFireEvent extends ServicesEvent {
@@ -124,15 +138,17 @@ class GetServiceInHiveEvent extends ServicesEvent {
   final String path;
   GetServiceInHiveEvent({required this.path});
 }
+
 class UpdateServiceInHiveEvent extends ServicesEvent {
   final String path;
-  final dynamic data;
-  UpdateServiceInHiveEvent({required this.path, required this.data});
+  final dynamic entities;
+  UpdateServiceInHiveEvent({required this.path, required this.entities});
 }
+
 class AddServiceInHiveEvent extends ServicesEvent {
   final String path;
-  final dynamic data;
-  AddServiceInHiveEvent({required this.path, required this.data});
+  final dynamic entities;
+  AddServiceInHiveEvent({required this.path, required this.entities});
 }
 
 @immutable

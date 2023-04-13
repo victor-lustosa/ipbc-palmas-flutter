@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ipbc_palmas/app/lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 
+import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 import '../../domain/use-cases/lyrics_use_cases.dart';
 import '../../domain/entities/lyric_entity.dart';
 import '../view-models/lyrics_view_model.dart';
@@ -14,6 +14,10 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
   final ILyricsUseCases hiveLyricsUseCase;
   final LyricsViewModel lyricsViewModel;
   final String path = 'lyrics/20';
+  final String initialId = 'fdg33f345';
+  late HiveDatabaseConfigsDTO data;
+  bool addController = false;
+
   LyricBloc({ required this.lyricsViewModel, required this.fireLyricsUseCase, required this.hiveLyricsUseCase})
       : super(InitialState()) {
     on<GetLyricsInFireEvent>(_getLyricsInFire);
@@ -25,15 +29,23 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
     on<CheckConnectivityEvent>(_checkConnectivity);
   }
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
-    if(event.database.isLyricsUpdated || (event.database.hiveUpdateId != event.database.fireUpdateId)){
-      add(GetLyricsInHiveEvent());
-    } else{
+    data = event.data;
+    if(checkUpdate(data)){
       final isConnected = await lyricsViewModel.isConnected();
       if(isConnected){
         add(GetLyricsInFireEvent());
       } else {
         emit(NoConnectionAvailableState());
       }
+    } else{
+      add(GetLyricsInHiveEvent());
+    }
+  }
+  checkUpdate(HiveDatabaseConfigsDTO data){
+    if(!data.isLyricsUpdated || (data.hiveUpdateId != data.fireUpdateId)) {
+      return true;
+    } else{
+      return false;
     }
   }
   Future<void> _getLyricsInFire(GetLyricsInFireEvent event, emit) async {
@@ -41,7 +53,7 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
     await emit.onEach<List<LyricEntity>>(
       await fireLyricsUseCase.get(path),
       onData: (lyrics) {
-        add(UpdateLyricsInHiveEvent(data: lyrics));
+        add(UpdateLyricsInHiveEvent(entities: lyrics));
         emit(SuccessfullyFetchedLyricsState(lyrics));
       },
       onError: (error, st) async {
@@ -67,10 +79,10 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
     );
   }
   Future<void> _addLyricsInHive(AddLyricsInHiveEvent event, emit) async {
-    hiveLyricsUseCase.add(path, event.data);
+    hiveLyricsUseCase.add(path, event.entities);
   }
   Future<void> _updateLyricsInHive(UpdateLyricsInHiveEvent event, emit) async {
-    hiveLyricsUseCase.update(path, event.data);
+    hiveLyricsUseCase.update(path, event.entities);
   }
   Future<void> _loading(_, emit) async {
     emit(LoadingLyricsState());
@@ -94,19 +106,19 @@ class GetLyricsInFireEvent extends LyricEvent {
   GetLyricsInFireEvent();
 }
 class CheckConnectivityEvent extends LyricEvent {
-  final HiveDatabaseConfigsDTO database;
-  CheckConnectivityEvent({required this.database});
+  final HiveDatabaseConfigsDTO data;
+  CheckConnectivityEvent({required this.data});
 }
 class GetLyricsInHiveEvent extends LyricEvent {
   GetLyricsInHiveEvent();
 }
 class UpdateLyricsInHiveEvent extends LyricEvent {
-  final dynamic data;
-  UpdateLyricsInHiveEvent({ required this.data});
+  final dynamic entities;
+  UpdateLyricsInHiveEvent({ required this.entities});
 }
 class AddLyricsInHiveEvent extends LyricEvent {
-  final dynamic data;
-  AddLyricsInHiveEvent({ required this.data});
+  final dynamic entities;
+  AddLyricsInHiveEvent({ required this.entities});
 }
 
 class LyricsFilterEvent extends LyricEvent {

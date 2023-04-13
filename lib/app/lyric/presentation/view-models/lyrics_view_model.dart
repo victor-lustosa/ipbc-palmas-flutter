@@ -4,10 +4,6 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:provider/provider.dart';
-
-import '../../../splash/presentation/blocs/database_bloc.dart';
-import '../../infra/models/hive-dtos/hive_database_configs_dto.dart';
 
 class LyricsViewModel {
   static int chorusController = 0;
@@ -27,29 +23,6 @@ class LyricsViewModel {
       await FirebaseCrashlytics.instance
           .recordError(e, st, reason: 'a non-fatal error');
       throw Exception();
-    }
-  }
-
-  refreshCollectionsUpdateAt(BuildContext context, type) {
-    switch (type) {
-      case 'saturday-services':
-        Provider.of(context).read<DatabaseBloc>().add(
-            AddDataEvent(data: Provider.of(context)
-                .read<HiveDatabaseConfigsDTO>()
-                .copyWith(isSaturdayCollectionUpdated: true)));
-        break;
-      case 'morning-sunday-services':
-        Provider.of(context).read<DatabaseBloc>().add(
-            AddDataEvent(data: Provider.of(context)
-                .read<HiveDatabaseConfigsDTO>()
-                .copyWith(isSundayMorningCollectionUpdated: true)));
-        break;
-      case 'evening-sunday-services':
-        Provider.of(context).read<DatabaseBloc>().add(
-            AddDataEvent(data: Provider.of(context)
-                .read<HiveDatabaseConfigsDTO>()
-                .copyWith(isSundayEveningCollectionUpdated: true)));
-        break;
     }
   }
 

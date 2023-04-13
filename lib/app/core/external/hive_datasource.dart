@@ -11,6 +11,7 @@ import '../../lyric/infra/models/hive-dtos/hive_liturgy_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_services_collection_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_verse_dto.dart';
+import '../../shared/components/utils/service_util.dart';
 import '../infra/datasources/datasource.dart';
 
 class HiveDatasource<R> implements IDatasource {
@@ -105,8 +106,6 @@ class HiveDatasource<R> implements IDatasource {
           box.add(HiveServicesCollectionAdapter.toDTO(entity) as R);
         }
         break;
-      case 'database-configs':
-        box.put(params[0], data as R);
     }
   }
 
@@ -116,27 +115,28 @@ class HiveDatasource<R> implements IDatasource {
     switch (params[0]) {
       case 'lyrics':
         for(LyricEntity entity in data as List<LyricEntity>) {
-          box.put('lyrics',HiveLyricAdapter.toDTO(entity) as R);
+          box.put(entity.id,HiveLyricAdapter.toDTO(entity) as R);
         }
         break;
       case 'services':
         for(ServiceEntity entity in data as List<ServiceEntity>) {
-          box.put(entity.type, HiveServiceAdapter.toDTO(entity) as R);
+          box.put(entity.id, HiveServiceAdapter.toDTO(entity) as R);
         }
         break;
       case 'services-collection':
         for(ServicesCollectionDTO entity in data as List<ServicesCollectionDTO>){
-          List<String> url = entity.path.split('/');
-          box.put(url[0], HiveServicesCollectionAdapter.toDTO(entity) as R);
+          box.put(entity.id, HiveServicesCollectionAdapter.toDTO(entity) as R);
         }
         break;
       case 'database-configs':
         box.put(params[0], data as R);
+        break;
     }
   }
 
   @override
   Future<void> delete(String path) async {
-    box.delete(path);
+    params = path.split('/');
+    box.delete(params[0]);
   }
 }

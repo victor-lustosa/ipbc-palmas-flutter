@@ -197,7 +197,7 @@ class _HiveTestState extends State<HiveTest> {
           ],
           id: '2')
     ];
-    widget.bloc.add(AddLyricsInHiveEvent(data: entities));
+    widget.bloc.add(AddLyricsInHiveEvent(entities: entities));
     super.initState();
   }
   @override

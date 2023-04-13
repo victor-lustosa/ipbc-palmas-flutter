@@ -27,35 +27,32 @@ class ServicesCollectionView extends StatefulWidget {
 }
 
 class _ServicesCollectionViewState extends State<ServicesCollectionView> {
-  late final ServiceBloc serviceBloc;
+
+  late final ServiceBloc bloc;
   late List<ServiceEntity> servicesList;
   late HiveDatabaseConfigsDTO data;
+
   @override
   void initState() {
     super.initState();
-    serviceBloc = context.read<ServiceBloc>();
+    bloc = context.read<ServiceBloc>();
     data = context.read<HiveDatabaseConfigsDTO>();
-    serviceBloc.add(
-      CheckConnectivityEvent(
-          path: widget.servicesCollection.path, database: data),
-    );
+    bloc.add(CheckConnectivityEvent(path: widget.servicesCollection.path, data: data));
   }
 
   serviceType(BuildContext context) {
     switch (widget.servicesCollection.path) {
       case 'saturday-services':
         data = data.copyWith(
-            isSaturdayCollectionUpdated: true, hiveUpdateId: data.fireUpdateId);
+            isSaturdayCollectionUpdated: true);
         break;
       case 'morning-sunday-services':
         data = data.copyWith(
-            isSundayMorningCollectionUpdated: true,
-            hiveUpdateId: data.fireUpdateId);
+            isSundayMorningCollectionUpdated: true);
         break;
       case 'evening-sunday-services':
         data = data.copyWith(
-            isSundayEveningCollectionUpdated: true,
-            hiveUpdateId: data.fireUpdateId);
+            isSundayEveningCollectionUpdated: true);
         break;
     }
     context.read<DatabaseBloc>().add(UpdateDataEvent(data: data));
@@ -79,7 +76,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
               highlightColor: const Color(0x66BCBCBC),
             ),
             child: BlocBuilder<ServiceBloc, ServicesState>(
-              bloc: serviceBloc,
+              bloc: bloc,
               builder: (context, state) {
                 if (state is InitialState) {
                   return const LoadingWidget();
