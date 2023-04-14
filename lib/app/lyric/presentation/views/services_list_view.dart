@@ -27,6 +27,7 @@ class _ServicesListViewState extends State<ServicesListView>
 
   late final ServicesCollectionBloc bloc;
   late List<ServicesCollectionDTO> servicesCollection;
+  late HiveDatabaseConfigsDTO data;
 
   @override
   void initState() {
@@ -56,8 +57,8 @@ class _ServicesListViewState extends State<ServicesListView>
                 return const NoConnectionView(index: 0);
               } else if (state is SuccessfullyFetchedCollectionState) {
                 servicesCollection = state.entities;
-                HiveDatabaseConfigsDTO data = context.read<HiveDatabaseConfigsDTO>();
-                if(!(data.isServicesUpdated) || (data.fireUpdateId != data.hiveUpdateId)){
+                data = context.read<HiveDatabaseConfigsDTO>();
+                if(!(data.isServicesUpdated)){
                   data = data.copyWith(isServicesUpdated: true);
                   context.read<DatabaseBloc>().add(UpdateDataEvent(data: data));
                 }

@@ -40,7 +40,7 @@ void main() async {
   String eveningSundayServiceUrl = 'evening-sunday-services';
 
   try {
-    /* final String saturdayJson = await rootBundle.loadString('assets/data/saturday-services/saturday-service.json');
+     final String saturdayJson = await rootBundle.loadString('assets/data/saturday-services/saturday-service.json');
     final String sundayEveningJson = await rootBundle.loadString('assets/data/sunday-evening-services/sunday-evening-service.json');
     final String sundayMorningJson = await rootBundle.loadString('assets/data/sunday-morning-services/sunday-morning-service.json');
      /*List<Map<String, dynamic>> servicesCollection = [
@@ -100,7 +100,7 @@ void main() async {
       fire.add(servicesCollectionUrl, collection);
     }
     //print('Services Collection have been added successfully');
-*/*/
+*/
     fire.add(settingsUrl, SettingsDTOAdapter.toMap(SettingsDTO(fireUpdateId: ServiceUtil.createId(8))));
     print('updateAt have been updated successfully');
 

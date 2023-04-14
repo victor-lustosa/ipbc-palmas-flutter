@@ -32,7 +32,7 @@ class ServicesCollectionBloc extends Bloc<ServicesCollectionEvent, ServicesColle
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
     data = event.data;
     add(LoadingEvent());
-    if(checkUpdate(data)){
+    if(!data.isServicesUpdated){
       final isConnected = await lyricsViewModel.isConnected();
       if(isConnected){
         add(GetCollectionInFireEvent());
@@ -43,13 +43,7 @@ class ServicesCollectionBloc extends Bloc<ServicesCollectionEvent, ServicesColle
       add(GetCollectionInHiveEvent());
     }
   }
-  checkUpdate(HiveDatabaseConfigsDTO data){
-    if(!data.isServicesUpdated || (data.hiveUpdateId != data.fireUpdateId)) {
-      return true;
-    } else{
-      return false;
-    }
-  }
+
   Future<void> _getCollectionInFire(GetCollectionInFireEvent event, emit) async {
     await emit.onEach<List<ServicesCollectionDTO>>(
       await fireCollectionUseCases.get(path),

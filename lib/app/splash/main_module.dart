@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:provider/provider.dart';
 
+import '../splash/presentation/view-models/database_view_model.dart';
 import '../home/view-models/home_view_model.dart';
 import 'presentation/blocs/database_bloc.dart';
 import '../core/external/firestore_datasource.dart';
@@ -11,6 +12,9 @@ import '../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 import 'infra/use-cases/databases_use_cases.dart';
 
 final mainModule = [
+  Provider<DatabaseViewModel>(
+    create: (_) => DatabaseViewModel(),
+  ),
   Provider<FirebaseCrashlytics>(
     create: (_) => FirebaseCrashlytics.instance,
   ),

@@ -32,7 +32,7 @@ class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
     data = event.data;
     add(LoadingEvent());
-    if (checkUpdate(event.path, data)) {
+    if (!checkServiceType(event.path, data)) {
       final isConnected = await lyricsViewModel.isConnected();
       if (isConnected) {
         add(GetServiceInFireEvent(path: event.path));
@@ -44,16 +44,9 @@ class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
     }
   }
 
-  checkUpdate(String path, HiveDatabaseConfigsDTO data) {
-    if (!checkServiceType(path, data) || (data.hiveUpdateId != data.fireUpdateId)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   bool checkServiceType(String type, HiveDatabaseConfigsDTO data) {
-    switch (type) {
+    List<String> params = type.split('/');
+    switch (params[0]) {
       case 'saturday-services':
         return data.isSaturdayCollectionUpdated;
       case 'morning-sunday-services':
@@ -69,7 +62,7 @@ class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
     await emit.onEach<List<ServiceEntity>>(
       await fireServicesUseCases.get(event.path),
       onData: (services) {
-        add(UpdateServiceInHiveEvent(path: event.path, entities: services));
+        add(UpdateServiceInHiveEvent(path: 'services/${event.path}', entities: services));
         emit(SuccessfullyFetchedServiceState(services));
       },
       onError: (error, st) async {
@@ -84,7 +77,7 @@ class ServiceBloc extends Bloc<ServicesEvent, ServicesState> {
 
   Future<void> _getServiceInHive(GetServiceInHiveEvent event, emit) async {
     await emit.onEach<List<ServiceEntity>>(
-      await hiveServicesUseCases.get(event.path),
+      await hiveServicesUseCases.get('services/${event.path}'),
       onData: (services) {
         emit(SuccessfullyFetchedServiceState(services));
       },

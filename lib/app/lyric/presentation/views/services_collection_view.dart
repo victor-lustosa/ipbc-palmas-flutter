@@ -41,18 +41,16 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
   }
 
   serviceType(BuildContext context) {
-    switch (widget.servicesCollection.path) {
+    List<String> params = widget.servicesCollection.path.split('/');
+    switch (params[0]) {
       case 'saturday-services':
-        data = data.copyWith(
-            isSaturdayCollectionUpdated: true);
+        data = data.copyWith(isSaturdayCollectionUpdated: true);
         break;
       case 'morning-sunday-services':
-        data = data.copyWith(
-            isSundayMorningCollectionUpdated: true);
+        data = data.copyWith(isSundayMorningCollectionUpdated: true);
         break;
       case 'evening-sunday-services':
-        data = data.copyWith(
-            isSundayEveningCollectionUpdated: true);
+        data = data.copyWith(isSundayEveningCollectionUpdated: true);
         break;
     }
     context.read<DatabaseBloc>().add(UpdateDataEvent(data: data));
@@ -63,7 +61,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
     if (!(data.isSaturdayCollectionUpdated) ||
         !(data.isSundayEveningCollectionUpdated) ||
         !(data.isSundayMorningCollectionUpdated) ||
-        (data.fireUpdateId != data.hiveUpdateId)) {
+        !(data.fireUpdateId != data.hiveUpdateId)) {
       serviceType(context);
     }
 

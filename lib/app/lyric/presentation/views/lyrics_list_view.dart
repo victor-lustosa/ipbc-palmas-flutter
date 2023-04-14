@@ -74,7 +74,7 @@ class _LyricsListViewState extends State<LyricsListView>
               return const NoConnectionView(index: 0);
             } else if (state is SuccessfullyFetchedLyricsState || state is SuccessfullyFilteredLyricsState) {
 
-              if (!(data.isLyricsUpdated) || (data.fireUpdateId != data.hiveUpdateId)) {
+              if (!(data.isLyricsUpdated)) {
                 data = data.copyWith(isLyricsUpdated: true);
                 context.read<DatabaseBloc>().add(UpdateDataEvent(data: data));
               }

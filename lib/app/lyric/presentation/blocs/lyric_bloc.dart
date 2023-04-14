@@ -30,7 +30,7 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
   }
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
     data = event.data;
-    if(checkUpdate(data)){
+    if(!data.isLyricsUpdated){
       final isConnected = await lyricsViewModel.isConnected();
       if(isConnected){
         add(GetLyricsInFireEvent());
@@ -41,13 +41,7 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
       add(GetLyricsInHiveEvent());
     }
   }
-  checkUpdate(HiveDatabaseConfigsDTO data){
-    if(!data.isLyricsUpdated || (data.hiveUpdateId != data.fireUpdateId)) {
-      return true;
-    } else{
-      return false;
-    }
-  }
+
   Future<void> _getLyricsInFire(GetLyricsInFireEvent event, emit) async {
     add(LoadingEvent());
     await emit.onEach<List<LyricEntity>>(

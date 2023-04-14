@@ -50,22 +50,19 @@ class HiveDatasource<R> implements IDatasource {
     params = path.split('/');
     switch (params[0]) {
       case 'services':
-        var result = box.values
-            .where((entity) => (entity as HiveServiceDTO).type == params[1])
-            .toList();
-        (result as List<HiveServiceDTO>)
-            .sort((a, b) => a.createAt.compareTo(b.createAt));
+        var result = box.values.where((entity) => (entity as HiveServiceDTO).type == params[1]).toList();
+        (result as List<HiveServiceDTO>).sort((a, b) => b.createAt.compareTo(a.createAt));
         return Stream.value(result.map(HiveServiceAdapter.toMap).toList());
+
       case 'lyrics':
         var result = box.values.toList();
-        (result as List<HiveLyricDTO>)
-            .sort((a, b) => a.createAt.compareTo(b.createAt));
-        return Stream.value(
-            HiveLyricAdapter.toMapList(result as List<HiveLyricDTO>));
+        (result as List<HiveLyricDTO>).sort((a, b) => b.createAt.compareTo(a.createAt));
+        return Stream.value(HiveLyricAdapter.toMapList(result as List<HiveLyricDTO>));
+
       case 'services-collection':
         var result = box.values.toList();
-        return Stream.value(
-            result.map(HiveServicesCollectionAdapter.toMap).toList());
+        return Stream.value(result.map(HiveServicesCollectionAdapter.toMap).toList());
+
       case 'database-configs':
         var result = box.get(params[0]);
         return Stream.value(
@@ -82,6 +79,7 @@ class HiveDatasource<R> implements IDatasource {
                   isSystemUpdated: false,
                 ),
         );
+
       default:
         return Stream.value([]);
     }
@@ -89,24 +87,6 @@ class HiveDatasource<R> implements IDatasource {
 
   @override
   Future<void> add(String path, data) async {
-    params = path.split('/');
-    switch (params[0]) {
-      case 'lyrics':
-        for(LyricEntity entity in data as List<LyricEntity>) {
-        box.add(HiveLyricAdapter.toDTO(entity) as R);
-        }
-        break;
-      case 'services':
-        for(ServiceEntity entity in data as List<ServiceEntity>) {
-          box.add(HiveServiceAdapter.toDTO(entity) as R);
-        }
-        break;
-      case 'services-collection':
-       for(ServicesCollectionDTO entity in data as List<ServicesCollectionDTO>){
-          box.add(HiveServicesCollectionAdapter.toDTO(entity) as R);
-        }
-        break;
-    }
   }
 
   @override
