@@ -15,7 +15,7 @@ import '../../../shared/components/button/button_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
 import '../../domain/entities/service_entity.dart';
-import '../blocs/service_bloc.dart';
+import '../blocs/services_collection_bloc.dart';
 
 class ServicesCollectionView extends StatefulWidget {
   const ServicesCollectionView({Key? key, required this.servicesCollection})
@@ -28,14 +28,14 @@ class ServicesCollectionView extends StatefulWidget {
 
 class _ServicesCollectionViewState extends State<ServicesCollectionView> {
 
-  late final ServiceBloc bloc;
+  late final ServicesCollectionBloc bloc;
   late List<ServiceEntity> servicesList;
   late HiveDatabaseConfigsDTO data;
 
   @override
   void initState() {
     super.initState();
-    bloc = context.read<ServiceBloc>();
+    bloc = context.read<ServicesCollectionBloc>();
     data = context.read<HiveDatabaseConfigsDTO>();
     bloc.add(CheckConnectivityEvent(path: widget.servicesCollection.path, data: data));
   }
@@ -58,13 +58,6 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
 
   @override
   Widget build(BuildContext context) {
-    if (!(data.isSaturdayCollectionUpdated) ||
-        !(data.isSundayEveningCollectionUpdated) ||
-        !(data.isSundayMorningCollectionUpdated) ||
-        !(data.fireUpdateId != data.hiveUpdateId)) {
-      serviceType(context);
-    }
-
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -73,7 +66,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
               splashColor: const Color(0x66C8C8C8),
               highlightColor: const Color(0x66BCBCBC),
             ),
-            child: BlocBuilder<ServiceBloc, ServicesState>(
+            child: BlocBuilder<ServicesCollectionBloc, ServicesCollectionState>(
               bloc: bloc,
               builder: (context, state) {
                 if (state is InitialState) {
@@ -82,8 +75,9 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                   return const LoadingWidget();
                 } else if (state is NoConnectionAvailableState) {
                   return const NoConnectionView(index: 0);
-                } else if (state is SuccessfullyFetchedServiceState) {
+                } else if (state is SuccessfullyFetchedCollectionState) {
                   servicesList = state.entities;
+                  serviceType(context);
                   return Column(
                     children: [
                       Container(

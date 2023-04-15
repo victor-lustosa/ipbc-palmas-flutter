@@ -10,7 +10,7 @@ import '../../../shared/components/loading/loading_widget.dart';
 import '../../../splash/presentation/blocs/database_bloc.dart';
 import '../../infra/models/firestore-dtos/services_collection_dto.dart';
 import '../../infra/models/hive-dtos/hive_database_configs_dto.dart';
-import '../blocs/services_collection_bloc.dart';
+import '../blocs/services_list_bloc.dart';
 import '../../../shared/layout/top-bar/main_top_bar_widget.dart';
 import '../../../shared/configs/app_configs.dart';
 import '../../../shared/configs/app_routes.dart';
@@ -25,13 +25,13 @@ class ServicesListView extends StatefulWidget {
 class _ServicesListViewState extends State<ServicesListView>
     with AutomaticKeepAliveClientMixin {
 
-  late final ServicesCollectionBloc bloc;
+  late final ServicesListBloc bloc;
   late List<ServicesCollectionDTO> servicesCollection;
   late HiveDatabaseConfigsDTO data;
 
   @override
   void initState() {
-    bloc = context.read<ServicesCollectionBloc>();
+    bloc = context.read<ServicesListBloc>();
     final data = context.read<HiveDatabaseConfigsDTO>();
     bloc.add(CheckConnectivityEvent(data: data));
     super.initState();
@@ -46,16 +46,16 @@ class _ServicesListViewState extends State<ServicesListView>
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: BlocBuilder<ServicesCollectionBloc, ServicesCollectionState>(
+          child: BlocBuilder<ServicesListBloc, ServicesListState>(
             bloc: bloc,
             builder: (context, state) {
               if (state is InitialState) {
                 return const LoadingWidget();
-              } else if (state is LoadingCollectionState) {
+              } else if (state is LoadingServiceState) {
                 return const LoadingWidget();
               } else if (state is NoConnectionAvailableState) {
                 return const NoConnectionView(index: 0);
-              } else if (state is SuccessfullyFetchedCollectionState) {
+              } else if (state is SuccessfullyFetchedServiceState) {
                 servicesCollection = state.entities;
                 data = context.read<HiveDatabaseConfigsDTO>();
                 if(!(data.isServicesUpdated)){

@@ -13,7 +13,7 @@ class LoadingWidget extends StatelessWidget {
     return Platform.isIOS
         ? SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.85,
+            height: MediaQuery.of(context).size.height,
             child: const Center(
               child: CupertinoActivityIndicator(
                 color: AppColors.darkGreen, radius: 17,
@@ -22,7 +22,7 @@ class LoadingWidget extends StatelessWidget {
           )
         : SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.85,
+            height: MediaQuery.of(context).size.height,
             child: const Center(
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(

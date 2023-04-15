@@ -2,7 +2,7 @@ import 'package:provider/provider.dart';
 
 import '../lyric/infra/models/hive-dtos/hive_services_collection_dto.dart';
 import '../lyric/infra/use-cases/collections_use_cases.dart';
-import '../lyric/presentation/blocs/services_collection_bloc.dart';
+import '../lyric/presentation/blocs/services_list_bloc.dart';
 import '../lyric/presentation/view-models/lyrics_view_model.dart';
 import '../core/external/firestore_datasource.dart';
 import '../core/infra/repositories/repository.dart';
@@ -12,7 +12,7 @@ import 'infra/use-cases/services_use_cases.dart';
 import 'infra/models/hive-dtos/hive_lyric_dto.dart';
 import 'infra/models/hive-dtos/hive_service_dto.dart';
 import 'presentation/blocs/lyric_bloc.dart';
-import 'presentation/blocs/service_bloc.dart';
+import 'presentation/blocs/services_collection_bloc.dart';
 
 final lyricModule = [
   Provider<LyricsViewModel>(
@@ -23,12 +23,12 @@ final lyricModule = [
         datasource: context.read<FirestoreDatasource>(),
     ),
   ),
-  Provider<ServicesCollectionBloc>(
-    create: (context) => ServicesCollectionBloc(
-      fireCollectionUseCases: CollectionsUseCases(
+  Provider<ServicesListBloc>(
+    create: (context) => ServicesListBloc(
+      fireServiceUseCases: CollectionsUseCases(
         repository: context.read<Repository<Stream<List<Map>>>>(),
       ),
-      hiveCollectionUseCases: CollectionsUseCases(
+      hiveServiceUseCases: CollectionsUseCases(
         repository: Repository(
           datasource: HiveDatasource<HiveServicesCollectionDTO>(boxLabel: 'services-collection'),
         ),
@@ -47,8 +47,8 @@ final lyricModule = [
       ),lyricsViewModel: context.read<LyricsViewModel>(),
     ),
   ),
-  Provider<ServiceBloc>(
-    create: (context) => ServiceBloc(
+  Provider<ServicesCollectionBloc>(
+    create: (context) => ServicesCollectionBloc(
       fireServicesUseCases: ServicesUseCases(
         repository: context.read<Repository<Stream<List<Map>>>>(),
       ),

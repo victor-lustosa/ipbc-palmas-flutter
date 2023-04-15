@@ -30,7 +30,7 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
   }
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
     data = event.data;
-    if(!data.isLyricsUpdated){
+    if(!event.data.isLyricsUpdated){
       final isConnected = await lyricsViewModel.isConnected();
       if(isConnected){
         add(GetLyricsInFireEvent());
