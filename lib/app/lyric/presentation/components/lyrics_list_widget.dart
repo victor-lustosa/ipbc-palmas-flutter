@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../lyric/presentation/components/album_cover_widget.dart';
 import 'dart:io';
 import '../../../shared/components/button/button_widget.dart';
-import '../../../shared/configs/app_configs.dart';
-import '../../../shared/configs/app_routes.dart';
+import '../../../configs/app_configs.dart';
+import '../../../configs/app_routes.dart';
 import '../../domain/entities/lyric_entity.dart';
 
 class LyricsListWidget extends StatefulWidget {

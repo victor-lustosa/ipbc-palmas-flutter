@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../shared/configs/app_configs.dart';
+import '../../../configs/app_configs.dart';
 //import '../../../shared/components/circle-avatar/circle_avatar_widget.dart';
 
 class MainTopBarWidget extends StatelessWidget {

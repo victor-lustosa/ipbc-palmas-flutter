@@ -5,7 +5,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import '../../../lyric/infra/adapters/firestore-dtos/verse_dto_adapter.dart';
 import '../../../lyric/infra/models/firestore-dtos/lyric_dto.dart';
 import '../../../lyric/infra/models/firestore-dtos/service_dto.dart';
-import '../../configs/app_configs.dart';
+import '../../../configs/app_configs.dart';
 
 class ServiceUtil {
   static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';

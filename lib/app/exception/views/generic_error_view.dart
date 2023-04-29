@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../shared/configs/app_configs.dart';
+import '../../configs/app_configs.dart';
 import '../../shared/mixins/clipboard_mixin.dart';
 
 class GenericErrorView extends StatefulWidget {

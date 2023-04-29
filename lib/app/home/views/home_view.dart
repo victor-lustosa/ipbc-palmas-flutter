@@ -6,10 +6,10 @@ import '../../lyric/lyric_module.dart';
 import '../view-models/home_view_model.dart';
 import '../../offers/views/offers_view.dart';
 import '../../lyric/presentation/views/lyrics_list_view.dart';
-import '../../shared/configs/app_routes.dart';
+import '../../configs/app_routes.dart';
 import '../../shared/layout/bottom-bar/cupertino/cupertino_bottom_bar_widget.dart';
 import '../../shared/layout/bottom-bar/material/material_bottom_bar_widget.dart';
-import '../../shared/configs/app_configs.dart';
+import '../../configs/app_configs.dart';
 
 
 class HomeView extends StatefulWidget {

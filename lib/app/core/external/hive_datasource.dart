@@ -11,7 +11,6 @@ import '../../lyric/infra/models/hive-dtos/hive_liturgy_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_services_collection_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_verse_dto.dart';
-import '../../shared/components/utils/service_util.dart';
 import '../infra/datasources/datasource.dart';
 
 class HiveDatasource<R> implements IDatasource {

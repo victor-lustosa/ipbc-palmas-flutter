@@ -3,8 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../exception/view/no_connection_view.dart';
-import '../../../exception/view/generic_error_view.dart';
+import '../../../shared/components/utils/validation_util.dart';
+import '../../../exception/views/no_connection_view.dart';
+import '../../../exception/views/generic_error_view.dart';
 import '../../../shared/components/button/button_widget.dart';
 import '../../../shared/components/loading/loading_widget.dart';
 import '../../../splash/presentation/blocs/database_bloc.dart';
@@ -12,8 +13,8 @@ import '../../infra/models/firestore-dtos/services_collection_dto.dart';
 import '../../infra/models/hive-dtos/hive_database_configs_dto.dart';
 import '../blocs/services_list_bloc.dart';
 import '../../../shared/layout/top-bar/main_top_bar_widget.dart';
-import '../../../shared/configs/app_configs.dart';
-import '../../../shared/configs/app_routes.dart';
+import '../../../configs/app_configs.dart';
+import '../../../configs/app_routes.dart';
 
 class ServicesListView extends StatefulWidget {
   const ServicesListView({super.key});
@@ -32,8 +33,12 @@ class _ServicesListViewState extends State<ServicesListView>
   @override
   void initState() {
     bloc = context.read<ServicesListBloc>();
-    final data = context.read<HiveDatabaseConfigsDTO>();
-    bloc.add(CheckConnectivityEvent(data: data));
+    bloc.add(LoadingEvent());
+    if(context.read<ValidationUtil>().validateService(context)){
+      bloc.add(CheckConnectivityEvent());
+    } else {
+      bloc.add(GetServiceInHiveEvent());
+     }
     super.initState();
   }
 
@@ -60,6 +65,7 @@ class _ServicesListViewState extends State<ServicesListView>
                 data = context.read<HiveDatabaseConfigsDTO>();
                 if(!(data.isServicesUpdated)){
                   data = data.copyWith(isServicesUpdated: true);
+                  bloc.add(UpdateServiceInHiveEvent(entities: state.entities));
                   context.read<DatabaseBloc>().add(UpdateDataEvent(data: data));
                 }
                 return Column(
@@ -79,7 +85,7 @@ class _ServicesListViewState extends State<ServicesListView>
                           margin: const EdgeInsets.only(left: 17, top: 33),
                           child: Text(
                             "Cultos",
-                            style: AppFonts.headHome,
+                            style:AppFonts.cnpjLabel,
                           ),
                         ), /*
                         Padding(

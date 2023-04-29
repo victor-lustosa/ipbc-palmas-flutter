@@ -2,13 +2,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../app/exception/view/unknown_route_view.dart';
-import '../../lyric/domain/entities/lyric_entity.dart';
-import '../../lyric/infra/models/firestore-dtos/services_collection_dto.dart';
-import '../../lyric/presentation/views/service_view.dart';
-import '../../lyric/presentation/views/lyric_view.dart';
-import '../../lyric/presentation/views/services_collection_view.dart';
-import '../../lyric/presentation/views/services_list_view.dart';
+import '../../../app/exception/views/unknown_route_view.dart';
+import '../lyric/domain/entities/lyric_entity.dart';
+import '../lyric/infra/models/firestore-dtos/services_collection_dto.dart';
+import '../lyric/presentation/views/lyric_view.dart';
+import '../lyric/presentation/views/service_view.dart';
+import '../lyric/presentation/views/services_collection_view.dart';
+import '../lyric/presentation/views/services_list_view.dart';
 
 class AppRoutes {
   AppRoutes._();
@@ -36,7 +36,6 @@ class AppRoutes {
           tween: Tween(begin: const Offset(0, 1), end: Offset.zero)
               .chain(CurveTween(curve: Curves.ease)),
         );
-
       default:
         return unknownRoute();
     }
@@ -60,6 +59,7 @@ class _ServicesListRoutesState extends State<ServicesListRoutes> {
           case AppRoutes.initialRoute:
             if (Platform.isIOS) {
               return CupertinoPageRoute(
+                settings: settings,
                 builder: (_) => const CupertinoPageScaffold(
                   child: ServicesListView(),
                 ),
@@ -90,7 +90,6 @@ class _ServicesListRoutesState extends State<ServicesListRoutes> {
               tween: Tween(begin: const Offset(1, 0), end: Offset.zero)
                   .chain(CurveTween(curve: Curves.ease)),
             );
-
           default:
             return unknownRoute();
         }

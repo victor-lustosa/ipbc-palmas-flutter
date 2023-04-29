@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../configs/app_configs.dart';
+import '../../../configs/app_configs.dart';
 
 class SearchBarWidget extends StatefulWidget {
   const SearchBarWidget({Key? key}) : super(key: key);

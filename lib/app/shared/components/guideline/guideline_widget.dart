@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../configs/app_configs.dart';
+import '../../../configs/app_configs.dart';
 import '../../../lyric/domain/entities/liturgy_entity.dart';
 
 class GuidelineWidget extends StatelessWidget {

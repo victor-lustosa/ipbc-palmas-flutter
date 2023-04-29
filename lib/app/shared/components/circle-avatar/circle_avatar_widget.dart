@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../configs/app_configs.dart';
+import '../../../configs/app_configs.dart';
 
 class CircleAvatarWidget extends StatelessWidget {
   const CircleAvatarWidget({super.key});

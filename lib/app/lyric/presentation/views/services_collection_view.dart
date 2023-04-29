@@ -3,17 +3,15 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ipbc_palmas/app/lyric/presentation/view-models/lyrics_view_model.dart';
-import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
-import '../../../exception/view/generic_error_view.dart';
-import '../../../exception/view/no_connection_view.dart';
-import '../../../splash/presentation/blocs/database_bloc.dart';
+import '../../../shared/components/utils/validation_util.dart';
+import '../../../exception/views/generic_error_view.dart';
+import '../../../exception/views/no_connection_view.dart';
 import '../../infra/models/firestore-dtos/services_collection_dto.dart';
 import 'service_view.dart';
 import '../../../shared/components/loading/loading_widget.dart';
 import '../../../shared/components/button/button_widget.dart';
-import '../../../shared/configs/app_configs.dart';
-import '../../../shared/configs/app_routes.dart';
+import '../../../configs/app_configs.dart';
+import '../../../configs/app_routes.dart';
 import '../../domain/entities/service_entity.dart';
 import '../blocs/services_collection_bloc.dart';
 
@@ -30,30 +28,19 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
 
   late final ServicesCollectionBloc bloc;
   late List<ServiceEntity> servicesList;
-  late HiveDatabaseConfigsDTO data;
+  late String path;
 
   @override
   void initState() {
     super.initState();
+    path = widget.servicesCollection.path;
     bloc = context.read<ServicesCollectionBloc>();
-    data = context.read<HiveDatabaseConfigsDTO>();
-    bloc.add(CheckConnectivityEvent(path: widget.servicesCollection.path, data: data));
-  }
-
-  serviceType(BuildContext context) {
-    List<String> params = widget.servicesCollection.path.split('/');
-    switch (params[0]) {
-      case 'saturday-services':
-        data = data.copyWith(isSaturdayCollectionUpdated: true);
-        break;
-      case 'morning-sunday-services':
-        data = data.copyWith(isSundayMorningCollectionUpdated: true);
-        break;
-      case 'evening-sunday-services':
-        data = data.copyWith(isSundayEveningCollectionUpdated: true);
-        break;
+    bloc.add(LoadingEvent());
+   if(context.read<ValidationUtil>().validateCollection(context, path)){
+     bloc.add(CheckConnectivityEvent(path: path));
+   } else {
+     bloc.add(GetServicesCollectionInHiveEvent(path: path));
     }
-    context.read<DatabaseBloc>().add(UpdateDataEvent(data: data));
   }
 
   @override
@@ -76,8 +63,9 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                 } else if (state is NoConnectionAvailableState) {
                   return const NoConnectionView(index: 0);
                 } else if (state is SuccessfullyFetchedCollectionState) {
+                  bloc.add(UpdateServicesCollectionInHiveEvent(entities: state.entities));
                   servicesList = state.entities;
-                  serviceType(context);
+                  context.read<ValidationUtil>().serviceType(context, path);
                   return Column(
                     children: [
                       Container(

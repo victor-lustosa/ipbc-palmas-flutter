@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../shared/configs/app_configs.dart';
+import '../../../configs/app_configs.dart';
 
 class AlbumCoverWidget extends StatelessWidget {
   const AlbumCoverWidget({Key? key, required this.albumCover, required this.width, required this.height}) : super(key: key);

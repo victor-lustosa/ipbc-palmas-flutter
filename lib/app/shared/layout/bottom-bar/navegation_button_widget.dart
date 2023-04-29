@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:io';
 
-import '../../configs/app_configs.dart';
+import '../../../configs/app_configs.dart';
 
 
 class NavigationButtonWidget extends StatelessWidget {

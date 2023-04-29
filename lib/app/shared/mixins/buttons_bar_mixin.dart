@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../configs/app_configs.dart';
+import '../../configs/app_configs.dart';
 import '../layout/bottom-bar/navegation_button_widget.dart';
 
 class MenuItem {

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../../../shared/components/utils/responsivity_util.dart';
 import '../../../shared/components/button/button_widget.dart';
 import '../../../shared/mixins/launch_url_mixin.dart';
-import '../../../shared/configs/app_configs.dart';
+import '../../../configs/app_configs.dart';
 import '../../domain/entities/lyric_entity.dart';
 import '../components/album_cover_widget.dart';
 

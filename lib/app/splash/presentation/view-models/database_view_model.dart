@@ -3,13 +3,13 @@ import '../../../core/external/firestore_datasource.dart';
 import '../../../shared/components/utils/validation_util.dart';
 
 class DatabaseViewModel {
-  Future<HiveDatabaseConfigsDTO> validateDatabase(
-      String fireDatabase,
-      FirestoreDatasource fire,
-      HiveDatabaseConfigsDTO data,
-      String initialId) async {
+
+  final String fireDatabase = 'firebase';
+  final String initialId = 'fdg33f345';
+
+  Future<HiveDatabaseConfigsDTO> validateDatabase(FirestoreDatasource fireInstance, HiveDatabaseConfigsDTO data) async {
     if ((ValidationUtil.validationDatasource() == fireDatabase) || (data.hiveUpdateId != initialId)) {
-      String fireUpdateId = await fire.verifyUpdateDatasource('settings');
+      String fireUpdateId = await fireInstance.verifyUpdateDatasource('settings');
       if (data.fireUpdateId != fireUpdateId) {
         data = data.copyWith(
           fireUpdateId: fireUpdateId,
@@ -20,16 +20,6 @@ class DatabaseViewModel {
           isSundayMorningCollectionUpdated: false,
         );
       }
-    }
-    if (data.isLyricsUpdated &&
-        data.isSundayMorningCollectionUpdated &&
-        data.isSaturdayCollectionUpdated &&
-        data.isSundayEveningCollectionUpdated &&
-        data.isServicesUpdated) {
-      data = data.copyWith(
-          isSystemUpdated: true,
-          hiveUpdateId: data.fireUpdateId
-      );
     }
     return data;
   }

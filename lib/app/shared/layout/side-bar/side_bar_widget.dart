@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../shared/configs/app_configs.dart';
+import '../../../configs/app_configs.dart';
 
 
 class SideBarWidget extends StatelessWidget {

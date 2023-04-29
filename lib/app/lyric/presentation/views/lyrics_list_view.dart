@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../exception/view/generic_error_view.dart';
+import 'package:ipbc_palmas/app/shared/components/utils/validation_util.dart';
+import '../../../exception/views/generic_error_view.dart';
 //import '../../../shared/components/search-bar/search_bar_widget.dart';
-import '../../../exception/view/no_connection_view.dart';
+import '../../../exception/views/no_connection_view.dart';
 import '../../../shared/components/loading/loading_widget.dart';
-import '../../../shared/configs/app_configs.dart';
+import '../../../configs/app_configs.dart';
 import '../../../shared/layout/top-bar/title_top_bar_widget.dart';
 import '../../../splash/presentation/blocs/database_bloc.dart';
 import '../../infra/models/hive-dtos/hive_database_configs_dto.dart';
@@ -22,7 +23,6 @@ class LyricsListView extends StatefulWidget {
 
 class _LyricsListViewState extends State<LyricsListView>
     with TickerProviderStateMixin {
-
   late List<LyricEntity> lyricsFetched;
   late List<LyricEntity> lyricsFiltered;
   late List<String> drawerNames;
@@ -50,8 +50,12 @@ class _LyricsListViewState extends State<LyricsListView>
     lyricsFiltered = [];
     fillLettersCarousel();
     bloc = context.read<LyricBloc>();
-    data = context.read<HiveDatabaseConfigsDTO>();
-    bloc.add(CheckConnectivityEvent(data: data));
+    bloc.add(LoadingEvent());
+    if (context.read<ValidationUtil>().validateLyrics(context)) {
+      bloc.add(CheckConnectivityEvent());
+    } else {
+      bloc.add(GetLyricsInHiveEvent());
+    }
   }
 
   @override
@@ -72,25 +76,13 @@ class _LyricsListViewState extends State<LyricsListView>
               return const LoadingWidget();
             } else if (state is NoConnectionAvailableState) {
               return const NoConnectionView(index: 0);
-            } else if (state is SuccessfullyFetchedLyricsState || state is SuccessfullyFilteredLyricsState) {
-
+            } else if (state is SuccessfullyFetchedLyricsState ) {
+              lyricsFetched = state.entities;
+              data = context.read<HiveDatabaseConfigsDTO>();
               if (!(data.isLyricsUpdated)) {
+                bloc.add(UpdateLyricsInHiveEvent(entities: state.entities));
                 data = data.copyWith(isLyricsUpdated: true);
                 context.read<DatabaseBloc>().add(UpdateDataEvent(data: data));
-              }
-
-              if (state is SuccessfullyFetchedLyricsState && selectedValue == '') {
-
-                lyricsFetched = state.entities;
-                lyricsFiltered = state.entities;
-
-              } else {
-                if (state is SuccessfullyFilteredLyricsState &&
-                    selectedValue != '') {
-                  lyricsFiltered = state.entities;
-                } else {
-                  lyricsFiltered = lyricsFetched;
-                }
               }
               // ignore: todo
               //TODO: autor, ano de produçao
@@ -101,7 +93,7 @@ class _LyricsListViewState extends State<LyricsListView>
                   child: RefreshIndicator(
                     color: AppColors.darkGreen,
                     onRefresh: () async {
-                      bloc.add(CheckConnectivityEvent(data: data));
+                      bloc.add(CheckConnectivityEvent());
                     },
                     child: Column(
                       children: [
@@ -127,7 +119,7 @@ class _LyricsListViewState extends State<LyricsListView>
                         ),
                         Container(
                           margin: const EdgeInsets.only(top: 27),
-                          child: LyricsListWidget(lyricsList: lyricsFiltered),
+                          child: LyricsListWidget(lyricsList: lyricsFetched),
                         ),
                       ],
                     ),

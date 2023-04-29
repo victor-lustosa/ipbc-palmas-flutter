@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../shared/configs/app_configs.dart';
+import '../../configs/app_configs.dart';
 import '../../shared/layout/top-bar/title_top_bar_widget.dart';
 import '../../shared/mixins/clipboard_mixin.dart';
 

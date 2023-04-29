@@ -22,11 +22,194 @@ class AppColors {
   static const Color secondaryLightGrey = Color(0xFFF3F3F3);
   //buscar no github esse valor
   static const Color secondLightGrey = Color.fromARGB(255, 242, 242, 242);
-
   static const Color logoGrey = Color.fromARGB(108, 238, 238, 238);
 }
 
 class AppFonts {
+ /* fontes corretas              */
+  static TextStyle? largeTitle = GoogleFonts.inter(
+    fontSize: 34,
+    color: const Color(0xFF444446),
+  );
+
+  static TextStyle? title1 = GoogleFonts.inter(
+    fontSize: 28,
+    color: AppColors.black,
+  );
+
+  static TextStyle? title2 = GoogleFonts.inter(
+    fontSize: 22,
+    color: const Color(0xFF545456),
+  );
+
+  static TextStyle? title3 = GoogleFonts.inter(
+    color: AppColors.darkGreen,
+    fontSize: 20,
+  );
+
+  static TextStyle? headline = GoogleFonts.inter(
+    color: const Color(0xFF444446),
+    fontWeight: FontWeight.w400,
+    fontSize: 18,
+  );
+
+  static TextStyle? button = GoogleFonts.inter(
+    color: AppColors.timelineSecondary,
+    fontSize: 13,
+  );
+
+  static TextStyle? body = GoogleFonts.inter(
+    color: AppColors.black,
+    fontSize: 17,
+  );
+
+  static TextStyle? bodyMedium = GoogleFonts.inter(
+    color: AppColors.black,
+    fontWeight: FontWeight.w500,
+    fontSize: 17,
+  );
+
+  static TextStyle? link = GoogleFonts.inter(
+    color: AppColors.white,
+    fontWeight: FontWeight.w500,
+    fontSize: 29,
+  );
+
+  static TextStyle? subhead = GoogleFonts.inter(
+    color: AppColors.white,
+    fontSize: 15,
+  );
+
+  static TextStyle? lyricsTitleTile = GoogleFonts.inter(
+    fontWeight: FontWeight.w500,
+    color: const Color(0xFF444446),
+    fontSize: 17,
+  );
+
+  static TextStyle? servicesTitleTile = GoogleFonts.inter(
+    fontWeight: FontWeight.w600,
+    color: const Color(0xFF444446),
+    fontSize: 15,
+  );
+
+  static TextStyle? serviceSubtitleTile = GoogleFonts.inter(
+    color: const Color(0xFF545456),
+    fontSize: 13,
+  );
+  static TextStyle? subtitleTile = GoogleFonts.inter(
+    color: const Color(0xFF444446),
+    fontSize: 14,
+  );
+  static TextStyle? titleDrawer = GoogleFonts.inter(
+    color: AppColors.darkGreen,
+    fontSize: 26.3,
+  );
+  static TextStyle? bodyDrawer = GoogleFonts.inter(
+    color: Colors.black,
+    fontSize: 16.7,
+  );
+  static TextStyle? body2 = GoogleFonts.inter(
+    color: Colors.black,
+    fontWeight: FontWeight.w500,
+    fontSize: 17,
+  );
+  static TextStyle? wifiLabel = GoogleFonts.inter(
+    color: Colors.black,
+    fontSize: 13,
+  );
+  static TextStyle? cnpjLabel = GoogleFonts.inter(
+    color: Colors.black,
+    fontWeight: FontWeight.w600,
+    fontSize: 18,
+  );
+  static TextStyle? selectedBottomNav = GoogleFonts.inter(
+    fontSize: 10.5,
+  );
+  static TextStyle? lyricTile = GoogleFonts.inter(
+    color: const Color(0xFF363638),
+    fontSize: 17,
+  );
+  static TextStyle? lyricTileReduced = GoogleFonts.inter(
+    color: const Color(0xFF363638),
+    fontSize: 15,
+  );
+  static TextStyle? titleLyricView = GoogleFonts.inter(
+    color: const Color(0xFF363638),
+    fontWeight: FontWeight.w500,
+    fontSize: 20,
+  );
+  static TextStyle? titleLyricsView = GoogleFonts.inter(
+    color: const Color(0xFF363638),
+    fontWeight: FontWeight.w500,
+    fontSize: 23,
+  );
+
+  static TextStyle? titleNoConnection = GoogleFonts.inter(
+    color: const Color(0xFF242426),
+    fontWeight: FontWeight.w500,
+    fontSize: 17,
+  );
+
+  static TextStyle? checkConnectionLabel = GoogleFonts.inter(
+    color: const Color(0xFF242426),
+    fontSize: 15,
+  );
+  static TextStyle? checkConnectionButtonLabel = GoogleFonts.inter(
+    color:  AppColors.white,
+    fontWeight: FontWeight.w500,
+    fontSize: 18,
+  );
+  static TextStyle? headlineServices = GoogleFonts.inter(
+    color: AppColors.white,
+    fontWeight: FontWeight.w500,
+    fontSize: 18,
+  );
+  static TextStyle? liturgyBadge = GoogleFonts.inter(
+    color: const Color(0xFF005B40),
+    fontWeight: FontWeight.w400,
+    fontSize: Platform.isIOS ? 13 : 13,
+  );
+  static TextStyle? headlineLyrics = GoogleFonts.inter(
+    color: const Color(0xFF444446),
+    fontWeight: FontWeight.w500,
+    fontSize: 19,
+  );
+  static TextStyle? h2 = GoogleFonts.inter(
+    color: const Color(0xFF444446),
+    fontWeight: FontWeight.w500,
+    fontSize: 21,
+  );
+  static TextStyle? h2Reduced = GoogleFonts.inter(
+    color: const Color(0xFF444446),
+    fontWeight: FontWeight.w500,
+    fontSize: 18,
+  );
+  static TextStyle? bodyPlaceholder = GoogleFonts.inter(
+    color: const Color(0xFFAEAEB2),
+    fontWeight: FontWeight.w200,
+    fontSize: 12.5,
+  );
+  static TextStyle? copyright = GoogleFonts.inter(
+    color: const Color(0xFFAEAEB2),
+    fontWeight: FontWeight.w300,
+    fontSize: 13,
+  );
+  static TextStyle? copyrightReduced = GoogleFonts.inter(
+    color: const Color(0xFFAEAEB2),
+    fontWeight: FontWeight.w300,
+    fontSize: 12,
+  );
+  static TextStyle? learnMore = GoogleFonts.inter(
+    color: AppColors.darkGreen,
+    fontWeight: FontWeight.w300,
+    fontSize: 13,
+  );
+  static TextStyle? logoVagalume = GoogleFonts.inter(
+    color: AppColors.darkGreen,
+    fontWeight: FontWeight.w400,
+    fontSize: 13,
+  );
+
   static TextStyle? subtitle = GoogleFonts.inter(
     fontSize: 15,
     color: const Color(0xFF444446),
@@ -64,6 +247,7 @@ class AppFonts {
     color: AppColors.white,
     fontSize: Platform.isIOS ? 19 : 18,
   );
+  /*
   static TextStyle? lyricsTitleTile = GoogleFonts.inter(
     fontWeight: FontWeight.w500,
     color: const Color(0xFF444446),
@@ -199,7 +383,7 @@ class AppFonts {
     color: AppColors.darkGreen,
     fontWeight: FontWeight.w400,
     fontSize: 13,
-  );
+  ); */
 }
 
 class AppIcons {

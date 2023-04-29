@@ -12,7 +12,7 @@ import '../../../lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
 import '../../../lyric/presentation/blocs/lyric_bloc.dart';
 import '../../../lyric/presentation/view-models/lyrics_view_model.dart';
 import '../../../shared/components/loading/loading_widget.dart';
-import '../../../shared/configs/app_configs.dart';
+import '../../../configs/app_configs.dart';
 import '../../infra/repositories/repository.dart';
 import '../firestore_datasource.dart';
 import '../hive_datasource.dart';
@@ -197,7 +197,7 @@ class _HiveTestState extends State<HiveTest> {
           ],
           id: '2')
     ];
-    widget.bloc.add(AddLyricsInHiveEvent(entities: entities));
+    widget.bloc.add(UpdateLyricsInHiveEvent(entities: entities));
     super.initState();
   }
   @override

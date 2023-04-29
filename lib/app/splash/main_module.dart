@@ -31,7 +31,6 @@ final mainModule = [
       datasource: HiveDatasource<HiveDatabaseConfigsDTO>(boxLabel: 'database-configs'),
     ),
   ),
-
   Provider<DatabaseBloc>(
     create: (context) => DatabaseBloc(
       databasesUseCases: DatabasesUseCases(

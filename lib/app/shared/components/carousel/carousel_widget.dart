@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../shared/configs/app_configs.dart';
+import '../../../configs/app_configs.dart';
 
 class Carousel extends StatefulWidget {
   final List<String> images;

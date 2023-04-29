@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../splash/presentation/view-models/database_view_model.dart';
 import '../../../core/external/firestore_datasource.dart';
-import '../../../exception/view/generic_error_view.dart';
+import '../../../exception/views/generic_error_view.dart';
 import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 import '../../../home/views/home_view.dart';
 import '../../../shared/components/loading/loading_widget.dart';
@@ -19,16 +19,11 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> {
   late final DatabaseBloc bloc;
-  late final DatabaseViewModel databaseViewModel;
   late HiveDatabaseConfigsDTO data;
-  late final DatabaseViewModel lyricsViewModel;
-  final String fireDatabase = 'firebase';
-  final String initialId = 'fdg33f345';
   @override
   initState() {
     bloc = context.read<DatabaseBloc>();
     bloc.add(GetDataEvent());
-    databaseViewModel = context.read<DatabaseViewModel>();
     super.initState();
   }
 
@@ -38,7 +33,8 @@ class _SplashViewState extends State<SplashView> {
       body: BlocConsumer<DatabaseBloc, DatabasesState>(
         listener: (context, state) async {
           if (state is FetchingDataState) {
-            data = await databaseViewModel.validateDatabase(fireDatabase, context.read<FirestoreDatasource>(), state.entity, initialId);
+            data = await context.read<DatabaseViewModel>()
+                .validateDatabase(context.read<FirestoreDatasource>(), state.entity);
             bloc.add(UpdateDataEvent(data: data));
           }
         },
