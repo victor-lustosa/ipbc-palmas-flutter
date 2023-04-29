@@ -40,5 +40,5 @@ $ flutter run lib/main.dart
 
 ### Arquitetura
 
-![alt text](https://github.com/victor-lustosa/ipbc-palmas-flutter/blob/develop/docs/arquitetura-frontend-ipb.png)
+![alt text](https://github.com/victor-lustosa/ipbc-palmas-flutter/blob/main/docs/arquitetura-frontend-ipb.png)
 
