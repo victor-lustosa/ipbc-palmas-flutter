@@ -9,13 +9,15 @@ import '../../../lyric/infra/models/firestore-dtos/services_collection_dto.dart'
 import '../view-models/lyrics_view_model.dart';
 
 class ServicesListBloc extends Bloc<ServicesListEvent, ServicesListState> {
-
   final IUseCases fireServiceUseCases;
   final IUseCases hiveServiceUseCases;
   final LyricsViewModel lyricsViewModel;
   final String path = 'services-collection/id';
 
-  ServicesListBloc({ required this.lyricsViewModel, required this.fireServiceUseCases, required this.hiveServiceUseCases})
+  ServicesListBloc(
+      {required this.lyricsViewModel,
+      required this.fireServiceUseCases,
+      required this.hiveServiceUseCases})
       : super(InitialState()) {
     on<GetServiceInFireEvent>(_getServiceInFire);
     on<UpdateServiceInHiveEvent>(_updateServiceInHive);
@@ -25,12 +27,12 @@ class ServicesListBloc extends Bloc<ServicesListEvent, ServicesListState> {
   }
 
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
-      final isConnected = await lyricsViewModel.isConnected();
-      if(isConnected){
-        add(GetServiceInFireEvent());
-      } else {
-        emit(NoConnectionAvailableState());
-      }
+    final isConnected = await lyricsViewModel.isConnected();
+    if (isConnected) {
+      add(GetServiceInFireEvent());
+    } else {
+      emit(NoConnectionAvailableState());
+    }
   }
 
   Future<void> _getServiceInFire(GetServiceInFireEvent event, emit) async {
@@ -40,8 +42,10 @@ class ServicesListBloc extends Bloc<ServicesListEvent, ServicesListState> {
         emit(SuccessfullyFetchedServiceState(services));
       },
       onError: (error, st) async {
-        await FirebaseCrashlytics.instance.recordError(error, st, reason: 'a non-fatal error');
-        FirebaseCrashlytics.instance.setCustomKey('get fire collection bloc', error.toString());
+        await FirebaseCrashlytics.instance
+            .recordError(error, st, reason: 'a non-fatal error');
+        FirebaseCrashlytics.instance
+            .setCustomKey('get fire collection bloc', error.toString());
         emit(ServiceExceptionState(error.toString()));
       },
     );
@@ -54,18 +58,21 @@ class ServicesListBloc extends Bloc<ServicesListEvent, ServicesListState> {
         emit(SuccessfullyFetchedServiceState(service));
       },
       onError: (error, st) async {
-        await FirebaseCrashlytics.instance.recordError(error, st, reason: 'a non-fatal error');
-        FirebaseCrashlytics.instance.setCustomKey('get hive collection bloc', error.toString());
+        await FirebaseCrashlytics.instance
+            .recordError(error, st, reason: 'a non-fatal error');
+        FirebaseCrashlytics.instance
+            .setCustomKey('get hive collection bloc', error.toString());
         emit(ServiceExceptionState(error.toString()));
       },
     );
   }
 
   Future<void> _loading(event, emit) async {
-   emit(LoadingServiceState());
+    emit(LoadingServiceState());
   }
 
-  Future<void> _updateServiceInHive(UpdateServiceInHiveEvent event, emit) async {
+  Future<void> _updateServiceInHive(
+      UpdateServiceInHiveEvent event, emit) async {
     await hiveServiceUseCases.update(path, event.entities);
   }
 }
@@ -76,18 +83,23 @@ abstract class ServicesListEvent {}
 class InitialEvent extends ServicesListEvent {
   InitialEvent();
 }
+
 class LoadingEvent extends ServicesListEvent {
   LoadingEvent();
 }
+
 class CheckConnectivityEvent extends ServicesListEvent {
   CheckConnectivityEvent();
 }
+
 class GetServiceInFireEvent extends ServicesListEvent {
   GetServiceInFireEvent();
 }
+
 class GetServiceInHiveEvent extends ServicesListEvent {
   GetServiceInHiveEvent();
 }
+
 class UpdateServiceInHiveEvent extends ServicesListEvent {
   final dynamic entities;
   UpdateServiceInHiveEvent({required this.entities});
@@ -95,12 +107,15 @@ class UpdateServiceInHiveEvent extends ServicesListEvent {
 
 @immutable
 abstract class ServicesListState {}
+
 class LoadingServiceState extends ServicesListState {
   LoadingServiceState();
 }
+
 class NoConnectionAvailableState extends ServicesListState {
   NoConnectionAvailableState();
 }
+
 class InitialState extends ServicesListState {
   InitialState();
 }

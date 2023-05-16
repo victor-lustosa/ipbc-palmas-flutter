@@ -46,17 +46,18 @@ class HiveLyricAdapter {
       'verses': HiveVerseAdapter.toMapList(data.verses),
     };
   }
+
   static HiveLyricDTO toDTO(LyricEntity entity) {
-    return  HiveLyricDTO(
-          albumCover: entity.albumCover,
-          id: entity.id,
-          createAt: entity.createAt,
-          title: entity.title,
-          group: entity.group,
-          verses: [
-            if (entity.verses.isNotEmpty)
-              ...entity.verses.map(HiveVerseAdapter.toDTO).toList(),
-          ],
-        );
-    }
+    return HiveLyricDTO(
+      albumCover: entity.albumCover,
+      id: entity.id,
+      createAt: entity.createAt,
+      title: entity.title,
+      group: entity.group,
+      verses: [
+        if (entity.verses.isNotEmpty)
+          ...entity.verses.map(HiveVerseAdapter.toDTO).toList(),
+      ],
+    );
+  }
 }

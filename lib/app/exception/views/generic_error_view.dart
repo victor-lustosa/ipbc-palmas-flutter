@@ -10,8 +10,8 @@ class GenericErrorView extends StatefulWidget {
   State<GenericErrorView> createState() => _GenericErrorViewState();
 }
 
-class _GenericErrorViewState extends State<GenericErrorView> with ClipboardMixin {
-
+class _GenericErrorViewState extends State<GenericErrorView>
+    with ClipboardMixin {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -21,7 +21,11 @@ class _GenericErrorViewState extends State<GenericErrorView> with ClipboardMixin
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Center(
-            child: Icon(Icons.error_outline_outlined, size: 50, color: Colors.red,),
+            child: Icon(
+              Icons.error_outline_outlined,
+              size: 50,
+              color: Colors.red,
+            ),
           ),
           Center(
             child: Container(
@@ -29,7 +33,11 @@ class _GenericErrorViewState extends State<GenericErrorView> with ClipboardMixin
               margin: const EdgeInsets.only(top: 30, bottom: 59.8),
               child: Text(
                 "Ops! Ocorreu um erro no Sistema.",
-                style: AppFonts.titleNoConnection,
+                style: AppFonts.defaultFont(
+                  color: AppColors.grey12,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 17,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),

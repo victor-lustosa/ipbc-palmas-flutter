@@ -32,8 +32,6 @@ class CarouselState extends State<Carousel> {
     return Column(
       children: [
         SizedBox(
-          //  decoration:
-          //      BoxDecoration(border: Border.all(width: 1, color: Colors.black)),
           width: MediaQuery.of(context).size.width,
           height: 200,
           child: PageView.builder(
@@ -57,19 +55,20 @@ class CarouselState extends State<Carousel> {
                 ),
                 // curve: Curves.easeInOutCubic,
                 child: Material(
+                  borderRadius: const BorderRadius.all(Radius.circular(30)),
+                  child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(30)),
-                    child: ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(30)),
-                        child: InkWell(
-                          splashColor: Colors.black26,
-                          onTap: () {},
-                          child: Column(
-                            children: const [
-                              // Ink.image(image: NetWorkingImage(widget.images[pagePosition]))
-                            ],
-                          ),
-                        ))),
+                    child: InkWell(
+                      splashColor: Colors.black26,
+                      onTap: () {},
+                      child: const Column(
+                        children: [
+                          // Ink.image(image: NetWorkingImage(widget.images[pagePosition]))
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               );
             },
           ),
@@ -89,8 +88,8 @@ class CarouselState extends State<Carousel> {
                 height: activePage == index ? 8 : 4,
                 decoration: BoxDecoration(
                   color: activePage == index
-                      ? const Color(0xFF00E8A2)
-                      : AppColors.secondLightGrey,
+                      ? AppColors.highlightGreen
+                      : AppColors.grey0,
                   shape: BoxShape.circle,
                 ),
               );

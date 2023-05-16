@@ -12,12 +12,11 @@ class NoConnectionView extends StatefulWidget {
 }
 
 class _NoConnectionViewState extends State<NoConnectionView> {
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height* 0.85,
+      height: MediaQuery.of(context).size.height * 0.85,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -38,7 +37,11 @@ class _NoConnectionViewState extends State<NoConnectionView> {
             margin: const EdgeInsets.only(top: 9.8, bottom: 59.8),
             child: Text(
               "Ops! Você está sem conexão com a internet!",
-              style: AppFonts.titleNoConnection,
+              style: AppFonts.defaultFont(
+                color: AppColors.grey12,
+                fontWeight: FontWeight.w500,
+                fontSize: 17,
+              ),
               textAlign: TextAlign.center,
             ),
           ),
@@ -71,7 +74,10 @@ class _NoConnectionViewState extends State<NoConnectionView> {
                   ),
                   Text(
                     "Wi-fi",
-                    style: AppFonts.wifiLabel,
+                    style: AppFonts.defaultFont(
+                      color: Colors.black,
+                      fontSize: 13,
+                    ),
                   ),
                 ],
               ),
@@ -82,7 +88,10 @@ class _NoConnectionViewState extends State<NoConnectionView> {
             width: 198.26,
             child: Text(
               "Cheque sua conexão e tente novamente.",
-              style: AppFonts.checkConnectionLabel,
+              style: AppFonts.defaultFont(
+                color: AppColors.grey12,
+                fontSize: 15,
+              ),
               textAlign: TextAlign.center,
             ),
           ),
@@ -93,8 +102,8 @@ class _NoConnectionViewState extends State<NoConnectionView> {
               width: 186,
               child: ElevatedButton(
                 onPressed: () {
-                final homeViewModel =  context.read<HomeViewModel>();
-                homeViewModel.jumpToPage(widget.index);
+                  final homeViewModel = context.read<HomeViewModel>();
+                  homeViewModel.jumpToPage(widget.index);
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
@@ -103,7 +112,11 @@ class _NoConnectionViewState extends State<NoConnectionView> {
                 ),
                 child: Text(
                   "RECARREGAR",
-                  style: AppFonts.checkConnectionButtonLabel,
+                  style: AppFonts.defaultFont(
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                  ),
                 ),
               ),
             ),

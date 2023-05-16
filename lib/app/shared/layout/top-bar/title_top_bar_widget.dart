@@ -20,7 +20,7 @@ class TitleTopBarWidget extends StatelessWidget {
           ),*/
           Text(
             title,
-            style: AppFonts.titleLyricsView,
+            style: AppFonts.title3(),
           ),
           // const Padding(
           //   padding: EdgeInsets.only(left: 4.0),

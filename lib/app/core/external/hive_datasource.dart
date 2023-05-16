@@ -67,43 +67,32 @@ class HiveDatasource<R> implements IDatasource {
         return Stream.value(
           result != null
               ? (result as HiveDatabaseConfigsDTO)
-              : HiveDatabaseConfigsDTO(
-                  hiveUpdateId: 'fdg33f345',
-                  fireUpdateId: 'fdg33f345',
-                  isLyricsUpdated: false,
-                  isServicesUpdated: false,
-                  isSundayMorningCollectionUpdated: false,
-                  isSaturdayCollectionUpdated: false,
-                  isSundayEveningCollectionUpdated: false,
-                  isSystemUpdated: false,
-                ),
+              : HiveDatabaseConfigsDTO.empty().copyWith(fireUpdateId: '000000000'),
         );
-
       default:
         return Stream.value([]);
     }
   }
 
   @override
-  Future<void> add(String path, data) async {
-  }
+  Future<void> add(String path, data) async {}
 
   @override
   Future<void> update(String path, data) async {
     params = path.split('/');
     switch (params[0]) {
       case 'lyrics':
-        for(LyricEntity entity in data as List<LyricEntity>) {
-          box.put(entity.id,HiveLyricAdapter.toDTO(entity) as R);
+        for (LyricEntity entity in data as List<LyricEntity>) {
+          box.put(entity.id, HiveLyricAdapter.toDTO(entity) as R);
         }
         break;
       case 'services':
-        for(ServiceEntity entity in data as List<ServiceEntity>) {
+        for (ServiceEntity entity in data as List<ServiceEntity>) {
           box.put(entity.id, HiveServiceAdapter.toDTO(entity) as R);
         }
         break;
       case 'services-collection':
-        for(ServicesCollectionDTO entity in data as List<ServicesCollectionDTO>){
+        for (ServicesCollectionDTO entity in data as List<ServicesCollectionDTO>) {
           box.put(entity.id, HiveServicesCollectionAdapter.toDTO(entity) as R);
         }
         break;

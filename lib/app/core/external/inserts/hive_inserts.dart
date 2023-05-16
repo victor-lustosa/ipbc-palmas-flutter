@@ -47,10 +47,10 @@ Future<void> main() async {
   //insert Service Hive DTO
 //database configs insert
   // await Hive.openBox<DatabaseConfigsHiveDTO>('database-configs');
- // await Hive.openBox<List<ServiceHiveDTO>>('services');
+  // await Hive.openBox<List<ServiceHiveDTO>>('services');
   await Hive.openBox<List<HiveLyricDTO>>('lyrics');
   //HiveDatasource dataHive = HiveDatasource<DatabaseConfigsHiveDTO>(boxLabel: 'database-configs');
- // HiveDatasource serviceHive = HiveDatasource<List<ServiceHiveDTO>>(boxLabel: 'services');
+  // HiveDatasource serviceHive = HiveDatasource<List<ServiceHiveDTO>>(boxLabel: 'services');
   HiveDatasource lyricHive = HiveDatasource<List<HiveLyricDTO>>(boxLabel: 'lyrics');
 /*  dataHive.add('database-configs',
     DatabaseConfigsHiveDTO(
@@ -108,19 +108,19 @@ Future<void> main() async {
     ),
   );*/
   LyricBloc lyricBloc = LyricBloc(
-    fireLyricsUseCase: LyricsUseCases(
-      repository: Repository<Stream<List<Map>>>(
-        datasource: FirestoreDatasource(
-          firestore: FirebaseFirestore.instance,
+      fireLyricsUseCase: LyricsUseCases(
+        repository: Repository<Stream<List<Map>>>(
+          datasource: FirestoreDatasource(
+            firestore: FirebaseFirestore.instance,
+          ),
         ),
       ),
-    ),
-    hiveLyricsUseCase: LyricsUseCases(
-      repository: Repository(
-        datasource: HiveDatasource<List<HiveLyricDTO>>(boxLabel: 'lyrics'),
+      hiveLyricsUseCase: LyricsUseCases(
+        repository: Repository(
+          datasource: HiveDatasource<List<HiveLyricDTO>>(boxLabel: 'lyrics'),
+        ),
       ),
-    ),lyricsViewModel: LyricsViewModel()
-  );
+      lyricsViewModel: LyricsViewModel());
 
   /*ServiceBloc lyricBloc = ServiceBloc(
     servicesUseCases: ServicesUseCases(
@@ -200,6 +200,7 @@ class _HiveTestState extends State<HiveTest> {
     widget.bloc.add(UpdateLyricsInHiveEvent(entities: entities));
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     widget.bloc.add(GetLyricsInHiveEvent());
@@ -229,7 +230,7 @@ class _HiveTestState extends State<HiveTest> {
                     return ListTile(
                       title: Text(
                         entitiesList[index].heading,
-                        style: AppFonts.lyricsTitleTile,
+                        style: AppFonts.title1,
                       ),
                       onTap: () {},
                     );

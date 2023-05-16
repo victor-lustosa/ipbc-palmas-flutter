@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-
+import '../blocs/database_bloc.dart';
 import '../../../splash/presentation/view-models/database_view_model.dart';
-import '../../../core/external/firestore_datasource.dart';
 import '../../../exception/views/generic_error_view.dart';
 import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 import '../../../home/views/home_view.dart';
 import '../../../shared/components/loading/loading_widget.dart';
-import '../blocs/database_bloc.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -33,8 +31,7 @@ class _SplashViewState extends State<SplashView> {
       body: BlocConsumer<DatabaseBloc, DatabasesState>(
         listener: (context, state) async {
           if (state is FetchingDataState) {
-            data = await context.read<DatabaseViewModel>()
-                .validateDatabase(context.read<FirestoreDatasource>(), state.entity);
+            data = await context.read<DatabaseViewModel>().validateDatabase(context, state.entity);
             bloc.add(UpdateDataEvent(data: data));
           }
         },
@@ -45,7 +42,10 @@ class _SplashViewState extends State<SplashView> {
           } else if (state is FetchingDataState) {
             return const LoadingWidget();
           } else if (state is SuccessfullyFetchedDataState) {
-            return Provider(create: (_) => data, child: const HomeView());
+            return Provider(
+              create: (_) => data,
+              child: const HomeView(),
+            );
           } else {
             return const GenericErrorView();
           }

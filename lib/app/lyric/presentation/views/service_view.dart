@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../components/lyrics_list_widget.dart';
+import '../../domain/entities/service_entity.dart';
 import '../../../shared/components/button/button_widget.dart';
 import '../../../configs/app_configs.dart';
-import '../../domain/entities/service_entity.dart';
 import '../../../shared/components/guideline/guideline_widget.dart';
-import '../components/lyrics_list_widget.dart';
 
 class ServiceViewDTO {
   ServiceViewDTO({required this.service, required this.image});
@@ -24,8 +24,6 @@ class ServiceView extends StatefulWidget {
 }
 
 class _ServiceViewState extends State<ServiceView> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +74,11 @@ class _ServiceViewState extends State<ServiceView> {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 widget.entity.service.title,
-                                style: AppFonts.headlineServices,
+                                style: AppFonts.defaultFont(
+                                  color: AppColors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
+                                ),
                               ),
                             ],
                           ),
@@ -98,7 +100,11 @@ class _ServiceViewState extends State<ServiceView> {
                                 ),
                                 child: Text(
                                   widget.entity.service.createAt,
-                                  style: AppFonts.liturgyBadge,
+                                  style: AppFonts.defaultFont(
+                                    color: const Color(0xFF005B40),
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 13,
+                                  ),
                                 ),
                               ),
                             ),
@@ -129,7 +135,7 @@ class _ServiceViewState extends State<ServiceView> {
                   width: 350,
                   child: Text(
                     "Músicas de ${widget.entity.service.heading}",
-                    style: AppFonts.headline,
+                    style: AppFonts.headline(),
                   ),
                 ),
               ),

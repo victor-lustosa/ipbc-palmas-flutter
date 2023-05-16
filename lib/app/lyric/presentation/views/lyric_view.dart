@@ -1,15 +1,14 @@
-
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import '../../../shared/components/utils/responsivity_util.dart';
-import '../../../shared/components/button/button_widget.dart';
-import '../../../shared/mixins/launch_url_mixin.dart';
-import '../../../configs/app_configs.dart';
-import '../../domain/entities/lyric_entity.dart';
 import '../components/album_cover_widget.dart';
+import '../../domain/entities/lyric_entity.dart';
+import '../../../configs/app_configs.dart';
+import '../../../shared/mixins/launch_url_mixin.dart';
+import '../../../shared/components/button/button_widget.dart';
+import '../../../shared/components/utils/responsivity_util.dart';
 
 class LyricView extends StatefulWidget {
   const LyricView({super.key, required this.lyricEntity});
@@ -62,7 +61,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                       height: 75,
                                       width: 75,
                                       albumCover: widget.lyricEntity.albumCover,
-                                    )
+                                  ),
                                 ),
                               ),
                             ),
@@ -70,22 +69,37 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  width:MediaQuery.of(context).size.width *
-                                      ResponsivityUtil.resolutionDeviceProportion(MediaQuery.of(context).size.width, .56, .5),
+                                  width: MediaQuery.of(context).size.width *
+                                      ResponsivityUtil.resolutionDeviceProportion(
+                                        MediaQuery.of(context).size.width,
+                                        0.56,
+                                        0.5,
+                                      ),
                                   margin: const EdgeInsets.only(bottom: 6),
                                   child: Text(
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     widget.lyricEntity.title,
                                     style: MediaQuery.of(context).size.width >
-                                        ResponsivityUtil.widthDevice
-                                        ? AppFonts.h2
-                                        : AppFonts.h2Reduced,
+                                            ResponsivityUtil.widthDevice
+                                        ? AppFonts.defaultFont(
+                                            color: AppColors.grey9,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 21,
+                                          )
+                                        : AppFonts.defaultFont(
+                                            color: AppColors.grey9,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 18,
+                                          ),
                                   ),
                                 ),
                                 Text(
                                   widget.lyricEntity.group,
-                                  style: AppFonts.subtitle,
+                                  style: AppFonts.defaultFont(
+                                    fontSize: 15,
+                                    color: AppColors.grey10,
+                                  ),
                                 ),
                               ],
                             ),
@@ -116,39 +130,37 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                       itemCount: widget.lyricEntity.verses.length,
                       itemBuilder: (_, index) {
                         return Container(
-                          decoration: const BoxDecoration(color:  AppColors.white),
+                          decoration:
+                              const BoxDecoration(color: AppColors.white),
                           margin: widget.lyricEntity.verses[index].isChorus
                               ? const EdgeInsets.only(left: 18, right: 16)
                               : const EdgeInsets.only(left: 8),
                           child: ClipRRect(
-                            borderRadius:const BorderRadius.all(Radius.circular(16)),
+                            borderRadius: const BorderRadius.all(Radius.circular(16)),
                             child: Container(
                               alignment: widget.lyricEntity.verses[index].isChorus
-                                  ? Alignment.centerRight
-                                  : Alignment.centerLeft,
+                                      ? Alignment.centerRight
+                                      : Alignment.centerLeft,
                               decoration: BoxDecoration(
                                   color: widget.lyricEntity.verses[index].isChorus
                                       ? const Color.fromRGBO(0, 168, 118, 0.1)
-                                      : AppColors.white),
+                                      : AppColors.white,
+                              ),
                               child: Container(
-                                // ignore: todo
-                                //TODO: Averiguar se é possivel um refrao ser a primeira caixinha
                                 margin: EdgeInsets.only(
                                   top: 14,
                                   bottom: 14,
                                   right: widget.lyricEntity.verses[index].isChorus
-                                      ? 5
-                                      : 15,
+                                          ? 5
+                                          : 15,
                                 ),
                                 child: ListView.separated(
                                   separatorBuilder: (__, _) {
-
                                     return const SizedBox(
                                       height: 10,
                                     );
                                   },
-                                  itemCount: widget.lyricEntity.verses[index]
-                                      .versesList.length,
+                                  itemCount: widget.lyricEntity.verses[index].versesList.length,
                                   scrollDirection: Axis.vertical,
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
@@ -160,12 +172,17 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                         bottom: 2,
                                       ),
                                       child: Text(
-                                        widget.lyricEntity.verses[index]
-                                            .versesList[position],
+                                        widget.lyricEntity.verses[index].versesList[position],
                                         style: MediaQuery.of(context).size.width >
-                                            ResponsivityUtil.widthDevice
-                                            ? AppFonts.lyricTile
-                                            : AppFonts.lyricTileReduced,
+                                                    ResponsivityUtil.widthDevice
+                                                ? AppFonts.defaultFont(
+                                                    color: AppColors.grey10,
+                                                    fontSize: 17,
+                                                  )
+                                                : AppFonts.defaultFont(
+                                                    color: AppColors.grey10,
+                                                    fontSize: 15,
+                                                  ),
                                       ),
                                     );
                                   }),
@@ -190,23 +207,28 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: "  Esse sistema não possui fins lucrativos sobre a obra representada a cima. Todos os direitos reservados aos autores da letra. ",
+                                text:
+                                    "  Esse sistema não possui fins lucrativos sobre a obra representada a cima. Todos os direitos reservados aos autores da letra. ",
                                 style: MediaQuery.of(context).size.width >
-                                    ResponsivityUtil.widthDevice
-                                    ? AppFonts.copyright
-                                    : AppFonts.copyrightReduced,
+                                        ResponsivityUtil.widthDevice
+                                    ? AppFonts.copyright(fontSize: 13)
+                                    : AppFonts.copyright(fontSize: 12),
                               ),
                               TextSpan(
-                                style: AppFonts.learnMore,
+                                style: AppFonts.defaultFont(
+                                  color: AppColors.darkGreen,
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 13,
+                                ),
                                 text: "Saiba mais.",
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () => setState(
                                         () {
-                                      _launched = launchInWebViewOrVC(toLaunch);
-                                      if (kDebugMode) {
-                                        print(_launched);
-                                      }
-                                    },
+                                          _launched = launchInWebViewOrVC(toLaunch);
+                                          if (kDebugMode) {
+                                            print(_launched);
+                                          }
+                                      },
                                   ),
                               ),
                             ],
@@ -219,7 +241,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                     height: 77,
                     width: 145,
                     decoration: const BoxDecoration(
-                      color: AppColors.logoGrey,
+                      color: AppColors.grey11,
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
                     child: Column(
@@ -240,7 +262,11 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                           margin: const EdgeInsets.only(bottom: 3),
                           child: Text(
                             'Lyrics by Vagalume',
-                            style: AppFonts.logoVagalume,
+                            style: AppFonts.defaultFont(
+                              color: AppColors.darkGreen,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 13,
+                            ),
                           ),
                         )
                       ],

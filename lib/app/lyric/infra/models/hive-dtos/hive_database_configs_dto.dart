@@ -4,42 +4,33 @@ part 'hive_database_configs_dto.g.dart';
 @HiveType(typeId: 3)
 class HiveDatabaseConfigsDTO {
   @HiveField(0)
-  String hiveUpdateId;
-
-  @HiveField(1)
   String fireUpdateId;
 
-  @HiveField(2)
+  @HiveField(1)
   bool isSaturdayCollectionUpdated;
 
-  @HiveField(3)
+  @HiveField(2)
   bool isSundayMorningCollectionUpdated;
 
-  @HiveField(4)
+  @HiveField(3)
   bool isSundayEveningCollectionUpdated;
 
-  @HiveField(5)
+  @HiveField(4)
   bool isServicesUpdated;
 
-  @HiveField(6)
+  @HiveField(5)
   bool isLyricsUpdated;
 
-  @HiveField(7)
-  bool isSystemUpdated;
 
-  HiveDatabaseConfigsDTO copyWith(
-       {String? hiveUpdateId,
+  HiveDatabaseConfigsDTO copyWith({
         String? fireUpdateId,
         bool? isSaturdayCollectionUpdated,
         bool? isSundayMorningCollectionUpdated,
         bool? isSundayEveningCollectionUpdated,
         bool? isServicesUpdated,
         bool? isLyricsUpdated,
-         bool? isSystemUpdated,
        }) {
     return HiveDatabaseConfigsDTO(
-      isSystemUpdated: isSystemUpdated ?? this.isSystemUpdated,
-      hiveUpdateId: hiveUpdateId ?? this.hiveUpdateId,
       fireUpdateId: fireUpdateId ?? this.fireUpdateId,
       isSundayMorningCollectionUpdated: isSundayMorningCollectionUpdated ?? this.isSundayMorningCollectionUpdated,
       isSaturdayCollectionUpdated: isSaturdayCollectionUpdated ?? this.isSaturdayCollectionUpdated,
@@ -49,9 +40,16 @@ class HiveDatabaseConfigsDTO {
     );
   }
 
+  factory HiveDatabaseConfigsDTO.empty() => HiveDatabaseConfigsDTO(
+    fireUpdateId: '',
+    isServicesUpdated: false,
+    isLyricsUpdated: false,
+    isSaturdayCollectionUpdated: false,
+    isSundayEveningCollectionUpdated: false,
+    isSundayMorningCollectionUpdated: false,
+  );
+
   HiveDatabaseConfigsDTO({
-    required this.isSystemUpdated,
-    required this.hiveUpdateId,
     required this.fireUpdateId,
     required this.isSaturdayCollectionUpdated,
     required this.isSundayEveningCollectionUpdated,

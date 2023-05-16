@@ -9,7 +9,6 @@ import '../view-models/lyrics_view_model.dart';
 
 class ServicesCollectionBloc
     extends Bloc<ServicesCollectionEvent, ServicesCollectionState> {
-
   final IUseCases fireServicesUseCases;
   final IUseCases hiveServicesUseCases;
   final LyricsViewModel lyricsViewModel;
@@ -44,8 +43,10 @@ class ServicesCollectionBloc
         emit(SuccessfullyFetchedCollectionState(services));
       },
       onError: (error, st) async {
-        await FirebaseCrashlytics.instance.recordError(error, st, reason: 'a non-fatal error');
-        FirebaseCrashlytics.instance.setCustomKey('get fire service bloc', error.toString());
+        await FirebaseCrashlytics.instance
+            .recordError(error, st, reason: 'a non-fatal error');
+        FirebaseCrashlytics.instance
+            .setCustomKey('get fire service bloc', error.toString());
         emit(ServiceExceptionState(error.toString()));
       },
     );
@@ -59,8 +60,10 @@ class ServicesCollectionBloc
         emit(SuccessfullyFetchedCollectionState(services));
       },
       onError: (error, st) async {
-        await FirebaseCrashlytics.instance.recordError(error, st, reason: 'a non-fatal error');
-        FirebaseCrashlytics.instance.setCustomKey('get hive service bloc', error.toString());
+        await FirebaseCrashlytics.instance
+            .recordError(error, st, reason: 'a non-fatal error');
+        FirebaseCrashlytics.instance
+            .setCustomKey('get hive service bloc', error.toString());
         emit(ServiceExceptionState(error.toString()));
       },
     );
@@ -82,20 +85,25 @@ abstract class ServicesCollectionEvent {}
 class InitialEvent extends ServicesCollectionEvent {
   InitialEvent();
 }
+
 class LoadingEvent extends ServicesCollectionEvent {
   LoadingEvent();
 }
+
 class CheckConnectivityEvent extends ServicesCollectionEvent {
   final String path;
   CheckConnectivityEvent({required this.path});
 }
+
 class GetServicesCollectionInFireEvent extends ServicesCollectionEvent {
   GetServicesCollectionInFireEvent();
 }
+
 class GetServicesCollectionInHiveEvent extends ServicesCollectionEvent {
   final String path;
   GetServicesCollectionInHiveEvent({required this.path});
 }
+
 class UpdateServicesCollectionInHiveEvent extends ServicesCollectionEvent {
   final dynamic entities;
   UpdateServicesCollectionInHiveEvent({required this.entities});
@@ -107,16 +115,20 @@ abstract class ServicesCollectionState {}
 class LoadingServiceState extends ServicesCollectionState {
   LoadingServiceState();
 }
+
 class NoConnectionAvailableState extends ServicesCollectionState {
   NoConnectionAvailableState();
 }
+
 class InitialState extends ServicesCollectionState {
   InitialState();
 }
+
 class ServiceExceptionState extends ServicesCollectionState {
   final String message;
   ServiceExceptionState(this.message);
 }
+
 class SuccessfullyFetchedCollectionState extends ServicesCollectionState {
   final List<ServiceEntity> entities;
   SuccessfullyFetchedCollectionState(this.entities);

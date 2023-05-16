@@ -50,6 +50,7 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   connectivity_plus: ^3.0.4
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
@@ -73,17 +74,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-  plugin:
-    platforms:
-      android:
-        package: io.flutter.plugins.firebase.analytics
-        pluginClass: FlutterFirebaseAnalyticsPlugin
-      ios:
-        pluginClass: FLTFirebaseAnalyticsPlugin
-      macos:
-        pluginClass: FLTFirebaseAnalyticsPlugin
-      web:
-        default_package: firebase_analytics_web
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../infra/datasources/datasource.dart';
 
-
 class FirestoreDatasource implements IDatasource {
   FirestoreDatasource({required FirebaseFirestore firestore})
       : _firestore = firestore;
@@ -47,15 +46,14 @@ class FirestoreDatasource implements IDatasource {
     return snapshot.map((entity) => entity.docs).map(_convert);
   }
 
-  Future<String> verifyUpdateDatasource(String path) async {
+  Future<String> verifyUpdateDatasource() async {
     String fireUpdateId = '';
     await _firestore
-        .collection(path)
+        .collection('settings')
         .get()
         .then((QuerySnapshot<Map<String, dynamic>> snapshot) {
       fireUpdateId = snapshot.docs.first.get('fireUpdateId');
     });
-
     return fireUpdateId;
   }
 

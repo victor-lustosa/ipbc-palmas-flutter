@@ -8,8 +8,8 @@ class DatabasesUseCases implements IUseCases<Stream<HiveDatabaseConfigsDTO>> {
 
   @override
   Future<Stream<HiveDatabaseConfigsDTO>> get(String path) async {
-     var result = await repository.get(path);
-     return result!;
+    var result = await repository.get(path);
+    return result!;
   }
 
   @override
@@ -18,7 +18,7 @@ class DatabasesUseCases implements IUseCases<Stream<HiveDatabaseConfigsDTO>> {
   }
 
   @override
-  Future<void> update(String path, data) async{
+  Future<void> update(String path, data) async {
     repository.update(path, data);
   }
 }

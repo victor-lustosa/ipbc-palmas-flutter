@@ -31,7 +31,7 @@ class LyricDTOAdapter {
   }
 
   static Map<String, dynamic> toMap(LyricDTO data) {
-    return  {
+    return {
       'id': data.id,
       'title': data.title,
       'createAt': data.createAt,
@@ -42,13 +42,15 @@ class LyricDTOAdapter {
   }
 
   static List<Map<String, dynamic>> toMapList(List<LyricDTO> data) {
-    return data.map((entity) => {
+    return data
+        .map((entity) => {
               'id': entity.id,
               'title': entity.title,
               'createAt': entity.createAt,
               'albumCover': entity.albumCover,
               'group': entity.group,
               'verses': VerseAdapter.toMapList(entity.verses),
-            }).toList();
+            })
+        .toList();
   }
 }

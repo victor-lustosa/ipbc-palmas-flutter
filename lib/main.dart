@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -19,37 +18,38 @@ import 'app/lyric/infra/models/hive-dtos/hive_service_dto.dart';
 import 'firebase_options.dart';
 
 void main() async {
+  runZonedGuarded<Future<void>>(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
 
-  runZonedGuarded<Future<void>>(() async {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
 
-    WidgetsFlutterBinding.ensureInitialized();
+      await Hive.initFlutter();
 
-    RendererBinding.instance.setSemanticsEnabled(true);
+      HiveDatasource.initHive();
 
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+      await Hive.openBox<HiveDatabaseConfigsDTO>('database-configs');
+      await Hive.openBox<HiveServiceDTO>('services');
+      await Hive.openBox<HiveLyricDTO>('lyrics');
+      await Hive.openBox<HiveServicesCollectionDTO>('services-collection');
 
-    await Hive.initFlutter();
+      if (kDebugMode) {
+        await FirebaseCrashlytics.instance
+            .setCrashlyticsCollectionEnabled(false);
+      }
 
-    HiveDatasource.initHive();
+      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-    await Hive.openBox<HiveDatabaseConfigsDTO>('database-configs');
-    await Hive.openBox<HiveServiceDTO>('services');
-    await Hive.openBox<HiveLyricDTO>('lyrics');
-    await Hive.openBox<HiveServicesCollectionDTO>('services-collection');
+      Bloc.observer = IpbcBlocObserver();
 
-    if (kDebugMode) {
-      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
-    }
-
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-
-    Bloc.observer = IpbcBlocObserver();
-
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]).then((_) => runApp(const AppWidget()));
-
-  }, (error, stackTrace) => FirebaseCrashlytics.instance.recordError(error, stackTrace),
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]).then((_) => runApp(const AppWidget()));
+    },
+    (error, stackTrace) =>
+        FirebaseCrashlytics.instance.recordError(error, stackTrace),
   );
 }

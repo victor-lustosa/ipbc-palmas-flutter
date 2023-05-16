@@ -7,7 +7,6 @@ import '../lyric/presentation/view-models/lyrics_view_model.dart';
 import '../core/external/firestore_datasource.dart';
 import '../core/infra/repositories/repository.dart';
 import '../core/external/hive_datasource.dart';
-import '../shared/components/utils/validation_util.dart';
 import 'infra/use-cases/lyrics_use_cases.dart';
 import 'infra/use-cases/services_use_cases.dart';
 import 'infra/models/hive-dtos/hive_lyric_dto.dart';
@@ -16,9 +15,7 @@ import 'presentation/blocs/lyric_bloc.dart';
 import 'presentation/blocs/services_collection_bloc.dart';
 
 final lyricModule = [
-  Provider<ValidationUtil>(
-    create: (context) => ValidationUtil(context: context),
-  ),
+
   Provider<LyricsViewModel>(
     create: (_) => LyricsViewModel(),
   ),
@@ -63,5 +60,4 @@ final lyricModule = [
       ),lyricsViewModel: context.read<LyricsViewModel>(),
     ),
   ),
-
 ];

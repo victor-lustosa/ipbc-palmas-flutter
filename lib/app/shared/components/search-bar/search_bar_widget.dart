@@ -23,7 +23,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             borderRadius: BorderRadius.all(
               Radius.circular(11),
             ),
-            color: AppColors.secondLightGrey,
+            color: AppColors.grey0,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -42,7 +42,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                   child: Icon(
                     size: 29.5,
                     Icons.search_sharp,
-                    color: Color(0xFF7C7C80),
+                    color: AppColors.grey9,
                   ),
                 ),
               ),
@@ -58,7 +58,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               borderRadius: BorderRadius.all(
                 Radius.circular(11),
               ),
-              color: AppColors.secondLightGrey,
+              color: AppColors.grey0,
             ),
             child: DropdownWidget(
               searchOptions,
@@ -97,17 +97,16 @@ class _DropdownWidgetState extends State<DropdownWidget> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonHideUnderline(
-
       child: ButtonTheme(
         alignedDropdown: true,
         child: DropdownButton<String>(
-          dropdownColor: AppColors.secondLightGrey,
+          dropdownColor: AppColors.grey0,
           elevation: 0,
           iconSize: 34,
           isExpanded: true,
           icon: const Icon(
             Icons.expand_more_outlined,
-            color: Color(0xFF7C7C80),
+            color: AppColors.grey9,
           ),
           borderRadius: const BorderRadius.all(
             Radius.circular(10),

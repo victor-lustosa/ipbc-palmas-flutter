@@ -22,7 +22,7 @@ class GuidelineWidget extends StatelessWidget {
               children: <Widget>[
                 Container(
                   width: 1.7,
-                  height: liturgyList[index].isAdditional ? 29: 18,
+                  height: liturgyList[index].isAdditional ? 29 : 18,
                   color:
                       index == 0 ? Colors.white : AppColors.timelineGuideTGreen,
                 ),
@@ -30,13 +30,13 @@ class GuidelineWidget extends StatelessWidget {
                   margin: const EdgeInsets.only(left: 5, right: 5),
                   padding: const EdgeInsets.all(3.2),
                   decoration: BoxDecoration(
-                    color: AppColors.timelineCircleGreen,
+                    color: AppColors.secondaryGreen,
                     borderRadius: BorderRadius.circular(50),
                   ),
                 ),
                 Container(
                   width: 2,
-                  height: liturgyList[index].isAdditional ? 28: 18,
+                  height: liturgyList[index].isAdditional ? 28 : 18,
                   color: index == liturgyList.length - 1
                       ? Colors.white
                       : AppColors.timelineGuideTGreen,
@@ -50,11 +50,14 @@ class GuidelineWidget extends StatelessWidget {
                   color: Colors.white,
                 ),
                 child: Column(
-                  crossAxisAlignment:CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       liturgyList[index].sequence,
-                      style: AppFonts.timelineTitle
+                      style: AppFonts.defaultFont(
+                        color: AppColors.grey9,
+                        fontSize: 17,
+                      ),
                     ),
                     Visibility(
                       visible: liturgyList[index].isAdditional,
@@ -62,7 +65,10 @@ class GuidelineWidget extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 4),
                         child: Text(
                           liturgyList[index].additional,
-                          style: AppFonts.timelineAdditional
+                          style: AppFonts.defaultFont(
+                            color: AppColors.grey8,
+                            fontSize: 13,
+                          ),
                         ),
                       ),
                     ),

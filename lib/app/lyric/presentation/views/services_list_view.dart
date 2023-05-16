@@ -2,19 +2,17 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../shared/components/utils/validation_util.dart';
 import '../../../exception/views/no_connection_view.dart';
 import '../../../exception/views/generic_error_view.dart';
 import '../../../shared/components/button/button_widget.dart';
 import '../../../shared/components/loading/loading_widget.dart';
-import '../../../splash/presentation/blocs/database_bloc.dart';
+import '../../../shared/components/utils/responsivity_util.dart';
 import '../../infra/models/firestore-dtos/services_collection_dto.dart';
-import '../../infra/models/hive-dtos/hive_database_configs_dto.dart';
 import '../blocs/services_list_bloc.dart';
 import '../../../shared/layout/top-bar/main_top_bar_widget.dart';
 import '../../../configs/app_configs.dart';
 import '../../../configs/app_routes.dart';
+import '../view-models/lyrics_view_model.dart';
 
 class ServicesListView extends StatefulWidget {
   const ServicesListView({super.key});
@@ -25,20 +23,19 @@ class ServicesListView extends StatefulWidget {
 
 class _ServicesListViewState extends State<ServicesListView>
     with AutomaticKeepAliveClientMixin {
-
   late final ServicesListBloc bloc;
-  late List<ServicesCollectionDTO> servicesCollection;
-  late HiveDatabaseConfigsDTO data;
+  late List<ServicesCollectionDTO> servicesList;
 
   @override
   void initState() {
+    context.read<LyricsViewModel>().initData(context);
     bloc = context.read<ServicesListBloc>();
     bloc.add(LoadingEvent());
-    if(context.read<ValidationUtil>().validateService(context)){
+    if (!context.read<LyricsViewModel>().data.isServicesUpdated) {
       bloc.add(CheckConnectivityEvent());
     } else {
       bloc.add(GetServiceInHiveEvent());
-     }
+    }
     super.initState();
   }
 
@@ -61,23 +58,14 @@ class _ServicesListViewState extends State<ServicesListView>
               } else if (state is NoConnectionAvailableState) {
                 return const NoConnectionView(index: 0);
               } else if (state is SuccessfullyFetchedServiceState) {
-                servicesCollection = state.entities;
-                data = context.read<HiveDatabaseConfigsDTO>();
-                if(!(data.isServicesUpdated)){
-                  data = data.copyWith(isServicesUpdated: true);
-                  bloc.add(UpdateServiceInHiveEvent(entities: state.entities));
-                  context.read<DatabaseBloc>().add(UpdateDataEvent(data: data));
+                servicesList = state.entities;
+                if (!context.read<LyricsViewModel>().data.isServicesUpdated) {
+                  bloc.add(UpdateServiceInHiveEvent(entities: servicesList));
+                  context.read<LyricsViewModel>().updateData(context, 'services');
                 }
                 return Column(
                   children: [
                     const MainTopBarWidget(),
-                    /*const Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Align(
-                        alignment: Alignment(-0.97, 0),
-                        child: BackButtonWidget(),
-                      ),
-                    ),*/
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -85,30 +73,9 @@ class _ServicesListViewState extends State<ServicesListView>
                           margin: const EdgeInsets.only(left: 17, top: 33),
                           child: Text(
                             "Cultos",
-                            style:AppFonts.cnpjLabel,
+                            style: AppFonts.title2,
                           ),
-                        ), /*
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: 10,
-                          ),
-                          child: SizedBox(
-                            height: 30,
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  AppRoutes.lyricRoute,
-                                );
-                              },
-                              icon: const Icon(
-                                size: 32,
-                                Icons.navigate_next_sharp,
-                                color: AppColors.darkGreen,
-                              ),
-                            ),
-                          ),
-                        ),*/
+                        ),
                       ],
                     ),
                     Align(
@@ -117,7 +84,16 @@ class _ServicesListViewState extends State<ServicesListView>
                         margin: const EdgeInsets.only(left: 18, top: 8),
                         child: Text(
                           "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
-                          style: AppFonts.subHeadHome,
+                          style: MediaQuery.of(context).size.width >
+                                  ResponsivityUtil.widthDevice
+                              ? AppFonts.defaultFont(
+                                  fontSize: 16,
+                                  color: AppColors.grey9,
+                                )
+                              : AppFonts.defaultFont(
+                                  fontSize: 15,
+                                  color: AppColors.grey9,
+                                ),
                         ),
                       ),
                     ),
@@ -134,7 +110,7 @@ class _ServicesListViewState extends State<ServicesListView>
                         },
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
-                        itemCount: servicesCollection.length,
+                        itemCount: servicesList.length,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           return Container(
@@ -145,7 +121,7 @@ class _ServicesListViewState extends State<ServicesListView>
                               image: DecorationImage(
                                 fit: BoxFit.cover,
                                 image: AssetImage(
-                                  servicesCollection[index].image,
+                                  servicesList[index].image,
                                 ),
                               ),
                             ),
@@ -156,8 +132,11 @@ class _ServicesListViewState extends State<ServicesListView>
                                 title: Container(
                                   margin: const EdgeInsets.only(left: 17),
                                   child: Text(
-                                    '${servicesCollection[index].title} | ${servicesCollection[index].hour}',
-                                    style: AppFonts.titleTile,
+                                    '${servicesList[index].title} | ${servicesList[index].hour}',
+                                    style: AppFonts.headline(
+                                        color: AppColors.white,
+                                        fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
                                 trailing: Container(
@@ -174,7 +153,8 @@ class _ServicesListViewState extends State<ServicesListView>
                                 onTap: () {
                                   Navigator.of(context).pushNamed(
                                       AppRoutes.servicesCollectionRoute,
-                                      arguments: servicesCollection[index]);
+                                      arguments: servicesList[index],
+                                  );
                                 },
                               ),
                             ),

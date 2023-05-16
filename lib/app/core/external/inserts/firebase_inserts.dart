@@ -14,6 +14,7 @@ import '../../../lyric/infra/models/firestore-dtos/service_dto.dart';
 import '../../../lyric/infra/models/firestore-dtos/settings_dto.dart';
 import '../../../shared/components/utils/service_util.dart';
 import '../firestore_datasource.dart';
+
 // ignore_for_file: avoid_print
 Future<void> firebaseInitialize() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,8 +32,9 @@ Future<void> firebaseInitialize() async {
 void main() async {
   await firebaseInitialize();
 
-  FirestoreDatasource fire = FirestoreDatasource(firestore: FirebaseFirestore.instance);
- // String servicesCollectionUrl = 'services-collection';
+  FirestoreDatasource fire =
+      FirestoreDatasource(firestore: FirebaseFirestore.instance);
+  // String servicesCollectionUrl = 'services-collection';
   String lyricsUrl = 'lyrics';
   String settingsUrl = 'settings/QJ70H5A2gNCrnwgHq5cB';
   String saturdayServiceUrl = 'saturday-services/xgvMavJww017MmVK54A9';
@@ -40,10 +42,13 @@ void main() async {
   String eveningSundayServiceUrl = 'evening-sunday-services';
 
   try {
-     final String saturdayJson = await rootBundle.loadString('assets/data/saturday-services/saturday-service.json');
-    final String sundayEveningJson = await rootBundle.loadString('assets/data/sunday-evening-services/sunday-evening-service.json');
-    final String sundayMorningJson = await rootBundle.loadString('assets/data/sunday-morning-services/sunday-morning-service.json');
-     /*List<Map<String, dynamic>> servicesCollection = [
+    final String saturdayJson = await rootBundle
+        .loadString('assets/data/saturday-services/saturday-service.json');
+    final String sundayEveningJson = await rootBundle.loadString(
+        'assets/data/sunday-evening-services/sunday-evening-service.json');
+    final String sundayMorningJson = await rootBundle.loadString(
+        'assets/data/sunday-morning-services/sunday-morning-service.json');
+    /*List<Map<String, dynamic>> servicesCollection = [
       {
         'id':'1',
         'title': 'Sábado à noite',
@@ -79,7 +84,8 @@ void main() async {
     services.add(ServiceDTOAdapter.fromJson(sundayMorningJson));
 
     for (int column = 0; services.length > column; column++) {
-      ServiceDTO service = await ServiceUtil.generateService(services[column], column);
+      ServiceDTO service =
+          await ServiceUtil.generateService(services[column], column);
       allLyricsInserted.addAll(service.lyricsList);
       servicesAux.add(service);
     }
@@ -101,9 +107,11 @@ void main() async {
     }
     //print('Services Collection have been added successfully');
 */
-    fire.add(settingsUrl, SettingsDTOAdapter.toMap(SettingsDTO(fireUpdateId: ServiceUtil.createId(8))));
+    fire.add(
+        settingsUrl,
+        SettingsDTOAdapter.toMap(
+            SettingsDTO(fireUpdateId: ServiceUtil.createId(8))));
     print('updateAt have been updated successfully');
-
   } catch (e) {
     //print('$e');
   }

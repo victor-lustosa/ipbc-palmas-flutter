@@ -26,18 +26,21 @@ final mainModule = [
   ChangeNotifierProvider<HomeViewModel>(
     create: (_) => HomeViewModel(),
   ),
+  Provider<HiveDatasource<HiveDatabaseConfigsDTO>>(
+    create: (context) =>
+        HiveDatasource<HiveDatabaseConfigsDTO>(boxLabel: 'database-configs'),
+  ),
   Provider<Repository<HiveDatabaseConfigsDTO>>(
-    create: (_) => Repository<HiveDatabaseConfigsDTO>(
-      datasource: HiveDatasource<HiveDatabaseConfigsDTO>(boxLabel: 'database-configs'),
-    ),
+    create: (context) => Repository<HiveDatabaseConfigsDTO>(
+        datasource: context.read<HiveDatasource<HiveDatabaseConfigsDTO>>()),
   ),
   Provider<DatabaseBloc>(
     create: (context) => DatabaseBloc(
-      databasesUseCases: DatabasesUseCases(
-        repository: Repository<Stream<HiveDatabaseConfigsDTO>>(
-            datasource: HiveDatasource<HiveDatabaseConfigsDTO>(boxLabel: 'database-configs'),
-      ),
-    ), crash: context.read<FirebaseCrashlytics>()
-  ),
+        databasesUseCases: DatabasesUseCases(
+          repository: Repository<Stream<HiveDatabaseConfigsDTO>>(
+            datasource: context.read<HiveDatasource<HiveDatabaseConfigsDTO>>(),
+          ),
+        ),
+        crash: context.read<FirebaseCrashlytics>()),
   ),
 ];

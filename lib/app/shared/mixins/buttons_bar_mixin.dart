@@ -14,13 +14,13 @@ class ButtonsBarMixin {
   List<BottomNavigationBarItem> buttons = [];
 
   List<BottomNavigationBarItem> buildButtonsBar() {
-    const List<MenuItem> menuItensList = <MenuItem>[
+    const List<MenuItem> menuItemsList = <MenuItem>[
       MenuItem(AppIcons.home, 'Home'),
-      MenuItem(AppIcons.lyricsIconName, 'Músicas'),
+      MenuItem(AppIcons.lyrics, 'Músicas'),
       MenuItem(AppIcons.volunteerActivism, 'Ofertas')
     ];
 
-    buttons = menuItensList.map(
+    buttons = menuItemsList.map(
           (MenuItem menuItem) => BottomNavigationBarItem(
             activeIcon: NavigationButtonWidget(
               size: 23,
@@ -30,7 +30,7 @@ class ButtonsBarMixin {
             icon: NavigationButtonWidget(
               size: 23,
               iconName: menuItem.iconData,
-              color: AppColors.grey,
+              color: AppColors.grey5,
             ),
             label: menuItem.label,
           ),

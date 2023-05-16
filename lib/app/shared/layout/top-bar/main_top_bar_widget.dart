@@ -21,7 +21,10 @@ class MainTopBarWidget extends StatelessWidget {
                 height: 41,
                 child: SvgPicture.asset(
                   AppIcons.logo,
-                  colorFilter: const ColorFilter.mode(AppColors.darkGreen, BlendMode.srcIn)
+                  colorFilter: const ColorFilter.mode(
+                    AppColors.darkGreen,
+                    BlendMode.srcIn,
+                  ),
                   //  height: 75,width: 75,
                 ),
               ),

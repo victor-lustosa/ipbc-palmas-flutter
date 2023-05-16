@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/cupertino.dart' hide CupertinoTabBar, CupertinoTabScaffold;
+import 'package:flutter/cupertino.dart'
+    hide CupertinoTabBar, CupertinoTabScaffold;
 import '../../../../exception/views/unknown_route_view.dart';
 import '../../../../lyric/presentation/views/lyrics_list_view.dart';
 import '../../../../offers/views/offers_view.dart';
@@ -22,7 +23,8 @@ class CupertinoBottomBarWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CupertinoBottomBarWidget> createState() => _CupertinoBottomBarWidgetState();
+  State<CupertinoBottomBarWidget> createState() =>
+      _CupertinoBottomBarWidgetState();
 }
 
 class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
@@ -44,7 +46,7 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
         items: buttons,
         onTap: (newValue) {
           setState(
-                () {
+            () {
               widget.callback(newValue);
             },
           );
@@ -76,16 +78,14 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
                   backgroundColor: Color(0xFFFFFFFF),
                 ),
                 //child: NoConnectionView(index: 0,)
-                child: OffersView()
-            );
+                child: OffersView());
 
           default:
             return const CupertinoPageScaffold(
                 navigationBar: CupertinoNavigationBar(
                   backgroundColor: Color(0xFFFFFFFF),
                 ),
-                child: UnknownRouteView()
-            );
+                child: UnknownRouteView());
         }
       },
     );

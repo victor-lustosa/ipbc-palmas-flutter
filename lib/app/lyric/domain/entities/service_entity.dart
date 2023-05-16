@@ -2,6 +2,7 @@ import 'lyric_entity.dart';
 import 'liturgy_entity.dart';
 
 class ServiceEntity {
+  
   ServiceEntity(
       {required this.id,
       required this.type,
@@ -15,6 +16,7 @@ class ServiceEntity {
       required this.liturgyList,
       required this.lyricsList,
       required this.createAt});
+
   final String id;
   final String type;
   final String image;

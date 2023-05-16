@@ -27,5 +27,4 @@ class LyricAdapter {
     }
     return lyricsList;
   }
-
 }

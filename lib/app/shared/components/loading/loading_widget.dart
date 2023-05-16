@@ -16,7 +16,8 @@ class LoadingWidget extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             child: const Center(
               child: CupertinoActivityIndicator(
-                color: AppColors.darkGreen, radius: 17,
+                color: AppColors.darkGreen,
+                radius: 17,
               ),
             ),
           )

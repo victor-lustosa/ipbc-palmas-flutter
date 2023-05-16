@@ -22,7 +22,6 @@ void setupFirebaseAnalyticsMocks([Callback? customHandlers]) {
     switch (methodCall.method) {
       case 'Analytics#getAppInstanceId':
         return 'ABCD1234';
-
       default:
         return false;
     }

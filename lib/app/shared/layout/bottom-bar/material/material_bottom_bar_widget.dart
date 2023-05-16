@@ -10,14 +10,16 @@ class MaterialBottomBarWidget extends StatefulWidget {
   final Function(int) callback;
 
   const MaterialBottomBarWidget(
-      {Key? key, required this.selectedIndex, required this.callback}
-      ) : super(key: key);
+      {Key? key, required this.selectedIndex, required this.callback})
+      : super(key: key);
 
   @override
-  State<MaterialBottomBarWidget> createState() => _MaterialBottomBarWidgetState();
+  State<MaterialBottomBarWidget> createState() =>
+      _MaterialBottomBarWidgetState();
 }
 
-class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget> with ButtonsBarMixin {
+class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
+    with ButtonsBarMixin {
   @override
   initState() {
     super.initState();
@@ -52,10 +54,10 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget> with 
           ),
           child: BottomNavigationBar(
             currentIndex: widget.selectedIndex,
-            unselectedLabelStyle: AppFonts.selectedBottomNav,
-            selectedLabelStyle: AppFonts.selectedBottomNav,
+            unselectedLabelStyle: AppFonts.defaultFont(fontSize: 10.5),
+            selectedLabelStyle:  AppFonts.defaultFont(fontSize: 10.5),
             selectedItemColor: AppColors.darkGreen,
-            unselectedItemColor: AppColors.grey,
+            unselectedItemColor: AppColors.grey5,
             backgroundColor: AppColors.white,
             items: buttons,
             onTap: (newValue) {

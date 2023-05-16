@@ -8,7 +8,8 @@ import '../../../lyric/infra/models/firestore-dtos/service_dto.dart';
 import '../../../configs/app_configs.dart';
 
 class ServiceUtil {
-  static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  static const _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   static final Random _random = Random();
 
   static String createId(int length) {
@@ -25,16 +26,20 @@ class ServiceUtil {
     String groupParam = group.replaceAll(' ', '%20');
     String apikey = 'a34faccfb8ad3edc6ddcc978e34802ef';
     try {
-      final response = await Uno().get('https://api.vagalume.com.br/search.php?art=$groupParam&mus=$titleParam&apikey=$apikey');
+      final response = await Uno().get(
+        'https://api.vagalume.com.br/search.php?art=$groupParam&mus=$titleParam&apikey=$apikey',
+      );
       return response.data;
     } on UnoError catch (error) {
       await FirebaseCrashlytics.instance.recordError(
-          error.message, error.stackTrace, reason: 'a non-fatal error');
+          error.message, error.stackTrace,
+          reason: 'a non-fatal error');
     }
   }
 
   static generateService(ServiceDTO service, int index) async {
-    List<LyricDTO> lyricsConverted = await generateVersesList(service.lyricsList);
+    List<LyricDTO> lyricsConverted =
+        await generateVersesList(service.lyricsList);
     List<LyricDTO> lyricsAux = [];
     //aqui vai o codigo para alterar a capa do album
     for (int line = 0; service.lyricsList.length > line; line++) {

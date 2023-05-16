@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../configs/app_configs.dart';
 import '../../shared/layout/top-bar/title_top_bar_widget.dart';
 import '../../shared/mixins/clipboard_mixin.dart';
@@ -30,17 +29,21 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(top: 42.0),
+                      margin: const EdgeInsets.only(top: 42),
                       child: Text(
                         "Dados bancários",
-                        style: AppFonts.title3,
+                        style: AppFonts.defaultFont(
+                          color: AppColors.black,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 25.0, bottom: 16),
+                      margin: const EdgeInsets.only(top: 25, bottom: 16),
                       child: Text(
                         "Pix",
-                        style: AppFonts.headline,
+                        style: AppFonts.headline(),
                       ),
                     ),
                     Container(
@@ -52,8 +55,9 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                           Radius.circular(16),
                         ),
                         child: Container(
-                          decoration:
-                          const BoxDecoration(color: AppColors.secondLightGrey),
+                          decoration: const BoxDecoration(
+                            color: AppColors.grey0,
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -61,20 +65,28 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                                 margin: const EdgeInsets.only(left: 15),
                                 child: Text(
                                   "CNPJ: $cnpj",
-                                  style: AppFonts.cnpjLabel,
+                                  style: AppFonts.defaultFont(
+                                    color: AppColors.grey10,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                  ),
                                 ),
                               ),
                               Container(
                                 margin: const EdgeInsets.only(right: 3),
                                 child: Tooltip(
                                   message: "copiado!",
-                                  textStyle: AppFonts.body2,
+                                  textStyle: AppFonts.body(
+                                    color: AppColors.grey10,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 17,
+                                  ),
                                   key: tooltipKey,
                                   triggerMode: TooltipTriggerMode.manual,
                                   showDuration: const Duration(seconds: 1),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
-                                    color: AppColors.tooltipGreen,
+                                    color: AppColors.highlightGreen,
                                   ),
                                   preferBelow: false,
                                   child: IconButton(
@@ -84,7 +96,10 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                                       copy(cnpj);
                                       tooltipKey.currentState?.ensureTooltipVisible();
                                     },
-                                    icon: const Icon(Icons.content_copy_rounded),
+                                    icon: const Icon(
+                                      Icons.content_copy_rounded,
+                                      color: AppColors.tooltipIcon,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -94,17 +109,25 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 26.0),
+                      margin: const EdgeInsets.only(top: 26),
                       child: Text(
                         "Igreja Presbiteriana de Palmas",
-                        style: AppFonts.body2,
+                        style: AppFonts.body(
+                          color: AppColors.grey9,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 17,
+                        ),
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 15.0),
+                      margin: const EdgeInsets.only(top: 15),
                       child: Text(
                         "Banco do Brasil",
-                        style: AppFonts.body2,
+                        style: AppFonts.body(
+                          color: AppColors.grey9,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 17,
+                        ),
                       ),
                     ),
                     Container(
@@ -113,13 +136,21 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                         children: [
                           Text(
                             "Ag: 3962-4",
-                            style: AppFonts.body2,
+                            style: AppFonts.body(
+                              color: AppColors.grey9,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 17,
+                            ),
                           ),
                           Container(
                             margin: const EdgeInsets.only(left: 9),
                             child: Text(
                               "C/c: 7293-1",
-                              style: AppFonts.body2,
+                              style: AppFonts.body(
+                                color: AppColors.grey9,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 17,
+                              ),
                             ),
                           ),
                         ],

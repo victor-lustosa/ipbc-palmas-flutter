@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../configs/app_configs.dart';
 
-
 class SideBarWidget extends StatelessWidget {
   final List<String> drawerNames;
 
@@ -38,7 +37,8 @@ class SideBarWidget extends StatelessWidget {
                     width: 34,
                     child: SvgPicture.asset(
                       AppIcons.accountCircle,
-                      colorFilter: const ColorFilter.mode(AppColors.darkGreen, BlendMode.srcIn),
+                      colorFilter: const ColorFilter.mode(
+                          AppColors.darkGreen, BlendMode.srcIn),
                       matchTextDirection: true,
                     ),
                   ),
@@ -51,7 +51,10 @@ class SideBarWidget extends StatelessWidget {
                     ),
                     child: Text(
                       'Victor',
-                      style: AppFonts.titleDrawer,
+                      style: AppFonts.defaultFont(
+                        color: AppColors.darkGreen,
+                        fontSize: 26.3,
+                      ),
                     ),
                   ),
                 ),
@@ -94,7 +97,8 @@ class SideBarWidget extends StatelessWidget {
                                 width: 25,
                                 child: SvgPicture.asset(
                                   AppIcons.sideBarIconsList[index],
-                                  colorFilter: const ColorFilter.mode(AppColors.black, BlendMode.srcIn),
+                                  colorFilter: const ColorFilter.mode(
+                                      AppColors.black, BlendMode.srcIn),
                                   matchTextDirection: true,
                                 ),
                               ),
@@ -105,7 +109,10 @@ class SideBarWidget extends StatelessWidget {
                               ),
                               child: Text(
                                 drawerNames[index],
-                                style: AppFonts.bodyDrawer,
+                                style: AppFonts.defaultFont(
+                                  color: Colors.black,
+                                  fontSize: 16.7,
+                                ),
                               ),
                             )
                           ],

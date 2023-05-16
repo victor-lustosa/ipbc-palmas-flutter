@@ -6,8 +6,8 @@ import 'package:flutter/cupertino.dart';
 class IconButtonWidget extends StatelessWidget {
   const IconButtonWidget(
       {Key? key,
-       this.size,
-       this.action,
+      this.size,
+      this.action,
       required this.color,
       this.splashColor,
       this.highlightColor,
@@ -40,7 +40,7 @@ class IconButtonWidget extends StatelessWidget {
               size: size,
               androidIcon,
               color: color,
-         ),
-      );
+            ),
+          );
   }
 }

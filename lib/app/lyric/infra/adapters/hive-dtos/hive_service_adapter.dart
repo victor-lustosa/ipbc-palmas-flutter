@@ -22,19 +22,19 @@ class HiveServiceAdapter {
   }
 
   static HiveServiceDTO toDTO(ServiceEntity entity) {
-    return  HiveServiceDTO(
-        id: entity.id,
-        liturgyList: HiveLiturgyAdapter.toDTOList(entity.liturgyList),
-        lyricsList: HiveLyricAdapter.toDTOList(entity.lyricsList),
-        createAt: entity.createAt,
-        heading: entity.heading,
-        title: entity.title,
-        theme: entity.theme,
-        preacher: entity.preacher,
-        guideIsVisible: entity.guideIsVisible,
-        type: entity.type,
-        image: entity.image,
-        hour: entity.hour,
+    return HiveServiceDTO(
+      id: entity.id,
+      liturgyList: HiveLiturgyAdapter.toDTOList(entity.liturgyList),
+      lyricsList: HiveLyricAdapter.toDTOList(entity.lyricsList),
+      createAt: entity.createAt,
+      heading: entity.heading,
+      title: entity.title,
+      theme: entity.theme,
+      preacher: entity.preacher,
+      guideIsVisible: entity.guideIsVisible,
+      type: entity.type,
+      image: entity.image,
+      hour: entity.hour,
     );
   }
 }

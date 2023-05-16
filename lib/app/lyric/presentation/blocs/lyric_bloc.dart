@@ -8,13 +8,15 @@ import '../../domain/entities/lyric_entity.dart';
 import '../view-models/lyrics_view_model.dart';
 
 class LyricBloc extends Bloc<LyricEvent, LyricState> {
-
   final ILyricsUseCases fireLyricsUseCase;
   final ILyricsUseCases hiveLyricsUseCase;
   final LyricsViewModel lyricsViewModel;
   final String path = 'lyrics/20';
 
-  LyricBloc({ required this.lyricsViewModel, required this.fireLyricsUseCase, required this.hiveLyricsUseCase})
+  LyricBloc(
+      {required this.lyricsViewModel,
+      required this.fireLyricsUseCase,
+      required this.hiveLyricsUseCase})
       : super(InitialState()) {
     on<GetLyricsInFireEvent>(_getLyricsInFire);
     on<GetLyricsInHiveEvent>(_getLyricsInHive);
@@ -24,12 +26,12 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
     on<CheckConnectivityEvent>(_checkConnectivity);
   }
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
-      final isConnected = await lyricsViewModel.isConnected();
-      if(isConnected){
-        add(GetLyricsInFireEvent());
-      } else {
-        emit(NoConnectionAvailableState());
-      }
+    final isConnected = await lyricsViewModel.isConnected();
+    if (isConnected) {
+      add(GetLyricsInFireEvent());
+    } else {
+      emit(NoConnectionAvailableState());
+    }
   }
 
   Future<void> _getLyricsInFire(GetLyricsInFireEvent event, emit) async {
@@ -40,8 +42,10 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
       },
       onError: (error, st) async {
         emit(ExceptionLyricState(error.toString()));
-        await FirebaseCrashlytics.instance.recordError(error, st, reason: 'a non-fatal error');
-        FirebaseCrashlytics.instance.setCustomKey('get fire lyric bloc', error.toString());
+        await FirebaseCrashlytics.instance
+            .recordError(error, st, reason: 'a non-fatal error');
+        FirebaseCrashlytics.instance
+            .setCustomKey('get fire lyric bloc', error.toString());
       },
     );
   }
@@ -53,8 +57,10 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
         emit(SuccessfullyFetchedLyricsState(lyrics));
       },
       onError: (error, st) async {
-        await FirebaseCrashlytics.instance.recordError(error, st, reason: 'a non-fatal error');
-        FirebaseCrashlytics.instance.setCustomKey('get hive lyric bloc', error.toString());
+        await FirebaseCrashlytics.instance
+            .recordError(error, st, reason: 'a non-fatal error');
+        FirebaseCrashlytics.instance
+            .setCustomKey('get hive lyric bloc', error.toString());
         emit(ExceptionLyricState(error.toString()));
       },
     );
@@ -69,7 +75,8 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
   }
 
   Future<void> _lyricsFilter(LyricsFilterEvent event, emit) async {
-    List<dynamic> lyricsList = await fireLyricsUseCase.lettersFilter(event.lyrics, event.letter);
+    List<dynamic> lyricsList =
+        await fireLyricsUseCase.lettersFilter(event.lyrics, event.letter);
     emit(SuccessfullyFetchedLyricsState(lyricsList as List<LyricEntity>));
   }
 }
@@ -80,22 +87,28 @@ abstract class LyricEvent {}
 class InitialEvent extends LyricEvent {
   InitialEvent();
 }
+
 class LoadingEvent extends LyricEvent {
   LoadingEvent();
 }
+
 class GetLyricsInFireEvent extends LyricEvent {
   GetLyricsInFireEvent();
 }
+
 class CheckConnectivityEvent extends LyricEvent {
   CheckConnectivityEvent();
 }
+
 class GetLyricsInHiveEvent extends LyricEvent {
   GetLyricsInHiveEvent();
 }
+
 class UpdateLyricsInHiveEvent extends LyricEvent {
   final dynamic entities;
-  UpdateLyricsInHiveEvent({ required this.entities});
+  UpdateLyricsInHiveEvent({required this.entities});
 }
+
 class LyricsFilterEvent extends LyricEvent {
   final String letter;
   final List<LyricEntity> lyrics;
@@ -108,16 +121,20 @@ abstract class LyricState {}
 class InitialState extends LyricState {
   InitialState();
 }
+
 class LoadingLyricsState extends LyricState {
   LoadingLyricsState();
 }
+
 class ExceptionLyricState extends LyricState {
   final String message;
   ExceptionLyricState(this.message);
 }
+
 class NoConnectionAvailableState extends LyricState {
   NoConnectionAvailableState();
 }
+
 class SuccessfullyFetchedLyricsState extends LyricState {
   final List<LyricEntity> entities;
   SuccessfullyFetchedLyricsState(this.entities);
