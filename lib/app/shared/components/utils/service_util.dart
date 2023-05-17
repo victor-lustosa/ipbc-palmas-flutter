@@ -8,8 +8,7 @@ import '../../../lyric/infra/models/firestore-dtos/service_dto.dart';
 import '../../../configs/app_configs.dart';
 
 class ServiceUtil {
-  static const _chars =
-      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   static final Random _random = Random();
 
   static String createId(int length) {
@@ -19,6 +18,39 @@ class ServiceUtil {
         (_) => _chars.codeUnitAt(_random.nextInt(_chars.length)),
       ),
     );
+  }
+
+  static generateService(ServiceDTO service, int index) async {
+    List<LyricDTO> lyricsConverted = await generateVersesList(service.lyricsList);
+    List<LyricDTO> lyricsAux = [];
+    //aqui vai o codigo para alterar a capa do album
+    for (int line = 0; service.lyricsList.length > line; line++) {
+      lyricsAux.add(
+        service.lyricsList[line].copyWith(
+          id: createId(8),
+          verses: lyricsConverted[line].verses,
+          albumCover: lyricsConverted[line].albumCover,
+        ),
+      );
+    }
+    return service.copyWith(
+      id: createId(8),
+      lyricsList: lyricsAux,
+    );
+  }
+
+  static Future<List<LyricDTO>> generateVersesList(List<LyricDTO> lyricsList) async {
+    List<LyricDTO> results = [];
+    for (int i = 0; lyricsList.length > i; i++) {
+      Map result = await getLyric(lyricsList[i].title, lyricsList[i].group);
+      results.add(
+        LyricDTO.empty().copyWith(
+          verses: VerseDTOAdapter.fromVagalume(result),
+          albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
+        ),
+      );
+    }
+    return results;
   }
 
   static Future<dynamic> getLyric(String title, String group) async {
@@ -32,44 +64,9 @@ class ServiceUtil {
       return response.data;
     } on UnoError catch (error) {
       await FirebaseCrashlytics.instance.recordError(
-          error.message, error.stackTrace,
-          reason: 'a non-fatal error');
-    }
-  }
-
-  static generateService(ServiceDTO service, int index) async {
-    List<LyricDTO> lyricsConverted =
-        await generateVersesList(service.lyricsList);
-    List<LyricDTO> lyricsAux = [];
-    //aqui vai o codigo para alterar a capa do album
-    for (int line = 0; service.lyricsList.length > line; line++) {
-      lyricsAux.add(
-        service.lyricsList[line].copyWith(
-          id: createId(8),
-          verses: lyricsConverted[line].verses,
-          albumCover: lyricsConverted[line].albumCover,
-        ),
+        error.message, error.stackTrace,
+        reason: 'a non-fatal error',
       );
     }
-    return service.copyWith(id: createId(8), lyricsList: lyricsAux);
-  }
-
-  static Future<List<LyricDTO>> generateVersesList(
-      List<LyricDTO> lyricsList) async {
-    List<LyricDTO> results = [];
-    for (int i = 0; lyricsList.length > i; i++) {
-      Map result = await getLyric(lyricsList[i].title, lyricsList[i].group);
-      results.add(
-        LyricDTO(
-          verses: VerseDTOAdapter.fromVagalume(result),
-          albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
-          id: createId(8),
-          title: '',
-          createAt: DateTime.now(),
-          group: '',
-        ),
-      );
-    }
-    return results;
   }
 }

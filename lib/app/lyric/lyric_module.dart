@@ -1,23 +1,27 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:ipbc_palmas/app/shared/components/utils/analytics_util.dart';
 import 'package:provider/provider.dart';
 
-import '../lyric/infra/models/hive-dtos/hive_services_collection_dto.dart';
-import '../lyric/infra/use-cases/collections_use_cases.dart';
+import '../lyric/infra/models/hive-dtos/hive_services_dto.dart';
+import '../lyric/infra/use-cases/services_use_cases.dart';
 import '../lyric/presentation/blocs/services_list_bloc.dart';
 import '../lyric/presentation/view-models/lyrics_view_model.dart';
 import '../core/external/firestore_datasource.dart';
 import '../core/infra/repositories/repository.dart';
 import '../core/external/hive_datasource.dart';
 import 'infra/use-cases/lyrics_use_cases.dart';
-import 'infra/use-cases/services_use_cases.dart';
+import 'infra/use-cases/collection_use_cases.dart';
 import 'infra/models/hive-dtos/hive_lyric_dto.dart';
-import 'infra/models/hive-dtos/hive_service_dto.dart';
+import 'infra/models/hive-dtos/hive_collection_dto.dart';
 import 'presentation/blocs/lyric_bloc.dart';
 import 'presentation/blocs/services_collection_bloc.dart';
 
 final lyricModule = [
 
   Provider<LyricsViewModel>(
-    create: (_) => LyricsViewModel(),
+    create: (context) => LyricsViewModel(
+        analyticsUtil: context.read<AnalyticsUtil>(),
+    ),
   ),
   Provider<Repository<Stream<List<Map>>>>(
     create: (context) => Repository<Stream<List<Map>>>(
@@ -26,14 +30,15 @@ final lyricModule = [
   ),
   Provider<ServicesListBloc>(
     create: (context) => ServicesListBloc(
-      fireServiceUseCases: CollectionsUseCases(
+      fireUseCases: ServicesUseCases(
         repository: context.read<Repository<Stream<List<Map>>>>(),
       ),
-      hiveServiceUseCases: CollectionsUseCases(
+      hiveUseCases: ServicesUseCases(
         repository: Repository(
-          datasource: HiveDatasource<HiveServicesCollectionDTO>(boxLabel: 'services-collection'),
+          datasource: HiveDatasource<HiveServicesDTO>(boxLabel: 'services'),
         ),
       ), lyricsViewModel: context.read<LyricsViewModel>(),
+      analyticsUtil: context.read<AnalyticsUtil>(),
     ),
   ),
   Provider<LyricBloc>(
@@ -46,18 +51,20 @@ final lyricModule = [
           datasource: HiveDatasource<HiveLyricDTO>(boxLabel: 'lyrics'),
         ),
       ),lyricsViewModel: context.read<LyricsViewModel>(),
+        analyticsUtil: context.read<AnalyticsUtil>(),
     ),
   ),
   Provider<ServicesCollectionBloc>(
     create: (context) => ServicesCollectionBloc(
-      fireServicesUseCases: ServicesUseCases(
+      fireUseCases: CollectionUseCases(
         repository: context.read<Repository<Stream<List<Map>>>>(),
       ),
-      hiveServicesUseCases: ServicesUseCases(
+      hiveUseCases: CollectionUseCases(
         repository: Repository(
-          datasource: HiveDatasource<HiveServiceDTO>(boxLabel: 'services'),
+          datasource: HiveDatasource<HiveCollectionDTO>(boxLabel: 'collection'),
         ),
       ),lyricsViewModel: context.read<LyricsViewModel>(),
+        analyticsUtil: context.read<AnalyticsUtil>(),
     ),
   ),
 ];

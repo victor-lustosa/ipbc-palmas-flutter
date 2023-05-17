@@ -1,20 +1,21 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
-import '../../domain/use-cases/lyrics_use_cases.dart';
-import '../../domain/entities/lyric_entity.dart';
 import '../view-models/lyrics_view_model.dart';
+import '../../domain/entities/lyric_entity.dart';
+import '../../domain/use-cases/lyrics_use_cases.dart';
+import '../../../shared/components/utils/analytics_util.dart';
 
 class LyricBloc extends Bloc<LyricEvent, LyricState> {
   final ILyricsUseCases fireLyricsUseCase;
   final ILyricsUseCases hiveLyricsUseCase;
   final LyricsViewModel lyricsViewModel;
+  final AnalyticsUtil analyticsUtil;
   final String path = 'lyrics/20';
 
   LyricBloc(
       {required this.lyricsViewModel,
+      required this.analyticsUtil,
       required this.fireLyricsUseCase,
       required this.hiveLyricsUseCase})
       : super(InitialState()) {
@@ -25,6 +26,7 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
     on<LoadingEvent>(_loading);
     on<CheckConnectivityEvent>(_checkConnectivity);
   }
+
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
     final isConnected = await lyricsViewModel.isConnected();
     if (isConnected) {
@@ -40,12 +42,10 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
       onData: (lyrics) {
         emit(SuccessfullyFetchedLyricsState(lyrics));
       },
-      onError: (error, st) async {
+      onError: (error, st) {
         emit(ExceptionLyricState(error.toString()));
-        await FirebaseCrashlytics.instance
-            .recordError(error, st, reason: 'a non-fatal error');
-        FirebaseCrashlytics.instance
-            .setCustomKey('get fire lyric bloc', error.toString());
+        analyticsUtil.recordError(name:'lyric bloc', error: error,st: st);
+        analyticsUtil.setCustomKey(name: 'lyric bloc', key: 'get fire lyrics bloc', value:  error.toString());
       },
     );
   }
@@ -57,10 +57,8 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
         emit(SuccessfullyFetchedLyricsState(lyrics));
       },
       onError: (error, st) async {
-        await FirebaseCrashlytics.instance
-            .recordError(error, st, reason: 'a non-fatal error');
-        FirebaseCrashlytics.instance
-            .setCustomKey('get hive lyric bloc', error.toString());
+        analyticsUtil.recordError(name:'lyric bloc', error:error,st: st);
+        analyticsUtil.setCustomKey(name: 'lyric bloc', key: 'get hive lyrics bloc', value:  error.toString());
         emit(ExceptionLyricState(error.toString()));
       },
     );
@@ -75,8 +73,7 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
   }
 
   Future<void> _lyricsFilter(LyricsFilterEvent event, emit) async {
-    List<dynamic> lyricsList =
-        await fireLyricsUseCase.lettersFilter(event.lyrics, event.letter);
+    List<dynamic> lyricsList = await fireLyricsUseCase.lettersFilter(event.lyrics, event.letter);
     emit(SuccessfullyFetchedLyricsState(lyricsList as List<LyricEntity>));
   }
 }

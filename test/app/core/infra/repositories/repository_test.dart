@@ -4,7 +4,7 @@ import 'package:mocktail/mocktail.dart';
 import '../../../../mocks/mocks.dart';
 
 void main() {
-  test('getting lyrics in repository', () {
+  test('getting lyrics in repository', () async {
     final datasource = IDatasourceMock();
     when(() => datasource.get('lyrics/1')).thenAnswer(
       (_) => Future.value(Stream.value(
@@ -34,7 +34,7 @@ void main() {
 
     final repository = Repository(datasource: datasource);
 
-    final result = repository.get('lyrics/1');
+    final result = await repository.get('lyrics/1');
     expect(result, emits(isA<List<dynamic>>()));
   });
 }

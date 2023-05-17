@@ -1,17 +1,17 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../lyric/domain/entities/lyric_entity.dart';
-import '../../lyric/domain/entities/service_entity.dart';
-import '../../lyric/infra/adapters/hive-dtos/hive_services_collection_adapter.dart';
-import '../../lyric/infra/adapters/hive-dtos/hive_lyric_adapter.dart';
-import '../../lyric/infra/adapters/hive-dtos/hive_service_adapter.dart';
-import '../../lyric/infra/models/firestore-dtos/services_collection_dto.dart';
-import '../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
-import '../../lyric/infra/models/hive-dtos/hive_service_dto.dart';
-import '../../lyric/infra/models/hive-dtos/hive_liturgy_dto.dart';
-import '../../lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
-import '../../lyric/infra/models/hive-dtos/hive_services_collection_dto.dart';
-import '../../lyric/infra/models/hive-dtos/hive_verse_dto.dart';
 import '../infra/datasources/datasource.dart';
+import '../../lyric/domain/entities/lyric_entity.dart';
+import '../../lyric/domain/entities/collection_entity.dart';
+import '../../lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
+import '../../lyric/infra/models/hive-dtos/hive_verse_dto.dart';
+import '../../lyric/infra/models/hive-dtos/hive_collection_dto.dart';
+import '../../lyric/infra/models/hive-dtos/hive_liturgy_dto.dart';
+import '../../lyric/infra/models/firestore-dtos/services_dto.dart';
+import '../../lyric/infra/models/hive-dtos/hive_services_dto.dart';
+import '../../lyric/infra/adapters/hive-dtos/hive_lyric_adapter.dart';
+import '../../lyric/infra/adapters/hive-dtos/hive_collection_adapter.dart';
+import '../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
+import '../../lyric/infra/adapters/hive-dtos/hive_services_adapter.dart';
 
 class HiveDatasource<R> implements IDatasource {
   String boxLabel;
@@ -33,7 +33,7 @@ class HiveDatasource<R> implements IDatasource {
       HiveServiceDTOAdapter(),
     );
     Hive.registerAdapter(
-      HiveServicesCollectionDTOAdapter(),
+      HiveServicesDTOAdapter(),
     );
     Hive.registerAdapter(
       HiveVerseDTOAdapter(),
@@ -48,19 +48,19 @@ class HiveDatasource<R> implements IDatasource {
   Future<dynamic> get(String path) async {
     params = path.split('/');
     switch (params[0]) {
-      case 'services':
-        var result = box.values.where((entity) => (entity as HiveServiceDTO).type == params[1]).toList();
-        (result as List<HiveServiceDTO>).sort((a, b) => b.createAt.compareTo(a.createAt));
-        return Stream.value(result.map(HiveServiceAdapter.toMap).toList());
+      case 'services-collection':
+        var result = box.values.where((entity) => (entity as HiveCollectionDTO).type == params[1]).toList();
+        (result as List<HiveCollectionDTO>).sort((a, b) => b.createAt.compareTo(a.createAt));
+        return Stream.value(result.map(HiveCollectionAdapter.toMap).toList());
 
       case 'lyrics':
         var result = box.values.toList();
         (result as List<HiveLyricDTO>).sort((a, b) => b.createAt.compareTo(a.createAt));
         return Stream.value(HiveLyricAdapter.toMapList(result as List<HiveLyricDTO>));
 
-      case 'services-collection':
+      case 'services':
         var result = box.values.toList();
-        return Stream.value(result.map(HiveServicesCollectionAdapter.toMap).toList());
+        return Stream.value(result.map(HiveServicesAdapter.toMap).toList());
 
       case 'database-configs':
         var result = box.get(params[0]);
@@ -81,19 +81,19 @@ class HiveDatasource<R> implements IDatasource {
   Future<void> update(String path, data) async {
     params = path.split('/');
     switch (params[0]) {
+      case 'services-collection':
+        for (CollectionEntity entity in data as List<CollectionEntity>) {
+          box.put(entity.id, HiveCollectionAdapter.toDTO(entity) as R);
+        }
+        break;
       case 'lyrics':
         for (LyricEntity entity in data as List<LyricEntity>) {
           box.put(entity.id, HiveLyricAdapter.toDTO(entity) as R);
         }
         break;
       case 'services':
-        for (ServiceEntity entity in data as List<ServiceEntity>) {
-          box.put(entity.id, HiveServiceAdapter.toDTO(entity) as R);
-        }
-        break;
-      case 'services-collection':
-        for (ServicesCollectionDTO entity in data as List<ServicesCollectionDTO>) {
-          box.put(entity.id, HiveServicesCollectionAdapter.toDTO(entity) as R);
+        for (ServicesDTO entity in data as List<ServicesDTO>) {
+          box.put(entity.id, HiveServicesAdapter.toDTO(entity) as R);
         }
         break;
       case 'database-configs':

@@ -1,22 +1,21 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:provider/provider.dart';
-
-import '../splash/presentation/view-models/database_view_model.dart';
-import '../home/view-models/home_view_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'presentation/blocs/database_bloc.dart';
-import '../core/external/firestore_datasource.dart';
-import '../core/external/hive_datasource.dart';
-import '../core/infra/repositories/repository.dart';
-import '../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 import 'infra/use-cases/databases_use_cases.dart';
+import '../core/external/hive_datasource.dart';
+import '../home/view-models/home_view_model.dart';
+import '../core/external/firestore_datasource.dart';
+import '../core/infra/repositories/repository.dart';
+import '../shared/components/utils/analytics_util.dart';
+import '../splash/presentation/view-models/database_view_model.dart';
+import '../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 
 final mainModule = [
   Provider<DatabaseViewModel>(
     create: (_) => DatabaseViewModel(),
   ),
-  Provider<FirebaseCrashlytics>(
-    create: (_) => FirebaseCrashlytics.instance,
+  Provider<AnalyticsUtil>(
+    create: (_) => AnalyticsUtil(),
   ),
   Provider<FirestoreDatasource>(
     create: (_) => FirestoreDatasource(
@@ -41,6 +40,7 @@ final mainModule = [
             datasource: context.read<HiveDatasource<HiveDatabaseConfigsDTO>>(),
           ),
         ),
-        crash: context.read<FirebaseCrashlytics>()),
+        analyticsUtil: context.read<AnalyticsUtil>(),
+    ),
   ),
 ];

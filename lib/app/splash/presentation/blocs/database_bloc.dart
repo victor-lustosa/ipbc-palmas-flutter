@@ -3,15 +3,16 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../shared/components/utils/analytics_util.dart';
 import '../../../splash/infra/use-cases/databases_use_cases.dart';
 import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 
 class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
   final DatabasesUseCases databasesUseCases;
-  final FirebaseCrashlytics crash;
+  final AnalyticsUtil analyticsUtil;
   final String path = 'database-configs';
 
-  DatabaseBloc({required this.databasesUseCases, required this.crash})
+  DatabaseBloc({required this.databasesUseCases, required this.analyticsUtil})
       : super(InitialDatasourceState()) {
     on<GetDataEvent>(_getData);
     on<UpdateDataEvent>(_updateData);
@@ -24,8 +25,8 @@ class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
         emit(FetchingDataState(service));
       },
       onError: (error, st) async {
-        await crash.recordError(error, st, reason: 'a non-fatal error');
-        crash.setCustomKey('get database bloc', error.toString());
+        analyticsUtil.recordError(error: error, st: st, name: 'database bloc');
+        analyticsUtil.setCustomKey(name: 'database bloc', key: 'get database bloc',value: error.toString());
         emit(ServiceExceptionState(error.toString()));
       },
     );

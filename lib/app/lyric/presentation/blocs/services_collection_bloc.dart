@@ -1,23 +1,24 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
-
-import '../../../core/domain/use-cases/use_cases.dart';
-import '../../domain/entities/service_entity.dart';
 import '../view-models/lyrics_view_model.dart';
+import '../../domain/entities/collection_entity.dart';
+import '../../../core/domain/use-cases/use_cases.dart';
+import '../../../shared/components/utils/analytics_util.dart';
 
 class ServicesCollectionBloc
     extends Bloc<ServicesCollectionEvent, ServicesCollectionState> {
-  final IUseCases fireServicesUseCases;
-  final IUseCases hiveServicesUseCases;
+  final IUseCases fireUseCases;
+  final IUseCases hiveUseCases;
   final LyricsViewModel lyricsViewModel;
+  final AnalyticsUtil analyticsUtil;
   String path = '';
 
   ServicesCollectionBloc(
       {required this.lyricsViewModel,
-      required this.fireServicesUseCases,
-      required this.hiveServicesUseCases})
+      required this.fireUseCases,
+      required this.analyticsUtil,
+      required this.hiveUseCases})
       : super(InitialState()) {
     on<GetServicesCollectionInFireEvent>(_getServicesCollectionInFire);
     on<GetServicesCollectionInHiveEvent>(_getServicesCollectionInHive);
@@ -37,16 +38,14 @@ class ServicesCollectionBloc
 
   Future<void> _getServicesCollectionInFire(
       GetServicesCollectionInFireEvent event, emit) async {
-    await emit.onEach<List<ServiceEntity>>(
-      await fireServicesUseCases.get(path),
+    await emit.onEach<List<CollectionEntity>>(
+      await fireUseCases.get(path),
       onData: (services) {
         emit(SuccessfullyFetchedCollectionState(services));
       },
       onError: (error, st) async {
-        await FirebaseCrashlytics.instance
-            .recordError(error, st, reason: 'a non-fatal error');
-        FirebaseCrashlytics.instance
-            .setCustomKey('get fire service bloc', error.toString());
+        analyticsUtil.recordError(name:'fire collection bloc', error:error,st: st);
+        analyticsUtil.setCustomKey(name: 'fire collection bloc', key: 'get fire collection bloc', value:  error.toString());
         emit(ServiceExceptionState(error.toString()));
       },
     );
@@ -54,16 +53,14 @@ class ServicesCollectionBloc
 
   Future<void> _getServicesCollectionInHive(
       GetServicesCollectionInHiveEvent event, emit) async {
-    await emit.onEach<List<ServiceEntity>>(
-      await hiveServicesUseCases.get('services/${event.path}'),
+    await emit.onEach<List<CollectionEntity>>(
+      await hiveUseCases.get('services-collection/${event.path}'),
       onData: (services) {
         emit(SuccessfullyFetchedCollectionState(services));
       },
       onError: (error, st) async {
-        await FirebaseCrashlytics.instance
-            .recordError(error, st, reason: 'a non-fatal error');
-        FirebaseCrashlytics.instance
-            .setCustomKey('get hive service bloc', error.toString());
+        analyticsUtil.recordError(name:'hive collection bloc', error:error,st: st);
+        analyticsUtil.setCustomKey(name: 'hive collection bloc', key: 'get hive collection bloc', value:  error.toString());
         emit(ServiceExceptionState(error.toString()));
       },
     );
@@ -75,7 +72,7 @@ class ServicesCollectionBloc
 
   Future<void> _updateServicesCollectionInHive(
       UpdateServicesCollectionInHiveEvent event, emit) async {
-    await hiveServicesUseCases.update('services/$path', event.entities);
+    await hiveUseCases.update('services-collection/$path', event.entities);
   }
 }
 
@@ -130,6 +127,6 @@ class ServiceExceptionState extends ServicesCollectionState {
 }
 
 class SuccessfullyFetchedCollectionState extends ServicesCollectionState {
-  final List<ServiceEntity> entities;
+  final List<CollectionEntity> entities;
   SuccessfullyFetchedCollectionState(this.entities);
 }

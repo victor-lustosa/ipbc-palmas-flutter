@@ -8,13 +8,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'app/lyric/infra/models/hive-dtos/hive_services_collection_dto.dart';
+import 'app/lyric/infra/models/hive-dtos/hive_services_dto.dart';
 import 'app/lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
 import 'app/app_widget.dart';
 import 'app/core/external/hive_datasource.dart';
 import 'app/ipbc_bloc_observer.dart';
 import 'app/lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
-import 'app/lyric/infra/models/hive-dtos/hive_service_dto.dart';
+import 'app/lyric/infra/models/hive-dtos/hive_collection_dto.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -31,13 +31,12 @@ void main() async {
       HiveDatasource.initHive();
 
       await Hive.openBox<HiveDatabaseConfigsDTO>('database-configs');
-      await Hive.openBox<HiveServiceDTO>('services');
+      await Hive.openBox<HiveCollectionDTO>('collection');
       await Hive.openBox<HiveLyricDTO>('lyrics');
-      await Hive.openBox<HiveServicesCollectionDTO>('services-collection');
+      await Hive.openBox<HiveServicesDTO>('services');
 
       if (kDebugMode) {
-        await FirebaseCrashlytics.instance
-            .setCrashlyticsCollectionEnabled(false);
+        await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
       }
 
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;

@@ -1,6 +1,6 @@
-import '../../../domain/entities/lyric_entity.dart';
 import 'hive_verse_adapter.dart';
 import '../../models/hive-dtos/hive_lyric_dto.dart';
+import '../../../domain/entities/lyric_entity.dart';
 
 class HiveLyricAdapter {
   static List<Map<String, dynamic>> toMapList(List<HiveLyricDTO> data) {

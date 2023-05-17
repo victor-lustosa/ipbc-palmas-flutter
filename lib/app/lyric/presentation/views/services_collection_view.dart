@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'service_view.dart';
 import '../view-models/lyrics_view_model.dart';
 import '../blocs/services_collection_bloc.dart';
-import '../../domain/entities/service_entity.dart';
-import '../../infra/models/firestore-dtos/services_collection_dto.dart';
+import '../../domain/entities/collection_entity.dart';
+import '../../infra/models/firestore-dtos/services_dto.dart';
 import '../../../configs/app_configs.dart';
 import '../../../configs/app_routes.dart';
 import '../../../exception/views/generic_error_view.dart';
@@ -17,7 +17,7 @@ import '../../../shared/components/button/button_widget.dart';
 class ServicesCollectionView extends StatefulWidget {
   const ServicesCollectionView({Key? key, required this.servicesCollection})
       : super(key: key);
-  final ServicesCollectionDTO servicesCollection;
+  final ServicesDTO servicesCollection;
 
   @override
   State<ServicesCollectionView> createState() => _ServicesCollectionViewState();
@@ -25,7 +25,7 @@ class ServicesCollectionView extends StatefulWidget {
 
 class _ServicesCollectionViewState extends State<ServicesCollectionView> {
   late final ServicesCollectionBloc bloc;
-  late List<ServiceEntity> servicesCollectionList;
+  late List<CollectionEntity> servicesCollectionList;
   late String path;
 
   @override
@@ -63,7 +63,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                   return const NoConnectionView(index: 0);
                 } else if (state is SuccessfullyFetchedCollectionState) {
                     servicesCollectionList = state.entities;
-                    if(state.entities[0].type == path.split('/')[0]){
+                    if(state.entities.isNotEmpty && state.entities[0].type == path.split('/')[0]){
                       if (context.read<LyricsViewModel>().isNotUpdated(path)) {
                         bloc.add(UpdateServicesCollectionInHiveEvent(entities: servicesCollectionList));
                         context.read<LyricsViewModel>().updateData(context, path);

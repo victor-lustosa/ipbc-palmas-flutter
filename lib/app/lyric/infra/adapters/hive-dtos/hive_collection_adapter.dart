@@ -1,9 +1,9 @@
-import '../../../domain/entities/service_entity.dart';
-import '../../models/hive-dtos/hive_service_dto.dart';
 import 'hive_liturgy_adapter.dart';
 import 'hive_lyric_adapter.dart';
+import '../../models/hive-dtos/hive_collection_dto.dart';
+import '../../../domain/entities/collection_entity.dart';
 
-class HiveServiceAdapter {
+class HiveCollectionAdapter {
   static Map<String, dynamic> toMap(dynamic data) {
     return {
       'id': data.id,
@@ -21,8 +21,8 @@ class HiveServiceAdapter {
     };
   }
 
-  static HiveServiceDTO toDTO(ServiceEntity entity) {
-    return HiveServiceDTO(
+  static HiveCollectionDTO toDTO(CollectionEntity entity) {
+    return HiveCollectionDTO(
       id: entity.id,
       liturgyList: HiveLiturgyAdapter.toDTOList(entity.liturgyList),
       lyricsList: HiveLyricAdapter.toDTOList(entity.lyricsList),

@@ -1,5 +1,5 @@
-import '../../../domain/entities/verse_entity.dart';
 import '../../models/hive-dtos/hive_verse_dto.dart';
+import '../../../domain/entities/verse_entity.dart';
 
 class HiveVerseAdapter {
   static List<Map<String, dynamic>> toMapList(List<HiveVerseDTO> data) {

@@ -1,16 +1,17 @@
-import '../../domain/entities/service_entity.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'liturgy_adapter.dart';
 import 'lyric_adapter.dart';
+import '../../domain/entities/collection_entity.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart' show DateFormat;
 
-class ServiceAdapter {
-  static List<ServiceEntity> fromMapList(dynamic data) {
-    List<ServiceEntity> services = [];
+class CollectionAdapter {
+  static List<CollectionEntity> fromMapList(dynamic data) {
+    List<CollectionEntity> services = [];
     for (dynamic entity in data) {
       services.add(
-        ServiceEntity(
+        CollectionEntity(
           type: entity['type'],
           hour: entity['hour'],
           liturgyList: LiturgyAdapter.fromMap(entity['liturgyList']),

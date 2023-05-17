@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'hive_service_dto.dart';
+part of 'hive_collection_dto.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class HiveServiceDTOAdapter extends TypeAdapter<HiveServiceDTO> {
+class HiveServiceDTOAdapter extends TypeAdapter<HiveCollectionDTO> {
   @override
   final int typeId = 1;
 
   @override
-  HiveServiceDTO read(BinaryReader reader) {
+  HiveCollectionDTO read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return HiveServiceDTO(
+    return HiveCollectionDTO(
       id: fields[0] as String,
       title: fields[3] as String,
       image: fields[10] as String,
@@ -33,7 +33,7 @@ class HiveServiceDTOAdapter extends TypeAdapter<HiveServiceDTO> {
   }
 
   @override
-  void write(BinaryWriter writer, HiveServiceDTO obj) {
+  void write(BinaryWriter writer, HiveCollectionDTO obj) {
     writer
       ..writeByte(12)
       ..writeByte(0)

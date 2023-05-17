@@ -1,8 +1,8 @@
 import 'package:hive/hive.dart';
-part 'hive_services_collection_dto.g.dart';
+part 'hive_services_dto.g.dart';
 
 @HiveType(typeId: 5)
-class HiveServicesCollectionDTO {
+class HiveServicesDTO {
 
   @HiveField(0)
   String id;
@@ -22,7 +22,7 @@ class HiveServicesCollectionDTO {
   @HiveField(5)
   String hour;
 
-  HiveServicesCollectionDTO(
+  HiveServicesDTO(
       {required this.id,
       required this.heading,
       required this.path,

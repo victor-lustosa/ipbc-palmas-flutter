@@ -1,7 +1,7 @@
-import '../../../core/domain/repositories/repository.dart';
+import '../adapters/lyric_adapter.dart';
 import '../../domain/entities/lyric_entity.dart';
 import '../../domain/use-cases/lyrics_use_cases.dart';
-import '../adapters/lyric_adapter.dart';
+import '../../../core/domain/repositories/repository.dart';
 
 class LyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
   final IRepository<Stream<List<Map>>> repository;

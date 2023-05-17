@@ -8,8 +8,10 @@ class FirestoreDatasource implements IDatasource {
 
   final FirebaseFirestore _firestore;
   List<String> params = [];
+  late Stream<QuerySnapshot<Map<String, dynamic>>> snapshot;
 
-  List<Map> _convert(List<QueryDocumentSnapshot<Map<String, dynamic>>> docs) {
+
+  List<Map> convert(List<QueryDocumentSnapshot<Map<String, dynamic>>> docs) {
     var entities = docs
         .map((document) => {
               'id': document.id,
@@ -20,15 +22,9 @@ class FirestoreDatasource implements IDatasource {
   }
 
   @override
-  Future<Stream<List<Map>>> get(String url) async {
+  Future<dynamic> get(String url) async {
     params = url.split('/');
-    Stream<QuerySnapshot<Map<String, dynamic>>> snapshot;
-    if (params[1] == 'id') {
-      snapshot = _firestore
-          .collection(params[0])
-          .orderBy("id", descending: false)
-          .snapshots();
-    } else if (params.length > 2) {
+   if(params.length > 2) {
       snapshot = _firestore
           .collection(params[0])
           .doc(params[1])
@@ -43,7 +39,7 @@ class FirestoreDatasource implements IDatasource {
           .limit(int.parse(params[1]))
           .snapshots();
     }
-    return snapshot.map((entity) => entity.docs).map(_convert);
+    return snapshot.map((entity) => entity.docs).map(convert);
   }
 
   Future<String> verifyUpdateDatasource() async {
@@ -52,7 +48,7 @@ class FirestoreDatasource implements IDatasource {
         .collection('settings')
         .get()
         .then((QuerySnapshot<Map<String, dynamic>> snapshot) {
-      fireUpdateId = snapshot.docs.first.get('fireUpdateId');
+       fireUpdateId = snapshot.docs.first.get('fireUpdateId');
     });
     return fireUpdateId;
   }

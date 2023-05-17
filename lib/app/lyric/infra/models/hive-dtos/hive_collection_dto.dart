@@ -1,10 +1,10 @@
 import 'package:hive/hive.dart';
 import 'hive_liturgy_dto.dart';
 import 'hive_lyric_dto.dart';
-part 'hive_service_dto.g.dart';
+part 'hive_collection_dto.g.dart';
 
 @HiveType(typeId: 1)
-class HiveServiceDTO {
+class HiveCollectionDTO {
   @HiveField(0)
   String id;
 
@@ -41,7 +41,7 @@ class HiveServiceDTO {
   @HiveField(11)
   String hour;
 
-  HiveServiceDTO({
+  HiveCollectionDTO({
         required this.id,
         required this.title,
         required this.image,

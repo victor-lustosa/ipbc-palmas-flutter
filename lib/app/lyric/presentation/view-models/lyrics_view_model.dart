@@ -1,14 +1,16 @@
 import 'dart:async';
 import 'package:provider/provider.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
+import '../../../shared/components/utils/analytics_util.dart';
 import '../../../splash/presentation/blocs/database_bloc.dart';
-class LyricsViewModel {
-  LyricsViewModel();
+import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 
+class LyricsViewModel {
+  LyricsViewModel({required this.analyticsUtil});
+
+  final AnalyticsUtil analyticsUtil;
   static int chorusController = 0;
   static bool previousChorus = false;
   late HiveDatabaseConfigsDTO data;
@@ -26,7 +28,7 @@ class LyricsViewModel {
         return false;
       }
     } on PlatformException catch (e, st) {
-      await FirebaseCrashlytics.instance.recordError(e, st, reason: 'a non-fatal error');
+      analyticsUtil.recordError(error:e, st:st,name: 'lyric view model');
       throw Exception();
     }
   }
@@ -35,9 +37,9 @@ class LyricsViewModel {
     switch (path.split('/')[0]) {
       case 'saturday-services':
         return !data.isSaturdayCollectionUpdated;
-      case 'morning-sunday-services':
+      case 'sunday-morning-services':
         return !data.isSundayMorningCollectionUpdated;
-      case 'evening-sunday-services':
+      case 'sunday-evening-services':
         return !data.isSundayEveningCollectionUpdated;
       default:
         return true;
@@ -49,10 +51,10 @@ class LyricsViewModel {
       case 'saturday-services':
         data = data.copyWith(isSaturdayCollectionUpdated: true);
         break;
-      case 'morning-sunday-services':
+      case 'sunday-morning-services':
         data = data.copyWith(isSundayMorningCollectionUpdated: true);
         break;
-      case 'evening-sunday-services':
+      case 'sunday-evening-services':
         data = data.copyWith(isSundayEveningCollectionUpdated: true);
         break;
       case 'services':

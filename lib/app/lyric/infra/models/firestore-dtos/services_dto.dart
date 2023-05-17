@@ -1,5 +1,5 @@
-class ServicesCollectionDTO {
-  ServicesCollectionDTO(
+class ServicesDTO {
+  ServicesDTO(
       {required this.image,
         required this.id,
         required this.hour,
@@ -13,7 +13,7 @@ class ServicesCollectionDTO {
   final String image;
   final String hour;
 
-  factory ServicesCollectionDTO.empty() => ServicesCollectionDTO(
+  factory ServicesDTO.empty() => ServicesDTO(
       heading: '',
       path: '',
       title: '',

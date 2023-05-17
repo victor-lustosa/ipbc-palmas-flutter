@@ -1,8 +1,8 @@
-import '../../models/firestore-dtos/services_collection_dto.dart';
+import '../../models/firestore-dtos/services_dto.dart';
 
-class ServicesCollectionDTOAdapter {
-  static ServicesCollectionDTO fromMap(dynamic json) {
-    return ServicesCollectionDTO(
+class ServicesDTOAdapter {
+  static ServicesDTO fromMap(dynamic json) {
+    return ServicesDTO(
       heading: json['heading'],
       path: json['path'],
       title: json['title'],
@@ -12,7 +12,7 @@ class ServicesCollectionDTOAdapter {
     );
   }
 
-  static Map<String, dynamic> toMap(ServicesCollectionDTO data) {
+  static Map<String, dynamic> toMap(ServicesDTO data) {
     return {
       'heading': data.heading,
       'path': data.path,

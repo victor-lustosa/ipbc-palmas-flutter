@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,6 +14,7 @@ import '../../../lyric/presentation/blocs/lyric_bloc.dart';
 import '../../../lyric/presentation/view-models/lyrics_view_model.dart';
 import '../../../shared/components/loading/loading_widget.dart';
 import '../../../configs/app_configs.dart';
+import '../../../shared/components/utils/analytics_util.dart';
 import '../../infra/repositories/repository.dart';
 import '../firestore_datasource.dart';
 import '../hive_datasource.dart';
@@ -120,7 +122,9 @@ Future<void> main() async {
           datasource: HiveDatasource<List<HiveLyricDTO>>(boxLabel: 'lyrics'),
         ),
       ),
-      lyricsViewModel: LyricsViewModel());
+      lyricsViewModel: LyricsViewModel(analyticsUtil: AnalyticsUtil()),
+      analyticsUtil: AnalyticsUtil(),
+  );
 
   /*ServiceBloc lyricBloc = ServiceBloc(
     servicesUseCases: ServicesUseCases(

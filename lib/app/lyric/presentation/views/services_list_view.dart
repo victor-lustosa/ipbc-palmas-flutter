@@ -2,17 +2,17 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../blocs/services_list_bloc.dart';
+import '../view-models/lyrics_view_model.dart';
+import '../../infra/models/firestore-dtos/services_dto.dart';
+import '../../../configs/app_configs.dart';
+import '../../../configs/app_routes.dart';
 import '../../../exception/views/no_connection_view.dart';
 import '../../../exception/views/generic_error_view.dart';
 import '../../../shared/components/button/button_widget.dart';
 import '../../../shared/components/loading/loading_widget.dart';
 import '../../../shared/components/utils/responsivity_util.dart';
-import '../../infra/models/firestore-dtos/services_collection_dto.dart';
-import '../blocs/services_list_bloc.dart';
 import '../../../shared/layout/top-bar/main_top_bar_widget.dart';
-import '../../../configs/app_configs.dart';
-import '../../../configs/app_routes.dart';
-import '../view-models/lyrics_view_model.dart';
 
 class ServicesListView extends StatefulWidget {
   const ServicesListView({super.key});
@@ -24,7 +24,7 @@ class ServicesListView extends StatefulWidget {
 class _ServicesListViewState extends State<ServicesListView>
     with AutomaticKeepAliveClientMixin {
   late final ServicesListBloc bloc;
-  late List<ServicesCollectionDTO> servicesList;
+  late List<ServicesDTO> servicesList;
 
   @override
   void initState() {

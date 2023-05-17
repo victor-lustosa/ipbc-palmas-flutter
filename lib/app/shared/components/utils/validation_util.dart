@@ -8,8 +8,6 @@ class ValidationUtil {
     switch (DateFormat('EEEE').format(DateTime.now())) {
       case 'Friday':
         return 'firebase';
-      case 'Tuesday':
-        return 'firebase';
       case 'Saturday':
         return 'firebase';
       case 'Sunday':

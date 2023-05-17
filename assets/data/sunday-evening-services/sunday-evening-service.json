@@ -7,7 +7,7 @@
   "hour": "19h",
   "image": "assets/images/sunday_evening.png",
   "heading": "domingo à noite",
-  "type": "evening-sunday-services",
+  "type": "sunday-evening-services",
   "guideIsVisible": true,
   "liturgyList": [
   {

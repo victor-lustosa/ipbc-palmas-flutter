@@ -1,9 +1,9 @@
 import 'lyric_entity.dart';
 import 'liturgy_entity.dart';
 
-class ServiceEntity {
+class CollectionEntity {
   
-  ServiceEntity(
+  CollectionEntity(
       {required this.id,
       required this.type,
       required this.hour,

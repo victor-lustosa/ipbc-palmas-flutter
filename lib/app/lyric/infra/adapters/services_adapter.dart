@@ -1,10 +1,10 @@
-import '../models/firestore-dtos/services_collection_dto.dart';
+import '../models/firestore-dtos/services_dto.dart';
 
-class ServicesCollectionAdapter {
-  static List<ServicesCollectionDTO> fromMapList(dynamic data) {
-    List<ServicesCollectionDTO> list = [];
+class ServicesAdapter {
+  static List<ServicesDTO> fromMapList(dynamic data) {
+    List<ServicesDTO> list = [];
     for (dynamic entity in data) {
-      list.add(ServicesCollectionDTO(
+      list.add(ServicesDTO(
         heading: entity['heading'],
         title: entity['title'],
         path: entity['path'],

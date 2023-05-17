@@ -1,5 +1,5 @@
-import '../../../domain/entities/liturgy_entity.dart';
 import '../firestore-dtos/lyric_dto.dart';
+import '../../../domain/entities/liturgy_entity.dart';
 
 class ServiceDTO {
   ServiceDTO(
