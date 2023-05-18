@@ -1,4 +1,7 @@
 {
+  "id": "1",
+  "image": "assets/images/sunday_evening.png",
+  "hour": "19h",
   "createAt": "",
   "title": "Domingo à noite",
   "theme": "avivamento do Espirito",
@@ -8,23 +11,23 @@
   "guideIsVisible": true,
   "liturgyList": [
   {
-  "isAdditional":  false,
-  "sequence": "Oração",
+    "isAdditional":  false,
+    "sequence": "Oração",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Texto Biblico",
     "additional": ""
   },
   {
     "isAdditional": true,
-    "sequence": "Texto Biblico",
-    "additional": "João 10:1-6"
+    "sequence": "Hino 201",
+    "additional": "Manso e suave"
   },
-  {
-    "isAdditional": true,
-    "sequence": "Hino 151",
-    "additional": "O Bom Pastor"
-  },
-  {"isAdditional": true,
+  {"isAdditional": false,
     "sequence": "Texto Biblico",
-    "additional": "Lucas 15:1-7"
+    "additional": ""
   },
   {
     "isAdditional": false,
@@ -37,13 +40,8 @@
     "additional": ""
   },
   {
-    "isAdditional": true,
-    "sequence": "Pregação",
-    "additional": "Salmos 23"
-  },
-  {
     "isAdditional": false,
-    "sequence": "Santa Ceia",
+    "sequence": "Pregação",
     "additional": ""
   },
   {

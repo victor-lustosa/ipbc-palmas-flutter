@@ -1,0 +1,57 @@
+{
+  "id": "",
+  "createAt": "",
+  "image": "assets/images/sunday_morning.jpg",
+  "title": "Domingo de manhã",
+  "theme": "Deus Age por meio da pequena fé",
+  "preacher": "Pb Cid",
+  "hour": "9h",
+  "heading": "domingo de manhã",
+  "type": "sunday-morning-services",
+  "guideIsVisible": true,
+  "liturgyList": [
+    {
+      "isAdditional":  false,
+      "sequence": "Abertura no salão de festas",
+      "additional": ""
+    },
+    {
+      "isAdditional": false,
+      "sequence": "Café da manhã",
+      "additional": ""
+    },
+    {
+      "isAdditional": false,
+      "sequence": "Coral Infantil",
+      "additional": ""
+    },
+    {"isAdditional": false,
+      "sequence": "Louvor",
+      "additional": ""
+    },
+    {
+      "isAdditional": false,
+      "sequence": "Avisos e divisão de salas",
+      "additional": ""
+    }
+  ],
+  "lyricsList": [
+    {
+      "id": "",
+      "title": "Eu vejo a glória",
+      "group": "Marcos Góes",
+      "albumCover": "",
+      "createAt": "",
+      "verses": []
+    },
+    {
+      "id": "",
+      "title": "Não tenhas sobre ti",
+      "group": "Paulo Cesar Baruk",
+      "albumCover":
+      "",
+      "createAt": "",
+      "verses": []
+    }
+  ]}
+

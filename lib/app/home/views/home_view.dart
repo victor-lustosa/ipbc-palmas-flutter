@@ -1,15 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../view-models/home_view_model.dart';
+import '../../configs/app_routes.dart';
 import '../../lyric/lyric_module.dart';
+import '../../configs/app_configs.dart';
 import '../../offers/views/offers_view.dart';
 import '../../lyric/presentation/views/lyrics_list_view.dart';
-import '../../configs/app_routes.dart';
-import '../../shared/layout/bottom-bar/cupertino/cupertino_bottom_bar_widget.dart';
 import '../../shared/layout/bottom-bar/material/material_bottom_bar_widget.dart';
-import '../../configs/app_configs.dart';
+import '../../shared/layout/bottom-bar/cupertino/cupertino_bottom_bar_widget.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

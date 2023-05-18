@@ -1,9 +1,12 @@
 {
+  "id": "1",
   "createAt": "",
+  "image": "assets/images/sunday_evening.png",
   "title": "Domingo à noite",
-  "theme": "avivamento do Espirito",
+  "theme": "Como me relaciono com os perdidos ao meu redor?",
   "preacher": "Pr Danilo",
   "heading": "domingo à noite",
+  "hour": "19h",
   "type": "sunday-evening-services",
   "guideIsVisible": true,
   "liturgyList": [
@@ -13,18 +16,18 @@
     "additional": ""
   },
   {
-    "isAdditional": true,
+    "isAdditional": false,
     "sequence": "Texto Biblico",
-    "additional": "João 10:1-6"
+    "additional": ""
   },
   {
     "isAdditional": true,
-    "sequence": "Hino 151",
-    "additional": "O Bom Pastor"
+    "sequence": "Hino 201",
+    "additional": "Manso e suave"
   },
-  {"isAdditional": true,
+  {"isAdditional": false,
     "sequence": "Texto Biblico",
-    "additional": "Lucas 15:1-7"
+    "additional": ""
   },
   {
     "isAdditional": false,
@@ -37,13 +40,8 @@
     "additional": ""
   },
   {
-    "isAdditional": true,
-    "sequence": "Pregação",
-    "additional": "Salmos 23"
-  },
-  {
     "isAdditional": false,
-    "sequence": "Santa Ceia",
+    "sequence": "Pregação",
     "additional": ""
   },
   {
@@ -60,24 +58,33 @@
   "lyricsList": [
     {
       "id": "",
-      "title": "Quem e",
-      "group": "diante do trono",
+      "title": "Vivifica-me",
+      "group": "Desconhecido",
       "albumCover": "",
       "createAt": "",
       "verses": []
     },
     {
       "id": "",
-      "title": "Eu me rendo",
-      "group": "Renascer Praise",
+      "title": "Infinitamente mais",
+      "group": "Asaph Borba",
+      "albumCover":
+      "",
+      "createAt": "",
+      "verses": []
+    },
+    {
+      "id": "",
+      "title": "Ofereço minha vida",
+      "group": "Igreja Bíblica da Paz",
       "albumCover": "",
       "createAt": "",
       "verses": []
     },
     {
       "id": "",
-      "title": "Te louvarei",
-      "group": "Toque no altar",
+      "title": "Manso e suave",
+      "group": "Cantor Cristão",
       "albumCover": "",
       "createAt": "",
       "verses": []

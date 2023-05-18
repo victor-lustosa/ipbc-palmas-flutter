@@ -1,15 +1,18 @@
 {
+  "id": "1",
   "createAt": "",
-  "theme": "avivamento do Espirito",
-  "preacher": "Pr Isaías",
+  "theme": "O dever de nos alegramos em Deus",
+  "preacher": "Pb Cid",
   "title": "Sábado",
+  "hour": "19h30",
   "type": "saturday-services",
   "heading": "sábado",
+  "image": "assets/images/saturday_evening.png",
   "guideIsVisible": false,
   "lyricsList": [
     {
       "id": "",
-      "title": "Quem e",
+      "title": "Me derramar",
       "group": "diante do trono",
       "albumCover": "",
       "createAt": "",
@@ -17,16 +20,16 @@
     },
     {
       "id": "",
-      "title": "Eu me rendo",
-      "group": "Renascer Praise",
+      "title": "Galhos Secos",
+      "group": "Para Nossa Alegria",
       "albumCover": "",
       "createAt": "",
       "verses": []
     },
     {
       "id": "",
-      "title": "Te louvarei",
-      "group": "Toque no altar",
+      "title": "Perto Quero Estar",
+      "group": "Ministério Toque No Altar",
       "albumCover": "",
       "createAt": "",
       "verses": []

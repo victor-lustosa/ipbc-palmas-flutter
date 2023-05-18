@@ -4,14 +4,14 @@ import '../../lyric/domain/entities/lyric_entity.dart';
 import '../../lyric/domain/entities/collection_entity.dart';
 import '../../lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_verse_dto.dart';
-import '../../lyric/infra/models/hive-dtos/hive_collection_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_liturgy_dto.dart';
 import '../../lyric/infra/models/firestore-dtos/services_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_services_dto.dart';
+import '../../lyric/infra/models/hive-dtos/hive_collection_dto.dart';
 import '../../lyric/infra/adapters/hive-dtos/hive_lyric_adapter.dart';
+import '../../lyric/infra/adapters/hive-dtos/hive_services_adapter.dart';
 import '../../lyric/infra/adapters/hive-dtos/hive_collection_adapter.dart';
 import '../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
-import '../../lyric/infra/adapters/hive-dtos/hive_services_adapter.dart';
 
 class HiveDatasource<R> implements IDatasource {
   String boxLabel;

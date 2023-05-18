@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../infra/datasources/datasource.dart';
 
 class FirestoreDatasource implements IDatasource {

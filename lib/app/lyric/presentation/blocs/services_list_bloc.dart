@@ -38,7 +38,7 @@ class ServicesListBloc extends Bloc<ServicesListEvent, ServicesListState> {
     await emit.onEach<List<ServicesDTO>>(
       await fireUseCases.get(path),
       onData: (services) {
-        emit(SuccessfullyFetchedServiceState(services));
+        emit(ServiceSuccessfullyFetchedState(services));
       },
       onError: (error, st) async {
         analyticsUtil.recordError(name: 'fire services bloc', error: error, st: st);
@@ -52,7 +52,7 @@ class ServicesListBloc extends Bloc<ServicesListEvent, ServicesListState> {
     await emit.onEach<List<ServicesDTO>>(
       await hiveUseCases.get(path),
       onData: (service) {
-        emit(SuccessfullyFetchedServiceState(service));
+        emit(ServiceSuccessfullyFetchedState(service));
       },
       onError: (error, st) async {
         analyticsUtil.recordError(name: 'hive services bloc',error: error,st: st,);
@@ -120,7 +120,7 @@ class ServiceExceptionState extends ServicesListState {
   ServiceExceptionState(this.message);
 }
 
-class SuccessfullyFetchedServiceState extends ServicesListState {
+class ServiceSuccessfullyFetchedState extends ServicesListState {
   final List<ServicesDTO> entities;
-  SuccessfullyFetchedServiceState(this.entities);
+  ServiceSuccessfullyFetchedState(this.entities);
 }

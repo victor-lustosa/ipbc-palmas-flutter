@@ -40,7 +40,7 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
     await emit.onEach<List<LyricEntity>>(
       await fireLyricsUseCase.get(path),
       onData: (lyrics) {
-        emit(SuccessfullyFetchedLyricsState(lyrics));
+        emit(LyricsSuccessfullyFetchedState(lyrics));
       },
       onError: (error, st) {
         emit(ExceptionLyricState(error.toString()));
@@ -54,7 +54,7 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
     await emit.onEach<List<LyricEntity>>(
       await hiveLyricsUseCase.get(path),
       onData: (lyrics) {
-        emit(SuccessfullyFetchedLyricsState(lyrics));
+        emit(LyricsSuccessfullyFetchedState(lyrics));
       },
       onError: (error, st) async {
         analyticsUtil.recordError(name:'lyric bloc', error:error,st: st);
@@ -74,7 +74,7 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
 
   Future<void> _lyricsFilter(LyricsFilterEvent event, emit) async {
     List<dynamic> lyricsList = await fireLyricsUseCase.lettersFilter(event.lyrics, event.letter);
-    emit(SuccessfullyFetchedLyricsState(lyricsList as List<LyricEntity>));
+    emit(LyricsSuccessfullyFetchedState(lyricsList as List<LyricEntity>));
   }
 }
 
@@ -132,7 +132,7 @@ class NoConnectionAvailableState extends LyricState {
   NoConnectionAvailableState();
 }
 
-class SuccessfullyFetchedLyricsState extends LyricState {
+class LyricsSuccessfullyFetchedState extends LyricState {
   final List<LyricEntity> entities;
-  SuccessfullyFetchedLyricsState(this.entities);
+  LyricsSuccessfullyFetchedState(this.entities);
 }

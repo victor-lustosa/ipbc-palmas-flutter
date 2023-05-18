@@ -1,23 +1,23 @@
 import 'dart:developer';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../lyric/infra/models/hive-dtos/hive_verse_dto.dart';
-import '../../../lyric/infra/use-cases/lyrics_use_cases.dart';
-import '../../../../firebase_options.dart';
-import '../../../lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
-import '../../../lyric/presentation/blocs/lyric_bloc.dart';
-import '../../../lyric/presentation/view-models/lyrics_view_model.dart';
-import '../../../shared/components/loading/loading_widget.dart';
-import '../../../configs/app_configs.dart';
-import '../../../shared/components/utils/analytics_util.dart';
-import '../../infra/repositories/repository.dart';
-import '../firestore_datasource.dart';
 import '../hive_datasource.dart';
+import '../firestore_datasource.dart';
+import '../../infra/repositories/repository.dart';
+import '../../../configs/app_configs.dart';
+import '../../../lyric/presentation/blocs/lyric_bloc.dart';
+import '../../../lyric/infra/use-cases/lyrics_use_cases.dart';
+import '../../../shared/components/utils/analytics_util.dart';
+import '../../../shared/components/loading/loading_widget.dart';
+import '../../../lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
+import '../../../lyric/presentation/view-models/lyrics_view_model.dart';
+import '../../../lyric/infra/models/hive-dtos/hive_verse_dto.dart';
+import '../../../../firebase_options.dart';
+
 //command to map hive entities
 // flutter packages pub run build_runner build --delete-conflicting-outputs
 
@@ -222,7 +222,7 @@ class _HiveTestState extends State<HiveTest> {
           builder: (context, state) {
             if (state is InitialState) {
               return const LoadingWidget();
-            } else if (state is SuccessfullyFetchedLyricsState) {
+            } else if (state is LyricsSuccessfullyFetchedState) {
               entitiesList = state.entities;
               return Center(
                 child: ListView.builder(

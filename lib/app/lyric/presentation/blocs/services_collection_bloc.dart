@@ -41,7 +41,7 @@ class ServicesCollectionBloc
     await emit.onEach<List<CollectionEntity>>(
       await fireUseCases.get(path),
       onData: (services) {
-        emit(SuccessfullyFetchedCollectionState(services));
+        emit(CollectionSuccessfullyFetchedState(services));
       },
       onError: (error, st) async {
         analyticsUtil.recordError(name:'fire collection bloc', error:error,st: st);
@@ -56,7 +56,7 @@ class ServicesCollectionBloc
     await emit.onEach<List<CollectionEntity>>(
       await hiveUseCases.get('services-collection/${event.path}'),
       onData: (services) {
-        emit(SuccessfullyFetchedCollectionState(services));
+        emit(CollectionSuccessfullyFetchedState(services));
       },
       onError: (error, st) async {
         analyticsUtil.recordError(name:'hive collection bloc', error:error,st: st);
@@ -126,7 +126,7 @@ class ServiceExceptionState extends ServicesCollectionState {
   ServiceExceptionState(this.message);
 }
 
-class SuccessfullyFetchedCollectionState extends ServicesCollectionState {
+class CollectionSuccessfullyFetchedState extends ServicesCollectionState {
   final List<CollectionEntity> entities;
-  SuccessfullyFetchedCollectionState(this.entities);
+  CollectionSuccessfullyFetchedState(this.entities);
 }

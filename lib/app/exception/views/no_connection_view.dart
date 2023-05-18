@@ -1,8 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-
-import '../../home/view-models/home_view_model.dart';
 import '../../configs/app_configs.dart';
+import '../../home/view-models/home_view_model.dart';
 
 class NoConnectionView extends StatefulWidget {
   const NoConnectionView({super.key, required this.index});

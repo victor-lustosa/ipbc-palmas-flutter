@@ -45,7 +45,7 @@ void main() {
     },
     act: (bloc) => bloc.add(CheckConnectivityEvent()),
     expect: () => [
-      isA<SuccessfullyFetchedLyricsState>(),
+      isA<LyricsSuccessfullyFetchedState>(),
     ],
   );
 
@@ -82,7 +82,7 @@ void main() {
     },
     act: (bloc) => bloc.add(GetLyricsInHiveEvent()),
     expect: () => [
-      isA<SuccessfullyFetchedLyricsState>(),
+      isA<LyricsSuccessfullyFetchedState>(),
     ],
   );
 

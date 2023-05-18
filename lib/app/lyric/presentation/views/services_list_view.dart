@@ -57,7 +57,7 @@ class _ServicesListViewState extends State<ServicesListView>
                 return const LoadingWidget();
               } else if (state is NoConnectionAvailableState) {
                 return const NoConnectionView(index: 0);
-              } else if (state is SuccessfullyFetchedServiceState) {
+              } else if (state is ServiceSuccessfullyFetchedState) {
                 servicesList = state.entities;
                 if (!context.read<LyricsViewModel>().data.isServicesUpdated) {
                   bloc.add(UpdateServiceInHiveEvent(entities: servicesList));

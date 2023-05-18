@@ -1,15 +1,15 @@
 import 'dart:math';
 import 'package:uno/uno.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-
-import '../../../lyric/infra/adapters/firestore-dtos/verse_dto_adapter.dart';
+import '../../../configs/app_configs.dart';
+import '../../../shared/components/utils/analytics_util.dart';
 import '../../../lyric/infra/models/firestore-dtos/lyric_dto.dart';
 import '../../../lyric/infra/models/firestore-dtos/service_dto.dart';
-import '../../../configs/app_configs.dart';
+import '../../../lyric/infra/adapters/firestore-dtos/verse_dto_adapter.dart';
 
 class ServiceUtil {
   static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   static final Random _random = Random();
+  static final AnalyticsUtil analyticsUtil = AnalyticsUtil();
 
   static String createId(int length) {
     return String.fromCharCodes(
@@ -20,7 +20,7 @@ class ServiceUtil {
     );
   }
 
-  static generateService(ServiceDTO service, int index) async {
+  static generateService(ServiceDTO service) async {
     List<LyricDTO> lyricsConverted = await generateVersesList(service.lyricsList);
     List<LyricDTO> lyricsAux = [];
     //aqui vai o codigo para alterar a capa do album
@@ -62,11 +62,8 @@ class ServiceUtil {
         'https://api.vagalume.com.br/search.php?art=$groupParam&mus=$titleParam&apikey=$apikey',
       );
       return response.data;
-    } on UnoError catch (error) {
-      await FirebaseCrashlytics.instance.recordError(
-        error.message, error.stackTrace,
-        reason: 'a non-fatal error',
-      );
+    } on UnoError catch (error, st) {
+      analyticsUtil.recordError(name:'service util', error:error,st: st);
     }
   }
 }

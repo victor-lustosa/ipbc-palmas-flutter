@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'lyric_dto_adapter.dart';
 import '../liturgy_adapter.dart';

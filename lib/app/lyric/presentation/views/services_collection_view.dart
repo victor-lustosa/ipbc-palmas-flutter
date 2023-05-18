@@ -61,7 +61,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                   return const LoadingWidget();
                 } else if (state is NoConnectionAvailableState) {
                   return const NoConnectionView(index: 0);
-                } else if (state is SuccessfullyFetchedCollectionState) {
+                } else if (state is CollectionSuccessfullyFetchedState) {
                     servicesCollectionList = state.entities;
                     if(state.entities.isNotEmpty && state.entities[0].type == path.split('/')[0]){
                       if (context.read<LyricsViewModel>().isNotUpdated(path)) {

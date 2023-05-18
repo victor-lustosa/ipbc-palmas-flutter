@@ -50,7 +50,7 @@ class _LyricsListViewState extends State<LyricsListView>
             return const LoadingWidget();
           } else if (state is NoConnectionAvailableState) {
             return const NoConnectionView(index: 0);
-          } else if (state is SuccessfullyFetchedLyricsState) {
+          } else if (state is LyricsSuccessfullyFetchedState) {
             lyricsFetched = state.entities;
             if (!context.read<LyricsViewModel>().data.isLyricsUpdated) {
               bloc.add(UpdateLyricsInHiveEvent(entities: lyricsFetched));

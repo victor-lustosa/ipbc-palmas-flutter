@@ -45,7 +45,7 @@ void main() {
     },
     act: (bloc) => bloc.add(CheckConnectivityEvent(path:'saturday-services/20')),
     expect: () => [
-      isA<SuccessfullyFetchedCollectionState>(),
+      isA<CollectionSuccessfullyFetchedState>(),
     ],
   );
 
@@ -82,7 +82,7 @@ void main() {
     },
     act: (bloc) => bloc.add(GetServicesCollectionInHiveEvent(path:'saturday-services/20')),
     expect: () => [
-      isA<SuccessfullyFetchedCollectionState>(),
+      isA<CollectionSuccessfullyFetchedState>(),
     ],
   );
 

@@ -45,7 +45,7 @@ void main() {
     },
     act: (bloc) => bloc.add(CheckConnectivityEvent()),
     expect: () => [
-      isA<SuccessfullyFetchedServiceState>(),
+      isA<ServiceSuccessfullyFetchedState>(),
     ],
   );
 
@@ -82,7 +82,7 @@ void main() {
     },
     act: (bloc) => bloc.add(GetServiceInHiveEvent()),
     expect: () => [
-      isA<SuccessfullyFetchedServiceState>(),
+      isA<ServiceSuccessfullyFetchedState>(),
     ],
   );
 
