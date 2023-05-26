@@ -4,8 +4,8 @@
   "hour": "19h",
   "createAt": "",
   "title": "Domingo à noite",
-  "theme": "avivamento do Espirito",
-  "preacher": "Pr Danilo",
+  "theme": "O que eu preciso fazer pra Deus abençoar minha vida?",
+  "preacher": "Pr Mark",
   "heading": "domingo à noite",
   "type": "sunday-evening-services",
   "guideIsVisible": true,
@@ -16,18 +16,18 @@
     "additional": ""
   },
   {
-    "isAdditional": false,
+    "isAdditional": true,
     "sequence": "Texto Biblico",
-    "additional": ""
+    "additional": "Salmo 150"
   },
   {
     "isAdditional": true,
-    "sequence": "Hino 201",
-    "additional": "Manso e suave"
+    "sequence": "Hino 254",
+    "additional": "Sossegai"
   },
-  {"isAdditional": false,
+  {"isAdditional": true,
     "sequence": "Texto Biblico",
-    "additional": ""
+    "additional": "Provérbios 28.13"
   },
   {
     "isAdditional": false,
@@ -45,8 +45,13 @@
     "additional": ""
   },
   {
+    "isAdditional": true,
+    "sequence": "Hino 33",
+    "additional": "Maravilhas divinas"
+  },
+  {
     "isAdditional": false,
-    "sequence": "Oração Final",
+    "sequence": "Bênção apostólica",
     "additional": ""
   },
   {
@@ -58,24 +63,24 @@
   "lyricsList": [
     {
       "id": "",
-      "title": "Quem e",
-      "group": "diante do trono",
+      "title": "A Luz do Teu Rosto",
+      "group": "Comunidade Evangélica de Maringá",
       "albumCover": "",
       "createAt": "",
       "verses": []
     },
     {
       "id": "",
-      "title": "Eu me rendo",
-      "group": "Renascer Praise",
+      "title": "Teu Santo Nome",
+      "group": "Adoradores Novo Tempo",
       "albumCover": "",
       "createAt": "",
       "verses": []
     },
     {
       "id": "",
-      "title": "Te louvarei",
-      "group": "Toque no altar",
+      "title": "Ao único",
+      "group": "Aline Barros",
       "albumCover": "",
       "createAt": "",
       "verses": []

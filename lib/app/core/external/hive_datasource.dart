@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+
 import '../infra/datasources/datasource.dart';
 import '../../lyric/domain/entities/lyric_entity.dart';
 import '../../lyric/domain/entities/collection_entity.dart';
@@ -23,25 +24,12 @@ class HiveDatasource<R> implements IDatasource {
   }
 
   static Future initHive() async {
-    Hive.registerAdapter(
-      HiveDatabaseConfigsDTOAdapter(),
-    );
-    Hive.registerAdapter(
-      HiveLyricDTOAdapter(),
-    );
-    Hive.registerAdapter(
-      HiveServiceDTOAdapter(),
-    );
-    Hive.registerAdapter(
-      HiveServicesDTOAdapter(),
-    );
-    Hive.registerAdapter(
-      HiveVerseDTOAdapter(),
-    );
-
-    Hive.registerAdapter(
-      HiveLiturgyDTOAdapter(),
-    );
+    Hive.registerAdapter(HiveDatabaseConfigsDTOAdapter());
+    Hive.registerAdapter(HiveLyricDTOAdapter());
+    Hive.registerAdapter(HiveServiceDTOAdapter());
+    Hive.registerAdapter(HiveServicesDTOAdapter());
+    Hive.registerAdapter(HiveVerseDTOAdapter());
+    Hive.registerAdapter(HiveLiturgyDTOAdapter());
   }
 
   @override
@@ -67,7 +55,7 @@ class HiveDatasource<R> implements IDatasource {
         return Stream.value(
           result != null
               ? (result as HiveDatabaseConfigsDTO)
-              : HiveDatabaseConfigsDTO.empty().copyWith(fireUpdateId: '000000000'),
+              : HiveDatabaseConfigsDTO.empty().copyWith(fireId: '000000000'),
         );
       default:
         return Stream.value([]);

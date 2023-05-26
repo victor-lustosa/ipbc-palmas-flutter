@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import '../../configs/app_configs.dart';
-import '../../shared/layout/top-bar/title_top_bar_widget.dart';
 import '../../shared/mixins/clipboard_mixin.dart';
+import '../../shared/layout/top-bar/title_top_bar_widget.dart';
 
 class OffersView extends StatefulWidget {
   const OffersView({super.key});

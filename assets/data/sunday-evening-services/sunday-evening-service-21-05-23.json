@@ -1,0 +1,89 @@
+{
+  "id": "1",
+  "createAt": "",
+  "image": "assets/images/sunday_evening.png",
+  "title": "Domingo à noite",
+  "theme": "Temor a Deus: um princípio esquecido na era presente.",
+  "preacher": "Pr Danilo",
+  "heading": "domingo à noite",
+  "hour": "19h",
+  "type": "sunday-evening-services",
+  "guideIsVisible": true,
+  "liturgyList": [
+  {
+  "isAdditional":  false,
+  "sequence": "Oração",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Texto Biblico",
+    "additional": ""
+  },
+  {
+    "isAdditional": true,
+    "sequence": "Hino 27",
+    "additional": "Um hino ao Senhor"
+  },
+  {"isAdditional": false,
+    "sequence": "Texto Biblico",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Oração de confissão de pecados",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Cânticos",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Pregação",
+    "additional": ""
+  },
+  {
+    "isAdditional": true,
+    "sequence": "Hino 27",
+    "additional": "Um hino ao Senhor"
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Bênção Apostólica",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Avisos",
+    "additional": ""
+  }
+],
+  "lyricsList": [
+    {
+      "id": "",
+      "title": "Águas Purificadoras",
+      "group": "Diante do Trono",
+      "albumCover": "",
+      "createAt": "",
+      "verses": []
+    },
+    {
+      "id": "",
+      "title": "Acima de Tudo",
+      "group": "Apascentar de Nova Iguaçu",
+      "albumCover": "",
+      "createAt": "",
+      "verses": []
+    },
+    {
+      "id": "",
+      "title": "Rio de vida",
+      "group": "Kleber Lucas",
+      "albumCover": "",
+      "createAt": "",
+      "verses": []
+    }
+  ]}
+

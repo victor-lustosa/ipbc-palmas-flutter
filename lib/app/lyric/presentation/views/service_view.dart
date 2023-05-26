@@ -1,10 +1,13 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
+
 import '../components/lyrics_list_widget.dart';
 import '../../domain/entities/collection_entity.dart';
-import '../../../shared/components/button/button_widget.dart';
 import '../../../configs/app_configs.dart';
+import '../../../shared/components/button/button_widget.dart';
 import '../../../shared/components/guideline/guideline_widget.dart';
 
 class ServiceViewDTO {
@@ -99,7 +102,7 @@ class _ServiceViewState extends State<ServiceView> {
                                   top: 4,
                                 ),
                                 child: Text(
-                                  widget.entity.service.createAt,
+                                  DateFormat('dd/MM/yyyy').format(widget.entity.service.createAt),
                                   style: AppFonts.defaultFont(
                                     color: const Color(0xFF005B40),
                                     fontWeight: FontWeight.w400,

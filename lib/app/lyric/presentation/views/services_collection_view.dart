@@ -1,18 +1,21 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+
 import 'service_view.dart';
 import '../view-models/lyrics_view_model.dart';
 import '../blocs/services_collection_bloc.dart';
 import '../../domain/entities/collection_entity.dart';
 import '../../infra/models/firestore-dtos/services_dto.dart';
-import '../../../configs/app_configs.dart';
 import '../../../configs/app_routes.dart';
+import '../../../configs/app_configs.dart';
 import '../../../exception/views/generic_error_view.dart';
 import '../../../exception/views/no_connection_view.dart';
-import '../../../shared/components/loading/loading_widget.dart';
 import '../../../shared/components/button/button_widget.dart';
+import '../../../shared/components/loading/loading_widget.dart';
 
 class ServicesCollectionView extends StatefulWidget {
   const ServicesCollectionView({Key? key, required this.servicesCollection})
@@ -150,18 +153,15 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                     ? const Color.fromRGBO(0, 232, 162, 0.1)
                                     : AppColors.grey0,
                                 child: ListTile(
+                                  visualDensity: VisualDensity.comfortable,
                                   horizontalTitleGap: 2,
-                                  contentPadding: EdgeInsets.zero,
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 5),
                                   title: Container(
-                                    margin: const EdgeInsets.only(
-                                      left: 16,
-                                      bottom: 5,
-                                      top: 8,
-                                    ),
+                                    margin: const EdgeInsets.only(left: 16),
                                     child: Text(
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
-                                      '${servicesCollectionList[index].title} ${servicesCollectionList[index].createAt} | ${widget.servicesCollection.hour}',
+                                      '${servicesCollectionList[index].title} ${DateFormat('dd/MM/yyyy').format(servicesCollectionList[index].createAt)} | ${widget.servicesCollection.hour}',
                                       style: AppFonts.defaultFont(
                                         fontWeight: FontWeight.w600,
                                         color: AppColors.grey9,
@@ -170,20 +170,19 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                     ),
                                   ),
                                   subtitle: Container(
-                                    margin: const EdgeInsets.only(left: 16),
+                                    margin: const EdgeInsets.only(left: 16, top: 4),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Container(
-                                          margin: const EdgeInsets.only(bottom: 4),
-                                          child: Text(
-                                            'Messagem: ${servicesCollectionList[index].theme}',
-                                            style: AppFonts.description(color: AppColors.grey8,
-                                            ),
+                                        Text(
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          'Messagem: ${servicesCollectionList[index].theme}',
+                                          style: AppFonts.description(color: AppColors.grey8,
                                           ),
                                         ),
                                         Container(
-                                          margin: const EdgeInsets.only(bottom: 8),
+                                          margin: const EdgeInsets.only(top: 4),
                                           child: Text(servicesCollectionList[index].preacher,
                                             style: AppFonts.description(color: AppColors.grey8,
                                             ),
@@ -193,7 +192,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                     ),
                                   ),
                                   trailing: SizedBox(
-                                    width: 50,
+                                    width:Platform.isIOS ? 40 : 45,
                                     child: IconButtonWidget(
                                       size: Platform.isIOS ? null : 33,
                                       color: AppColors.darkGreen,

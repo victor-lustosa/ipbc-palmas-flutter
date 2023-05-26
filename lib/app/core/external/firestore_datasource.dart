@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../infra/datasources/datasource.dart';
 
 class FirestoreDatasource implements IDatasource {
@@ -15,8 +16,7 @@ class FirestoreDatasource implements IDatasource {
         .map((document) => {
               'id': document.id,
               ...document.data(),
-            })
-        .toList();
+            }).toList();
     return entities;
   }
 
@@ -24,40 +24,32 @@ class FirestoreDatasource implements IDatasource {
   Future<dynamic> get(String url) async {
     params = url.split('/');
    if(params.length > 2) {
-      snapshot = _firestore
-          .collection(params[0])
-          .doc(params[1])
-          .collection(params[2])
+      snapshot = _firestore.collection(params[0])
+          .doc(params[1]).collection(params[2])
           .orderBy("createAt", descending: true)
-          .limit(int.parse(params[3]))
-          .snapshots();
+          .limit(int.parse(params[3])).snapshots();
     } else {
-      snapshot = _firestore
-          .collection(params[0])
+      snapshot = _firestore.collection(params[0])
           .orderBy("createAt", descending: true)
-          .limit(int.parse(params[1]))
-          .snapshots();
+          .limit(int.parse(params[1])).snapshots();
     }
     return snapshot.map((entity) => entity.docs).map(convert);
   }
 
   Future<String> verifyUpdateDatasource() async {
-    String fireUpdateId = '';
-    await _firestore
-        .collection('settings')
-        .get()
-        .then((QuerySnapshot<Map<String, dynamic>> snapshot) {
-       fireUpdateId = snapshot.docs.first.get('fireUpdateId');
+    String fireId = '';
+    await _firestore.collection('settings')
+        .get().then((QuerySnapshot<Map<String, dynamic>> snapshot) {
+       fireId = snapshot.docs.first.get('fireId');
     });
-    return fireUpdateId;
+    return fireId;
   }
 
   @override
   Future<void> add(String url, data) async {
     params = url.split('/');
     if (params.length > 1) {
-      _firestore
-          .collection(params[0])
+      _firestore.collection(params[0])
           .doc(params[1])
           .collection(params[2])
           .add(data);
@@ -70,12 +62,9 @@ class FirestoreDatasource implements IDatasource {
   Future<void> update(String url, data) async {
     params = url.split('/');
     if (params.length > 2) {
-      _firestore
-          .collection(params[0])
-          .doc(params[1])
-          .collection(params[2])
-          .doc(params[3])
-          .update(data);
+      _firestore.collection(params[0])
+          .doc(params[1]).collection(params[2])
+          .doc(params[3]).update(data);
     } else {
       _firestore.collection(params[0]).doc(params[1]).update(data);
     }

@@ -4,7 +4,7 @@
   "hour": "19h",
   "createAt": "",
   "title": "Domingo à noite",
-  "theme": "avivamento do Espirito",
+  "theme": "O segredo da consciência integra.",
   "preacher": "Pr Danilo",
   "heading": "domingo à noite",
   "type": "sunday-evening-services",
@@ -16,18 +16,19 @@
     "additional": ""
   },
   {
-    "isAdditional": false,
+    "isAdditional": true,
     "sequence": "Texto Biblico",
-    "additional": ""
+    "additional": "Salmo 25.1-5"
   },
   {
     "isAdditional": true,
-    "sequence": "Hino 201",
-    "additional": "Manso e suave"
+    "sequence": "Hino 64",
+    "additional": "Grata memória"
   },
-  {"isAdditional": false,
+  {
+    "isAdditional": true,
     "sequence": "Texto Biblico",
-    "additional": ""
+    "additional": "Salmo 25.6-22"
   },
   {
     "isAdditional": false,
@@ -44,9 +45,14 @@
     "sequence": "Pregação",
     "additional": ""
   },
+    {
+      "isAdditional": false,
+      "sequence": "Santa Ceia",
+      "additional": ""
+    },
   {
     "isAdditional": false,
-    "sequence": "Oração Final",
+    "sequence": "Bênção apostólica",
     "additional": ""
   },
   {
@@ -58,24 +64,24 @@
   "lyricsList": [
     {
       "id": "",
-      "title": "Quem e",
-      "group": "diante do trono",
+      "title": "Vem Está É A Hora",
+      "group": "Vineyard",
       "albumCover": "",
       "createAt": "",
       "verses": []
     },
     {
       "id": "",
-      "title": "Eu me rendo",
-      "group": "Renascer Praise",
+      "title": "Maravilhosa Graça",
+      "group": "Comunidade da Graça",
       "albumCover": "",
       "createAt": "",
       "verses": []
     },
     {
       "id": "",
-      "title": "Te louvarei",
-      "group": "Toque no altar",
+      "title": "Vinho E Pão",
+      "group": "Vencedores Por Cristo",
       "albumCover": "",
       "createAt": "",
       "verses": []

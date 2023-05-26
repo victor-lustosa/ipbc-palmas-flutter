@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../configs/app_configs.dart';
 
 class AlbumCoverWidget extends StatelessWidget {

@@ -16,18 +16,19 @@
     "additional": ""
   },
   {
-    "isAdditional": false,
+    "isAdditional": true,
     "sequence": "Texto Biblico",
-    "additional": ""
+    "additional": "Salmo 100:1-4"
   },
   {
     "isAdditional": true,
-    "sequence": "Hino 201",
-    "additional": "Manso e suave"
+    "sequence": "Hino 14",
+    "additional": "Louvor"
   },
-  {"isAdditional": false,
+  {
+    "isAdditional": true,
     "sequence": "Texto Biblico",
-    "additional": ""
+    "additional": "Salmo 100:5"
   },
   {
     "isAdditional": false,
@@ -45,8 +46,13 @@
     "additional": ""
   },
   {
+    "isAdditional": true,
+    "sequence": "Hino 201",
+    "additional": "Manso e suave"
+  },
+  {
     "isAdditional": false,
-    "sequence": "Oração Final",
+    "sequence": "Bênção Apostólica",
     "additional": ""
   },
   {
@@ -58,18 +64,9 @@
   "lyricsList": [
     {
       "id": "",
-      "title": "Vivifica-me",
-      "group": "Desconhecido",
-      "albumCover": "",
-      "createAt": "",
-      "verses": []
-    },
-    {
-      "id": "",
       "title": "Infinitamente mais",
       "group": "Asaph Borba",
-      "albumCover":
-      "",
+      "albumCover": "",
       "createAt": "",
       "verses": []
     },
@@ -77,14 +74,6 @@
       "id": "",
       "title": "Ofereço minha vida",
       "group": "Igreja Bíblica da Paz",
-      "albumCover": "",
-      "createAt": "",
-      "verses": []
-    },
-    {
-      "id": "",
-      "title": "Manso e suave",
-      "group": "Cantor Cristão",
       "albumCover": "",
       "createAt": "",
       "verses": []

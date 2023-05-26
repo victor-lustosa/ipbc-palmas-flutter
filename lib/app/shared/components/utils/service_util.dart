@@ -1,5 +1,7 @@
 import 'dart:math';
+
 import 'package:uno/uno.dart';
+
 import '../../../configs/app_configs.dart';
 import '../../../shared/components/utils/analytics_util.dart';
 import '../../../lyric/infra/models/firestore-dtos/lyric_dto.dart';
@@ -20,7 +22,7 @@ class ServiceUtil {
     );
   }
 
-  static generateService(ServiceDTO service) async {
+  static generateService(ServiceDTO service, List<LyricDTO> unknownLyrics) async {
     List<LyricDTO> lyricsConverted = await generateVersesList(service.lyricsList);
     List<LyricDTO> lyricsAux = [];
     //aqui vai o codigo para alterar a capa do album
@@ -33,6 +35,7 @@ class ServiceUtil {
         ),
       );
     }
+    lyricsAux.addAll(unknownLyrics);
     return service.copyWith(
       id: createId(8),
       lyricsList: lyricsAux,

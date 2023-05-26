@@ -1,7 +1,7 @@
 
 class SettingsDTO {
   const SettingsDTO({
-    required this.fireUpdateId,
+    required this.fireId,
   });
-  final String fireUpdateId;
+  final String fireId;
 }

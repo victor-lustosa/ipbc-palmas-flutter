@@ -1,15 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/cupertino.dart'
     hide CupertinoTabBar, CupertinoTabScaffold;
+
+import '../../../../configs/app_routes.dart';
+import '../../../../configs/app_configs.dart';
+import '../../../../offers/views/offers_view.dart';
+import '../../../../shared/mixins/buttons_bar_mixin.dart';
 import '../../../../exception/views/unknown_route_view.dart';
 import '../../../../lyric/presentation/views/lyrics_list_view.dart';
-import '../../../../offers/views/offers_view.dart';
-import '../../../../configs/app_routes.dart';
-import '../../../../shared/mixins/buttons_bar_mixin.dart';
-import '../../../../configs/app_configs.dart';
 
-import 'custom_bottom_tab_bar.dart';
 import 'custom_tab_scaffold.dart';
+import 'custom_bottom_tab_bar.dart';
 
 class CupertinoBottomBarWidget extends StatefulWidget {
   final int selectedIndex;

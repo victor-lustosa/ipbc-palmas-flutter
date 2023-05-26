@@ -1,8 +1,10 @@
 import 'dart:async';
+
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+
 import '../../../shared/components/utils/analytics_util.dart';
 import '../../../splash/presentation/blocs/database_bloc.dart';
 import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';

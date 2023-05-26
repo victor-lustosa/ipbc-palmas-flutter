@@ -1,85 +1,54 @@
 {
+  "id": "1",
+  "image": "assets/images/sunday_morning.png",
+  "hour": "9h",
   "createAt": "",
   "title": "Domingo de manhã",
-  "theme": "avivamento do Espirito",
-  "preacher": "Pr Danilo",
+  "theme": "Lição 06: Deus insiste em nos amar.",
+  "preacher": "Pb Cid",
   "heading": "domingo de manhã",
   "type": "sunday-morning-services",
   "guideIsVisible": true,
   "liturgyList": [
     {
       "isAdditional":  false,
-      "sequence": "Oração",
+      "sequence": "Abertura",
       "additional": ""
     },
     {
       "isAdditional": true,
-      "sequence": "Texto Biblico",
-      "additional": "João 10:1-6"
-    },
-    {
-      "isAdditional": true,
-      "sequence": "Hino 151",
-      "additional": "O Bom Pastor"
-    },
-    {"isAdditional": true,
-      "sequence": "Texto Biblico",
-      "additional": "Lucas 15:1-7"
+      "sequence": "Hino 351",
+      "additional": "Belas palavras de Vida"
     },
     {
       "isAdditional": false,
-      "sequence": "Oração de confissão de pecados",
+      "sequence": "Devocional",
+      "additional": ""
+    },
+    {"isAdditional": false,
+      "sequence": "Louvor",
       "additional": ""
     },
     {
       "isAdditional": false,
-      "sequence": "Cânticos",
-      "additional": ""
-    },
-    {
-      "isAdditional": true,
-      "sequence": "Pregação",
-      "additional": "Salmos 23"
-    },
-    {
-      "isAdditional": false,
-      "sequence": "Santa Ceia",
-      "additional": ""
-    },
-    {
-      "isAdditional": false,
-      "sequence": "Oração Final",
-      "additional": ""
-    },
-    {
-      "isAdditional": false,
-      "sequence": "Avisos",
+      "sequence": "Avisos e divisão de salas",
       "additional": ""
     }
   ],
   "lyricsList": [
     {
-      "id": "dfsdfsd",
-      "title": "agua viva",
-      "group": "oficina g3",
+      "id": "",
+      "title": "Nas Estrelas",
+      "group": "Vencedores Por Cristo",
       "albumCover":
       "",
       "createAt": "",
       "verses": []
     },
     {
-      "id": "dfsdfsd",
-      "title": "agua viva",
-      "group": "oficina g3",
-      "albumCover":
-      "",
-      "createAt": "",
-      "verses": []
-    },
-    {
-      "id": "dfsdfsd",
-      "title": "agua viva",
-      "group": "oficina g3",
+      "id": "",
+      "title": "Como É Bom Te Louvar",
+      "group": "Renata Leonel",
       "albumCover":
       "",
       "createAt": "",

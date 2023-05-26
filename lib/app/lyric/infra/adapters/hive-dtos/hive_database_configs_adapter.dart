@@ -4,7 +4,7 @@ class HiveDatabaseConfigsAdapter {
   static List<Map<String, dynamic>> toMapList(HiveDatabaseConfigsDTO data) {
     List<Map<String, dynamic>> map = [];
     map.add({
-      'fireUpdateId': data.fireUpdateId,
+      'fireId': data.fireId,
       'isServicesUpdated': data.isServicesUpdated,
       'isSaturdayCollectionUpdated': data.isSaturdayCollectionUpdated,
       'isSundayMorningCollectionUpdated': data.isSundayMorningCollectionUpdated,
@@ -16,7 +16,7 @@ class HiveDatabaseConfigsAdapter {
 
   static HiveDatabaseConfigsDTO fromMap(List<Map> json) {
     return HiveDatabaseConfigsDTO(
-      fireUpdateId: json[0]['fireUpdateId'],
+      fireId: json[0]['fireId'],
       isServicesUpdated: json[0]['isServicesUpdated'],
       isSundayMorningCollectionUpdated: json[0]['isSundayMorningCollectionUpdated'],
       isSaturdayCollectionUpdated: json[0]['isSaturdayCollectionUpdated'],

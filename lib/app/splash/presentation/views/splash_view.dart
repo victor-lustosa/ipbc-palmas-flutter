@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../blocs/database_bloc.dart';
-import '../../../splash/presentation/view-models/database_view_model.dart';
-import '../../../exception/views/generic_error_view.dart';
-import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 import '../../../home/views/home_view.dart';
+import '../../../exception/views/generic_error_view.dart';
 import '../../../shared/components/loading/loading_widget.dart';
+import '../../../splash/presentation/view-models/database_view_model.dart';
+import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);

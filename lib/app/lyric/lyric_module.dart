@@ -1,4 +1,5 @@
 import 'package:provider/provider.dart';
+
 import 'presentation/blocs/lyric_bloc.dart';
 import 'infra/use-cases/lyrics_use_cases.dart';
 import 'infra/use-cases/collection_use_cases.dart';

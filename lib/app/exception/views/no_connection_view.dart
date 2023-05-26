@@ -1,5 +1,6 @@
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../../configs/app_configs.dart';
 import '../../home/view-models/home_view_model.dart';
 

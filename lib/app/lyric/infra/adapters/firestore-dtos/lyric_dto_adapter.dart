@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../verse_adapter.dart';
@@ -6,9 +7,27 @@ import '../firestore-dtos/verse_dto_adapter.dart';
 import '../../models/firestore-dtos/lyric_dto.dart';
 
 class LyricDTOAdapter {
-  static List<LyricDTO> fromJson(String source) => fromMap(json.decode(source));
 
-  static List<LyricDTO> fromMap(dynamic json) {
+  static List<LyricDTO> fromJson(String source) => fromMapList(json.decode(source));
+  static LyricDTO fromUnknownJson(String source) => fromMap(json.decode(source));
+
+  static LyricDTO fromMap(dynamic json) {
+    return LyricDTO(
+          albumCover: json['albumCover'],
+          id: json['id'],
+          createAt: Timestamp.now().toDate(),
+          title: json['title'],
+          group: json['group'],
+          verses: [
+            if (json.containsKey('verses'))
+              ...(json['verses'] as List)
+                  .map(VerseDTOAdapter.fromMap)
+                  .toList(),
+          ],
+        );
+    }
+
+  static List<LyricDTO> fromMapList(dynamic json) {
     List<LyricDTO> lyricList = [];
     for (dynamic lyric in json) {
       lyricList.add(

@@ -1,5 +1,7 @@
-import 'hive_liturgy_adapter.dart';
+
 import 'hive_lyric_adapter.dart';
+import 'hive_liturgy_adapter.dart';
+
 import '../../models/hive-dtos/hive_collection_dto.dart';
 import '../../../domain/entities/collection_entity.dart';
 
@@ -26,7 +28,7 @@ class HiveCollectionAdapter {
       id: entity.id,
       liturgyList: HiveLiturgyAdapter.toDTOList(entity.liturgyList),
       lyricsList: HiveLyricAdapter.toDTOList(entity.lyricsList),
-      createAt: entity.createAt,
+      createAt: entity.createAt.toString(),
       heading: entity.heading,
       title: entity.title,
       theme: entity.theme,

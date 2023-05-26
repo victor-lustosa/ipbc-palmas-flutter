@@ -1,8 +1,10 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+
 import '../components/album_cover_widget.dart';
 import '../../domain/entities/lyric_entity.dart';
 import '../../../configs/app_configs.dart';

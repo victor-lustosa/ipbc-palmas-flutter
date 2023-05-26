@@ -1,6 +1,6 @@
 import '../../../core/domain/use-cases/use_cases.dart';
-import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 import '../../../core/domain/repositories/repository.dart';
+import '../../../lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
 
 class DatabasesUseCases implements IUseCases<Stream<HiveDatabaseConfigsDTO>> {
   final IRepository<Stream<HiveDatabaseConfigsDTO>> repository;

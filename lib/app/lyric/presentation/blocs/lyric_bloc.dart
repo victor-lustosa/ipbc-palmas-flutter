@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+
 import '../view-models/lyrics_view_model.dart';
 import '../../domain/entities/lyric_entity.dart';
 import '../../domain/use-cases/lyrics_use_cases.dart';

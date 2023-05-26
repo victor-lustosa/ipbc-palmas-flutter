@@ -1,5 +1,5 @@
-import '../../../domain/entities/liturgy_entity.dart';
 import '../../models/hive-dtos/hive_liturgy_dto.dart';
+import '../../../domain/entities/liturgy_entity.dart';
 
 class HiveLiturgyAdapter {
   static List<Map<String, dynamic>> toMapList(List<HiveLiturgyDTO> data) {

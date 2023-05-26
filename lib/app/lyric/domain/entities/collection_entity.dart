@@ -21,7 +21,7 @@ class CollectionEntity {
   final String type;
   final String image;
   final String hour;
-  final String createAt;
+  final DateTime createAt;
   final String theme;
   final String preacher;
   final bool guideIsVisible;

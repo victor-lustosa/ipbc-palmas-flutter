@@ -1,0 +1,69 @@
+{
+  "id": "",
+  "title": "Hino 64 - Grata Memória",
+  "group": "Hinário Novo Cântico",
+  "albumCover": "",
+  "createAt": "",
+  "verses": [
+    {
+      "id": 0,
+      "isChorus": false,
+      "versesList": [
+        {
+         "verse0": "Nunca meus lábios cessarão, ó Cristo,",
+         "verse1": "De bendizer-te, de cantar-te glória;",
+         "verse2": "Pois guardo na alma teu amor imenso:",
+         "verse3": "Grata memória!"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "isChorus": true,
+      "versesList": [
+        {
+          "verse0": "Quando perdido vagueava aflito,",
+          "verse1": "E em densas trevas meu andar seguia,",
+          "verse2": "Tu me buscaste, lá dos céus mandando",
+          "verse3": "Luz que me guia!"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "isChorus": true,
+      "versesList": [
+        {
+          "verse0": "Quando oprimido por mundano jugo,",
+          "verse1": "Em meus caminhos eu me angustiava,",
+          "verse2": "Deu-me descanso tua voz tão terna,",
+          "verse3": "Que me chamava!"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "isChorus": true,
+      "versesList": [
+        {
+          "verse0": "Aos fortes braços eu corri confiante,",
+          "verse1": "Meigo e bondoso, não me recusaste;",
+          "verse2": "Em teu imenso, suave amor, tão puro,",
+          "verse3": "Me agasalhaste!"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "isChorus": false,
+      "versesList": [
+        {
+          "verse0": "Oh! Nunca , nunca cessarão meus lábios",
+          "verse1": "De bendizer-te, de cantar-te a glória;",
+          "verse2": "Pois em minha alma Tu és sempre, ó Cristo,",
+          "verse3": "Grata memória! Amém."
+        }
+      ]
+    }
+  ]
+}

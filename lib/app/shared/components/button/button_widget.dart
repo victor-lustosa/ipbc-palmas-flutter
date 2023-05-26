@@ -25,6 +25,7 @@ class IconButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Platform.isIOS
         ? CupertinoButton(
+          padding: EdgeInsets.zero,
             onPressed: action,
             child: Icon(
               size: size,
@@ -33,6 +34,7 @@ class IconButtonWidget extends StatelessWidget {
             ),
           )
         : IconButton(
+            padding: EdgeInsets.zero,
             onPressed: action,
             splashColor: splashColor,
             highlightColor: highlightColor,

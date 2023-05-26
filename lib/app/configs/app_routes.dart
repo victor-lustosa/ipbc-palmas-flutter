@@ -1,13 +1,14 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../lyric/domain/entities/lyric_entity.dart';
-import '../lyric/infra/models/firestore-dtos/services_dto.dart';
 import '../lyric/presentation/views/lyric_view.dart';
 import '../lyric/presentation/views/service_view.dart';
-import '../lyric/presentation/views/services_collection_view.dart';
 import '../lyric/presentation/views/services_list_view.dart';
+import '../lyric/infra/models/firestore-dtos/services_dto.dart';
+import '../lyric/presentation/views/services_collection_view.dart';
 import '../../../app/exception/views/unknown_route_view.dart';
 
 class AppRoutes {

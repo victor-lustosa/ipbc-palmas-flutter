@@ -1,0 +1,51 @@
+{
+  "id": "",
+  "title": "Hino 97 - Súplica do Redimido",
+  "group": "Hinário Novo Cântico",
+  "albumCover": "",
+  "createAt": "",
+  "verses": [
+    {
+      "id": 0,
+      "isChorus": false,
+      "versesList": [
+        {
+         "verse0": "Meu pecado resgatado Foi na cruz , por teu amor!",
+         "verse1": "E da mortem triste sorte! - Me livraste, ó Redentor!"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "isChorus": true,
+      "versesList": [
+        {
+          "verse0": "Cristo, inflama viva chama",
+          "verse1": "Em meu peito, ó Salvador!",
+          "verse2": "Pois te adora quem te implora:",
+          "verse3": "Vem guiar-me, bom Senhor!"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "isChorus": false,
+      "versesList": [
+        {
+          "verse0": "Se hesitante, vacilante, Ouço a voz do tentador,",
+          "verse1": "Tu me guias, me auxilias, E me tornas vencedor."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "isChorus": false,
+      "versesList": [
+        {
+          "verse0": "Redimida só tem vida A minha alma em teu amor!",
+          "verse1": "Com apreço reconheço Quanto devo a ti, Senhor."
+        }
+      ]
+    }
+  ]
+}

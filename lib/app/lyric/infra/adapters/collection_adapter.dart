@@ -1,10 +1,10 @@
-
-import 'liturgy_adapter.dart';
-import 'lyric_adapter.dart';
-import '../../domain/entities/collection_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'lyric_adapter.dart';
+import 'liturgy_adapter.dart';
+
+import '../../domain/entities/collection_entity.dart';
 // ignore: depend_on_referenced_packages
-import 'package:intl/intl.dart' show DateFormat;
 
 class CollectionAdapter {
   static List<CollectionEntity> fromMapList(dynamic data) {
@@ -17,10 +17,8 @@ class CollectionAdapter {
           liturgyList: LiturgyAdapter.fromMap(entity['liturgyList']),
           lyricsList: LyricAdapter.fromListMap(entity['lyricsList']),
           createAt: entity['createAt'].runtimeType == String
-              ? entity['createAt']
-              : DateFormat('dd/MM/yyyy')
-                  .format((entity['createAt'] as Timestamp).toDate())
-                  .toString(),
+              ? DateTime.parse(entity['createAt'])
+              : (entity['createAt'] as Timestamp).toDate(),
           heading: entity['heading'],
           title: entity['title'],
           guideIsVisible: entity['guideIsVisible'],

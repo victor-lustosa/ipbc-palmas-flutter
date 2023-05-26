@@ -1,5 +1,5 @@
-import '../../../core/domain/repositories/repository.dart';
 import '../datasources/datasource.dart';
+import '../../../core/domain/repositories/repository.dart';
 
 class Repository<R> implements IRepository<R> {
   Repository({required this.datasource});

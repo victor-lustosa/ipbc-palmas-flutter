@@ -21,7 +21,7 @@ class CollectionDTOAdapter {
       liturgyList: json.containsKey('liturgyList')
           ? LiturgyAdapter.fromMap(json['liturgyList'])
           : [],
-      lyricsList: LyricDTOAdapter.fromMap(json['lyricsList']),
+      lyricsList: LyricDTOAdapter.fromMapList(json['lyricsList']),
       hour: json['hour'],
     );
   }

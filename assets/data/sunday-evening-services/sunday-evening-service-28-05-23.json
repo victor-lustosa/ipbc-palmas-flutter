@@ -1,0 +1,90 @@
+{
+  "id": "1",
+  "createAt": "",
+  "image": "assets/images/sunday_evening.png",
+  "title": "Domingo à noite",
+  "theme": "Temor a Deus: um princípio esquecido na era presente",
+  "preacher": "Pr Danilo",
+  "heading": "domingo à noite",
+  "hour": "19h",
+  "type": "sunday-evening-services",
+  "guideIsVisible": true,
+  "liturgyList": [
+  {
+  "isAdditional":  false,
+  "sequence": "Oração",
+    "additional": ""
+  },
+  {
+    "isAdditional": true,
+    "sequence": "Texto Biblico",
+    "additional": "Isaías 53:1-4"
+  },
+  {
+    "isAdditional": true,
+    "sequence": "Hino 04",
+    "additional": "Culto a trindade"
+  },
+  {
+    "isAdditional": true,
+    "sequence": "Texto Biblico",
+    "additional": "Isaías 53:5-12"
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Oração de confissão de pecados",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Cânticos",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Pregação",
+    "additional": ""
+  },
+  {
+    "isAdditional": true,
+    "sequence": "Hino 97",
+    "additional": "Súplica do redimido"
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Bênção apostólica",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Avisos",
+    "additional": ""
+  }
+],
+  "lyricsList": [
+    {
+      "id": "",
+      "title": "Uma Coisa Peço Ao Senhor",
+      "group": "Fernandinho",
+      "albumCover": "",
+      "createAt": "",
+      "verses": []
+    },
+    {
+      "id": "",
+      "title": "Nosso General",
+      "group": "Adhemar de Campos",
+      "albumCover": "",
+      "createAt": "",
+      "verses": []
+    },
+    {
+      "id": "",
+      "title": "Compromisso",
+      "group": "Kadoshi",
+      "albumCover": "",
+      "createAt": "",
+      "verses": []
+    }
+  ]}
+

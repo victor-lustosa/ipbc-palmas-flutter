@@ -1,6 +1,8 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
 import '../../../configs/app_routes.dart';
 import '../../../configs/app_configs.dart';
 import '../../domain/entities/lyric_entity.dart';

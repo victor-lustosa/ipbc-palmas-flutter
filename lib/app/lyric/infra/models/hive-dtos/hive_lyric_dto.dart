@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+
 import 'hive_verse_dto.dart';
 part 'hive_lyric_dto.g.dart';
 

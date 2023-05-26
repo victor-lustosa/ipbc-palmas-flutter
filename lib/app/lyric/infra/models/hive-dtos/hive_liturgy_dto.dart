@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+
 part 'hive_liturgy_dto.g.dart';
 
 @HiveType(typeId: 4)

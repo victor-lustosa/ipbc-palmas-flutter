@@ -18,7 +18,7 @@ class HiveDatabaseConfigsDTOAdapter
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return HiveDatabaseConfigsDTO(
-      fireUpdateId: fields[0] as String,
+      fireId: fields[0] as String,
       isSaturdayCollectionUpdated: fields[1] as bool,
       isSundayEveningCollectionUpdated: fields[3] as bool,
       isSundayMorningCollectionUpdated: fields[2] as bool,
@@ -32,7 +32,7 @@ class HiveDatabaseConfigsDTOAdapter
     writer
       ..writeByte(6)
       ..writeByte(0)
-      ..write(obj.fireUpdateId)
+      ..write(obj.fireId)
       ..writeByte(1)
       ..write(obj.isSaturdayCollectionUpdated)
       ..writeByte(2)
