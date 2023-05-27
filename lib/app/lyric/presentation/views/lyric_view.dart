@@ -67,43 +67,49 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                 ),
                               ),
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: MediaQuery.of(context).size.width *
-                                      ResponsivityUtil.resolutionDeviceProportion(
-                                        MediaQuery.of(context).size.width,
-                                        0.56,
-                                        0.5,
-                                      ),
-                                  margin: const EdgeInsets.only(bottom: 6),
-                                  child: Text(
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width *
+                                  ResponsivityUtil.resolutionDeviceProportion(MediaQuery.of(context).size.width, 0.56, 0.5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(bottom: 6),
+                                    child: Text(
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      widget.lyricEntity.title,
+                                      style: MediaQuery.of(context).size.width >
+                                              ResponsivityUtil.widthDevice
+                                          ? AppFonts.defaultFont(
+                                              color: AppColors.grey9,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 21,
+                                            )
+                                          : AppFonts.defaultFont(
+                                              color: AppColors.grey9,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 18,
+                                            ),
+                                    ),
+                                  ),
+                                  Text(
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    widget.lyricEntity.title,
+                                    widget.lyricEntity.group,
                                     style: MediaQuery.of(context).size.width >
-                                            ResponsivityUtil.widthDevice
+                                        ResponsivityUtil.widthDevice
                                         ? AppFonts.defaultFont(
-                                            color: AppColors.grey9,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 21,
-                                          )
+                                            fontSize: 15,
+                                            color: AppColors.grey10,
+                                         )
                                         : AppFonts.defaultFont(
-                                            color: AppColors.grey9,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 18,
-                                          ),
+                                            fontSize: 14,
+                                            color: AppColors.grey10,
+                                         ),
                                   ),
-                                ),
-                                Text(
-                                  widget.lyricEntity.group,
-                                  style: AppFonts.defaultFont(
-                                    fontSize: 15,
-                                    color: AppColors.grey10,
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),
