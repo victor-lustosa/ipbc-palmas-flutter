@@ -2,7 +2,7 @@ import 'package:provider/provider.dart';
 
 import 'presentation/blocs/lyric_bloc.dart';
 import 'infra/use-cases/lyrics_use_cases.dart';
-import 'infra/use-cases/collection_use_cases.dart';
+import 'infra/use-cases/service_use_cases.dart';
 import 'infra/models/hive-dtos/hive_lyric_dto.dart';
 import 'infra/models/hive-dtos/hive_collection_dto.dart';
 import 'presentation/blocs/services_collection_bloc.dart';
@@ -55,10 +55,10 @@ final lyricModule = [
   ),
   Provider<ServicesCollectionBloc>(
     create: (context) => ServicesCollectionBloc(
-      fireUseCases: CollectionUseCases(
+      fireUseCases: ServiceUseCases(
         repository: context.read<Repository<Stream<List<Map>>>>(),
       ),
-      hiveUseCases: CollectionUseCases(
+      hiveUseCases: ServiceUseCases(
         repository: Repository(
           datasource: HiveDatasource<HiveCollectionDTO>(boxLabel: 'collection'),
         ),

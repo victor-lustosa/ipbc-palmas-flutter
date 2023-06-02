@@ -185,11 +185,11 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                                     ResponsivityUtil.widthDevice
                                                 ? AppFonts.defaultFont(
                                                     color: AppColors.grey10,
-                                                    fontSize: 17,
+                                                    fontSize: 16,
                                                   )
                                                 : AppFonts.defaultFont(
                                                     color: AppColors.grey10,
-                                                    fontSize: 15,
+                                                    fontSize: 14,
                                                   ),
                                       ),
                                     );

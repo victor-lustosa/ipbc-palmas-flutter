@@ -17,7 +17,7 @@ class LyricsViewModel {
   static bool previousChorus = false;
   late HiveDatabaseConfigsDTO data;
 
-  initData(BuildContext context){
+  initData(BuildContext context) {
     data = context.read<HiveDatabaseConfigsDTO>();
   }
 
@@ -30,7 +30,7 @@ class LyricsViewModel {
         return false;
       }
     } on PlatformException catch (e, st) {
-      analyticsUtil.recordError(error:e, st:st,name: 'lyric view model');
+      analyticsUtil.recordError(error: e, st: st, name: 'lyric view model');
       throw Exception();
     }
   }
@@ -48,27 +48,36 @@ class LyricsViewModel {
     }
   }
 
-  updateData(BuildContext context, String path) {
+  checkUpdateData(BuildContext context, String path) {
     switch (path.split('/')[0]) {
       case 'saturday-services':
-        data = data.copyWith(isSaturdayCollectionUpdated: true);
+        if (!data.isSaturdayCollectionUpdated) {
+          data = data.copyWith(isSaturdayCollectionUpdated: true);
+        }
         break;
       case 'sunday-morning-services':
-        data = data.copyWith(isSundayMorningCollectionUpdated: true);
+        if (!data.isSundayMorningCollectionUpdated) {
+          data = data.copyWith(isSundayMorningCollectionUpdated: true);
+        }
         break;
       case 'sunday-evening-services':
-        data = data.copyWith(isSundayEveningCollectionUpdated: true);
+        if (!data.isSundayEveningCollectionUpdated) {
+          data = data.copyWith(isSundayEveningCollectionUpdated: true);
+        }
         break;
       case 'services':
-        data = data.copyWith(isServicesUpdated: true);
+        if (!data.isServicesUpdated) {
+          data = data.copyWith(isServicesUpdated: true);
+        }
         break;
       case 'lyrics':
-        data = data.copyWith(isLyricsUpdated: true);
+        if (!data.isLyricsUpdated) {
+          data = data.copyWith(isLyricsUpdated: true);
+        }
         break;
     }
     context.read<DatabaseBloc>().add(UpdateDataEvent(data: data));
   }
-
 
   static BorderRadius paintChorus(isChorus) {
     if (isChorus) {

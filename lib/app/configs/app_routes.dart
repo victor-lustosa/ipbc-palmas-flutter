@@ -7,7 +7,7 @@ import '../lyric/domain/entities/lyric_entity.dart';
 import '../lyric/presentation/views/lyric_view.dart';
 import '../lyric/presentation/views/service_view.dart';
 import '../lyric/presentation/views/services_list_view.dart';
-import '../lyric/infra/models/firestore-dtos/services_dto.dart';
+import '../lyric/domain/entities/services_entity.dart';
 import '../lyric/presentation/views/services_collection_view.dart';
 import '../../../app/exception/views/unknown_route_view.dart';
 
@@ -86,7 +86,7 @@ class _ServicesListRoutesState extends State<ServicesListRoutes> {
               transitionSpeed: const Duration(milliseconds: 700),
               reverseSpeed: const Duration(milliseconds: 700),
               child: ServicesCollectionView(
-                servicesCollection: settings.arguments as ServicesDTO,
+                servicesCollection: settings.arguments as ServicesEntity,
               ),
               tween: Tween(begin: const Offset(1, 0), end: Offset.zero)
                   .chain(CurveTween(curve: Curves.ease)),

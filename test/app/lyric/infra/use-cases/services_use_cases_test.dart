@@ -2,7 +2,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ipbc_palmas/app/core/infra/repositories/repository.dart';
-import 'package:ipbc_palmas/app/lyric/infra/models/firestore-dtos/services_dto.dart';
+import 'package:ipbc_palmas/app/lyric/domain/entities/services_entity.dart';
 import 'package:ipbc_palmas/app/lyric/infra/use-cases/services_use_cases.dart';
 import '../../../../mocks/mocks.dart';
 
@@ -22,6 +22,6 @@ void main() {
     when(() => repository.get('services/20')).thenAnswer((_) => Future.value(Stream.value([entity])));
     final serviceUsecase = ServicesUseCases(repository: repository);
     final result = await serviceUsecase.get('services/20');
-    expect(result, emits(isA<List<ServicesDTO>>()));
+    expect(result, emits(isA<List<ServicesEntity>>()));
   });
 }

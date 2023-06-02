@@ -4,9 +4,9 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../view-models/lyrics_view_model.dart';
+import '../../domain/entities/services_entity.dart';
 import '../../../core/domain/use-cases/use_cases.dart';
 import '../../../shared/components/utils/analytics_util.dart';
-import '../../../lyric/infra/models/firestore-dtos/services_dto.dart';
 
 class ServicesListBloc extends Bloc<ServicesListEvent, ServicesListState> {
   final IUseCases fireUseCases;
@@ -37,9 +37,10 @@ class ServicesListBloc extends Bloc<ServicesListEvent, ServicesListState> {
   }
 
   Future<void> _getServiceInFire(GetServiceInFireEvent event, emit) async {
-    await emit.onEach<List<ServicesDTO>>(
+    await emit.onEach<List<ServicesEntity>>(
       await fireUseCases.get(path),
       onData: (services) {
+        add(UpdateServiceInHiveEvent(entities: services));
         emit(ServiceSuccessfullyFetchedState(services));
       },
       onError: (error, st) async {
@@ -51,7 +52,7 @@ class ServicesListBloc extends Bloc<ServicesListEvent, ServicesListState> {
   }
 
   Future<void> _getServiceInHive(GetServiceInHiveEvent event, emit) async {
-    await emit.onEach<List<ServicesDTO>>(
+    await emit.onEach<List<ServicesEntity>>(
       await hiveUseCases.get(path),
       onData: (service) {
         emit(ServiceSuccessfullyFetchedState(service));
@@ -123,6 +124,6 @@ class ServiceExceptionState extends ServicesListState {
 }
 
 class ServiceSuccessfullyFetchedState extends ServicesListState {
-  final List<ServicesDTO> entities;
+  final List<ServicesEntity> entities;
   ServiceSuccessfullyFetchedState(this.entities);
 }

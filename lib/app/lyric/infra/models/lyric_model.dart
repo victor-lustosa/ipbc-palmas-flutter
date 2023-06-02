@@ -7,7 +7,7 @@ class LyricModel extends LyricEntity {
   LyricModel(
       {required String id,
       required String title,
-      required String createAt,
+      required DateTime createAt,
       required String albumCover,
       required String group,
       required List<VerseEntity> verses})
@@ -22,7 +22,7 @@ class LyricModel extends LyricEntity {
 
   factory LyricModel.empty() => LyricModel(
         id: '',
-        createAt: '',
+        createAt: DateTime.now(),
         title: '',
         group: '',
         albumCover: '',
@@ -32,7 +32,7 @@ class LyricModel extends LyricEntity {
   LyricModel copyWith({
     String? id,
     String? title,
-    String? createAt,
+    DateTime? createAt,
     String? group,
     String? albumCover,
     List<VerseEntity>? verses,

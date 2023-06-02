@@ -53,10 +53,7 @@ class _LyricsListViewState extends State<LyricsListView>
             return const NoConnectionView(index: 0);
           } else if (state is LyricsSuccessfullyFetchedState) {
             lyricsFetched = state.entities;
-            if (!context.read<LyricsViewModel>().data.isLyricsUpdated) {
-              bloc.add(UpdateLyricsInHiveEvent(entities: lyricsFetched));
-              context.read<LyricsViewModel>().updateData(context, 'lyrics');
-            }
+            context.read<LyricsViewModel>().checkUpdateData(context, 'lyrics');
             return SafeArea(
               child: SingleChildScrollView(
                 child: RefreshIndicator(

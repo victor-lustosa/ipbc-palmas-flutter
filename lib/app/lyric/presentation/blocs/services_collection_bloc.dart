@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../view-models/lyrics_view_model.dart';
-import '../../domain/entities/collection_entity.dart';
+import '../../domain/entities/service_entity.dart';
 import '../../../core/domain/use-cases/use_cases.dart';
 import '../../../shared/components/utils/analytics_util.dart';
 
@@ -40,14 +40,21 @@ class ServicesCollectionBloc
 
   Future<void> _getServicesCollectionInFire(
       GetServicesCollectionInFireEvent event, emit) async {
-    await emit.onEach<List<CollectionEntity>>(
+    await emit.onEach<List<ServiceEntity>>(
       await fireUseCases.get(path),
       onData: (services) {
+        if (services.isNotEmpty && (services[0].type == path.split('/')[0])) {
+          add(UpdateServicesCollectionInHiveEvent(entities: services));
+        }
         emit(CollectionSuccessfullyFetchedState(services));
       },
       onError: (error, st) async {
-        analyticsUtil.recordError(name:'fire collection bloc', error:error,st: st);
-        analyticsUtil.setCustomKey(name: 'fire collection bloc', key: 'get fire collection bloc', value:  error.toString());
+        analyticsUtil.recordError(
+            name: 'fire collection bloc', error: error, st: st);
+        analyticsUtil.setCustomKey(
+            name: 'fire collection bloc',
+            key: 'get fire collection bloc',
+            value: error.toString());
         emit(ServiceExceptionState(error.toString()));
       },
     );
@@ -55,14 +62,18 @@ class ServicesCollectionBloc
 
   Future<void> _getServicesCollectionInHive(
       GetServicesCollectionInHiveEvent event, emit) async {
-    await emit.onEach<List<CollectionEntity>>(
+    await emit.onEach<List<ServiceEntity>>(
       await hiveUseCases.get('services-collection/${event.path}'),
       onData: (services) {
         emit(CollectionSuccessfullyFetchedState(services));
       },
       onError: (error, st) async {
-        analyticsUtil.recordError(name:'hive collection bloc', error:error,st: st);
-        analyticsUtil.setCustomKey(name: 'hive collection bloc', key: 'get hive collection bloc', value:  error.toString());
+        analyticsUtil.recordError(
+            name: 'hive collection bloc', error: error, st: st);
+        analyticsUtil.setCustomKey(
+            name: 'hive collection bloc',
+            key: 'get hive collection bloc',
+            value: error.toString());
         emit(ServiceExceptionState(error.toString()));
       },
     );
@@ -129,6 +140,6 @@ class ServiceExceptionState extends ServicesCollectionState {
 }
 
 class CollectionSuccessfullyFetchedState extends ServicesCollectionState {
-  final List<CollectionEntity> entities;
+  final List<ServiceEntity> entities;
   CollectionSuccessfullyFetchedState(this.entities);
 }

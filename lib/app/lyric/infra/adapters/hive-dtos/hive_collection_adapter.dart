@@ -3,7 +3,7 @@ import 'hive_lyric_adapter.dart';
 import 'hive_liturgy_adapter.dart';
 
 import '../../models/hive-dtos/hive_collection_dto.dart';
-import '../../../domain/entities/collection_entity.dart';
+import '../../../domain/entities/service_entity.dart';
 
 class HiveCollectionAdapter {
   static Map<String, dynamic> toMap(dynamic data) {
@@ -23,7 +23,7 @@ class HiveCollectionAdapter {
     };
   }
 
-  static HiveCollectionDTO toDTO(CollectionEntity entity) {
+  static HiveCollectionDTO toDTO(ServiceEntity entity) {
     return HiveCollectionDTO(
       id: entity.id,
       liturgyList: HiveLiturgyAdapter.toDTOList(entity.liturgyList),

@@ -8,8 +8,8 @@ import 'package:intl/intl.dart';
 import 'service_view.dart';
 import '../view-models/lyrics_view_model.dart';
 import '../blocs/services_collection_bloc.dart';
-import '../../domain/entities/collection_entity.dart';
-import '../../infra/models/firestore-dtos/services_dto.dart';
+import '../../domain/entities/service_entity.dart';
+import '../../domain/entities/services_entity.dart';
 import '../../../configs/app_routes.dart';
 import '../../../configs/app_configs.dart';
 import '../../../exception/views/generic_error_view.dart';
@@ -20,7 +20,7 @@ import '../../../shared/components/loading/loading_widget.dart';
 class ServicesCollectionView extends StatefulWidget {
   const ServicesCollectionView({Key? key, required this.servicesCollection})
       : super(key: key);
-  final ServicesDTO servicesCollection;
+  final ServicesEntity servicesCollection;
 
   @override
   State<ServicesCollectionView> createState() => _ServicesCollectionViewState();
@@ -28,7 +28,7 @@ class ServicesCollectionView extends StatefulWidget {
 
 class _ServicesCollectionViewState extends State<ServicesCollectionView> {
   late final ServicesCollectionBloc bloc;
-  late List<CollectionEntity> servicesCollectionList;
+  late List<ServiceEntity> servicesCollectionList;
   late String path;
 
   @override
@@ -65,13 +65,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                 } else if (state is NoConnectionAvailableState) {
                   return const NoConnectionView(index: 0);
                 } else if (state is CollectionSuccessfullyFetchedState) {
-                    servicesCollectionList = state.entities;
-                    if(state.entities.isNotEmpty && state.entities[0].type == path.split('/')[0]){
-                      if (context.read<LyricsViewModel>().isNotUpdated(path)) {
-                        bloc.add(UpdateServicesCollectionInHiveEvent(entities: servicesCollectionList));
-                        context.read<LyricsViewModel>().updateData(context, path);
-                      }
-                    }
+                  servicesCollectionList = state.entities;
+                  context.read<LyricsViewModel>().checkUpdateData(context, path);
                   return Column(
                     children: [
                       Container(
@@ -99,7 +94,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -155,7 +151,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                 child: ListTile(
                                   visualDensity: VisualDensity.comfortable,
                                   horizontalTitleGap: 2,
-                                  contentPadding: const EdgeInsets.symmetric(vertical: 5),
+                                  contentPadding:
+                                      const EdgeInsets.symmetric(vertical: 5),
                                   title: Container(
                                     margin: const EdgeInsets.only(left: 16),
                                     child: Text(
@@ -170,21 +167,27 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                     ),
                                   ),
                                   subtitle: Container(
-                                    margin: const EdgeInsets.only(left: 16, top: 4),
+                                    margin:
+                                        const EdgeInsets.only(left: 16, top: 4),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
                                           'Messagem: ${servicesCollectionList[index].theme}',
-                                          style: AppFonts.description(color: AppColors.grey8,
+                                          style: AppFonts.description(
+                                            color: AppColors.grey8,
                                           ),
                                         ),
                                         Container(
                                           margin: const EdgeInsets.only(top: 4),
-                                          child: Text(servicesCollectionList[index].preacher,
-                                            style: AppFonts.description(color: AppColors.grey8,
+                                          child: Text(
+                                            servicesCollectionList[index]
+                                                .preacher,
+                                            style: AppFonts.description(
+                                              color: AppColors.grey8,
                                             ),
                                           ),
                                         ),
@@ -192,7 +195,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                     ),
                                   ),
                                   trailing: SizedBox(
-                                    width:Platform.isIOS ? 40 : 45,
+                                    width: Platform.isIOS ? 40 : 45,
                                     child: IconButtonWidget(
                                       size: Platform.isIOS ? null : 33,
                                       color: AppColors.darkGreen,

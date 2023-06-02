@@ -1,4 +1,4 @@
-import '../../models/firestore-dtos/services_dto.dart';
+import '../../../domain/entities/services_entity.dart';
 import '../../models/hive-dtos/hive_services_dto.dart';
 
 class HiveServicesAdapter {
@@ -13,7 +13,7 @@ class HiveServicesAdapter {
     };
   }
 
-  static HiveServicesDTO toDTO(ServicesDTO entity) {
+  static HiveServicesDTO toDTO(ServicesEntity entity) {
     return HiveServicesDTO(
       id: entity.id,
       heading: entity.heading,

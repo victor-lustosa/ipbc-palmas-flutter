@@ -1,14 +1,14 @@
 import '../adapters/services_adapter.dart';
+import '../../domain/entities/services_entity.dart';
 import '../../../core/domain/use-cases/use_cases.dart';
 import '../../../core/domain/repositories/repository.dart';
-import '../../../lyric/infra/models/firestore-dtos/services_dto.dart';
 
-class ServicesUseCases implements IUseCases<Stream<List<ServicesDTO>>> {
+class ServicesUseCases implements IUseCases<Stream<List<ServicesEntity>>> {
   final IRepository<Stream<List<Map>>> repository;
   ServicesUseCases({required this.repository});
 
   @override
-  Future<Stream<List<ServicesDTO>>> get(String url) async {
+  Future<Stream<List<ServicesEntity>>> get(String url) async {
     var result = await repository.get(url);
     if (result != null) {
       return result.map(ServicesAdapter.fromMapList);
@@ -25,5 +25,4 @@ class ServicesUseCases implements IUseCases<Stream<List<ServicesDTO>>> {
   Future<void> update(String path, data) async {
     repository.update(path, data);
   }
-
 }

@@ -3,8 +3,8 @@
   "createAt": "",
   "image": "assets/images/sunday_morning.jpg",
   "title": "Domingo de manhã",
-  "theme": "Deus Age por meio da pequena fé",
-  "preacher": "Pb Cid",
+  "theme": "Lição 10: Da fraqueza tiraram força.",
+  "preacher": "Pr Joefeson",
   "hour": "9h",
   "heading": "domingo de manhã",
   "type": "sunday-morning-services",
@@ -12,17 +12,17 @@
   "liturgyList": [
     {
       "isAdditional":  false,
-      "sequence": "Abertura no salão de festas",
+      "sequence": "Abertura",
       "additional": ""
     },
     {
-      "isAdditional": false,
-      "sequence": "Café da manhã",
-      "additional": ""
+      "isAdditional": true,
+      "sequence": "Hino 13",
+      "additional": "Contemplação"
     },
     {
       "isAdditional": false,
-      "sequence": "Coral Infantil",
+      "sequence": "Devocional",
       "additional": ""
     },
     {"isAdditional": false,
@@ -38,18 +38,17 @@
   "lyricsList": [
     {
       "id": "",
-      "title": "Eu vejo a glória",
-      "group": "Marcos Góes",
+      "title": "A rocha",
+      "group": "Vineyard",
       "albumCover": "",
       "createAt": "",
       "verses": []
     },
     {
       "id": "",
-      "title": "Não tenhas sobre ti",
-      "group": "Paulo Cesar Baruk",
-      "albumCover":
-      "",
+      "title": "Eu te quero",
+      "group": "Adoração e Adoradores",
+      "albumCover": "",
       "createAt": "",
       "verses": []
     }

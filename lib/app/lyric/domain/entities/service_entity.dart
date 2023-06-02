@@ -1,10 +1,10 @@
-import 'lyric_entity.dart';
+import 'package:ipbc_palmas/app/lyric/infra/models/lyric_model.dart';
 import 'liturgy_entity.dart';
 
-class CollectionEntity {
+class ServiceEntity {
   
-  CollectionEntity(
-      {required this.id,
+  ServiceEntity({
+      required this.id,
       required this.type,
       required this.hour,
       required this.theme,
@@ -27,6 +27,7 @@ class CollectionEntity {
   final bool guideIsVisible;
   final String title;
   final String heading;
-  final List<LyricEntity> lyricsList;
+  final List<LyricModel> lyricsList;
   final List<LiturgyEntity> liturgyList;
+
 }

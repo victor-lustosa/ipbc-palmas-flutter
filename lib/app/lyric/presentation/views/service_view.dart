@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 import '../components/lyrics_list_widget.dart';
-import '../../domain/entities/collection_entity.dart';
+import '../../domain/entities/service_entity.dart';
 import '../../../configs/app_configs.dart';
 import '../../../shared/components/button/button_widget.dart';
 import '../../../shared/components/guideline/guideline_widget.dart';
@@ -13,7 +13,7 @@ import '../../../shared/components/guideline/guideline_widget.dart';
 class ServiceViewDTO {
   ServiceViewDTO({required this.service, required this.image});
 
-  final CollectionEntity service;
+  final ServiceEntity service;
   final String image;
 }
 

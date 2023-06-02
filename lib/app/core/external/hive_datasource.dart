@@ -2,11 +2,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../infra/datasources/datasource.dart';
 import '../../lyric/domain/entities/lyric_entity.dart';
-import '../../lyric/domain/entities/collection_entity.dart';
+import '../../lyric/domain/entities/service_entity.dart';
 import '../../lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_verse_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_liturgy_dto.dart';
-import '../../lyric/infra/models/firestore-dtos/services_dto.dart';
+import '../../lyric/domain/entities/services_entity.dart';
 import '../../lyric/infra/models/hive-dtos/hive_services_dto.dart';
 import '../../lyric/infra/models/hive-dtos/hive_collection_dto.dart';
 import '../../lyric/infra/adapters/hive-dtos/hive_lyric_adapter.dart';
@@ -70,7 +70,7 @@ class HiveDatasource<R> implements IDatasource {
     params = path.split('/');
     switch (params[0]) {
       case 'services-collection':
-        for (CollectionEntity entity in data as List<CollectionEntity>) {
+        for (ServiceEntity entity in data as List<ServiceEntity>) {
           box.put(entity.id, HiveCollectionAdapter.toDTO(entity) as R);
         }
         break;
@@ -80,7 +80,7 @@ class HiveDatasource<R> implements IDatasource {
         }
         break;
       case 'services':
-        for (ServicesDTO entity in data as List<ServicesDTO>) {
+        for (ServicesEntity entity in data as List<ServicesEntity>) {
           box.put(entity.id, HiveServicesAdapter.toDTO(entity) as R);
         }
         break;

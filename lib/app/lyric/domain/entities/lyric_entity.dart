@@ -1,18 +1,17 @@
-import '../../domain/entities/verse_entity.dart';
+import 'verse_entity.dart';
 
 class LyricEntity {
   final String id;
   final String title;
   final String group;
   final String albumCover;
-  final String createAt;
+  final DateTime createAt;
   final List<VerseEntity> verses;
-
-  LyricEntity(
-      {required this.albumCover,
+  LyricEntity({
       required this.id,
       required this.title,
       required this.createAt,
+      required this.albumCover,
       required this.group,
       required this.verses});
 }

@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/services_list_bloc.dart';
 import '../view-models/lyrics_view_model.dart';
-import '../../infra/models/firestore-dtos/services_dto.dart';
+import '../../domain/entities/services_entity.dart';
 import '../../../configs/app_configs.dart';
 import '../../../configs/app_routes.dart';
 import '../../../exception/views/no_connection_view.dart';
@@ -26,7 +26,7 @@ class ServicesListView extends StatefulWidget {
 class _ServicesListViewState extends State<ServicesListView>
     with AutomaticKeepAliveClientMixin {
   late final ServicesListBloc bloc;
-  late List<ServicesDTO> servicesList;
+  late List<ServicesEntity> servicesList;
 
   @override
   void initState() {
@@ -61,10 +61,7 @@ class _ServicesListViewState extends State<ServicesListView>
                 return const NoConnectionView(index: 0);
               } else if (state is ServiceSuccessfullyFetchedState) {
                 servicesList = state.entities;
-                if (!context.read<LyricsViewModel>().data.isServicesUpdated) {
-                  bloc.add(UpdateServiceInHiveEvent(entities: servicesList));
-                  context.read<LyricsViewModel>().updateData(context, 'services');
-                }
+                context.read<LyricsViewModel>().checkUpdateData(context, 'services');
                 return Column(
                   children: [
                     const MainTopBarWidget(),

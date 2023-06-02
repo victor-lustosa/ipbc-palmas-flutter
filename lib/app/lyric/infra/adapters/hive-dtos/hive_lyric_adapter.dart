@@ -23,7 +23,7 @@ class HiveLyricAdapter {
         HiveLyricDTO(
           albumCover: lyric.albumCover,
           id: lyric.id,
-          createAt: lyric.createAt,
+          createAt: lyric.createAt.toString(),
           title: lyric.title,
           group: lyric.group,
           verses: [
@@ -51,7 +51,7 @@ class HiveLyricAdapter {
     return HiveLyricDTO(
       albumCover: entity.albumCover,
       id: entity.id,
-      createAt: entity.createAt,
+      createAt: entity.createAt.toString(),
       title: entity.title,
       group: entity.group,
       verses: [

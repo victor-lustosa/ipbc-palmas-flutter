@@ -8,14 +8,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../firestore_datasource.dart';
 import '../../../configs/app_configs.dart';
-import '../../../../firebase_options.dart';
+import '../../../lyric/infra/models/lyric_model.dart';
+import '../../../lyric/infra/models/service_model.dart';
+import '../../../lyric/infra/adapters/lyric_adapter.dart';
+import '../../../lyric/domain/entities/lyric_entity.dart';
+import '../../../lyric/infra/adapters/service_adapter.dart';
 import '../../../shared/components/utils/service_util.dart';
-import '../../../lyric/infra/models/firestore-dtos/lyric_dto.dart';
-import '../../../lyric/infra/models/firestore-dtos/service_dto.dart';
 import '../../../lyric/infra/models/firestore-dtos/settings_dto.dart';
-import '../../../lyric/infra/adapters/firestore-dtos/lyric_dto_adapter.dart';
 import '../../../lyric/infra/adapters/firestore-dtos/settings_dto_adapter.dart';
-import '../../../lyric/infra/adapters/firestore-dtos/collection_dto_adapter.dart';
+import '../../../../firebase_options.dart';
 
 // ignore_for_file: avoid_print
 Future<void> firebaseInitialize() async {
@@ -38,37 +39,47 @@ dateNowDelayed() async {
 void main() async {
   await firebaseInitialize();
   FirestoreDatasource fire = FirestoreDatasource(firestore: FirebaseFirestore.instance);
-  List<LyricDTO> lyricsInserted = [];
+  List<LyricModel> lyricsInserted = [];
+  List<LyricModel> unknownLyrics = [];
   try {
     //servicesListInserts(fire);
-    //LyricDTO lyric0 = await convertUnknownLyric(fire, 'assets/data/unknown-lyrics/hino-351.json');
-    //LyricDTO lyric1 = await convertUnknownLyric(fire, 'assets/data/unknown-lyrics/hino-108.json');
-    //LyricDTO lyric2 = await convertUnknownLyric(fire, 'assets/data/unknown-lyrics/vivifica-me.json');
-    //List<LyricDTO> lyricsAux = await unknownLyricsInsert(fire, [lyric0]);
-    /*List<LyricDTO> saturdayLyrics = await insertService('assets/data/saturday-services/saturday-service-29-04-23.json', 'saturday-services', fire, lyricsAux);
+    //  LyricModel lyric0 = await convertUnknownLyric(fire, 'assets/data/unknown-lyrics/hino-13.json');
+    LyricModel lyric0 = await convertUnknownLyric(fire, 'assets/data/unknown-lyrics/hino-04.json');
+    LyricModel lyric1 = await convertUnknownLyric(fire, 'assets/data/unknown-lyrics/hino-97.json');
+    LyricModel lyric2 = await convertUnknownLyric(fire, 'assets/data/unknown-lyrics/salmo-27.json');
+
+    unknownLyrics.addAll([lyric0, lyric1, lyric2]);
+    /* List<LyricModel> saturdayLyrics = await insertService(
+        'assets/data/saturday-services/saturday-service-29-04-23.json',
+        'saturday-services',
+        fire,
+        unknownLyrics);
     print('Saturday lyrics have been successfully added');
     lyricsInserted.addAll(saturdayLyrics);
-
-   List<LyricDTO> sundayEveningLyrics = await insertService(
-        'assets/data/sunday-evening-services/sunday-evening-service-21-05-23.json',
-        'sunday-evening-services',
-        fire,
-        lyricsAux,
+*/
+    List<LyricModel> sundayEveningLyrics = await insertService(
+      'assets/data/sunday-evening-services/sunday-evening-service-28-05-23.json',
+      'sunday-evening-services',
+      fire,
+      unknownLyrics,
     );
-      print('Sunday Evening lyrics have been successfully added');
-      lyricsInserted.addAll(sundayEveningLyrics);
-    */
-    List<LyricDTO> sundayMorningLyrics = await insertService(
-        'assets/data/sunday-morning-services/sunday-morning-service-21-05-23.json',
+    print('Sunday Evening lyrics have been successfully added');
+    lyricsInserted.addAll(sundayEveningLyrics);
+
+    /*List<LyricDTO> sundayMorningLyrics = await insertService(
+        'assets/data/sunday-morning-services/sunday-morning-service-28-05-23.json',
         'sunday-morning-services',
         fire,
-        [],
+        unknownLyrics,
     );
 
     print('Sunday Morning lyrics have been successfully added');
-    lyricsInserted.addAll(sundayMorningLyrics);
+    lyricsInserted.addAll(sundayMorningLyrics);*/
+
+    unknownLyricsInsert(fire, unknownLyrics);
 
     lyricsInserts(fire, lyricsInserted);
+
     updateFireID(fire);
   } catch (e) {
     print('$e');
@@ -113,44 +124,41 @@ servicesListInserts(FirestoreDatasource fire) async {
   print('Services list have been successfully added');
 }
 
-Future<LyricDTO> convertUnknownLyric(FirestoreDatasource fire, String path) async {
+Future<LyricModel> convertUnknownLyric(
+    FirestoreDatasource fire, String path) async {
   final String unknownJson = await rootBundle.loadString(path);
-  return LyricDTOAdapter.fromUnknownJson(unknownJson);
+  LyricModel unknownLyric = LyricAdapter.fromUnknownJson(unknownJson);
+  return unknownLyric.copyWith(
+    id: ServiceUtil.createId(8),
+    albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
+  );
 }
 
-Future<List<LyricDTO>> unknownLyricsInsert(FirestoreDatasource fire, List<LyricDTO> lyricsInserted) async {
-  List<LyricDTO> lyricsAux = [];
-  if (lyricsInserted.isNotEmpty) {
-    for (LyricDTO entity in lyricsInserted) {
-      lyricsAux.add(
-        entity.copyWith(
-          id: ServiceUtil.createId(8),
-          albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
-        ),
-      );
+void unknownLyricsInsert(
+    FirestoreDatasource fire, List<LyricModel> lyrics) async {
+  if (lyrics.isNotEmpty) {
+    for (LyricModel entity in lyrics) {
+      fire.add('unknown-lyrics', LyricAdapter.toMap(entity));
     }
   }
-  for (LyricDTO entity in lyricsAux) {
-    fire.add('unknown-lyrics', LyricDTOAdapter.toMap(entity));
-  }
   print('Unknown lyrics have been successfully added');
-  return lyricsAux;
 }
 
-Future<List<LyricDTO>> insertService(String path, String url, FirestoreDatasource fire, List<LyricDTO> unknownLyrics) async {
+Future<List<LyricModel>> insertService(String path, String url,
+    FirestoreDatasource fire, List<LyricModel> unknownLyrics) async {
   final String json = await rootBundle.loadString(path);
-  ServiceDTO result = await ServiceUtil.generateService(
-      CollectionDTOAdapter.fromJson(json),
-      unknownLyrics,
+  ServiceModel result = await ServiceUtil.generateService(
+    ServiceAdapter.fromJson(json),
+    unknownLyrics,
   );
-  fire.add(url, CollectionDTOAdapter.toMap(result));
+  fire.add(url, ServiceAdapter.toMap(result));
   return result.lyricsList;
 }
 
-lyricsInserts(FirestoreDatasource fire, List<LyricDTO> lyricsInserted) async {
+lyricsInserts(FirestoreDatasource fire, List<LyricEntity> lyricsInserted) async {
   String lyricsUrl = 'lyrics';
-  for (LyricDTO lyric in lyricsInserted) {
-    fire.add(lyricsUrl, LyricDTOAdapter.toMap(lyric));
+  for (LyricEntity lyric in lyricsInserted) {
+    fire.add(lyricsUrl, LyricAdapter.toMap(lyric));
   }
   print('lyrics list have been successfully added');
   print('Total number of lyrics inserted: ${lyricsInserted.length}');

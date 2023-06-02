@@ -1,12 +1,12 @@
 import 'dart:math';
-
 import 'package:uno/uno.dart';
 
 import '../../../configs/app_configs.dart';
+import '../../../lyric/infra/models/lyric_model.dart';
+import '../../../lyric/infra/models/service_model.dart';
+import '../../../lyric/domain/entities/lyric_entity.dart';
+import '../../../lyric/infra/adapters/verse_adapter.dart';
 import '../../../shared/components/utils/analytics_util.dart';
-import '../../../lyric/infra/models/firestore-dtos/lyric_dto.dart';
-import '../../../lyric/infra/models/firestore-dtos/service_dto.dart';
-import '../../../lyric/infra/adapters/firestore-dtos/verse_dto_adapter.dart';
 
 class ServiceUtil {
   static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
@@ -22,9 +22,9 @@ class ServiceUtil {
     );
   }
 
-  static generateService(ServiceDTO service, List<LyricDTO> unknownLyrics) async {
-    List<LyricDTO> lyricsConverted = await generateVersesList(service.lyricsList);
-    List<LyricDTO> lyricsAux = [];
+  static generateService(ServiceModel service, List<LyricModel> unknownLyrics) async {
+    List<LyricEntity> lyricsConverted = await generateVersesList(service.lyricsList);
+    List<LyricModel> lyricsAux = [];
     //aqui vai o codigo para alterar a capa do album
     for (int line = 0; service.lyricsList.length > line; line++) {
       lyricsAux.add(
@@ -42,13 +42,13 @@ class ServiceUtil {
     );
   }
 
-  static Future<List<LyricDTO>> generateVersesList(List<LyricDTO> lyricsList) async {
-    List<LyricDTO> results = [];
+  static Future<List<LyricEntity>> generateVersesList(List<LyricEntity> lyricsList) async {
+    List<LyricEntity> results = [];
     for (int i = 0; lyricsList.length > i; i++) {
       Map result = await getLyric(lyricsList[i].title, lyricsList[i].group);
       results.add(
-        LyricDTO.empty().copyWith(
-          verses: VerseDTOAdapter.fromVagalume(result),
+        LyricModel.empty().copyWith(
+          verses: VerseAdapter.fromVagalume(result),
           albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
         ),
       );

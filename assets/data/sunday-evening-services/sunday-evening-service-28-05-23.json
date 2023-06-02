@@ -3,7 +3,7 @@
   "createAt": "",
   "image": "assets/images/sunday_evening.png",
   "title": "Domingo à noite",
-  "theme": "Temor a Deus: um princípio esquecido na era presente",
+  "theme": "Uma vida em troca de muitas.",
   "preacher": "Pr Danilo",
   "heading": "domingo à noite",
   "hour": "19h",
@@ -62,14 +62,6 @@
   }
 ],
   "lyricsList": [
-    {
-      "id": "",
-      "title": "Uma Coisa Peço Ao Senhor",
-      "group": "Fernandinho",
-      "albumCover": "",
-      "createAt": "",
-      "verses": []
-    },
     {
       "id": "",
       "title": "Nosso General",
