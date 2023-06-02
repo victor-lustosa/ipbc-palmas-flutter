@@ -221,6 +221,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 40)
                     ],
                   );
                 } else {

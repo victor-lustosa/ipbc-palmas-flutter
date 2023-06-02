@@ -280,9 +280,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 40,
-                  )
+                  const SizedBox(height: 40)
                 ],
               ),
             ),
