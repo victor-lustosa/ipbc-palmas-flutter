@@ -1,0 +1,38 @@
+{
+  "id": "1",
+  "createAt": "",
+  "theme": "Trabalho: benção ou fardo?",
+  "preacher": "Pr Isaías",
+  "title": "Sábado",
+  "hour": "19h30",
+  "type": "saturday-services",
+  "heading": "sábado",
+  "image": "assets/images/saturday_evening.png",
+  "guideIsVisible": false,
+  "lyricsList": [
+    {
+      "id": "",
+      "title": "A rocha",
+      "group": "Vineyard",
+      "albumCover": "",
+      "createAt": "",
+      "verses": []
+    },
+    {
+      "id": "",
+      "title": "Reina em mim",
+      "group": "Vineyard",
+      "albumCover": "",
+      "createAt": "",
+      "verses": []
+    },
+    {
+      "id": "",
+      "title": "Eu me rendo",
+      "group": "Renascer Praise",
+      "albumCover": "",
+      "createAt": "",
+      "verses": []
+    }
+  ]}
+

@@ -1,0 +1,57 @@
+{
+  "id": "",
+  "title": "Hino 28 - Coroação",
+  "group": "Hinário Novo Cântico",
+  "albumCover": "",
+  "createAt": "",
+  "verses": [
+    {
+      "id": 0,
+      "isChorus": false,
+      "versesList": [
+        {
+         "verse0": "Tuas obras te coroam",
+         "verse1": "Como um halo de esplendor!",
+         "verse2": "Astros, anjos, céus entoam",
+         "verse3": "Hino eterno a ti Senhor!",
+         "verse4": "Campos, matas, vales, montes,",
+         "verse5": "Verde outeiro e verde mar,",
+         "verse6": "Aves e sonoras fontes",
+         "verse7": "Formam coro singular!"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "isChorus": true,
+      "versesList": [
+        {
+          "verse0": "Nós, mortais, por ti remidos,",
+          "verse1": "Deus de glória, Deus de amor,",
+          "verse2": "Corações aos céus erguidos,",
+          "verse3": "Celebramos teu louvor!",
+          "verse4": "Revelaste amor profundo,",
+          "verse5": "Insondável, sem igual,",
+          "verse6": "Enviando Cristo ao mundo",
+          "verse7": "A vencer por nós o mal!"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "isChorus": false,
+      "versesList": [
+        {
+          "verse0": "Fonte és de alegria e vida,",
+          "verse1": "És do bem o Inspirador;",
+          "verse2": "Tua graça nos convida",
+          "verse3": "A viver em mútuo amor",
+          "verse4": "Quais alegres peregrinos,",
+          "verse5": "Sempre em marcha triunfal,",
+          "verse6": "Cantaremos gratos hinos",
+          "verse7": "Na jornada até o final!"
+        }
+      ]
+    }
+  ]
+}

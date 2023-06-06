@@ -1,0 +1,61 @@
+{
+  "id": "1",
+  "createAt": "",
+  "image": "assets/images/sunday_evening.png",
+  "title": "Domingo à noite",
+  "theme": "Confiando em Deus diante dos nossos medos.",
+  "preacher": "Rev Danilo",
+  "heading": "domingo à noite",
+  "hour": "19h",
+  "type": "sunday-evening-services",
+  "guideIsVisible": true,
+  "liturgyList": [
+  {
+  "isAdditional":  false,
+  "sequence": "Oração",
+    "additional": ""
+  },
+  {
+    "isAdditional": true,
+    "sequence": "Hino 28",
+    "additional": "Coroação"
+  },
+  {
+    "isAdditional": true,
+    "sequence": "Texto Bíblico",
+    "additional": "Salmo 150"
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Cânticos Silvestre Kuhlmann",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Pregação",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Cântico especial Silvestre Kuhlmann",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Ceia",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Bênção apostólica",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Avisos",
+    "additional": ""
+  }
+],
+  "lyricsList": []
+}
+
