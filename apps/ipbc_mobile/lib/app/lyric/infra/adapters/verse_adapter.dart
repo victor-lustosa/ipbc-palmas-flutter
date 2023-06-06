@@ -1,12 +1,21 @@
 import '../../domain/entities/verse_entity.dart';
 
 class VerseAdapter {
+
   static VerseEntity fromMap(dynamic json) {
     return VerseEntity(
       id: json['id'].runtimeType == String ? int.parse(json['id']) : json['id'],
       isChorus: json['isChorus'],
-      versesList: json['versesList'],
+      versesList: json['id'].runtimeType == String ? verseJsonDecode(json['versesList']) : json['versesList'],
     );
+  }
+
+  static List verseJsonDecode(dynamic json) {
+    List results = [];
+    for (int i = 0; i < json[0].length; i++) {
+      results.add(json[0]['verse$i']);
+    }
+    return results;
   }
 
   static List<Map<String, dynamic>> toMapList(List<VerseEntity> data) {
@@ -18,6 +27,7 @@ class VerseAdapter {
             })
         .toList();
   }
+
   static List<VerseEntity> fromVagalume(dynamic json) {
     List<VerseEntity> verseEntityList = [];
     if (json.length > 2) {

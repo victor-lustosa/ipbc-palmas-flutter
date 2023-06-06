@@ -12,6 +12,7 @@ class LyricAdapter {
   static List<LyricModel> fromJson(String source) => fromMapList(json.decode(source));
   static LyricModel fromUnknownJson(String source) => fromMap(json.decode(source));
 
+
   static LyricModel fromMap(dynamic json) {
     return LyricModel(
       albumCover: json['albumCover'],
