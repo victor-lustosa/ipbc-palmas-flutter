@@ -1,0 +1,90 @@
+{
+  "id": "1",
+  "createAt": "",
+  "image": "assets/images/sunday_evening.png",
+  "title": "Domingo à noite",
+  "theme": "O procedimento da esposa e do marido crente é um testemunho ao mundo descrente.",
+  "preacher": "Pr Joefeson",
+  "heading": "domingo à noite",
+  "hour": "19h",
+  "type": "sunday-evening-services",
+  "guideIsVisible": true,
+  "liturgyList": [
+  {
+  "isAdditional":  false,
+  "sequence": "Oração",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Texto Biblico",
+    "additional": ""
+  },
+  {
+    "isAdditional": true,
+    "sequence": "Hino 320",
+    "additional": "Bilha no viver"
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Texto Biblico",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Oração de confissão de pecados",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Cânticos",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Pregação",
+    "additional": ""
+  },
+  {
+    "isAdditional": true,
+    "sequence": "Hino 395",
+    "additional": "Amor no lar"
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Bênção apostólica",
+    "additional": ""
+  },
+  {
+    "isAdditional": false,
+    "sequence": "Avisos",
+    "additional": ""
+  }
+],
+  "lyricsList": [
+    {
+      "id": "",
+      "title": "Confiarei",
+      "group": "Ministério Ame",
+      "albumCover": "",
+      "createAt": "2023-06-11",
+      "verses": []
+    },
+    {
+      "id": "",
+      "title": "Primeiro Amor",
+      "group": "Aline Barros",
+      "albumCover": "",
+      "createAt": "2023-06-11",
+      "verses": []
+    },
+    {
+      "id": "",
+      "title": "Quao Grande É o Meu Deus",
+      "group": "Corinhos Evangélicos",
+      "albumCover": "",
+      "createAt": "2023-06-11",
+      "verses": []
+    }
+  ]}
+

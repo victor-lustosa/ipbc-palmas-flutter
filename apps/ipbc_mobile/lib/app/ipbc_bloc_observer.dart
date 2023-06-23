@@ -1,8 +1,6 @@
 // ignore_for_file: avoid_print
-
-
 import 'package:bloc/bloc.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:core_module/core_module.dart';
 
 class IpbcBlocObserver extends BlocObserver {
   @override

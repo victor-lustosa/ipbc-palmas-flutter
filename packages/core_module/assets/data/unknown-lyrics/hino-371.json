@@ -1,0 +1,45 @@
+{
+  "id": "",
+  "title": "Hino 371 - A Bíblia",
+  "group": "Hinário Novo Cântico",
+  "albumCover": "",
+  "createAt": "",
+  "verses": [
+    {
+      "id": "0",
+      "isChorus": false,
+      "versesList": [
+        {
+         "verse0": "Da Bíblia a luz celeste Lampeje aqui, Senhor,",
+         "verse1": "A luz que vem de Cristo, O Mestre e Salvador.",
+         "verse2": "Tal como o sol no espaço Difunde a sua luz,",
+         "verse3": "Teu livro aqui resplenda A glória de Jesus."
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "isChorus": true,
+      "versesList": [
+        {
+          "verse0": "Senhor, que a tua Igreja Rebrilhe qual fanal,",
+          "verse1": "Da Bíblia refletindo A luz celestial.",
+          "verse2": "Num proceloso mundo Rumando à perdição",
+          "verse3": "Que a Bíblia a todos mostre Em Cristo a salvação"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "isChorus": true,
+      "versesList": [
+        {
+          "verse0": "Concede inteligência! Queremos perceber",
+          "verse1": "O que, Senhor, na Bíblia, Mandaste-nos dizer.",
+          "verse2": "Adestra-nos, ó Mestre, Com teu Verbo eficaz!",
+          "verse3": "Instrui e repreende, Destrói o que é falaz. Amém."
+        }
+      ]
+    }
+  ]
+}

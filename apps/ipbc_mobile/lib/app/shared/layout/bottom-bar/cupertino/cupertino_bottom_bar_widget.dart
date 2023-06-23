@@ -1,13 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart'
     hide CupertinoTabBar, CupertinoTabScaffold;
-import 'package:design_system/design_system.dart';
 
 import '../../../../configs/app_routes.dart';
 import '../../../../offers/views/offers_view.dart';
 import '../../../../shared/mixins/buttons_bar_mixin.dart';
 import '../../../../exception/views/unknown_route_view.dart';
-import '../../../../lyric/presentation/views/lyrics_list_view.dart';
+import '../../../../lyric/views/lyrics_list_view.dart';
 
 import 'custom_tab_scaffold.dart';
 import 'custom_bottom_tab_bar.dart';

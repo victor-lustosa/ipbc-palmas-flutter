@@ -1,5 +1,5 @@
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:design_system/design_system.dart';
 
 import '../../shared/mixins/clipboard_mixin.dart';
 import '../../shared/layout/top-bar/title_top_bar_widget.dart';

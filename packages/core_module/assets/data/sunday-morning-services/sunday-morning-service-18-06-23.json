@@ -1,0 +1,56 @@
+{
+  "id": "",
+  "createAt": "",
+  "image": "assets/images/sunday_morning.jpg",
+  "title": "Domingo de manhã",
+  "theme": "Lição 12: Graça e Disciplina do Deus Fiel",
+  "preacher": "Pr Joefeson",
+  "hour": "9h",
+  "heading": "domingo de manhã",
+  "type": "sunday-morning-services",
+  "guideIsVisible": true,
+  "liturgyList": [
+    {
+      "isAdditional":  false,
+      "sequence": "Abertura",
+      "additional": ""
+    },
+    {
+      "isAdditional": true,
+      "sequence": "Hino 4",
+      "additional": "Culto à trindade"
+    },
+    {
+      "isAdditional": false,
+      "sequence": "Devocional",
+      "additional": ""
+    },
+    {"isAdditional": false,
+      "sequence": "Louvor",
+      "additional": ""
+    },
+    {
+      "isAdditional": false,
+      "sequence": "Avisos e divisão de salas",
+      "additional": ""
+    }
+  ],
+  "lyricsList": [
+    {
+      "id": "",
+      "title": "Sonda-me",
+      "group": "Aline Barros",
+      "albumCover": "",
+      "createAt": "2000-01-01",
+      "verses": []
+    },
+    {
+      "id": "",
+      "title": "Nele Você Pode Confiar",
+      "group": "Rebanhão",
+      "albumCover": "",
+      "createAt": "2000-01-01",
+      "verses": []
+    }
+  ]}
+

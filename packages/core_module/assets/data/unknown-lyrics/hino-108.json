@@ -1,0 +1,66 @@
+{
+  "id": "",
+  "title": "Hino 108 - Aflição e Paz",
+  "group": "Hinário Novo Cântico",
+  "albumCover": "",
+  "createAt": "",
+  "verses": [
+    {
+      "id": "0",
+      "isChorus": false,
+      "versesList": [
+        {
+         "verse0": "Se paz a mais doce me deres gozar",
+         "verse1": "Se dor a mais forte sofrer,",
+         "verse2": "Oh, seja o que for, Tu me fazes saber",
+         "verse3": "Que feliz com Jesus sempre sou!"
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "isChorus": true,
+      "versesList": [
+        {
+          "verse0": "Sou feliz com Jesus, Sou feliz com Jesus, meu Senhor!"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "isChorus": false,
+      "versesList": [
+        {
+          "verse0": "Embora me assalte o cruel Satanás,",
+          "verse1": "E ataque com vis tentações;",
+          "verse2": "Oh! Certo eu estou, apesar de aflições,",
+          "verse3": "Que feliz eu serei com Jesus!"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "isChorus": false,
+      "versesList": [
+        {
+          "verse0": "Meu triste pecado, por meu Salvador",
+          "verse1": "Foi pago de um modo cabal!",
+          "verse2": "Valeu-me o Senhor, oh, mercê sem igual!",
+          "verse3": "Sou feliz, graças dou a Jesus!"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "isChorus": false,
+      "versesList": [
+        {
+          "verse0": "A vinda eu anseio do meu Salvador,",
+          "verse1": "Em breve virá me levar",
+          "verse2": "Ao céu, onde eu vou para sempre morar",
+          "verse3": "Com remidos na luz do Senhor!"
+        }
+      ]
+    }
+  ]
+}

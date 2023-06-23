@@ -1,14 +1,14 @@
 import 'dart:io';
 
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:design_system/design_system.dart';
 import 'package:provider/provider.dart';
 
 import '../view-models/home_view_model.dart';
 import '../../configs/app_routes.dart';
 import '../../lyric/lyric_module.dart';
 import '../../offers/views/offers_view.dart';
-import '../../lyric/presentation/views/lyrics_list_view.dart';
+import '../../lyric/views/lyrics_list_view.dart';
 import '../../shared/layout/bottom-bar/material/material_bottom_bar_widget.dart';
 import '../../shared/layout/bottom-bar/cupertino/cupertino_bottom_bar_widget.dart';
 

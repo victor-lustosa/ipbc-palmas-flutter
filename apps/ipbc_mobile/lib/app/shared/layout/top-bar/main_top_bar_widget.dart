@@ -1,5 +1,5 @@
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:design_system/design_system.dart';
 import 'package:flutter_svg/svg.dart';
 //import '../../../shared/components/circle-avatar/circle_avatar_widget.dart';
 

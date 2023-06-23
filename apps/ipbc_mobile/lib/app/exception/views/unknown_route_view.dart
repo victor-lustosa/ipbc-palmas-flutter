@@ -1,5 +1,5 @@
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:design_system/design_system.dart';
 
 class UnknownRouteView extends StatefulWidget {
   const UnknownRouteView({super.key});

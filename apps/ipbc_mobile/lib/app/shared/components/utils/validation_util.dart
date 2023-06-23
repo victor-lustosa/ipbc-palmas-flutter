@@ -1,5 +1,5 @@
 
-import 'package:intl/intl.dart' show DateFormat;
+import 'package:core_module/core_module.dart';
 
 class ValidationUtil {
 

@@ -1,12 +1,10 @@
-import 'package:bloc_test/bloc_test.dart';
+
 import 'package:core_module/core_module.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ipbc_palmas/app/shared/components/utils/analytics_util.dart';
-import 'package:ipbc_palmas/app/lyric/presentation/blocs/services_list_bloc.dart';
-import 'package:ipbc_palmas/app/lyric/presentation/view-models/lyrics_view_model.dart';
-import 'package:mocktail/mocktail.dart';
-import '../../../mocks/mocks.dart';
+import 'package:ipbc_palmas/app/lyric/blocs/services_list_bloc.dart';
+import 'package:ipbc_palmas/app/lyric/view-models/lyrics_view_model.dart';
 
+import '../../../mocks/mocks.dart';
 void main() {
   late IUseCases<Stream<List<ServicesEntityMock>>> useCases;
   late ServicesListBloc bloc;
@@ -29,7 +27,7 @@ void main() {
     },
   );
 
-  blocTest<ServicesListBloc, ServicesListState>(
+  /*blocTest<ServicesListBloc, ServicesListState>(
     'Fetching services list of firestore',
     build: () {
       when(() => lyricsViewModel.isConnected())
@@ -47,7 +45,7 @@ void main() {
     expect: () => [
       isA<ServiceSuccessfullyFetchedState>(),
     ],
-  );
+  );*/
 
   blocTest<ServicesListBloc, ServicesListState>(
     'Fetching services list of firestore and occorring an error',

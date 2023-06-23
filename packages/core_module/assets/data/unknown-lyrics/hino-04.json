@@ -1,0 +1,57 @@
+{
+  "id": "",
+  "title": "Hino 04 - Culto à Trindade.",
+  "group": "Hinário Novo Cântico",
+  "albumCover": "",
+  "createAt": "",
+  "verses": [
+    {
+      "id": "0",
+      "isChorus": false,
+      "versesList": [
+        {
+         "verse0": "Deus está no templo!",
+         "verse1": "Pai Onipotente!",
+         "verse2": "A seus pés nos humilhamos.",
+         "verse3": "Servos consagrados,",
+         "verse4": "Reverentemente,",
+         "verse5": "Ao Deus Santo adoramos.",
+         "verse6": "Por favor, com amor,",
+         "verse7": "Espiritualmente Deus está no templo!"
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "isChorus": true,
+      "versesList": [
+        {
+          "verse0": "Cristo está no templo!",
+          "verse1": "Sumo benefício",
+          "verse2": "Por seu sangue nos foi dado.",
+          "verse3": "Ele, o bom Cordeiro,",
+          "verse4": "Foi o sacrifício",
+          "verse5": "Que expirou o vil pecado.",
+          "verse6": "Escolheu e sofreu",
+          "verse7": "O cabal suplício; Cristo está no templo!"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "isChorus": true,
+      "versesList": [
+        {
+          "verse0": "Tu, que estás no templo,",
+          "verse1": "Preceptor divino,",
+          "verse2": "E os corações habitas;",
+          "verse3": "Tu, paciente Mestre,",
+          "verse4": "Dá-nos teu ensino,",
+          "verse5": "Aclarando as leis benditas.",
+          "verse6": "Que prazer conhecer",
+          "verse7": "A graça infinita! Sim, está no templo!"
+        }
+      ]
+    }
+  ]
+}

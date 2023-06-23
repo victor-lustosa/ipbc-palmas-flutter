@@ -1,0 +1,117 @@
+{
+  "id": "",
+  "title": "Uma coisa peço ao Senhor",
+  "group": "Hinário Novo Cântico",
+  "albumCover": "",
+  "createAt": "",
+  "verses": [
+    {
+      "id": "0",
+      "isChorus": false,
+      "versesList": [
+        {
+         "verse0": "O Senhor é a minha luz",
+         "verse1": "E a minha salvação",
+         "verse2": "quem temerei se o Senhor",
+         "verse3": "É a força da minha vida",
+         "verse4": "Quando o mal me sobrevém",
+         "verse5": "E tenta me destruir",
+         "verse6": "Todos os meus opressores",
+         "verse7": "Eles quem tropeçam e caem"
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "isChorus": false,
+      "versesList": [
+        {
+          "verse0": "Ainda que um exército se acampe contra mim",
+          "verse1": "Oh, Deus não temerá o meu coração",
+          "verse2": "E se diante de mim vier a guerra",
+          "verse3": "Ainda sim em ti confiarei"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "isChorus": true,
+      "versesList": [
+        {
+          "verse0": "Uma coisa peço ao Senhor",
+          "verse1": "E a buscarei",
+          "verse2": "Que em tua casa eu possa habitar",
+          "verse3": "Pra sempre",
+          "verse4": "Todo dia, enquanto eu viver",
+          "verse5": "E tua beleza contemplarei"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "isChorus": true,
+      "versesList": [
+        {
+          "verse0": "Pois no dia da provação",
+          "verse1": "Me esconderá",
+          "verse2": "Dentro de sua tenda, o Senhor",
+          "verse3": "Me acolherá",
+          "verse4": "Tu me guardas e me conduz",
+          "verse5": "Me elevarás sobre uma rocha"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "isChorus": false,
+      "versesList": [
+        {
+          "verse0": "Ouve-me quando eu clamar",
+          "verse1": "Compadece-te de mim",
+          "verse2": "Convém ao meu coração",
+          "verse3": "O buscar a tua presença",
+          "verse4": "Não rejeite a mim, Senhor",
+          "verse5": "Não te ires contra mim",
+          "verse6": "Tu és meu auxílio e socorro",
+          "verse7": "Minha força e Salvação"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "isChorus": false,
+      "versesList": [
+        {
+          "verse0": "Ainda que meus pais venham a mim desamparar",
+          "verse1": "Eu sei que o Senhor me acolherá",
+          "verse2": "Ensina-me, Senhor o teu caminho",
+          "verse3": "E frustes os que querem ver meu fim."
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "isChorus": false,
+      "versesList": [
+        {
+          "verse0": "Não me entregues à vontade do acusador",
+          "verse1": "Pois crueldade intentam contra mim",
+          "verse2": "Tua bondade na terra dos homens se mostrará",
+          "verse3": "Com alegria em ti, oh Deus, esperarei"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "isChorus": false,
+      "versesList": [
+        {
+          "verse0": "Agora exaltarás minha cabeça",
+          "verse1": "Perante meus inimigos",
+          "verse2": "Em tuas moradas, Senhor, Sacrificarei",
+          "verse3": "E salmodiarei"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "id": "",
+  "title": "Hino 395 - Amor no lar",
+  "group": "Hinário Novo Cântico",
+  "albumCover": "",
+  "createAt": "",
+  "verses": [
+    {
+      "id": "0",
+      "isChorus": false,
+      "versesList": [
+        {
+         "verse0": "Mui felizes nos correm os dias",
+         "verse1": "E depressa se esvai nossa dor!",
+         "verse2": "São benditas as sãs alegrias,",
+         "verse3": "Quando reina no lar doce amor!"
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "isChorus": false,
+      "versesList": [
+        {
+          "verse0": "Os caminhos pisamos juncados,",
+          "verse1": "Sim, juncados de ramos em flor!",
+          "verse2": "Surgem bênçãos de todos os lados,",
+          "verse3": "Quando reina no lar doce amor!"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "isChorus": false,
+      "versesList": [
+        {
+          "verse0": "Saboroso é o pão que fruímos,",
+          "verse1": "Se o fruímos de nosso labor!",
+          "verse2": "Sim, contente, em tudo sorrimos,",
+          "verse3": "Quando reina no lar doce amor!"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "isChorus": false,
+      "versesList": [
+        {
+          "verse0": "Os pais crentes aos filhos afirmam",
+          "verse1": "As verdades da Lei do Senhor!",
+          "verse2": "E com obras o ensino confirmam,",
+          "verse3": "Quando reina no lar doce amor!"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "isChorus": false,
+      "versesList": [
+        {
+          "verse0": "Se sentimos em casa a pobreza,",
+          "verse1": "Se há pobreza também ao redor,",
+          "verse2": "Suportável será, com certeza,",
+          "verse3": "Quando reina no lar doce amor!"
+        }
+      ]
+    }
+  ]
+}
