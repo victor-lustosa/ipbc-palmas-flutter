@@ -1,6 +1,6 @@
 
 # IPBC Palmas
-![alt text](https://github.com/victor-lustosa/ipbc-palmas-flutter/blob/develop/docs/IPB-banner.png)
+![alt text](https://github.com/victor-lustosa/ipbc-palmas-flutter/blob/main/docs/IPB-banner.png)
 
 Projeto de aplicativo Android e iOS Open Source para a Igreja Presbiteriana Central de Palmas totalmente voluntário, sem fins lucrativos, para fornecer aos membros funcionalidades como: letras das músicas utilizadas nos cultos, histórico de cultos com liturgias, e outras funcionalidades, sendo futuramente um projeto para criar aplicativos para qualquer igreja em várias línguas diferentes.
 
