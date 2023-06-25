@@ -20,8 +20,7 @@ final mainModule = [
     create: (_) => HomeViewModel(),
   ),
   Provider<HiveDatasource<HiveDatabaseConfigsDTO>>(
-    create: (context) =>
-        HiveDatasource<HiveDatabaseConfigsDTO>(boxLabel: 'database-configs'),
+    create: (context) => HiveDatasource<HiveDatabaseConfigsDTO>(boxLabel: 'database-configs'),
   ),
   Provider<Repository<HiveDatabaseConfigsDTO>>(
     create: (context) => Repository<HiveDatabaseConfigsDTO>(

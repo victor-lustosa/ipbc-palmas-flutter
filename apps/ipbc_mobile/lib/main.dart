@@ -10,29 +10,17 @@ import 'app/app_widget.dart';
 import 'app/ipbc_bloc_observer.dart';
 
 void main() async {
-  runZonedGuarded<Future<void>>(
-    () async {
+  runZonedGuarded<Future<void>>(() async {
       WidgetsFlutterBinding.ensureInitialized();
 
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
-
-      await Hive.initFlutter();
-
-      HiveDatasource.initHive();
-
-      await Hive.openBox<HiveDatabaseConfigsDTO>('database-configs');
-      await Hive.openBox<HiveCollectionDTO>('collection');
-      await Hive.openBox<HiveLyricDTO>('lyrics');
-      await Hive.openBox<HiveServicesDTO>('services');
+      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+      await HiveDatasource.hiveInit();
 
       if (kDebugMode) {
         await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
       }
 
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-
       Bloc.observer = IpbcBlocObserver();
 
       SystemChrome.setPreferredOrientations([

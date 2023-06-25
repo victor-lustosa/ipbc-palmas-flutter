@@ -6,7 +6,7 @@ class VerseAdapter {
     return VerseEntity(
       id: json['id'].runtimeType == String ? int.parse(json['id']) : json['id'],
       isChorus: json['isChorus'],
-      versesList: json['id'].runtimeType == String ? verseJsonDecode(json['versesList']) : json['versesList'],
+      versesList: json['versesList'].runtimeType == String ? verseJsonDecode(json['versesList']) : json['versesList'],
     );
   }
 

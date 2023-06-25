@@ -121,8 +121,7 @@ class AppFonts {
     fontSize: 12.5,
   );
 
-  static TextStyle? copyright(
-      {Color? color, required double fontSize, FontWeight? fontWeight}) {
+  static TextStyle? copyright({Color? color, required double fontSize, FontWeight? fontWeight}) {
     return GoogleFonts.inter(
       color: color ?? AppColors.grey5,
       fontWeight: fontWeight ?? FontWeight.w300,

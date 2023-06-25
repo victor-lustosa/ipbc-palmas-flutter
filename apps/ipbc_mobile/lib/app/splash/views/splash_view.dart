@@ -21,6 +21,7 @@ class _SplashViewState extends State<SplashView> {
   late HiveDatabaseConfigsDTO data;
   @override
   initState() {
+    HiveDatasource.initSplash();
     bloc = context.read<DatabaseBloc>();
     bloc.add(GetDataEvent());
     super.initState();

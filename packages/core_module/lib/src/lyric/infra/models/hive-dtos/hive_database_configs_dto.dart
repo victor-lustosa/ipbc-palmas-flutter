@@ -41,7 +41,7 @@ class HiveDatabaseConfigsDTO {
   }
 
   factory HiveDatabaseConfigsDTO.empty() => HiveDatabaseConfigsDTO(
-    fireId: '',
+    fireId: '000000000',
     isServicesUpdated: false,
     isLyricsUpdated: false,
     isSaturdayCollectionUpdated: false,

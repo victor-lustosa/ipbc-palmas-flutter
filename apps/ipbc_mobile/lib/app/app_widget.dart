@@ -13,9 +13,7 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ...mainModule,
-      ],
+      providers: mainModule,
       child: MaterialApp(
         builder: (context, Widget? child) {
           return ScrollConfiguration(
