@@ -25,7 +25,6 @@ class _HomeViewState extends State<HomeView> {
   final pageViewController = PageController();
   @override
   void initState() {
-    HiveDatasource.initHome();
     super.initState();
     _homeViewModel = context.read<HomeViewModel>();
   }

@@ -19,15 +19,9 @@ class HiveDatasource<R> implements IDatasource {
     await Hive.initFlutter();
     await _allAdapters();
     await Hive.openBox<HiveDatabaseConfigsDTO>('database-configs');
-  }
-
-  static Future initSplash() async {
+    await Hive.openBox<HiveLyricDTO>('lyrics');
     await Hive.openBox<HiveCollectionDTO>('collection');
     await Hive.openBox<HiveServicesDTO>('services');
-  }
-
-  static Future initHome() async {
-    await Hive.openBox<HiveLyricDTO>('lyrics');
   }
 
   static _allAdapters() {
