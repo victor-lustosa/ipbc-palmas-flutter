@@ -41,5 +41,3 @@ export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:firebase_crashlytics/firebase_crashlytics.dart';
 export 'package:hive_flutter/hive_flutter.dart';
-export 'package:mocktail/mocktail.dart';
-export 'package:bloc_test/bloc_test.dart';

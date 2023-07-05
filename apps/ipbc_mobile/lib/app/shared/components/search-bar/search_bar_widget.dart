@@ -1,24 +1,32 @@
+import 'dart:io';
+
 import 'package:core_module/core_module.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../button/button_widget.dart';
+//import '../forms/form_field_widget.dart';
+
 class SearchBarWidget extends StatefulWidget {
-  const SearchBarWidget({Key? key}) : super(key: key);
+  const SearchBarWidget({Key? key, required this.formFieldController,required this.action})
+      : super(key: key);
+
+  final TextEditingController formFieldController;
+  final void Function() action;
 
   @override
   State<SearchBarWidget> createState() => _SearchBarWidgetState();
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
-  List<String> searchOptions = ['Trecho', 'Artista', 'Música'];
-  String selectedOption = 'Trecho';
+  List<String> searchOptions = ['Trecho', 'Artista', 'Música','banco de dados'];
+  String selectedOption = 'Música';
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Container(
-          height: 48,
-          width: 250,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(
               Radius.circular(11),
@@ -28,29 +36,34 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 18),
-                child: Text(
-                  'Digite o termo de pesquisa',
-                  style: AppFonts.bodyPlaceholder,
+              Container(
+                margin: const EdgeInsets.only(left: 13),
+                height: 48,
+                width: 192,
+                child:
+       //FormFieldWidget(
+        //            formFieldController: widget.formFieldController,
+         //           hintText: 'Digite o termo de pesquisa',
+                  //  onChanged: onChangeFormField,
+                   // validator: validateFormField),
+           //   ),
+              SizedBox(
+                width: 40,
+                child: IconButtonWidget(
+                  size: Platform.isIOS ? null : 29.5,
+                  color: AppColors.grey9,
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  iOSIcon: CupertinoIcons.search,
+                  androidIcon: Icons.search_sharp,
+                  action: widget.action,
                 ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 36),
-                child: SizedBox(
-                  height: 48,
-                  child: Icon(
-                    size: 29.5,
-                    Icons.search_sharp,
-                    color: AppColors.grey9,
-                  ),
-                ),
-              ),
+              ),),
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 5),
+        Container(
+          margin: const EdgeInsets.only(left: 10),
           child: Container(
             height: 48,
             width: 100,
@@ -76,6 +89,11 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       ],
     );
   }
+
+  //String? onChangeFormField(value) {}
+  //String? validateFormField(value) {
+  //}
+
 }
 
 class DropdownWidget extends StatefulWidget {

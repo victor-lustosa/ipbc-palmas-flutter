@@ -19,7 +19,7 @@ dependencies:
   firebase_core: ^2.9.0 #Recursos basicos
   firebase_auth: ^4.4.0 #Autenticacao
   firebase_storage: ^11.1.0 #Armazenamento arquivos
-  cloud_firestore:  #Banco de dados
+  cloud_firestore: ^4.4.0 #Banco de dados
   design_system:
     path: ../design_system
 
@@ -27,7 +27,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  mocktail: ^0.3.0
+  flutter_lints: ^2.0.0
   hive_generator: ^2.0.0 # <-- this line
   fake_cloud_firestore: ^2.4.1+1
   bloc_test: ^9.1.1

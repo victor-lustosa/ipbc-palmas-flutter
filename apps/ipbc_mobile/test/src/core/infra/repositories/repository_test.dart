@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:core_module/core_module.dart';
 import '../../../../mocks/mocks.dart';
+import 'package:mocktail/mocktail.dart';
 
 void main() {
   test('getting lyrics in repository', () async {

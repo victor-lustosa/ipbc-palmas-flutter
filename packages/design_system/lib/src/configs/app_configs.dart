@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppColors {
-
   //primary
   static const Color darkGreen = Color.fromARGB(255, 0, 83, 58);
 
@@ -39,7 +38,6 @@ class AppColors {
 }
 
 class AppFonts {
-
   static TextStyle? defaultFont(
       {Color? color, required double fontSize, FontWeight? fontWeight}) {
     return GoogleFonts.inter(
@@ -49,6 +47,12 @@ class AppFonts {
     );
   }
 
+  static TextStyle? searchField = GoogleFonts.inter(
+    decorationThickness: 0,
+    color: AppColors.grey5,
+    fontWeight: FontWeight.w200,
+    fontSize: 12.5,
+  );
   static TextStyle? largeTitle = GoogleFonts.inter(
     fontSize: 34,
     color: const Color(0xFF444446),
@@ -121,7 +125,8 @@ class AppFonts {
     fontSize: 12.5,
   );
 
-  static TextStyle? copyright({Color? color, required double fontSize, FontWeight? fontWeight}) {
+  static TextStyle? copyright(
+      {Color? color, required double fontSize, FontWeight? fontWeight}) {
     return GoogleFonts.inter(
       color: color ?? AppColors.grey5,
       fontWeight: fontWeight ?? FontWeight.w300,
