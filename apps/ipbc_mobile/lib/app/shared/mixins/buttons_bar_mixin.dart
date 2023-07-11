@@ -10,7 +10,7 @@ class MenuItem {
   final String label;
 }
 
-class ButtonsBarMixin {
+mixin ButtonsBarMixin {
   List<BottomNavigationBarItem> buttons = [];
 
   List<BottomNavigationBarItem> buildButtonsBar() {
