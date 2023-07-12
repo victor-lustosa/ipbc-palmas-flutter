@@ -1,7 +1,97 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class TopBarWidget extends PreferredSize {
+class TopBarWidget extends StatefulWidget {
+  const TopBarWidget({super.key});
+
+  @override
+  State<TopBarWidget> createState() => _TopBarWidgetState();
+}
+
+class _TopBarWidgetState extends State<TopBarWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(
+            top: 24,
+            left: 110,
+            right: 134,
+            bottom: 24,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Image(
+                width: 100,
+                image: AssetImage(
+                  AppImages.logo,
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    tabButtons('Sobre', () {}),
+                    tabButtons('Localização', () {}),
+                    tabButtons('App', () {}),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 18),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.darkGreen,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 35,
+                      vertical: 22.5,
+                    ),
+                    textStyle: AppFonts.defaultFont(fontSize: 18),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: const Text('Entrar em contato'),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          decoration: const BoxDecoration(color: AppColors.grey5),
+          height: 0.4,
+        )
+      ],
+    );
+  }
+
+  Widget tabButtons(String label, Function action) => Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        child: TextButton(
+          style: ButtonStyle(
+            textStyle: MaterialStateProperty.resolveWith<TextStyle?>(
+              (states) => AppFonts.defaultFont(fontSize: 18),
+            ),
+            foregroundColor: MaterialStateProperty.resolveWith<Color?>(
+                (Set<MaterialState> states) {
+              return states.contains(MaterialState.hovered)
+                  ? AppColors.darkGreen
+                  : AppColors.grey6; // Defer to the widget's default.
+            }),
+            overlayColor: MaterialStateColor.resolveWith((states) => Colors.white),
+            backgroundColor: MaterialStateProperty.all<Color>(AppColors.white),
+          ),
+          child: Text(label),
+          onPressed: () => action,
+        ),
+      );
+}
+
+/*class TopBarWidget extends PreferredSize {
 
   static final List<String> contentViews = ['Sobre', 'Localização', 'Apps'];
 
@@ -44,7 +134,7 @@ class TopBarWidget extends PreferredSize {
         ),
       );
 }
-
+*/
 /*class TopBarWidget extends PreferredSize {
   final List<String> contentViews;
   final TabController tabController;

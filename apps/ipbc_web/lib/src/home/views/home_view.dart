@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ipbc_web/src/shared/layout/top_bar/top_bar_widget.dart';
+
+import '../../shared/layout/top_bar/top_bar_widget.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -16,14 +17,12 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: TopBarWidget(),
-        body: SingleChildScrollView(
+    return const Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
             child: Column(
               children: [
-                const Center(child: Text('Site Oficial')),
-                Container(width: MediaQuery.of(context).size.width,height: MediaQuery.of(context).size.height,)
+                 TopBarWidget(),
               ],
             )),
       ),
