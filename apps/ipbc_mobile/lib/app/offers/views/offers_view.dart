@@ -12,6 +12,7 @@ class OffersView extends StatefulWidget {
 }
 
 class _OffersViewState extends State<OffersView> with ClipboardMixin {
+  
   final String cnpj = "38.136.701/0001-25";
 
   final GlobalKey<TooltipState> tooltipKey = GlobalKey<TooltipState>();
@@ -111,48 +112,20 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 26),
-                      child: Text(
-                        "Igreja Presbiteriana de Palmas",
-                        style: AppFonts.body(
-                          color: AppColors.grey9,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17,
-                        ),
-                      ),
+                      child: defaultLabel("Igreja Presbiteriana de Palmas")
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 15),
-                      child: Text(
-                        "Banco do Brasil",
-                        style: AppFonts.body(
-                          color: AppColors.grey9,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17,
-                        ),
-                      ),
+                      child: defaultLabel("Banco do Brasil")
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 15),
                       child: Row(
                         children: [
-                          Text(
-                            "Ag: 3962-4",
-                            style: AppFonts.body(
-                              color: AppColors.grey9,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17,
-                            ),
-                          ),
+                          defaultLabel("Ag: 3962-4"),
                           Container(
                             margin: const EdgeInsets.only(left: 9),
-                            child: Text(
-                              "C/c: 7293-1",
-                              style: AppFonts.body(
-                                color: AppColors.grey9,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 17,
-                              ),
-                            ),
+                            child: defaultLabel( "C/c: 7293-1"),
                           ),
                         ],
                       ),
@@ -166,4 +139,14 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
       ),
     );
   }
+ Widget defaultLabel(String label){
+   return Text(
+     label,
+     style: AppFonts.body(
+       color: AppColors.grey9,
+       fontWeight: FontWeight.w500,
+       fontSize: 17,
+     ),
+   );
+ }
 }

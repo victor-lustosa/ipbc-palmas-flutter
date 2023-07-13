@@ -120,18 +120,13 @@ class _ServiceViewState extends State<ServiceView> {
                 visible: widget.entity.service.guideIsVisible,
                 child: Container(
                   margin: const EdgeInsets.only(top: 18, left: 16),
-                  child: GuidelineWidget(
-                      liturgyList: widget.entity.service.liturgyList),
+                  child: GuidelineWidget(liturgyList: widget.entity.service.liturgyList),
                 ),
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  margin: const EdgeInsets.only(
-                    top: 24,
-                    left: 15,
-                    bottom: 20,
-                  ),
+                  margin: const EdgeInsets.only(top: 24, left: 15, bottom: 20),
                   height: 25,
                   width: 350,
                   child: Text(

@@ -59,36 +59,25 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
             return CupertinoTabView(
               onGenerateRoute: AppRoutes.onGenerateRoute,
               builder: (context) {
-                return const CupertinoPageScaffold(
-                    navigationBar: CupertinoNavigationBar(
-                      backgroundColor: Color(0xFFFFFFFF),
-                    ),
-                    child: ServicesListRoutes());
+                return viewRoute(const ServicesListRoutes());
               },
             );
           case 1:
-            return const CupertinoPageScaffold(
-                navigationBar: CupertinoNavigationBar(
-                  backgroundColor: Color(0xFFFFFFFF),
-                ),
-                child: LyricsListView());
+            return viewRoute(const LyricsListView());
 
           case 2:
-            return const CupertinoPageScaffold(
-                navigationBar: CupertinoNavigationBar(
-                  backgroundColor: Color(0xFFFFFFFF),
-                ),
-                //child: NoConnectionView(index: 0,)
-                child: OffersView());
+            return viewRoute(const OffersView());
 
           default:
-            return const CupertinoPageScaffold(
-                navigationBar: CupertinoNavigationBar(
-                  backgroundColor: Color(0xFFFFFFFF),
-                ),
-                child: UnknownRouteView());
+            return viewRoute(const UnknownRouteView());
         }
       },
     );
+  }
+  Widget viewRoute(Widget view){
+    return CupertinoPageScaffold(
+        navigationBar: const CupertinoNavigationBar(
+          backgroundColor: Color(0xFFFFFFFF),
+        ), child: view);
   }
 }

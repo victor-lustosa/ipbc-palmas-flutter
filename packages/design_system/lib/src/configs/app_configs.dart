@@ -39,11 +39,11 @@ class AppColors {
 
 class AppFonts {
   static TextStyle? defaultFont(
-      {Color? color, required double fontSize, FontWeight? fontWeight}) {
+      {Color? color, double? fontSize, FontWeight? fontWeight}) {
     return GoogleFonts.inter(
       color: color ?? AppColors.black,
       fontWeight: fontWeight,
-      fontSize: fontSize,
+      fontSize: fontSize ?? 18,
     );
   }
 
@@ -138,6 +138,7 @@ class AppFonts {
 class AppIcons {
   static const String lyrics = 'assets/icons/lyrics.svg';
   static const String logo = 'assets/icons/logo.svg';
+
   static const String arrowBack = 'assets/icons/arrow_back_ios_new.svg';
   static const String home = 'assets/icons/home.svg';
   static const String volunteerActivism = 'assets/icons/volunteer_activism.svg';
@@ -158,7 +159,7 @@ class AppImages {
   static const String vagalumeImage = 'assets/images/vagalume_image.png';
   static const String wifiIconImage = 'assets/images/wifi_icon.png';
   static const String noConnectionImage = 'assets/images/perm_scan_wifi.png';
-
+  static const String logo = 'assets/images/logo.png';
   static final List<String> defaultCoversList = [
     'assets/images/default_cover_1.png',
     'assets/images/default_cover_2.png',

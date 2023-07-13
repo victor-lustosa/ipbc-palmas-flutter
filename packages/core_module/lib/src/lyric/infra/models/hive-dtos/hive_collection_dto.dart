@@ -1,6 +1,6 @@
 import 'hive_lyric_dto.dart';
 import 'hive_liturgy_dto.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 part 'hive_collection_dto.g.dart';
 

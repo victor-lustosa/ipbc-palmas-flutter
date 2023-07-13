@@ -11,10 +11,13 @@ import 'app/configs/ipbc_bloc_observer.dart';
 
 void main() async {
   runZonedGuarded<Future<void>>(() async {
+
       WidgetsFlutterBinding.ensureInitialized();
 
-      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-      await HiveDatasource.hiveInit();
+      await Future.wait([
+        Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
+        HiveDatasource.hiveInit()
+      ]);
 
       if (kDebugMode) {
         await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);

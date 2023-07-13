@@ -181,8 +181,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                         Container(
                                           margin: const EdgeInsets.only(top: 4),
                                           child: Text(
-                                            servicesCollectionList[index]
-                                                .preacher,
+                                            servicesCollectionList[index].preacher,
                                             style: AppFonts.description(
                                               color: AppColors.grey8,
                                             ),
