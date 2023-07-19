@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../../shared/layout/footer/footer_widget.dart';
 import '../../shared/layout/top_bar/top_bar_widget.dart';
 import '../components/about_church_widget.dart';
 import '../components/about_services_widget.dart';
@@ -32,7 +32,8 @@ class _HomeViewState extends State<HomeView> {
               LocationWidget(),
               AboutServicesWidget(),
               AppStoresWidget(),
-              ContactFormWidget()
+              ContactFormWidget(),
+              FooterWidget()
             ],
           ),
         ),
