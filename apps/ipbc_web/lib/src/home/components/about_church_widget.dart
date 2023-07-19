@@ -143,37 +143,35 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
     );
   }
 
-  Widget infoBlocs(String image, String text) {
-    return SizedBox(
-      height: 80,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: 80,
-            decoration: BoxDecoration(
-              color: const Color(0x33005b40),
-              borderRadius: BorderRadius.circular(12),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage(image),
+  Widget infoBlocs(String image, String text) => SizedBox(
+        height: 80,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 80,
+              decoration: BoxDecoration(
+                color: const Color(0x33005b40),
+                borderRadius: BorderRadius.circular(12),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage(image),
+                ),
               ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 24),
-            width: 456,
-            child: Text(
-              text,
-              style: AppFonts.defaultFont(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: const Color(0xff545456),
+            Container(
+              margin: const EdgeInsets.only(left: 24),
+              width: 456,
+              child: Text(
+                text,
+                style: AppFonts.defaultFont(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: const Color(0xff545456),
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
+          ],
+        ),
+      );
 }
