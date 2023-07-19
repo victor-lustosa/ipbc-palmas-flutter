@@ -13,14 +13,17 @@ class _FooterWidgetState extends State<FooterWidget> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(color: Color(0xff242426)),
+      width: MediaQuery.of(context).size.width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 116,bottom: 154),
+            margin: const EdgeInsets.only(top: 116,bottom: 154,right: 40),
+            width: 910,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
                   width: 141,
@@ -30,10 +33,11 @@ class _FooterWidgetState extends State<FooterWidget> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(
-                  width: 600,
+                Container(
+                  width: 550,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,7 +166,7 @@ class _FooterWidgetState extends State<FooterWidget> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 39.67,bottom: 31),
+            margin: const EdgeInsets.only(bottom: 31),
             child: Text(
               'Copyright © 2023 Igreja Presbiteriana Central em Palmas/TO',
               textAlign: TextAlign.center,

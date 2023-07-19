@@ -14,12 +14,9 @@ class _AppStoresWidgetState extends State<AppStoresWidget> {
     return Container(
       height: 734,
       width: MediaQuery.of(context).size.width,
-      decoration:  BoxDecoration(
-        color: const Color(0xff005b40),
-          border: Border.all(color: Colors.red)
-      ),
+      decoration: const BoxDecoration( color: Color(0xff005b40)),
       child: Container(
-        margin: EdgeInsets.only(left:120,top: 100),
+        margin: const EdgeInsets.only(left:120,top: 100),
         child: Stack(
           children: [
             Positioned(

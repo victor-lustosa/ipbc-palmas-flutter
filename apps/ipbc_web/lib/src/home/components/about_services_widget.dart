@@ -18,13 +18,11 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 241, vertical: 100),
       decoration: const BoxDecoration(color: Color(0xffffffff)),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin: const EdgeInsets.only(bottom: 79),
+            margin: const EdgeInsets.only(bottom: 79,top: 100),
             child: Text(
               'Programação',
               style: AppFonts.defaultFont(
@@ -34,66 +32,58 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
               ),
             ),
           ),
-          SizedBox(
+          Container(
             height: 694,
+            width: 963,
+            margin: const EdgeInsets.only(bottom: 127),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(right: 80),
+                  margin: const EdgeInsets.only(top: 10),
                   width: 260,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      leftBloc('Cultos de Domingo', '9h e 19h, na IPBC Palmas'),
+                      leftBloc('Cultos de Oração', 'Quartas às 19h na IPBC Palmas'),
+                      leftBloc('EBD', 'Todos os domingos às 9h, na IPBC Palmas'),
                       Container(
-                        padding: const EdgeInsets.only(bottom: 40),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        margin: const EdgeInsets.only(bottom: 20),
+                        child: Text(
+                          'Pequenos Grupos',
+                          style: AppFonts.defaultFont(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xff242426),
+                          ),
+                        ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          style: AppFonts.defaultFont(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xff545456),
+                          ),
                           children: [
-                            leftBloc('Cultos de Domingo', '9h e 19h, na IPBC Palmas'),
-                            const SizedBox(height: 40),
-                            leftBloc('Cultos de Oração', 'Quartas às 19h na IPBC Palmas'),
-                            const SizedBox(height: 40),
-                            leftBloc('EBD', 'Todos os domingos às 9h, na IPBC Palmas'),
-                            const SizedBox(height: 40),
-                            Container(
-                              margin: const EdgeInsets.only(bottom: 16),
-                              child: Text(
-                                'Pequenos Grupos',
-                                style: AppFonts.defaultFont(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color(0xff242426),
-                                ),
+                            TextSpan(
+                              text: 'Terças e quartas em diversas localidades. ',
+                              style: AppFonts.defaultFont(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                color: const Color(0xff545456),
                               ),
                             ),
-                            RichText(
-                              text: TextSpan(
-                                style: AppFonts.defaultFont(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color(0xff545456),
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: 'Terças e quartas em diversas localidades. ',
-                                    style: AppFonts.defaultFont(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400,
-                                      color: const Color(0xff545456),
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'Entrar em contato para mais informações.',
-                                    style: AppFonts.defaultFont(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400,
-                                      decoration: TextDecoration.underline,
-                                      color: const Color(0xff545456),
-                                      decorationColor: const Color(0xff545456),
-                                    ),
-                                  ),
-                                ],
+                            TextSpan(
+                              text: 'Entrar em contato para mais informações.',
+                              style: AppFonts.defaultFont(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                decoration: TextDecoration.underline,
+                                color: const Color(0xff545456),
+                                decorationColor: const Color(0xff545456),
                               ),
                             ),
                           ],
@@ -105,13 +95,12 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                 SingleChildScrollView(
                   child: SizedBox(
                     width: 618,
-                    height: 1362,
+                    height: 1333,
                     child: ListView.separated(
                       separatorBuilder: (BuildContext context, int index) {
                         return const SizedBox(height: 24);
                       },
                       scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
                       itemCount: labelsRightBloc.length,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (_, index) {
@@ -152,7 +141,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: const EdgeInsets.only(bottom: 16),
+          margin: const EdgeInsets.only(bottom: 20),
           child: Text(
             title,
             style: AppFonts.defaultFont(
@@ -170,6 +159,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
             color: const Color(0xff545456),
           ),
         ),
+        const SizedBox(height: 40),
       ],
     );
 }

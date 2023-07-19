@@ -12,21 +12,15 @@ class _LocationWidgetState extends State<LocationWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(
-        left: 120,
-        top: 100,
-        right: 189.74,
-        bottom: 100,
-      ),
-      height: 587.18,
-      decoration: const BoxDecoration(
-        color: Color(0xfff3f3f3),
-      ),
+      height: 587,
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.only(top: 100),
+      decoration: const BoxDecoration(color: Color(0xfff3f3f3)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            margin: const EdgeInsets.only(right: 80),
+          SizedBox(
             width: 573.26,
             height: 387.18,
             child: ClipRRect(
@@ -38,8 +32,8 @@ class _LocationWidgetState extends State<LocationWidget> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.symmetric(vertical: 115.09),
-            width: 477,
+            height: 160,
+            margin: const EdgeInsets.only(left: 80,right: 69.74),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -65,32 +59,28 @@ class _LocationWidgetState extends State<LocationWidget> {
                     ),
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(right: 356),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 16),
+                Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(right: 16),
+                      width: 24,
+                      height: 24,
+                      child: Image.asset(
+                        'assets/page-1/images/locationon-FKu.png',
                         width: 24,
                         height: 24,
-                        child: Image.asset(
-                          'assets/page-1/images/locationon-FKu.png',
-                          width: 24,
-                          height: 24,
-                        ),
                       ),
-                      Text(
-                        // ploremipsumdolorsitametconsect (1:205)
-                        'Endereço',
-                        style: AppFonts.defaultFont(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: const Color(0xff545456),
-                        ),
+                    ),
+                    Text(
+                      // ploremipsumdolorsitametconsect (1:205)
+                      'Endereço',
+                      style: AppFonts.defaultFont(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xff545456),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),

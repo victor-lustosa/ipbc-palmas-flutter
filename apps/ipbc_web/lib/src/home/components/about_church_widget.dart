@@ -19,7 +19,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
             margin: const EdgeInsets.only(
               left: 24,
               right: 24,
-              bottom: 100,
+              bottom: 100
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -77,64 +77,63 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
           ),
         ),
         Container(
-          margin: const EdgeInsets.symmetric(
-            vertical: 100,
-            horizontal: 24,
-          ),
+          margin: const EdgeInsets.only(left: 24,right: 24, top: 100),
+          width: 1200,
           decoration: const BoxDecoration(color: Color(0xffffffff)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Sobre a IPBC Palmas',
-                    style: AppFonts.defaultFont(
-                      fontSize: 46,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xff242426),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 560,
-                    child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sagittis eros. Quisque quis euismod lorem. Etiam sodales ac felis id interdum.',
+              Container(
+                margin: const EdgeInsets.only(top: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Sobre a IPBC Palmas',
                       style: AppFonts.defaultFont(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: const Color(0xff545456),
+                        fontSize: 46,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xff242426),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 80),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    infoBlocs(
-                      '',
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sagittis eros.',
+                    Container(
+                      margin:const EdgeInsets.only(top: 16),
+                      width: 560,
+                      child: Text(
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sagittis eros. Quisque quis euismod lorem. Etiam sodales ac felis id interdum.',
+                        style: AppFonts.defaultFont(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(0xff545456),
+                        ),
+                      ),
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    infoBlocs(
-                      '',
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sagittis eros.',
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    infoBlocs(
-                      '',
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sagittis eros.',
-                    )
                   ],
                 ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  infoBlocs(
+                    '',
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sagittis eros.',
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  infoBlocs(
+                    '',
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sagittis eros.',
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  infoBlocs(
+                    '',
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sagittis eros.',
+                  )
+                ],
               ),
             ],
           ),
