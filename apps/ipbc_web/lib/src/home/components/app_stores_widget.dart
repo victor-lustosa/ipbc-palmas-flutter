@@ -1,4 +1,5 @@
-/*import 'package:flutter/material.dart';
+import 'package:core_module/core_module.dart';
+import 'package:flutter/material.dart';
 
 class AppStoresWidget extends StatefulWidget {
   const AppStoresWidget({super.key});
@@ -13,27 +14,23 @@ class _AppStoresWidgetState extends State<AppStoresWidget> {
     return Column(
       children: [
         Container(
-          // heroheadingrightv55 (1:46)
-          padding: EdgeInsets.fromLTRB(120 * fem, 100 * fem, 0 * fem, 0 * fem),
-          width: double.infinity,
-          height: 734 * fem,
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.only(left: 120, top: 100),
+          height: 734,
+          decoration: const BoxDecoration(
             color: Color(0xff005b40),
           ),
-          child: Container(
-            // container2du (1:47)
-            width: 1426.62 * fem,
-            height: 699.81 * fem,
+          child: SizedBox(
+            width: 1426.62,
+            height: 699.81,
             child: Stack(
               children: [
                 Positioned(
-                  // telasipbcapp1yZ9 (1:219)
-                  left: 352.341003418 * fem,
-                  top: 15 * fem,
+                  left: 352.341003418,
+                  top: 15,
                   child: Align(
                     child: SizedBox(
-                      width: 1074.28 * fem,
-                      height: 684.81 * fem,
+                      width: 1074.28,
+                      height: 684.81,
                       child: Image.asset(
                         'assets/page-1/images/telas-ipbc-app-1-2jh.png',
                         fit: BoxFit.cover,
@@ -42,100 +39,72 @@ class _AppStoresWidgetState extends State<AppStoresWidget> {
                   ),
                 ),
                 Positioned(
-                  // columnG2T (1:51)
-                  left: 0 * fem,
-                  top: 0 * fem,
-                  child: Container(
-                    width: 571 * fem,
-                    height: 253 * fem,
+                  child: SizedBox(
+                    width: 571,
+                    height: 253,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          // contento2P (1:52)
-                          margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 0 * fem, 40 * fem),
+                          margin: const EdgeInsets.only(bottom: 40),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                // baixeoipbcappKmR (1:53)
-                                margin: EdgeInsets.fromLTRB(
-                                    0 * fem, 0 * fem, 0 * fem, 23 * fem),
+                                margin: const EdgeInsets.only(bottom: 23),
                                 child: Text(
                                   'Baixe o IPBC App',
-                                  style: SafeGoogleFont(
-                                    'Inter',
-                                    fontSize: 46 * ffem,
+                                  style: AppFonts.defaultFont(
+                                    fontSize: 46,
                                     fontWeight: FontWeight.w600,
-                                    height: 1.2000000166 * ffem / fem,
-                                    color: Color(0xffffffff),
+                                    color: const Color(0xffffffff),
                                   ),
                                 ),
                               ),
-                              Container(
-                                // acompanhealiturgiadoscultosasl (1:54)
-                                constraints: BoxConstraints(
-                                  maxWidth: 569 * fem,
-                                ),
-                                child: Text(
-                                  'Acompanhe a liturgia dos cultos, as letras das músicas cantadas e eem breve, comunicações, eventos e mensagens pregadas.',
-                                  style: SafeGoogleFont(
-                                    'Inter',
-                                    fontSize: 18 * ffem,
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.5 * ffem / fem,
-                                    color: Color(0xccffffff),
-                                  ),
+                              Text(
+                                'Acompanhe a liturgia dos cultos, as letras das músicas cantadas e eem breve, comunicações, eventos e mensagens pregadas.',
+                                style: AppFonts.defaultFont(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(0xffffffff),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        Container(
-                          // frame1Xcb (1:111)
-                          width: double.infinity,
-                          height: 80 * fem,
+                        SizedBox(
+                          height: 80,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                // button4cX (1:56)
-                                margin: EdgeInsets.fromLTRB(
-                                    0 * fem, 0 * fem, 24 * fem, 0 * fem),
-                                padding: EdgeInsets.fromLTRB(
-                                    32 * fem, 24 * fem, 32 * fem, 24 * fem),
-                                height: double.infinity,
+                                margin: const EdgeInsets.only(right: 24),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 32, vertical: 24),
                                 decoration: BoxDecoration(
-                                  color: Color(0xff242426),
-                                  borderRadius: BorderRadius.circular(20 * fem),
+                                  color: const Color(0xff242426),
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
-                                      // appleiconmWw (1:216)
-                                      margin: EdgeInsets.fromLTRB(
-                                          0 * fem, 0 * fem, 16 * fem, 0 * fem),
-                                      width: 32 * fem,
-                                      height: 32 * fem,
+                                      margin: const EdgeInsets.only(right: 16),
+                                      width: 32,
+                                      height: 32,
                                       child: Image.asset(
                                         'assets/page-1/images/apple-icon-kto.png',
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                     Container(
-                                      // baixenaappstoregdu (1:57)
-                                      margin: EdgeInsets.fromLTRB(
-                                          0 * fem, 1 * fem, 0 * fem, 0 * fem),
+                                      margin: const EdgeInsets.only(top: 1),
                                       child: Text(
                                         'Baixe na App Store',
-                                        style: SafeGoogleFont(
-                                          'Inter',
-                                          fontSize: 18 * ffem,
+                                        style: AppFonts.defaultFont(
+                                          fontSize: 18,
                                           fontWeight: FontWeight.w500,
-                                          height: 1.3999999364 * ffem / fem,
-                                          color: Color(0xffffffff),
+                                          color: const Color(0xffffffff),
                                         ),
                                       ),
                                     ),
@@ -143,40 +112,32 @@ class _AppStoresWidgetState extends State<AppStoresWidget> {
                                 ),
                               ),
                               Container(
-                                // buttonQpo (1:109)
-                                padding: EdgeInsets.fromLTRB(
-                                    32 * fem, 24 * fem, 32 * fem, 24 * fem),
-                                height: double.infinity,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 32, vertical: 24),
                                 decoration: BoxDecoration(
-                                  color: Color(0xff242426),
-                                  borderRadius: BorderRadius.circular(20 * fem),
+                                  color: const Color(0xff242426),
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
-                                      // playstoreicon9XV (1:217)
-                                      margin: EdgeInsets.fromLTRB(
-                                          0 * fem, 0 * fem, 16 * fem, 0 * fem),
-                                      width: 32 * fem,
-                                      height: 32 * fem,
+                                      margin: const EdgeInsets.only(right: 16),
+                                      width: 32,
+                                      height: 32,
                                       child: Image.asset(
                                         'assets/page-1/images/playstore-icon-zqd.png',
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                     Container(
-                                      // baixenaplaystoreV5Z (1:110)
-                                      margin: EdgeInsets.fromLTRB(
-                                          0 * fem, 1 * fem, 0 * fem, 0 * fem),
+                                      margin: const EdgeInsets.only(top: 1),
                                       child: Text(
                                         'Baixe na PlayStore',
-                                        style: SafeGoogleFont(
-                                          'Inter',
-                                          fontSize: 18 * ffem,
+                                        style: AppFonts.defaultFont(
+                                          fontSize: 18,
                                           fontWeight: FontWeight.w500,
-                                          height: 1.3999999364 * ffem / fem,
-                                          color: Color(0xffffffff),
+                                          color: const Color(0xffffffff),
                                         ),
                                       ),
                                     ),
@@ -198,4 +159,3 @@ class _AppStoresWidgetState extends State<AppStoresWidget> {
     );
   }
 }
-*/
