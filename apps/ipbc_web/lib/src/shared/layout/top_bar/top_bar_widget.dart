@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'package:ipbc_web/src/shared/components/tab_buttons_widget.dart';
 
 class TopBarWidget extends StatefulWidget {
   const TopBarWidget({super.key});
@@ -9,6 +10,7 @@ class TopBarWidget extends StatefulWidget {
 }
 
 class _TopBarWidgetState extends State<TopBarWidget> {
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -34,9 +36,9 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    tabButtons('Sobre', () {}),
-                    tabButtons('Localização', () {}),
-                    tabButtons('App', () {}),
+                    TabButtonsWidget(label:'Sobre', action: () {}),
+                    TabButtonsWidget(label:'Localização',  action: () {}),
+                    TabButtonsWidget(label:'App', action:() {}),
                   ],
                 ),
               ),
@@ -68,27 +70,6 @@ class _TopBarWidgetState extends State<TopBarWidget> {
       ],
     );
   }
-
-  Widget tabButtons(String label, Function action) => Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20),
-        child: TextButton(
-          style: ButtonStyle(
-            textStyle: MaterialStateProperty.resolveWith<TextStyle?>(
-              (states) => AppFonts.defaultFont(fontSize: 18),
-            ),
-            foregroundColor: MaterialStateProperty.resolveWith<Color?>(
-                (Set<MaterialState> states) {
-              return states.contains(MaterialState.hovered)
-                  ? AppColors.darkGreen
-                  : AppColors.grey6; // Defer to the widget's default.
-            }),
-            overlayColor: MaterialStateColor.resolveWith((states) => Colors.white),
-            backgroundColor: MaterialStateProperty.all<Color>(AppColors.white),
-          ),
-          child: Text(label),
-          onPressed: () => action,
-        ),
-      );
 }
 
 /*class TopBarWidget extends PreferredSize {

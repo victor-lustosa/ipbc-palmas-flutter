@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../shared/layout/top_bar/top_bar_widget.dart';
+import '../components/about_church_widget.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -20,11 +21,13 @@ class _HomeViewState extends State<HomeView> {
     return const Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-            child: Column(
-              children: [
-                 TopBarWidget(),
-              ],
-            )),
+          child: Column(
+            children: [
+              TopBarWidget(),
+              AboutChurchWidget(),
+            ],
+          ),
+        ),
       ),
     );
   }

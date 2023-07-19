@@ -38,11 +38,10 @@ class AppColors {
 }
 
 class AppFonts {
-  static TextStyle? defaultFont(
-      {Color? color, double? fontSize, FontWeight? fontWeight}) {
+  static TextStyle? defaultFont({Color? color, double? fontSize, FontWeight? fontWeight}) {
     return GoogleFonts.inter(
       color: color ?? AppColors.black,
-      fontWeight: fontWeight,
+      fontWeight: fontWeight ?? FontWeight.w400,
       fontSize: fontSize ?? 18,
     );
   }
