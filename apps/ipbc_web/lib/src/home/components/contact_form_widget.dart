@@ -1,4 +1,5 @@
-/*import 'package:flutter/material.dart';
+import 'package:core_module/core_module.dart';
+import 'package:flutter/material.dart';
 
 class ContactFormWidget extends StatefulWidget {
   const ContactFormWidget({super.key});
@@ -13,238 +14,141 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
     return Column(
       children: [
         Container(
-          // contactform8PR (1:58)
-          padding:
-              EdgeInsets.fromLTRB(470 * fem, 100 * fem, 470 * fem, 100 * fem),
-          width: double.infinity,
-          height: 689 * fem,
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.symmetric(horizontal: 470, vertical: 100),
+          height: 689,
+          decoration: const BoxDecoration(
             color: Color(0xfff3f3f3),
           ),
-          child: Container(
-            // container4ns (1:59)
-            width: double.infinity,
-            height: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  // sectiontitleRdR (1:60)
-                  margin: EdgeInsets.fromLTRB(
-                      35 * fem, 0 * fem, 35 * fem, 40 * fem),
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        // h2getintouchAb1 (1:61)
-                        margin: EdgeInsets.fromLTRB(
-                            0 * fem, 0 * fem, 0 * fem, 15 * fem),
-                        child: Text(
-                          'Entre em contato',
-                          textAlign: TextAlign.center,
-                          style: SafeGoogleFont(
-                            'Inter',
-                            fontSize: 32 * ffem,
-                            fontWeight: FontWeight.w700,
-                            height: 1.2000000477 * ffem / fem,
-                            color: Color(0xff242426),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        // envieseupedidodeoraosolicitaoo (1:62)
-                        'Envie seu pedido de oração, solicitação ou dúvida.',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(left: 35, right: 35, bottom: 40),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 15),
+                      child: Text(
+                        'Entre em contato',
                         textAlign: TextAlign.center,
-                        style: SafeGoogleFont(
-                          'Inter',
-                          fontSize: 18 * ffem,
-                          fontWeight: FontWeight.w400,
-                          height: 1.5 * ffem / fem,
-                          color: Color(0xff545456),
+                        style: AppFonts.defaultFont(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w700,
+                          color: const Color(0xff242426),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    Text(
+                      'Envie seu pedido de oração, solicitação ou dúvida.',
+                      textAlign: TextAlign.center,
+                      style: AppFonts.defaultFont(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xff545456),
+                      ),
+                    ),
+                  ],
                 ),
-                Container(
-                  // formots (1:64)
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  fieldForm('Nome',  'Seu nome completo'),
+                  const SizedBox(height: 16),
+                  fieldForm('Email',  'me@company.com'),
+                  const SizedBox(height: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        // inputwrapperwVH (1:65)
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              // formblocklabeluBD (1:66)
-                              margin: EdgeInsets.fromLTRB(
-                                  0 * fem, 0 * fem, 0 * fem, 8 * fem),
-                              child: Text(
-                                'Nome',
-                                style: SafeGoogleFont(
-                                  'Inter',
-                                  fontSize: 14 * ffem,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.5 * ffem / fem,
-                                  color: Color(0xff545456),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              // formtextinput2md (1:67)
-                              padding: EdgeInsets.fromLTRB(
-                                  12 * fem, 11 * fem, 12 * fem, 11 * fem),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Color(0xffffffff),
-                                borderRadius: BorderRadius.circular(12 * fem),
-                              ),
-                              child: Text(
-                                'Seu nome completo',
-                                style: SafeGoogleFont(
-                                  'Inter',
-                                  fontSize: 14 * ffem,
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.4000000272 * ffem / fem,
-                                  color: Color(0xff979797),
-                                ),
-                              ),
-                            ),
-                          ],
+                        margin: const EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          'Mensagem',
+                          style: AppFonts.defaultFont(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: const Color(0xff545456),
+                          ),
                         ),
                       ),
-                      SizedBox(
-                        height: 16 * fem,
-                      ),
                       Container(
-                        // inputwrapperWB1 (1:69)
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              // formblocklabelFuH (1:70)
-                              margin: EdgeInsets.fromLTRB(
-                                  0 * fem, 0 * fem, 0 * fem, 8 * fem),
-                              child: Text(
-                                'Email',
-                                style: SafeGoogleFont(
-                                  'Inter',
-                                  fontSize: 14 * ffem,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.5 * ffem / fem,
-                                  color: Color(0xff545456),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              // formtextinputAmM (1:71)
-                              padding: EdgeInsets.fromLTRB(
-                                  12 * fem, 12 * fem, 12 * fem, 10 * fem),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Color(0xffffffff),
-                                borderRadius: BorderRadius.circular(12 * fem),
-                              ),
-                              child: Text(
-                                'me@company.com',
-                                style: SafeGoogleFont(
-                                  'Inter',
-                                  fontSize: 14 * ffem,
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.4000000272 * ffem / fem,
-                                  color: Color(0xff979797),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 16 * fem,
-                      ),
-                      Container(
-                        // textareawrapperzEb (1:73)
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              // formblocklabelwvX (1:74)
-                              margin: EdgeInsets.fromLTRB(
-                                  0 * fem, 0 * fem, 0 * fem, 8 * fem),
-                              child: Text(
-                                'Mensagem',
-                                style: SafeGoogleFont(
-                                  'Inter',
-                                  fontSize: 14 * ffem,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.5 * ffem / fem,
-                                  color: Color(0xff545456),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              // formtextareaspB (1:75)
-                              padding: EdgeInsets.fromLTRB(
-                                  12 * fem, 12 * fem, 12 * fem, 12 * fem),
-                              width: double.infinity,
-                              height: 100 * fem,
-                              decoration: BoxDecoration(
-                                color: Color(0xffffffff),
-                                borderRadius: BorderRadius.circular(12 * fem),
-                              ),
-                              child: Text(
-                                'Sua mensagem...',
-                                style: SafeGoogleFont(
-                                  'Inter',
-                                  fontSize: 14 * ffem,
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.4000000272 * ffem / fem,
-                                  color: Color(0xff979797),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 16 * fem,
-                      ),
-                      Container(
-                        // formbuttonB4B (1:77)
-                        width: double.infinity,
-                        height: 49 * fem,
+                        width: 500,
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
+                        height: 100,
                         decoration: BoxDecoration(
-                          color: Color(0xff005b40),
-                          borderRadius: BorderRadius.circular(20 * fem),
+                          color: const Color(0xffffffff),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Center(
-                          child: Text(
-                            'Enviar',
-                            style: SafeGoogleFont(
-                              'Inter',
-                              fontSize: 18 * ffem,
-                              fontWeight: FontWeight.w500,
-                              height: 1.3999999364 * ffem / fem,
-                              color: Color(0xffffffff),
-                            ),
+                        child: Text(
+                          'Sua mensagem...',
+                          style: AppFonts.defaultFont(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xff979797),
                           ),
                         ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Container(
+                    height: 49,
+                    decoration: BoxDecoration(
+                      color: const Color(0xff005b40),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Enviar',
+                        style: AppFonts.defaultFont(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xffffffff),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ],
     );
   }
+  fieldForm(String label, nameField) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+        margin: const EdgeInsets.only(bottom: 8),
+        child: Text(
+          label,
+          style: AppFonts.defaultFont(
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            color: const Color(0xff545456),
+          ),
+        ),
+      ),
+      Container(
+        width: 500,
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
+        decoration: BoxDecoration(
+          color: const Color(0xffffffff),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Text(
+          nameField,
+          style: AppFonts.defaultFont(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: const Color(0xff979797),
+          ),
+        ),
+      ),
+    ],
+  );
 }
-*/

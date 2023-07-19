@@ -4,6 +4,7 @@ import '../../shared/layout/top_bar/top_bar_widget.dart';
 import '../components/about_church_widget.dart';
 import '../components/about_services_widget.dart';
 import '../components/app_stores_widget.dart';
+import '../components/contact_form_widget.dart';
 import '../components/location_widget.dart';
 
 class HomeView extends StatefulWidget {
@@ -30,7 +31,8 @@ class _HomeViewState extends State<HomeView> {
               AboutChurchWidget(),
               LocationWidget(),
               AboutServicesWidget(),
-              AppStoresWidget()
+              AppStoresWidget(),
+              ContactFormWidget()
             ],
           ),
         ),
