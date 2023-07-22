@@ -153,6 +153,7 @@ class AppImages {
   static const String vagalumeImage = 'assets/images/vagalume_image.png';
   static const String wifiIconImage = 'assets/images/wifi_icon.png';
   static const String noConnectionImage = 'assets/images/perm_scan_wifi.png';
+  static const String logoLoginImage = 'assets/images/auth/logo_ipbc_login.png';
 
   static final List<String> defaultCoversList = [
     'assets/images/default_cover_1.png',

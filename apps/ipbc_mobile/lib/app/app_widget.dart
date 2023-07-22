@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'package:ipbc_palmas/app/auth/views/login_view.dart';
 import 'package:provider/provider.dart';
 
 import 'configs/app_routes.dart';
@@ -23,7 +24,7 @@ class AppWidget extends StatelessWidget {
         },
         title: 'IPBC Palmas',
         theme: lightTheme,
-        home: const SplashView(),
+        home:  LoginView(),
         initialRoute: "/",
         onGenerateRoute: AppRoutes.onGenerateRoute,
         debugShowCheckedModeBanner: false,
