@@ -6,7 +6,6 @@ import '../../lyric/infra/adapters/hive-dtos/hive_services_adapter.dart';
 import '../../lyric/infra/adapters/hive-dtos/hive_collection_adapter.dart';
 
 class HiveDatasource<R> implements IDatasource {
-
   String boxLabel;
   late Box<R> box;
   List<String> params = [];
@@ -17,17 +16,13 @@ class HiveDatasource<R> implements IDatasource {
 
   static Future hiveInit() async {
     await Hive.initFlutter();
-    await _allAdapters();
-    await Hive.openBox<HiveDatabaseConfigsDTO>('database-configs');
-  }
-
-  static Future initSplash() async {
-    await Hive.openBox<HiveCollectionDTO>('collection');
-    await Hive.openBox<HiveServicesDTO>('services');
-  }
-
-  static Future initHome() async {
-    await Hive.openBox<HiveLyricDTO>('lyrics');
+    _allAdapters();
+    await Future.wait<void>([
+      Hive.openBox<HiveDatabaseConfigsDTO>('database-configs'),
+      Hive.openBox<HiveLyricDTO>('lyrics'),
+      Hive.openBox<HiveCollectionDTO>('collection'),
+      Hive.openBox<HiveServicesDTO>('services'),
+    ]);
   }
 
   static _allAdapters() {

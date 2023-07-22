@@ -27,25 +27,24 @@ class AlbumCoverWidget extends StatelessWidget {
                   if (wasSynchronouslyLoaded) {
                     return child;
                   }
-                  return Container(
-                    color: AppColors.grey2,
-                    width: width,
-                    height: height,
-                  );
+                  return defaultCover();
                 },
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) {
                     return child;
                   }
-                  return Container(
-                    color: AppColors.grey2,
-                    width: width,
-                    height: height,
-                  );
+                  return defaultCover();
                 },
                 albumCover,
               ),
       ),
+    );
+  }
+  Widget defaultCover(){
+    return Container(
+      color: AppColors.grey2,
+      width: width,
+      height: height,
     );
   }
 }

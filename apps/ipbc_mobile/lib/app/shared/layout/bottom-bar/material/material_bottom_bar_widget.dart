@@ -18,8 +18,7 @@ class MaterialBottomBarWidget extends StatefulWidget {
       _MaterialBottomBarWidgetState();
 }
 
-class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
-    with ButtonsBarMixin {
+class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget> with ButtonsBarMixin {
   @override
   initState() {
     super.initState();
@@ -29,7 +28,7 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4.0),
+      padding: const EdgeInsets.only(bottom: 4),
       child: Container(
         height: 55,
         decoration: BoxDecoration(

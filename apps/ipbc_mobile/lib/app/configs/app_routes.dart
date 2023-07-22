@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:ipbc_palmas/app/lyric/views/admin/insert_lyrics_view.dart';
 
 import '../lyric/views/lyric_view.dart';
 import '../lyric/views/service_view.dart';
@@ -21,10 +22,11 @@ class AppRoutes {
   }
 
   static const String initialRoute = "/";
-  static const String serviceRoute = "/service-view";
-  static const String lyricsListRoute = "/lyrics-list-view";
-  static const String lyricRoute = "/lyric-view";
-  static const String servicesCollectionRoute = "/services-collection-view";
+  static const String insertLyricsRoute = "/insert-lyrics";
+  static const String serviceRoute = "/service";
+  static const String lyricsListRoute = "/lyrics-list";
+  static const String lyricRoute = "/lyric";
+  static const String servicesCollectionRoute = "/services-collection";
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -87,6 +89,15 @@ class _ServicesListRoutesState extends State<ServicesListRoutes> {
               child: ServicesCollectionView(
                 servicesCollection: settings.arguments as ServicesEntity,
               ),
+              tween: Tween(begin: const Offset(1, 0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.ease)),
+            );
+
+          case AppRoutes.insertLyricsRoute:
+            return CustomTransitionPageRoute(
+              transitionSpeed: const Duration(milliseconds: 700),
+              reverseSpeed: const Duration(milliseconds: 700),
+              child: const InsertLyricsView(),
               tween: Tween(begin: const Offset(1, 0), end: Offset.zero)
                   .chain(CurveTween(curve: Curves.ease)),
             );

@@ -39,16 +39,22 @@ class AppColors {
 }
 
 class AppFonts {
-
-  static TextStyle? defaultFont(
-      {Color? color, required double fontSize, FontWeight? fontWeight}) {
+  static TextStyle? defaultFont({Color? color, double? fontSize, FontWeight? fontWeight, Color? decorationColor, TextDecoration? decoration}) {
     return GoogleFonts.inter(
-      color: color ?? AppColors.black,
-      fontWeight: fontWeight,
-      fontSize: fontSize,
+        color: color ?? AppColors.black,
+        fontWeight: fontWeight,
+        fontSize: fontSize ?? 18,
+        decorationColor: decorationColor,
+        decoration: decoration
     );
   }
 
+  static TextStyle? searchField = GoogleFonts.inter(
+    decorationThickness: 0,
+    color: AppColors.grey5,
+    fontWeight: FontWeight.w200,
+    fontSize: 12.5,
+  );
   static TextStyle? largeTitle = GoogleFonts.inter(
     fontSize: 34,
     color: const Color(0xFF444446),
@@ -121,7 +127,8 @@ class AppFonts {
     fontSize: 12.5,
   );
 
-  static TextStyle? copyright({Color? color, required double fontSize, FontWeight? fontWeight}) {
+  static TextStyle? copyright(
+      {Color? color, required double fontSize, FontWeight? fontWeight}) {
     return GoogleFonts.inter(
       color: color ?? AppColors.grey5,
       fontWeight: fontWeight ?? FontWeight.w300,
@@ -133,6 +140,7 @@ class AppFonts {
 class AppIcons {
   static const String lyrics = 'assets/icons/lyrics.svg';
   static const String logo = 'assets/icons/logo.svg';
+  static const String callIcon = 'assets/icons/call.png';
   static const String arrowBack = 'assets/icons/arrow_back_ios_new.svg';
   static const String home = 'assets/icons/home.svg';
   static const String volunteerActivism = 'assets/icons/volunteer_activism.svg';
@@ -153,6 +161,7 @@ class AppImages {
   static const String vagalumeImage = 'assets/images/vagalume_image.png';
   static const String wifiIconImage = 'assets/images/wifi_icon.png';
   static const String noConnectionImage = 'assets/images/perm_scan_wifi.png';
+  static const String logo = 'assets/images/logo.png';
   static const String logoLoginImage = 'assets/images/auth/logo_ipbc_login.png';
 
   static final List<String> defaultCoversList = [

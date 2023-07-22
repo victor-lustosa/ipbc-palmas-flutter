@@ -4,9 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:uno/uno.dart';
 
 import '../../../core_module.dart';
+import '../../lyric/infra/adapters/firestore-dtos/settings_dto_adapter.dart';
+import '../../lyric/infra/models/firestore-dtos/settings_dto.dart';
 import '../../lyric/infra/models/lyric_model.dart';
 import '../../lyric/infra/models/service_model.dart';
-
 
 class ServiceUtil {
   static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
@@ -22,22 +23,23 @@ class ServiceUtil {
     );
   }
 
- static dateNowDelayed() async {
+  static dateNowDelayed() async {
     return Future.delayed(const Duration(seconds: 2), () => DateTime.now());
   }
 
-  static generateService(ServiceModel service, List<LyricModel> unknownLyrics) async {
-    List<LyricEntity> lyricsConverted = await generateVersesList(service.lyricsList);
+  static generateService(
+      ServiceModel service, List<LyricModel> unknownLyrics) async {
+    List<LyricEntity> lyricsConverted =
+        await generateVersesList(service.lyricsList);
     List<LyricModel> lyricsAux = [];
     //aqui vai o codigo para alterar a capa do album
     for (int line = 0; service.lyricsList.length > line; line++) {
       lyricsAux.add(
         service.lyricsList[line].copyWith(
-          id: createId(8),
-          verses: lyricsConverted[line].verses,
-          albumCover: lyricsConverted[line].albumCover,
-          createAt: await dateNowDelayed()
-        ),
+            id: createId(8),
+            verses: lyricsConverted[line].verses,
+            albumCover: lyricsConverted[line].albumCover,
+            createAt: await dateNowDelayed()),
       );
     }
     lyricsAux.addAll(unknownLyrics);
@@ -47,7 +49,8 @@ class ServiceUtil {
     );
   }
 
-  static Future<List<LyricEntity>> generateVersesList(List<LyricEntity> lyricsList) async {
+  static Future<List<LyricEntity>> generateVersesList(
+      List<LyricEntity> lyricsList) async {
     List<LyricEntity> results = [];
     for (int i = 0; lyricsList.length > i; i++) {
       Map result = await getLyric(lyricsList[i].title, lyricsList[i].group);
@@ -71,7 +74,7 @@ class ServiceUtil {
       );
       return response.data;
     } on UnoError catch (error, st) {
-      analyticsUtil.recordError(name:'service util', error:error,st: st);
+      analyticsUtil.recordError(name: 'service util', error: error, st: st);
     }
   }
 
@@ -93,5 +96,75 @@ class ServiceUtil {
       }
     }
     print('Unknown lyrics have been successfully added');
+  }
+
+  static insertServicesList(FirestoreDatasource fire) async {
+    String servicesUrl = 'services';
+    List<Map<String, dynamic>> servicesList = [
+      {
+        'id': ServiceUtil.createId(8),
+        'title': 'Domingo à noite',
+        'heading': 'domingo à noite',
+        'createAt': await ServiceUtil.dateNowDelayed(),
+        'image': 'assets/images/sunday_evening.png',
+        'path': 'sunday-evening-services/20',
+        'hour': '19h'
+      },
+      {
+        'id': ServiceUtil.createId(8),
+        'title': 'Domingo pela manhã',
+        'heading': 'domingo pela manhã',
+        'createAt': await ServiceUtil.dateNowDelayed(),
+        'image': 'assets/images/sunday_morning.jpg',
+        'path': 'sunday-morning-services/20',
+        'hour': '9h'
+      },
+      {
+        'id': ServiceUtil.createId(8),
+        'title': 'Sábado à noite',
+        'createAt': await ServiceUtil.dateNowDelayed(),
+        'heading': 'sábado à noite (UMP)',
+        'image': 'assets/images/saturday_evening.png',
+        'path': 'saturday-services/20',
+        'hour': '19h30'
+      },
+    ];
+
+    for (Map service in servicesList) {
+      fire.add(servicesUrl, service);
+    }
+    print('Services list have been successfully added');
+  }
+
+  static Future<List<LyricModel>> insertService(String path, String url,
+      FirestoreDatasource fire, List<LyricModel> unknownLyrics) async {
+    final String json = await rootBundle.loadString(path);
+    ServiceModel result = await ServiceUtil.generateService(
+      ServiceAdapter.fromJson(json),
+      unknownLyrics,
+    );
+    fire.add(url, ServiceAdapter.toMap(result));
+    return result.lyricsList;
+  }
+
+  static insertLyrics(
+      FirestoreDatasource fire, List<LyricEntity> lyricsInserted) async {
+    String lyricsUrl = 'lyrics';
+    for (LyricEntity lyric in lyricsInserted) {
+      fire.add(lyricsUrl, LyricAdapter.toMap(lyric));
+    }
+    print('lyrics list have been successfully added');
+    print('Total number of lyrics inserted: ${lyricsInserted.length}');
+  }
+
+  static updateFireID(FirestoreDatasource fire) async {
+    String settingsUrl = 'settings/LTwnciNO0YmWAmf7GHcU';
+    fire.update(
+      settingsUrl,
+      SettingsDTOAdapter.toMap(
+        SettingsDTO(fireId: ServiceUtil.createId(8)),
+      ),
+    );
+    print('FireID have been successfully updated');
   }
 }

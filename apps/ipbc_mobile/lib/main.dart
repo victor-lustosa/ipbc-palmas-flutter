@@ -7,14 +7,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'app/app_widget.dart';
-import 'app/ipbc_bloc_observer.dart';
+import 'app/configs/ipbc_bloc_observer.dart';
 
 void main() async {
   runZonedGuarded<Future<void>>(() async {
+
       WidgetsFlutterBinding.ensureInitialized();
 
-      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-      await HiveDatasource.hiveInit();
+      await Future.wait([
+        Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
+        HiveDatasource.hiveInit()
+      ]);
 
       if (kDebugMode) {
         await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);

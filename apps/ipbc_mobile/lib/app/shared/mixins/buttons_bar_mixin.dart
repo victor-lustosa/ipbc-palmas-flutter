@@ -10,7 +10,7 @@ class MenuItem {
   final String label;
 }
 
-class ButtonsBarMixin {
+mixin ButtonsBarMixin {
   List<BottomNavigationBarItem> buttons = [];
 
   List<BottomNavigationBarItem> buildButtonsBar() {
@@ -22,20 +22,19 @@ class ButtonsBarMixin {
 
     buttons = menuItemsList.map(
           (MenuItem menuItem) => BottomNavigationBarItem(
-            activeIcon: NavigationButtonWidget(
-              size: 23,
-              iconName: menuItem.iconData,
-              color: AppColors.darkGreen,
-            ),
-            icon: NavigationButtonWidget(
-              size: 23,
-              iconName: menuItem.iconData,
-              color: AppColors.grey5,
-            ),
+            activeIcon: items(menuItem.iconData, AppColors.darkGreen),
+            icon: items(menuItem.iconData,  AppColors.grey5),
             label: menuItem.label,
           ),
-        )
-        .toList();
+        ).toList();
+
     return buttons;
+  }
+  Widget items(String iconData, Color color){
+    return NavigationButtonWidget(
+      size: 23,
+      iconName: iconData,
+      color: color,
+    );
   }
 }

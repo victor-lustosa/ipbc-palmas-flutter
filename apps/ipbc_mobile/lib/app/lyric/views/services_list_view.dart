@@ -14,6 +14,7 @@ import '../../shared/components/loading/loading_widget.dart';
 import '../../shared/components/utils/responsivity_util.dart';
 import '../../shared/layout/top-bar/main_top_bar_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 class ServicesListView extends StatefulWidget {
   const ServicesListView({super.key});
 
@@ -81,16 +82,13 @@ class _ServicesListViewState extends State<ServicesListView>
                         margin: const EdgeInsets.only(left: 18, top: 8),
                         child: Text(
                           "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
-                          style: MediaQuery.of(context).size.width >
-                                  ResponsivityUtil.widthDevice
-                              ? AppFonts.defaultFont(
-                                  fontSize: 16,
-                                  color: AppColors.grey9,
-                                )
-                              : AppFonts.defaultFont(
-                                  fontSize: 15,
-                                  color: AppColors.grey9,
-                                ),
+                          style: AppFonts.defaultFont(
+                            fontSize: MediaQuery.of(context).size.width >
+                                    ResponsivityUtil.widthDevice
+                                ? 16
+                                : 15,
+                            color: AppColors.grey9,
+                          ),
                         ),
                       ),
                     ),
@@ -131,8 +129,8 @@ class _ServicesListViewState extends State<ServicesListView>
                                   child: Text(
                                     '${servicesList[index].title} | ${servicesList[index].hour}',
                                     style: AppFonts.headline(
-                                        color: AppColors.white,
-                                        fontWeight: FontWeight.w500,
+                                      color: AppColors.white,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ),
@@ -149,8 +147,8 @@ class _ServicesListViewState extends State<ServicesListView>
                                 ),
                                 onTap: () {
                                   Navigator.of(context).pushNamed(
-                                      AppRoutes.servicesCollectionRoute,
-                                      arguments: servicesList[index],
+                                    AppRoutes.servicesCollectionRoute,
+                                    arguments: servicesList[index],
                                   );
                                 },
                               ),

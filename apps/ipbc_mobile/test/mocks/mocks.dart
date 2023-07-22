@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:ipbc_palmas/app/lyric/view-models/lyrics_view_model.dart';
+import 'package:mocktail/mocktail.dart';
 
 class LyricEntityMock extends Mock implements LyricEntity {}
 class CollectionEntityMock extends Mock implements ServiceEntity {}

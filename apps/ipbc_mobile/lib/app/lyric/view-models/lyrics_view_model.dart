@@ -15,6 +15,7 @@ class LyricsViewModel {
   static int chorusController = 0;
   static bool previousChorus = false;
   late HiveDatabaseConfigsDTO data;
+  final TextEditingController formFieldController = TextEditingController();
 
   initData(BuildContext context) {
     data = context.read<HiveDatabaseConfigsDTO>();
@@ -115,5 +116,8 @@ class LyricsViewModel {
       previousChorus = false;
       return const BorderRadius.all(Radius.circular(0));
     }
+  }
+  fetchingSearch(){
+    //print('chegueii');
   }
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'service_view.dart';
 import '../view-models/lyrics_view_model.dart';
@@ -12,7 +13,7 @@ import '../../exception/views/generic_error_view.dart';
 import '../../exception/views/no_connection_view.dart';
 import '../../shared/components/button/button_widget.dart';
 import '../../shared/components/loading/loading_widget.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 class ServicesCollectionView extends StatefulWidget {
   const ServicesCollectionView({Key? key, required this.servicesCollection})
       : super(key: key);
@@ -148,7 +149,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                   visualDensity: VisualDensity.comfortable,
                                   horizontalTitleGap: 2,
                                   contentPadding:
-                                      const EdgeInsets.symmetric(vertical: 5),
+                                      const EdgeInsets.symmetric(vertical: 9),
                                   title: Container(
                                     margin: const EdgeInsets.only(left: 16),
                                     child: Text(
@@ -180,8 +181,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                         Container(
                                           margin: const EdgeInsets.only(top: 4),
                                           child: Text(
-                                            servicesCollectionList[index]
-                                                .preacher,
+                                            servicesCollectionList[index].preacher,
                                             style: AppFonts.description(
                                               color: AppColors.grey8,
                                             ),
@@ -228,6 +228,29 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
           ),
         ),
       ),
+      /*floatingActionButton: SizedBox(
+        height: 58,
+        width: 58,
+        child: FloatingActionButton(
+          elevation: 1.8,
+          highlightElevation: 1.8,
+          focusElevation: 1.8,
+          hoverElevation: 1.8,
+          onPressed: () {
+            Navigator.pushNamed(
+              context,
+              AppRoutes.insertLyricsRoute
+            );
+          },
+          backgroundColor: AppColors.add,
+          child: const Icon(
+            size: 45,
+            Icons.add_rounded,
+            color: AppColors.white,
+          ),
+          // icon: Icon(Icons.map, size: 15, color: Colors.white)
+        ),
+      ),*/
     );
   }
 }
