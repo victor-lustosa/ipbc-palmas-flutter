@@ -28,3 +28,5 @@ lib/src/configs/firebase_options.dart
 .dart_tool/
 .packages
 build/
+.flutter-plugins
+.flutter-plugins-dependencies
