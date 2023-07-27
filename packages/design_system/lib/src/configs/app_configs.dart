@@ -38,8 +38,9 @@ class AppColors {
 }
 
 class AppFonts {
-  static TextStyle? defaultFont({Color? color, double? fontSize, FontWeight? fontWeight, Color? decorationColor, TextDecoration? decoration}) {
+  static TextStyle? defaultFont({Color? color, double? fontSize, FontWeight? fontWeight, Color? decorationColor, TextDecoration? decoration, double? height}) {
     return GoogleFonts.inter(
+      height: height,
       color: color ?? AppColors.black,
       fontWeight: fontWeight,
       fontSize: fontSize ?? 18,
@@ -137,9 +138,20 @@ class AppFonts {
 }
 
 class AppIcons {
+  //web
+  static const String announce = 'assets/icons/announce.png';
+  static const String appleIcon = 'assets/icons/apple_icon.png';
+  static const String playIcon = 'assets/icons/play_icon.png';
+  static const String callIcon = 'assets/icons/call.png';
+  static const String greenArrowIcon = 'assets/icons/green_arrow_icon.png';
+  static const String darkGreenArrowIcon = 'assets/icons/dark_green_arrow_icon.png';
+  static const String book = 'assets/icons/book.png';
+  static const String churchLocationIcon = 'assets/icons/church_location_icon.png';
+  static const String volunteerActivismCube = 'assets/icons/volunteer_activism.png';
+
+  //mobile
   static const String lyrics = 'assets/icons/lyrics.svg';
   static const String logo = 'assets/icons/logo.svg';
-  static const String callIcon = 'assets/icons/call.png';
   static const String arrowBack = 'assets/icons/arrow_back_ios_new.svg';
   static const String home = 'assets/icons/home.svg';
   static const String volunteerActivism = 'assets/icons/volunteer_activism.svg';
@@ -147,16 +159,27 @@ class AppIcons {
 
   static final sideBarIconsList = [
     'assets/icons/privacy_tip.svg',
-    'assets/icons/lyrics.svg',
+    lyrics,
     'assets/icons/event.svg',
     'assets/icons/play_circle.svg',
     'assets/icons/book.svg',
-    'assets/icons/volunteer_activism.svg',
+    volunteerActivism,
     'assets/icons/group.svg',
   ];
 }
 
 class AppImages {
+  //web
+  static const String bannerStore = 'assets/images/banner_store.png';
+  static const String churchLocation = 'assets/images/church_location.png';
+  static const String hero = 'assets/images/hero.png';
+  static const String saturdayService = 'assets/images/saturday_service.png';
+  static const String sundayEveningService = 'assets/images/sunday_evening_service.png';
+  static const String sundayMorningService = 'assets/images/sunday_morning_service.png';
+  static const String littleGroup = 'assets/images/little_group.png';
+  static const String footerLogo = 'assets/images/footer_logo.png';
+
+  //mobile
   static const String vagalumeImage = 'assets/images/vagalume_image.png';
   static const String wifiIconImage = 'assets/images/wifi_icon.png';
   static const String noConnectionImage = 'assets/images/perm_scan_wifi.png';

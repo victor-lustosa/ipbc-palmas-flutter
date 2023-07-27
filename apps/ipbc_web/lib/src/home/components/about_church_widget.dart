@@ -14,7 +14,8 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
     return Column(
       children: [
         Container(
-          decoration: const BoxDecoration(color: Color(0xffffffff)),
+          decoration: const BoxDecoration(
+              color: Color(0xffffffff)),
           child: Container(
             margin: const EdgeInsets.only(
               left: 24,
@@ -54,8 +55,8 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                 ),
                 Container(
                   width: 960,
-                  margin: const EdgeInsets.only(top: 40),
                   height: 576,
+                  margin: const EdgeInsets.only(top: 40),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -64,9 +65,10 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                       color: const Color(0x33005b40),
                       borderRadius: BorderRadius.circular(20),
                       image: const DecorationImage(
+
                         fit: BoxFit.cover,
                         image: AssetImage(
-                          '',
+                          AppImages.hero,
                         ),
                       ),
                     ),
@@ -101,7 +103,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                       margin:const EdgeInsets.only(top: 16),
                       width: 560,
                       child: Text(
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sagittis eros. Quisque quis euismod lorem. Etiam sodales ac felis id interdum.',
+                        'Há 30 anos em Palmas/TO, a Igreja Presbiteriana Central de Palmas existe para servir e nutrir os membros, ajudar a sociedade e espalhar as boas notícias do Evangelho.',
                         style: AppFonts.defaultFont(
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
@@ -116,22 +118,22 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   infoBlocs(
-                    '',
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sagittis eros.',
+                    AppIcons.announce,
+                    'Anunciar o reino de Deus',
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   infoBlocs(
-                    '',
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sagittis eros.',
+                    AppIcons.book,
+                    'Educar para a vivência cristã',
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   infoBlocs(
-                    '',
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sagittis eros.',
+                    AppIcons.volunteerActivismCube,
+                    'Assistir o ser humano em suas necessidades',
                   )
                 ],
               ),
@@ -164,8 +166,8 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
               child: Text(
                 text,
                 style: AppFonts.defaultFont(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
                   color: const Color(0xff545456),
                 ),
               ),

@@ -34,7 +34,7 @@ export 'package:intl/intl.dart';
 
 export 'src/core/external/firestore_datasource.dart';
 export 'src/core/external/hive_datasource.dart';
-
+export 'src/shared/mixins/launch_url_mixin.dart';
 export 'src/configs/firebase_options.dart';
 
 export 'package:cloud_firestore/cloud_firestore.dart';

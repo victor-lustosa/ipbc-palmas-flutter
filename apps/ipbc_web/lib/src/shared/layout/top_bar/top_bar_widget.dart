@@ -38,51 +38,56 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                     TabButtonsWidget(label: 'Sobre', action: () {}),
                     TabButtonsWidget(label: 'Localização', action: () {}),
                     TabButtonsWidget(label: 'App', action: () {}),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(AppColors.white),
-                        shadowColor: MaterialStateProperty.resolveWith<Color>(
-                                (Set<MaterialState> states) {
-                              return states.contains(MaterialState.hovered)
-                                  ? AppColors.darkGreen
-                                  : AppColors.grey6; // Defer to the widget's default.
-                            }),
-                        overlayColor: MaterialStateColor.resolveWith(
-                                (states) => AppColors.darkGreen),
-                        backgroundColor:
-                        MaterialStateProperty.all<Color>(AppColors.darkGreen),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    SizedBox(
+                      width: 259,
+                      height: 49,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(AppColors.white),
+                          shadowColor: MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                            return states.contains(MaterialState.hovered)
+                                ? AppColors.darkGreen
+                                : AppColors.grey6; // Defer to the widget's default.
+                          }),
+                          overlayColor: MaterialStateColor.resolveWith(
+                              (states) => AppColors.darkGreen),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColors.darkGreen),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
-                            )),
-                        padding: MaterialStateProperty.all<EdgeInsets>(
-                            const EdgeInsets.symmetric(
-                              horizontal: 36,
-                              vertical: 21.5,
-                            )),
-                        textStyle: MaterialStateProperty.all<TextStyle?>(
-                            AppFonts.defaultFont(fontSize: 18)),
-                      ),
-                      onPressed: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Entrar em contato'),
-                          Container(
-                            margin: const EdgeInsets.only(left: 16),
-                            child: Image.asset(
-                              AppIcons.callIcon,
-                              width: 24,
-                              height: 24,
                             ),
                           ),
-                        ],
+                          padding: MaterialStateProperty.all<EdgeInsets>(
+                              const EdgeInsets.symmetric(horizontal: 32)),
+                          textStyle: MaterialStateProperty.all<TextStyle?>(
+                              AppFonts.defaultFont(fontSize: 18)),
+                        ),
+                        onPressed: () {},
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text('Entrar em contato'),
+                              Container(
+                                margin: const EdgeInsets.only(left: 16),
+                                child: Image.asset(
+                                  AppIcons.callIcon,
+                                  width: 24,
+                                  height: 24,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-
             ],
           ),
         ),

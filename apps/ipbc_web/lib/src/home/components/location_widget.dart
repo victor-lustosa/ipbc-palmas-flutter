@@ -8,11 +8,19 @@ class LocationWidget extends StatefulWidget {
   State<LocationWidget> createState() => _LocationWidgetState();
 }
 
-class _LocationWidgetState extends State<LocationWidget> {
+class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
+  Future<void>? _locationLink;
+
+  final Uri locationLink = Uri(
+    scheme: 'https',
+    host: 'goo.gl',
+    path: 'maps/p25aM3t4Azo23URo7',
+  );
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 587,
+      height: 650,
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.only(top: 100),
       decoration: const BoxDecoration(color: Color(0xfff3f3f3)),
@@ -20,20 +28,29 @@ class _LocationWidgetState extends State<LocationWidget> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 573.26,
-            height: 387.18,
-            child: ClipRRect(
+          Container(
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              child: Image.asset(
-                'assets/page-1/images/screenshot-2023-07-09-at-220-1-YAB.png',
-                fit: BoxFit.cover,
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x19000000),
+                  blurRadius: 40,
+                  offset: Offset(4, 4),
+                  spreadRadius: 0,
+                )
+              ],
+            ),
+            child: const Image(
+              width: 573.26,
+              fit: BoxFit.cover,
+              image: AssetImage(
+                AppImages.churchLocation,
               ),
             ),
           ),
           Container(
-            height: 160,
-            margin: const EdgeInsets.only(left: 80,right: 69.74),
+            height: 273,
+            margin: const EdgeInsets.only(left: 80, right: 69.74),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -60,27 +77,81 @@ class _LocationWidgetState extends State<LocationWidget> {
                   ),
                 ),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       margin: const EdgeInsets.only(right: 16),
-                      width: 24,
-                      height: 24,
                       child: Image.asset(
-                        'assets/page-1/images/locationon-FKu.png',
+                        AppIcons.churchLocationIcon,
                         width: 24,
                         height: 24,
                       ),
                     ),
-                    Text(
-                      // ploremipsumdolorsitametconsect (1:205)
-                      'Endereço',
-                      style: AppFonts.defaultFont(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: const Color(0xff545456),
+                    SizedBox(
+                      width: 437,
+                      child: Text(
+                        'Quadra Arse 23, Av.Ns 06, Ai 09 - Plano Diretor Sul, Palmas - TO',
+                        style: AppFonts.defaultFont(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(0xff545456),
+                        ),
                       ),
                     ),
                   ],
+                ),
+                Container(
+                  width: 215,
+                  margin: const EdgeInsets.only(top: 40),
+                  height: 49,
+                  child: OutlinedButton(
+                    style: ButtonStyle(
+                      side: MaterialStateProperty.resolveWith(
+                          (Set<MaterialState> states) {
+                        return states.contains(MaterialState.hovered)
+                            ? const BorderSide(
+                                color: AppColors.darkGreen, width: 1)
+                            : const BorderSide(
+                                color: Color(0xCC005B40), width: 1);
+                      }),
+                      foregroundColor: MaterialStateProperty.resolveWith(
+                          (Set<MaterialState> states) {
+                        return states.contains(MaterialState.hovered)
+                            ? AppColors.darkGreen
+                            : const Color(0xCC005B40);
+                      }),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color(0xfff3f3f3)),
+                      overlayColor: MaterialStateProperty.all<Color>(
+                          const Color(0xfff3f3f3)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      textStyle: MaterialStateProperty.all<TextStyle?>(
+                          AppFonts.defaultFont(
+                              fontSize: 18, fontWeight: FontWeight.w500)),
+                    ),
+                    onPressed: () {
+                      _locationLink = launchInBrowser(locationLink);
+                    },
+                    child: Row(
+                      children: [
+                        Container(
+                            margin: const EdgeInsets.only(left: 6),
+                            child: const Text('Ver Localização')),
+                        Container(
+                          margin: const EdgeInsets.only(left: 16),
+                          child: Image.asset(
+                            AppIcons.darkGreenArrowIcon,
+                            width: 20,
+                            height: 20,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

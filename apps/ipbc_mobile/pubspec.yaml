@@ -38,7 +38,6 @@ dependencies:
   bloc: ^8.1.1
   flutter_bloc: ^8.1.2
   flutter_svg: ^2.0.5
-  url_launcher: ^6.1.10
   path_provider: ^2.0.14
   upgrader: ^7.0.0
   connectivity_plus: ^4.0.0

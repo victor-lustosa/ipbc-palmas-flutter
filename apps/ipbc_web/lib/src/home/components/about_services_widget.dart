@@ -1,6 +1,12 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+class AboutServices {
+  AboutServices({required this.label, required this.imagePath});
+  final String label;
+  final String imagePath;
+}
+
 class AboutServicesWidget extends StatefulWidget {
   const AboutServicesWidget({super.key});
 
@@ -9,12 +15,14 @@ class AboutServicesWidget extends StatefulWidget {
 }
 
 class _AboutServicesWidgetState extends State<AboutServicesWidget> {
-  List labelsRightBloc = [
-    'Culto de Domingo',
-    'Culto de Oração',
-    'EBD',
-    'Pequeno Grupo'
+
+ final List<AboutServices> labelsRightBloc = [
+    AboutServices(label: 'Culto de Domingo', imagePath: AppImages.sundayEveningService),
+    AboutServices(label: 'Culto de Jovens', imagePath: AppImages.saturdayService),
+    AboutServices(label: 'EBD', imagePath: AppImages.sundayMorningService),
+    AboutServices(label: 'Pequeno Grupo', imagePath: AppImages.littleGroup),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,7 +30,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
       child: Column(
         children: [
           Container(
-            margin: const EdgeInsets.only(bottom: 79,top: 100),
+            margin: const EdgeInsets.only(bottom: 79, top: 100),
             child: Text(
               'Programação',
               style: AppFonts.defaultFont(
@@ -46,9 +54,9 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      leftBloc('Cultos de Domingo', '9h e 19h, na IPBC Palmas'),
-                      leftBloc('Cultos de Oração', 'Quartas às 19h na IPBC Palmas'),
-                      leftBloc('EBD', 'Todos os domingos às 9h, na IPBC Palmas'),
+                      titleBlocs('Cultos de Domingo', '9h e 19h, na IPBC Palmas'),
+                      titleBlocs('Cultos de Jovens', 'Sábado às 19h30 na IPBC Palmas'),
+                      titleBlocs('EBD', 'Todos os domingos às 9h, na IPBC Palmas'),
                       Container(
                         margin: const EdgeInsets.only(bottom: 20),
                         child: Text(
@@ -69,7 +77,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                           ),
                           children: [
                             TextSpan(
-                              text: 'Terças e quartas em diversas localidades. ',
+                              text:
+                                  'Terças e quartas em diversas localidades. ',
                               style: AppFonts.defaultFont(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w400,
@@ -104,7 +113,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                       itemCount: labelsRightBloc.length,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (_, index) {
-                        return rightBloc('', labelsRightBloc[index]);
+                        return imageBlocs(labelsRightBloc[index].imagePath, labelsRightBloc[index].label);
                       },
                     ),
                   ),
@@ -117,49 +126,49 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
     );
   }
 
-  Widget rightBloc(String image, String title) => Container(
-      padding: const EdgeInsets.only(left: 16, top: 270, right: 16, bottom: 16),
-      decoration: BoxDecoration(
-        color: const Color(0x33005b40),
-        borderRadius: BorderRadius.circular(20),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: AssetImage(image),
+  Widget imageBlocs(String image, String title) => Container(
+        padding: const EdgeInsets.only(left: 16, top: 270, right: 16, bottom: 16),
+        decoration: BoxDecoration(
+          color: const Color(0x33005b40),
+          borderRadius: BorderRadius.circular(20),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage(image),
+          ),
         ),
-      ),
-      child: Text(
-        title,
-        style: AppFonts.defaultFont(
-          fontSize: 24,
-          fontWeight: FontWeight.w700,
-          color: const Color(0xffffffff),
+        child: Text(
+          title,
+          style: AppFonts.defaultFont(
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xffffffff),
+          ),
         ),
-      ),
-    );
+      );
 
-  Widget leftBloc(String title, String subtitle) => Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(bottom: 20),
-          child: Text(
-            title,
-            style: AppFonts.defaultFont(
-              fontSize: 24,
-              fontWeight: FontWeight.w500,
-              color: const Color(0xff242426),
+  Widget titleBlocs(String title, String subtitle) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(bottom: 20),
+            child: Text(
+              title,
+              style: AppFonts.defaultFont(
+                fontSize: 24,
+                fontWeight: FontWeight.w500,
+                color: const Color(0xff242426),
+              ),
             ),
           ),
-        ),
-        Text(
-          subtitle,
-          style: AppFonts.defaultFont(
-            fontSize: 18,
-            fontWeight: FontWeight.w400,
-            color: const Color(0xff545456),
+          Text(
+            subtitle,
+            style: AppFonts.defaultFont(
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+              color: const Color(0xff545456),
+            ),
           ),
-        ),
-        const SizedBox(height: 40),
-      ],
-    );
+          const SizedBox(height: 40),
+        ],
+      );
 }

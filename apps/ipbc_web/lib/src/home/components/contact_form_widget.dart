@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ContactFormWidget extends StatefulWidget {
   const ContactFormWidget({super.key});
@@ -9,6 +10,10 @@ class ContactFormWidget extends StatefulWidget {
 }
 
 class _ContactFormWidgetState extends State<ContactFormWidget> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController messageController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,7 +23,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin: const EdgeInsets.only(bottom: 15, top: 100),
+            margin: const EdgeInsets.only(bottom: 13, top: 100),
             child: Text(
               'Entre em contato',
               textAlign: TextAlign.center,
@@ -29,20 +34,23 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
               ),
             ),
           ),
-          Text(
-            'Envie seu pedido de oração, solicitação ou dúvida.',
-            textAlign: TextAlign.center,
-            style: AppFonts.defaultFont(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: const Color(0xff545456),
+          Container(
+            margin: const EdgeInsets.only(bottom: 42),
+            child: Text(
+              'Envie seu pedido de oração, solicitação ou dúvida.',
+              textAlign: TextAlign.center,
+              style: AppFonts.defaultFont(
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                color: const Color(0xff545456),
+              ),
             ),
           ),
-          const SizedBox(height: 40),
-          fieldForm('Nome', 'Seu nome completo'),
-          const SizedBox(height: 16),
-          fieldForm('Email', 'me@company.com'),
-          const SizedBox(height: 16),
+          fieldForm('Nome', 'Seu nome completo', nameController),
+          Container(
+            margin: const EdgeInsets.only(top: 19, bottom: 19),
+            child: fieldForm('Email', 'me@company.com', emailController),
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -59,42 +67,70 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
               ),
               Container(
                 width: 500,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
-                height: 100,
+                height: 110,
                 decoration: BoxDecoration(
-                  color: const Color(0xffffffff),
+                  color: AppColors.white,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Text(
-                  'Sua mensagem...',
+                child: TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  autofocus: false,
+                  scrollPadding: const EdgeInsets.all(40.0),
+                  controller: messageController,
+                  keyboardType: TextInputType.text,
+                  inputFormatters: const <TextInputFormatter>[],
+                  maxLines: 5,
+                  maxLength: 500,
+                  decoration: InputDecoration(
+                      focusColor: AppColors.grey0,
+                      counterStyle: const TextStyle(color: Color(0xff979797)),
+                      contentPadding:
+                          const EdgeInsets.only(left: 10, right: 10, top: 13),
+                      hintText: 'Sua mensagem...',
+                      isDense: true,
+                      hintStyle: AppFonts.defaultFont(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xff979797),
+                      ),
+                      border: InputBorder.none),
                   style: AppFonts.defaultFont(
                     fontSize: 14,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w400,
                     color: const Color(0xff979797),
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(
-            height: 16,
-          ),
           Container(
-            margin: const EdgeInsets.only(bottom: 100),
+            margin: const EdgeInsets.only(top: 32, bottom: 98),
             width: 500,
             height: 49,
-            decoration: BoxDecoration(
-              color: const Color(0xff005b40),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Center(
-              child: Text(
-                'Enviar',
-                style: AppFonts.defaultFont(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: const Color(0xffffffff),
+            child: ElevatedButton(
+              style: ButtonStyle(
+                foregroundColor:
+                    MaterialStateProperty.all<Color>(AppColors.white),
+                // overlayColor: MaterialStateProperty.all<Color>(AppColors.darkGreen),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(AppColors.darkGreen),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                textStyle: MaterialStateProperty.all<TextStyle?>(
+                  AppFonts.defaultFont(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.white,
+                  ),
+                ),
+              ),
+              onPressed: () {},
+              child: const Center(
+                child: Text(
+                  'Enviar',
                 ),
               ),
             ),
@@ -104,11 +140,13 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
     );
   }
 
-  fieldForm(String label, nameField) => Column(
+  fieldForm(String label, String hintText,
+          TextEditingController formFieldController) =>
+      Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(bottom: 8),
+            margin: const EdgeInsets.only(bottom: 10),
             child: Text(
               label,
               style: AppFonts.defaultFont(
@@ -120,16 +158,31 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
           ),
           Container(
             width: 500,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
+            height: 42,
             decoration: BoxDecoration(
               color: const Color(0xffffffff),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Text(
-              nameField,
+            child: TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              autofocus: false,
+              controller: formFieldController,
+              keyboardType: TextInputType.text,
+              inputFormatters: const <TextInputFormatter>[],
+              decoration: InputDecoration(
+                contentPadding:
+                    const EdgeInsets.only(left: 10, right: 10, bottom: 9),
+                hintText: hintText,
+                hintStyle: AppFonts.defaultFont(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: const Color(0xff979797),
+                ),
+                border: InputBorder.none,
+              ),
               style: AppFonts.defaultFont(
                 fontSize: 14,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w400,
                 color: const Color(0xff979797),
               ),
             ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class TabButtonsWidget extends StatelessWidget {
   const TabButtonsWidget({super.key, required this.label, required this.action});
   final String label;
-  final Function action;
+  final VoidCallback action;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,8 +23,8 @@ class TabButtonsWidget extends StatelessWidget {
           overlayColor: MaterialStateProperty.all<Color>(Colors.white),
           backgroundColor: MaterialStateProperty.all<Color>(AppColors.white),
         ),
+        onPressed: action,
         child: Text(label),
-        onPressed: () => action,
       ),
     );
   }

@@ -26,15 +26,13 @@ class _FooterWidgetState extends State<FooterWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: 141,
-                  height: 36,
+                  width: 99.34,
                   child: Image.asset(
-                    'assets/page-1/images/logo-T3V.png',
-                    fit: BoxFit.cover,
+                    AppImages.footerLogo,
                   ),
                 ),
-                Container(
-                  width: 550,
+                SizedBox(
+                  width: 600,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +52,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                             ),
                           ),
                           Text(
-                            'Endereço',
+                            'Q. Arse 23, Av.Ns 06, Ai 09',
                             style: AppFonts.defaultFont(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -63,7 +61,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'CEP',
+                            'CEP: 77020-544',
                             style: AppFonts.defaultFont(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -96,7 +94,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                             ),
                           ),
                           Text(
-                            'Nome e telefone',
+                            'Secretaria da Igreja',
                             style: AppFonts.defaultFont(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -105,7 +103,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Nome e telefone',
+                            '+55 (63) 3213-2775',
                             style: AppFonts.defaultFont(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -114,7 +112,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Nome e telefone',
+                            '8h as 12h - 14h as 18h',
                             style: AppFonts.defaultFont(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -149,7 +147,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                             ),
                           ),
                           Text(
-                            'Quarta às 19h',
+                            'Sábado às 19h30',
                             style: AppFonts.defaultFont(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,

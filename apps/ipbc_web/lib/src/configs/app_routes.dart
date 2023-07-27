@@ -4,13 +4,6 @@ import 'package:ipbc_web/src/home/views/home_view.dart';
 class AppRoutes {
   AppRoutes._();
 
-  static final GlobalKey<NavigatorState> _androidNavigatorKey =
-      GlobalKey<NavigatorState>();
-
-  static GlobalKey<NavigatorState> getAndroidNavigatorKey() {
-    return _androidNavigatorKey;
-  }
-
   static const String initialRoute = "/";
   static const String homeRoute = "/home";
 
