@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
+import '../components/emails/models/keys_api_emails.dart';
 import '../components/emails/models/send_grid_model.dart';
 
 mixin EmailMixin {
   static const _apiSendGridURL = "https://api.sendgrid.com/v3/mail/send";
   static const _apiBrevoURL = "https://api.sendgrid.com/v3/mail/send";
-
 
   Future<String> sendGrid(
       {required String body,
@@ -25,7 +25,7 @@ mixin EmailMixin {
         Uri.parse(_apiSendGridURL),
         headers: {
           HttpHeaders.contentTypeHeader: "application/json",
-          HttpHeaders.authorizationHeader: _sendGridKEY
+          HttpHeaders.authorizationHeader: KeysApiEmails.sendGridKEY
         },
         body: v,
       );
@@ -52,7 +52,7 @@ mixin EmailMixin {
         Uri.parse(_apiBrevoURL),
         headers: {
           HttpHeaders.contentTypeHeader: "application/json",
-          HttpHeaders.authorizationHeader: _brevoKEY
+          HttpHeaders.authorizationHeader: KeysApiEmails.brevoKEY
         },
         body: v,
       );
