@@ -8,8 +8,6 @@ mixin EmailMixin {
   static const _apiSendGridURL = "https://api.sendgrid.com/v3/mail/send";
   static const _apiBrevoURL = "https://api.sendgrid.com/v3/mail/send";
 
-  static const String _sendGridKEY = "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";
-  static const String _brevoKEY = "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";
 
   Future<String> sendGrid(
       {required String body,
