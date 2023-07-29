@@ -9,11 +9,23 @@ class ContactFormWidget extends StatefulWidget {
   State<ContactFormWidget> createState() => _ContactFormWidgetState();
 }
 
-class _ContactFormWidgetState extends State<ContactFormWidget> {
+class _ContactFormWidgetState extends State<ContactFormWidget> with EmailMixin {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController messageController = TextEditingController();
 
+  final _nameKey = GlobalKey<FormState>();
+  final _emailKey = GlobalKey<FormState>();
+  final _messageKey = GlobalKey<FormState>();
+
+  String? nameErrorText;
+  String? emailErrorText;
+  String? messageErrorText;
+
+  bool isNameValid = true;
+  bool isEmailValid = true;
+  bool isMessageValid = true;
+  bool isSubmitted = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,10 +58,128 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
               ),
             ),
           ),
-          fieldForm('Nome', 'Seu nome completo', nameController),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(bottom: 10),
+                child: Text(
+                  'Nome',
+                  style: AppFonts.defaultFont(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: const Color(0xff545456),
+                  ),
+                ),
+              ),
+              Container(
+                width: 500,
+                height: 42,
+                decoration: BoxDecoration(
+                  color: const Color(0xffffffff),
+                  border: Border.all(
+                      color: isNameValid ? AppColors.white : Colors.red),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: TextFormField(
+                  enabled: !isSubmitted,
+                  key: _nameKey,
+                  cursorColor: const Color(0xff979797),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  autofocus: false,
+                  controller: nameController,
+                  validator: (data) {
+                    return nameValidation(data);
+                  },
+                  keyboardType: TextInputType.text,
+                  inputFormatters: const <TextInputFormatter>[],
+                  decoration: InputDecoration(
+                    errorText: nameErrorText,
+                    contentPadding: const EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      bottom: 9,
+                    ),
+                    hintText: 'Seu nome completo',
+                    hintStyle: AppFonts.defaultFont(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(0xff979797),
+                    ),
+                    border: InputBorder.none,
+                  ),
+                  style: AppFonts.defaultFont(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: const Color(0xff979797),
+                  ),
+                ),
+              ),
+            ],
+          ),
           Container(
             margin: const EdgeInsets.only(top: 19, bottom: 19),
-            child: fieldForm('Email', 'me@company.com', emailController),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    'Email',
+                    style: AppFonts.defaultFont(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(0xff545456),
+                    ),
+                  ),
+                ),
+                Builder(builder: (context) {
+                  return Container(
+                    width: 500,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      color: const Color(0xffffffff),
+                      border: Border.all(
+                          color: isEmailValid ? AppColors.white : Colors.red),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: TextFormField(
+                      enabled: !isSubmitted,
+                      key: _emailKey,
+                      cursorColor: const Color(0xff979797),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      autofocus: false,
+                      controller: emailController,
+                      validator: (data) {
+                        return emailValidation(data);
+                      },
+                      keyboardType: TextInputType.text,
+                      inputFormatters: const <TextInputFormatter>[],
+                      decoration: InputDecoration(
+                        errorText: emailErrorText,
+                        contentPadding: const EdgeInsets.only(
+                          left: 10,
+                          right: 10,
+                          bottom: 9,
+                        ),
+                        hintText: 'me@company.com',
+                        hintStyle: AppFonts.defaultFont(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(0xff979797),
+                        ),
+                        border: InputBorder.none,
+                      ),
+                      style: AppFonts.defaultFont(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xff979797),
+                      ),
+                    ),
+                  );
+                }),
+              ],
+            ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,9 +200,18 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
                 height: 110,
                 decoration: BoxDecoration(
                   color: AppColors.white,
+                  border: Border.all(
+                    color: isMessageValid ? AppColors.white : Colors.red,
+                  ),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextFormField(
+                  enabled: !isSubmitted,
+                  key: _messageKey,
+                  validator: (data) {
+                    return messageValidation(data);
+                  },
+                  cursorColor: const Color(0xff979797),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   autofocus: false,
                   scrollPadding: const EdgeInsets.all(40.0),
@@ -84,8 +223,12 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
                   decoration: InputDecoration(
                       focusColor: AppColors.grey0,
                       counterStyle: const TextStyle(color: Color(0xff979797)),
-                      contentPadding:
-                          const EdgeInsets.only(left: 10, right: 10, top: 13),
+                      contentPadding: const EdgeInsets.only(
+                        left: 10,
+                        right: 10,
+                        top: 13,
+                      ),
+                      errorText: messageErrorText,
                       hintText: 'Sua mensagem...',
                       isDense: true,
                       hintStyle: AppFonts.defaultFont(
@@ -127,10 +270,30 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
                   ),
                 ),
               ),
-              onPressed: () {},
-              child: const Center(
+              onPressed: () {
+                if (nameController.text.isNotEmpty &&
+                    emailController.text.isNotEmpty &&
+                    messageController.text.isNotEmpty) {
+                  if (!EmailValidator.validate(emailController.text)) {
+                    callEmailValidationBorder();
+                  } else {
+                      setState(() {
+                        isSubmitted = true;
+                      });
+                    /* sendGrid(
+                      body: '${nameController.text} /n ${messageController.text}',
+                      subject: 'victor.olustosa@outlook.com',
+                      recipients: [emailController.text],
+                    );*/
+                    nameController.clear();
+                    messageController.clear();
+                    emailController.clear();
+                  }
+                }
+              },
+              child:  Center(
                 child: Text(
-                  'Enviar',
+                  isSubmitted ? 'Enviado!' : 'Enviar',
                 ),
               ),
             ),
@@ -140,53 +303,75 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
     );
   }
 
-  fieldForm(String label, String hintText,
-          TextEditingController formFieldController) =>
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(bottom: 10),
-            child: Text(
-              label,
-              style: AppFonts.defaultFont(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: const Color(0xff545456),
-              ),
-            ),
-          ),
-          Container(
-            width: 500,
-            height: 42,
-            decoration: BoxDecoration(
-              color: const Color(0xffffffff),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: TextFormField(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              autofocus: false,
-              controller: formFieldController,
-              keyboardType: TextInputType.text,
-              inputFormatters: const <TextInputFormatter>[],
-              decoration: InputDecoration(
-                contentPadding:
-                    const EdgeInsets.only(left: 10, right: 10, bottom: 9),
-                hintText: hintText,
-                hintStyle: AppFonts.defaultFont(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: const Color(0xff979797),
-                ),
-                border: InputBorder.none,
-              ),
-              style: AppFonts.defaultFont(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: const Color(0xff979797),
-              ),
-            ),
-          ),
-        ],
-      );
+  cleanEmailValidationBorder() {
+    Future.delayed(Duration.zero, () async {
+      setState(() {
+        isEmailValid = true;
+        emailErrorText = null;
+      });
+    });
+  }
+
+  callEmailValidationBorder() {
+    Future.delayed(Duration.zero, () async {
+      setState(() {
+        emailErrorText = 'por favor, escreva um email válido.';
+        isEmailValid = false;
+      });
+    });
+  }
+
+  emailValidation(String? data) {
+    if (data != null && !isSubmitted) {
+      if (data.isEmpty && emailErrorText == null) {
+        callEmailValidationBorder();
+        return null;
+      }
+      if (data.isNotEmpty &&
+          emailErrorText != null &&
+          EmailValidator.validate(emailController.text)) {
+        cleanEmailValidationBorder();
+        return null;
+      }
+    } else {
+      cleanEmailValidationBorder();
+      return null;
+    }
+  }
+
+  nameValidation(String? data) {
+    if (data == null || data.isEmpty && !isSubmitted) {
+      Future.delayed(Duration.zero, () async {
+        setState(() {
+          isNameValid = false;
+        });
+      });
+      return null;
+    } else {
+      Future.delayed(Duration.zero, () async {
+        setState(() {
+          isNameValid = true;
+        });
+      });
+      return null;
+    }
+  }
+
+  messageValidation(String? data) {
+    if (data == null || data.isEmpty && !isSubmitted) {
+      Future.delayed(Duration.zero, () async {
+        setState(() {
+          isMessageValid = false;
+        });
+      });
+      return null;
+    } else {
+      Future.delayed(Duration.zero, () async {
+        setState(() {
+          isMessageValid = true;
+        });
+      });
+      return null;
+    }
+  }
 }

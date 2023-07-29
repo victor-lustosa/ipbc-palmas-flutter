@@ -35,9 +35,11 @@ export 'package:intl/intl.dart';
 export 'src/core/external/firestore_datasource.dart';
 export 'src/core/external/hive_datasource.dart';
 export 'src/shared/mixins/launch_url_mixin.dart';
+export 'src/shared/mixins/email_mixin.dart';
 export 'src/configs/firebase_options.dart';
 
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:firebase_crashlytics/firebase_crashlytics.dart';
 export 'package:hive_flutter/hive_flutter.dart';
+export 'package:email_validator/email_validator.dart';
