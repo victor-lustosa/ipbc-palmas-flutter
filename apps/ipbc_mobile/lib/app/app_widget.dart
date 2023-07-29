@@ -1,7 +1,5 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'configs/app_routes.dart';
 import 'splash/main_module.dart';
 import 'configs/no_glow_behavior.dart';

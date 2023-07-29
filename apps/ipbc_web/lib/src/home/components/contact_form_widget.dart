@@ -9,7 +9,7 @@ class ContactFormWidget extends StatefulWidget {
   State<ContactFormWidget> createState() => _ContactFormWidgetState();
 }
 
-class _ContactFormWidgetState extends State<ContactFormWidget> with EmailMixin {
+class _ContactFormWidgetState extends State<ContactFormWidget> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController messageController = TextEditingController();
@@ -280,11 +280,6 @@ class _ContactFormWidgetState extends State<ContactFormWidget> with EmailMixin {
                       setState(() {
                         isSubmitted = true;
                       });
-                    /* sendGrid(
-                      body: '${nameController.text} /n ${messageController.text}',
-                      subject: 'victor.olustosa@outlook.com',
-                      recipients: [emailController.text],
-                    );*/
                     nameController.clear();
                     messageController.clear();
                     emailController.clear();

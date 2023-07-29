@@ -1,6 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:ipbc_web/src/shared/components/tab_buttons_widget.dart';
+import '../../components/tab_buttons_widget.dart';
 
 class TopBarWidget extends StatefulWidget {
   const TopBarWidget({super.key});

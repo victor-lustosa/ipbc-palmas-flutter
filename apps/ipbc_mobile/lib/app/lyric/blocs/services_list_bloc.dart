@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:core_module/core_module.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../view-models/lyrics_view_model.dart';
 

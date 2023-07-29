@@ -1,5 +1,4 @@
 import 'package:core_module/core_module.dart';
-import 'package:provider/provider.dart';
 import 'blocs/database_bloc.dart';
 import '../home/view-models/home_view_model.dart';
 import '../splash/view-models/database_view_model.dart';

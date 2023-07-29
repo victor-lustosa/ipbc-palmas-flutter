@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
-import '../components/emails/models/keys_api_emails.dart';
+import '../../configs/api_keys.dart';
 import '../components/emails/models/send_grid_model.dart';
 
 mixin EmailMixin {
@@ -25,7 +25,7 @@ mixin EmailMixin {
         Uri.parse(_apiSendGridURL),
         headers: {
           HttpHeaders.contentTypeHeader: "application/json",
-          HttpHeaders.authorizationHeader: KeysApiEmails.sendGridKEY
+          HttpHeaders.authorizationHeader: ApiKeys.sendGridKEY
         },
         body: v,
       );
@@ -52,7 +52,7 @@ mixin EmailMixin {
         Uri.parse(_apiBrevoURL),
         headers: {
           HttpHeaders.contentTypeHeader: "application/json",
-          HttpHeaders.authorizationHeader: KeysApiEmails.brevoKEY
+          HttpHeaders.authorizationHeader: ApiKeys.brevoKEY
         },
         body: v,
       );

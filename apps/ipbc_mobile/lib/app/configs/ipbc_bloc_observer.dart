@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-import 'package:bloc/bloc.dart';
 import 'package:core_module/core_module.dart';
 
 class IpbcBlocObserver extends BlocObserver {

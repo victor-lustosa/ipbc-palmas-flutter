@@ -1,7 +1,5 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
 import '../blocs/database_bloc.dart';
 import '../../home/views/home_view.dart';

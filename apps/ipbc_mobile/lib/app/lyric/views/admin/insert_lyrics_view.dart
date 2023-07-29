@@ -1,5 +1,5 @@
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../../shared/components/search-bar/search_bar_widget.dart';
 import '../../view-models/lyrics_view_model.dart';
 

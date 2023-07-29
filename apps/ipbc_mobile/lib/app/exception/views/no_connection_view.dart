@@ -1,6 +1,5 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../home/view-models/home_view_model.dart';
 
 class NoConnectionView extends StatefulWidget {
