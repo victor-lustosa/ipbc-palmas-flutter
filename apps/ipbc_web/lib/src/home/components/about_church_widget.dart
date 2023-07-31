@@ -15,12 +15,13 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
       children: [
         Container(
           decoration: const BoxDecoration(
-              color: Color(0xffffffff)),
+            color: Color(0xffffffff),
+          ),
           child: Container(
             margin: const EdgeInsets.only(
               left: 24,
               right: 24,
-              bottom: 100
+              bottom: 100,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -65,7 +66,6 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                       color: const Color(0x33005b40),
                       borderRadius: BorderRadius.circular(20),
                       image: const DecorationImage(
-
                         fit: BoxFit.cover,
                         image: AssetImage(
                           AppImages.hero,
@@ -79,7 +79,11 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
           ),
         ),
         Container(
-          margin: const EdgeInsets.only(left: 24,right: 24, top: 100),
+          margin: const EdgeInsets.only(
+            left: 24,
+            right: 24,
+            top: 100,
+          ),
           width: 1200,
           decoration: const BoxDecoration(color: Color(0xffffffff)),
           child: Row(
@@ -100,7 +104,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                       ),
                     ),
                     Container(
-                      margin:const EdgeInsets.only(top: 16),
+                      margin: const EdgeInsets.only(top: 16),
                       width: 560,
                       child: Text(
                         'Há 30 anos em Palmas/TO, a Igreja Presbiteriana Central de Palmas existe para servir e nutrir os membros, ajudar a sociedade e espalhar as boas notícias do Evangelho.',
@@ -144,7 +148,8 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
     );
   }
 
-  Widget infoBlocs(String image, String text) => SizedBox(
+  Widget infoBlocs(String image, String text) =>
+      SizedBox(
         height: 80,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

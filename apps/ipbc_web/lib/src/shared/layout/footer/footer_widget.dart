@@ -19,7 +19,11 @@ class _FooterWidgetState extends State<FooterWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 116,bottom: 154,right: 40),
+            margin: const EdgeInsets.only(
+              top: 116,
+              bottom: 154,
+              right: 40,
+            ),
             width: 910,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,7 +163,6 @@ class _FooterWidgetState extends State<FooterWidget> {
                     ],
                   ),
                 ),
-
               ],
             ),
           ),

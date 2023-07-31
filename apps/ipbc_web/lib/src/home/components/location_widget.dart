@@ -109,10 +109,8 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
                       side: MaterialStateProperty.resolveWith(
                           (Set<MaterialState> states) {
                         return states.contains(MaterialState.hovered)
-                            ? const BorderSide(
-                                color: AppColors.darkGreen, width: 1)
-                            : const BorderSide(
-                                color: Color(0xCC005B40), width: 1);
+                            ? const BorderSide(color: AppColors.darkGreen)
+                            : const BorderSide(color: Color(0xCC005B40));
                       }),
                       foregroundColor: MaterialStateProperty.resolveWith(
                           (Set<MaterialState> states) {
@@ -121,17 +119,19 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
                             : const Color(0xCC005B40);
                       }),
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color(0xfff3f3f3)),
+                          const Color(0xfff3f3f3),
+                      ),
                       overlayColor: MaterialStateProperty.all<Color>(
-                          const Color(0xfff3f3f3)),
+                          const Color(0xfff3f3f3),
+                      ),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
                       textStyle: MaterialStateProperty.all<TextStyle?>(
-                          AppFonts.defaultFont(
-                              fontSize: 18, fontWeight: FontWeight.w500)),
+                          AppFonts.defaultFont(fontSize: 18, fontWeight: FontWeight.w500),
+                      ),
                     ),
                     onPressed: () {
                       _locationLink = launchInBrowser(locationLink);
@@ -140,7 +140,8 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
                       children: [
                         Container(
                             margin: const EdgeInsets.only(left: 6),
-                            child: const Text('Ver Localização')),
+                            child: const Text('Ver Localização'),
+                        ),
                         Container(
                           margin: const EdgeInsets.only(left: 16),
                           child: Image.asset(

@@ -26,6 +26,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
   bool isEmailValid = true;
   bool isMessageValid = true;
   bool isSubmitted = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -78,12 +79,13 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
                 decoration: BoxDecoration(
                   color: const Color(0xffffffff),
                   border: Border.all(
-                      color: isNameValid ? AppColors.white : Colors.red),
+                    color: isNameValid ? AppColors.white : Colors.red,
+                  ),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextFormField(
-                  enabled: !isSubmitted,
                   key: _nameKey,
+                  enabled: !isSubmitted,
                   cursorColor: const Color(0xff979797),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   autofocus: false,
@@ -133,51 +135,54 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
                     ),
                   ),
                 ),
-                Builder(builder: (context) {
-                  return Container(
-                    width: 500,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
-                      border: Border.all(
-                          color: isEmailValid ? AppColors.white : Colors.red),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: TextFormField(
-                      enabled: !isSubmitted,
-                      key: _emailKey,
-                      cursorColor: const Color(0xff979797),
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      autofocus: false,
-                      controller: emailController,
-                      validator: (data) {
-                        return emailValidation(data);
-                      },
-                      keyboardType: TextInputType.text,
-                      inputFormatters: const <TextInputFormatter>[],
-                      decoration: InputDecoration(
-                        errorText: emailErrorText,
-                        contentPadding: const EdgeInsets.only(
-                          left: 10,
-                          right: 10,
-                          bottom: 9,
+                Builder(
+                  builder: (context) {
+                    return Container(
+                      width: 500,
+                      height: 42,
+                      decoration: BoxDecoration(
+                        color: const Color(0xffffffff),
+                        border: Border.all(
+                          color: isEmailValid ? AppColors.white : Colors.red,
                         ),
-                        hintText: 'me@company.com',
-                        hintStyle: AppFonts.defaultFont(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: TextFormField(
+                        key: _emailKey,
+                        enabled: !isSubmitted,
+                        cursorColor: const Color(0xff979797),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        autofocus: false,
+                        controller: emailController,
+                        validator: (data) {
+                          return emailValidation(data);
+                        },
+                        keyboardType: TextInputType.text,
+                        inputFormatters: const <TextInputFormatter>[],
+                        decoration: InputDecoration(
+                          errorText: emailErrorText,
+                          contentPadding: const EdgeInsets.only(
+                            left: 10,
+                            right: 10,
+                            bottom: 9,
+                          ),
+                          hintText: 'me@company.com',
+                          hintStyle: AppFonts.defaultFont(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: const Color(0xff979797),
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        style: AppFonts.defaultFont(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                           color: const Color(0xff979797),
                         ),
-                        border: InputBorder.none,
                       ),
-                      style: AppFonts.defaultFont(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: const Color(0xff979797),
-                      ),
-                    ),
-                  );
-                }),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -221,22 +226,23 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
                   maxLines: 5,
                   maxLength: 500,
                   decoration: InputDecoration(
-                      focusColor: AppColors.grey0,
-                      counterStyle: const TextStyle(color: Color(0xff979797)),
-                      contentPadding: const EdgeInsets.only(
-                        left: 10,
-                        right: 10,
-                        top: 13,
-                      ),
-                      errorText: messageErrorText,
-                      hintText: 'Sua mensagem...',
-                      isDense: true,
-                      hintStyle: AppFonts.defaultFont(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: const Color(0xff979797),
-                      ),
-                      border: InputBorder.none),
+                    focusColor: AppColors.grey0,
+                    counterStyle: const TextStyle(color: Color(0xff979797)),
+                    contentPadding: const EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      top: 13,
+                    ),
+                    errorText: messageErrorText,
+                    hintText: 'Sua mensagem...',
+                    isDense: true,
+                    hintStyle: AppFonts.defaultFont(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(0xff979797),
+                    ),
+                    border: InputBorder.none,
+                  ),
                   style: AppFonts.defaultFont(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -251,23 +257,16 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
             width: 500,
             height: 49,
             child: ElevatedButton(
-              style: ButtonStyle(
-                foregroundColor:
-                    MaterialStateProperty.all<Color>(AppColors.white),
-                // overlayColor: MaterialStateProperty.all<Color>(AppColors.darkGreen),
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(AppColors.darkGreen),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: AppColors.white,
+                backgroundColor: AppColors.darkGreen,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                textStyle: MaterialStateProperty.all<TextStyle?>(
-                  AppFonts.defaultFont(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.white,
-                  ),
+                textStyle: AppFonts.defaultFont(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.white,
                 ),
               ),
               onPressed: () {
@@ -277,16 +276,16 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
                   if (!EmailValidator.validate(emailController.text)) {
                     callEmailValidationBorder();
                   } else {
-                      setState(() {
-                        isSubmitted = true;
-                      });
+                    setState(() {
+                      isSubmitted = true;
+                    });
                     nameController.clear();
                     messageController.clear();
                     emailController.clear();
                   }
                 }
               },
-              child:  Center(
+              child: Center(
                 child: Text(
                   isSubmitted ? 'Enviado!' : 'Enviar',
                 ),

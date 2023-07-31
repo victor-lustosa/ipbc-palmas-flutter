@@ -38,6 +38,8 @@ export 'src/shared/mixins/launch_url_mixin.dart';
 export 'src/shared/mixins/email_mixin.dart';
 export 'src/configs/firebase_options.dart';
 
+export 'src/shared/components/scroll_transform/scroll_transform_item.dart';
+export 'src/shared/components/scroll_transform/scroll_transform_view.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:firebase_crashlytics/firebase_crashlytics.dart';

@@ -9,6 +9,7 @@ class AppStoresWidget extends StatefulWidget {
 }
 
 class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
+
   Future<void>? _appStoreLink;
   Future<void>? _playStoreLink;
 
@@ -105,8 +106,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
     );
   }
 
-  Widget storeButton(
-          String labelStore, String iconPath, VoidCallback onPressed) =>
+  Widget storeButton(String labelStore, String iconPath, VoidCallback onPressed) =>
       Container(
         height: 80,
         width: 272,

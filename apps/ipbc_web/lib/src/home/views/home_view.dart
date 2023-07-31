@@ -1,4 +1,6 @@
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import '../view_models/home_view_model.dart';
 import '../../shared/layout/footer/footer_widget.dart';
 import '../../shared/layout/top_bar/top_bar_widget.dart';
 import '../components/about_church_widget.dart';
@@ -15,25 +17,29 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  late HomeViewModel homeViewModel;
   @override
   void initState() {
+    homeViewModel = context.read<HomeViewModel>();
     super.initState();
+
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+        controller: homeViewModel.scrollViewController,
           child: Column(
             children: [
-              TopBarWidget(),
-              AboutChurchWidget(),
-              LocationWidget(),
-              AboutServicesWidget(),
-              AppStoresWidget(),
-              ContactFormWidget(),
-              FooterWidget()
+              TopBarWidget(homeViewModel: homeViewModel),
+              const AboutChurchWidget(),
+              const LocationWidget(),
+              const AboutServicesWidget(),
+              const AppStoresWidget(),
+              const ContactFormWidget(),
+              const FooterWidget()
             ],
           ),
         ),

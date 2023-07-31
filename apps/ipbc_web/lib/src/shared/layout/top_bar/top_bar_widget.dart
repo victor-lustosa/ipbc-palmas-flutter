@@ -1,15 +1,19 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import '../../../home/view_models/home_view_model.dart';
 import '../../components/tab_buttons_widget.dart';
 
 class TopBarWidget extends StatefulWidget {
-  const TopBarWidget({super.key});
+  const TopBarWidget({super.key, required this.homeViewModel});
+
+  final HomeViewModel homeViewModel;
 
   @override
   State<TopBarWidget> createState() => _TopBarWidgetState();
 }
 
 class _TopBarWidgetState extends State<TopBarWidget> {
+  bool isPressed = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -35,38 +39,39 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    TabButtonsWidget(label: 'Sobre', action: () {}),
-                    TabButtonsWidget(label: 'Localização', action: () {}),
-                    TabButtonsWidget(label: 'App', action: () {}),
+                    TabButtonsWidget(
+                        label: 'Localização',
+                        action: () {
+                          scrollPage(1544);
+                        }),
+                    TabButtonsWidget(
+                        label: 'Programação',
+                        action: () {
+                          scrollPage(2192);
+                        }),
+                    TabButtonsWidget(
+                        label: 'Aplicativo',
+                        action: () {
+                          scrollPage(3252);
+                        }),
                     SizedBox(
                       width: 259,
                       height: 49,
                       child: ElevatedButton(
-                        style: ButtonStyle(
-                          foregroundColor:
-                              MaterialStateProperty.all<Color>(AppColors.white),
-                          shadowColor: MaterialStateProperty.resolveWith<Color>(
-                              (Set<MaterialState> states) {
-                            return states.contains(MaterialState.hovered)
-                                ? AppColors.darkGreen
-                                : AppColors.grey6; // Defer to the widget's default.
-                          }),
-                          overlayColor: MaterialStateColor.resolveWith(
-                              (states) => AppColors.darkGreen),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              AppColors.darkGreen),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: isPressed
+                              ? const Color(0xff242426)
+                              : AppColors.white,
+                          shadowColor: AppColors.grey6,
+                          backgroundColor: isPressed
+                              ? const Color(0xFF00E8A2)
+                              : AppColors.darkGreen,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          padding: MaterialStateProperty.all<EdgeInsets>(
-                              const EdgeInsets.symmetric(horizontal: 32)),
-                          textStyle: MaterialStateProperty.all<TextStyle?>(
-                              AppFonts.defaultFont(fontSize: 18)),
+                          padding: const EdgeInsets.symmetric(horizontal: 32),
+                          textStyle: AppFonts.defaultFont(fontSize: 18),
                         ),
-                        onPressed: () {},
                         child: Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -75,7 +80,9 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                               Container(
                                 margin: const EdgeInsets.only(left: 16),
                                 child: Image.asset(
-                                  AppIcons.callIcon,
+                                  isPressed
+                                      ? AppIcons.darkGreenCallIcon
+                                      : AppIcons.callIcon,
                                   width: 24,
                                   height: 24,
                                 ),
@@ -83,6 +90,23 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                             ],
                           ),
                         ),
+                        onPressed: () {
+                          Future.delayed(Duration.zero, () async {
+                            setState(() {
+                              isPressed = true;
+                            });
+                          });
+                          Future.delayed(const Duration(milliseconds: 500),
+                              () async {
+                                scrollPage(3985);
+                          });
+                          Future.delayed(const Duration(milliseconds: 900),
+                              () async {
+                            setState(() {
+                              isPressed = false;
+                            });
+                          });
+                        },
                       ),
                     ),
                   ],
@@ -98,98 +122,13 @@ class _TopBarWidgetState extends State<TopBarWidget> {
       ],
     );
   }
-}
 
-/*class TopBarWidget extends PreferredSize {
-
-  static final List<String> contentViews = ['Sobre', 'Localização', 'Apps'];
-
-  TopBarWidget({super.key}) : super(
-          preferredSize: const Size.fromHeight(80),
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    const Flexible(flex: 2, child: SizedBox(width: 100)),
-                    Flexible(
-                      flex: 1,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          tabButtons(contentViews[0]),
-                          tabButtons(contentViews[1]),
-                          tabButtons(contentViews[2]),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-  static Widget tabButtons(String label) => Container(
-        margin: const EdgeInsets.symmetric(horizontal: 0),
-        child: MaterialButton(
-          hoverColor: Colors.white,
-          child: Text(
-            label,
-            style: AppFonts.defaultFont(fontSize: 18, color: AppColors.grey6),
-          ),
-          onPressed: () {},
-        ),
-      );
+  scrollPage(double position) {
+    setState(() {
+      widget.homeViewModel.scrollViewController.animateTo(
+          duration: const Duration(milliseconds: 1500),
+          curve: Curves.easeInOutQuint,
+          position);
+    });
+  }
 }
-*/
-/*class TopBarWidget extends PreferredSize {
-  final List<String> contentViews;
-  final TabController tabController;
-  TopBarWidget(
-      {super.key, required this.tabController, required this.contentViews})
-      : super(
-          preferredSize: const Size.fromHeight(100),
-          child: SafeArea(
-            child: Column(
-              children: [
-                Container(height: 20, width: 20,
-                    decoration: const BoxDecoration(color: AppColors.darkGreen)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    const Flexible(flex: 2, child: SizedBox(width: 100)),
-                    Flexible(
-                      flex: 1,
-                      child: SizedBox(
-                        child: TabBar(
-                          overlayColor: MaterialStateColor.resolveWith((states) => Colors.white),
-                          labelColor: AppColors.darkGreen,
-                          isScrollable: true,
-                          labelPadding: const EdgeInsets.symmetric(horizontal: 0),
-                          unselectedLabelColor: AppColors.grey6,
-                          controller: tabController,
-                          indicatorColor: Colors.transparent,
-                          labelStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                          tabs: <Widget>[
-                            Container(margin: const EdgeInsets.symmetric(horizontal: 10),child: Tab(text: contentViews[0])),
-                            Container(margin: const EdgeInsets.symmetric(horizontal: 10),child: Tab(text: contentViews[1])),
-                            Container(margin: const EdgeInsets.symmetric(horizontal: 10),child: Tab(text: contentViews[2])),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  height: 20,
-                  width: 20,
-                  decoration: BoxDecoration(color: AppColors.darkGreen),
-                )
-              ],
-            ),
-          ),
-        );
-}
-*/

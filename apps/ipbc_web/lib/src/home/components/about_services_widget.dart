@@ -146,7 +146,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  Widget titleBlocs(String title, String subtitle) => Column(
+  Widget titleBlocs(String title, String subtitle) =>
+      Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(

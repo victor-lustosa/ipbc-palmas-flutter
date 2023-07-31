@@ -142,7 +142,8 @@ class AppIcons {
   static const String announce = 'assets/icons/announce.png';
   static const String appleIcon = 'assets/icons/apple_icon.png';
   static const String playIcon = 'assets/icons/play_icon.png';
-  static const String callIcon = 'assets/icons/call.png';
+  static const String darkGreenCallIcon = 'assets/icons/dark_green_call_icon.png';
+  static const String callIcon = 'assets/icons/call_icon.png';
   static const String greenArrowIcon = 'assets/icons/green_arrow_icon.png';
   static const String darkGreenArrowIcon = 'assets/icons/dark_green_arrow_icon.png';
   static const String book = 'assets/icons/book.png';
