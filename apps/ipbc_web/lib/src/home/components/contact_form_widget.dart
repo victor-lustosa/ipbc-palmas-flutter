@@ -10,22 +10,22 @@ class ContactFormWidget extends StatefulWidget {
 }
 
 class _ContactFormWidgetState extends State<ContactFormWidget> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController messageController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
 
   final _nameKey = GlobalKey<FormState>();
   final _emailKey = GlobalKey<FormState>();
   final _messageKey = GlobalKey<FormState>();
 
-  String? nameErrorText;
-  String? emailErrorText;
-  String? messageErrorText;
+  String nameErrorText = 'por favor, insira um nome.';
+  String emailErrorText = 'por favor, insira um email válido.';
+  String messageErrorText = 'por favor, insira uma mensagem.';
 
-  bool isNameValid = true;
-  bool isEmailValid = true;
-  bool isMessageValid = true;
-  bool isSubmitted = false;
+  bool _isNameValid = true;
+  bool _isEmailValid = true;
+  bool _isMessageValid = true;
+  bool _isSubmitted = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,10 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin: const EdgeInsets.only(bottom: 13, top: 100),
+            margin: const EdgeInsets.only(
+              bottom: 13,
+              top: 100,
+            ),
             child: Text(
               'Entre em contato',
               textAlign: TextAlign.center,
@@ -59,235 +62,105 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
               ),
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 10),
-                child: Text(
-                  'Nome',
-                  style: AppFonts.defaultFont(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: const Color(0xff545456),
-                  ),
-                ),
+          field(
+              key: _nameKey,
+              margin: const EdgeInsets.only(bottom: 8),
+              title: 'Nome',
+              isValid: _isNameValid,
+              controller: _nameController,
+              hintText: 'Seu nome completo',
+              errorText: nameErrorText,
+              validator: (data) {
+                return _nameValidation(data);
+              }),
+          field(
+              key: _emailKey,
+              margin: const EdgeInsets.only(top: 16, bottom: 8),
+              title: 'Email',
+              isValid: _isEmailValid,
+              controller: _emailController,
+              hintText: 'me@company.com',
+              errorText: emailErrorText,
+              validator: (data) {
+                return _emailValidation(data);
+              }),
+          field(
+              key: _messageKey,
+              margin: const EdgeInsets.only(top: 16, bottom: 8),
+              title: 'Mensagem',
+              isValid: _isMessageValid,
+              controller: _messageController,
+              hintText: 'Sua mensagem...',
+              errorText: messageErrorText,
+              isDense: true,
+              maxLines: 5,
+              maxLength: 500,
+              heightField: 110,
+              contentPadding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+                top: 11,
               ),
-              Container(
-                width: 500,
-                height: 42,
-                decoration: BoxDecoration(
-                  color: const Color(0xffffffff),
-                  border: Border.all(
-                    color: isNameValid ? AppColors.white : Colors.red,
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: TextFormField(
-                  key: _nameKey,
-                  enabled: !isSubmitted,
-                  cursorColor: const Color(0xff979797),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  autofocus: false,
-                  controller: nameController,
-                  validator: (data) {
-                    return nameValidation(data);
-                  },
-                  keyboardType: TextInputType.text,
-                  inputFormatters: const <TextInputFormatter>[],
-                  decoration: InputDecoration(
-                    errorText: nameErrorText,
-                    contentPadding: const EdgeInsets.only(
-                      left: 10,
-                      right: 10,
-                      bottom: 9,
-                    ),
-                    hintText: 'Seu nome completo',
-                    hintStyle: AppFonts.defaultFont(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xff979797),
-                    ),
-                    border: InputBorder.none,
-                  ),
-                  style: AppFonts.defaultFont(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: const Color(0xff979797),
-                  ),
-                ),
-              ),
-            ],
-          ),
+              validator: (data) {
+                return _messageValidation(data);
+              }),
           Container(
-            margin: const EdgeInsets.only(top: 19, bottom: 19),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  child: Text(
-                    'Email',
-                    style: AppFonts.defaultFont(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xff545456),
-                    ),
-                  ),
-                ),
-                Builder(
-                  builder: (context) {
-                    return Container(
-                      width: 500,
-                      height: 42,
-                      decoration: BoxDecoration(
-                        color: const Color(0xffffffff),
-                        border: Border.all(
-                          color: isEmailValid ? AppColors.white : Colors.red,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: TextFormField(
-                        key: _emailKey,
-                        enabled: !isSubmitted,
-                        cursorColor: const Color(0xff979797),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        autofocus: false,
-                        controller: emailController,
-                        validator: (data) {
-                          return emailValidation(data);
-                        },
-                        keyboardType: TextInputType.text,
-                        inputFormatters: const <TextInputFormatter>[],
-                        decoration: InputDecoration(
-                          errorText: emailErrorText,
-                          contentPadding: const EdgeInsets.only(
-                            left: 10,
-                            right: 10,
-                            bottom: 9,
-                          ),
-                          hintText: 'me@company.com',
-                          hintStyle: AppFonts.defaultFont(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: const Color(0xff979797),
-                          ),
-                          border: InputBorder.none,
-                        ),
-                        style: AppFonts.defaultFont(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: const Color(0xff979797),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 8),
-                child: Text(
-                  'Mensagem',
-                  style: AppFonts.defaultFont(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: const Color(0xff545456),
-                  ),
-                ),
-              ),
-              Container(
-                width: 500,
-                height: 110,
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  border: Border.all(
-                    color: isMessageValid ? AppColors.white : Colors.red,
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: TextFormField(
-                  enabled: !isSubmitted,
-                  key: _messageKey,
-                  validator: (data) {
-                    return messageValidation(data);
-                  },
-                  cursorColor: const Color(0xff979797),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  autofocus: false,
-                  scrollPadding: const EdgeInsets.all(40.0),
-                  controller: messageController,
-                  keyboardType: TextInputType.text,
-                  inputFormatters: const <TextInputFormatter>[],
-                  maxLines: 5,
-                  maxLength: 500,
-                  decoration: InputDecoration(
-                    focusColor: AppColors.grey0,
-                    counterStyle: const TextStyle(color: Color(0xff979797)),
-                    contentPadding: const EdgeInsets.only(
-                      left: 10,
-                      right: 10,
-                      top: 13,
-                    ),
-                    errorText: messageErrorText,
-                    hintText: 'Sua mensagem...',
-                    isDense: true,
-                    hintStyle: AppFonts.defaultFont(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xff979797),
-                    ),
-                    border: InputBorder.none,
-                  ),
-                  style: AppFonts.defaultFont(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: const Color(0xff979797),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 32, bottom: 98),
+            margin: const EdgeInsets.only(top: 32, bottom: 100),
             width: 500,
             height: 49,
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                foregroundColor: AppColors.white,
-                backgroundColor: AppColors.darkGreen,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+              style: ButtonStyle(
+                overlayColor: _isSubmitted
+                    ? MaterialStateProperty.all<Color>(const Color(0xFF00E8A2))
+                    : null,
+                foregroundColor: _isSubmitted
+                    ? MaterialStateProperty.all<Color>(const Color(0xff242426))
+                    : MaterialStateProperty.all<Color>(AppColors.white),
+                shadowColor: MaterialStateProperty.all<Color>(AppColors.grey6),
+                backgroundColor: _isSubmitted
+                    ? MaterialStateProperty.all<Color>(const Color(0xFF00E8A2))
+                    : MaterialStateProperty.all<Color>(AppColors.darkGreen),
+                shape: MaterialStateProperty.all<OutlinedBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                 ),
-                textStyle: AppFonts.defaultFont(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.white,
+                textStyle: MaterialStateProperty.all<TextStyle?>(
+                  AppFonts.defaultFont(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.white,
+                  ),
                 ),
               ),
               onPressed: () {
-                if (nameController.text.isNotEmpty &&
-                    emailController.text.isNotEmpty &&
-                    messageController.text.isNotEmpty) {
-                  if (!EmailValidator.validate(emailController.text)) {
-                    callEmailValidationBorder();
-                  } else {
-                    setState(() {
-                      isSubmitted = true;
-                    });
-                    nameController.clear();
-                    messageController.clear();
-                    emailController.clear();
-                  }
+                if (_nameController.text.isEmpty && !_isSubmitted) {
+                  _nameBorderValidation(false);
+                }
+                if (_emailController.text.isEmpty && !_isSubmitted) {
+                  _emailBorderValidation(false);
+                }
+                if (_messageController.text.isEmpty && !_isSubmitted) {
+                  _messageBorderValidation(false);
+                }
+                if (_nameController.text.isNotEmpty &&
+                    _emailController.text.isNotEmpty &&
+                    _messageController.text.isNotEmpty &&
+                    _isNameValid &&
+                    _isEmailValid &&
+                    _isMessageValid &&
+                    !_isSubmitted) {
+                  setState(() {
+                    _isSubmitted = true;
+                  });
+                  _nameController.clear();
+                  _messageController.clear();
+                  _emailController.clear();
                 }
               },
               child: Center(
                 child: Text(
-                  isSubmitted ? 'Enviado!' : 'Enviar',
+                  _isSubmitted ? 'Enviado!' : 'Enviar',
                 ),
               ),
             ),
@@ -297,75 +170,153 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
     );
   }
 
-  cleanEmailValidationBorder() {
+  _nameBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
-      setState(() {
-        isEmailValid = true;
-        emailErrorText = null;
+    setState(() {
+      _isNameValid = value;
+     });
+    });
+  }
+
+  _emailBorderValidation(bool value) {
+    Future.delayed(Duration.zero, () async {
+    setState(() {
+      _isEmailValid = value;
       });
     });
   }
 
-  callEmailValidationBorder() {
+  _messageBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
-      setState(() {
-        emailErrorText = 'por favor, escreva um email válido.';
-        isEmailValid = false;
+    setState(() {
+      _isMessageValid = value;
       });
     });
   }
 
-  emailValidation(String? data) {
-    if (data != null && !isSubmitted) {
-      if (data.isEmpty && emailErrorText == null) {
-        callEmailValidationBorder();
+  _emailValidation(String? data) {
+    if (data != null && !_isSubmitted) {
+      if (data.isEmpty) {
+        _emailBorderValidation(true);
         return null;
       }
-      if (data.isNotEmpty &&
-          emailErrorText != null &&
-          EmailValidator.validate(emailController.text)) {
-        cleanEmailValidationBorder();
+      if (data.isNotEmpty && EmailValidator.validate(_emailController.text)) {
+        _emailBorderValidation(true);
         return null;
       }
     } else {
-      cleanEmailValidationBorder();
+      _emailBorderValidation(false);
       return null;
     }
   }
 
-  nameValidation(String? data) {
-    if (data == null || data.isEmpty && !isSubmitted) {
-      Future.delayed(Duration.zero, () async {
-        setState(() {
-          isNameValid = false;
-        });
-      });
+  _nameValidation(String? data) {
+    if (data == null || data.isEmpty && !_isSubmitted) {
+      _nameBorderValidation(false);
       return null;
     } else {
-      Future.delayed(Duration.zero, () async {
-        setState(() {
-          isNameValid = true;
-        });
-      });
+      _nameBorderValidation(true);
       return null;
     }
   }
 
-  messageValidation(String? data) {
-    if (data == null || data.isEmpty && !isSubmitted) {
-      Future.delayed(Duration.zero, () async {
-        setState(() {
-          isMessageValid = false;
-        });
-      });
+  _messageValidation(String? data) {
+    if (data == null || data.isEmpty && !_isSubmitted) {
+      _messageBorderValidation(false);
       return null;
     } else {
-      Future.delayed(Duration.zero, () async {
-        setState(() {
-          isMessageValid = true;
-        });
-      });
+      _messageBorderValidation(true);
       return null;
     }
+  }
+
+  field(
+      {required Key key,
+      required String title,
+      required bool isValid,
+      required String hintText,
+      required String errorText,
+      required FormFieldValidator validator,
+      required TextEditingController controller,
+      bool? isDense,
+      int? maxLines,
+      int? maxLength,
+      double? heightField,
+      EdgeInsetsGeometry? margin,
+      EdgeInsetsGeometry? contentPadding}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: margin,
+          child: Text(
+            title,
+            style: AppFonts.defaultFont(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: const Color(0xff545456),
+            ),
+          ),
+        ),
+        Container(
+          width: 500,
+          height: heightField ?? 42,
+          decoration: BoxDecoration(
+            color: const Color(0xffffffff),
+            border: Border.all(
+              color: isValid ? AppColors.white : Colors.red,
+            ),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: TextFormField(
+            key: key,
+            enabled: !_isSubmitted,
+            cursorColor: const Color(0xff979797),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            controller: controller,
+            validator: validator,
+            maxLines: maxLines,
+            maxLength: maxLength,
+            keyboardType: TextInputType.text,
+            inputFormatters: const <TextInputFormatter>[],
+            decoration: InputDecoration(
+              isDense: isDense,
+              hintText: hintText,
+              border: InputBorder.none,
+              contentPadding: contentPadding ??
+                  const EdgeInsets.only(
+                    left: 10,
+                    right: 10,
+                    bottom: 10,
+                  ),
+              hintStyle: AppFonts.defaultFont(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: isValid ? const Color(0xff979797) : Colors.red,
+              ),
+            ),
+            style: AppFonts.defaultFont(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: isValid ? const Color(0xff979797) : Colors.red,
+            ),
+          ),
+        ),
+        Visibility(
+          visible: !isValid,
+          child: Container(
+            margin: const EdgeInsets.only(top: 4, left: 2),
+            child: Text(
+              errorText,
+              style: AppFonts.defaultFont(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Colors.red,
+              ),
+            ),
+          ),
+        )
+      ],
+    );
   }
 }

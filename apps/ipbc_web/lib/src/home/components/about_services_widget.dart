@@ -1,5 +1,8 @@
 import 'package:core_module/core_module.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import '../view_models/home_view_model.dart';
 
 class AboutServices {
   AboutServices({required this.label, required this.imagePath});
@@ -8,18 +11,19 @@ class AboutServices {
 }
 
 class AboutServicesWidget extends StatefulWidget {
-  const AboutServicesWidget({super.key});
+  const AboutServicesWidget({super.key, required this.viewModel});
+
+  final HomeViewModel viewModel;
 
   @override
   State<AboutServicesWidget> createState() => _AboutServicesWidgetState();
 }
 
 class _AboutServicesWidgetState extends State<AboutServicesWidget> {
-
- final List<AboutServices> labelsRightBloc = [
-    AboutServices(label: 'Culto de Domingo', imagePath: AppImages.sundayEveningService),
+  final List<AboutServices> labelsRightBloc = [
+    AboutServices(label: 'Culto Solene', imagePath: AppImages.sundayEveningService),
     AboutServices(label: 'Culto de Jovens', imagePath: AppImages.saturdayService),
-    AboutServices(label: 'EBD', imagePath: AppImages.sundayMorningService),
+    AboutServices(label: 'Escola Bíblica Dominical', imagePath: AppImages.sundayMorningService),
     AboutServices(label: 'Pequeno Grupo', imagePath: AppImages.littleGroup),
   ];
 
@@ -54,9 +58,9 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      titleBlocs('Cultos de Domingo', '9h e 19h, na IPBC Palmas'),
-                      titleBlocs('Cultos de Jovens', 'Sábado às 19h30 na IPBC Palmas'),
-                      titleBlocs('EBD', 'Todos os domingos às 9h, na IPBC Palmas'),
+                      cardTitle('Cultos Solenes', 'Domingo às 19h, na IPBC Palmas'),
+                      cardTitle('Cultos de Jovens', 'Sábado às 19h30 na IPBC Palmas'),
+                      cardTitle('Escola Bíblica Dominical', 'Domingo às 9h, na IPBC Palmas'),
                       Container(
                         margin: const EdgeInsets.only(bottom: 20),
                         child: Text(
@@ -77,8 +81,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                           ),
                           children: [
                             TextSpan(
-                              text:
-                                  'Terças e quartas em diversas localidades. ',
+                              text: 'Durante a semana em diversas localidades. ',
                               style: AppFonts.defaultFont(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w400,
@@ -87,6 +90,18 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                             ),
                             TextSpan(
                               text: 'Entrar em contato para mais informações.',
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => setState(
+                                      () {
+                                        widget.viewModel.scrollViewController
+                                            .animateTo(
+                                          duration: const Duration(
+                                              milliseconds: 1500),
+                                          curve: Curves.easeInOutQuint,
+                                          3985,
+                                        );
+                                      },
+                                    ),
                               style: AppFonts.defaultFont(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w400,
@@ -113,7 +128,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                       itemCount: labelsRightBloc.length,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (_, index) {
-                        return imageBlocs(labelsRightBloc[index].imagePath, labelsRightBloc[index].label);
+                        return cardImage(labelsRightBloc[index].imagePath,
+                            labelsRightBloc[index].label);
                       },
                     ),
                   ),
@@ -126,8 +142,13 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
     );
   }
 
-  Widget imageBlocs(String image, String title) => Container(
-        padding: const EdgeInsets.only(left: 16, top: 270, right: 16, bottom: 16),
+  Widget cardImage(String image, String title) => Container(
+        padding: const EdgeInsets.only(
+          left: 16,
+          top: 270,
+          right: 16,
+          bottom: 16,
+        ),
         decoration: BoxDecoration(
           color: const Color(0x33005b40),
           borderRadius: BorderRadius.circular(20),
@@ -146,8 +167,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  Widget titleBlocs(String title, String subtitle) =>
-      Column(
+  Widget cardTitle(String title, String subtitle) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(

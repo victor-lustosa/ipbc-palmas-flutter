@@ -46,41 +46,13 @@ class _FooterWidgetState extends State<FooterWidget> {
                         children: [
                           Container(
                             margin: const EdgeInsets.only(bottom: 16),
-                            child: Text(
-                              'Localização',
-                              style: AppFonts.defaultFont(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: const Color(0xffffffff),
-                              ),
-                            ),
+                            child: titleInfo('Localização'),
                           ),
-                          Text(
-                            'Q. Arse 23, Av.Ns 06, Ai 09',
-                            style: AppFonts.defaultFont(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xffffffff),
-                            ),
-                          ),
+                          subtitleInfo('Q. Arse 23, Av.Ns 06, Ai 09'),
                           const SizedBox(height: 8),
-                          Text(
-                            'CEP: 77020-544',
-                            style: AppFonts.defaultFont(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xffffffff),
-                            ),
-                          ),
+                          subtitleInfo('CEP: 77020-544'),
                           const SizedBox(height: 8),
-                          Text(
-                            'Palmas/TO',
-                            style: AppFonts.defaultFont(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xffffffff),
-                            ),
-                          ),
+                          subtitleInfo('Palmas/TO'),
                         ],
                       ),
                       Column(
@@ -88,41 +60,13 @@ class _FooterWidgetState extends State<FooterWidget> {
                         children: [
                           Container(
                             margin: const EdgeInsets.only(bottom: 16),
-                            child: Text(
-                              'Contatos',
-                              style: AppFonts.defaultFont(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: const Color(0xffffffff),
-                              ),
-                            ),
+                            child: titleInfo('Contatos'),
                           ),
-                          Text(
-                            'Secretaria da Igreja',
-                            style: AppFonts.defaultFont(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xffffffff),
-                            ),
-                          ),
+                          subtitleInfo('Secretaria da Igreja'),
                           const SizedBox(height: 8),
-                          Text(
-                            '+55 (63) 3213-2775',
-                            style: AppFonts.defaultFont(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xffffffff),
-                            ),
-                          ),
+                          subtitleInfo('+55 (63) 3213-2775'),
                           const SizedBox(height: 8),
-                          Text(
-                            '8h as 12h - 14h as 18h',
-                            style: AppFonts.defaultFont(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xffffffff),
-                            ),
-                          ),
+                          subtitleInfo('8h as 12h - 14h as 18h'),
                         ],
                       ),
                       Column(
@@ -130,34 +74,13 @@ class _FooterWidgetState extends State<FooterWidget> {
                         children: [
                           Container(
                             margin: const EdgeInsets.only(bottom: 16),
-                            child: Text(
-                              'Cultos',
-                              style: AppFonts.defaultFont(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: const Color(0xffffffff),
-                              ),
-                            ),
+                            child: titleInfo('Cultos'),
                           ),
                           Container(
                             margin: const EdgeInsets.only(bottom: 8),
-                            child: Text(
-                              'Domingo às 9h e 19h',
-                              style: AppFonts.defaultFont(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: const Color(0xffffffff),
-                              ),
-                            ),
+                            child: subtitleInfo('Domingo às 9h e 19h'),
                           ),
-                          Text(
-                            'Sábado às 19h30',
-                            style: AppFonts.defaultFont(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xffffffff),
-                            ),
-                          ),
+                          subtitleInfo('Sábado às 19h30')
                         ],
                       ),
                     ],
@@ -168,18 +91,32 @@ class _FooterWidgetState extends State<FooterWidget> {
           ),
           Container(
             margin: const EdgeInsets.only(bottom: 31),
-            child: Text(
+            child: subtitleInfo(
               'Copyright © 2023 Igreja Presbiteriana Central em Palmas/TO',
               textAlign: TextAlign.center,
-              style: AppFonts.defaultFont(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: const Color(0xffffffff),
-              ),
             ),
-          ),
+          )
         ],
       ),
     );
   }
+
+  titleInfo(String text, {TextAlign? textAlign}) => Text(
+        text,
+        style: AppFonts.defaultFont(
+          fontSize: 14,
+          fontWeight: FontWeight.w700,
+          color: const Color(0xffffffff),
+        ),
+      );
+
+  subtitleInfo(String text, {TextAlign? textAlign}) => Text(
+        text,
+        textAlign: textAlign,
+        style: AppFonts.defaultFont(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: const Color(0xffffffff),
+        ),
+      );
 }

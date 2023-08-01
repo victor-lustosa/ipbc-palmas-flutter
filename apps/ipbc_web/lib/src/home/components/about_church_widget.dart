@@ -121,21 +121,21 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  infoBlocs(
+                  cardMission(
                     AppIcons.announce,
                     'Anunciar o reino de Deus',
                   ),
                   const SizedBox(
                     height: 16,
                   ),
-                  infoBlocs(
+                  cardMission(
                     AppIcons.book,
                     'Educar para a vivência cristã',
                   ),
                   const SizedBox(
                     height: 16,
                   ),
-                  infoBlocs(
+                  cardMission(
                     AppIcons.volunteerActivismCube,
                     'Assistir o ser humano em suas necessidades',
                   )
@@ -148,7 +148,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
     );
   }
 
-  Widget infoBlocs(String image, String text) =>
+  Widget cardMission(String image, String text) =>
       SizedBox(
         height: 80,
         child: Row(

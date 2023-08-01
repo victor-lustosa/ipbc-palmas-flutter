@@ -4,9 +4,9 @@ import '../../../home/view_models/home_view_model.dart';
 import '../../components/tab_buttons_widget.dart';
 
 class TopBarWidget extends StatefulWidget {
-  const TopBarWidget({super.key, required this.homeViewModel});
+  const TopBarWidget({super.key, required this.viewModel});
 
-  final HomeViewModel homeViewModel;
+  final HomeViewModel viewModel;
 
   @override
   State<TopBarWidget> createState() => _TopBarWidgetState();
@@ -125,7 +125,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
 
   scrollPage(double position) {
     setState(() {
-      widget.homeViewModel.scrollViewController.animateTo(
+      widget.viewModel.scrollViewController.animateTo(
           duration: const Duration(milliseconds: 1500),
           curve: Curves.easeInOutQuint,
           position);

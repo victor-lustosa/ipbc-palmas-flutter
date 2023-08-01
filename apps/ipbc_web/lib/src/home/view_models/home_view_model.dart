@@ -2,6 +2,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class HomeViewModel with EmailMixin {
+
   ScrollController scrollViewController = ScrollController();
 
   sendBySendGrid(){

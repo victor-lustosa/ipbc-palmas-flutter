@@ -33,10 +33,10 @@ class _HomeViewState extends State<HomeView> {
         controller: homeViewModel.scrollViewController,
           child: Column(
             children: [
-              TopBarWidget(homeViewModel: homeViewModel),
+              TopBarWidget(viewModel: homeViewModel),
               const AboutChurchWidget(),
               const LocationWidget(),
-              const AboutServicesWidget(),
+              AboutServicesWidget(viewModel: homeViewModel),
               const AppStoresWidget(),
               const ContactFormWidget(),
               const FooterWidget()
