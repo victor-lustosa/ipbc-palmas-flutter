@@ -20,8 +20,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
     }
   }
 
-  web() =>
-      Column(
+  web() => Column(
         children: [
           Container(
             decoration: const BoxDecoration(
@@ -73,20 +72,19 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                       Container(
                         width: 560,
                         margin: const EdgeInsets.only(top: 16),
-                        child: aboutChurchText(TextAlign.start),
+                        child: aboutChurchText(textAlign: TextAlign.start),
                       ),
                     ],
                   ),
                 ),
-                churchMissions(555, 445)
+                churchMissions(width: 555, textWidth: 445)
               ],
             ),
           )
         ],
       );
 
-  tablet() =>
-      Column(
+  tablet() => Column(
         children: [
           Container(
             decoration: const BoxDecoration(
@@ -124,7 +122,9 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
               top: 100,
             ),
             width: 1200,
-            decoration:  BoxDecoration(color: Color(0xffffffff),border: Border.all(color: Colors.red)),
+            decoration: const BoxDecoration(
+              color: Color(0xffffffff),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -136,11 +136,10 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                     top: 16,
                     bottom: 64,
                   ),
-                  decoration:  BoxDecoration(border: Border.all(color: Colors.red)),
-                  child: aboutChurchText(TextAlign.center),
+                  child: aboutChurchText(textAlign: TextAlign.center),
                 ),
                 Container(
-                  child: churchMissions(605, 445),
+                  child: churchMissions(width: 605, textWidth: 445),
                 )
               ],
             ),
@@ -148,8 +147,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         ],
       );
 
-  mobile() =>
-      Column(
+  mobile() => Column(
         children: [
           Container(
             decoration: const BoxDecoration(
@@ -162,15 +160,13 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                 bottom: 100,
               ),
               child: Container(
-                margin: const EdgeInsets.only(top: 100),
+                margin: const EdgeInsets.only(top: 80),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     titlePage(fontSize: 40),
                     subtitlePage(fontSize: 20, width: 422),
-                    mainImage(
-                      height: 393,
-                    ),
+                    mainImage(height: 393),
                   ],
                 ),
               ),
@@ -180,7 +176,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
             margin: EdgeInsets.only(
               left: MediaQuery.of(context).size.width * 0.01,
               right: MediaQuery.of(context).size.width * 0.01,
-              top: 100,
+              top: 64,
             ),
             width: 1200,
             decoration: const BoxDecoration(color: Color(0xffffffff)),
@@ -188,27 +184,24 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                titleAbout(fontSize: 38),
+                titleAbout(fontSize: 32),
                 Container(
                   width: 470,
-                  margin: const EdgeInsets.only(
-                    top: 16,
-                    bottom: 40,
-                  ),
-                  child: aboutChurchText(TextAlign.center),
+                  margin: const EdgeInsets.only(top: 16, bottom: 75),
+                  child: aboutChurchText(textAlign: TextAlign.center),
                 ),
-                churchMissions(410, 300)
+                churchMissions(width: 430, textWidth: 300, textHeight: 1.5),
               ],
             ),
           )
         ],
       );
 
-  titlePage({required double fontSize}) =>
-      Text(
+  titlePage({required double fontSize}) => Text(
         'Uma comunidade de fé',
         textAlign: TextAlign.center,
         style: AppFonts.defaultFont(
+          height: 1.5,
           fontSize: fontSize,
           fontWeight: FontWeight.w600,
           color: const Color(0xff242426),
@@ -223,6 +216,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
           'A Igreja Presbiteriana Central em Palmas existe para unir o povo de Deus e ajudar sua comunidade.',
           textAlign: TextAlign.center,
           style: AppFonts.defaultFont(
+            height: 1.5,
             fontSize: fontSize,
             fontWeight: FontWeight.w500,
             color: const Color(0xff545456),
@@ -230,8 +224,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         ),
       );
 
-  mainImage({double? width, required double height}) =>
-      Container(
+  mainImage({double? width, required double height}) => Container(
         width: width,
         height: height,
         margin: const EdgeInsets.only(top: 40),
@@ -252,8 +245,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         ),
       );
 
-  titleAbout({required double fontSize}) =>
-      Text(
+  titleAbout({required double fontSize}) => Text(
         'Sobre a IPBC Palmas',
         style: AppFonts.defaultFont(
           fontSize: fontSize,
@@ -262,47 +254,54 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         ),
       );
 
-  aboutChurchText(TextAlign textAlign) =>
-      Text(
+  aboutChurchText({required TextAlign textAlign}) => Text(
         textAlign: textAlign,
         'Há 30 anos em Palmas/TO, a Igreja Presbiteriana Central de Palmas existe para servir e nutrir os membros, ajudar a sociedade e espalhar as boas notícias do Evangelho.',
         style: AppFonts.defaultFont(
           fontSize: 18,
+          height: 1.5,
           fontWeight: FontWeight.w400,
           color: const Color(0xff545456),
         ),
       );
 
-  churchMissions(double width, double textWidth) =>
+  churchMissions({
+    required double width,
+    required double textWidth,
+    double? textHeight}) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           cardMission(
-            AppIcons.announce,
-            'Anunciar o reino de Deus',
-            width,
-            textWidth,
+            image: AppIcons.announce,
+            text: 'Anunciar o reino de Deus',
+            width: width,
+            textWidth: textWidth,
           ),
           const SizedBox(height: 16),
           cardMission(
-            AppIcons.book,
-            'Educar para a vivência cristã',
-            width,
-            textWidth,
+            image: AppIcons.book,
+            text: 'Educar para a vivência cristã',
+            width: width,
+            textWidth: textWidth,
           ),
           const SizedBox(height: 16),
           cardMission(
-            AppIcons.volunteerActivismCube,
-            'Assistir o ser humano em suas necessidades',
-            width,
-            textWidth,
-          )
+              image: AppIcons.volunteerActivismCube,
+             text: 'Assistir o ser humano em suas necessidades',
+             width: width,
+              textWidth: textWidth,
+          ),
         ],
       );
 
-  Widget cardMission(String image, String text, double width, double textWidth) =>
-      Container(
-        decoration:  BoxDecoration(border: Border.all(color: Colors.red)),
+  Widget cardMission({
+    required String image,
+    required String text,
+    required double width,
+    required double textWidth
+  }) =>
+      SizedBox(
         height: 80,
         width: width,
         child: Row(
@@ -326,6 +325,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                 text,
                 style: AppFonts.defaultFont(
                   fontSize: 20,
+                  height: 1.5,
                   fontWeight: FontWeight.w500,
                   color: const Color(0xff545456),
                 ),

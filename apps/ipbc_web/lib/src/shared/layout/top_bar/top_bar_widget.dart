@@ -29,22 +29,12 @@ class _TopBarWidgetState extends State<TopBarWidget> {
       Column(
         children: [
           Container(
-            margin: EdgeInsets.only(
-              top: 24,
-              left: TopBarResponsive.leftWidth(MediaQuery.of(context).size.width),
-              right: TopBarResponsive.rightWidth(MediaQuery.of(context).size.width),
-              bottom: 24,
-            ),
+            margin: upperMargin(value: 24),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Image(
-                  width: 100,
-                  image: AssetImage(
-                    AppImages.logo,
-                  ),
-                ),
-              SizedBox(
+                heroImage(),
+                SizedBox(
                 width: 693,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -87,21 +77,15 @@ class _TopBarWidgetState extends State<TopBarWidget> {
         ],
       );
 
-
   tablet() =>
       Column(
         children: [
           Container(
-            margin: smallMargin(),
+            margin: upperMargin(value: 12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Image(
-                  width: 100,
-                  image: AssetImage(
-                    AppImages.logo,
-                  ),
-                ),
+                heroImage(),
                 contactButton()
               ],
             ),
@@ -116,16 +100,11 @@ class _TopBarWidgetState extends State<TopBarWidget> {
   mobile() => Column(
         children: [
           Container(
-            margin: smallMargin(),
+            margin: upperMargin(value: 12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Image(
-                  width: 100,
-                  image: AssetImage(
-                    AppImages.logo,
-                  ),
-                ),
+                heroImage(),
                 smallContactButton()
               ],
             ),
@@ -136,6 +115,13 @@ class _TopBarWidgetState extends State<TopBarWidget> {
           )
         ],
       );
+
+  heroImage() =>  const Image(
+    width: 100,
+    image: AssetImage(
+      AppImages.logo,
+    ),
+  );
 
   contactButton() => SizedBox(
         width: 259,
@@ -212,12 +198,14 @@ class _TopBarWidgetState extends State<TopBarWidget> {
           ),
         ),
       );
-  smallMargin() => EdgeInsets.only(
-    top: 12,
+
+  upperMargin({required double value}) => EdgeInsets.only(
+    top: value,
     left: TopBarResponsive.leftWidth(MediaQuery.of(context).size.width),
     right: TopBarResponsive.rightWidth(MediaQuery.of(context).size.width),
-    bottom: 12,
+    bottom: value,
   );
+
   scrollPage(double position) {
     setState(() {
       context.read<HomeViewModel>().scrollViewController.animateTo(
