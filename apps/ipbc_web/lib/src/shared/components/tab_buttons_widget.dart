@@ -9,25 +9,22 @@ class TabButtonsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 34,left: 5),
-      child: TextButton(
-        style: ButtonStyle(
-          textStyle: MaterialStateProperty.all<TextStyle?>(
-            AppFonts.defaultFont(fontSize: 18),
-          ),
-          foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                  (Set<MaterialState> states) {
-                return states.contains(MaterialState.hovered)
-                    ? AppColors.darkGreen
-                    : AppColors.grey6; // Defer to the widget's default.
-              }),
-          overlayColor: MaterialStateProperty.all<Color>(Colors.white),
-          backgroundColor: MaterialStateProperty.all<Color>(AppColors.white),
+    return TextButton(
+      style: ButtonStyle(
+        textStyle: MaterialStateProperty.all<TextStyle?>(
+          AppFonts.defaultFont(fontSize: 18),
         ),
-        onPressed: action,
-        child: Text(label),
+        foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+              return states.contains(MaterialState.hovered)
+                  ? AppColors.darkGreen
+                  : AppColors.grey6; // Defer to the widget's default.
+            }),
+        overlayColor: MaterialStateProperty.all<Color>(Colors.white),
+        backgroundColor: MaterialStateProperty.all<Color>(AppColors.white),
       ),
+      onPressed: action,
+      child: Text(label),
     );
   }
 }

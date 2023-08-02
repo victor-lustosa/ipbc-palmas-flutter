@@ -150,12 +150,16 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
                     _isEmailValid &&
                     _isMessageValid &&
                     !_isSubmitted) {
-                  setState(() {
-                    _isSubmitted = true;
-                  });
-                  _nameController.clear();
-                  _messageController.clear();
-                  _emailController.clear();
+                  if(EmailValidator.validate(_emailController.text)){
+                    setState(() {
+                      _isSubmitted = true;
+                    });
+                    _nameController.clear();
+                    _messageController.clear();
+                    _emailController.clear();
+                  } else{
+                    _emailBorderValidation(false);
+                  }
                 }
               },
               child: Center(
@@ -195,18 +199,17 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
   }
 
   _emailValidation(String? data) {
-    if (data != null && !_isSubmitted) {
-      if (data.isEmpty) {
-        _emailBorderValidation(true);
+    if (data == null || data.isEmpty && !_isSubmitted) {
+        _emailBorderValidation(false);
         return null;
-      }
-      if (data.isNotEmpty && EmailValidator.validate(_emailController.text)) {
-        _emailBorderValidation(true);
-        return null;
-      }
     } else {
-      _emailBorderValidation(false);
-      return null;
+      if (EmailValidator.validate(_emailController.text)) {
+        _emailBorderValidation(true);
+        return null;
+      } else{
+        _emailBorderValidation(false);
+        return null;
+      }
     }
   }
 
@@ -264,7 +267,9 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
           decoration: BoxDecoration(
             color: const Color(0xffffffff),
             border: Border.all(
-              color: isValid ? AppColors.white : Colors.red,
+              color: isValid
+                  ? AppColors.white
+                  : Colors.red,
             ),
             borderRadius: BorderRadius.circular(12),
           ),
@@ -280,6 +285,13 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
             keyboardType: TextInputType.text,
             inputFormatters: const <TextInputFormatter>[],
             decoration: InputDecoration(
+              counterStyle: AppFonts.defaultFont(
+                fontSize: 10,
+                fontWeight: FontWeight.w400,
+                color: isValid
+                    ? const Color(0xff979797)
+                    : Colors.red,
+              ),
               isDense: isDense,
               hintText: hintText,
               border: InputBorder.none,
@@ -292,13 +304,17 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
               hintStyle: AppFonts.defaultFont(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                color: isValid ? const Color(0xff979797) : Colors.red,
+                color: isValid
+                    ? const Color(0xff979797)
+                    : Colors.red,
               ),
             ),
             style: AppFonts.defaultFont(
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: isValid ? const Color(0xff979797) : Colors.red,
+              color: isValid
+                  ? const Color(0xff979797)
+                  : Colors.red,
             ),
           ),
         ),
