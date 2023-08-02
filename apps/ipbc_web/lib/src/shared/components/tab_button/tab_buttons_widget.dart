@@ -19,7 +19,8 @@ class TabButtonsWidget extends StatelessWidget {
               return states.contains(MaterialState.hovered)
                   ? AppColors.darkGreen
                   : AppColors.grey6; // Defer to the widget's default.
-            }),
+            },
+         ),
         overlayColor: MaterialStateProperty.all<Color>(Colors.white),
         backgroundColor: MaterialStateProperty.all<Color>(AppColors.white),
       ),

@@ -11,9 +11,7 @@ class AboutServices {
 }
 
 class AboutServicesWidget extends StatefulWidget {
-  const AboutServicesWidget({super.key, required this.viewModel});
-
-  final HomeViewModel viewModel;
+  const AboutServicesWidget({super.key});
 
   @override
   State<AboutServicesWidget> createState() => _AboutServicesWidgetState();
@@ -58,8 +56,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      cardTitle('Cultos Solenes', 'Domingo às 19h, na IPBC Palmas'),
-                      cardTitle('Cultos de Jovens', 'Sábado às 19h30 na IPBC Palmas'),
+                      cardTitle('Culto Solene', 'Domingo às 19h, na IPBC Palmas'),
+                      cardTitle('Culto de Jovens', 'Sábado às 19h30 na IPBC Palmas'),
                       cardTitle('Escola Bíblica Dominical', 'Domingo às 9h, na IPBC Palmas'),
                       Container(
                         margin: const EdgeInsets.only(bottom: 20),
@@ -93,7 +91,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () => setState(
                                       () {
-                                        widget.viewModel.scrollViewController
+                                        context.read<HomeViewModel>().scrollViewController
                                             .animateTo(
                                           duration: const Duration(
                                               milliseconds: 1500),

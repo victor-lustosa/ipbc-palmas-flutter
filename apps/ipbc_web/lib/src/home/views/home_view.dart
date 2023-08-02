@@ -17,10 +17,8 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  late HomeViewModel homeViewModel;
   @override
   void initState() {
-    homeViewModel = context.read<HomeViewModel>();
     super.initState();
 
   }
@@ -30,16 +28,16 @@ class _HomeViewState extends State<HomeView> {
     return  Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-        controller: homeViewModel.scrollViewController,
-          child: Column(
+        controller: context.read<HomeViewModel>().scrollViewController,
+          child: const Column(
             children: [
-              TopBarWidget(viewModel: homeViewModel),
-              const AboutChurchWidget(),
-              const LocationWidget(),
-              AboutServicesWidget(viewModel: homeViewModel),
-              const AppStoresWidget(),
-              const ContactFormWidget(),
-              const FooterWidget()
+              TopBarWidget(),
+              AboutChurchWidget(),
+              LocationWidget(),
+              AboutServicesWidget(),
+              AppStoresWidget(),
+              ContactFormWidget(),
+              FooterWidget()
             ],
           ),
         ),

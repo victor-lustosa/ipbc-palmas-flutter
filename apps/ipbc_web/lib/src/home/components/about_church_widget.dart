@@ -96,7 +96,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
               margin: const EdgeInsets.only(
                 left: 24,
                 right: 24,
-                bottom: 100,
+                bottom: 40,
               ),
               child: Container(
                 margin: const EdgeInsets.only(top: 100),
@@ -124,7 +124,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
               top: 100,
             ),
             width: 1200,
-            decoration: const BoxDecoration(color: Color(0xffffffff)),
+            decoration:  BoxDecoration(color: Color(0xffffffff),border: Border.all(color: Colors.red)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -134,11 +134,14 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                   width: 600,
                   margin: const EdgeInsets.only(
                     top: 16,
-                    bottom: 40,
+                    bottom: 64,
                   ),
+                  decoration:  BoxDecoration(border: Border.all(color: Colors.red)),
                   child: aboutChurchText(TextAlign.center),
                 ),
-                churchMissions(555, 445)
+                Container(
+                  child: churchMissions(605, 445),
+                )
               ],
             ),
           )
@@ -298,7 +301,8 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
       );
 
   Widget cardMission(String image, String text, double width, double textWidth) =>
-      SizedBox(
+      Container(
+        decoration:  BoxDecoration(border: Border.all(color: Colors.red)),
         height: 80,
         width: width,
         child: Row(
