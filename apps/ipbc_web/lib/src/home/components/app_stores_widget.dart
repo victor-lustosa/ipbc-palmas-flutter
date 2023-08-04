@@ -28,11 +28,11 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
   Widget build(BuildContext context) {
     if (MediaQuery.of(context).size.width > 1200) {
       return web();
-    } else if (MediaQuery.of(context).size.width > 640) {
+    } else if (MediaQuery.of(context).size.width > 800) {
       return tablet();
     } else {
       return AppStoresMobile(
-        title: title(),
+        title: title(fontSize: 32),
         subtitle: subtitle(),
         playButton: playButton(),
         appButton: appButton(),
@@ -49,7 +49,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
           child: Stack(
             children: [
               Positioned(
-                left: 280.341003418,
+                left: 170,
                 top: 15,
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
@@ -68,7 +68,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(bottom: 23),
-                        child: title(),
+                        child: title(fontSize: 46),
                       ),
                       Container(
                         margin: const EdgeInsets.only(bottom: 40),
@@ -93,16 +93,16 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
       );
 
   tablet() => Container(
-        height: 734,
+        height: 780,
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(color: Color(0xff005b40)),
         child: Container(
-          margin: const EdgeInsets.only(left: 120, top: 100),
+          margin: const EdgeInsets.only(top: 80),
           child: Stack(
             children: [
               Positioned(
-                left: 280.341003418,
-                top: 15,
+                top: 200,
+                right: 1,
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: 684.81,
@@ -112,6 +112,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
                 ),
               ),
               Positioned(
+                left: 120,
                 child: SizedBox(
                   width: 571,
                   height: 253,
@@ -120,7 +121,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(bottom: 23),
-                        child: title(),
+                        child: title(fontSize: 46),
                       ),
                       Container(
                         margin: const EdgeInsets.only(bottom: 40),
@@ -144,19 +145,21 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         ),
       );
 
-  title() => Text(
+  title({required double fontSize}) => Text(
         'Baixe o IPBC App',
         style: AppFonts.defaultFont(
-          fontSize: 46,
+          fontSize: fontSize,
           fontWeight: FontWeight.w600,
           color: const Color(0xffffffff),
         ),
       );
 
   subtitle() => Text(
+    textAlign:TextAlign.center,
         'Acompanhe a liturgia dos cultos, as letras das músicas cantadas e em breve, comunicações, eventos e mensagens pregadas.',
         style: AppFonts.defaultFont(
           fontSize: 18,
+          height: 1.5,
           fontWeight: FontWeight.w400,
           color: const Color(0xffffffff),
         ),
@@ -194,49 +197,42 @@ class AppStoresMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 734,
+      height: 780,
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(color: Color(0xff005b40)),
       child: Container(
-        margin: const EdgeInsets.only(left: 120, top: 100),
+        margin: const EdgeInsets.only(left: 0, top: 60),
         child: Stack(
+          alignment: Alignment.center,
           children: [
             Positioned(
-              left: 280.341003418,
-              top: 15,
               child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 684.81,
-                child: const Image(
-                  image: AssetImage(AppImages.bannerStore),
-                ),
-              ),
-            ),
-            Positioned(
-              child: SizedBox(
-                width: 571,
-                height: 253,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       margin: const EdgeInsets.only(bottom: 23),
                       child: title,
                     ),
                     Container(
+                      width: 400,
                       margin: const EdgeInsets.only(bottom: 40),
                       child: subtitle,
                     ),
-                    Row(
-                      children: [
-                        appButton,
-                        Container(
-                            margin: const EdgeInsets.only(left: 24),
-                            child: playButton,
-                        ),
-                      ],
+                    appButton,
+                    Container(
+                        margin: const EdgeInsets.only(top: 24),
+                        child: playButton,
                     ),
                   ],
+                ),
+              ),
+            ),
+            Positioned(
+              top: 420,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: const Image(
+                  image: AssetImage(AppImages.bannerStore),
                 ),
               ),
             ),

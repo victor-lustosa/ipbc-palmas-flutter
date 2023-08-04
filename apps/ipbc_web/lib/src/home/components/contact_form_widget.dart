@@ -29,184 +29,227 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: const BoxDecoration(color: Color(0xfff3f3f3)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(
-              bottom: 13,
-              top: 100,
-            ),
-            child: Text(
-              'Entre em contato',
-              textAlign: TextAlign.center,
-              style: AppFonts.defaultFont(
-                fontSize: 32,
-                fontWeight: FontWeight.w700,
-                color: const Color(0xff242426),
-              ),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(bottom: 42),
-            child: Text(
-              'Envie seu pedido de oração, solicitação ou dúvida.',
-              textAlign: TextAlign.center,
-              style: AppFonts.defaultFont(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-                color: const Color(0xff545456),
-              ),
-            ),
-          ),
-          field(
-              key: _nameKey,
-              margin: const EdgeInsets.only(bottom: 8),
-              title: 'Nome',
-              isValid: _isNameValid,
-              controller: _nameController,
-              hintText: 'Seu nome completo',
-              errorText: nameErrorText,
-              validator: (data) {
-                return _nameValidation(data);
-              }),
-          field(
-              key: _emailKey,
-              margin: const EdgeInsets.only(top: 16, bottom: 8),
-              title: 'Email',
-              isValid: _isEmailValid,
-              controller: _emailController,
-              hintText: 'me@company.com',
-              errorText: emailErrorText,
-              validator: (data) {
-                return _emailValidation(data);
-              }),
-          field(
-              key: _messageKey,
-              margin: const EdgeInsets.only(top: 16, bottom: 8),
-              title: 'Mensagem',
-              isValid: _isMessageValid,
-              controller: _messageController,
-              hintText: 'Sua mensagem...',
-              errorText: messageErrorText,
-              isDense: true,
-              maxLines: 5,
-              maxLength: 500,
-              heightField: 110,
-              contentPadding: const EdgeInsets.only(
-                left: 10,
-                right: 10,
-                top: 11,
-              ),
-              validator: (data) {
-                return _messageValidation(data);
-              }),
-          Container(
-            margin: const EdgeInsets.only(top: 32, bottom: 100),
-            width: 500,
-            height: 49,
-            child: ElevatedButton(
-              style: ButtonStyle(
-                overlayColor: _isSubmitted
-                    ? MaterialStateProperty.all<Color>(const Color(0xFF00E8A2))
-                    : null,
-                foregroundColor: _isSubmitted
-                    ? MaterialStateProperty.all<Color>(const Color(0xff242426))
-                    : MaterialStateProperty.all<Color>(AppColors.white),
-                shadowColor: MaterialStateProperty.all<Color>(AppColors.grey6),
-                backgroundColor: _isSubmitted
-                    ? MaterialStateProperty.all<Color>(const Color(0xFF00E8A2))
-                    : MaterialStateProperty.all<Color>(AppColors.darkGreen),
-                shape: MaterialStateProperty.all<OutlinedBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                textStyle: MaterialStateProperty.all<TextStyle?>(
-                  AppFonts.defaultFont(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.white,
-                  ),
-                ),
-              ),
-              onPressed: () {
-                if (_nameController.text.isEmpty && !_isSubmitted) {
-                  _nameBorderValidation(false);
-                }
-                if (_emailController.text.isEmpty && !_isSubmitted) {
-                  _emailBorderValidation(false);
-                }
-                if (_messageController.text.isEmpty && !_isSubmitted) {
-                  _messageBorderValidation(false);
-                }
-                if (_nameController.text.isNotEmpty &&
-                    _emailController.text.isNotEmpty &&
-                    _messageController.text.isNotEmpty &&
-                    _isNameValid &&
-                    _isEmailValid &&
-                    _isMessageValid &&
-                    !_isSubmitted) {
-                  if(EmailValidator.validate(_emailController.text)){
-                    setState(() {
-                      _isSubmitted = true;
-                    });
-                    _nameController.clear();
-                    _messageController.clear();
-                    _emailController.clear();
-                  } else{
-                    _emailBorderValidation(false);
-                  }
-                }
-              },
-              child: Center(
-                child: Text(
-                  _isSubmitted ? 'Enviado!' : 'Enviar',
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+    if (MediaQuery.of(context).size.width > 580) {
+      return web();
+    } else {
+      return mobile();
+    }
   }
+
+  web() => Container(
+    width: MediaQuery.of(context).size.width,
+    decoration: const BoxDecoration(color: Color(0xfff3f3f3)),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        title(),
+        subtitle(width: 500),
+        nameField(width: 500),
+        emailField(width: 500),
+        messageField(width: 500),
+        sendButton(width: 500),
+      ],
+    ),
+  );
+
+  mobile() => Container(
+    width: MediaQuery.of(context).size.width,
+    decoration: const BoxDecoration(color: Color(0xfff3f3f3)),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        title(),
+        subtitle(width: 342),
+        nameField(width: 342),
+        emailField(width: 342),
+        messageField(width: 342),
+        sendButton(width: 342),
+      ],
+    ),
+  );
+
+  title() => Container(
+    margin: const EdgeInsets.only(
+      bottom: 13,
+      top: 100,
+    ),
+    child: Text(
+      'Entre em contato',
+      textAlign: TextAlign.center,
+      style: AppFonts.defaultFont(
+        fontSize: 32,
+        fontWeight: FontWeight.w700,
+        color: const Color(0xff242426),
+      ),
+    ),
+  );
+
+  subtitle({required double width}) =>
+      Container(
+        width: width,
+        margin: const EdgeInsets.only(bottom: 40),
+        child: Text(
+          'Envie seu pedido de oração, solicitação ou dúvida.',
+          textAlign: TextAlign.center,
+          style: AppFonts.defaultFont(
+            height: 1.5,
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: const Color(0xff545456),
+          ),
+        ),
+      );
+
+  nameField({required double width}) => field(
+      key: _nameKey,
+      margin: const EdgeInsets.only(bottom: 8),
+      title: 'Nome',
+      isValid: _isNameValid,
+      controller: _nameController,
+      hintText: 'Seu nome completo',
+      errorText: nameErrorText,
+      validator: (data) {
+        return _nameValidation(data);
+      },
+      width: width,
+  );
+
+  emailField({required double width}) => field(
+  key: _emailKey,
+  margin: const EdgeInsets.only(top: 16, bottom: 8),
+  title: 'Email',
+  isValid: _isEmailValid,
+  controller: _emailController,
+  hintText: 'me@company.com',
+  errorText: emailErrorText,
+  validator: (data) {
+  return _emailValidation(data);
+  },
+  width: width,
+  );
+
+  messageField({required double width}) => field(
+      key: _messageKey,
+      margin: const EdgeInsets.only(top: 16, bottom: 8),
+      title: 'Mensagem',
+      isValid: _isMessageValid,
+      controller: _messageController,
+      hintText: 'Sua mensagem...',
+      errorText: messageErrorText,
+      isDense: true,
+      maxLines: 5,
+      maxLength: 500,
+      heightField: 110,
+      contentPadding: const EdgeInsets.only(
+        left: 10,
+        right: 10,
+        top: 11,
+      ),
+      validator: (data) {
+        return _messageValidation(data);
+      },
+  width: width,
+  );
+
+  sendButton({required double width}) =>  Container(
+    margin: const EdgeInsets.only(top: 32, bottom: 100),
+    width: width,
+    height: 49,
+    child: ElevatedButton(
+      style: ButtonStyle(
+        overlayColor: _isSubmitted
+            ? MaterialStateProperty.all<Color>(const Color(0xFF00E8A2))
+            : null,
+        foregroundColor: _isSubmitted
+            ? MaterialStateProperty.all<Color>(const Color(0xff242426))
+            : MaterialStateProperty.all<Color>(AppColors.white),
+        shadowColor: MaterialStateProperty.all<Color>(AppColors.grey6),
+        backgroundColor: _isSubmitted
+            ? MaterialStateProperty.all<Color>(const Color(0xFF00E8A2))
+            : MaterialStateProperty.all<Color>(AppColors.darkGreen),
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        textStyle: MaterialStateProperty.all<TextStyle?>(
+          AppFonts.defaultFont(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+            color: AppColors.white,
+          ),
+        ),
+      ),
+      onPressed: () {
+        if (_nameController.text.isEmpty && !_isSubmitted) {
+          _nameBorderValidation(false);
+        }
+        if (_emailController.text.isEmpty && !_isSubmitted) {
+          _emailBorderValidation(false);
+        }
+        if (_messageController.text.isEmpty && !_isSubmitted) {
+          _messageBorderValidation(false);
+        }
+        if (_nameController.text.isNotEmpty &&
+            _emailController.text.isNotEmpty &&
+            _messageController.text.isNotEmpty &&
+            _isNameValid &&
+            _isEmailValid &&
+            _isMessageValid &&
+            !_isSubmitted) {
+          if (EmailValidator.validate(_emailController.text)) {
+            setState(() {
+              _isSubmitted = true;
+            });
+            _nameController.clear();
+            _messageController.clear();
+            _emailController.clear();
+          } else {
+            _emailBorderValidation(false);
+          }
+        }
+      },
+      child: Center(
+        child: Text(
+          _isSubmitted ? 'Enviado!' : 'Enviar',
+        ),
+      ),
+    ),
+  );
 
   _nameBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
-    setState(() {
-      _isNameValid = value;
-     });
+      setState(() {
+        _isNameValid = value;
+      });
     });
   }
 
   _emailBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
-    setState(() {
-      _isEmailValid = value;
+      setState(() {
+        _isEmailValid = value;
       });
     });
   }
 
   _messageBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
-    setState(() {
-      _isMessageValid = value;
+      setState(() {
+        _isMessageValid = value;
       });
     });
   }
 
   _emailValidation(String? data) {
     if (data == null || data.isEmpty && !_isSubmitted) {
-        _emailBorderValidation(false);
-        return null;
+      _emailBorderValidation(false);
+      return null;
     } else {
       if (EmailValidator.validate(_emailController.text)) {
         _emailBorderValidation(true);
         return null;
-      } else{
+      } else {
         _emailBorderValidation(false);
         return null;
       }
@@ -241,6 +284,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
       required String errorText,
       required FormFieldValidator validator,
       required TextEditingController controller,
+      required double width,
       bool? isDense,
       int? maxLines,
       int? maxLength,
@@ -262,14 +306,12 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
           ),
         ),
         Container(
-          width: 500,
+          width: width,
           height: heightField ?? 42,
           decoration: BoxDecoration(
             color: const Color(0xffffffff),
             border: Border.all(
-              color: isValid
-                  ? AppColors.white
-                  : Colors.red,
+              color: isValid ? AppColors.white : Colors.red,
             ),
             borderRadius: BorderRadius.circular(12),
           ),
@@ -288,9 +330,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
               counterStyle: AppFonts.defaultFont(
                 fontSize: 10,
                 fontWeight: FontWeight.w400,
-                color: isValid
-                    ? const Color(0xff979797)
-                    : Colors.red,
+                color: isValid ? const Color(0xff979797) : Colors.red,
               ),
               isDense: isDense,
               hintText: hintText,
@@ -304,17 +344,13 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
               hintStyle: AppFonts.defaultFont(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                color: isValid
-                    ? const Color(0xff979797)
-                    : Colors.red,
+                color: isValid ? const Color(0xff979797) : Colors.red,
               ),
             ),
             style: AppFonts.defaultFont(
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: isValid
-                  ? const Color(0xff979797)
-                  : Colors.red,
+              color: isValid ? const Color(0xff979797) : Colors.red,
             ),
           ),
         ),
