@@ -300,8 +300,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
     required String text,
     required double width,
     required double textWidth
-  }) =>
-      SizedBox(
+  }) => SizedBox(
         height: 80,
         width: width,
         child: Row(

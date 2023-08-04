@@ -266,7 +266,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
               Container(
                 margin: const EdgeInsets.only(left: 16),
                 child: Image.asset(
-                  AppIcons.darkGreenArrowIcon,
+                  AppIcons.arrowIconDarkGreen,
                   width: 20,
                   height: 20,
                 ),

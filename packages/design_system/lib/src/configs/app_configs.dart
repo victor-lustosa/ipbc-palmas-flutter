@@ -142,10 +142,12 @@ class AppIcons {
   static const String announce = 'assets/icons/announce.png';
   static const String appleIcon = 'assets/icons/apple_icon.png';
   static const String playIcon = 'assets/icons/play_icon.png';
-  static const String darkGreenCallIcon = 'assets/icons/dark_green_call_icon.png';
+  static const String darkGreenCallIcon = 'assets/icons/call_icon_dark_green.png';
   static const String callIcon = 'assets/icons/call_icon.png';
+  static const String arrowBackDarkGreen = 'assets/icons/arrow_back.png';
+  static const String arrowForwardDarkGreen = 'assets/icons/arrow_forward.png';
   static const String greenArrowIcon = 'assets/icons/green_arrow_icon.png';
-  static const String darkGreenArrowIcon = 'assets/icons/dark_green_arrow_icon.png';
+  static const String arrowIconDarkGreen = 'assets/icons/arrow_icon_dark_green.png';
   static const String book = 'assets/icons/book.png';
   static const String churchLocationIcon = 'assets/icons/church_location_icon.png';
   static const String volunteerActivismCube = 'assets/icons/volunteer_activism.png';
@@ -153,7 +155,7 @@ class AppIcons {
   //mobile
   static const String lyrics = 'assets/icons/lyrics.svg';
   static const String logo = 'assets/icons/logo.svg';
-  static const String arrowBack = 'assets/icons/arrow_back_ios_new.svg';
+  static const String iosArrowBack = 'assets/icons/arrow_back_ios_new.svg';
   static const String home = 'assets/icons/home.svg';
   static const String volunteerActivism = 'assets/icons/volunteer_activism.svg';
   static const String accountCircle = 'assets/icons/account_circle.svg';
@@ -174,10 +176,23 @@ class AppImages {
   static const String bannerStore = 'assets/images/banner_store.png';
   static const String churchLocation = 'assets/images/church_location.png';
   static const String hero = 'assets/images/hero.png';
-  static const String saturdayService = 'assets/images/saturday_service.png';
-  static const String sundayEveningService = 'assets/images/sunday_evening_service.png';
-  static const String sundayMorningService = 'assets/images/sunday_morning_service.png';
-  static const String littleGroup = 'assets/images/little_group.png';
+
+  static const String saturdayServiceLg = 'assets/images/saturday_service_lg.png';
+  static const String saturdayServiceMd = 'assets/images/saturday_service_md.png';
+  static const String saturdayServiceSm = 'assets/images/saturday_service_sm.png';
+
+  static const String sundayEveningServiceLg = 'assets/images/sunday_evening_service_lg.png';
+  static const String sundayEveningServiceMd = 'assets/images/sunday_evening_service_md.png';
+  static const String sundayEveningServiceSm = 'assets/images/sunday_evening_service_sm.png';
+
+  static const String sundayMorningServiceLg = 'assets/images/sunday_morning_service_lg.png';
+  static const String sundayMorningServiceMd = 'assets/images/sunday_morning_service_md.png';
+  static const String sundayMorningServiceSm = 'assets/images/sunday_morning_service_sm.png';
+
+  static const String littleGroupLg = 'assets/images/little_group_lg.png';
+  static const String littleGroupMd = 'assets/images/little_group_md.png';
+  static const String littleGroupSm = 'assets/images/little_group_sm.png';
+
   static const String footerLogo = 'assets/images/footer_logo.png';
 
   //mobile

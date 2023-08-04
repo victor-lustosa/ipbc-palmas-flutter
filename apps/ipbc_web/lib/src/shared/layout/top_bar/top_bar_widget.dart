@@ -48,22 +48,22 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                           TabButtonsWidget(
                               label: 'Localização',
                               action: () {
-                                scrollPage(1544);
+                                scrollPage(MediaQuery.of(context).size.width > 1200 ? 1575 : 1656);
                               }),
                           TabButtonsWidget(
                               label: 'Programação',
                               action: () {
-                                scrollPage(2192);
+                                scrollPage(MediaQuery.of(context).size.width > 1200 ? 2175 : 2534);
                               }),
                           TabButtonsWidget(
                               label: 'Aplicativo',
                               action: () {
-                                scrollPage(3252);
+                                scrollPage(MediaQuery.of(context).size.width > 1200 ? 3232 : 3560);
                               }),
                         ],
                       ),
                     ),
-                    contactButton()
+                    contactButton(position: MediaQuery.of(context).size.width > 1200 ? 3965 : 4280)
                   ],
                 ),
               ),
@@ -86,7 +86,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 heroImage(),
-                contactButton()
+                contactButton(position: 4185)
               ],
             ),
           ),
@@ -105,7 +105,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 heroImage(),
-                smallContactButton()
+                smallContactButton(position: 4250)
               ],
             ),
           ),
@@ -123,7 +123,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
     ),
   );
 
-  contactButton() => SizedBox(
+  contactButton({required double position}) => SizedBox(
         width: 259,
         height: 49,
         child: ElevatedButton(
@@ -142,7 +142,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
               ),
               textStyle: AppFonts.defaultFont(fontSize: 18),
             ),
-            onPressed: _onPressed,
+            onPressed: () => _onPressed(position: position),
             child: Center(
               child: SizedBox(
                 width: 198,
@@ -156,7 +156,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                         isPressed
                             ? AppIcons.darkGreenCallIcon
                             : AppIcons.callIcon,
-                        width: 24,
+                         width: 24,
                         height: 24,
                       ),
                     ),
@@ -167,7 +167,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
         ),
       );
 
-  smallContactButton() => SizedBox(
+  smallContactButton({required double position}) => SizedBox(
         width: 88,
         height: 49,
         child: ElevatedButton(
@@ -186,7 +186,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
             ),
             textStyle: AppFonts.defaultFont(fontSize: 18),
           ),
-          onPressed: _onPressed,
+          onPressed: () => _onPressed(position: position),
           child: Center(
             child: Image.asset(
               isPressed
@@ -215,14 +215,14 @@ class _TopBarWidgetState extends State<TopBarWidget> {
     });
   }
 
-  _onPressed() async {
+  _onPressed({required double position}) async {
     Future.delayed(Duration.zero, () async {
       setState(() {
         isPressed = true;
       });
     });
     Future.delayed(const Duration(milliseconds: 500), () async {
-      scrollPage(3985);
+      scrollPage(position);
     });
     Future.delayed(const Duration(milliseconds: 900), () async {
       setState(() {
