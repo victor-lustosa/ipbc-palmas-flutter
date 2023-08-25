@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppColors {
-
   //primary
   static const Color darkGreen = Color.fromARGB(255, 0, 83, 58);
 
@@ -39,13 +38,14 @@ class AppColors {
 }
 
 class AppFonts {
-  static TextStyle? defaultFont({Color? color, double? fontSize, FontWeight? fontWeight, Color? decorationColor, TextDecoration? decoration}) {
+  static TextStyle? defaultFont({Color? color, double? fontSize, FontWeight? fontWeight, Color? decorationColor, TextDecoration? decoration, double? height}) {
     return GoogleFonts.inter(
-        color: color ?? AppColors.black,
-        fontWeight: fontWeight,
-        fontSize: fontSize ?? 18,
-        decorationColor: decorationColor,
-        decoration: decoration
+      height: height,
+      color: color ?? AppColors.black,
+      fontWeight: fontWeight,
+      fontSize: fontSize ?? 18,
+      decorationColor: decorationColor,
+      decoration: decoration
     );
   }
 
@@ -138,6 +138,21 @@ class AppFonts {
 }
 
 class AppIcons {
+  //web
+  static const String announce = 'assets/icons/announce.png';
+  static const String appleIcon = 'assets/icons/apple_icon.png';
+  static const String playIcon = 'assets/icons/play_icon.png';
+  static const String darkGreenCallIcon = 'assets/icons/call_icon_dark_green.png';
+  static const String callIcon = 'assets/icons/call_icon.png';
+  static const String arrowBackDarkGreen = 'assets/icons/arrow_back.png';
+  static const String arrowForwardDarkGreen = 'assets/icons/arrow_forward.png';
+  static const String greenArrowIcon = 'assets/icons/green_arrow_icon.png';
+  static const String arrowIconDarkGreen = 'assets/icons/arrow_icon_dark_green.png';
+  static const String book = 'assets/icons/book.png';
+  static const String churchLocationIcon = 'assets/icons/church_location_icon.png';
+  static const String volunteerActivismCube = 'assets/icons/volunteer_activism.png';
+
+  //mobile
   static const String lyrics = 'assets/icons/lyrics.svg';
   static const String logo = 'assets/icons/logo.svg';
   static const String callIcon = 'assets/icons/call.png';
@@ -145,6 +160,7 @@ class AppIcons {
   static const String home = 'assets/icons/home.svg';
   static const String volunteerActivism = 'assets/icons/volunteer_activism.svg';
   static const String accountCircle = 'assets/icons/account_circle.svg';
+  static const String iosArrowBack = 'assets/icons/arrow_back_ios_new.svg';
 
   static final sideBarIconsList = [
     'assets/icons/privacy_tip.svg',
@@ -158,6 +174,30 @@ class AppIcons {
 }
 
 class AppImages {
+  //web
+  static const String bannerStore = 'assets/images/banner_store.png';
+  static const String churchLocation = 'assets/images/church_location.png';
+  static const String hero = 'assets/images/hero.png';
+
+  static const String saturdayServiceLg = 'assets/images/saturday_service_lg.png';
+  static const String saturdayServiceMd = 'assets/images/saturday_service_md.png';
+  static const String saturdayServiceSm = 'assets/images/saturday_service_sm.png';
+
+  static const String sundayEveningServiceLg = 'assets/images/sunday_evening_service_lg.png';
+  static const String sundayEveningServiceMd = 'assets/images/sunday_evening_service_md.png';
+  static const String sundayEveningServiceSm = 'assets/images/sunday_evening_service_sm.png';
+
+  static const String sundayMorningServiceLg = 'assets/images/sunday_morning_service_lg.png';
+  static const String sundayMorningServiceMd = 'assets/images/sunday_morning_service_md.png';
+  static const String sundayMorningServiceSm = 'assets/images/sunday_morning_service_sm.png';
+
+  static const String littleGroupLg = 'assets/images/little_group_lg.png';
+  static const String littleGroupMd = 'assets/images/little_group_md.png';
+  static const String littleGroupSm = 'assets/images/little_group_sm.png';
+
+  static const String footerLogo = 'assets/images/footer_logo.png';
+
+  //mobile
   static const String vagalumeImage = 'assets/images/vagalume_image.png';
   static const String wifiIconImage = 'assets/images/wifi_icon.png';
   static const String noConnectionImage = 'assets/images/perm_scan_wifi.png';

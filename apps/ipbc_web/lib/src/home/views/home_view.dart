@@ -1,4 +1,6 @@
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import '../view_models/home_view_model.dart';
 import '../../shared/layout/footer/footer_widget.dart';
 import '../../shared/layout/top_bar/top_bar_widget.dart';
 import '../components/about_church_widget.dart';
@@ -18,14 +20,16 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
+
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
+        controller: context.read<HomeViewModel>().scrollViewController,
+          child: const Column(
             children: [
               TopBarWidget(),
               AboutChurchWidget(),

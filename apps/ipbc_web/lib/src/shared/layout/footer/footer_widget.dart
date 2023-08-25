@@ -19,22 +19,24 @@ class _FooterWidgetState extends State<FooterWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 116,bottom: 154,right: 40),
+            margin: const EdgeInsets.only(
+              top: 116,
+              bottom: 154,
+              right: 40,
+            ),
             width: 910,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: 141,
-                  height: 36,
+                  width: 99.34,
                   child: Image.asset(
-                    'assets/page-1/images/logo-T3V.png',
-                    fit: BoxFit.cover,
+                    AppImages.footerLogo,
                   ),
                 ),
-                Container(
-                  width: 550,
+                SizedBox(
+                  width: 600,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,41 +46,13 @@ class _FooterWidgetState extends State<FooterWidget> {
                         children: [
                           Container(
                             margin: const EdgeInsets.only(bottom: 16),
-                            child: Text(
-                              'Localização',
-                              style: AppFonts.defaultFont(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: const Color(0xffffffff),
-                              ),
-                            ),
+                            child: titleInfo('Localização'),
                           ),
-                          Text(
-                            'Endereço',
-                            style: AppFonts.defaultFont(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xffffffff),
-                            ),
-                          ),
+                          subtitleInfo('Q. Arse 23, Av.Ns 06, Ai 09'),
                           const SizedBox(height: 8),
-                          Text(
-                            'CEP',
-                            style: AppFonts.defaultFont(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xffffffff),
-                            ),
-                          ),
+                          subtitleInfo('CEP: 77020-544'),
                           const SizedBox(height: 8),
-                          Text(
-                            'Palmas/TO',
-                            style: AppFonts.defaultFont(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xffffffff),
-                            ),
-                          ),
+                          subtitleInfo('Palmas/TO'),
                         ],
                       ),
                       Column(
@@ -86,41 +60,13 @@ class _FooterWidgetState extends State<FooterWidget> {
                         children: [
                           Container(
                             margin: const EdgeInsets.only(bottom: 16),
-                            child: Text(
-                              'Contatos',
-                              style: AppFonts.defaultFont(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: const Color(0xffffffff),
-                              ),
-                            ),
+                            child: titleInfo('Contatos'),
                           ),
-                          Text(
-                            'Nome e telefone',
-                            style: AppFonts.defaultFont(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xffffffff),
-                            ),
-                          ),
+                          subtitleInfo('Secretaria da Igreja'),
                           const SizedBox(height: 8),
-                          Text(
-                            'Nome e telefone',
-                            style: AppFonts.defaultFont(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xffffffff),
-                            ),
-                          ),
+                          subtitleInfo('+55 (63) 3213-2775'),
                           const SizedBox(height: 8),
-                          Text(
-                            'Nome e telefone',
-                            style: AppFonts.defaultFont(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xffffffff),
-                            ),
-                          ),
+                          subtitleInfo('8h as 12h - 14h as 18h'),
                         ],
                       ),
                       Column(
@@ -128,57 +74,49 @@ class _FooterWidgetState extends State<FooterWidget> {
                         children: [
                           Container(
                             margin: const EdgeInsets.only(bottom: 16),
-                            child: Text(
-                              'Cultos',
-                              style: AppFonts.defaultFont(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: const Color(0xffffffff),
-                              ),
-                            ),
+                            child: titleInfo('Cultos'),
                           ),
                           Container(
                             margin: const EdgeInsets.only(bottom: 8),
-                            child: Text(
-                              'Domingo às 9h e 19h',
-                              style: AppFonts.defaultFont(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: const Color(0xffffffff),
-                              ),
-                            ),
+                            child: subtitleInfo('Domingo às 9h e 19h'),
                           ),
-                          Text(
-                            'Quarta às 19h',
-                            style: AppFonts.defaultFont(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xffffffff),
-                            ),
-                          ),
+                          subtitleInfo('Sábado às 19h30')
                         ],
                       ),
                     ],
                   ),
                 ),
-
               ],
             ),
           ),
           Container(
             margin: const EdgeInsets.only(bottom: 31),
-            child: Text(
+            child: subtitleInfo(
               'Copyright © 2023 Igreja Presbiteriana Central em Palmas/TO',
               textAlign: TextAlign.center,
-              style: AppFonts.defaultFont(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: const Color(0xffffffff),
-              ),
             ),
-          ),
+          )
         ],
       ),
     );
   }
+
+  titleInfo(String text, {TextAlign? textAlign}) => Text(
+        text,
+        style: AppFonts.defaultFont(
+          fontSize: 14,
+          fontWeight: FontWeight.w700,
+          color: const Color(0xffffffff),
+        ),
+      );
+
+  subtitleInfo(String text, {TextAlign? textAlign}) => Text(
+        text,
+        textAlign: textAlign,
+        style: AppFonts.defaultFont(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: const Color(0xffffffff),
+        ),
+      );
 }

@@ -1,5 +1,4 @@
 import 'package:core_module/core_module.dart';
-import 'package:provider/provider.dart';
 import 'blocs/lyric_bloc.dart';
 import 'blocs/services_collection_bloc.dart';
 import '../lyric/blocs/services_list_bloc.dart';

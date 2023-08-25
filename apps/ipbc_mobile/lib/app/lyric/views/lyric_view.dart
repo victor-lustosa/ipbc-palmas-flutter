@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 import '../components/album_cover_widget.dart';
-import '../../shared/mixins/launch_url_mixin.dart';
 import '../../shared/components/button/button_widget.dart';
 import '../../shared/components/utils/responsivity_util.dart';
 
@@ -157,7 +156,8 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                 margin: EdgeInsets.only(
                                   top: 14,
                                   bottom: 14,
-                                  right: widget.lyricEntity.verses[index].isChorus
+                                  right:
+                                      widget.lyricEntity.verses[index].isChorus
                                           ? 5
                                           : 15,
                                 ),
@@ -232,8 +232,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () => setState(
                                         () {
-                                          _launched =
-                                              launchInWebViewOrVC(toLaunch);
+                                          _launched = launchInBrowser(toLaunch);
                                           if (kDebugMode) {
                                             print(_launched);
                                           }

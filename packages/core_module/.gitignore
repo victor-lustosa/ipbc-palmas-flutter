@@ -9,13 +9,14 @@
 .history
 .svn/
 migrate_working_dir/
-
+.flutter-plugins
+.flutter-plugins-dependencies
 # IntelliJ related
 *.iml
 *.ipr
 *.iws
 .idea/
-lib/src/configs/firebase_options.dart
+lib/src/configs/
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.

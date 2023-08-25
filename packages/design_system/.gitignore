@@ -9,7 +9,8 @@
 .history
 .svn/
 migrate_working_dir/
-
+.flutter-plugins
+.flutter-plugins-dependencies
 # IntelliJ related
 *.iml
 *.ipr
@@ -28,3 +29,5 @@ migrate_working_dir/
 .dart_tool/
 .packages
 build/
+.flutter-plugins
+.flutter-plugins-dependencies

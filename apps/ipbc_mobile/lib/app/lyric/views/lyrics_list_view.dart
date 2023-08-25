@@ -1,6 +1,5 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/lyric_bloc.dart';
 import '../components/lyrics_list_widget.dart';
 import '../view-models/lyrics_view_model.dart';
