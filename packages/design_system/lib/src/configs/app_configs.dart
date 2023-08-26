@@ -28,6 +28,8 @@ class AppColors {
   static const Color timelineGuideTGreen = Color(0xFFCCDED9);
   static const Color badgeGreen = Color(0xFFE4F5F0);
   static const Color tooltipIcon = Color(0xFF171717);
+  static const Color inputBorderGrey = Color(0xFFEBEBEB);
+  static const Color hintInputForm = Color(0xFFA3A3A3);
 
 //system colors ios
   static const Color confirmation = Color(0xFF34C759);
@@ -155,7 +157,6 @@ class AppIcons {
   //mobile
   static const String lyrics = 'assets/icons/lyrics.svg';
   static const String logo = 'assets/icons/logo.svg';
-  static const String callIcon = 'assets/icons/call.png';
   static const String arrowBack = 'assets/icons/arrow_back_ios_new.svg';
   static const String home = 'assets/icons/home.svg';
   static const String volunteerActivism = 'assets/icons/volunteer_activism.svg';
