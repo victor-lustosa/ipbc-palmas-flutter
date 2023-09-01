@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'package:ipbc_palmas/app/auth/views/create_account_view.dart';
 import 'package:ipbc_palmas/app/auth/views/login_view.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,7 @@ class AppWidget extends StatelessWidget {
         },
         title: 'IPBC Palmas',
         theme: lightTheme,
-        home:  LoginView(),
+        home:  CreateAccountView(),
         initialRoute: "/",
         onGenerateRoute: AppRoutes.onGenerateRoute,
         debugShowCheckedModeBanner: false,
