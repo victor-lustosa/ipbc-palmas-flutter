@@ -9,14 +9,16 @@
 .history
 .svn/
 migrate_working_dir/
-.flutter-plugins
-.flutter-plugins-dependencies
+
 # IntelliJ related
 *.iml
 *.ipr
 *.iws
 .idea/
-lib/src/configs/
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
@@ -29,4 +31,3 @@ lib/src/configs/
 .dart_tool/
 .packages
 build/
-.metadata

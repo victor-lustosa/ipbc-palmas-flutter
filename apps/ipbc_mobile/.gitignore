@@ -9,13 +9,15 @@
 .history
 .svn/
 migrate_working_dir/
-
+.metadata
 # IntelliJ related
 *.iml
 *.ipr
 *.iws
 .idea/
 
+tests.output
+pubspec.lock
 android/app/google-services.json
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line

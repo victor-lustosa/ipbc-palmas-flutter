@@ -34,7 +34,7 @@ migrate_working_dir/
 pubspec.lock
 # Symbolication related
 app.*.symbols
-
+.metadata
 # Obfuscation related
 app.*.map.json
 
