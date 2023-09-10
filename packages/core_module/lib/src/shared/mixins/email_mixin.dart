@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import '../../configs/api_keys.dart';
-import '../components/emails/models/send_grid_model.dart';
+import '../models/send_grid_model.dart';
 
 mixin EmailMixin {
   static const _apiSendGridURL = "https://api.sendgrid.com/v3/mail/send";

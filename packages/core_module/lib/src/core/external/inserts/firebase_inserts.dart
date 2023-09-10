@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import '../../../../core_module.dart';
-import '../../../lyric/infra/models/lyric_model.dart';
 import '../../../shared/utils/service_util.dart';
 
 // ignore_for_file: avoid_print

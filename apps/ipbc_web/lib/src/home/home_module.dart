@@ -1,6 +1,18 @@
 import 'package:core_module/core_module.dart';
+import '../home/views/home_view.dart';
 import 'view_models/home_view_model.dart';
 
-final homeModule = [
-  Provider<HomeViewModel>(create: (context) => HomeViewModel()),
-];
+class MainModule extends Module {
+
+
+  @override
+  void binds(i) {
+    i.addSingleton<HomeViewModel>(HomeViewModel.new);
+  }
+
+  @override
+  void routes(r) {
+    r.child('/', child: (_) => const HomeView());
+  }
+
+}

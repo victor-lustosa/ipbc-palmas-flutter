@@ -100,7 +100,7 @@ class _NoConnectionViewState extends State<NoConnectionView> {
               width: 186,
               child: ElevatedButton(
                 onPressed: () {
-                  final homeViewModel = context.read<HomeViewModel>();
+                  final homeViewModel = Modular.get<HomeViewModel>();
                   homeViewModel.jumpToPage(widget.index);
                 },
                 style: ButtonStyle(

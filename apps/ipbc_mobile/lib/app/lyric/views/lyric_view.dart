@@ -7,8 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 import '../components/album_cover_widget.dart';
-import '../../shared/components/button/button_widget.dart';
-import '../../shared/components/utils/responsivity_util.dart';
 
 class LyricView extends StatefulWidget {
   const LyricView({super.key, required this.lyricEntity});
@@ -272,7 +270,6 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                             'Lyrics by Vagalume',
                             style: AppFonts.defaultFont(
                               color: AppColors.darkGreen,
-                              fontWeight: FontWeight.w400,
                               fontSize: 13,
                             ),
                           ),

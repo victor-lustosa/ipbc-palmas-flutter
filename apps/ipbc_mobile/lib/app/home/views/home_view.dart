@@ -3,13 +3,12 @@ import 'dart:io';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import '../../../layout/bottom-bar/cupertino/cupertino_bottom_bar_widget.dart';
+import '../../../layout/bottom-bar/material/material_bottom_bar_widget.dart';
 import '../view-models/home_view_model.dart';
-import '../../configs/app_routes.dart';
-import '../../lyric/lyric_module.dart';
+import '../../configs/ios_routes.dart';
 import '../../offers/views/offers_view.dart';
 import '../../lyric/views/lyrics_list_view.dart';
-import '../../shared/layout/bottom-bar/material/material_bottom_bar_widget.dart';
-import '../../shared/layout/bottom-bar/cupertino/cupertino_bottom_bar_widget.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -25,7 +24,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    _homeViewModel = context.read<HomeViewModel>();
+    _homeViewModel = Modular.get<HomeViewModel>();
   }
 
   @override
@@ -45,58 +44,55 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [...lyricModule],
-      child: WillPopScope(
-        onWillPop: Platform.isIOS
-            ? null
-            : _homeViewModel.systemBackButtonPressed,
-        child: Scaffold(
-          backgroundColor: AppColors.white,
-          body: SafeArea(
-            child: PageView(
-              controller: pageViewController,
-              onPageChanged: (index) {
-                setState(
-                  () {
-                   selectedIndex = index;
-                  },
-                );
-              },
-              children: const [
-                ServicesListRoutes(),
-                LyricsListView(),
-                OffersView(),
-              ],
-            ),
-          ),
-          extendBody: true,
-          bottomNavigationBar: AnimatedBuilder(
-            animation: pageViewController,
-            builder: (__, _) {
-              return Platform.isIOS
-                  ? CupertinoBottomBarWidget(
-                      selectedIndex: selectedIndex,
-                      callback: (int index) {
-                        setState(
-                          () {
-                            onItemTapped(index);
-                          },
-                        );
-                      },
-                    )
-                  : MaterialBottomBarWidget(
-                      selectedIndex: selectedIndex,
-                      callback: (int index) {
-                        setState(
-                          () {
-                            onItemTapped(index);
-                          },
-                        );
-                      },
-                    );
+    return WillPopScope(
+      onWillPop: Platform.isIOS
+          ? null
+          : _homeViewModel.systemBackButtonPressed,
+      child: Scaffold(
+        backgroundColor: AppColors.white,
+        body: SafeArea(
+          child: PageView(
+            controller: pageViewController,
+            onPageChanged: (index) {
+              setState(
+                () {
+                 selectedIndex = index;
+                },
+              );
             },
+            children: const [
+              ServicesListRoutes(),
+              LyricsListView(),
+              OffersView(),
+            ],
           ),
+        ),
+        extendBody: true,
+        bottomNavigationBar: AnimatedBuilder(
+          animation: pageViewController,
+          builder: (__, _) {
+            return Platform.isIOS
+                ? CupertinoBottomBarWidget(
+                    selectedIndex: selectedIndex,
+                    callback: (int index) {
+                      setState(
+                        () {
+                          onItemTapped(index);
+                        },
+                      );
+                    },
+                  )
+                : MaterialBottomBarWidget(
+                    selectedIndex: selectedIndex,
+                    callback: (int index) {
+                      setState(
+                        () {
+                          onItemTapped(index);
+                        },
+                      );
+                    },
+                  );
+          },
         ),
       ),
     );

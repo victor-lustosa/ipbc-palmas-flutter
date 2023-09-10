@@ -9,6 +9,30 @@ class AboutChurchWidget extends StatefulWidget {
 }
 
 class _AboutChurchWidgetState extends State<AboutChurchWidget> {
+
+  final List<String> assetsList = [
+    AppImages.hero,
+    AppIcons.announce,
+    AppIcons.book,
+    AppIcons.volunteerActivismCube,
+  ];
+  final List<Image> imagesList = [];
+  @override
+  void initState() {
+    super.initState();
+    for (String imagePath in assetsList) {
+      imagesList.add(Image.asset(imagePath));
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    for (Image entity in imagesList) {
+      precacheImage(entity.image, context);
+    }
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (MediaQuery.of(context).size.width > 1200) {
@@ -190,7 +214,11 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                   margin: const EdgeInsets.only(top: 16, bottom: 75),
                   child: aboutChurchText(textAlign: TextAlign.center),
                 ),
-                churchMissions(width: 430, textWidth: 300, textHeight: 1.5),
+                churchMissions(
+                  width: 430,
+                  textWidth: 300,
+                  textHeight: 1.5,
+                ),
               ],
             ),
           )
@@ -208,8 +236,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         ),
       );
 
-  subtitlePage({required double fontSize, double? width}) =>
-      Container(
+  subtitlePage({required double fontSize, double? width}) => Container(
         margin: const EdgeInsets.only(top: 24),
         width: width,
         child: Text(
@@ -228,13 +255,10 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         width: width,
         height: height,
         margin: const EdgeInsets.only(top: 40),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-        ),
         child: Container(
           decoration: BoxDecoration(
-            color: const Color(0x33005b40),
             borderRadius: BorderRadius.circular(20),
+            color: AppColors.grey4,
             image: const DecorationImage(
               fit: BoxFit.cover,
               image: AssetImage(
@@ -265,42 +289,42 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         ),
       );
 
-  churchMissions({
-    required double width,
-    required double textWidth,
-    double? textHeight}) =>
+  churchMissions(
+          {required double width,
+          required double textWidth,
+          double? textHeight}) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           cardMission(
-            image: AppIcons.announce,
+            image: imagesList[1].image,
             text: 'Anunciar o reino de Deus',
             width: width,
             textWidth: textWidth,
           ),
           const SizedBox(height: 16),
           cardMission(
-            image: AppIcons.book,
+            image: imagesList[2].image,
             text: 'Educar para a vivência cristã',
             width: width,
             textWidth: textWidth,
           ),
           const SizedBox(height: 16),
           cardMission(
-              image: AppIcons.volunteerActivismCube,
-             text: 'Assistir o ser humano em suas necessidades',
-             width: width,
-              textWidth: textWidth,
+            image: imagesList[3].image,
+            text: 'Assistir o ser humano em suas necessidades',
+            width: width,
+            textWidth: textWidth,
           ),
         ],
       );
 
-  Widget cardMission({
-    required String image,
-    required String text,
-    required double width,
-    required double textWidth
-  }) => SizedBox(
+  Widget cardMission(
+          {required ImageProvider image,
+          required String text,
+          required double width,
+          required double textWidth}) =>
+      SizedBox(
         height: 80,
         width: width,
         child: Row(
@@ -309,11 +333,11 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
             Container(
               width: 80,
               decoration: BoxDecoration(
-                color: const Color(0x33005b40),
+                color: AppColors.darkGreen,
                 borderRadius: BorderRadius.circular(12),
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AssetImage(image),
+                  image: image,
                 ),
               ),
             ),

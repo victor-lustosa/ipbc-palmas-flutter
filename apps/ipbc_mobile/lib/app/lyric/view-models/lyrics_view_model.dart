@@ -1,10 +1,10 @@
 import 'dart:async';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:core_module/core_module.dart';
+import 'package:core_module/core_module.dart' hide ModularWatchExtension;
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../main.dart';
 import '../../splash/blocs/database_bloc.dart';
 
 class LyricsViewModel {
@@ -17,7 +17,7 @@ class LyricsViewModel {
   final TextEditingController formFieldController = TextEditingController();
 
   initData(BuildContext context) {
-    data = context.read<HiveDatabaseConfigsDTO>();
+    data = GInstances.getIt<HiveDatabaseConfigsDTO>();
   }
 
   Future<bool> isConnected() async {
@@ -75,7 +75,7 @@ class LyricsViewModel {
         }
         break;
     }
-    context.read<DatabaseBloc>().add(UpdateDataEvent(data: data));
+    Modular.get<DatabaseBloc>().add(UpdateDataEvent(data: data));
   }
 
   static BorderRadius paintChorus(isChorus) {

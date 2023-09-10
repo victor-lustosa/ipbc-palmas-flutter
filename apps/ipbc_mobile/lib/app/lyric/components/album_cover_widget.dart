@@ -19,11 +19,18 @@ class AlbumCoverWidget extends StatelessWidget {
       child: Container(
         child: albumCover.contains("assets")
             ? SizedBox(
-                width: width, height: height, child: Image.asset(albumCover))
+                width: width,
+                height: height,
+                child: Image.asset(albumCover),
+              )
             : Image.network(
                 fit: BoxFit.cover,
-                frameBuilder: (BuildContext context, Widget child, int? frame,
-                    bool wasSynchronouslyLoaded) {
+                frameBuilder: (
+                  BuildContext context,
+                  Widget child,
+                  int? frame,
+                  bool wasSynchronouslyLoaded,
+                ) {
                   if (wasSynchronouslyLoaded) {
                     return child;
                   }
@@ -40,7 +47,8 @@ class AlbumCoverWidget extends StatelessWidget {
       ),
     );
   }
-  Widget defaultCover(){
+
+  Widget defaultCover() {
     return Container(
       color: AppColors.grey2,
       width: width,

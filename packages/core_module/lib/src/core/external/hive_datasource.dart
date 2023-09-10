@@ -1,9 +1,4 @@
 import '../../../core_module.dart';
-import '../../lyric/infra/models/hive-dtos/hive_verse_dto.dart';
-import '../../lyric/infra/models/hive-dtos/hive_liturgy_dto.dart';
-import '../../lyric/infra/adapters/hive-dtos/hive_lyric_adapter.dart';
-import '../../lyric/infra/adapters/hive-dtos/hive_services_adapter.dart';
-import '../../lyric/infra/adapters/hive-dtos/hive_collection_adapter.dart';
 
 class HiveDatasource<R> implements IDatasource {
   String boxLabel;

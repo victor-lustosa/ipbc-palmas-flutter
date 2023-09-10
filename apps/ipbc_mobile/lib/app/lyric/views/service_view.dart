@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../components/lyrics_list_widget.dart';
-import '../../shared/components/button/button_widget.dart';
-import '../../shared/components/guideline/guideline_widget.dart';
 
 class ServiceViewDTO {
   ServiceViewDTO({required this.service, required this.image});
@@ -103,7 +101,6 @@ class _ServiceViewState extends State<ServiceView> {
                                   DateFormat('dd/MM/yyyy').format(widget.entity.service.createAt),
                                   style: AppFonts.defaultFont(
                                     color: const Color(0xFF005B40),
-                                    fontWeight: FontWeight.w400,
                                     fontSize: 13,
                                   ),
                                 ),

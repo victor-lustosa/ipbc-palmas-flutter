@@ -1,6 +1,5 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import '../../shared/mixins/clipboard_mixin.dart';
 
 class GenericErrorView extends StatefulWidget {
   const GenericErrorView({super.key});
@@ -9,8 +8,7 @@ class GenericErrorView extends StatefulWidget {
   State<GenericErrorView> createState() => _GenericErrorViewState();
 }
 
-class _GenericErrorViewState extends State<GenericErrorView>
-    with ClipboardMixin {
+class _GenericErrorViewState extends State<GenericErrorView> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(

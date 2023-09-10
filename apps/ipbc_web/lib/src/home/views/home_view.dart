@@ -1,8 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import '../view_models/home_view_model.dart';
-import '../../shared/layout/footer/footer_widget.dart';
-import '../../shared/layout/top_bar/top_bar_widget.dart';
+import '../../../layout/footer/footer_widget.dart';
+import '../../../layout/top_bar/top_bar_widget.dart';
 import '../components/about_church_widget.dart';
 import '../components/about_services_widget.dart';
 import '../components/app_stores_widget.dart';
@@ -28,7 +28,7 @@ class _HomeViewState extends State<HomeView> {
     return  Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-        controller: context.read<HomeViewModel>().scrollViewController,
+        controller: Modular.get<HomeViewModel>().scrollViewController,
           child: const Column(
             children: [
               TopBarWidget(),

@@ -1,13 +1,10 @@
 import 'dart:math' show Random;
 
 import 'package:flutter/services.dart';
+import 'package:lyric_module/lyric_module.dart';
 import 'package:uno/uno.dart';
 
 import '../../../core_module.dart';
-import '../../lyric/infra/adapters/firestore-dtos/settings_dto_adapter.dart';
-import '../../lyric/infra/models/firestore-dtos/settings_dto.dart';
-import '../../lyric/infra/models/lyric_model.dart';
-import '../../lyric/infra/models/service_model.dart';
 
 class ServiceUtil {
   static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';

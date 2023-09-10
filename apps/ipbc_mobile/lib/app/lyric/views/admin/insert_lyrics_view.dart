@@ -1,6 +1,5 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import '../../../shared/components/search-bar/search_bar_widget.dart';
 import '../../view-models/lyrics_view_model.dart';
 
 class InsertLyricsView extends StatefulWidget {
@@ -19,9 +18,8 @@ class _InsertLyricsViewState extends State<InsertLyricsView> {
           Container(
             margin: const EdgeInsets.only(left: 19, top: 30),
             child: SearchBarWidget(
-              formFieldController:
-                  context.read<LyricsViewModel>().formFieldController,
-              action: context.read<LyricsViewModel>().fetchingSearch,
+              formFieldController: Modular.get<LyricsViewModel>().formFieldController,
+              action: Modular.get<LyricsViewModel>().fetchingSearch,
             ),
           ),
         ],

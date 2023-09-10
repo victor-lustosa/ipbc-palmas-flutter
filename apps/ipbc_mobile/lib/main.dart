@@ -7,10 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'app/app_widget.dart';
 import 'app/configs/ipbc_bloc_observer.dart';
+import 'app/splash/main_module.dart';
+
+class GInstances{
+  static GetIt getIt = GetIt.instance;
+}
 
 void main() async {
-  runZonedGuarded<Future<void>>(() async {
-
+  runZonedGuarded<Future<void>>(
+    () async {
       WidgetsFlutterBinding.ensureInitialized();
 
       await Future.wait([
@@ -28,7 +33,14 @@ void main() async {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
         DeviceOrientation.portraitDown,
-      ]).then((_) => runApp(const AppWidget()));
+      ]).then(
+        (_) => runApp(
+          ModularApp(
+            module: MainModule(),
+            child: const AppWidget(),
+          ),
+        ),
+      );
     },
     (error, stackTrace) => FirebaseCrashlytics.instance.recordError(error, stackTrace),
   );

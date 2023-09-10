@@ -28,7 +28,8 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
     }
   }
 
-  web() => Container(
+  web() =>
+      Container(
         height: 600,
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.only(top: 100),
@@ -77,7 +78,8 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ),
       );
 
-  tablet() => Container(
+  tablet() =>
+      Container(
         height: 880,
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.only(top: 100),
@@ -98,9 +100,8 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
                   )
                 ],
               ),
-
               child: ClipRRect(
-                child:  locationImage(width: 573.26),
+                child: locationImage(width: 573.26),
                 borderRadius: BorderRadius.circular(20),
               ),
             ),
@@ -113,7 +114,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
                   title(fontSize: 46),
                   subtitle(textAlign: TextAlign.start),
                   address(width: 437),
-                  locationButton( width: 215, height: 49),
+                  locationButton(width: 215, height: 49),
                 ],
               ),
             ),
@@ -121,7 +122,8 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ),
       );
 
-  mobile() => Container(
+  mobile() =>
+      Container(
         height: 750,
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.only(top: 60),
@@ -162,7 +164,9 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
           ],
         ),
       );
-  locationImage({required double width}) => Image(
+
+  locationImage({required double width}) =>
+      Image(
         width: width,
         fit: BoxFit.cover,
         image: const AssetImage(
@@ -170,7 +174,8 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ),
       );
 
-  title({required double fontSize}) => Container(
+  title({required double fontSize}) =>
+      Container(
         margin: const EdgeInsets.only(bottom: 23),
         child: Text(
           'Localização',
@@ -182,7 +187,8 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ),
       );
 
-  subtitle({required TextAlign textAlign}) => Container(
+  subtitle({required TextAlign textAlign}) =>
+      Container(
         margin: const EdgeInsets.only(bottom: 24),
         child: Text(
           textAlign: textAlign,
@@ -190,19 +196,19 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
           style: AppFonts.defaultFont(
             height: 1.5,
             fontSize: 18,
-            fontWeight: FontWeight.w400,
             color: const Color(0xff545456),
           ),
         ),
       );
 
-  address({required double width}) => SizedBox(
-    width: width,
-    child: Row(
+  address({required double width}) =>
+      SizedBox(
+        width: width,
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: const EdgeInsets.only(right: 16,top: 7),
+              margin: const EdgeInsets.only(right: 16, top: 7),
               child: Image.asset(
                 AppIcons.churchLocationIcon,
                 width: 24,
@@ -216,27 +222,31 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
                 style: AppFonts.defaultFont(
                   fontSize: 18,
                   height: 1.5,
-                  fontWeight: FontWeight.w400,
                   color: const Color(0xff545456),
                 ),
               ),
             ),
           ],
         ),
-  );
+      );
 
-  locationButton({required double width, required double height,}) => Container(
+  locationButton({
+    required double width,
+    required double height,
+  }) => Container(
         width: width,
         height: height,
         margin: const EdgeInsets.only(top: 40),
         child: OutlinedButton(
           style: ButtonStyle(
-            side: MaterialStateProperty.resolveWith((Set<MaterialState> states) {
+            side:
+                MaterialStateProperty.resolveWith((Set<MaterialState> states) {
               return states.contains(MaterialState.hovered)
                   ? const BorderSide(color: AppColors.darkGreen)
                   : const BorderSide(color: Color(0xCC005B40));
             }),
-            foregroundColor: MaterialStateProperty.resolveWith((Set<MaterialState> states) {
+            foregroundColor:
+                MaterialStateProperty.resolveWith((Set<MaterialState> states) {
               return states.contains(MaterialState.hovered)
                   ? AppColors.darkGreen
                   : const Color(0xCC005B40);

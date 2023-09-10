@@ -5,14 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../blocs/services_list_bloc.dart';
+import '../lyric_module.dart';
 import '../view-models/lyrics_view_model.dart';
-import '../../configs/app_routes.dart';
 import '../../exception/views/no_connection_view.dart';
 import '../../exception/views/generic_error_view.dart';
-import '../../shared/components/button/button_widget.dart';
-import '../../shared/components/loading/loading_widget.dart';
-import '../../shared/components/utils/responsivity_util.dart';
-import '../../shared/layout/top-bar/main_top_bar_widget.dart';
+import '../../../layout/top-bar/main_top_bar_widget.dart';
 
 class ServicesListView extends StatefulWidget {
   const ServicesListView({super.key});
@@ -28,10 +25,9 @@ class _ServicesListViewState extends State<ServicesListView>
 
   @override
   void initState() {
-    context.read<LyricsViewModel>().initData(context);
-    bloc = context.read<ServicesListBloc>();
-    bloc.add(LoadingEvent());
-    if (!context.read<LyricsViewModel>().data.isServicesUpdated) {
+    Modular.get<LyricsViewModel>().initData(context);
+    bloc = Modular.get<ServicesListBloc>();
+    if (!Modular.get<LyricsViewModel>().data.isServicesUpdated) {
       bloc.add(CheckConnectivityEvent());
     } else {
       bloc.add(GetServiceInHiveEvent());
@@ -51,15 +47,13 @@ class _ServicesListViewState extends State<ServicesListView>
           child: BlocBuilder<ServicesListBloc, ServicesListState>(
             bloc: bloc,
             builder: (context, state) {
-              if (state is InitialState) {
-                return const LoadingWidget();
-              } else if (state is LoadingServiceState) {
+               if (state is LoadingServiceState) {
                 return const LoadingWidget();
               } else if (state is NoConnectionAvailableState) {
                 return const NoConnectionView(index: 0);
               } else if (state is ServiceSuccessfullyFetchedState) {
                 servicesList = state.entities;
-                context.read<LyricsViewModel>().checkUpdateData(context, 'services');
+                Modular.get<LyricsViewModel>().checkUpdateData(context, 'services');
                 return Column(
                   children: [
                     const MainTopBarWidget(),
@@ -145,8 +139,8 @@ class _ServicesListViewState extends State<ServicesListView>
                                   ),
                                 ),
                                 onTap: () {
-                                  Navigator.of(context).pushNamed(
-                                    AppRoutes.servicesCollectionRoute,
+                                  Modular.to.navigate(
+                                    LyricModule.servicesCollectionRoute,
                                     arguments: servicesList[index],
                                   );
                                 },

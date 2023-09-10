@@ -1,10 +1,9 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import '../../../main.dart';
 import '../blocs/database_bloc.dart';
-import '../../home/views/home_view.dart';
 import '../../exception/views/generic_error_view.dart';
-import '../../shared/components/loading/loading_widget.dart';
 import '../../splash/view-models/database_view_model.dart';
 
 class SplashView extends StatefulWidget {
@@ -19,7 +18,7 @@ class _SplashViewState extends State<SplashView> {
   late HiveDatabaseConfigsDTO data;
   @override
   initState() {
-    bloc = context.read<DatabaseBloc>();
+    bloc = Modular.get<DatabaseBloc>();
     bloc.add(GetDataEvent());
     super.initState();
   }
@@ -30,21 +29,16 @@ class _SplashViewState extends State<SplashView> {
       body: BlocConsumer<DatabaseBloc, DatabasesState>(
         listener: (context, state) async {
           if (state is FetchingDataState) {
-            data = await context.read<DatabaseViewModel>().validateDatabase(context, state.entity);
+            HiveDatabaseConfigsDTO data = await Modular.get<DatabaseViewModel>().validate(context, state.entity);
             bloc.add(UpdateDataEvent(data: data));
+            GInstances.getIt.registerSingleton<HiveDatabaseConfigsDTO>(data);
+            Modular.to.pushNamed('/home/lyrics');
           }
         },
         bloc: bloc,
         builder: (context, state) {
           if (state is LoadingState) {
             return const LoadingWidget();
-          } else if (state is FetchingDataState) {
-            return const LoadingWidget();
-          } else if (state is SuccessfullyFetchedDataState) {
-            return Provider(
-              create: (_) => data,
-              child: const HomeView(),
-            );
           } else {
             return const GenericErrorView();
           }

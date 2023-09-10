@@ -9,8 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  provider: ^6.0.5
+  get_it: ^7.6.4
   flutter_bloc: ^8.1.2
   hive_flutter: ^1.1.0
   uno: ^1.1.8
@@ -23,9 +22,13 @@ dependencies:
   firebase_core: ^2.9.0 #Recursos basicos
   firebase_auth: ^4.4.0 #Autenticacao
   firebase_storage: ^11.1.0 #Armazenamento arquivos
+  firebase_core_platform_interface: ^4.6.0
+  flutter_modular: ^6.3.1
   cloud_firestore: ^4.4.0 #Banco de dados
   design_system:
     path: ../design_system
+  lyric_module:
+    path: ../lyric_module
 
 dev_dependencies:
   flutter_test:
@@ -35,7 +38,6 @@ dev_dependencies:
   hive_generator: ^2.0.0 # <-- this line
   fake_cloud_firestore: ^2.4.1+1
   bloc_test: ^9.1.1
-  firebase_core_platform_interface: ^4.6.0
   firebase_analytics_platform_interface: ^3.4.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

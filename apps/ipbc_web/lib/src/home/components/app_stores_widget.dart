@@ -40,7 +40,8 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
     }
   }
 
-  web() => Container(
+  web() =>
+      Container(
         height: 734,
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(color: Color(0xff005b40)),
@@ -92,7 +93,8 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         ),
       );
 
-  tablet() => Container(
+  tablet() =>
+      Container(
         height: 780,
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(color: Color(0xff005b40)),
@@ -145,7 +147,8 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         ),
       );
 
-  title({required double fontSize}) => Text(
+  title({required double fontSize}) =>
+      Text(
         'Baixe o IPBC App',
         style: AppFonts.defaultFont(
           fontSize: fontSize,
@@ -154,18 +157,19 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         ),
       );
 
-  subtitle() => Text(
+  subtitle() =>
+      Text(
     textAlign:TextAlign.center,
         'Acompanhe a liturgia dos cultos, as letras das músicas cantadas e em breve, comunicações, eventos e mensagens pregadas.',
         style: AppFonts.defaultFont(
           fontSize: 18,
           height: 1.5,
-          fontWeight: FontWeight.w400,
           color: const Color(0xffffffff),
         ),
       );
 
-  playButton() => StoreButton(
+  playButton() =>
+      StoreButton(
         labelStore: 'Baixe na PlayStore',
         iconPath: AppIcons.playIcon,
         onPressed: () {
@@ -173,7 +177,8 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         },
       );
 
-  appButton() => StoreButton(
+  appButton() =>
+      StoreButton(
         labelStore: 'Baixe na App Store',
         iconPath: AppIcons.appleIcon,
         onPressed: () {

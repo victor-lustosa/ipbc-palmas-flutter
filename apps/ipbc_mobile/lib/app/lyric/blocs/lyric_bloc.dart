@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -16,7 +17,7 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
       required this.analyticsUtil,
       required this.fireLyricsUseCase,
       required this.hiveLyricsUseCase})
-      : super(InitialState()) {
+      : super(LoadingLyricsState()) {
     on<GetLyricsInFireEvent>(_getLyricsInFire);
     on<GetLyricsInHiveEvent>(_getLyricsInHive);
     on<UpdateLyricsInHiveEvent>(_updateLyricsInHive);
@@ -38,7 +39,6 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
     await emit.onEach<List<LyricEntity>>(
       await fireLyricsUseCase.get(path),
       onData: (lyrics) {
-
         add(UpdateLyricsInHiveEvent(entities: lyrics));
         emit(LyricsSuccessfullyFetchedState(lyrics));
       },
@@ -81,10 +81,6 @@ class LyricBloc extends Bloc<LyricEvent, LyricState> {
 @immutable
 abstract class LyricEvent {}
 
-class InitialEvent extends LyricEvent {
-  InitialEvent();
-}
-
 class LoadingEvent extends LyricEvent {
   LoadingEvent();
 }
@@ -114,10 +110,6 @@ class LyricsFilterEvent extends LyricEvent {
 
 @immutable
 abstract class LyricState {}
-
-class InitialState extends LyricState {
-  InitialState();
-}
 
 class LoadingLyricsState extends LyricState {
   LoadingLyricsState();

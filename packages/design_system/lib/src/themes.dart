@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'configs/app_configs.dart';
+import 'configs/app_colors.dart';
 
 final lightTheme = ThemeData(
   splashColor: Colors.transparent,

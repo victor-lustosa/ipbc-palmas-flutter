@@ -8,7 +8,7 @@ class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
   final String path = 'database-configs';
 
   DatabaseBloc({required this.databasesUseCases, required this.analyticsUtil})
-      : super(InitialDatasourceState()) {
+      : super(LoadingState()) {
     on<GetDataEvent>(_getData);
     on<UpdateDataEvent>(_updateData);
   }
@@ -29,16 +29,12 @@ class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
 
   Future<void> _updateData(UpdateDataEvent event, emit) async {
     databasesUseCases.update(path, event.data);
-    emit(SuccessfullyFetchedDataState());
+   // emit(SuccessfullyFetchedDataState());
   }
 }
 
 @immutable
 abstract class DatabasesEvent {}
-
-class InitialEvent extends DatabasesEvent {
-  InitialEvent();
-}
 
 class GetDataEvent extends DatabasesEvent {
   GetDataEvent();
@@ -51,10 +47,6 @@ class UpdateDataEvent extends DatabasesEvent {
 
 @immutable
 abstract class DatabasesState {}
-
-class InitialDatasourceState extends DatabasesState {
-  InitialDatasourceState();
-}
 
 class LoadingState extends DatabasesState {
   LoadingState();
@@ -69,7 +61,6 @@ class FetchingDataState extends DatabasesState {
   final HiveDatabaseConfigsDTO entity;
   FetchingDataState(this.entity);
 }
-
 class SuccessfullyFetchedDataState extends DatabasesState {
   SuccessfullyFetchedDataState();
 }

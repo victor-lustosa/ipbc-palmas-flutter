@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:core_module/core_module.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../view-models/lyrics_view_model.dart';
 
@@ -18,7 +18,7 @@ class ServicesCollectionBloc
       required this.fireUseCases,
       required this.analyticsUtil,
       required this.hiveUseCases})
-      : super(InitialState()) {
+      : super(LoadingServiceState()) {
     on<GetServicesCollectionInFireEvent>(_getServicesCollectionInFire);
     on<GetServicesCollectionInHiveEvent>(_getServicesCollectionInHive);
     on<UpdateServicesCollectionInHiveEvent>(_updateServicesCollectionInHive);
@@ -89,10 +89,6 @@ class ServicesCollectionBloc
 @immutable
 abstract class ServicesCollectionEvent {}
 
-class InitialEvent extends ServicesCollectionEvent {
-  InitialEvent();
-}
-
 class LoadingEvent extends ServicesCollectionEvent {
   LoadingEvent();
 }
@@ -125,10 +121,6 @@ class LoadingServiceState extends ServicesCollectionState {
 
 class NoConnectionAvailableState extends ServicesCollectionState {
   NoConnectionAvailableState();
-}
-
-class InitialState extends ServicesCollectionState {
-  InitialState();
 }
 
 class ServiceExceptionState extends ServicesCollectionState {

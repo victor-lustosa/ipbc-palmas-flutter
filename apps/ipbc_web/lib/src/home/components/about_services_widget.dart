@@ -1,7 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:ipbc_web/src/shared/components/carousel/carousel_widget.dart';
 
 import '../view_models/home_view_model.dart';
 
@@ -20,59 +19,26 @@ class AboutServicesWidget extends StatefulWidget {
 
 class _AboutServicesWidgetState extends State<AboutServicesWidget> {
   final List<AboutServices> servicesImagesLg = [
-    AboutServices(
-      label: 'Culto Solene',
-      imagePath: AppImages.sundayEveningServiceLg,
-    ),
-    AboutServices(
-      label: 'Culto de Jovens',
-      imagePath: AppImages.saturdayServiceLg,
-    ),
-    AboutServices(
-      label: 'Escola Bíblica Dominical',
-      imagePath: AppImages.sundayMorningServiceLg,
-    ),
-    AboutServices(
-      label: 'Pequeno Grupo',
-      imagePath: AppImages.littleGroupLg,
-    ),
+    AboutServices(label: 'Culto Solene', imagePath: AppImages.sundayEveningServiceLg),
+    AboutServices(label: 'Culto de Jovens', imagePath: AppImages.saturdayServiceLg),
+    AboutServices(label: 'Escola Bíblica Dominical', imagePath: AppImages.sundayMorningServiceLg),
+    AboutServices(label: 'Pequeno Grupo', imagePath: AppImages.littleGroupLg)
   ];
+
   final List<AboutServices> servicesImagesMd = [
-    AboutServices(
-      label: 'Culto Solene',
-      imagePath: AppImages.sundayEveningServiceMd,
-    ),
-    AboutServices(
-      label: 'Culto de Jovens',
-      imagePath: AppImages.saturdayServiceMd,
-    ),
-    AboutServices(
-      label: 'Escola Bíblica Dominical',
-      imagePath: AppImages.sundayMorningServiceMd,
-    ),
-    AboutServices(
-      label: 'Pequeno Grupo',
-      imagePath: AppImages.littleGroupMd,
-    ),
+    AboutServices(label: 'Culto Solene', imagePath: AppImages.sundayEveningServiceMd),
+    AboutServices(label: 'Culto de Jovens', imagePath: AppImages.saturdayServiceMd),
+    AboutServices(label: 'Escola Bíblica Dominical', imagePath: AppImages.sundayMorningServiceMd),
+    AboutServices(label: 'Pequeno Grupo', imagePath: AppImages.littleGroupMd)
   ];
+
   final List<AboutServices> servicesImagesSm = [
-    AboutServices(
-      label: 'Culto Solene',
-      imagePath: AppImages.sundayEveningServiceSm,
-    ),
-    AboutServices(
-      label: 'Culto de Jovens',
-      imagePath: AppImages.saturdayServiceSm,
-    ),
-    AboutServices(
-      label: 'Escola Bíblica Dominical',
-      imagePath: AppImages.sundayMorningServiceSm,
-    ),
-    AboutServices(
-      label: 'Pequeno Grupo',
-      imagePath: AppImages.littleGroupSm,
-    ),
+    AboutServices(label: 'Culto Solene', imagePath: AppImages.sundayEveningServiceSm),
+    AboutServices(label: 'Culto de Jovens', imagePath: AppImages.saturdayServiceSm),
+    AboutServices(label: 'Escola Bíblica Dominical', imagePath: AppImages.sundayMorningServiceSm),
+    AboutServices(label: 'Pequeno Grupo', imagePath: AppImages.littleGroupSm)
   ];
+
   @override
   Widget build(BuildContext context) {
     if (MediaQuery.of(context).size.width > 1200) {
@@ -84,7 +50,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
     }
   }
 
-  web() => Container(
+  web() =>
+      Container(
         decoration: const BoxDecoration(color: Color(0xffffffff)),
         child: Column(
           children: [
@@ -105,7 +72,6 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                 children: [
                   descriptionServices(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
                     width: 260),
                   verticalCards(),
                 ],
@@ -115,7 +81,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  tablet() => Container(
+  tablet() =>
+      Container(
         decoration: const BoxDecoration(color: Color(0xffffffff)),
         child: Column(
           children: [
@@ -135,9 +102,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   descriptionServices(
+                    width: 260,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    width: 260
                   ),
                   verticalCards(),
                 ],
@@ -147,17 +113,14 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  mobile() => Container(
+  mobile() =>
+      Container(
         decoration: const BoxDecoration(color: Color(0xffffffff)),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              margin: const EdgeInsets.only(
-                bottom: 40,
-                top: 80,
-              ),
+              margin: const EdgeInsets.only(bottom: 40, top: 80),
               child: title(fontSize: 32),
             ),
             SizedBox(
@@ -168,7 +131,6 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                 children: [
                     descriptionServices(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
                         width:
                         MediaQuery.of(context).size.width > 580
                             ? MediaQuery.of(context).size.width * 0.5
@@ -181,15 +143,16 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  descriptionServices(
-          {required CrossAxisAlignment crossAxisAlignment,
-          required MainAxisAlignment mainAxisAlignment, required double width}) =>
+  descriptionServices({
+    CrossAxisAlignment? crossAxisAlignment,
+    MainAxisAlignment? mainAxisAlignment,
+    required double width}) =>
       Container(
         margin: const EdgeInsets.only(top: 10,left: 24),
         width: width,
         child: Column(
-          crossAxisAlignment: crossAxisAlignment,
-          mainAxisAlignment: mainAxisAlignment,
+          crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
+          mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
           children: [
             cardService(
               'Culto Solene',
@@ -227,7 +190,6 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                     style: AppFonts.defaultFont(
                       fontSize: 18,
                       height: 1.5,
-                      fontWeight: FontWeight.w400,
                       color: const Color(0xff545456),
                     ),
                   ),
@@ -236,8 +198,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                     recognizer: TapGestureRecognizer()
                       ..onTap = () => setState(
                             () {
-                              context
-                                  .read<HomeViewModel>()
+                              Modular.get<HomeViewModel>()
                                   .scrollViewController
                                   .animateTo(
                                     duration: const Duration(
@@ -251,7 +212,6 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                     style: AppFonts.defaultFont(
                       height: 1.5,
                       fontSize: 18,
-                      fontWeight: FontWeight.w400,
                       decoration: TextDecoration.underline,
                       color: const Color(0xff545456),
                       decorationColor: const Color(0xff545456),
@@ -264,7 +224,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  title({required double fontSize}) => Text(
+  title({required double fontSize}) =>
+      Text(
     'Programação',
     style: AppFonts.defaultFont(
       fontSize: fontSize,
@@ -273,7 +234,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
     ),
   );
 
-  horizontalCards() => Container(
+  horizontalCards() =>
+      Container(
         margin: const EdgeInsets.only(
           bottom: 70,
           top: 50
@@ -289,7 +251,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  verticalCards() => SingleChildScrollView(
+  verticalCards() =>
+      SingleChildScrollView(
         child: SizedBox(
           width: MediaQuery.of(context).size.width > 1100 ? 618 : 457,
           height: 1333,
@@ -322,7 +285,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
           bottom: 16,
         ),
         decoration: BoxDecoration(
-          color: const Color(0x33005b40),
+          color: AppColors.grey4,
           borderRadius: BorderRadius.circular(20),
           image: DecorationImage(
             fit: BoxFit.cover,

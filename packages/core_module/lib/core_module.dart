@@ -5,45 +5,29 @@ export 'src/core/domain/use-cases/use_cases.dart';
 export 'src/core/infra/datasources/datasource.dart';
 export 'src/core/infra/repositories/repository.dart';
 
-export 'src/lyric/domain/use-cases/lyrics_use_cases.dart';
-export 'src/lyric/domain/entities/lyric_entity.dart';
-export 'src/lyric/domain/entities/verse_entity.dart';
-export 'src/lyric/domain/entities/service_entity.dart';
-export 'src/lyric/domain/entities/services_entity.dart';
-export 'src/lyric/domain/entities/liturgy_entity.dart';
-
-export 'src/lyric/infra/adapters/lyric_adapter.dart';
-export 'src/lyric/infra/adapters/verse_adapter.dart';
-export 'src/lyric/infra/adapters/service_adapter.dart';
-export 'src/lyric/infra/adapters/services_adapter.dart';
-
-export 'src/lyric/infra/use-cases/services_use_cases.dart';
-export 'src/lyric/infra/use-cases/service_use_cases.dart';
-export 'src/lyric/infra/use-cases/lyrics_use_cases.dart';
-
-export 'src/lyric/infra/models/hive-dtos/hive_lyric_dto.dart';
-export 'src/lyric/infra/models/hive-dtos/hive_database_configs_dto.dart';
-export 'src/lyric/infra/models/hive-dtos/hive_collection_dto.dart';
-export 'src/lyric/infra/models/hive-dtos/hive_services_dto.dart';
-
 export 'src/splash/infra/use-cases/databases_use_cases.dart';
-
-export 'package:design_system/design_system.dart';
-export 'src/shared/utils/analytics_util.dart';
-export 'package:intl/intl.dart';
 
 export 'src/core/external/firestore_datasource.dart';
 export 'src/core/external/hive_datasource.dart';
-export 'src/shared/mixins/launch_url_mixin.dart';
-export 'src/shared/mixins/email_mixin.dart';
+
 export 'src/configs/firebase_options.dart';
 
-export 'src/shared/components/scroll_transform/scroll_transform_item.dart';
-export 'src/shared/components/scroll_transform/scroll_transform_view.dart';
+export 'src/shared/mixins/launch_url_mixin.dart';
+export 'src/shared/mixins/clipboard_mixin.dart';
+export 'src/shared/mixins/email_mixin.dart';
+export 'src/shared/utils/validation_util.dart';
+export 'src/shared/utils/responsivity_util.dart';
+export 'src/app_module.dart';
+
+export 'package:design_system/design_system.dart';
+export 'package:lyric_module/lyric_module.dart';
+export 'package:flutter_modular/flutter_modular.dart';
+export 'src/shared/utils/analytics_util.dart';
+export 'package:intl/intl.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:firebase_crashlytics/firebase_crashlytics.dart';
 export 'package:hive_flutter/hive_flutter.dart';
 export 'package:email_validator/email_validator.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
-export 'package:provider/provider.dart';
+export 'package:get_it/get_it.dart' hide Disposable;

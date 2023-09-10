@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:core_module/core_module.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../view-models/lyrics_view_model.dart';
 
@@ -16,7 +16,7 @@ class ServicesListBloc extends Bloc<ServicesListEvent, ServicesListState> {
       required this.fireUseCases,
       required this.analyticsUtil,
       required this.hiveUseCases})
-      : super(InitialState()) {
+      : super(LoadingServiceState()) {
     on<GetServiceInFireEvent>(_getServiceInFire);
     on<UpdateServiceInHiveEvent>(_updateServiceInHive);
     on<GetServiceInHiveEvent>(_getServiceInHive);
@@ -75,10 +75,6 @@ class ServicesListBloc extends Bloc<ServicesListEvent, ServicesListState> {
 @immutable
 abstract class ServicesListEvent {}
 
-class InitialEvent extends ServicesListEvent {
-  InitialEvent();
-}
-
 class LoadingEvent extends ServicesListEvent {
   LoadingEvent();
 }
@@ -109,10 +105,6 @@ class LoadingServiceState extends ServicesListState {
 
 class NoConnectionAvailableState extends ServicesListState {
   NoConnectionAvailableState();
-}
-
-class InitialState extends ServicesListState {
-  InitialState();
 }
 
 class ServiceExceptionState extends ServicesListState {

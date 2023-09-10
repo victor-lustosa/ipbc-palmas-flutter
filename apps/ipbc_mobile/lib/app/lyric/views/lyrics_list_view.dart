@@ -1,12 +1,13 @@
+
 import 'package:core_module/core_module.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' ;
+
 import '../blocs/lyric_bloc.dart';
 import '../components/lyrics_list_widget.dart';
 import '../view-models/lyrics_view_model.dart';
 import '../../exception/views/generic_error_view.dart';
 import '../../exception/views/no_connection_view.dart';
-import '../../shared/components/loading/loading_widget.dart';
-import '../../shared/layout/top-bar/title_top_bar_widget.dart';
+import '../../../layout/top-bar/title_top_bar_widget.dart';
 
 class LyricsListView extends StatefulWidget {
   const LyricsListView({super.key});
@@ -26,9 +27,8 @@ class _LyricsListViewState extends State<LyricsListView>
   void initState() {
     super.initState();
     lyricsFetched = [];
-    bloc = context.read<LyricBloc>();
-    bloc.add(LoadingEvent());
-    if (!context.read<LyricsViewModel>().data.isLyricsUpdated) {
+    bloc = Modular.get<LyricBloc>();
+    if (!Modular.get<LyricsViewModel>().data.isLyricsUpdated) {
       bloc.add(CheckConnectivityEvent());
     } else {
       bloc.add(GetLyricsInHiveEvent());
@@ -42,15 +42,13 @@ class _LyricsListViewState extends State<LyricsListView>
       body: BlocBuilder<LyricBloc, LyricState>(
         bloc: bloc,
         builder: (context, state) {
-          if (state is InitialState) {
-            return const LoadingWidget();
-          } else if (state is LoadingLyricsState) {
+           if (state is LoadingLyricsState) {
             return const LoadingWidget();
           } else if (state is NoConnectionAvailableState) {
             return const NoConnectionView(index: 0);
           } else if (state is LyricsSuccessfullyFetchedState) {
             lyricsFetched = state.entities;
-            context.read<LyricsViewModel>().checkUpdateData(context, 'lyrics');
+            Modular.get<LyricsViewModel>().checkUpdateData(context, 'lyrics');
             return SafeArea(
               child: SingleChildScrollView(
                 child: RefreshIndicator(

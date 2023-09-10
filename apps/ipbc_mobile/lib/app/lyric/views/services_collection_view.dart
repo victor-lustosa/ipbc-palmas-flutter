@@ -4,14 +4,12 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../lyric_module.dart';
 import 'service_view.dart';
 import '../view-models/lyrics_view_model.dart';
 import '../blocs/services_collection_bloc.dart';
-import '../../configs/app_routes.dart';
 import '../../exception/views/generic_error_view.dart';
 import '../../exception/views/no_connection_view.dart';
-import '../../shared/components/button/button_widget.dart';
-import '../../shared/components/loading/loading_widget.dart';
 
 class ServicesCollectionView extends StatefulWidget {
   const ServicesCollectionView({Key? key, required this.servicesCollection})
@@ -32,9 +30,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
     super.initState();
     servicesCollectionList = [];
     path = widget.servicesCollection.path;
-    bloc = context.read<ServicesCollectionBloc>();
-    bloc.add(LoadingEvent());
-    if (context.read<LyricsViewModel>().isNotUpdated(path)) {
+    bloc = Modular.get<ServicesCollectionBloc>();
+    if (Modular.get<LyricsViewModel>().isNotUpdated(path)) {
       bloc.add(CheckConnectivityEvent(path: path));
     } else {
       bloc.add(GetServicesCollectionInHiveEvent(path: path));
@@ -54,15 +51,13 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
             child: BlocBuilder<ServicesCollectionBloc, ServicesCollectionState>(
               bloc: bloc,
               builder: (context, state) {
-                if (state is InitialState) {
-                  return const LoadingWidget();
-                } else if (state is LoadingServiceState) {
+               if (state is LoadingServiceState) {
                   return const LoadingWidget();
                 } else if (state is NoConnectionAvailableState) {
                   return const NoConnectionView(index: 0);
                 } else if (state is CollectionSuccessfullyFetchedState) {
                   servicesCollectionList = state.entities;
-                  context.read<LyricsViewModel>().checkUpdateData(context, path);
+                  Modular.get<LyricsViewModel>().checkUpdateData(context, path);
                   return Column(
                     children: [
                       Container(
@@ -90,8 +85,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -129,8 +123,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: ListView.separated(
-                            separatorBuilder:
-                                (BuildContext context, int index) {
+                            separatorBuilder: (BuildContext context, int index) {
                               return const SizedBox(height: 16);
                             },
                             scrollDirection: Axis.vertical,
@@ -147,8 +140,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                 child: ListTile(
                                   visualDensity: VisualDensity.comfortable,
                                   horizontalTitleGap: 2,
-                                  contentPadding:
-                                      const EdgeInsets.symmetric(vertical: 9),
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 9),
                                   title: Container(
                                     margin: const EdgeInsets.only(left: 16),
                                     child: Text(
@@ -163,11 +155,9 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                     ),
                                   ),
                                   subtitle: Container(
-                                    margin:
-                                        const EdgeInsets.only(left: 16, top: 4),
+                                    margin: const EdgeInsets.only(left: 16, top: 4),
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           overflow: TextOverflow.ellipsis,
@@ -201,9 +191,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                     ),
                                   ),
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      AppRoutes.serviceRoute,
+                                    Modular.to.navigate(
+                                      LyricModule.serviceRoute,
                                       arguments: ServiceViewDTO(
                                         service: servicesCollectionList[index],
                                         image: widget.servicesCollection.image,
