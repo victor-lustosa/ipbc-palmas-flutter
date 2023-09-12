@@ -1,5 +1,4 @@
 class TopBarResponsive {
-
   static leftWidth(value){
     return value > 1200
         ? value * 0.085

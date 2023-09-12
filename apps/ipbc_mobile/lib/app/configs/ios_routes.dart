@@ -2,8 +2,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import '../lyric/views/lyric_view.dart';
-import '../lyric/views/services_list_view.dart';
 import '../../../app/exception/views/unknown_route_view.dart';
+import '../service/views/services_list_view.dart';
 
 class AppRoutes {
   AppRoutes._();
@@ -24,7 +24,7 @@ class AppRoutes {
         return CustomTransitionPageRoute(
           transitionSpeed: const Duration(milliseconds: 500),
           reverseSpeed: const Duration(milliseconds: 500),
-          child: LyricView(lyricEntity: settings.arguments as LyricEntity),
+          child: LyricView(entity: settings.arguments as LyricEntity),
           tween: Tween(begin: const Offset(0, 1), end: Offset.zero)
               .chain(CurveTween(curve: Curves.ease)),
         );

@@ -7,10 +7,10 @@ import '../../../design_system.dart';
 //import '../forms/auth_field_widget.dart';
 
 class SearchBarWidget extends StatefulWidget {
-  const SearchBarWidget({Key? key, required this.formFieldController,required this.action})
+  const SearchBarWidget({Key? key, required this.controller,required this.action})
       : super(key: key);
 
-  final TextEditingController formFieldController;
+  final TextEditingController controller;
   final void Function() action;
 
   @override
@@ -96,11 +96,11 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
 }
 
 class DropdownWidget extends StatefulWidget {
-  const DropdownWidget(this.list, this.callback, this.initialValue,
+  const DropdownWidget(this.entitiesList, this.callback, this.initialValue,
       {super.key});
 
   final Function(String) callback;
-  final List<String> list;
+  final List<String> entitiesList;
   final String initialValue;
 
   @override
@@ -128,7 +128,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
           borderRadius: const BorderRadius.all(
             Radius.circular(10),
           ),
-          items: widget.list.map<DropdownMenuItem<String>>(
+          items: widget.entitiesList.map<DropdownMenuItem<String>>(
             (String value) {
               return DropdownMenuItem<String>(
                 value: value,

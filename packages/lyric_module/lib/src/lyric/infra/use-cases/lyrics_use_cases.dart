@@ -28,13 +28,13 @@ class LyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
 
   @override
   Future<List<LyricEntity>> lettersFilter(
-      List<LyricEntity> lyrics, String letter) {
+      List<LyricEntity> lyrics) {
     List<LyricEntity> lyricsResult = [];
-    for (LyricEntity lyric in lyrics) {
+    /*for (LyricEntity lyric in lyrics) {
       if (lyric.title[0].toLowerCase() == letter.toLowerCase()) {
         lyricsResult.add(lyric);
       }
-    }
+    }*/
     return Future.value(lyricsResult);
   }
 

@@ -4,13 +4,14 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../lyric/components/album_cover_widget.dart';
-import '../lyric_module.dart';
+import '../../lyric/lyric_module.dart';
+import 'album_cover_widget.dart';
+
 
 class LyricsListWidget extends StatefulWidget {
-  const LyricsListWidget({Key? key, required this.lyricsList})
+  const LyricsListWidget({Key? key, required this.entitiesList})
       : super(key: key);
-  final List<LyricEntity> lyricsList;
+  final List<LyricEntity> entitiesList;
 
   @override
   State<LyricsListWidget> createState() => _LyricsListWidgetState();
@@ -38,7 +39,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                 },
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
-                itemCount: widget.lyricsList.length,
+                itemCount: widget.entitiesList.length,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (__, index) {
                   return Material(
@@ -49,7 +50,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                       horizontalTitleGap: 0,
                       contentPadding: const EdgeInsets.only(left: 10),
                       leading: AlbumCoverWidget(
-                        albumCover: widget.lyricsList[index].albumCover,
+                        albumCover: widget.entitiesList[index].albumCover,
                         height: 50,
                         width: 50,
                       ),
@@ -58,7 +59,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                         child: Text(
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          widget.lyricsList[index].title,
+                          widget.entitiesList[index].title,
                           style: AppFonts.subhead(
                             fontWeight: FontWeight.w500,
                             color: AppColors.grey9,
@@ -69,7 +70,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                       subtitle: Container(
                         margin: const EdgeInsets.only(left: 10,bottom: 0),
                         child: Text(
-                          widget.lyricsList[index].group,
+                          widget.entitiesList[index].group,
                           style: AppFonts.description(
                             color: AppColors.grey9,
                             fontSize: 14,
@@ -90,7 +91,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                       onTap: () {
                         Modular.to.navigate(
                           LyricModule.lyricRoute,
-                          arguments: widget.lyricsList[index],
+                          arguments: widget.entitiesList[index],
                         );
                       },
                     ),

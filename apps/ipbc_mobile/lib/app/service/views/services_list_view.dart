@@ -4,9 +4,10 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../home/home_module.dart';
+import '../../shared/blocs/generics.dart';
+import '../../shared/view-models/database_view_model.dart';
 import '../blocs/services_list_bloc.dart';
-import '../lyric_module.dart';
-import '../view-models/lyrics_view_model.dart';
 import '../../exception/views/no_connection_view.dart';
 import '../../exception/views/generic_error_view.dart';
 import '../../../layout/top-bar/main_top_bar_widget.dart';
@@ -21,16 +22,15 @@ class ServicesListView extends StatefulWidget {
 class _ServicesListViewState extends State<ServicesListView>
     with AutomaticKeepAliveClientMixin {
   late final ServicesListBloc bloc;
-  late List<ServicesEntity> servicesList;
+  late List<ServicesEntity> entitiesList;
 
   @override
   void initState() {
-    Modular.get<LyricsViewModel>().initData(context);
     bloc = Modular.get<ServicesListBloc>();
-    if (!Modular.get<LyricsViewModel>().data.isServicesUpdated) {
+    if (!Modular.get<DatabaseViewModel>().data.isServicesUpdated) {
       bloc.add(CheckConnectivityEvent());
     } else {
-      bloc.add(GetServiceInHiveEvent());
+      bloc.add(GetInHiveEvent());
     }
     super.initState();
   }
@@ -44,16 +44,16 @@ class _ServicesListViewState extends State<ServicesListView>
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: BlocBuilder<ServicesListBloc, ServicesListState>(
+          child: BlocBuilder<ServicesListBloc, GenericState<ServicesListState>>(
             bloc: bloc,
             builder: (context, state) {
-               if (state is LoadingServiceState) {
+               if (state is LoadingState<ServicesListState>) {
                 return const LoadingWidget();
-              } else if (state is NoConnectionAvailableState) {
+              } else if (state is NoConnectionState<ServicesListState>) {
                 return const NoConnectionView(index: 0);
-              } else if (state is ServiceSuccessfullyFetchedState) {
-                servicesList = state.entities;
-                Modular.get<LyricsViewModel>().checkUpdateData(context, 'services');
+              } else if (state is DataFetchedState<ServicesListState, ServicesEntity>) {
+                entitiesList = state.entities;
+                Modular.get<DatabaseViewModel>().checkUpdateData(context, 'services');
                 return Column(
                   children: [
                     const MainTopBarWidget(),
@@ -98,7 +98,7 @@ class _ServicesListViewState extends State<ServicesListView>
                         },
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
-                        itemCount: servicesList.length,
+                        itemCount: entitiesList.length,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           return Container(
@@ -109,7 +109,7 @@ class _ServicesListViewState extends State<ServicesListView>
                               image: DecorationImage(
                                 fit: BoxFit.cover,
                                 image: AssetImage(
-                                  servicesList[index].image,
+                                  entitiesList[index].image,
                                 ),
                               ),
                             ),
@@ -120,7 +120,7 @@ class _ServicesListViewState extends State<ServicesListView>
                                 title: Container(
                                   margin: const EdgeInsets.only(left: 17),
                                   child: Text(
-                                    '${servicesList[index].title} | ${servicesList[index].hour}',
+                                    '${entitiesList[index].title} | ${entitiesList[index].hour}',
                                     style: AppFonts.headline(
                                       color: AppColors.white,
                                       fontWeight: FontWeight.w500,
@@ -140,8 +140,8 @@ class _ServicesListViewState extends State<ServicesListView>
                                 ),
                                 onTap: () {
                                   Modular.to.navigate(
-                                    LyricModule.servicesCollectionRoute,
-                                    arguments: servicesList[index],
+                                    HomeModule.servicesCollectionRoute,
+                                    arguments: entitiesList[index],
                                   );
                                 },
                               ),

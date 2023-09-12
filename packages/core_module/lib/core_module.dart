@@ -11,6 +11,8 @@ export 'src/core/external/firestore_datasource.dart';
 export 'src/core/external/hive_datasource.dart';
 
 export 'src/configs/firebase_options.dart';
+export 'src/configs/no_glow_behavior.dart';
+export 'src/configs/generic_bloc_observer.dart';
 
 export 'src/shared/mixins/launch_url_mixin.dart';
 export 'src/shared/mixins/clipboard_mixin.dart';
@@ -30,4 +32,3 @@ export 'package:firebase_crashlytics/firebase_crashlytics.dart';
 export 'package:hive_flutter/hive_flutter.dart';
 export 'package:email_validator/email_validator.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
-export 'package:get_it/get_it.dart' hide Disposable;

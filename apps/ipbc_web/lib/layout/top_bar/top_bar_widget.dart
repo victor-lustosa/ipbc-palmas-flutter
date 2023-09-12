@@ -205,7 +205,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
       );
 
   scrollPage(double position) => setState(() {
-        Modular.get<HomeViewModel>().scrollViewController.animateTo(
+        Modular.get<HomeViewModel>().scrollController.animateTo(
             duration: const Duration(milliseconds: 1500),
             curve: Curves.easeInOutQuint,
             position);

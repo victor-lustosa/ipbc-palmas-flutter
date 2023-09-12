@@ -3,128 +3,97 @@ import 'dart:async';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../view-models/lyrics_view_model.dart';
+import '../../shared/blocs/generics.dart';
+import '../../shared/view-models/services_view_model.dart';
 
-class LyricBloc extends Bloc<LyricEvent, LyricState> {
-  final ILyricsUseCases fireLyricsUseCase;
-  final ILyricsUseCases hiveLyricsUseCase;
-  final LyricsViewModel lyricsViewModel;
+class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>> {
+  final ILyricsUseCases fireUseCase;
+  final ILyricsUseCases hiveUseCase;
+  final ServicesViewModel viewModel;
   final AnalyticsUtil analyticsUtil;
   final String path = 'lyrics/20';
 
-  LyricBloc(
-      {required this.lyricsViewModel,
-      required this.analyticsUtil,
-      required this.fireLyricsUseCase,
-      required this.hiveLyricsUseCase})
-      : super(LoadingLyricsState()) {
-    on<GetLyricsInFireEvent>(_getLyricsInFire);
-    on<GetLyricsInHiveEvent>(_getLyricsInHive);
-    on<UpdateLyricsInHiveEvent>(_updateLyricsInHive);
-    on<LyricsFilterEvent>(_lyricsFilter);
-    on<LoadingEvent>(_loading);
-    on<CheckConnectivityEvent>(_checkConnectivity);
+  LyricBloc({
+    required this.viewModel,
+    required this.analyticsUtil,
+    required this.fireUseCase,
+    required this.hiveUseCase,
+  }) : super(LoadingState<LyricState>()) {
+    on<GetInFireEvent<LyricEvent>>(_getInFire);
+    on<GetInHiveEvent<LyricEvent>>(_getInHive);
+    on<UpdateInHiveEvent<LyricEvent>>(_updateInHive);
+    on<FilterEvent<LyricEvent>>(_filter);
+    on<LoadingEvent<LyricEvent>>(_loading);
+    on<CheckConnectivityEvent<LyricEvent>>(_checkConnectivity);
   }
 
-  Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
-    final isConnected = await lyricsViewModel.isConnected();
+  Future<void> _checkConnectivity(
+      CheckConnectivityEvent<LyricEvent> event, emit) async {
+    final isConnected = await viewModel.isConnected();
     if (isConnected) {
-      add(GetLyricsInFireEvent());
+      add(GetInFireEvent());
     } else {
-      emit(NoConnectionAvailableState());
+      emit(NoConnectionState<LyricState>());
     }
   }
 
-  Future<void> _getLyricsInFire(GetLyricsInFireEvent event, emit) async {
+  Future<void> _getInFire(GetInFireEvent<LyricEvent> event, emit) async {
     await emit.onEach<List<LyricEntity>>(
-      await fireLyricsUseCase.get(path),
+      await fireUseCase.get(path),
       onData: (lyrics) {
-        add(UpdateLyricsInHiveEvent(entities: lyrics));
-        emit(LyricsSuccessfullyFetchedState(lyrics));
+        add(UpdateInHiveEvent(entities: lyrics));
+        emit(DataFetchedState<LyricState, LyricEntity>(entities: lyrics));
       },
       onError: (error, st) {
-        emit(ExceptionLyricState(error.toString()));
-        analyticsUtil.recordError(name:'lyric bloc', error: error,st: st);
-        analyticsUtil.setCustomKey(name: 'lyric bloc', key: 'get fire lyrics bloc', value:  error.toString());
+        emit(ExceptionState<LyricState>(message: error.toString()));
+        analyticsUtil.recordError(name: 'lyric bloc', error: error, st: st);
+        analyticsUtil.setCustomKey(
+            name: 'lyric bloc',
+            key: 'get fire lyrics bloc',
+            value: error.toString());
       },
     );
   }
 
-  Future<void> _getLyricsInHive(GetLyricsInHiveEvent event, emit) async {
+  Future<void> _getInHive(GetInHiveEvent<LyricEvent> event, emit) async {
     await emit.onEach<List<LyricEntity>>(
-      await hiveLyricsUseCase.get(path),
+      await hiveUseCase.get(path),
       onData: (lyrics) {
-        emit(LyricsSuccessfullyFetchedState(lyrics));
+        emit(DataFetchedState<LyricState, LyricEntity>(entities: lyrics));
       },
       onError: (error, st) async {
-        analyticsUtil.recordError(name:'lyric bloc', error:error,st: st);
-        analyticsUtil.setCustomKey(name: 'lyric bloc', key: 'get hive lyrics bloc', value:  error.toString());
-        emit(ExceptionLyricState(error.toString()));
+        analyticsUtil.recordError(name: 'lyric bloc', error: error, st: st);
+        analyticsUtil.setCustomKey(
+            name: 'lyric bloc',
+            key: 'get hive lyrics bloc',
+            value: error.toString());
+        emit(ExceptionState<LyricState>(message: error.toString()));
       },
     );
   }
 
-  Future<void> _updateLyricsInHive(UpdateLyricsInHiveEvent event, emit) async {
-    hiveLyricsUseCase.update(path, event.entities);
+  Future<void> _updateInHive(UpdateInHiveEvent<LyricEvent> event, emit) async {
+    hiveUseCase.update(path, event.entities);
   }
 
   Future<void> _loading(_, emit) async {
-    emit(LoadingLyricsState());
+    emit(LoadingState<LyricState>());
   }
 
-  Future<void> _lyricsFilter(LyricsFilterEvent event, emit) async {
-    List<dynamic> lyricsList = await fireLyricsUseCase.lettersFilter(event.lyrics, event.letter);
-    emit(LyricsSuccessfullyFetchedState(lyricsList as List<LyricEntity>));
+  Future<void> _filter(FilterEvent<LyricEvent> event, emit) async {
+    List<LyricEntity> lyricsList =
+        await fireUseCase.lettersFilter(event.lyrics);
+    emit(DataFetchedState<LyricState, LyricEntity>(entities: lyricsList));
   }
 }
 
 @immutable
 abstract class LyricEvent {}
 
-class LoadingEvent extends LyricEvent {
-  LoadingEvent();
-}
-
-class GetLyricsInFireEvent extends LyricEvent {
-  GetLyricsInFireEvent();
-}
-
-class CheckConnectivityEvent extends LyricEvent {
-  CheckConnectivityEvent();
-}
-
-class GetLyricsInHiveEvent extends LyricEvent {
-  GetLyricsInHiveEvent();
-}
-
-class UpdateLyricsInHiveEvent extends LyricEvent {
-  final dynamic entities;
-  UpdateLyricsInHiveEvent({required this.entities});
-}
-
-class LyricsFilterEvent extends LyricEvent {
-  final String letter;
-  final List<LyricEntity> lyrics;
-  LyricsFilterEvent({required this.letter, required this.lyrics});
-}
-
 @immutable
 abstract class LyricState {}
 
-class LoadingLyricsState extends LyricState {
-  LoadingLyricsState();
-}
-
-class ExceptionLyricState extends LyricState {
-  final String message;
-  ExceptionLyricState(this.message);
-}
-
-class NoConnectionAvailableState extends LyricState {
-  NoConnectionAvailableState();
-}
-
-class LyricsSuccessfullyFetchedState extends LyricState {
-  final List<LyricEntity> entities;
-  LyricsSuccessfullyFetchedState(this.entities);
+class FilterEvent<R> extends GenericEvent<R> {
+  List<LyricEntity> lyrics;
+  FilterEvent({required this.lyrics});
 }

@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 import 'package:core_module/core_module.dart';
 
-class IpbcBlocObserver extends BlocObserver {
+class GenericBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);

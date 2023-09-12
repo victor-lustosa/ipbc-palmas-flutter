@@ -10,7 +10,7 @@ class HiveCollectionAdapter {
     return {
       'id': data.id,
       'liturgyList': HiveLiturgyAdapter.toMapList(data.liturgyList),
-      'lyricsList': HiveLyricAdapter.toMapList(data.lyricsList),
+      'lyricsList': HiveLyricAdapter.toMapList(data.entitiesList),
       'createAt': data.createAt,
       'heading': data.heading,
       'title': data.title,

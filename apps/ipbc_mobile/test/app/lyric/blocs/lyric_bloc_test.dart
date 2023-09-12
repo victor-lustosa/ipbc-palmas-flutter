@@ -1,27 +1,28 @@
+import 'package:ipbc_palmas/app/shared/blocs/generics.dart';
+import 'package:ipbc_palmas/app/shared/view-models/services_view_model.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ipbc_palmas/app/lyric/blocs/lyric_bloc.dart';
-import 'package:ipbc_palmas/app/lyric/view-models/lyrics_view_model.dart';
 import '../../../mocks/mocks.dart';
 void main() {
   late ILyricsUseCases<Stream<List<LyricEntityMock>>> useCases;
   late LyricBloc bloc;
   late AnalyticsUtil analyticsUtil;
-  late LyricsViewModel lyricsViewModel;
+  late ServicesViewModel servicesViewModel;
 
   setUp(
     () async {
       TestWidgetsFlutterBinding.ensureInitialized();
       analyticsUtil = AnalyticsMock();
-      lyricsViewModel = LyricsViewModelMock();
+      servicesViewModel = ServicesViewModelMock();
       useCases = ILyricsUseCasesMock<Stream<List<LyricEntityMock>>>();
 
       bloc = LyricBloc(
-        fireLyricsUseCase: useCases,
-        hiveLyricsUseCase: useCases,
-        lyricsViewModel: lyricsViewModel,
+        fireUseCase: useCases,
+        hiveUseCase: useCases,
+        viewModel: servicesViewModel,
         analyticsUtil: analyticsUtil,
       );
     },
@@ -30,7 +31,7 @@ void main() {
 /*  blocTest<LyricBloc, LyricState>(
     'Fetching lyrics of firestore',
     build: () {
-      when(() => lyricsViewModel.isConnected())
+      when(() => servicesViewModel.isConnected())
           .thenAnswer((_) => Future.value(true));
       when(() => useCases.get('lyrics/20')).thenAnswer(
         (_) => Future.value(
@@ -52,10 +53,10 @@ void main() {
     ],
   );*/
 
-  blocTest<LyricBloc, LyricState>(
+  blocTest<LyricBloc, GenericState<LyricState>>(
     'Fetching lyrics of firestore and occorring an error',
     build: () {
-      when(() => lyricsViewModel.isConnected())
+      when(() => servicesViewModel.isConnected())
           .thenAnswer((_) => Future.value(true));
       when(() => useCases.get('lyrics/20')).thenAnswer(
         (_) async => Stream.error(
@@ -67,11 +68,11 @@ void main() {
     },
     act: (bloc) => bloc.add(CheckConnectivityEvent()),
     expect: () => [
-      isA<ExceptionLyricState>(),
+      isA<ExceptionState>(),
     ],
   );
 
-  blocTest<LyricBloc, LyricState>(
+  blocTest<LyricBloc, GenericState<LyricState>>(
     'Fetching lyrics of hive',
     build: () {
       when(() => useCases.get('lyrics/20')).thenAnswer(
@@ -83,13 +84,13 @@ void main() {
       );
       return bloc;
     },
-    act: (bloc) => bloc.add(GetLyricsInHiveEvent()),
+    act: (bloc) => bloc.add(GetInHiveEvent()),
     expect: () => [
-      isA<LyricsSuccessfullyFetchedState>(),
+      isA<DataFetchedState>(),
     ],
   );
 
-  blocTest<LyricBloc, LyricState>(
+  blocTest<LyricBloc, GenericState<LyricState>>(
     'Fetching lyrics of hive and occorring an error',
     build: () {
       when(() => useCases.get('lyrics/20')).thenAnswer(
@@ -100,9 +101,9 @@ void main() {
       );
       return bloc;
     },
-    act: (bloc) => bloc.add(GetLyricsInHiveEvent()),
+    act: (bloc) => bloc.add(GetInHiveEvent()),
     expect: () => [
-      isA<ExceptionLyricState>(),
+      isA<ExceptionState>(),
     ],
   );
 }

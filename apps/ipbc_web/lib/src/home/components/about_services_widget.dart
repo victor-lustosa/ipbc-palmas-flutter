@@ -199,7 +199,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                       ..onTap = () => setState(
                             () {
                               Modular.get<HomeViewModel>()
-                                  .scrollViewController
+                                  .scrollController
                                   .animateTo(
                                     duration: const Duration(
                                       milliseconds: 1500,

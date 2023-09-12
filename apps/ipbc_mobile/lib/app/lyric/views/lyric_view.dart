@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
-import '../components/album_cover_widget.dart';
+import '../../shared/components/album_cover_widget.dart';
 
 class LyricView extends StatefulWidget {
-  const LyricView({super.key, required this.lyricEntity});
+  const LyricView({super.key, required this.entity});
 
-  final LyricEntity lyricEntity;
+  final LyricEntity entity;
   @override
   State<LyricView> createState() => _LyricViewState();
 }
@@ -58,7 +58,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                   child: AlbumCoverWidget(
                                     height: 75,
                                     width: 75,
-                                    albumCover: widget.lyricEntity.albumCover,
+                                    albumCover: widget.entity.albumCover,
                                   ),
                                 ),
                               ),
@@ -77,7 +77,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                     child: Text(
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      widget.lyricEntity.title,
+                                      widget.entity.title,
                                       style: AppFonts.defaultFont(
                                         color: AppColors.grey9,
                                         fontWeight: FontWeight.w500,
@@ -92,7 +92,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                   Text(
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    widget.lyricEntity.group,
+                                    widget.entity.group,
                                     style: AppFonts.defaultFont(
                                       color: AppColors.grey10,
                                       fontSize:
@@ -129,12 +129,12 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: widget.lyricEntity.verses.length,
+                      itemCount: widget.entity.verses.length,
                       itemBuilder: (_, index) {
                         return Container(
                           decoration:
                               const BoxDecoration(color: AppColors.white),
-                          margin: widget.lyricEntity.verses[index].isChorus
+                          margin: widget.entity.verses[index].isChorus
                               ? const EdgeInsets.only(left: 18, right: 16)
                               : const EdgeInsets.only(left: 8),
                           child: ClipRRect(
@@ -142,11 +142,11 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                 const BorderRadius.all(Radius.circular(16)),
                             child: Container(
                               alignment:
-                                  widget.lyricEntity.verses[index].isChorus
+                                  widget.entity.verses[index].isChorus
                                       ? Alignment.centerRight
                                       : Alignment.centerLeft,
                               decoration: BoxDecoration(
-                                color: widget.lyricEntity.verses[index].isChorus
+                                color: widget.entity.verses[index].isChorus
                                     ? const Color.fromRGBO(0, 168, 118, .1)
                                     : AppColors.white,
                               ),
@@ -155,7 +155,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                   top: 14,
                                   bottom: 14,
                                   right:
-                                      widget.lyricEntity.verses[index].isChorus
+                                      widget.entity.verses[index].isChorus
                                           ? 5
                                           : 15,
                                 ),
@@ -165,7 +165,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                       height: 10,
                                     );
                                   },
-                                  itemCount: widget.lyricEntity.verses[index]
+                                  itemCount: widget.entity.verses[index]
                                       .versesList.length,
                                   scrollDirection: Axis.vertical,
                                   shrinkWrap: true,
@@ -178,7 +178,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                         bottom: 2,
                                       ),
                                       child: Text(
-                                        widget.lyricEntity.verses[index]
+                                        widget.entity.verses[index]
                                             .versesList[position],
                                         style: AppFonts.defaultFont(
                                           color: AppColors.grey10,

@@ -1,28 +1,29 @@
+import 'package:ipbc_palmas/app/service/blocs/services_collection_bloc.dart';
+import 'package:ipbc_palmas/app/shared/blocs/generics.dart';
+import 'package:ipbc_palmas/app/shared/view-models/services_view_model.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:core_module/core_module.dart';
-import 'package:ipbc_palmas/app/lyric/view-models/lyrics_view_model.dart';
-import 'package:ipbc_palmas/app/lyric/blocs/services_collection_bloc.dart';
 import '../../../mocks/mocks.dart';
 
 void main() {
   late IUseCases<Stream<List<CollectionEntityMock>>> useCases;
   late ServicesCollectionBloc bloc;
   late AnalyticsUtil analyticsUtil;
-  late LyricsViewModel lyricsViewModel;
+  late ServicesViewModel servicesViewModel;
 
   setUp(
         () async {
       TestWidgetsFlutterBinding.ensureInitialized();
       analyticsUtil = AnalyticsMock();
-      lyricsViewModel = LyricsViewModelMock();
+      servicesViewModel = ServicesViewModelMock();
       useCases = IUseCasesMock<Stream<List<CollectionEntityMock>>>();
 
       bloc = ServicesCollectionBloc(
         fireUseCases: useCases,
         hiveUseCases: useCases,
-        lyricsViewModel: lyricsViewModel,
+        viewModel: servicesViewModel,
         analyticsUtil: analyticsUtil,
       );
     },
@@ -31,7 +32,7 @@ void main() {
   /*blocTest<ServicesCollectionBloc, ServicesCollectionState>(
     'Fetching services collection of firestore',
     build: () {
-      when(() => lyricsViewModel.isConnected())
+      when(() => servicesViewModel.isConnected())
           .thenAnswer((_) => Future.value(true));
       when(() => useCases.get('saturday-services/20')).thenAnswer(
             (_) => Future.value(
@@ -48,10 +49,10 @@ void main() {
     ],
   );*/
 
-  blocTest<ServicesCollectionBloc, ServicesCollectionState>(
+  blocTest<ServicesCollectionBloc, GenericState<ServicesCollectionState>>(
     'Fetching services collection of firestore and occorring an error',
     build: () {
-      when(() => lyricsViewModel.isConnected())
+      when(() => servicesViewModel.isConnected())
           .thenAnswer((_) => Future.value(true));
       when(() => useCases.get('saturday-services/20')).thenAnswer(
             (_) async => Stream.error(
@@ -63,11 +64,11 @@ void main() {
     },
     act: (bloc) => bloc.add(CheckConnectivityEvent(path:'saturday-services/20')),
     expect: () => [
-      isA<ServiceExceptionState>(),
+      isA<ExceptionState>(),
     ],
   );
 
-  blocTest<ServicesCollectionBloc, ServicesCollectionState>(
+  blocTest<ServicesCollectionBloc, GenericState<ServicesCollectionState>>(
     'Fetching services collection of hive',
     build: () {
       when(() => useCases.get('services-collection/saturday-services/20')).thenAnswer(
@@ -79,13 +80,13 @@ void main() {
       );
       return bloc;
     },
-    act: (bloc) => bloc.add(GetServicesCollectionInHiveEvent(path:'saturday-services/20')),
+    act: (bloc) => bloc.add(GetInHiveEvent(path:'saturday-services/20')),
     expect: () => [
-      isA<CollectionSuccessfullyFetchedState>(),
+      isA<DataFetchedState>(),
     ],
   );
 
-  blocTest<ServicesCollectionBloc, ServicesCollectionState>(
+  blocTest<ServicesCollectionBloc, GenericState<ServicesCollectionState>>(
     'Fetching services collection of hive and occorring an error',
     build: () {
       when(() => useCases.get('services-collection/saturday-services/20')).thenAnswer(
@@ -96,9 +97,9 @@ void main() {
       );
       return bloc;
     },
-    act: (bloc) => bloc.add(GetServicesCollectionInHiveEvent(path:'saturday-services/20')),
+    act: (bloc) => bloc.add(GetInHiveEvent(path:'saturday-services/20')),
     expect: () => [
-      isA<ServiceExceptionState>(),
+      isA<ExceptionState>(),
     ],
   );
 }

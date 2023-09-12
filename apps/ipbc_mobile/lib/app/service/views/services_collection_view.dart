@@ -4,17 +4,18 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../lyric_module.dart';
+import '../../home/home_module.dart';
+import '../../shared/blocs/generics.dart';
+import '../../shared/view-models/database_view_model.dart';
 import 'service_view.dart';
-import '../view-models/lyrics_view_model.dart';
 import '../blocs/services_collection_bloc.dart';
 import '../../exception/views/generic_error_view.dart';
 import '../../exception/views/no_connection_view.dart';
 
 class ServicesCollectionView extends StatefulWidget {
-  const ServicesCollectionView({Key? key, required this.servicesCollection})
+  const ServicesCollectionView({Key? key, required this.entity})
       : super(key: key);
-  final ServicesEntity servicesCollection;
+  final ServicesEntity entity;
 
   @override
   State<ServicesCollectionView> createState() => _ServicesCollectionViewState();
@@ -22,19 +23,19 @@ class ServicesCollectionView extends StatefulWidget {
 
 class _ServicesCollectionViewState extends State<ServicesCollectionView> {
   late final ServicesCollectionBloc bloc;
-  late List<ServiceEntity> servicesCollectionList;
+  late List<ServiceEntity> entitiesList;
   late String path;
 
   @override
   void initState() {
     super.initState();
-    servicesCollectionList = [];
-    path = widget.servicesCollection.path;
+    entitiesList = [];
+    path = widget.entity.path;
     bloc = Modular.get<ServicesCollectionBloc>();
-    if (Modular.get<LyricsViewModel>().isNotUpdated(path)) {
+    if (Modular.get<DatabaseViewModel>().isNotUpdated(path)) {
       bloc.add(CheckConnectivityEvent(path: path));
     } else {
-      bloc.add(GetServicesCollectionInHiveEvent(path: path));
+      bloc.add(GetInHiveEvent(path: path));
     }
   }
 
@@ -48,16 +49,16 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
               splashColor: const Color(0x66C8C8C8),
               highlightColor: const Color(0x66BCBCBC),
             ),
-            child: BlocBuilder<ServicesCollectionBloc, ServicesCollectionState>(
+            child: BlocBuilder<ServicesCollectionBloc, GenericState<ServicesCollectionState>>(
               bloc: bloc,
               builder: (context, state) {
-               if (state is LoadingServiceState) {
+               if (state is LoadingState<ServicesCollectionState>) {
                   return const LoadingWidget();
-                } else if (state is NoConnectionAvailableState) {
+                } else if (state is NoConnectionState<ServicesCollectionState>) {
                   return const NoConnectionView(index: 0);
-                } else if (state is CollectionSuccessfullyFetchedState) {
-                  servicesCollectionList = state.entities;
-                  Modular.get<LyricsViewModel>().checkUpdateData(context, path);
+                } else if (state is DataFetchedState<ServicesCollectionState, ServiceEntity>) {
+                  entitiesList = state.entities;
+                  Modular.get<DatabaseViewModel>().checkUpdateData(context, path);
                   return Column(
                     children: [
                       Container(
@@ -71,7 +72,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             image: AssetImage(
-                              widget.servicesCollection.image,
+                              widget.entity.image,
                             ),
                           ),
                         ),
@@ -99,7 +100,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                         action: () => Navigator.pop(context),
                                       ),
                                       Text(
-                                        "Cultos de ${widget.servicesCollection.heading}",
+                                        "Cultos de ${widget.entity.heading}",
                                         style: AppFonts.defaultFont(
                                           color: AppColors.white,
                                           fontWeight: FontWeight.w500,
@@ -128,7 +129,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                             },
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            itemCount: servicesCollectionList.length,
+                            itemCount: entitiesList.length,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               return Material(
@@ -146,7 +147,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                     child: Text(
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
-                                      '${servicesCollectionList[index].title} ${DateFormat('dd/MM/yyyy').format(servicesCollectionList[index].createAt)} | ${widget.servicesCollection.hour}',
+                                      '${entitiesList[index].title} ${DateFormat('dd/MM/yyyy').format(entitiesList[index].createAt)} | ${widget.entity.hour}',
                                       style: AppFonts.defaultFont(
                                         fontWeight: FontWeight.w600,
                                         color: AppColors.grey9,
@@ -162,7 +163,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                         Text(
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
-                                          'Messagem: ${servicesCollectionList[index].theme}',
+                                          'Messagem: ${entitiesList[index].theme}',
                                           style: AppFonts.description(
                                             color: AppColors.grey8,
                                           ),
@@ -170,7 +171,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                         Container(
                                           margin: const EdgeInsets.only(top: 4),
                                           child: Text(
-                                            servicesCollectionList[index].preacher,
+                                            entitiesList[index].preacher,
                                             style: AppFonts.description(
                                               color: AppColors.grey8,
                                             ),
@@ -192,10 +193,10 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                   ),
                                   onTap: () {
                                     Modular.to.navigate(
-                                      LyricModule.serviceRoute,
+                                      HomeModule.serviceRoute,
                                       arguments: ServiceViewDTO(
-                                        service: servicesCollectionList[index],
-                                        image: widget.servicesCollection.image,
+                                        service: entitiesList[index],
+                                        image: widget.entity.image,
                                       ),
                                     );
                                   },

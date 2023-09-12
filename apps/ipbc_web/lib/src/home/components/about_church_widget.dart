@@ -16,7 +16,9 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
     AppIcons.book,
     AppIcons.volunteerActivismCube,
   ];
+
   final List<Image> imagesList = [];
+
   @override
   void initState() {
     super.initState();

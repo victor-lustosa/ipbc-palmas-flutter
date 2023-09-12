@@ -4,7 +4,8 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../components/lyrics_list_widget.dart';
+import '../../shared/components/lyrics_list_widget.dart';
+
 
 class ServiceViewDTO {
   ServiceViewDTO({required this.service, required this.image});
@@ -132,7 +133,7 @@ class _ServiceViewState extends State<ServiceView> {
                   ),
                 ),
               ),
-              LyricsListWidget(lyricsList: widget.entity.service.lyricsList),
+              LyricsListWidget(entitiesList: widget.entity.service.lyricsList),
               const SizedBox(height: 40)
             ],
           ),

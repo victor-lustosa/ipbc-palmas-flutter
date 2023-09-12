@@ -4,7 +4,6 @@ import 'view_models/home_view_model.dart';
 
 class MainModule extends Module {
 
-
   @override
   void binds(i) {
     i.addSingleton<HomeViewModel>(HomeViewModel.new);

@@ -6,12 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'app/app_widget.dart';
-import 'app/configs/ipbc_bloc_observer.dart';
 import 'app/splash/main_module.dart';
-
-class GInstances{
-  static GetIt getIt = GetIt.instance;
-}
 
 void main() async {
   runZonedGuarded<Future<void>>(
@@ -24,11 +19,12 @@ void main() async {
       ]);
 
       if (kDebugMode) {
-        await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+        await FirebaseCrashlytics.instance
+            .setCrashlyticsCollectionEnabled(false);
       }
 
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-      Bloc.observer = IpbcBlocObserver();
+      Bloc.observer = GenericBlocObserver();
 
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
@@ -42,6 +38,7 @@ void main() async {
         ),
       );
     },
-    (error, stackTrace) => FirebaseCrashlytics.instance.recordError(error, stackTrace),
+    (error, stackTrace) =>
+        FirebaseCrashlytics.instance.recordError(error, stackTrace),
   );
 }

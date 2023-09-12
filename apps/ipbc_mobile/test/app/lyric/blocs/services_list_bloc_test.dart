@@ -1,28 +1,29 @@
+import 'package:ipbc_palmas/app/service/blocs/services_list_bloc.dart';
+import 'package:ipbc_palmas/app/shared/blocs/generics.dart';
+import 'package:ipbc_palmas/app/shared/view-models/services_view_model.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ipbc_palmas/app/lyric/blocs/services_list_bloc.dart';
-import 'package:ipbc_palmas/app/lyric/view-models/lyrics_view_model.dart';
 
 import '../../../mocks/mocks.dart';
 void main() {
   late IUseCases<Stream<List<ServicesEntityMock>>> useCases;
   late ServicesListBloc bloc;
   late AnalyticsUtil analyticsUtil;
-  late LyricsViewModel lyricsViewModel;
+  late ServicesViewModel servicesViewModel;
 
   setUp(
         () async {
       TestWidgetsFlutterBinding.ensureInitialized();
       analyticsUtil = AnalyticsMock();
-      lyricsViewModel = LyricsViewModelMock();
+      servicesViewModel = ServicesViewModelMock();
       useCases = IUseCasesMock<Stream<List<ServicesEntityMock>>>();
 
       bloc = ServicesListBloc(
         fireUseCases: useCases,
         hiveUseCases: useCases,
-        lyricsViewModel: lyricsViewModel,
+        viewModel: servicesViewModel,
         analyticsUtil: analyticsUtil,
       );
     },
@@ -31,7 +32,7 @@ void main() {
   /*blocTest<ServicesListBloc, ServicesListState>(
     'Fetching services list of firestore',
     build: () {
-      when(() => lyricsViewModel.isConnected())
+      when(() => servicesViewModel.isConnected())
           .thenAnswer((_) => Future.value(true));
       when(() => useCases.get('services/20')).thenAnswer(
             (_) => Future.value(
@@ -48,10 +49,10 @@ void main() {
     ],
   );*/
 
-  blocTest<ServicesListBloc, ServicesListState>(
+  blocTest<ServicesListBloc, GenericState<ServicesListState>>(
     'Fetching services list of firestore and occorring an error',
     build: () {
-      when(() => lyricsViewModel.isConnected())
+      when(() => servicesViewModel.isConnected())
           .thenAnswer((_) => Future.value(true));
       when(() => useCases.get('services/20')).thenAnswer(
             (_) async => Stream.error(
@@ -63,11 +64,11 @@ void main() {
     },
     act: (bloc) => bloc.add(CheckConnectivityEvent()),
     expect: () => [
-      isA<ServiceExceptionState>(),
+      isA<ExceptionState>(),
     ],
   );
 
-  blocTest<ServicesListBloc, ServicesListState>(
+  blocTest<ServicesListBloc, GenericState<ServicesListState>>(
     'Fetching services list of hive',
     build: () {
       when(() => useCases.get('services/20')).thenAnswer(
@@ -79,13 +80,13 @@ void main() {
       );
       return bloc;
     },
-    act: (bloc) => bloc.add(GetServiceInHiveEvent()),
+    act: (bloc) => bloc.add(GetInHiveEvent()),
     expect: () => [
-      isA<ServiceSuccessfullyFetchedState>(),
+      isA<DataFetchedState>(),
     ],
   );
 
-  blocTest<ServicesListBloc, ServicesListState>(
+  blocTest<ServicesListBloc, GenericState<ServicesListState>>(
     'Fetching services list of hive and occorring an error',
     build: () {
       when(() => useCases.get('services/20')).thenAnswer(
@@ -96,9 +97,9 @@ void main() {
       );
       return bloc;
     },
-    act: (bloc) => bloc.add(GetServiceInHiveEvent()),
+    act: (bloc) => bloc.add(GetInHiveEvent()),
     expect: () => [
-      isA<ServiceExceptionState>(),
+      isA<ExceptionState>(),
     ],
   );
 }
