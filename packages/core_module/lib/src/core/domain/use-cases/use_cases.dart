@@ -2,7 +2,7 @@ abstract class IUseCases<R>
     implements IGetUseCases<R>, IAddUseCases, IUpdateUseCases {}
 
 abstract class IGetUseCases<R> {
-  Future<R> get(String url);
+  Future<R?> get(String url);
 }
 
 abstract class IAddUseCases {

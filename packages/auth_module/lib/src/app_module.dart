@@ -13,7 +13,7 @@ class AuthModule extends Module {
     i.add(
       () => LoginViewModel(
         useCase: AuthUseCase(
-          repository: Repository<Stream<HiveAuthDTO>>(
+          repository: Repository<HiveAuthDTO>(
             datasource: HiveDatasource<HiveAuthDTO>(boxLabel: 'auth'),
           ),
         ),

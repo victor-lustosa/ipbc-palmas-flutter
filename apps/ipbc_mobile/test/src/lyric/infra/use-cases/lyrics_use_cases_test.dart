@@ -6,7 +6,7 @@ import 'package:mocktail/mocktail.dart';
 
 void main() {
   test('getting lyrics in use case', () async {
-    Repository<Stream<List<Map>>> repository = RepositoryMock();
+    Repository<List<Map>> repository = RepositoryMock();
     Timestamp timestamp = Timestamp.now();
     Map entity = {
       'id': 'dfsdfsd',
@@ -30,7 +30,7 @@ void main() {
         },
       ],
     };
-    when(() => repository.get('lyrics/20')).thenAnswer((_) => Future.value(Stream.value([entity])));
+    when(() => repository.get('lyrics/20')).thenAnswer((_) => Future.value([entity]));
     final lyricUsecase = LyricsUseCases(repository: repository);
     final result = await lyricUsecase.get('lyrics/20');
     expect(result, emits(isA<List<LyricEntity>>()));

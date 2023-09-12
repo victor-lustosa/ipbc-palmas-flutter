@@ -18,7 +18,7 @@ class LyricModule extends Module {
     i.addSingleton<LyricBloc>(() =>
         LyricBloc(
           fireUseCase: LyricsUseCases(
-            repository: i.get<Repository<Stream<List<Map>>>>(),
+            repository: i.get<Repository<List<Map>>>(),
           ),
           hiveUseCase: LyricsUseCases(
             repository: Repository(

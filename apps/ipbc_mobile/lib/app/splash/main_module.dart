@@ -6,13 +6,13 @@ import '../shared/view-models/database_view_model.dart';
 import 'views/splash_view.dart';
 
 class MainModule extends Module {
- /* @override
+  @override
   void binds(i) {
     i.addSingleton<DatabaseViewModel>(DatabaseViewModel.new);
     i.addSingleton<DatabaseBloc>(
       () => DatabaseBloc(
         useCases: DatabasesUseCases(
-          repository: Repository<Stream<HiveDatabaseConfigsDTO>>(
+          repository: Repository<HiveDatabaseConfigsDTO>(
             datasource: HiveDatasource<HiveDatabaseConfigsDTO>(
                 boxLabel: 'database-configs'),
           ),
@@ -21,14 +21,14 @@ class MainModule extends Module {
       ),
       config: CoreModule.blocConfig(),
     );
-  }*/
+  }
 
-  //@override
- // List<Module> get imports => [CoreModule()];
+  @override
+  List<Module> get imports => [CoreModule()];
 
   @override
   void routes(r) {
-    r.module('/', module: AuthModule());
+    r.module('/auth', module: AuthModule());
     r.child('/splash', child: (_) => const SplashView());
     r.module('/home', module: HomeModule());
   }

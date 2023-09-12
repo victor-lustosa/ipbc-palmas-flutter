@@ -6,39 +6,39 @@ class FirestoreDatasource implements IDatasource {
 
   final FirebaseFirestore _firestore;
   List<String> params = [];
-  late Stream<QuerySnapshot<Map<String, dynamic>>> snapshot;
-
-
-  List<Map> convert(List<QueryDocumentSnapshot<Map<String, dynamic>>> docs) {
-    var entities = docs
-        .map((document) => {
-              'id': document.id,
-              ...document.data(),
-            }).toList();
+  convert (List<QueryDocumentSnapshot<Map<String, dynamic>>> docs) {
+    var entities = docs.map((document) => {
+      'id': document.id,
+      ...document.data(),
+    }).toList();
     return entities;
   }
-
   @override
   Future<dynamic> get(String url) async {
     params = url.split('/');
-   if(params.length > 2) {
-      snapshot = _firestore.collection(params[0])
-          .doc(params[1]).collection(params[2])
-          .orderBy("createAt", descending: true)
-          .limit(int.parse(params[3])).snapshots();
+    var result = [];
+    if (params.length > 2) {
+      await _firestore.collection(params[0]).doc(params[1])
+          .collection(params[2]).orderBy("createAt", descending: true)
+          .limit(int.parse(params[3])).get()
+          .then((QuerySnapshot<Map<String, dynamic>> value) {
+        result = convert(value.docs);
+      });
     } else {
-      snapshot = _firestore.collection(params[0])
+      await _firestore.collection(params[0])
           .orderBy("createAt", descending: true)
-          .limit(int.parse(params[1])).snapshots();
+          .limit(int.parse(params[1])).get()
+          .then((QuerySnapshot<Map<String, dynamic>> value) {
+        result = convert(value.docs);
+      });
     }
-    return snapshot.map((entity) => entity.docs).map(convert);
+    return result;
   }
 
   Future<String> verifyUpdateDatasource() async {
     String fireId = '';
-    await _firestore.collection('settings')
-        .get().then((QuerySnapshot<Map<String, dynamic>> snapshot) {
-       fireId = snapshot.docs.first.get('fireId');
+    await _firestore.collection('settings').get().then((QuerySnapshot<Map<String, dynamic>> snapshot) {
+      fireId = snapshot.docs.first.get('fireId');
     });
     return fireId;
   }
@@ -47,10 +47,8 @@ class FirestoreDatasource implements IDatasource {
   Future<void> add(String url, data) async {
     params = url.split('/');
     if (params.length > 1) {
-      _firestore.collection(params[0])
-          .doc(params[1])
-          .collection(params[2])
-          .add(data);
+      _firestore.collection(params[0]).doc(params[1])
+          .collection(params[2]).add(data);
     } else {
       _firestore.collection(params[0]).add(data);
     }

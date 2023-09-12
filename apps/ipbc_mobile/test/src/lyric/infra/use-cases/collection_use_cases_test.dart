@@ -5,7 +5,7 @@ import '../../../../mocks/mocks.dart';
 
 void main() {
   test('getting services collection in use case', () async {
-    Repository<Stream<List<Map>>> repository = RepositoryMock();
+    Repository<List<Map>> repository = RepositoryMock();
     Timestamp timestamp = Timestamp.now();
     Map entity = {
       "id": "1",
@@ -47,8 +47,7 @@ void main() {
       "liturgyList": [],
     };
     when(() => repository.get('saturday-services/20')).thenAnswer(
-      (_) => Future.value(
-        Stream.value([entity]),
+      (_) => Future.value([entity]
       ),
     );
     final collectionUsecase = ServiceUseCases(repository: repository);

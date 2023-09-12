@@ -4,16 +4,13 @@ import 'package:lyric_module/lyric_module.dart';
 import '../../../../service_module.dart';
 
 class ServicesUseCases implements IUseCases<Stream<List<ServicesEntity>>> {
-  final IRepository<Stream<List<Map>>> repository;
+  final IRepository<List<Map>> repository;
   ServicesUseCases({required this.repository});
 
   @override
   Future<Stream<List<ServicesEntity>>> get(String url) async {
     var result = await repository.get(url);
-    if (result != null) {
-      return result.map(ServicesAdapter.fromMapList);
-    }
-    return Stream.value([]);
+    return Stream.value(ServicesAdapter.fromMapList(result));
   }
 
   @override

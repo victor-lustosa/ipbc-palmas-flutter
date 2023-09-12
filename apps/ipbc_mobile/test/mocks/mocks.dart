@@ -9,5 +9,5 @@ class AnalyticsMock extends Mock implements AnalyticsUtil {}
 class ServicesViewModelMock extends Mock implements ServicesViewModel {}
 class ILyricsUseCasesMock<R> extends Mock implements ILyricsUseCases<R> {}
 class IUseCasesMock<R> extends Mock implements IUseCases<R> {}
-class RepositoryMock extends Mock implements Repository<Stream<List<Map>>> {}
+class RepositoryMock extends Mock implements Repository<List<Map>> {}
 class IDatasourceMock extends Mock implements IDatasource {}

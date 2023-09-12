@@ -7,7 +7,7 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-   // Modular.setInitialRoute('/auth/');
+    Modular.setInitialRoute('/splash');
 
     return MaterialApp.router(
       builder: (context, Widget? child) {

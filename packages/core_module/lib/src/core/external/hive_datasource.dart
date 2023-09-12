@@ -38,31 +38,24 @@ class HiveDatasource<R> implements IDatasource {
       case 'services-collection':
         var result = box.values.where((entity) => (entity as HiveCollectionDTO).type == params[1]).toList();
         (result as List<HiveCollectionDTO>).sort((a, b) => b.createAt.compareTo(a.createAt));
-        return Stream.value(result.map(HiveCollectionAdapter.toMap).toList());
+        return result.map(HiveCollectionAdapter.toMap).toList();
 
       case 'lyrics':
         var result = box.values.toList();
         (result as List<HiveLyricDTO>).sort((a, b) => b.createAt.compareTo(a.createAt));
-        return Stream.value(HiveLyricAdapter.toMapList(result as List<HiveLyricDTO>));
+        return HiveLyricAdapter.toMapList(result as List<HiveLyricDTO>);
 
       case 'services':
         var result = box.values.toList();
-        return Stream.value(result.map(HiveServicesAdapter.toMap).toList());
+        return result.map(HiveServicesAdapter.toMap).toList();
 
       case 'auth':
         var result = box.values.where((entity) => (entity as HiveAuthDTO).password == params[2]  && entity.email == params[1]).toList();
-        return Stream.value(result.isNotEmpty
-            ? (result[0] as HiveAuthDTO)
-            : HiveAuthDTO.empty());
+        return result.isNotEmpty ? (result[0] as HiveAuthDTO) : HiveAuthDTO.empty();
 
       case 'database-configs':
         var result = box.get(params[0]);
-        return Stream.value(
-          result != null
-              ? (result as HiveDatabaseConfigsDTO)
-              : HiveDatabaseConfigsDTO.empty());
-      default:
-        return Stream.value([]);
+        return result != null ? (result as HiveDatabaseConfigsDTO) : HiveDatabaseConfigsDTO.empty();
     }
   }
 

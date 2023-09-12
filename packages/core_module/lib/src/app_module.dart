@@ -17,8 +17,8 @@ class CoreModule extends Module {
         firestore: i.get<FirebaseFirestore>(),
       ),
     );
-    i.addSingleton<Repository<Stream<List<Map>>>>(
-      () => Repository<Stream<List<Map>>>(
+    i.addSingleton<Repository<List<Map>>>(
+      () => Repository<List<Map>>(
         datasource: i.get<FirestoreDatasource>(),
       ),
     );

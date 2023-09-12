@@ -16,7 +16,7 @@ class ServiceModule extends Module {
     i.addSingleton<ServicesCollectionBloc>(
       () => ServicesCollectionBloc(
         fireUseCases: ServiceUseCases(
-          repository: i.get<Repository<Stream<List<Map>>>>(),
+          repository: i.get<Repository<List<Map>>>(),
         ),
         hiveUseCases: ServiceUseCases(
           repository: Repository(
@@ -33,7 +33,7 @@ class ServiceModule extends Module {
     i.addSingleton<ServicesListBloc>(
       () => ServicesListBloc(
         fireUseCases: ServicesUseCases(
-          repository: i.get<Repository<Stream<List<Map>>>>(),
+          repository: i.get<Repository<List<Map>>>(),
         ),
         hiveUseCases: ServicesUseCases(
           repository: Repository(

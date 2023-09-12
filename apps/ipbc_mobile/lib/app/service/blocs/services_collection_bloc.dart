@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import '../../shared/blocs/generics.dart';
 import '../../shared/view-models/services_view_model.dart';
 
-
 class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>, GenericState<ServicesCollectionState>> {
   final IUseCases fireUseCases;
   final IUseCases hiveUseCases;

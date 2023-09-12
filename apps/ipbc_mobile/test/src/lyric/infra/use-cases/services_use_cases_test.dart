@@ -6,7 +6,7 @@ import 'package:mocktail/mocktail.dart';
 
 void main() {
   test('getting services list in use case', () async {
-    Repository<Stream<List<Map>>> repository = RepositoryMock();
+    Repository<List<Map>> repository = RepositoryMock();
     Timestamp timestamp = Timestamp.now();
     Map entity =  {
       'id': '1',
@@ -17,7 +17,7 @@ void main() {
       'path': 'sunday-evening-services/20',
       'hour': '19h'
     };
-    when(() => repository.get('services/20')).thenAnswer((_) => Future.value(Stream.value([entity])));
+    when(() => repository.get('services/20')).thenAnswer((_) => Future.value([entity]));
     final serviceUsecase = ServicesUseCases(repository: repository);
     final result = await serviceUsecase.get('services/20');
     expect(result, emits(isA<List<ServicesEntity>>()));

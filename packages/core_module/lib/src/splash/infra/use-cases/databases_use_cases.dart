@@ -2,14 +2,14 @@
 import '../../../../core_module.dart';
 import '../models/hive-dtos/hive_database_configs_dto.dart';
 
-class DatabasesUseCases implements IUseCases<Stream<HiveDatabaseConfigsDTO>> {
-  final IRepository<Stream<HiveDatabaseConfigsDTO>> repository;
+class DatabasesUseCases implements IUseCases<HiveDatabaseConfigsDTO> {
+  final IRepository<HiveDatabaseConfigsDTO> repository;
   DatabasesUseCases({required this.repository});
 
   @override
-  Future<Stream<HiveDatabaseConfigsDTO>> get(String path) async {
+  Future<HiveDatabaseConfigsDTO?> get(String path) async {
     var result = await repository.get(path);
-    return result!;
+    return result;
   }
 
   @override

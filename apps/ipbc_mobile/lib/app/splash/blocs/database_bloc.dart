@@ -14,17 +14,12 @@ class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
   }
 
   _getData(GetDataEvent event, emit) async {
-    await emit.onEach<HiveDatabaseConfigsDTO?>(
-      await useCases.get(path),
-      onData: (service) {
-        emit(FetchingDataState(service));
-      },
-      onError: (error, st) async {
-        analyticsUtil.recordError(error: error, st: st, name: 'database bloc');
-        analyticsUtil.setCustomKey(name: 'database bloc', key: 'get database bloc',value: error.toString());
-        emit(ExceptionState(error.toString()));
-      },
-    );
+     var service = await useCases.get(path);
+     if(service != null){
+       emit(FetchingDataState(service));
+     } else {
+       emit(ExceptionState('database bloc'));
+      }
   }
 
   Future<void> _updateData(UpdateDataEvent event, emit) async {
