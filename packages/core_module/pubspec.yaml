@@ -31,6 +31,8 @@ dependencies:
     path: ../lyric_module
   service_module:
     path: ../service_module
+  auth_module:
+    path: ../auth_module
 dev_dependencies:
   flutter_test:
     sdk: flutter

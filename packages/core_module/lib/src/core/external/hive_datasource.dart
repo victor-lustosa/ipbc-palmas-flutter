@@ -1,7 +1,4 @@
-import 'package:service_module/service_module.dart';
-
 import '../../../core_module.dart';
-import '../../splash/infra/models/hive-dtos/hive_database_configs_dto.dart';
 
 class HiveDatasource<R> implements IDatasource {
   String boxLabel;
@@ -18,6 +15,7 @@ class HiveDatasource<R> implements IDatasource {
     await Future.wait<void>([
       Hive.openBox<HiveDatabaseConfigsDTO>('database-configs'),
       Hive.openBox<HiveLyricDTO>('lyrics'),
+      Hive.openBox<HiveAuthDTO>('auth'),
       Hive.openBox<HiveCollectionDTO>('collection'),
       Hive.openBox<HiveServicesDTO>('services'),
     ]);
@@ -26,6 +24,7 @@ class HiveDatasource<R> implements IDatasource {
   static _allAdapters() {
     Hive.registerAdapter(HiveDatabaseConfigsDTOAdapter());
     Hive.registerAdapter(HiveServicesDTOAdapter());
+    Hive.registerAdapter(HiveAuthDTOAdapter());
     Hive.registerAdapter(HiveServiceDTOAdapter());
     Hive.registerAdapter(HiveLyricDTOAdapter());
     Hive.registerAdapter(HiveVerseDTOAdapter());
@@ -37,32 +36,31 @@ class HiveDatasource<R> implements IDatasource {
     params = path.split('/');
     switch (params[0]) {
       case 'services-collection':
-        var result = box.values
-            .where((entity) => (entity as HiveCollectionDTO).type == params[1])
-            .toList();
-        (result as List<HiveCollectionDTO>)
-            .sort((a, b) => b.createAt.compareTo(a.createAt));
+        var result = box.values.where((entity) => (entity as HiveCollectionDTO).type == params[1]).toList();
+        (result as List<HiveCollectionDTO>).sort((a, b) => b.createAt.compareTo(a.createAt));
         return Stream.value(result.map(HiveCollectionAdapter.toMap).toList());
 
       case 'lyrics':
         var result = box.values.toList();
-        (result as List<HiveLyricDTO>)
-            .sort((a, b) => b.createAt.compareTo(a.createAt));
-        return Stream.value(
-          HiveLyricAdapter.toMapList(result as List<HiveLyricDTO>),
-        );
+        (result as List<HiveLyricDTO>).sort((a, b) => b.createAt.compareTo(a.createAt));
+        return Stream.value(HiveLyricAdapter.toMapList(result as List<HiveLyricDTO>));
 
       case 'services':
         var result = box.values.toList();
         return Stream.value(result.map(HiveServicesAdapter.toMap).toList());
+
+      case 'auth':
+        var result = box.values.where((entity) => (entity as HiveAuthDTO).password == params[2]  && entity.email == params[1]).toList();
+        return Stream.value(result.isNotEmpty
+            ? (result[0] as HiveAuthDTO)
+            : HiveAuthDTO.empty());
 
       case 'database-configs':
         var result = box.get(params[0]);
         return Stream.value(
           result != null
               ? (result as HiveDatabaseConfigsDTO)
-              : HiveDatabaseConfigsDTO.empty(),
-        );
+              : HiveDatabaseConfigsDTO.empty());
       default:
         return Stream.value([]);
     }
@@ -98,6 +96,9 @@ class HiveDatasource<R> implements IDatasource {
             HiveServicesAdapter.toDTO(entity) as R,
           );
         }
+        break;
+      case 'auth':
+        box.put(params[1], HiveAuthAdapter.toDTO(data) as R);
         break;
       case 'database-configs':
         box.put(params[0], data as R);

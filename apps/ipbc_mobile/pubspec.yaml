@@ -33,8 +33,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   core_module:
     path: ../../packages/core_module
-  auth_module:
-    path: ../../packages/auth_module
+
   flutter_svg: ^2.0.5
   path_provider: ^2.0.14
   upgrader: ^7.0.0

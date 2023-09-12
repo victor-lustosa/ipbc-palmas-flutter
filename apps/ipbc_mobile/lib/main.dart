@@ -18,10 +18,9 @@ void main() async {
         HiveDatasource.hiveInit()
       ]);
 
-      if (kDebugMode) {
-        await FirebaseCrashlytics.instance
-            .setCrashlyticsCollectionEnabled(false);
-      }
+      // if (kDebugMode) {
+        await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+     // }
 
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
       Bloc.observer = GenericBlocObserver();
@@ -38,7 +37,6 @@ void main() async {
         ),
       );
     },
-    (error, stackTrace) =>
-        FirebaseCrashlytics.instance.recordError(error, stackTrace),
+    (error, stackTrace) => FirebaseCrashlytics.instance.recordError(error, stackTrace),
   );
 }

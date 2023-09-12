@@ -1,4 +1,5 @@
 library auth_module;
 
-export 'src/views/login_view.dart';
-export 'src/views/create_account_view.dart';
+export 'src/app_module.dart';
+export 'src/infra/models/hive_dtos/hive_auth_dto.dart';
+export 'src/infra/adapters/hive_dtos/hive_auth_adapter.dart';

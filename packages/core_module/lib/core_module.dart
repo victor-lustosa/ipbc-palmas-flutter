@@ -24,6 +24,7 @@ export 'src/app_module.dart';
 
 export 'package:design_system/design_system.dart';
 export 'package:lyric_module/lyric_module.dart';
+export 'package:auth_module/auth_module.dart';
 export 'package:service_module/service_module.dart';
 export 'package:flutter_modular/flutter_modular.dart';
 export 'src/shared/utils/analytics_util.dart';
