@@ -1,4 +1,6 @@
-import 'lyric_model.dart';
+
+
+import 'package:lyric_module/lyric_module.dart';
 
 import '../../domain/entities/liturgy_entity.dart';
 import '../../domain/entities/service_entity.dart';

@@ -1,11 +1,8 @@
 import 'dart:convert';
+import 'package:lyric_module/lyric_module.dart';
 
-import 'package:core_module/core_module.dart';
-
-import 'lyric_adapter.dart';
+import '../../../../service_module.dart';
 import 'liturgy_adapter.dart';
-import '../models/service_model.dart';
-import '../../domain/entities/service_entity.dart';
 // ignore: depend_on_referenced_packages
 
 class ServiceAdapter {

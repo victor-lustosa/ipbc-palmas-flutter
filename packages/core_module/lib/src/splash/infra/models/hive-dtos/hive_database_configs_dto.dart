@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import '../../../../../core_module.dart';
 part 'hive_database_configs_dto.g.dart';
 
 @HiveType(typeId: 3)

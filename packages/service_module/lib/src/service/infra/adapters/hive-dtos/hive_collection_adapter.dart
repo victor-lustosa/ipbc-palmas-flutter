@@ -1,5 +1,6 @@
 
-import 'hive_lyric_adapter.dart';
+import 'package:lyric_module/lyric_module.dart';
+
 import 'hive_liturgy_adapter.dart';
 
 import '../../models/hive-dtos/hive_collection_dto.dart';

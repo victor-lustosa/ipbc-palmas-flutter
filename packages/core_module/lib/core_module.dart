@@ -3,6 +3,7 @@ library core_module;
 export 'src/core/domain/repositories/repository.dart';
 export 'src/core/domain/use-cases/use_cases.dart';
 export 'src/core/infra/datasources/datasource.dart';
+export 'src/splash/infra/models/hive-dtos/hive_database_configs_dto.dart';
 export 'src/core/infra/repositories/repository.dart';
 
 export 'src/splash/infra/use-cases/databases_use_cases.dart';
@@ -23,6 +24,7 @@ export 'src/app_module.dart';
 
 export 'package:design_system/design_system.dart';
 export 'package:lyric_module/lyric_module.dart';
+export 'package:service_module/service_module.dart';
 export 'package:flutter_modular/flutter_modular.dart';
 export 'src/shared/utils/analytics_util.dart';
 export 'package:intl/intl.dart';

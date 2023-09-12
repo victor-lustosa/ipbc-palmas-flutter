@@ -1,4 +1,6 @@
-import 'package:hive_flutter/hive_flutter.dart';
+
+
+import 'package:lyric_module/lyric_module.dart';
 
 part 'hive_liturgy_dto.g.dart';
 

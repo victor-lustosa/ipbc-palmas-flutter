@@ -29,7 +29,8 @@ dependencies:
     path: ../design_system
   lyric_module:
     path: ../lyric_module
-
+  service_module:
+    path: ../service_module
 dev_dependencies:
   flutter_test:
     sdk: flutter

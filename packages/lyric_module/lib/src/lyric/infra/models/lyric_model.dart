@@ -1,7 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import '../../domain/entities/lyric_entity.dart';
-import '../../domain/entities/verse_entity.dart';
+
+import '../../../../lyric_module.dart';
 
 class LyricModel extends LyricEntity {
   LyricModel(

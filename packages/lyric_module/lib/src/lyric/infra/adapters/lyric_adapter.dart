@@ -1,10 +1,7 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../models/lyric_model.dart';
-import 'verse_adapter.dart';
-import '../../domain/entities/lyric_entity.dart';
+import '../../../../lyric_module.dart';
 // ignore: depend_on_referenced_packages
 
 class LyricAdapter {

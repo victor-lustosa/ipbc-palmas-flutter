@@ -1,4 +1,7 @@
+import 'package:service_module/service_module.dart';
+
 import '../../../core_module.dart';
+import '../../splash/infra/models/hive-dtos/hive_database_configs_dto.dart';
 
 class HiveDatasource<R> implements IDatasource {
   String boxLabel;
