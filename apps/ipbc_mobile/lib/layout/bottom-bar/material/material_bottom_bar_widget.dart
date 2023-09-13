@@ -30,7 +30,7 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget> with 
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
       child: Container(
-        height: 55,
+        height: 56,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
             topRight: Radius.circular(22),
@@ -53,8 +53,8 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget> with 
           ),
           child: BottomNavigationBar(
             currentIndex: widget.selectedIndex,
-            unselectedLabelStyle: AppFonts.defaultFont(fontSize: 10.5),
-            selectedLabelStyle:  AppFonts.defaultFont(fontSize: 10.5),
+            unselectedLabelStyle: AppFonts.defaultFont(fontSize: 12),
+            selectedLabelStyle:  AppFonts.defaultFont(fontSize: 12),
             selectedItemColor: AppColors.darkGreen,
             unselectedItemColor: AppColors.grey5,
             backgroundColor: AppColors.white,

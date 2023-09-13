@@ -16,13 +16,13 @@ class NavigationButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: Platform.isIOS ? 0 : 1.3),
+      padding: EdgeInsets.only(bottom: Platform.isIOS ? 0 : 1.5, top: 0),
       child: SizedBox(
         width: size,
         height: size,
         child: SvgPicture.asset(
           colorFilter: ColorFilter.mode(
-              color ?? AppColors.darkGreen,
+            color ?? AppColors.darkGreen,
             BlendMode.srcIn,),
           iconName,
           matchTextDirection: true,

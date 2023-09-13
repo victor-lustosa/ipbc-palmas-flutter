@@ -32,7 +32,7 @@ mixin ButtonsBarMixin {
   }
   Widget items(String iconData, Color color){
     return NavigationButtonWidget(
-      size: 23,
+      size: iconData == AppIcons.home ? 19.5: 19,
       iconName: iconData,
       color: color,
     );

@@ -19,9 +19,9 @@ class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
       required this.analyticsUtil,
       required this.hiveUseCases})
       : super(LoadingState()) {
-    on<GetInFireEvent<ServicesCollectionEvent>>(_getServicesCollectionInFire);
-    on<GetInHiveEvent<ServicesCollectionEvent>>(_getServicesCollectionInHive);
-    on<UpdateInHiveEvent<ServicesCollectionEvent>>(_updateServicesCollectionInHive);
+    on<GetInFireEvent<ServicesCollectionEvent>>(_getInFire);
+    on<GetInHiveEvent<ServicesCollectionEvent>>(_getInHive);
+    on<UpdateInHiveEvent<ServicesCollectionEvent>>(_updateInHive);
     on<LoadingEvent<ServicesCollectionEvent>>(_loading);
     on<CheckConnectivityEvent<ServicesCollectionEvent>>(_checkConnectivity);
   }
@@ -35,7 +35,7 @@ class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
     }
   }
 
-  Future<void> _getServicesCollectionInFire(
+  Future<void> _getInFire(
       GetInFireEvent event, emit) async {
     await emit.onEach<List<ServiceEntity>>(
       await fireUseCases.get(path),
@@ -43,45 +43,35 @@ class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
         if (services.isNotEmpty && (services[0].type == path.split('/')[0])) {
           add(UpdateInHiveEvent<ServicesCollectionEvent>(entities: services));
         }
-        emit(DataFetchedState(entities: services));
+        emit(DataFetchedState<ServicesCollectionState, ServiceEntity>(entities: services));
       },
       onError: (error, st) async {
-        analyticsUtil.recordError(
-            name: 'fire collection bloc', error: error, st: st);
-        analyticsUtil.setCustomKey(
-            name: 'fire collection bloc',
-            key: 'get fire collection bloc',
-            value: error.toString());
-        emit(ExceptionState(message: error.toString()));
+        analyticsUtil.recordError(name: 'fire collection bloc', error: error, st: st);
+        analyticsUtil.setCustomKey(name: 'fire collection bloc', key: 'get fire collection bloc', value: error.toString());
+        emit(ExceptionState<ServicesCollectionState>(message: error.toString()));
       },
     );
   }
 
-  Future<void> _getServicesCollectionInHive(
-      GetInHiveEvent event, emit) async {
+  Future<void> _getInHive(GetInHiveEvent event, emit) async {
     await emit.onEach<List<ServiceEntity>>(
       await hiveUseCases.get('services-collection/${event.path}'),
       onData: (services) {
-        emit(DataFetchedState(entities: services));
+        emit(DataFetchedState<ServicesCollectionState, ServiceEntity>(entities: services));
       },
       onError: (error, st) async {
-        analyticsUtil.recordError(
-            name: 'hive collection bloc', error: error, st: st);
-        analyticsUtil.setCustomKey(
-            name: 'hive collection bloc',
-            key: 'get hive collection bloc',
-            value: error.toString());
-        emit(ExceptionState(message: error.toString()));
+        analyticsUtil.recordError(name: 'hive collection bloc', error: error, st: st);
+        analyticsUtil.setCustomKey(name: 'hive collection bloc', key: 'get hive collection bloc', value: error.toString());
+        emit(ExceptionState<ServicesCollectionState>(message: error.toString()));
       },
     );
   }
 
   Future<void> _loading(_, emit) async {
-    emit(LoadingState());
+    emit(LoadingState<ServicesCollectionState>());
   }
 
-  Future<void> _updateServicesCollectionInHive(
-      UpdateInHiveEvent<ServicesCollectionEvent> event, emit) async {
+  Future<void> _updateInHive(UpdateInHiveEvent<ServicesCollectionEvent> event, emit) async {
     await hiveUseCases.update('services-collection/$path', event.entities);
   }
 }

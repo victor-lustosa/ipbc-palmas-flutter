@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import '../view_models/home_view_model.dart';
 
 class AboutServices {
-  AboutServices({required this.label, required this.imagePath});
+  AboutServices({required this.label, required this.path});
   final String label;
-  final String imagePath;
+  final String path;
 }
 
 class AboutServicesWidget extends StatefulWidget {
@@ -18,25 +18,25 @@ class AboutServicesWidget extends StatefulWidget {
 }
 
 class _AboutServicesWidgetState extends State<AboutServicesWidget> {
-  final List<AboutServices> servicesImagesLg = [
-    AboutServices(label: 'Culto Solene', imagePath: AppImages.sundayEveningServiceLg),
-    AboutServices(label: 'Culto de Jovens', imagePath: AppImages.saturdayServiceLg),
-    AboutServices(label: 'Escola Bíblica Dominical', imagePath: AppImages.sundayMorningServiceLg),
-    AboutServices(label: 'Pequeno Grupo', imagePath: AppImages.littleGroupLg)
+  final List<Map<String, String>> servicesImagesLg = [
+    {'label': 'Culto Solene', 'path': AppImages.sundayEveningServiceLg},
+    {'label': 'Culto de Jovens', 'path': AppImages.saturdayServiceLg},
+    {'label': 'Escola Bíblica Dominical', 'path': AppImages.sundayMorningServiceLg},
+    {'label': 'Pequeno Grupo', 'path': AppImages.littleGroupLg},
   ];
 
-  final List<AboutServices> servicesImagesMd = [
-    AboutServices(label: 'Culto Solene', imagePath: AppImages.sundayEveningServiceMd),
-    AboutServices(label: 'Culto de Jovens', imagePath: AppImages.saturdayServiceMd),
-    AboutServices(label: 'Escola Bíblica Dominical', imagePath: AppImages.sundayMorningServiceMd),
-    AboutServices(label: 'Pequeno Grupo', imagePath: AppImages.littleGroupMd)
+  final List<Map<String, String>> servicesImagesMd = [
+    {'label': 'Culto Solene', 'path': AppImages.sundayEveningServiceMd},
+    {'label': 'Culto de Jovens', 'path': AppImages.saturdayServiceMd},
+    {'label': 'Escola Bíblica Dominical','path': AppImages.sundayMorningServiceMd},
+    {'label': 'Pequeno Grupo', 'path': AppImages.littleGroupMd},
   ];
 
-  final List<AboutServices> servicesImagesSm = [
-    AboutServices(label: 'Culto Solene', imagePath: AppImages.sundayEveningServiceSm),
-    AboutServices(label: 'Culto de Jovens', imagePath: AppImages.saturdayServiceSm),
-    AboutServices(label: 'Escola Bíblica Dominical', imagePath: AppImages.sundayMorningServiceSm),
-    AboutServices(label: 'Pequeno Grupo', imagePath: AppImages.littleGroupSm)
+  final List<Map<String, String>> servicesImagesSm = [
+    {'label': 'Culto Solene', 'path': AppImages.sundayEveningServiceSm},
+    {'label': 'Culto de Jovens', 'path': AppImages.saturdayServiceSm},
+    {'label': 'Escola Bíblica Dominical', 'path': AppImages.sundayMorningServiceSm},
+    {'label': 'Pequeno Grupo', 'path': AppImages.littleGroupSm},
   ];
 
   @override
@@ -50,8 +50,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
     }
   }
 
-  web() =>
-      Container(
+  web() => Container(
         decoration: const BoxDecoration(color: Color(0xffffffff)),
         child: Column(
           children: [
@@ -71,8 +70,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   descriptionServices(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    width: 260),
+                      crossAxisAlignment: CrossAxisAlignment.start, width: 260),
                   verticalCards(),
                 ],
               ),
@@ -81,8 +79,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  tablet() =>
-      Container(
+  tablet() => Container(
         decoration: const BoxDecoration(color: Color(0xffffffff)),
         child: Column(
           children: [
@@ -113,8 +110,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  mobile() =>
-      Container(
+  mobile() => Container(
         decoration: const BoxDecoration(color: Color(0xffffffff)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -129,12 +125,11 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                    descriptionServices(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        width:
-                        MediaQuery.of(context).size.width > 580
-                            ? MediaQuery.of(context).size.width * 0.5
-                            : 280),
+                  descriptionServices(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      width: MediaQuery.of(context).size.width > 580
+                          ? MediaQuery.of(context).size.width * 0.5
+                          : 280),
                 ],
               ),
             ),
@@ -143,12 +138,12 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  descriptionServices({
-    CrossAxisAlignment? crossAxisAlignment,
-    MainAxisAlignment? mainAxisAlignment,
-    required double width}) =>
+  descriptionServices(
+          {CrossAxisAlignment? crossAxisAlignment,
+          MainAxisAlignment? mainAxisAlignment,
+          required double width}) =>
       Container(
-        margin: const EdgeInsets.only(top: 10,left: 24),
+        margin: const EdgeInsets.only(top: 10, left: 24),
         width: width,
         child: Column(
           crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
@@ -224,23 +219,28 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  title({required double fontSize}) =>
-      Text(
-    'Programação',
-    style: AppFonts.defaultFont(
-      fontSize: fontSize,
-      fontWeight: FontWeight.w600,
-      color: const Color(0xff242426),
-    ),
-  );
-
-  horizontalCards() =>
-      Container(
-        margin: const EdgeInsets.only(
-          bottom: 70,
-          top: 50
+  title({required double fontSize}) => Text(
+        'Programação',
+        style: AppFonts.defaultFont(
+          fontSize: fontSize,
+          fontWeight: FontWeight.w600,
+          color: const Color(0xff242426),
         ),
+      );
+
+  horizontalCards() => Container(
+        margin: const EdgeInsets.only(bottom: 70, top: 50),
         child: CarouselWidget(
+          padding: const EdgeInsets.only(
+            left: 26,
+            right: 16,
+            bottom: 16,
+          ),
+          fontStyle: AppFonts.defaultFont(
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+            color: AppColors.white,
+          ),
           services: servicesImagesSm,
           width: MediaQuery.of(context).size.width < 602
               ? MediaQuery.of(context).size.width * .91
@@ -248,11 +248,12 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
           height: MediaQuery.of(context).size.width < 602
               ? MediaQuery.of(context).size.width * .84
               : 510,
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
         ),
       );
 
-  verticalCards() =>
-      SingleChildScrollView(
+  verticalCards() => SingleChildScrollView(
         child: SizedBox(
           width: MediaQuery.of(context).size.width > 1100 ? 618 : 457,
           height: 1333,
@@ -266,11 +267,11 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
             itemBuilder: (_, index) {
               return cardImage(
                 MediaQuery.of(context).size.width > 1100
-                    ? servicesImagesLg[index].imagePath
-                    : servicesImagesMd[index].imagePath,
+                    ? servicesImagesLg[index]['path']!
+                    : servicesImagesMd[index]['path']!,
                 MediaQuery.of(context).size.width > 1100
-                    ? servicesImagesLg[index].label
-                    : servicesImagesMd[index].label,
+                    ? servicesImagesLg[index]['label']!
+                    : servicesImagesMd[index]['label']!,
               );
             },
           ),

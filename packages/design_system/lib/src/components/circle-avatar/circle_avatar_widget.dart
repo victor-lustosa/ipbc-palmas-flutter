@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../design_system.dart';
@@ -8,22 +7,25 @@ class CircleAvatarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        shape: const CircleBorder(),
-        //padding: EdgeInsets.all(24),
-      ),
-      onPressed: () {},
-      child: const CircleAvatar(
-        radius: 19,
-        backgroundColor: AppColors.darkGreen,
-        child: CircleAvatar(
-          radius: 17,
+    return SizedBox(
+      width: 32,
+      height: 32,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.darkGreen,
+            shape: const CircleBorder(),
+        padding: const EdgeInsets.all(2),
+        ),
+        onPressed: () {
+          },
+        child: const CircleAvatar(
+          radius: 16,
           backgroundColor: Colors.grey,
           backgroundImage: NetworkImage(
-              "https://firebasestorage.googleapis.com/v0/b/ipbc-palmas.appspot.com/o/user_avatar.png?alt=media&token=e4459485-b7ce-4aff-a147-b1c6ac0897b1"),
+              "https://firebasestorage.googleapis.com/v0/b/ipbc-palmas-9d93d.appspot.com/o/profile.jpeg?alt=media&token=1e1415e3-4137-4a78-ba74-8b408784aeaa"),
         ),
       ),
     );
   }
 }
+

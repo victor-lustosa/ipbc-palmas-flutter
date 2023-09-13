@@ -1,18 +1,24 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../design_system.dart';
 
 class CarouselWidget extends StatefulWidget {
-  final List<dynamic> services;
+  final List<Map<String, String>> services;
   final double width;
   final double height;
+  final EdgeInsetsGeometry? padding;
+  final MainAxisAlignment? mainAxisAlignment;
+  final CrossAxisAlignment? crossAxisAlignment;
+  final TextStyle? fontStyle;
 
   const CarouselWidget({
     required this.services,
     required this.width,
     required this.height,
     Key? key,
+    this.mainAxisAlignment,
+    this.crossAxisAlignment,
+    this.fontStyle, this.padding,
   }) : super(key: key);
 
   @override
@@ -20,21 +26,20 @@ class CarouselWidget extends StatefulWidget {
 }
 
 class CarouselWidgetState extends State<CarouselWidget> {
-  late PageController _pageController;
+  static late PageController _pageController;
   int activePage = 0;
   final List<Image> imagesList = [];
-
+  static get pageController => _pageController;
   @override
   void initState() {
     super.initState();
-    for (var services in widget.services) {
-      imagesList.add(Image.asset(services.imagePath));
+    for (int i = 0; i < widget.services.length; i++) {
+      imagesList.add(Image.network(widget.services[i]['path']!,));
     }
     _pageController = PageController(
       initialPage: 0,
     );
   }
-
   @override
   void didChangeDependencies() {
     for (Image image in imagesList) {
@@ -42,12 +47,9 @@ class CarouselWidgetState extends State<CarouselWidget> {
     }
     super.didChangeDependencies();
   }
-
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
           width: widget.width,
@@ -62,61 +64,30 @@ class CarouselWidgetState extends State<CarouselWidget> {
                 },
               );
             },
-            itemBuilder: (context, pagePosition) {
-              bool active = pagePosition == activePage;
+            itemBuilder: (context, position) {
+              bool active = position == activePage;
               return AnimatedContainer(
-                padding: const EdgeInsets.only(
-                  left: 26,
-                  right: 16,
-                  bottom: 16,
-                ),
-                margin: EdgeInsets.all(active ? 0 : 15),
+                padding: widget.padding ?? EdgeInsets.zero,
+                margin: EdgeInsets.all(active ? 0 : 6),
                 duration: const Duration(milliseconds: 300),
                 decoration: BoxDecoration(
                   color: AppColors.grey4,
                   borderRadius: const BorderRadius.all(
-                    Radius.circular(30),
+                    Radius.circular(15),
                   ),
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: imagesList[pagePosition].image,
+                    image: imagesList[position].image,
                   ),
                 ),
                 curve: Curves.easeInOutCubic,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: widget.mainAxisAlignment ?? MainAxisAlignment.start,
+                  crossAxisAlignment: widget.crossAxisAlignment ?? CrossAxisAlignment.center,
                   children: [
                     Text(
-                      widget.services[pagePosition].label,
-                      style: AppFonts.defaultFont(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                        color: const Color(0xffffffff),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List<Widget>.generate(
-                        widget.services.length,
-                        (index) {
-                          return Container(
-                            margin: const EdgeInsets.only(
-                              top: 6,
-                              left: 4,
-                              right: 4,
-                            ),
-                            width: activePage == index ? 8 : 4,
-                            height: activePage == index ? 8 : 4,
-                            decoration: BoxDecoration(
-                              color: activePage == index
-                                  ? AppColors.highlightGreen
-                                  : AppColors.grey0,
-                              shape: BoxShape.circle,
-                            ),
-                          );
-                        },
-                      ),
+                      widget.services[position]['label']!,
+                      style: widget.fontStyle,
                     ),
                   ],
                 ),
@@ -125,44 +96,33 @@ class CarouselWidgetState extends State<CarouselWidget> {
           ),
         ),
         Container(
-          margin: const EdgeInsets.only(top: 18),
+          margin: const EdgeInsets.only(top: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              button(
-                image: AppIcons.arrowBackDarkGreen,
-                onPressed: () {
-                  _pageController.previousPage(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOutCubic,
-                  );
-                },
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 45),
-                child: button(
-                  image: AppIcons.arrowForwardDarkGreen,
-                  onPressed: () {
-                    _pageController.nextPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOutCubic,
-                    );
-                  },
-                ),
-              ),
-            ],
+            children: List<Widget>.generate(
+              widget.services.length,
+              (index) {
+                return Container(
+                  margin: const EdgeInsets.only(
+                    top: 3,
+                    left: 2,
+                    right: 2,
+                    bottom: 3,
+                  ),
+                  width: activePage == index ? 8 : 4,
+                  height: activePage == index ? 8 : 4,
+                  decoration: BoxDecoration(
+                    color: activePage == index
+                        ? AppColors.highlightGreen
+                        : const Color(0xFFCCCCCC),
+                    shape: BoxShape.circle,
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ],
     );
   }
-
-  button({required String image, required VoidCallback onPressed}) => SizedBox(
-        width: 50,
-        height: 50,
-        child: IconButton(
-          onPressed: onPressed,
-          icon: Image.asset(image),
-        ),
-      );
 }

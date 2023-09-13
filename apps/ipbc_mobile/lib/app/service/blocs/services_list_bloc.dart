@@ -28,9 +28,9 @@ class ServicesListBloc extends Bloc<GenericEvent<ServicesListEvent>, GenericStat
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
     final isConnected = await viewModel.isConnected();
     if (isConnected) {
-      add(GetInFireEvent());
+      add(GetInFireEvent<ServicesListEvent>());
     } else {
-      emit(NoConnectionState());
+      emit(NoConnectionState<ServicesListState>());
     }
   }
 
@@ -38,13 +38,13 @@ class ServicesListBloc extends Bloc<GenericEvent<ServicesListEvent>, GenericStat
     await emit.onEach<List<ServicesEntity>>(
       await fireUseCases.get(path),
       onData: (services) {
-        add(UpdateInHiveEvent(entities: services));
-        emit(DataFetchedState(entities: services));
+        add(UpdateInHiveEvent<ServicesListEvent>(entities: services));
+        emit(DataFetchedState<ServicesListState, ServicesEntity>(entities: services));
       },
       onError: (error, st) async {
         analyticsUtil.recordError(name: 'fire services bloc', error: error, st: st);
         analyticsUtil.setCustomKey(name: 'fire services bloc',key: 'get fire services bloc',value: error.toString());
-        emit(ExceptionState(message: error.toString()));
+        emit(ExceptionState<ServicesListState>(message: error.toString()));
       },
     );
   }
@@ -53,22 +53,21 @@ class ServicesListBloc extends Bloc<GenericEvent<ServicesListEvent>, GenericStat
     await emit.onEach<List<ServicesEntity>>(
       await hiveUseCases.get(path),
       onData: (service) {
-        emit(DataFetchedState(entities: service));
+        emit(DataFetchedState<ServicesListState, ServicesEntity>(entities: service));
       },
       onError: (error, st) async {
         analyticsUtil.recordError(name: 'hive services bloc',error: error,st: st,);
         analyticsUtil.setCustomKey(name: 'hive services bloc', key:'get hive services bloc',value: error.toString());
-        emit(ExceptionState(message: error.toString()));
+        emit(ExceptionState<ServicesListState>(message: error.toString()));
       },
     );
   }
 
   Future<void> _loading(event, emit) async {
-    emit(LoadingState());
+    emit(LoadingState<ServicesListState>());
   }
 
-  Future<void> _updateInHive(
-      UpdateInHiveEvent event, emit) async {
+  Future<void> _updateInHive(UpdateInHiveEvent event, emit) async {
     await hiveUseCases.update(path, event.entities);
   }
 }

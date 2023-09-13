@@ -39,21 +39,22 @@ class _LyricsListViewState extends State<LyricsListView> with TickerProviderStat
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: BlocBuilder<LyricBloc, GenericState<LyricState>>(
-        bloc: bloc,
-        builder: (context, state) {
-           if (state is LoadingState<LyricState>) {
-            return const LoadingWidget();
-          } else if (state is NoConnectionState<LyricState>) {
-            return const NoConnectionView(index: 0);
-          } else if (state is DataFetchedState<LyricState, LyricEntity>) {
-            lyricsFetched = state.entities;
-            Modular.get<DatabaseViewModel>().checkUpdateData(context, 'lyrics');
-            return SafeArea(
-              child: SingleChildScrollView(
-                child: RefreshIndicator(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: BlocBuilder<LyricBloc, GenericState<LyricState>>(
+            bloc: bloc,
+            builder: (context, state) {
+               if (state is LoadingState<LyricState>) {
+                return const LoadingWidget();
+              } else if (state is NoConnectionState<LyricState>) {
+                return const NoConnectionView(index: 0);
+              } else if (state is DataFetchedState<LyricState, LyricEntity>) {
+                lyricsFetched = state.entities;
+                Modular.get<DatabaseViewModel>().checkUpdateData(context, 'lyrics');
+                return RefreshIndicator(
                   color: AppColors.darkGreen,
                   onRefresh: () async {
+                    print('dfsdfsd');
                     bloc.add(CheckConnectivityEvent());
                   },
                   child: Column(
@@ -81,13 +82,13 @@ class _LyricsListViewState extends State<LyricsListView> with TickerProviderStat
                       ),
                     ],
                   ),
-                ),
-              ),
-            );
-          } else {
-            return const GenericErrorView();
-          }
-        },
+                );
+              } else {
+                return const GenericErrorView();
+              }
+            },
+          ),
+        ),
       ),
     );
   }

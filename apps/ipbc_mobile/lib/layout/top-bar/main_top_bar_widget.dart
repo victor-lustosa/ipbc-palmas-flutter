@@ -10,14 +10,14 @@ class MainTopBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 23, left: 16),
-              child: SizedBox(
-                width: 76,
-                height: 41,
+        return Container(
+          margin: const EdgeInsets.only(top: 32, left: 16, right: 18),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: 78,
+                height: 32,
                 child: SvgPicture.asset(
                   AppIcons.logo,
                   colorFilter: const ColorFilter.mode(
@@ -27,17 +27,9 @@ class MainTopBarWidget extends StatelessWidget {
                   //  height: 75,width: 75,
                 ),
               ),
-            ),
-            /* Padding(
-              padding: const EdgeInsets.only(top: 4.5),
-              child: Align(
-                  alignment:
-                      MediaQuery.of(context).orientation.name == 'portrait'
-                          ? const Alignment(0.985, 0)
-                          : const Alignment(1, 0),
-                  child: const CircleAvatarWidget()),
-            ),*/
-          ],
+               const CircleAvatarWidget(),
+            ],
+          ),
         );
       },
     );

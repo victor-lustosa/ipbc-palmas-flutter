@@ -31,7 +31,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
       CheckConnectivityEvent<LyricEvent> event, emit) async {
     final isConnected = await viewModel.isConnected();
     if (isConnected) {
-      add(GetInFireEvent());
+      add(GetInFireEvent<LyricEvent>());
     } else {
       emit(NoConnectionState<LyricState>());
     }
@@ -41,16 +41,13 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     await emit.onEach<List<LyricEntity>>(
       await fireUseCase.get(path),
       onData: (lyrics) {
-        add(UpdateInHiveEvent(entities: lyrics));
+        add(UpdateInHiveEvent<LyricEvent>(entities: lyrics));
         emit(DataFetchedState<LyricState, LyricEntity>(entities: lyrics));
       },
       onError: (error, st) {
-        emit(ExceptionState<LyricState>(message: error.toString()));
         analyticsUtil.recordError(name: 'lyric bloc', error: error, st: st);
-        analyticsUtil.setCustomKey(
-            name: 'lyric bloc',
-            key: 'get fire lyrics bloc',
-            value: error.toString());
+        analyticsUtil.setCustomKey(name: 'lyric bloc', key: 'get fire lyrics bloc', value: error.toString());
+        emit(ExceptionState<LyricState>(message: error.toString()));
       },
     );
   }
@@ -63,10 +60,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
       },
       onError: (error, st) async {
         analyticsUtil.recordError(name: 'lyric bloc', error: error, st: st);
-        analyticsUtil.setCustomKey(
-            name: 'lyric bloc',
-            key: 'get hive lyrics bloc',
-            value: error.toString());
+        analyticsUtil.setCustomKey(name: 'lyric bloc', key: 'get hive lyrics bloc', value: error.toString());
         emit(ExceptionState<LyricState>(message: error.toString()));
       },
     );
@@ -81,8 +75,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   }
 
   Future<void> _filter(FilterEvent<LyricEvent> event, emit) async {
-    List<LyricEntity> lyricsList =
-        await fireUseCase.lettersFilter(event.lyrics);
+    List<LyricEntity> lyricsList = await fireUseCase.lettersFilter(event.lyrics);
     emit(DataFetchedState<LyricState, LyricEntity>(entities: lyricsList));
   }
 }
