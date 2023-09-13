@@ -8,12 +8,12 @@ class ServiceModule extends Module {
 
   @override
   void binds(i) {
-    i.addSingleton<ServicesViewModel>(
+    i.addLazySingleton<ServicesViewModel>(
       () => ServicesViewModel(
         analyticsUtil: i.get<AnalyticsUtil>(),
       ),
     );
-    i.addSingleton<ServicesCollectionBloc>(
+    i.addLazySingleton<ServicesCollectionBloc>(
       () => ServicesCollectionBloc(
         fireUseCases: ServiceUseCases(
           repository: i.get<Repository<List<Map>>>(),
@@ -30,7 +30,7 @@ class ServiceModule extends Module {
       config: CoreModule.blocConfig(),
     );
 
-    i.addSingleton<ServicesListBloc>(
+    i.addLazySingleton<ServicesListBloc>(
       () => ServicesListBloc(
         fireUseCases: ServicesUseCases(
           repository: i.get<Repository<List<Map>>>(),

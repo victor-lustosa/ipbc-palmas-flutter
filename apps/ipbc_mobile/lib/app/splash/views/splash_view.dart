@@ -23,6 +23,12 @@ class _SplashViewState extends State<SplashView> {
   }
 
   @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<DatabaseBloc, DatabasesState>(

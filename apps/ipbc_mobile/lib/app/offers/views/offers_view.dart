@@ -25,7 +25,7 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
             children: [
               const TitleTopBarWidget(title: "Dízimos e Ofertas"),
               SizedBox(
-                width: MediaQuery.of(context).size.width * .92,
+                width: context.mediaQuery.size.width * .92,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

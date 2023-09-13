@@ -19,9 +19,9 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > 1200) {
+    if (context.mediaQuery.size.width > 1200) {
       return web();
-    } else if (MediaQuery.of(context).size.width > 640) {
+    } else if (context.mediaQuery.size.width > 640) {
       return tablet();
     } else {
       return mobile();
@@ -31,7 +31,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
   web() =>
       Container(
         height: 600,
-        width: MediaQuery.of(context).size.width,
+        width: context.mediaQuery.size.width,
         margin: const EdgeInsets.only(top: 100),
         decoration: const BoxDecoration(color: Color(0xfff3f3f3)),
         child: Column(
@@ -81,7 +81,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
   tablet() =>
       Container(
         height: 880,
-        width: MediaQuery.of(context).size.width,
+        width: context.mediaQuery.size.width,
         margin: const EdgeInsets.only(top: 100),
         decoration: const BoxDecoration(color: Color(0xfff3f3f3)),
         child: Column(
@@ -125,7 +125,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
   mobile() =>
       Container(
         height: 750,
-        width: MediaQuery.of(context).size.width,
+        width: context.mediaQuery.size.width,
         margin: const EdgeInsets.only(top: 60),
         decoration: const BoxDecoration(color: Color(0xfff3f3f3)),
         child: Column(
@@ -156,7 +156,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
                 children: [
                   title(fontSize: 32),
                   subtitle(textAlign: TextAlign.center),
-                  address(width: MediaQuery.of(context).size.width * 0.65),
+                  address(width: context.mediaQuery.size.width * 0.65),
                   locationButton(width: 342, height: 49),
                 ],
               ),

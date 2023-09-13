@@ -33,7 +33,7 @@ class _ServiceViewState extends State<ServiceView> {
             children: [
               Container(
                 height: 186,
-                width: MediaQuery.of(context).size.width,
+                width: context.mediaQuery.size.width,
                 decoration: BoxDecoration(
                   //    border: Border.all(color: Colors.black),
                   borderRadius: const BorderRadius.only(

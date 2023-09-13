@@ -13,8 +13,8 @@ class _NoConnectionViewState extends State<NoConnectionView> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.85,
+      width: context.mediaQuery.size.width,
+      height: context.mediaQuery.size.height * 0.85,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -93,30 +93,20 @@ class _NoConnectionViewState extends State<NoConnectionView> {
               textAlign: TextAlign.center,
             ),
           ),
-          ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(16)),
-            child: SizedBox(
-              height: 48,
-              width: 186,
-              child: ElevatedButton(
-                onPressed: () {
-                  final homeViewModel = Modular.get<HomeViewModel>();
-                  homeViewModel.jumpToPage(widget.index);
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    AppColors.darkGreen,
-                  ),
-                ),
-                child: Text(
-                  "RECARREGAR",
-                  style: AppFonts.defaultFont(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                  ),
-                ),
+
+          SizedBox(
+            height: 48,
+            width: 186,
+            child: ButtonWidget(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
               ),
+              action: () {
+                final homeViewModel = Modular.get<HomeViewModel>();
+                homeViewModel.jumpToPage(widget.index);
+              },
+              backgroundColor: AppColors.darkGreen,
+              child: const Text("RECARREGAR"),
             ),
           )
         ],

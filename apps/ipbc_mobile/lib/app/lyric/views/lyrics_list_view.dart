@@ -27,7 +27,7 @@ class _LyricsListViewState extends State<LyricsListView> with TickerProviderStat
   void initState() {
     super.initState();
     lyricsFetched = [];
-    bloc = Modular. get<LyricBloc>();
+    bloc = Modular.get<LyricBloc>();
     if (!Modular.get<DatabaseViewModel>().data.isLyricsUpdated) {
       bloc.add(CheckConnectivityEvent<LyricEvent>());
     } else {
@@ -40,23 +40,22 @@ class _LyricsListViewState extends State<LyricsListView> with TickerProviderStat
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: BlocBuilder<LyricBloc, GenericState<LyricState>>(
-            bloc: bloc,
-            builder: (context, state) {
-               if (state is LoadingState<LyricState>) {
-                return const LoadingWidget();
-              } else if (state is NoConnectionState<LyricState>) {
-                return const NoConnectionView(index: 0);
-              } else if (state is DataFetchedState<LyricState, LyricEntity>) {
-                lyricsFetched = state.entities;
-                Modular.get<DatabaseViewModel>().checkUpdateData(context, 'lyrics');
-                return RefreshIndicator(
-                  color: AppColors.darkGreen,
-                  onRefresh: () async {
-                    print('dfsdfsd');
-                    bloc.add(CheckConnectivityEvent());
-                  },
+        child: BlocBuilder<LyricBloc, GenericState<LyricState>>(
+          bloc: bloc,
+          builder: (context, state) {
+             if (state is LoadingState<LyricState>) {
+              return const LoadingWidget();
+            } else if (state is NoConnectionState<LyricState>) {
+              return const NoConnectionView(index: 0);
+            } else if (state is DataFetchedState<LyricState, LyricEntity>) {
+              lyricsFetched = state.entities;
+              Modular.get<DatabaseViewModel>().checkUpdateData(context, 'lyrics');
+              return RefreshIndicator(
+                color: AppColors.darkGreen,
+                onRefresh: () async {
+                  bloc.add(CheckConnectivityEvent());
+                },
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
                       const TitleTopBarWidget(title: "Músicas/Letras"),
@@ -82,12 +81,12 @@ class _LyricsListViewState extends State<LyricsListView> with TickerProviderStat
                       ),
                     ],
                   ),
-                );
-              } else {
-                return const GenericErrorView();
-              }
-            },
-          ),
+                ),
+              );
+            } else {
+              return const GenericErrorView();
+            }
+          },
         ),
       ),
     );

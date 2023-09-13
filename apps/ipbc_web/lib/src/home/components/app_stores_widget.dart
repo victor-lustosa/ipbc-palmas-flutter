@@ -26,9 +26,9 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > 1200) {
+    if (context.mediaQuery.size.width > 1200) {
       return web();
-    } else if (MediaQuery.of(context).size.width > 800) {
+    } else if (context.mediaQuery.size.width > 800) {
       return tablet();
     } else {
       return AppStoresMobile(
@@ -43,7 +43,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
   web() =>
       Container(
         height: 734,
-        width: MediaQuery.of(context).size.width,
+        width: context.mediaQuery.size.width,
         decoration: const BoxDecoration(color: Color(0xff005b40)),
         child: Container(
           margin: const EdgeInsets.only(left: 120, top: 100),
@@ -53,7 +53,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
                 left: 170,
                 top: 15,
                 child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
+                  width: context.mediaQuery.size.width,
                   height: 684.81,
                   child: const Image(
                     image: AssetImage(AppImages.bannerStore),
@@ -96,7 +96,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
   tablet() =>
       Container(
         height: 780,
-        width: MediaQuery.of(context).size.width,
+        width: context.mediaQuery.size.width,
         decoration: const BoxDecoration(color: Color(0xff005b40)),
         child: Container(
           margin: const EdgeInsets.only(top: 80),
@@ -106,7 +106,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
                 top: 200,
                 right: 1,
                 child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
+                  width: context.mediaQuery.size.width,
                   height: 684.81,
                   child: const Image(
                     image: AssetImage(AppImages.bannerStore),
@@ -203,7 +203,7 @@ class AppStoresMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 780,
-      width: MediaQuery.of(context).size.width,
+      width: context.mediaQuery.size.width,
       decoration: const BoxDecoration(color: Color(0xff005b40)),
       child: Container(
         margin: const EdgeInsets.only(left: 0, top: 60),
@@ -235,7 +235,7 @@ class AppStoresMobile extends StatelessWidget {
             Positioned(
               top: 420,
               child: SizedBox(
-                width: MediaQuery.of(context).size.width,
+                width: context.mediaQuery.size.width,
                 child: const Image(
                   image: AssetImage(AppImages.bannerStore),
                 ),

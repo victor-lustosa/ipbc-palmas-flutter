@@ -19,8 +19,7 @@ class ServicesListView extends StatefulWidget {
   State<ServicesListView> createState() => _ServicesListViewState();
 }
 
-class _ServicesListViewState extends State<ServicesListView>
-    with AutomaticKeepAliveClientMixin {
+class _ServicesListViewState extends State<ServicesListView> {
   late final ServicesListBloc bloc;
   late List<ServicesEntity> entitiesList;
 
@@ -36,11 +35,13 @@ class _ServicesListViewState extends State<ServicesListView>
   }
 
   @override
-  bool get wantKeepAlive => true;
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -76,7 +77,7 @@ class _ServicesListViewState extends State<ServicesListView>
                         child: Text(
                           "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
                           style: AppFonts.defaultFont(
-                            fontSize: MediaQuery.of(context).size.width >
+                            fontSize: context.mediaQuery.size.width >
                                     ResponsivityUtil.widthDevice
                                 ? 16
                                 : 15,
@@ -91,7 +92,7 @@ class _ServicesListViewState extends State<ServicesListView>
                         left: 16,
                         right: 16,
                       ),
-                      width: MediaQuery.of(context).size.width,
+                      width: context.mediaQuery.size.width,
                       child: ListView.separated(
                         separatorBuilder: (BuildContext context, int index) {
                           return const SizedBox(height: 17);

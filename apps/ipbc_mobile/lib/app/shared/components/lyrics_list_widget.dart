@@ -30,7 +30,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
         child: Column(
           children: [
             SizedBox(
-              width: MediaQuery.of(context).size.width,
+              width: context.mediaQuery.size.width,
               child: ListView.separated(
                 separatorBuilder: (__, _) {
                   return const SizedBox(

@@ -28,17 +28,11 @@ class _InitViewState extends State<InitView> {
     _viewModel = Modular.get<HomeViewModel>();
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   void onItemTapped(int index) {
     selectedIndex = index;
     _controller.animateToPage(
       index,
-      duration: const Duration(milliseconds: 700),
+      duration: const Duration(milliseconds: 250),
       curve: Curves.easeInOutQuint,
     );
   }

@@ -21,6 +21,7 @@ export 'src/shared/mixins/email_mixin.dart';
 export 'src/shared/utils/validation_util.dart';
 export 'src/shared/utils/responsivity_util.dart';
 export 'src/app_module.dart';
+export 'src/configs/app_configs.dart';
 
 export 'package:design_system/design_system.dart';
 export 'package:lyric_module/lyric_module.dart';

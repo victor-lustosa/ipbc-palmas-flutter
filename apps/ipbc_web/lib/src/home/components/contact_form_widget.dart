@@ -30,7 +30,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > mdSize) {
+    if (context.mediaQuery.size.width > mdSize) {
       return web();
     } else {
       return mobile();
@@ -38,7 +38,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
   }
 
   web() => Container(
-        width: MediaQuery.of(context).size.width,
+        width: context.mediaQuery.size.width,
         decoration: const BoxDecoration(color: Color(0xfff3f3f3)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,25 +54,37 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
       );
 
   mobile() => Container(
-        width: MediaQuery.of(context).size.width,
+        width: context.mediaQuery.size.width,
         decoration: const BoxDecoration(color: Color(0xfff3f3f3)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             title(),
-            subtitle(width: MediaQuery.of(context).size.width * .7),
+            subtitle(width: context.mediaQuery.size.width * .7),
             nameField(
-                width: MediaQuery.of(context).size.width *
-                    (MediaQuery.of(context).size.width > mdSize ? .685 : .655)),
+              width: context.mediaQuery.size.width *
+                  (context.mediaQuery.size.width > mdSize
+                    ? .685
+                    : .655),
+            ),
             emailField(
-                width: MediaQuery.of(context).size.width *
-                    (MediaQuery.of(context).size.width > mdSize ? .685 : .655)),
+              width: context.mediaQuery.size.width *
+                  (context.mediaQuery.size.width > mdSize
+                    ? .685
+                    : .655),
+            ),
             messageField(
-                width: MediaQuery.of(context).size.width *
-                    (MediaQuery.of(context).size.width > mdSize ? .685 : .655)),
+              width: context.mediaQuery.size.width *
+                  (context.mediaQuery.size.width > mdSize
+                    ? .685
+                    : .655),
+            ),
             sendButton(
-                width: MediaQuery.of(context).size.width *
-                    (MediaQuery.of(context).size.width > mdSize ? .685 : .655)),
+              width: context.mediaQuery.size.width *
+                  (context.mediaQuery.size.width > mdSize
+                    ? .685
+                    : .655),
+            ),
           ],
         ),
       );
@@ -214,32 +226,26 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         margin: const EdgeInsets.only(top: 32, bottom: 100),
         width: width,
         height: 49,
-        child: ElevatedButton(
-          style: ButtonStyle(
-            overlayColor: _isSubmitted
-                ? MaterialStateProperty.all<Color>(const Color(0xFF00E8A2))
-                : null,
-            foregroundColor: _isSubmitted
-                ? MaterialStateProperty.all<Color>(const Color(0xff242426))
-                : MaterialStateProperty.all<Color>(AppColors.white),
-            shadowColor: MaterialStateProperty.all<Color>(AppColors.grey6),
-            backgroundColor: _isSubmitted
-                ? MaterialStateProperty.all<Color>(const Color(0xFF00E8A2))
-                : MaterialStateProperty.all<Color>(AppColors.darkGreen),
-            shape: MaterialStateProperty.all<OutlinedBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-            textStyle: MaterialStateProperty.all<TextStyle?>(
-              AppFonts.defaultFont(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: AppColors.white,
-              ),
-            ),
+        child: ButtonWidget(
+          backgroundColor: _isSubmitted
+              ? const Color(0xFF00E8A2)
+              : AppColors.darkGreen,
+          shadowColor: AppColors.grey6,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
           ),
-          onPressed: () {
+          overlayColor: _isSubmitted
+              ? const Color(0xFF00E8A2)
+              : null,
+          foregroundColor: _isSubmitted
+              ? const Color(0xff242426)
+              : AppColors.white,
+          textStyle: AppFonts.defaultFont(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+            color: AppColors.white,
+          ),
+          action: () {
             if (_nameController.text.isEmpty && !_isSubmitted) {
               _nameBorderValidation(false);
             }
@@ -268,10 +274,18 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
               }
             }
           },
-          child: Center(
-            child: Text(
-              _isSubmitted ? 'Enviado!' : 'Enviar',
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(right: 12),
+                child: Center(
+                  child: Text(
+                    _isSubmitted ? 'Enviado!' : 'Enviar',
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       );

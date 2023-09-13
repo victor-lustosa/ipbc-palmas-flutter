@@ -12,8 +12,8 @@ class _UnknownRouteViewState extends State<UnknownRouteView> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.85,
+      width: context.mediaQuery.size.width,
+      height: context.mediaQuery.size.height * 0.85,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

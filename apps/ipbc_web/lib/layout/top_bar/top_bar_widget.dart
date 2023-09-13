@@ -17,9 +17,9 @@ class _TopBarWidgetState extends State<TopBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width < 600) {
+    if (context.mediaQuery.size.width < 600) {
       return mobile();
-    } else if (MediaQuery.of(context).size.width < 915) {
+    } else if (context.mediaQuery.size.width < 915) {
       return tablet();
     } else {
       return web();
@@ -49,7 +49,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                               label: 'Localização',
                               action: () {
                                 scrollPage(
-                                    MediaQuery.of(context).size.width > lgSize
+                                    context.mediaQuery.size.width > lgSize
                                         ? 1575
                                         : 1656);
                               },
@@ -58,7 +58,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                               label: 'Programação',
                               action: () {
                                 scrollPage(
-                                    MediaQuery.of(context).size.width > lgSize
+                                    context.mediaQuery.size.width > lgSize
                                         ? 2175
                                         : 2534);
                               },
@@ -67,7 +67,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                               label: 'Aplicativo',
                               action: () {
                                 scrollPage(
-                                    MediaQuery.of(context).size.width > lgSize
+                                    context.mediaQuery.size.width > lgSize
                                         ? 3232
                                         : 3560);
                               },
@@ -76,7 +76,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                         ),
                       ),
                       contactButton(
-                          position: MediaQuery.of(context).size.width > lgSize
+                          position: context.mediaQuery.size.width > lgSize
                               ? 3965
                               : 4280)
                     ],
@@ -174,19 +174,15 @@ class _TopBarWidgetState extends State<TopBarWidget> {
   smallContactButton({required double position}) => SizedBox(
         width: 88,
         height: 49,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            foregroundColor:
-                isPressed ? const Color(0xff242426) : AppColors.white,
-            shadowColor: AppColors.grey6,
-            backgroundColor:
-                isPressed ? const Color(0xFF00E8A2) : AppColors.darkGreen,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            textStyle: AppFonts.defaultFont(fontSize: 18),
+        child: ButtonWidget(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
           ),
-          onPressed: () => _onPressed(position: position),
+          action: () => _onPressed(position: position),
+          foregroundColor: isPressed ? const Color(0xff242426) : AppColors.white,
+          shadowColor: AppColors.grey6,
+          backgroundColor:
+              isPressed ? const Color(0xFF00E8A2) : AppColors.darkGreen,
           child: Center(
             child: Image.asset(
               isPressed ? AppIcons.darkGreenCallIcon : AppIcons.callIcon,
@@ -199,31 +195,44 @@ class _TopBarWidgetState extends State<TopBarWidget> {
 
   upperMargin({required double value}) => EdgeInsets.only(
         top: value,
-        left: TopBarResponsive.leftWidth(MediaQuery.of(context).size.width),
-        right: TopBarResponsive.rightWidth(MediaQuery.of(context).size.width),
+        left: TopBarResponsive.leftWidth(context.mediaQuery.size.width),
+        right: TopBarResponsive.rightWidth(context.mediaQuery.size.width),
         bottom: value,
       );
 
-  scrollPage(double position) => setState(() {
-        Modular.get<HomeViewModel>().scrollController.animateTo(
-            duration: const Duration(milliseconds: 1500),
-            curve: Curves.easeInOutQuint,
-            position);
-      });
+  scrollPage(double position) => setState(
+        () {
+          Modular.get<HomeViewModel>().scrollController.animateTo(
+              duration: const Duration(milliseconds: 1500),
+              curve: Curves.easeInOutQuint,
+              position);
+        },
+      );
 
   _onPressed({required double position}) async {
     Future.delayed(
-        Duration.zero,
-        () async => setState(() {
-              isPressed = true;
-            }));
-    Future.delayed(const Duration(milliseconds: 500), () async {
-      scrollPage(position);
-    });
-    Future.delayed(const Duration(milliseconds: 900), () async {
-      setState(() {
-        isPressed = false;
-      });
-    });
+      Duration.zero,
+      () async => setState(
+        () {
+          isPressed = true;
+        },
+      ),
+    );
+    Future.delayed(
+      const Duration(milliseconds: 500),
+      () async {
+        scrollPage(position);
+      },
+    );
+    Future.delayed(
+      const Duration(milliseconds: 900),
+      () async {
+        setState(
+          () {
+            isPressed = false;
+          },
+        );
+      },
+    );
   }
 }

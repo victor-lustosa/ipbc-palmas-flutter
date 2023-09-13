@@ -41,9 +41,9 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > 1200) {
+    if (context.mediaQuery.size.width > 1200) {
       return web();
-    } else if (MediaQuery.of(context).size.width > 770) {
+    } else if (context.mediaQuery.size.width > 770) {
       return tablet();
     } else {
       return mobile();
@@ -127,8 +127,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                 children: [
                   descriptionServices(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      width: MediaQuery.of(context).size.width > 580
-                          ? MediaQuery.of(context).size.width * 0.5
+                      width: context.mediaQuery.size.width > 580
+                          ? context.mediaQuery.size.width * 0.5
                           : 280),
                 ],
               ),
@@ -242,11 +242,11 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
             color: AppColors.white,
           ),
           services: servicesImagesSm,
-          width: MediaQuery.of(context).size.width < 602
-              ? MediaQuery.of(context).size.width * .91
+          width: context.mediaQuery.size.width < 602
+              ? context.mediaQuery.size.width * .91
               : 550,
-          height: MediaQuery.of(context).size.width < 602
-              ? MediaQuery.of(context).size.width * .84
+          height: context.mediaQuery.size.width < 602
+              ? context.mediaQuery.size.width * .84
               : 510,
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -255,7 +255,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
 
   verticalCards() => SingleChildScrollView(
         child: SizedBox(
-          width: MediaQuery.of(context).size.width > 1100 ? 618 : 457,
+          width: context.mediaQuery.size.width > 1100 ? 618 : 457,
           height: 1333,
           child: ListView.separated(
             separatorBuilder: (BuildContext context, int index) {
@@ -266,10 +266,10 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (_, index) {
               return cardImage(
-                MediaQuery.of(context).size.width > 1100
+                context.mediaQuery.size.width > 1100
                     ? servicesImagesLg[index]['path']!
                     : servicesImagesMd[index]['path']!,
-                MediaQuery.of(context).size.width > 1100
+                context.mediaQuery.size.width > 1100
                     ? servicesImagesLg[index]['label']!
                     : servicesImagesMd[index]['label']!,
               );

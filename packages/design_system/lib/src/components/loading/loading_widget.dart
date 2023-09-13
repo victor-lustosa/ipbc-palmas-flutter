@@ -9,7 +9,7 @@ class LoadingWidget extends StatelessWidget {
   const LoadingWidget({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Platform.isIOS
         ? SizedBox(
             width: MediaQuery.of(context).size.width,

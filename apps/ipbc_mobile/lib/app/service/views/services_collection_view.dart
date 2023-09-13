@@ -40,6 +40,12 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
   }
 
   @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -63,7 +69,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                     children: [
                       Container(
                         height: 186,
-                        width: MediaQuery.of(context).size.width,
+                        width: context.mediaQuery.size.width,
                         decoration: BoxDecoration(
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(18),
@@ -122,7 +128,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                           right: 16,
                         ),
                         child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
+                          width: context.mediaQuery.size.width,
                           child: ListView.separated(
                             separatorBuilder: (BuildContext context, int index) {
                               return const SizedBox(height: 16);

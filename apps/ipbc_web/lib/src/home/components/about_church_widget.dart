@@ -37,9 +37,9 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > 1200) {
+    if (context.mediaQuery.size.width > 1200) {
       return web();
-    } else if (MediaQuery.of(context).size.width > 640) {
+    } else if (context.mediaQuery.size.width > 640) {
       return tablet();
     } else {
       return mobile();
@@ -79,8 +79,8 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
           ),
           Container(
             margin: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.03,
-              right: MediaQuery.of(context).size.width * 0.03,
+              left: context.mediaQuery.size.width * 0.03,
+              right: context.mediaQuery.size.width * 0.03,
               top: 100,
             ),
             width: 1200,
@@ -143,8 +143,8 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
           ),
           Container(
             margin: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.01,
-              right: MediaQuery.of(context).size.width * 0.01,
+              left: context.mediaQuery.size.width * 0.01,
+              right: context.mediaQuery.size.width * 0.01,
               top: 100,
             ),
             width: 1200,
@@ -200,8 +200,8 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
           ),
           Container(
             margin: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.01,
-              right: MediaQuery.of(context).size.width * 0.01,
+              left: context.mediaQuery.size.width * 0.01,
+              right: context.mediaQuery.size.width * 0.01,
               top: 64,
             ),
             width: 1200,

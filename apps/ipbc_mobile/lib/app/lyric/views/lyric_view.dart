@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../shared/components/album_cover_widget.dart';
 
-class LyricView extends StatefulWidget {
+class LyricView extends StatefulWidget{
   const LyricView({super.key, required this.entity});
 
   final LyricEntity entity;
@@ -64,9 +64,9 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                               ),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width *
+                              width: context.mediaQuery.size.width *
                                   ResponsivityUtil.resolutionDeviceProportion(
-                                      MediaQuery.of(context).size.width,
+                                      context.mediaQuery.size.width,
                                       0.56,
                                       0.5),
                               child: Column(
@@ -81,8 +81,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                       style: AppFonts.defaultFont(
                                         color: AppColors.grey9,
                                         fontWeight: FontWeight.w500,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width >
+                                        fontSize: context.mediaQuery.size.width >
                                                     ResponsivityUtil.widthDevice
                                                 ? 21
                                                 : 18,
@@ -95,8 +94,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                     widget.entity.group,
                                     style: AppFonts.defaultFont(
                                       color: AppColors.grey10,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width >
+                                      fontSize: context.mediaQuery.size.width >
                                                   ResponsivityUtil.widthDevice
                                               ? 15
                                               : 14,
@@ -182,7 +180,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                             .versesList[position],
                                         style: AppFonts.defaultFont(
                                           color: AppColors.grey10,
-                                          fontSize: MediaQuery.of(context)
+                                          fontSize: context.mediaQuery
                                                       .size
                                                       .width >
                                                   ResponsivityUtil.widthDevice
@@ -208,14 +206,14 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                     ),
                     child: Center(
                       child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.85,
+                        width: context.mediaQuery.size.width * 0.85,
                         child: RichText(
                           text: TextSpan(
                             children: [
                               TextSpan(
                                 text:
                                     "  Esse sistema não possui fins lucrativos sobre a obra representada a cima. Todos os direitos reservados aos autores da letra. ",
-                                style: MediaQuery.of(context).size.width >
+                                style: context.mediaQuery.size.width >
                                         ResponsivityUtil.widthDevice
                                     ? AppFonts.copyright(fontSize: 13)
                                     : AppFonts.copyright(fontSize: 12),

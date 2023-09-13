@@ -11,9 +11,9 @@ class FooterWidget extends StatefulWidget {
 class _FooterWidgetState extends State<FooterWidget> {
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > 1200) {
+    if (context.mediaQuery.size.width > 1200) {
       return web();
-    } else if (MediaQuery.of(context).size.width > 770) {
+    } else if (context.mediaQuery.size.width > 770) {
       return tablet();
     } else {
       return mobile();
@@ -22,7 +22,7 @@ class _FooterWidgetState extends State<FooterWidget> {
 
   web() => Container(
         decoration: const BoxDecoration(color: Color(0xff242426)),
-        width: MediaQuery.of(context).size.width,
+        width: context.mediaQuery.size.width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -61,7 +61,7 @@ class _FooterWidgetState extends State<FooterWidget> {
 
   tablet() => Container(
         decoration: const BoxDecoration(color: Color(0xff242426)),
-        width: MediaQuery.of(context).size.width,
+        width: context.mediaQuery.size.width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -74,9 +74,9 @@ class _FooterWidgetState extends State<FooterWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                location(width: MediaQuery.of(context).size.width * .3),
-                contacts(width: MediaQuery.of(context).size.width * .3),
-                services(width: MediaQuery.of(context).size.width * .3),
+                location(width: context.mediaQuery.size.width * .3),
+                contacts(width: context.mediaQuery.size.width * .3),
+                services(width: context.mediaQuery.size.width * .3),
               ],
             ),
             footer()
@@ -86,7 +86,7 @@ class _FooterWidgetState extends State<FooterWidget> {
 
   mobile() => Container(
         decoration: const BoxDecoration(color: Color(0xff242426)),
-        width: MediaQuery.of(context).size.width,
+        width: context.mediaQuery.size.width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -180,7 +180,7 @@ class _FooterWidgetState extends State<FooterWidget> {
       );
 
   footer() => Container(
-        width: MediaQuery.of(context).size.width * 0.75,
+        width: context.mediaQuery.size.width * 0.75,
         margin: const EdgeInsets.only(bottom: 60),
         child: subtitleInfo(
           'Copyright © 2023 Igreja Presbiteriana Central em Palmas/TO',
