@@ -9,7 +9,6 @@ class AboutChurchWidget extends StatefulWidget {
 }
 
 class _AboutChurchWidgetState extends State<AboutChurchWidget> {
-
   final List<String> assetsList = [
     AppImages.hero,
     AppIcons.announce,
@@ -50,7 +49,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         children: [
           Container(
             decoration: const BoxDecoration(
-              color: Color(0xffffffff),
+              color: AppColors.white,
             ),
             child: Container(
               margin: const EdgeInsets.only(
@@ -84,7 +83,9 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
               top: 100,
             ),
             width: 1200,
-            decoration: const BoxDecoration(color: Color(0xffffffff)),
+            decoration: const BoxDecoration(
+              color: AppColors.white,
+            ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,7 +115,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         children: [
           Container(
             decoration: const BoxDecoration(
-              color: Color(0xffffffff),
+              color: AppColors.white,
             ),
             child: Container(
               margin: const EdgeInsets.only(
@@ -149,7 +150,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
             ),
             width: 1200,
             decoration: const BoxDecoration(
-              color: Color(0xffffffff),
+              color: AppColors.white,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -177,13 +178,13 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         children: [
           Container(
             decoration: const BoxDecoration(
-              color: Color(0xffffffff),
+              color: AppColors.white,
             ),
             child: Container(
               margin: const EdgeInsets.only(
                 left: 24,
                 right: 24,
-                bottom: 100,
+                bottom: 80,
               ),
               child: Container(
                 margin: const EdgeInsets.only(top: 80),
@@ -199,11 +200,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(
-              left: context.mediaQuery.size.width * 0.01,
-              right: context.mediaQuery.size.width * 0.01,
-              top: 64,
-            ),
+            margin: const EdgeInsets.only(top: 84),
             width: 1200,
             decoration: const BoxDecoration(color: Color(0xffffffff)),
             child: Column(
@@ -212,14 +209,22 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
               children: [
                 titleAbout(fontSize: 32),
                 Container(
-                  width: 470,
-                  margin: const EdgeInsets.only(top: 16, bottom: 75),
-                  child: aboutChurchText(textAlign: TextAlign.center),
+                  width: context.mediaQuery.size.width,
+                  margin: const EdgeInsets.only(
+                    top: 16,
+                    bottom: 75,
+                    left: 24,
+                    right: 24,
+                  ),
+                  child: aboutChurchText(
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 churchMissions(
-                  width: 430,
-                  textWidth: 300,
-                  textHeight: 1.5,
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                  width: context.mediaQuery.size.width,
+                  textWidth: 238,
+                  textHeight: 1.4,
                 ),
               ],
             ),
@@ -280,45 +285,56 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         ),
       );
 
-  aboutChurchText({required TextAlign textAlign}) => Text(
-        textAlign: textAlign,
-        'Há 30 anos em Palmas/TO, a Igreja Presbiteriana Central de Palmas existe para servir e nutrir os membros, ajudar a sociedade e espalhar as boas notícias do Evangelho.',
-        style: AppFonts.defaultFont(
-          fontSize: 18,
-          height: 1.5,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xff545456),
+  aboutChurchText({
+    required TextAlign textAlign,
+    EdgeInsetsGeometry? margin,
+  }) =>
+      Container(
+        margin: margin ?? EdgeInsets.zero,
+        child: Text(
+          textAlign: textAlign,
+          'Há 30 anos em Palmas/TO, a Igreja Presbiteriana Central de Palmas existe para servir e nutrir os membros, ajudar a sociedade e espalhar as boas notícias do Evangelho.',
+          style: AppFonts.defaultFont(
+            fontSize: 18,
+            height: 1.4,
+            fontWeight: FontWeight.w400,
+            color: const Color(0xff545456),
+          ),
         ),
       );
 
   churchMissions(
           {required double width,
+          EdgeInsetsGeometry? margin,
           required double textWidth,
           double? textHeight}) =>
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          cardMission(
-            image: imagesList[1].image,
-            text: 'Anunciar o reino de Deus',
-            width: width,
-            textWidth: textWidth,
-          ),
-          const SizedBox(height: 16),
-          cardMission(
-            image: imagesList[2].image,
-            text: 'Educar para a vivência cristã',
-            width: width,
-            textWidth: textWidth,
-          ),
-          const SizedBox(height: 16),
-          cardMission(
-            image: imagesList[3].image,
-            text: 'Assistir o ser humano em suas necessidades',
-            width: width,
-            textWidth: textWidth,
-          ),
-        ],
+      Container(
+        margin: margin ?? EdgeInsets.zero,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            cardMission(
+              image: imagesList[1].image,
+              text: 'Anunciar o reino de Deus',
+              width: width,
+              textWidth: textWidth,
+            ),
+            const SizedBox(height: 16),
+            cardMission(
+              image: imagesList[2].image,
+              text: 'Educar para a vivência cristã',
+              width: width,
+              textWidth: textWidth,
+            ),
+            const SizedBox(height: 16),
+            cardMission(
+              image: imagesList[3].image,
+              text: 'Assistir o ser humano em suas necessidades',
+              width: width,
+              textWidth: textWidth,
+            ),
+          ],
+        ),
       );
 
   Widget cardMission(

@@ -13,7 +13,8 @@ Projeto de aplicativo Android e iOS Open Source para a Igreja Presbiteriana Cent
 ### Pacotes e plugins usados no projeto
 
 - Gerências de Estado: Bloc Pattern e ChangeNotifier
-- Injeção de Dependência: Provider
+- Gerenciamento das rotas: Modular
+- Injeção de Dependência: Modular
 - Databases NoSQL: Hive e Firestore (Brevemente Supabase)
 - Análise de Dados: firebase Crashlytics
 

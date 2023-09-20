@@ -13,5 +13,4 @@ class MainModule extends Module {
   void routes(r) {
     r.child('/', child: (_) => const HomeView());
   }
-
 }

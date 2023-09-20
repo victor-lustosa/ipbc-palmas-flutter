@@ -240,11 +240,6 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
           foregroundColor: _isSubmitted
               ? const Color(0xff242426)
               : AppColors.white,
-          textStyle: AppFonts.defaultFont(
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-            color: AppColors.white,
-          ),
           action: () {
             if (_nameController.text.isEmpty && !_isSubmitted) {
               _nameBorderValidation(false);

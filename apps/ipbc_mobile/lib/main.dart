@@ -4,7 +4,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
+//import 'package:flutter/foundation.dart';
 import 'app/app_widget.dart';
 import 'app/splash/main_module.dart';
 

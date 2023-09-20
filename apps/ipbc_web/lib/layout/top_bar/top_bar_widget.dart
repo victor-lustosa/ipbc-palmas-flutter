@@ -114,7 +114,10 @@ class _TopBarWidgetState extends State<TopBarWidget> {
             margin: upperMargin(value: 12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [heroImage(), smallContactButton(position: 4250)],
+              children: [
+                heroImage(),
+                smallContactButton(position: 4250),
+              ],
             ),
           ),
           Container(
@@ -134,19 +137,16 @@ class _TopBarWidgetState extends State<TopBarWidget> {
   contactButton({required double position}) => SizedBox(
         width: 259,
         height: 49,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            foregroundColor:
-                isPressed ? const Color(0xff242426) : AppColors.white,
-            shadowColor: AppColors.grey6,
-            backgroundColor:
-                isPressed ? const Color(0xFF00E8A2) : AppColors.darkGreen,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            textStyle: AppFonts.defaultFont(fontSize: 18),
+        child: ButtonWidget(
+          foregroundColor:
+              isPressed ? const Color(0xff242426) : AppColors.white,
+          shadowColor: AppColors.grey6,
+          backgroundColor:
+              isPressed ? const Color(0xFF00E8A2) : AppColors.darkGreen,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
           ),
-          onPressed: () => _onPressed(position: position),
+          action: () => _onPressed(position: position),
           child: Center(
             child: SizedBox(
               width: 198,
@@ -179,13 +179,20 @@ class _TopBarWidgetState extends State<TopBarWidget> {
             borderRadius: BorderRadius.circular(20),
           ),
           action: () => _onPressed(position: position),
-          foregroundColor: isPressed ? const Color(0xff242426) : AppColors.white,
+          foregroundColor:
+              isPressed
+                  ? const Color(0xff242426)
+                  : AppColors.white,
           shadowColor: AppColors.grey6,
           backgroundColor:
-              isPressed ? const Color(0xFF00E8A2) : AppColors.darkGreen,
+              isPressed
+                  ? const Color(0xFF00E8A2)
+                  : AppColors.darkGreen,
           child: Center(
             child: Image.asset(
-              isPressed ? AppIcons.darkGreenCallIcon : AppIcons.callIcon,
+              isPressed
+                  ? AppIcons.darkGreenCallIcon
+                  : AppIcons.callIcon,
               width: 24,
               height: 24,
             ),

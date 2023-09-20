@@ -22,9 +22,12 @@ class GuidelineWidget extends StatelessWidget {
               children: <Widget>[
                 Container(
                   width: 1.7,
-                  height: liturgyList[index].isAdditional ? 29 : 18,
-                  color:
-                      index == 0 ? Colors.white : AppColors.timelineGuideTGreen,
+                  height: liturgyList[index].isAdditional
+                      ? 29
+                      : 18,
+                  color: index == 0
+                      ? Colors.white
+                      : AppColors.timelineGuideTGreen,
                 ),
                 Container(
                   margin: const EdgeInsets.only(left: 5, right: 5),
@@ -36,7 +39,9 @@ class GuidelineWidget extends StatelessWidget {
                 ),
                 Container(
                   width: 2,
-                  height: liturgyList[index].isAdditional ? 28 : 18,
+                  height: liturgyList[index].isAdditional
+                      ? 28
+                      : 18,
                   color: index == liturgyList.length - 1
                       ? Colors.white
                       : AppColors.timelineGuideTGreen,

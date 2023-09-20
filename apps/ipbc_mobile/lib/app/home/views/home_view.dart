@@ -48,64 +48,40 @@ class _HomeViewState extends State<HomeView>
             } else if (state
                 is DataFetchedState<ServicesListState, ServicesEntity>) {
               entitiesList = state.entities;
-              Modular.get<DatabaseViewModel>()
-                  .checkUpdateData(context, 'services');
-              return RefreshIndicator(
-                color: AppColors.darkGreen,
-                onRefresh: () async {
-                  bloc.add(CheckConnectivityEvent());
-                },
-                child: SingleChildScrollView(
-                  child: SizedBox(
-                    width: context.mediaQuery.size.width,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const MainTopBarWidget(),
-                        title("Eventos"),
-                        subtitle(
-                          const EdgeInsets.only(
-                            left: 18,
-                            top: 8,
-                            right: 18,
+              Modular.get<DatabaseViewModel>().checkUpdateData(context, 'services');
+              return SingleChildScrollView(
+                child: SizedBox(
+                  width: context.mediaQuery.size.width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const MainTopBarWidget(),
+                      title(text: "Eventos"),
+                      subtitle(right: 18, text: "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
+                      ),
+                      title(text: "Cultos"),
+                      subtitle(right: 17, text: "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 24.5, left: 15.5, right: 15.5),
+                        child: CarouselWidget(
+                          fontStyle: AppFonts.defaultFont(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.white,
                           ),
-                          "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          width: context.mediaQuery.size.width,
+                          height: 167,
+                          services: List.generate(
+                              entitiesList.length,
+                              (index) => {
+                                    'label': entitiesList[index].title,
+                                    'path': entitiesList[index].image,
+                                  }),
                         ),
-                        title("Cultos"),
-                        subtitle(
-                          const EdgeInsets.only(
-                            left: 18,
-                            top: 8,
-                            right: 17,
-                          ),
-                          "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(
-                            bottom: 0,
-                            top: 24.5,
-                            left: 15.5,
-                            right: 15.5,
-                          ),
-                          child: CarouselWidget(
-                            fontStyle: AppFonts.defaultFont(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.white,
-                            ),
-                            services: List.generate(
-                                entitiesList.length,
-                                (index) => {
-                                      'label': entitiesList[index].title,
-                                      'path': entitiesList[index].image,
-                                    }),
-                            width: context.mediaQuery.size.width,
-                            height: 167,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               );
@@ -118,7 +94,8 @@ class _HomeViewState extends State<HomeView>
     );
   }
 
-  Widget title(String text) => Row(
+  Widget title({required String text}) =>
+      Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
@@ -131,10 +108,11 @@ class _HomeViewState extends State<HomeView>
         ],
       );
 
-  Widget subtitle(EdgeInsetsGeometry padding, String text) => Align(
+  Widget subtitle({required double right, required String text}) =>
+      Align(
         alignment: Alignment.centerLeft,
         child: Container(
-          margin: const EdgeInsets.only(left: 18, top: 8, right: 18),
+          margin: EdgeInsets.only(left: 18, top: 8, right: right),
           child: Text(
             text,
             style: AppFonts.defaultFont(

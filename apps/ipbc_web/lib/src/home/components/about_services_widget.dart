@@ -233,7 +233,6 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         child: CarouselWidget(
           padding: const EdgeInsets.only(
             left: 26,
-            right: 16,
             bottom: 16,
           ),
           fontStyle: AppFonts.defaultFont(

@@ -35,3 +35,4 @@ extension ThemeDataExtensions on ThemeData {
   AppColorsExtension get appColors =>
       extension<AppColorsExtension>() ?? lightAppColors;
 }*/
+
