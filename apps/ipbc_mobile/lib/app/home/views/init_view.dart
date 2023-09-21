@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../layout/bottom-bar/cupertino/cupertino_bottom_bar_widget.dart';
 import '../../../layout/bottom-bar/material/material_bottom_bar_widget.dart';
+import '../../configs/app_routes.dart';
 import '../view-models/home_view_model.dart';
 import '../../offers/views/offers_view.dart';
 import '../../lyric/views/lyrics_list_view.dart';
@@ -56,7 +57,7 @@ class _InitViewState extends State<InitView> {
               );
             },
             children: const [
-              RouterOutlet(),
+              HomeRoutes(),
               LyricsListView(),
               OffersView(),
             ],

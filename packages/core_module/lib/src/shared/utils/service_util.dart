@@ -1,7 +1,6 @@
 import 'dart:math' show Random;
 
 import 'package:flutter/services.dart';
-import 'package:service_module/service_module.dart';
 import 'package:uno/uno.dart';
 
 import '../../../core_module.dart';

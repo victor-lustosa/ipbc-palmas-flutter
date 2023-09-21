@@ -1,8 +1,6 @@
 
 import 'package:lyric_module/lyric_module.dart';
 
-import '../../../../service_module.dart';
-
 class ServicesUseCases implements IUseCases<Stream<List<ServicesEntity>>> {
   final IRepository<List<Map>> repository;
   ServicesUseCases({required this.repository});

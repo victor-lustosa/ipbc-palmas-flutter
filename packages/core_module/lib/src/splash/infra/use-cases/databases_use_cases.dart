@@ -1,6 +1,5 @@
 
 import '../../../../core_module.dart';
-import '../models/hive-dtos/hive_database_configs_dto.dart';
 
 class DatabasesUseCases implements IUseCases<HiveDatabaseConfigsDTO> {
   final IRepository<HiveDatabaseConfigsDTO> repository;

@@ -5,12 +5,12 @@ class CarouselWidget extends StatefulWidget {
   final List<ServicesEntity> services;
   final double width;
   final double height;
+  final String? route;
   final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
   final TextStyle? fontStyle;
-  final VoidCallback? action;
-  final Function(int) callback;
   const CarouselWidget({
     required this.services,
     required this.width,
@@ -20,7 +20,8 @@ class CarouselWidget extends StatefulWidget {
     this.crossAxisAlignment,
     this.fontStyle,
     this.padding,
-    this.action, required this.callback,
+    this.margin,
+    this.route,
   }) : super(key: key);
 
   @override
@@ -42,6 +43,7 @@ class CarouselWidgetState extends State<CarouselWidget> {
       initialPage: 0,
     );
   }
+
   @override
   void didChangeDependencies() {
     for (Image image in imagesList) {
@@ -49,11 +51,13 @@ class CarouselWidgetState extends State<CarouselWidget> {
     }
     super.didChangeDependencies();
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
+        Container(
+          margin: widget.margin,
           width: widget.width,
           height: widget.height,
           child: PageView.builder(
@@ -67,10 +71,14 @@ class CarouselWidgetState extends State<CarouselWidget> {
               );
             },
             itemBuilder: (context, position) {
-              widget.callback(position);
               bool active = position == activePage;
               return InkWell(
-                onTap: widget.action,
+                onTap: widget.route == null
+                    ? () {}
+                    : () => Navigator.of(context).pushNamed(
+                          widget.route!,
+                          arguments: widget.services[position],
+                        ),
                 child: AnimatedContainer(
                   padding: widget.padding ?? EdgeInsets.zero,
                   margin: EdgeInsets.all(active ? 0 : 6),
@@ -78,12 +86,15 @@ class CarouselWidgetState extends State<CarouselWidget> {
                   decoration: BoxDecoration(
                     color: AppColors.grey4,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    image: DecorationImage(fit: BoxFit.cover, image: imagesList[position].image),
+                    image: DecorationImage(
+                        fit: BoxFit.cover, image: imagesList[position].image),
                   ),
                   curve: Curves.easeInOutCubic,
                   child: Column(
-                    mainAxisAlignment: widget.mainAxisAlignment ?? MainAxisAlignment.start,
-                    crossAxisAlignment: widget.crossAxisAlignment ?? CrossAxisAlignment.center,
+                    mainAxisAlignment:
+                        widget.mainAxisAlignment ?? MainAxisAlignment.start,
+                    crossAxisAlignment:
+                        widget.crossAxisAlignment ?? CrossAxisAlignment.center,
                     children: [
                       Text(
                         widget.services[position].title,

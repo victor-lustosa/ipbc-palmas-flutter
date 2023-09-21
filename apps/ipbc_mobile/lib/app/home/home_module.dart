@@ -1,13 +1,9 @@
 import 'package:core_module/core_module.dart';
-import 'package:ipbc_palmas/app/home/views/home_view.dart';
-import 'package:ipbc_palmas/app/home/views/init_view.dart';
 import '../lyric/lyric_module.dart';
 
 import '../service/service_module.dart';
-import '../service/views/service_view.dart';
-import '../service/views/services_collection_view.dart';
-import '../service/views/services_list_view.dart';
 import 'view-models/home_view_model.dart';
+import 'views/init_view.dart';
 
 class HomeModule extends Module {
   static const String initialRoute = '/';
@@ -28,32 +24,7 @@ class HomeModule extends Module {
 
   @override
   void routes(r) {
-    r.child(
-      initialRoute,
-      child: (_) => const InitView(),
-      children: [
-        ChildRoute(
-          homeRoute,
-          child: (_) => const HomeView(),
-        ),
-        ChildRoute(
-          servicesListRoute,
-          child: (_) => const ServicesListView(),
-        ),
-        ChildRoute(
-          servicesCollectionRoute,
-          child: (_) => ServicesCollectionView(
-            entity: r.args.data as ServicesEntity,
-          ),
-        ),
-        ChildRoute(
-          serviceRoute,
-          child: (_) => ServiceView(
-            entity: r.args.data as ServiceViewDTO,
-          ),
-        ),
-      ],
-    );
+    r.child(initialRoute, child: (_) => const InitView());
     r.module(lyricsRoute, module: LyricModule());
   }
 }

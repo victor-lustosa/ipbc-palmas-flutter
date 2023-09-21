@@ -40,12 +40,6 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
   }
 
   @override
-  void dispose() {
-    bloc.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -103,7 +97,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                         highlightColor: Colors.transparent,
                                         iOSIcon: CupertinoIcons.chevron_back,
                                         androidIcon: Icons.arrow_back_rounded,
-                                        action: () => Modular.to.pop(context),
+                                        action: () => Navigator.pop(context),
                                       ),
                                       Text(
                                         "Cultos de ${widget.entity.heading}",

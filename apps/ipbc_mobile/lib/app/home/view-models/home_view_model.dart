@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-import '../../configs/ios_routes.dart';
+import '../../configs/app_routes.dart';
 
-class HomeViewModel extends ChangeNotifier{
+class HomeViewModel extends ChangeNotifier {
 
   int selectedIndex = 0;
 

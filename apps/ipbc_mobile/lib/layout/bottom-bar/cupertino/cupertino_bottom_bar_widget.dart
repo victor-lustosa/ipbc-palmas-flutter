@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart'
     hide CupertinoTabBar, CupertinoTabScaffold;
 
 
-import '../../../app/configs/ios_routes.dart';
+import '../../../app/configs/app_routes.dart';
 import '../../../app/exception/views/unknown_route_view.dart';
 import '../../../app/lyric/views/lyrics_list_view.dart';
 import '../../../app/offers/views/offers_view.dart';
@@ -58,7 +58,7 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
             return CupertinoTabView(
               onGenerateRoute: AppRoutes.onGenerateRoute,
               builder: (context) {
-                return viewRoute(const ServicesListRoutes());
+                return viewRoute(const HomeRoutes());
               },
             );
           case 1:

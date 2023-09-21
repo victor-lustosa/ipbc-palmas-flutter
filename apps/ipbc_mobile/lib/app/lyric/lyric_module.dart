@@ -1,6 +1,6 @@
 import 'package:core_module/core_module.dart';
-import 'package:ipbc_palmas/app/service/service_module.dart';
 
+import '../service/service_module.dart';
 import '../shared/view-models/services_view_model.dart';
 import 'views/lyric_view.dart';
 import 'views/lyrics_list_view.dart';

@@ -1,6 +1,5 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:ipbc_palmas/app/home/home_module.dart';
 
 import '../../../layout/top-bar/main_top_bar_widget.dart';
 import '../../exception/views/generic_error_view.dart';
@@ -8,6 +7,7 @@ import '../../exception/views/no_connection_view.dart';
 import '../../service/blocs/services_list_bloc.dart';
 import '../../shared/blocs/generics.dart';
 import '../../shared/view-models/database_view_model.dart';
+import '../home_module.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -16,11 +16,11 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView>
-    with AutomaticKeepAliveClientMixin {
+class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin {
   late final ServicesListBloc bloc;
   late List<ServicesEntity> entitiesList;
   int position = 0;
+
   @override
   void initState() {
     bloc = Modular.get<ServicesListBloc>();
@@ -34,6 +34,7 @@ class _HomeViewState extends State<HomeView>
 
   @override
   bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -71,21 +72,8 @@ class _HomeViewState extends State<HomeView>
                             fontWeight: FontWeight.w500,
                             color: AppColors.white,
                           ),
-                          callback: (int index) {
-                            Future.delayed(Duration.zero, (){
-                              setState(
-                                    () {
-                                  position = index;
-                                },
-                              );
-                            });
-                          },
-                          action: () {
-                            Modular.to.pushNamed(
-                              '${HomeModule.initRoute}${HomeModule.servicesCollectionRoute}',
-                              arguments: entitiesList[position],
-                            );
-                          },
+                          margin: const EdgeInsets.only(left: 15.5, right: 15.5),
+                          route: HomeModule.servicesCollectionRoute,
                           mainAxisAlignment: MainAxisAlignment.center,
                           width: context.mediaQuery.size.width,
                           height: 167,

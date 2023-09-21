@@ -226,7 +226,6 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
   horizontalCards() => Container(
         margin: const EdgeInsets.only(bottom: 70, top: 50),
         child: CarouselWidget(
-          callback: (_){},
           padding: const EdgeInsets.only(
             left: 26,
             bottom: 16,
@@ -236,7 +235,6 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
             fontWeight: FontWeight.w700,
             color: AppColors.white,
           ),
-          action: (){},
           services: servicesImagesSm,
           width: context.mediaQuery.size.width < 602
               ? context.mediaQuery.size.width * .91
