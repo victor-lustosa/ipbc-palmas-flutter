@@ -75,7 +75,7 @@ class CarouselWidgetState extends State<CarouselWidget> {
               return InkWell(
                 onTap: widget.route == null
                     ? () {}
-                    : () => Navigator.of(context).pushNamed(
+                    : () => Modular.to.pushNamed(
                           widget.route!,
                           arguments: widget.services[position],
                         ),

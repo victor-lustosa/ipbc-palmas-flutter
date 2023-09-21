@@ -6,7 +6,7 @@ import 'ui/views/login_view.dart';
 import 'ui/view_models/login_view_model.dart';
 
 class AuthModule extends Module {
-  static const String authRoute = '/auth';
+
   @override
   List<Module> get imports => [CoreModule()];
   @override

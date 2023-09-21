@@ -7,6 +7,7 @@ import '../../exception/views/no_connection_view.dart';
 import '../../service/blocs/services_list_bloc.dart';
 import '../../shared/blocs/generics.dart';
 import '../../shared/view-models/database_view_model.dart';
+import '../../splash/main_module.dart';
 import '../home_module.dart';
 
 class HomeView extends StatefulWidget {
@@ -73,7 +74,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                             color: AppColors.white,
                           ),
                           margin: const EdgeInsets.only(left: 15.5, right: 15.5),
-                          route: HomeModule.servicesCollectionRoute,
+                          route: '${MainModule.initRoute}${HomeModule.servicesCollectionRoute}',
                           mainAxisAlignment: MainAxisAlignment.center,
                           width: context.mediaQuery.size.width,
                           height: 167,

@@ -5,6 +5,7 @@ import '../../home/home_module.dart';
 import '../blocs/database_bloc.dart';
 import '../../exception/views/generic_error_view.dart';
 import '../../shared/view-models/database_view_model.dart';
+import '../main_module.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _SplashViewState extends State<SplashView> {
           if (state is FetchingDataState) {
             var data = await Modular.get<DatabaseViewModel>().validate(state.entity);
             bloc.add(UpdateDataEvent(data: data));
-            Modular.to.navigate(HomeModule.initRoute);
+            Modular.to.navigate('${MainModule.initRoute}${HomeModule.homeRoute}');
           }
         },
         bloc: bloc,
