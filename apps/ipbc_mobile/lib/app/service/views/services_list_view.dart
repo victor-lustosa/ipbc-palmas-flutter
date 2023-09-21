@@ -140,7 +140,7 @@ class _ServicesListViewState extends State<ServicesListView> {
                                   ),
                                 ),
                                 onTap: () {
-                                  Modular.to.navigate(
+                                  Modular.to.pushNamed(
                                     HomeModule.servicesCollectionRoute,
                                     arguments: entitiesList[index],
                                   );

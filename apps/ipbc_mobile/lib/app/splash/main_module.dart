@@ -6,6 +6,7 @@ import '../shared/view-models/database_view_model.dart';
 import 'views/splash_view.dart';
 
 class MainModule extends Module {
+  static const String splashRoute = '/splash';
   @override
   void binds(i) {
     i.addSingleton<DatabaseViewModel>(DatabaseViewModel.new);
@@ -28,8 +29,8 @@ class MainModule extends Module {
 
   @override
   void routes(r) {
-    r.module('/auth', module: AuthModule());
-    r.child('/splash', child: (_) => const SplashView());
-    r.module('/home', module: HomeModule());
+    r.module(AuthModule.authRoute, module: AuthModule());
+    r.child(splashRoute, child: (_) => const SplashView());
+    r.module(HomeModule.initRoute, module: HomeModule());
   }
 }

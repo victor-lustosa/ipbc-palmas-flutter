@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'package:ipbc_palmas/app/home/home_module.dart';
 
 import '../../../layout/top-bar/main_top_bar_widget.dart';
 import '../../exception/views/generic_error_view.dart';
@@ -19,7 +20,7 @@ class _HomeViewState extends State<HomeView>
     with AutomaticKeepAliveClientMixin {
   late final ServicesListBloc bloc;
   late List<ServicesEntity> entitiesList;
-
+  int position = 0;
   @override
   void initState() {
     bloc = Modular.get<ServicesListBloc>();
@@ -63,22 +64,32 @@ class _HomeViewState extends State<HomeView>
                       subtitle(right: 17, text: "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 24.5, left: 15.5, right: 15.5),
+                        margin: const EdgeInsets.only(top: 24.5),
                         child: CarouselWidget(
                           fontStyle: AppFonts.defaultFont(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                             color: AppColors.white,
                           ),
+                          callback: (int index) {
+                            Future.delayed(Duration.zero, (){
+                              setState(
+                                    () {
+                                  position = index;
+                                },
+                              );
+                            });
+                          },
+                          action: () {
+                            Modular.to.pushNamed(
+                              '${HomeModule.initRoute}${HomeModule.servicesCollectionRoute}',
+                              arguments: entitiesList[position],
+                            );
+                          },
                           mainAxisAlignment: MainAxisAlignment.center,
                           width: context.mediaQuery.size.width,
                           height: 167,
-                          services: List.generate(
-                              entitiesList.length,
-                              (index) => {
-                                    'label': entitiesList[index].title,
-                                    'path': entitiesList[index].image,
-                                  }),
+                          services: entitiesList,
                         ),
                       ),
                     ],

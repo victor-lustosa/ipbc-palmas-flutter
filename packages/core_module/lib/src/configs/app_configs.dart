@@ -12,8 +12,6 @@ extension BuildContextExtensions on BuildContext {
 
   MediaQueryData get mediaQuery => MediaQuery.of(this);
 
-  NavigatorState get navigator => Navigator.of(this);
-
   FocusScopeNode get focusScope => FocusScope.of(this);
 
   ScaffoldState get scaffold => Scaffold.of(this);

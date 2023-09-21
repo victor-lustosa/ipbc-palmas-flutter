@@ -68,7 +68,7 @@ class _ServiceViewState extends State<ServiceView> {
                                 highlightColor: Colors.transparent,
                                 iOSIcon: CupertinoIcons.chevron_back,
                                 androidIcon: Icons.arrow_back_rounded,
-                                action: () => Navigator.pop(context),
+                                action: () => Modular.to.pop(context),
                               ),
                               Text(
                                 maxLines: 1,

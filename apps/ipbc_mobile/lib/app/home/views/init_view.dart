@@ -56,7 +56,7 @@ class _InitViewState extends State<InitView> {
               );
             },
             children: const [
-              HomeView(),
+              RouterOutlet(),
               LyricsListView(),
               OffersView(),
             ],

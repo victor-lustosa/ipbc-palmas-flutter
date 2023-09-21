@@ -19,9 +19,8 @@ class ServiceModule extends Module {
           repository: i.get<Repository<List<Map>>>(),
         ),
         hiveUseCases: ServiceUseCases(
-          repository: Repository(
-            datasource:
-                HiveDatasource<HiveCollectionDTO>(boxLabel: 'collection'),
+          repository: Repository<List<Map>>(
+            datasource: HiveDatasource<HiveCollectionDTO>(boxLabel: 'collection'),
           ),
         ),
         viewModel: i.get<ServicesViewModel>(),
@@ -36,7 +35,7 @@ class ServiceModule extends Module {
           repository: i.get<Repository<List<Map>>>(),
         ),
         hiveUseCases: ServicesUseCases(
-          repository: Repository(
+          repository: Repository<List<Map>>(
             datasource: HiveDatasource<HiveServicesDTO>(boxLabel: 'services'),
           ),
         ),

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-
-import '../../../design_system.dart';
+import 'package:core_module/core_module.dart';
 
 class CarouselWidget extends StatefulWidget {
-  final List<Map<String, String>> services;
+  final List<ServicesEntity> services;
   final double width;
   final double height;
   final EdgeInsetsGeometry? padding;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
   final TextStyle? fontStyle;
-
+  final VoidCallback? action;
+  final Function(int) callback;
   const CarouselWidget({
     required this.services,
     required this.width,
@@ -18,7 +18,9 @@ class CarouselWidget extends StatefulWidget {
     Key? key,
     this.mainAxisAlignment,
     this.crossAxisAlignment,
-    this.fontStyle, this.padding,
+    this.fontStyle,
+    this.padding,
+    this.action, required this.callback,
   }) : super(key: key);
 
   @override
@@ -34,7 +36,7 @@ class CarouselWidgetState extends State<CarouselWidget> {
   void initState() {
     super.initState();
     for (int i = 0; i < widget.services.length; i++) {
-      imagesList.add(Image.network(widget.services[i]['path']!,));
+      imagesList.add(Image.network(widget.services[i].image));
     }
     _pageController = PageController(
       initialPage: 0,
@@ -65,31 +67,30 @@ class CarouselWidgetState extends State<CarouselWidget> {
               );
             },
             itemBuilder: (context, position) {
+              widget.callback(position);
               bool active = position == activePage;
-              return AnimatedContainer(
-                padding: widget.padding ?? EdgeInsets.zero,
-                margin: EdgeInsets.all(active ? 0 : 6),
-                duration: const Duration(milliseconds: 300),
-                decoration: BoxDecoration(
-                  color: AppColors.grey4,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(15),
+              return InkWell(
+                onTap: widget.action,
+                child: AnimatedContainer(
+                  padding: widget.padding ?? EdgeInsets.zero,
+                  margin: EdgeInsets.all(active ? 0 : 6),
+                  duration: const Duration(milliseconds: 300),
+                  decoration: BoxDecoration(
+                    color: AppColors.grey4,
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                    image: DecorationImage(fit: BoxFit.cover, image: imagesList[position].image),
                   ),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: imagesList[position].image,
+                  curve: Curves.easeInOutCubic,
+                  child: Column(
+                    mainAxisAlignment: widget.mainAxisAlignment ?? MainAxisAlignment.start,
+                    crossAxisAlignment: widget.crossAxisAlignment ?? CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        widget.services[position].title,
+                        style: widget.fontStyle,
+                      ),
+                    ],
                   ),
-                ),
-                curve: Curves.easeInOutCubic,
-                child: Column(
-                  mainAxisAlignment: widget.mainAxisAlignment ?? MainAxisAlignment.start,
-                  crossAxisAlignment: widget.crossAxisAlignment ?? CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      widget.services[position]['label']!,
-                      style: widget.fontStyle,
-                    ),
-                  ],
                 ),
               );
             },

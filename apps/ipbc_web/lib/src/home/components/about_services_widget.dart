@@ -4,12 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../view_models/home_view_model.dart';
 
-class AboutServices {
-  AboutServices({required this.label, required this.path});
-  final String label;
-  final String path;
-}
-
 class AboutServicesWidget extends StatefulWidget {
   const AboutServicesWidget({super.key});
 
@@ -18,25 +12,26 @@ class AboutServicesWidget extends StatefulWidget {
 }
 
 class _AboutServicesWidgetState extends State<AboutServicesWidget> {
-  final List<Map<String, String>> servicesImagesLg = [
-    {'label': 'Culto Solene', 'path': AppImages.sundayEveningServiceLg},
-    {'label': 'Culto de Jovens', 'path': AppImages.saturdayServiceLg},
-    {'label': 'Escola Bíblica Dominical', 'path': AppImages.sundayMorningServiceLg},
-    {'label': 'Pequeno Grupo', 'path': AppImages.littleGroupLg},
+
+  final List<ServicesEntity> servicesImagesLg = [
+    ServicesModel.empty().copyWith(image: AppImages.sundayEveningServiceLg, title: 'Culto Solene'),
+    ServicesModel.empty().copyWith(image: AppImages.saturdayServiceLg, title: 'Culto de Jovens'),
+    ServicesModel.empty().copyWith(image: AppImages.sundayMorningServiceLg, title: 'Escola Bíblica Dominical'),
+    ServicesModel.empty().copyWith(image: AppImages.littleGroupLg, title: 'Pequeno Grupo'),
   ];
 
-  final List<Map<String, String>> servicesImagesMd = [
-    {'label': 'Culto Solene', 'path': AppImages.sundayEveningServiceMd},
-    {'label': 'Culto de Jovens', 'path': AppImages.saturdayServiceMd},
-    {'label': 'Escola Bíblica Dominical','path': AppImages.sundayMorningServiceMd},
-    {'label': 'Pequeno Grupo', 'path': AppImages.littleGroupMd},
+  final List<ServicesEntity> servicesImagesMd = [
+    ServicesModel.empty().copyWith(image: AppImages.sundayEveningServiceMd, title: 'Culto Solene',),
+    ServicesModel.empty().copyWith(image: AppImages.saturdayServiceMd, title: 'Culto de Jovens'),
+    ServicesModel.empty().copyWith(image: AppImages.sundayMorningServiceMd, title: 'Escola Bíblica Dominical'),
+    ServicesModel.empty().copyWith(image: AppImages.littleGroupMd, title: 'Pequeno Grupo'),
   ];
 
-  final List<Map<String, String>> servicesImagesSm = [
-    {'label': 'Culto Solene', 'path': AppImages.sundayEveningServiceSm},
-    {'label': 'Culto de Jovens', 'path': AppImages.saturdayServiceSm},
-    {'label': 'Escola Bíblica Dominical', 'path': AppImages.sundayMorningServiceSm},
-    {'label': 'Pequeno Grupo', 'path': AppImages.littleGroupSm},
+  final List<ServicesEntity> servicesImagesSm = [
+    ServicesModel.empty().copyWith(image: AppImages.sundayEveningServiceSm, title: 'Culto Solene',),
+    ServicesModel.empty().copyWith(image: AppImages.saturdayServiceSm, title: 'Culto de Jovens'),
+    ServicesModel.empty().copyWith(image: AppImages.sundayMorningServiceSm, title: 'Escola Bíblica Dominical'),
+    ServicesModel.empty().copyWith(image: AppImages.littleGroupSm, title: 'Pequeno Grupo'),
   ];
 
   @override
@@ -231,6 +226,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
   horizontalCards() => Container(
         margin: const EdgeInsets.only(bottom: 70, top: 50),
         child: CarouselWidget(
+          callback: (_){},
           padding: const EdgeInsets.only(
             left: 26,
             bottom: 16,
@@ -240,6 +236,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
             fontWeight: FontWeight.w700,
             color: AppColors.white,
           ),
+          action: (){},
           services: servicesImagesSm,
           width: context.mediaQuery.size.width < 602
               ? context.mediaQuery.size.width * .91
@@ -266,11 +263,11 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
             itemBuilder: (_, index) {
               return cardImage(
                 context.mediaQuery.size.width > 1100
-                    ? servicesImagesLg[index]['path']!
-                    : servicesImagesMd[index]['path']!,
+                    ? servicesImagesLg[index].image
+                    : servicesImagesMd[index].image,
                 context.mediaQuery.size.width > 1100
-                    ? servicesImagesLg[index]['label']!
-                    : servicesImagesMd[index]['label']!,
+                    ? servicesImagesLg[index].image
+                    : servicesImagesMd[index].image,
               );
             },
           ),

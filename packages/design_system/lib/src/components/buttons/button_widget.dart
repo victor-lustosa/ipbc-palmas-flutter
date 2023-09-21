@@ -30,7 +30,6 @@ class ButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ButtonStyle(
-
           padding: padding == null
               ? null
               : MaterialStateProperty.all<EdgeInsetsGeometry>(padding!),
@@ -59,7 +58,6 @@ class ButtonWidget extends StatelessWidget {
                 AppFonts.defaultFont(
                   fontWeight: FontWeight.w500,
                   color: AppColors.white,
-
                 ),
           ),
         ),

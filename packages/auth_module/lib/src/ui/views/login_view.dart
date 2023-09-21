@@ -1,9 +1,9 @@
-import 'package:auth_module/src/ui/views/view_models/login_view_model.dart';
+import 'package:auth_module/src/ui/view_models/login_view_model.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'components/auth_fields.dart';
+import '../components/auth_fields.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});

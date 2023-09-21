@@ -4,6 +4,7 @@ export 'src/infra/use-cases/services_use_cases.dart';
 export 'src/infra/use-cases/service_use_cases.dart';
 
 export 'src/infra/models/service_model.dart';
+export 'src/infra/models/services_model.dart';
 export 'src/infra/models/hive-dtos/hive_collection_dto.dart';
 export 'src/infra/models/hive-dtos/hive_services_dto.dart';
 

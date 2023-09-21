@@ -77,7 +77,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                           ),
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: AssetImage(
+                            image: NetworkImage(
                               widget.entity.image,
                             ),
                           ),
@@ -103,7 +103,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                         highlightColor: Colors.transparent,
                                         iOSIcon: CupertinoIcons.chevron_back,
                                         androidIcon: Icons.arrow_back_rounded,
-                                        action: () => Navigator.pop(context),
+                                        action: () => Modular.to.pop(context),
                                       ),
                                       Text(
                                         "Cultos de ${widget.entity.heading}",
@@ -198,7 +198,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                     ),
                                   ),
                                   onTap: () {
-                                    Modular.to.navigate(
+                                    Modular.to.pushNamed(
                                       HomeModule.serviceRoute,
                                       arguments: ServiceViewDTO(
                                         service: entitiesList[index],

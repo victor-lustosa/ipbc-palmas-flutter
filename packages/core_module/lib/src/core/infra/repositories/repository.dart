@@ -7,23 +7,23 @@ class Repository<R> implements IRepository<R> {
   final IDatasource datasource;
 
   @override
-  Future<R> get(path) async {
+  Future<R> get(String path) async {
     var result = await datasource.get(path);
     return result;
   }
 
   @override
-  Future<void> add(path, data) {
+  Future<void> add(String path, data) {
     return datasource.add(path, data);
   }
 
   @override
-  Future<void> delete(path) {
+  Future<void> delete(String path) {
     return datasource.delete(path);
   }
 
   @override
-  Future<void> update(path, data) {
+  Future<void> update(String path, data) {
     return datasource.update(path, data);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:core_module/core_module.dart';
+import 'package:ipbc_palmas/app/home/views/home_view.dart';
 import 'package:ipbc_palmas/app/home/views/init_view.dart';
 import '../lyric/lyric_module.dart';
 
@@ -10,6 +11,8 @@ import 'view-models/home_view_model.dart';
 
 class HomeModule extends Module {
   static const String initialRoute = '/';
+  static const String homeRoute = '/home';
+  static const String initRoute = '/init';
   static const String lyricsRoute = '/lyrics';
   static const String serviceRoute = '/service';
   static const String servicesListRoute = '/services';
@@ -29,6 +32,10 @@ class HomeModule extends Module {
       initialRoute,
       child: (_) => const InitView(),
       children: [
+        ChildRoute(
+          homeRoute,
+          child: (_) => const HomeView(),
+        ),
         ChildRoute(
           servicesListRoute,
           child: (_) => const ServicesListView(),

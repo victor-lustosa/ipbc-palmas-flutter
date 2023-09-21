@@ -1,8 +1,8 @@
-import 'package:auth_module/src/ui/views/view_models/login_view_model.dart';
+import 'package:auth_module/src/ui/view_models/login_view_model.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import 'components/auth_fields.dart';
+import '../components/auth_fields.dart';
 
 class CreateAccountView extends StatefulWidget {
   const CreateAccountView({super.key});
@@ -25,7 +25,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                 margin: const EdgeInsets.only(left: 20, top: 20),
                 child: IconButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () => Modular.to.navigate('/login'),
+                  onPressed: () => Modular.to.pop(context),
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   color: AppColors.darkGreen,

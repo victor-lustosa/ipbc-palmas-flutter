@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'package:ipbc_palmas/app/home/home_module.dart';
 
 import '../blocs/database_bloc.dart';
 import '../../exception/views/generic_error_view.dart';
@@ -23,12 +24,6 @@ class _SplashViewState extends State<SplashView> {
   }
 
   @override
-  void dispose() {
-    bloc.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<DatabaseBloc, DatabasesState>(
@@ -36,7 +31,7 @@ class _SplashViewState extends State<SplashView> {
           if (state is FetchingDataState) {
             var data = await Modular.get<DatabaseViewModel>().validate(state.entity);
             bloc.add(UpdateDataEvent(data: data));
-            Modular.to.pushNamed('/home/');
+            Modular.to.navigate('${HomeModule.initRoute}${HomeModule.homeRoute}');
           }
         },
         bloc: bloc,
