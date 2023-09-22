@@ -12,6 +12,7 @@ class ServicesListBloc extends Bloc<GenericEvent<ServicesListEvent>, GenericStat
   final ServicesViewModel viewModel;
   final String path = 'services/20';
   final AnalyticsUtil analyticsUtil;
+
   ServicesListBloc(
       {required this.viewModel,
       required this.fireUseCases,

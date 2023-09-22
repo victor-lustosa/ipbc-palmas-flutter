@@ -32,7 +32,7 @@ class _SplashViewState extends State<SplashView> {
           if (state is FetchingDataState) {
             var data = await Modular.get<DatabaseViewModel>().validate(state.entity);
             bloc.add(UpdateDataEvent(data: data));
-            Modular.to.navigate('${MainModule.initRoute}${HomeModule.homeRoute}');
+            Modular.to.navigate(MainModule.initRoute);
           }
         },
         bloc: bloc,

@@ -9,7 +9,6 @@ import '../../configs/app_routes.dart';
 import '../view-models/home_view_model.dart';
 import '../../offers/views/offers_view.dart';
 import '../../lyric/views/lyrics_list_view.dart';
-import 'home_view.dart';
 
 class InitView extends StatefulWidget {
   const InitView({super.key});
@@ -57,7 +56,7 @@ class _InitViewState extends State<InitView> {
               );
             },
             children: const [
-              RouterOutlet(),
+              HomeRoutes(),
               LyricsListView(),
               OffersView(),
             ],

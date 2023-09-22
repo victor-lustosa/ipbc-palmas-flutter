@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import '../../home/home_module.dart';
 import '../../shared/blocs/generics.dart';
 import '../../shared/view-models/database_view_model.dart';
-import '../../splash/main_module.dart';
 import 'service_view.dart';
 import '../blocs/services_collection_bloc.dart';
 import '../../exception/views/generic_error_view.dart';
@@ -193,8 +192,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                     ),
                                   ),
                                   onTap: () {
-                                    Modular.to.pushNamed(
-                                      '${MainModule.initRoute}${HomeModule.serviceRoute}',
+                                    Navigator.of(context).pushNamed(
+                                      HomeModule.serviceRoute,
                                       arguments: ServiceViewDTO(
                                         service: entitiesList[index],
                                         image: widget.entity.image,

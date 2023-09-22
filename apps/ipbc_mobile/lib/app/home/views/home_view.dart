@@ -74,7 +74,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                             color: AppColors.white,
                           ),
                           margin: const EdgeInsets.only(left: 15.5, right: 15.5),
-                          route: '${MainModule.initRoute}${HomeModule.servicesCollectionRoute}',
+                          route: HomeModule.servicesCollectionRoute,
                           mainAxisAlignment: MainAxisAlignment.center,
                           width: context.mediaQuery.size.width,
                           height: 167,

@@ -17,6 +17,12 @@ class HomeModule extends Module {
   static const String servicesListRoute = '/services';
   static const String servicesCollectionRoute = '/services-collection';
 
+  static final GlobalKey<NavigatorState> _androidNavigatorKey =
+  GlobalKey<NavigatorState>();
+
+  static GlobalKey<NavigatorState> getAndroidNavigatorKey() {
+    return _androidNavigatorKey;
+  }
   @override
   void binds(Injector i) {
     i.add(HomeViewModel.new);
@@ -27,71 +33,6 @@ class HomeModule extends Module {
 
   @override
   void routes(r) {
-    r.child(
-      initialRoute,
-      child: (_) => const InitView(),
-      children: [
-        ChildRoute(
-          homeRoute,
-           transition: TransitionType.custom,
-           child: (_) => const HomeView(),
-            customTransition: CustomTransition(
-              transitionDuration: const Duration(milliseconds: 700),
-              reverseTransitionDuration: const Duration(milliseconds: 700),
-              transitionBuilder: (context, anim1, anim2, child) {
-                return SlideTransition(
-                  position: anim1.drive(Tween(begin: const Offset(1, 0), end: Offset.zero).chain(CurveTween(curve: Curves.ease))),
-                  child: child,
-                );
-              },
-            ),
-        ),
-        ChildRoute(
-          servicesListRoute,
-          transition: TransitionType.custom,
-          child: (_) => const ServicesListView(),
-          customTransition: CustomTransition(
-            transitionDuration: const Duration(milliseconds: 700),
-            reverseTransitionDuration: const Duration(milliseconds: 700),
-            transitionBuilder: (context, anim1, anim2, child) {
-              return SlideTransition(
-                position: anim1.drive(Tween(begin: const Offset(1, 0), end: Offset.zero).chain(CurveTween(curve: Curves.ease))),
-                child: child,
-              );
-            },
-          ),
-        ),
-        ChildRoute(
-          servicesCollectionRoute,
-          transition: TransitionType.custom,
-          child: (_) => ServicesCollectionView(entity: r.args.data as ServicesEntity,),
-          customTransition: CustomTransition(
-            transitionDuration: const Duration(milliseconds: 700),
-            reverseTransitionDuration: const Duration(milliseconds: 700),
-            transitionBuilder: (context, anim1, anim2, child) {
-              return SlideTransition(
-                position: anim1.drive(Tween(begin: const Offset(1, 0), end: Offset.zero).chain(CurveTween(curve: Curves.ease))),
-                child: child,
-              );
-            },
-          ),
-        ),
-        ChildRoute(
-          serviceRoute,
-          transition: TransitionType.custom,
-          child: (_) => ServiceView(entity: r.args.data as ServiceViewDTO,),
-          customTransition: CustomTransition(
-            transitionDuration: const Duration(milliseconds: 700),
-            reverseTransitionDuration: const Duration(milliseconds: 700),
-            transitionBuilder: (context, anim1, anim2, child) {
-              return SlideTransition(
-                position: anim1.drive(Tween(begin: const Offset(1, 0), end: Offset.zero).chain(CurveTween(curve: Curves.ease))),
-                child: child,
-              );
-            },
-          ),
-        ),
-      ],
-    );
+    r.child(initialRoute, child: (_) => const InitView());
   }
 }
