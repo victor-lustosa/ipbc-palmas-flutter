@@ -12,33 +12,71 @@ class AboutServicesWidget extends StatefulWidget {
 }
 
 class _AboutServicesWidgetState extends State<AboutServicesWidget> {
+  late double vWidth;
 
   final List<ServicesEntity> servicesImagesLg = [
-    ServicesModel.empty().copyWith(image: AppImages.sundayEveningServiceLg, title: 'Culto Solene'),
-    ServicesModel.empty().copyWith(image: AppImages.saturdayServiceLg, title: 'Culto de Jovens'),
-    ServicesModel.empty().copyWith(image: AppImages.sundayMorningServiceLg, title: 'Escola Bíblica Dominical'),
-    ServicesModel.empty().copyWith(image: AppImages.littleGroupLg, title: 'Pequeno Grupo'),
+    ServicesModel.empty().copyWith(
+      image: AppImages.sundayEveningServiceLg,
+      title: 'Culto Solene',
+    ),
+    ServicesModel.empty().copyWith(
+      image: AppImages.saturdayServiceLg,
+      title: 'Culto de Jovens',
+    ),
+    ServicesModel.empty().copyWith(
+      image: AppImages.sundayMorningServiceLg,
+      title: 'Escola Bíblica Dominical',
+    ),
+    ServicesModel.empty().copyWith(
+      image: AppImages.littleGroupLg,
+      title: 'Pequeno Grupo',
+    ),
   ];
 
   final List<ServicesEntity> servicesImagesMd = [
-    ServicesModel.empty().copyWith(image: AppImages.sundayEveningServiceMd, title: 'Culto Solene',),
-    ServicesModel.empty().copyWith(image: AppImages.saturdayServiceMd, title: 'Culto de Jovens'),
-    ServicesModel.empty().copyWith(image: AppImages.sundayMorningServiceMd, title: 'Escola Bíblica Dominical'),
-    ServicesModel.empty().copyWith(image: AppImages.littleGroupMd, title: 'Pequeno Grupo'),
+    ServicesModel.empty().copyWith(
+      image: AppImages.sundayEveningServiceMd,
+      title: 'Culto Solene',
+    ),
+    ServicesModel.empty().copyWith(
+      image: AppImages.saturdayServiceMd,
+      title: 'Culto de Jovens',
+    ),
+    ServicesModel.empty().copyWith(
+      image: AppImages.sundayMorningServiceMd,
+      title: 'Escola Bíblica Dominical',
+    ),
+    ServicesModel.empty().copyWith(
+      image: AppImages.littleGroupMd,
+      title: 'Pequeno Grupo',
+    ),
   ];
 
   final List<ServicesEntity> servicesImagesSm = [
-    ServicesModel.empty().copyWith(image: AppImages.sundayEveningServiceSm, title: 'Culto Solene',),
-    ServicesModel.empty().copyWith(image: AppImages.saturdayServiceSm, title: 'Culto de Jovens'),
-    ServicesModel.empty().copyWith(image: AppImages.sundayMorningServiceSm, title: 'Escola Bíblica Dominical'),
-    ServicesModel.empty().copyWith(image: AppImages.littleGroupSm, title: 'Pequeno Grupo'),
+    ServicesModel.empty().copyWith(
+      image: AppImages.sundayEveningServiceSm,
+      title: 'Culto Solene',
+    ),
+    ServicesModel.empty().copyWith(
+      image: AppImages.saturdayServiceSm,
+      title: 'Culto de Jovens',
+    ),
+    ServicesModel.empty().copyWith(
+        image: AppImages.sundayMorningServiceSm,
+        title: 'Escola Bíblica Dominical'),
+    ServicesModel.empty().copyWith(
+      image: AppImages.littleGroupSm,
+      title: 'Pequeno Grupo',
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
-    if (context.mediaQuery.size.width > 1200) {
+    vWidth = context.mediaQuery.size.width;
+
+    if (vWidth > 1200) {
       return web();
-    } else if (context.mediaQuery.size.width > 770) {
+    } else if (vWidth > 770) {
       return tablet();
     } else {
       return mobile();
@@ -46,7 +84,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
   }
 
   web() => Container(
-        decoration: const BoxDecoration(color: Color(0xffffffff)),
+        decoration: const BoxDecoration(color: AppColors.white),
         child: Column(
           children: [
             Container(
@@ -75,7 +113,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
       );
 
   tablet() => Container(
-        decoration: const BoxDecoration(color: Color(0xffffffff)),
+        decoration: const BoxDecoration(color: AppColors.white),
         child: Column(
           children: [
             Container(
@@ -106,7 +144,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
       );
 
   mobile() => Container(
-        decoration: const BoxDecoration(color: Color(0xffffffff)),
+        decoration: const BoxDecoration(color: AppColors.white),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -122,8 +160,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                 children: [
                   descriptionServices(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      width: context.mediaQuery.size.width > 580
-                          ? context.mediaQuery.size.width * 0.5
+                      width: vWidth > 580
+                          ? vWidth * 0.5
                           : 280),
                 ],
               ),
@@ -145,16 +183,16 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
           mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
           children: [
             cardService(
-              'Culto Solene',
-              'Domingo às 19h, na IPBC Palmas',
+              title: 'Culto Solene',
+              subtitle: 'Domingo às 19h, na IPBC Palmas',
             ),
             cardService(
-              'Culto de Jovens',
-              'Sábado às 19h30 na IPBC Palmas',
+              title: 'Culto de Jovens',
+              subtitle: 'Sábado às 19h30 na IPBC Palmas',
             ),
             cardService(
-              'Escola Bíblica Dominical',
-              'Domingo às 9h, na IPBC Palmas',
+              title: 'Escola Bíblica Dominical',
+              subtitle: 'Domingo às 9h, na IPBC Palmas',
             ),
             Container(
               margin: const EdgeInsets.only(bottom: 20),
@@ -163,14 +201,13 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                 style: AppFonts.defaultFont(
                   fontSize: 24,
                   fontWeight: FontWeight.w500,
-                  color: const Color(0xff242426),
+                  color: AppColors.grey12,
                 ),
               ),
             ),
             RichText(
               text: TextSpan(
                 style: AppFonts.defaultFont(
-                  fontSize: 18,
                   fontWeight: FontWeight.w500,
                   color: const Color(0xff545456),
                 ),
@@ -178,7 +215,6 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                   TextSpan(
                     text: 'Durante a semana em diversas localidades. ',
                     style: AppFonts.defaultFont(
-                      fontSize: 18,
                       height: 1.5,
                       color: const Color(0xff545456),
                     ),
@@ -201,7 +237,6 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                           ),
                     style: AppFonts.defaultFont(
                       height: 1.5,
-                      fontSize: 18,
                       decoration: TextDecoration.underline,
                       color: const Color(0xff545456),
                       decorationColor: const Color(0xff545456),
@@ -219,7 +254,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         style: AppFonts.defaultFont(
           fontSize: fontSize,
           fontWeight: FontWeight.w600,
-          color: const Color(0xff242426),
+          color: AppColors.grey12,
         ),
       );
 
@@ -236,12 +271,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
             color: AppColors.white,
           ),
           services: servicesImagesSm,
-          width: context.mediaQuery.size.width < 602
-              ? context.mediaQuery.size.width * .91
-              : 550,
-          height: context.mediaQuery.size.width < 602
-              ? context.mediaQuery.size.width * .84
-              : 510,
+          width: vWidth < 602 ? vWidth * .91 : 550,
+          height: vWidth < 602 ? vWidth * .84 : 510,
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
         ),
@@ -249,7 +280,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
 
   verticalCards() => SingleChildScrollView(
         child: SizedBox(
-          width: context.mediaQuery.size.width > 1100 ? 618 : 457,
+          width: vWidth > 1100 ? 618 : 457,
           height: 1333,
           child: ListView.separated(
             separatorBuilder: (BuildContext context, int index) {
@@ -260,19 +291,19 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (_, index) {
               return cardImage(
-                context.mediaQuery.size.width > 1100
+                image: vWidth > 1100
                     ? servicesImagesLg[index].image
                     : servicesImagesMd[index].image,
-                context.mediaQuery.size.width > 1100
-                    ? servicesImagesLg[index].image
-                    : servicesImagesMd[index].image,
+                title: vWidth > 1100
+                    ? servicesImagesLg[index].title
+                    : servicesImagesMd[index].title,
               );
             },
           ),
         ),
       );
 
-  Widget cardImage(String image, String title) => Container(
+  Widget cardImage({required String image,required String title}) => Container(
         padding: const EdgeInsets.only(
           left: 16,
           top: 270,
@@ -292,12 +323,12 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
           style: AppFonts.defaultFont(
             fontSize: 24,
             fontWeight: FontWeight.w700,
-            color: const Color(0xffffffff),
+            color: AppColors.white,
           ),
         ),
       );
 
-  Widget cardService(String title, String subtitle) => Column(
+  Widget cardService({required String title, required String subtitle}) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
@@ -308,16 +339,14 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                 height: 1.5,
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
-                color: const Color(0xff242426),
+                color: AppColors.grey12,
               ),
             ),
           ),
           Text(
             subtitle,
             style: AppFonts.defaultFont(
-              fontSize: 18,
               height: 1.5,
-              fontWeight: FontWeight.w400,
               color: const Color(0xff545456),
             ),
           ),
@@ -325,3 +354,5 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ],
       );
 }
+
+

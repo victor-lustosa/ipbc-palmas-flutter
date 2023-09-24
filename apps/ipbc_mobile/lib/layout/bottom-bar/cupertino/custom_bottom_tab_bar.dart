@@ -169,13 +169,11 @@ class CupertinoTabBar extends StatelessWidget implements PreferredSizeWidget {
     BorderSide resolveBorderSide(BorderSide side) {
       return side == BorderSide.none
           ? side
-          : side.copyWith(
-              color: CupertinoDynamicColor.resolve(side.color, context));
+          : side.copyWith(color: CupertinoDynamicColor.resolve(side.color, context));
     }
 
     // Return the border as is when it's a subclass.
-    final Border? resolvedBorder =
-        border == null || border.runtimeType != Border
+    final Border? resolvedBorder = border == null || border.runtimeType != Border
             ? border
             : Border(
                 top: resolveBorderSide(border!.top),
@@ -184,13 +182,23 @@ class CupertinoTabBar extends StatelessWidget implements PreferredSizeWidget {
                 right: resolveBorderSide(border!.right),
               );
 
-    final Color inactive =
-        CupertinoDynamicColor.resolve(inactiveColor, context);
-    Widget result = DecoratedBox(
-      decoration: BoxDecoration(
-        //border: resolvedBorder,
-        color: backgroundColor,
+    final Color inactive = CupertinoDynamicColor.resolve(inactiveColor, context);
+    Widget result = Container(
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(16),
+          topLeft: Radius.circular(16),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black,
+            spreadRadius: 0,
+            blurRadius: .7,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
       ),
+
       child: SizedBox(
         height: height + bottomPadding,
         child: IconTheme.merge(
@@ -198,25 +206,9 @@ class CupertinoTabBar extends StatelessWidget implements PreferredSizeWidget {
           data: IconThemeData(color: inactive, size: iconSize),
           child: DefaultTextStyle(
             // Default with the inactive state.
-            style: CupertinoTheme.of(context)
-                .textTheme
-                .tabLabelTextStyle
-                .copyWith(color: inactive, fontSize: 11.5),
+            style: CupertinoTheme.of(context).textTheme.tabLabelTextStyle.copyWith(color: inactive, fontSize: 11.5),
             child: Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(22),
-                    topLeft: Radius.circular(24)),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.grey.withOpacity(0.4),
-                      offset: const Offset(1, 2),
-                      spreadRadius: 3,
-                      blurRadius: 7,
-                      blurStyle: BlurStyle.outer),
-                ],
-              ),
-              padding: EdgeInsets.only(bottom: bottomPadding + 16, top: 4),
+              padding: EdgeInsets.only(bottom: bottomPadding),
               child: Semantics(
                 explicitChildNodes: true,
                 child: Row(

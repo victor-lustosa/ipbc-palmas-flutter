@@ -3,11 +3,7 @@ import 'package:flutter/material.dart';
 import '../lyric/lyric_module.dart';
 
 import '../service/service_module.dart';
-import '../service/views/service_view.dart';
-import '../service/views/services_collection_view.dart';
-import '../service/views/services_list_view.dart';
 import 'view-models/home_view_model.dart';
-import 'views/home_view.dart';
 import 'views/init_view.dart';
 
 class HomeModule extends Module {

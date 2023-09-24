@@ -103,8 +103,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                         "Cultos de ${widget.entity.heading}",
                                         style: AppFonts.defaultFont(
                                           color: AppColors.white,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500
                                         ),
                                       ),
                                     ],

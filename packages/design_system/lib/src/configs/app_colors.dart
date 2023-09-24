@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   //primary
-  static const Color darkGreen = Color.fromARGB(255, 0, 83, 58);
+  static const Color darkGreen = Color(0xFF005B40);
 
   //neutral
   static const Color white = Color(0xFFFFFFFF);
@@ -17,17 +17,16 @@ class AppColors {
   static const Color grey8 = Color(0xFF545456);
   static const Color grey9 = Color(0xFF444446);
   static const Color grey10 = Color(0xFF363638);
-  static const Color grey11 = Color.fromARGB(108, 238, 238, 238);
   static const Color grey12 = Color(0xFF242426);
   static const Color black = Color(0xFF171717);
 
   //secondary
   static const Color secondaryGreen = Color(0xFF00A876);
+  static const Color secondaryGrey = Color(0xFFEBEBEB);
+  static const Color vagalumeBackground = Color.fromRGBO(235, 235, 235, 40);
   static const Color highlightGreen = Color(0xFF00E8A2);
   static const Color timelineGuideTGreen = Color(0xFFCCDED9);
   static const Color badgeGreen = Color(0xFFE4F5F0);
-  static const Color tooltipIcon = Color(0xFF171717);
-  static const Color inputBorderGrey = Color(0xFFEBEBEB);
   static const Color hintInputForm = Color(0xFFA3A3A3);
 
 //system colors ios

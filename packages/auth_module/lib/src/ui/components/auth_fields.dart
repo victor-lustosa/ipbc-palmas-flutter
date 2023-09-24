@@ -65,9 +65,9 @@ class _AuthFieldsState extends State<AuthFields> {
   );
 
   _fieldDecoration({required isValid}) => BoxDecoration(
-    color: const Color(0xffffffff),
+    color: AppColors.white,
     border: Border.all(
-      color: isValid ? AppColors.inputBorderGrey : Colors.red,
+      color: isValid ? AppColors.secondaryGrey : Colors.red,
     ),
     borderRadius: BorderRadius.circular(16),
   );

@@ -10,7 +10,7 @@ class CircleAvatarWidget extends StatelessWidget {
     return SizedBox(
       width: 32,
       height: 32,
-      child: ButtonWidget(
+      child: ElevatedButtonWidget(
         backgroundColor: AppColors.darkGreen,
         shape: const CircleBorder(),
         padding: const EdgeInsets.all(2),

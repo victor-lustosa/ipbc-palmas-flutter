@@ -66,9 +66,9 @@ class _HomeRoutesState extends State<HomeRoutes> {
 
           case AppRoutes.serviceRoute:
             return CustomTransitionPageRoute(
-                child: ServiceView(entity: settings.arguments as ServiceViewDTO),
                 transitionSpeed: const Duration(milliseconds: 700),
                 reverseSpeed: const Duration(milliseconds: 700),
+                child: ServiceView(entity: settings.arguments as ServiceViewDTO),
                 tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(CurveTween(curve: Curves.ease))
             );
 

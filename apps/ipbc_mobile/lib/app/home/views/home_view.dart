@@ -7,7 +7,6 @@ import '../../exception/views/no_connection_view.dart';
 import '../../service/blocs/services_list_bloc.dart';
 import '../../shared/blocs/generics.dart';
 import '../../shared/view-models/database_view_model.dart';
-import '../../splash/main_module.dart';
 import '../home_module.dart';
 
 class HomeView extends StatefulWidget {

@@ -97,7 +97,7 @@ class _NoConnectionViewState extends State<NoConnectionView> {
           SizedBox(
             height: 48,
             width: 186,
-            child: ButtonWidget(
+            child: ElevatedButtonWidget(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),

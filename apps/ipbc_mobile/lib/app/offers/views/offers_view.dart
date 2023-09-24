@@ -69,7 +69,6 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                                   style: AppFonts.defaultFont(
                                     color: AppColors.grey10,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 18,
                                   ),
                                 ),
                               ),
@@ -99,7 +98,7 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                                     },
                                     icon: const Icon(
                                       Icons.content_copy_rounded,
-                                      color: AppColors.tooltipIcon,
+                                      color: AppColors.black,
                                     ),
                                   ),
                                 ),

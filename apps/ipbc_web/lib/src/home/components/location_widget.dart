@@ -10,7 +10,8 @@ class LocationWidget extends StatefulWidget {
 
 class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
   Future<void>? _locationLink;
-
+  late double vWidth;
+  bool isHovered = false;
   final Uri locationLink = Uri(
     scheme: 'https',
     host: 'goo.gl',
@@ -19,21 +20,21 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
 
   @override
   Widget build(BuildContext context) {
-    if (context.mediaQuery.size.width > 1200) {
+    vWidth = context.mediaQuery.size.width;
+    if (vWidth > 1200) {
       return web();
-    } else if (context.mediaQuery.size.width > 640) {
+    } else if (vWidth > 640) {
       return tablet();
     } else {
       return mobile();
     }
   }
 
-  web() =>
-      Container(
+  web() => Container(
         height: 600,
-        width: context.mediaQuery.size.width,
+        width: vWidth,
         margin: const EdgeInsets.only(top: 100),
-        decoration: const BoxDecoration(color: Color(0xfff3f3f3)),
+        decoration: const BoxDecoration(color: AppColors.grey0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -45,17 +46,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0x19000000),
-                          blurRadius: 40,
-                          offset: Offset(4, 4),
-                          spreadRadius: 0,
-                        )
-                      ],
-                    ),
+                    decoration: imageShadow(),
                     child: locationImage(width: 573.26),
                   ),
                   Container(
@@ -66,7 +57,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
                       children: [
                         title(fontSize: 46),
                         subtitle(textAlign: TextAlign.start),
-                        address(width: 437),
+                        address(width: 480),
                         locationButton(width: 215, height: 49),
                       ],
                     ),
@@ -78,28 +69,17 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ),
       );
 
-  tablet() =>
-      Container(
+  tablet() => Container(
         height: 880,
-        width: context.mediaQuery.size.width,
+        width: vWidth,
         margin: const EdgeInsets.only(top: 100),
-        decoration: const BoxDecoration(color: Color(0xfff3f3f3)),
+        decoration: const BoxDecoration(color: AppColors.grey0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x19000000),
-                    blurRadius: 40,
-                    offset: Offset(4, 4),
-                    spreadRadius: 0,
-                  )
-                ],
-              ),
+              decoration: imageShadow(),
               child: ClipRRect(
                 child: locationImage(width: 573.26),
                 borderRadius: BorderRadius.circular(20),
@@ -113,7 +93,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
                 children: [
                   title(fontSize: 46),
                   subtitle(textAlign: TextAlign.start),
-                  address(width: 437),
+                  address(width: 480),
                   locationButton(width: 215, height: 49),
                 ],
               ),
@@ -122,41 +102,31 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ),
       );
 
-  mobile() =>
-      Container(
+  mobile() => Container(
         height: 750,
-        width: context.mediaQuery.size.width,
+        width: vWidth,
         margin: const EdgeInsets.only(top: 60),
-        decoration: const BoxDecoration(color: Color(0xfff3f3f3)),
+        decoration: const BoxDecoration(color: AppColors.grey0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x19000000),
-                    blurRadius: 40,
-                    offset: Offset(4, 4),
-                    spreadRadius: 0,
-                  )
-                ],
-              ),
+              margin: const EdgeInsets.symmetric(horizontal: 24),
+              decoration: imageShadow(),
               child: ClipRRect(
-                child: locationImage(width: 445),
+                child: locationImage(),
                 borderRadius: BorderRadius.circular(20),
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(left: 80, right: 69.74, top: 40),
+              margin: const EdgeInsets.only(left: 24, right: 24, top: 40),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   title(fontSize: 32),
-                  subtitle(textAlign: TextAlign.center),
-                  address(width: context.mediaQuery.size.width * 0.65),
+                  subtitle(textAlign: TextAlign.center,width: 360),
+                  address(width: 360),
                   locationButton(width: 342, height: 49),
                 ],
               ),
@@ -165,8 +135,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ),
       );
 
-  locationImage({required double width}) =>
-      Image(
+  locationImage({ double? width}) => Image(
         width: width,
         fit: BoxFit.cover,
         image: const AssetImage(
@@ -174,35 +143,32 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ),
       );
 
-  title({required double fontSize}) =>
-      Container(
+  title({required double fontSize}) => Container(
         margin: const EdgeInsets.only(bottom: 23),
         child: Text(
           'Localização',
           style: AppFonts.defaultFont(
             fontSize: fontSize,
             fontWeight: FontWeight.w600,
-            color: const Color(0xff242426),
+            color: AppColors.grey12,
           ),
         ),
       );
 
-  subtitle({required TextAlign textAlign}) =>
-      Container(
+  subtitle({required TextAlign textAlign, double? width}) => Container(
+    width: width,
         margin: const EdgeInsets.only(bottom: 24),
         child: Text(
           textAlign: textAlign,
           'A igreja fica localizada na quadra central em Palmas/TO.',
           style: AppFonts.defaultFont(
             height: 1.5,
-            fontSize: 18,
             color: const Color(0xff545456),
           ),
         ),
       );
 
-  address({required double width}) =>
-      SizedBox(
+  address({double? width}) => SizedBox(
         width: width,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,12 +181,10 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
                 height: 24,
               ),
             ),
-            SizedBox(
-              width: width - 40,
+            Flexible(
               child: Text(
                 'Quadra Arse 23, Av.Ns 06, Ai 09 - Plano Diretor Sul, Palmas - TO',
                 style: AppFonts.defaultFont(
-                  fontSize: 18,
                   height: 1.5,
                   color: const Color(0xff545456),
                 ),
@@ -230,43 +194,40 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ),
       );
 
+  imageShadow() => BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x19000000),
+            blurRadius: 40,
+            offset: Offset(4, 4),
+            spreadRadius: 0,
+          )
+        ],
+      );
+
   locationButton({
     required double width,
     required double height,
-  }) => Container(
+  }) =>
+      Container(
         width: width,
         height: height,
         margin: const EdgeInsets.only(top: 40),
-        child: OutlinedButton(
-          style: ButtonStyle(
-            side:
-                MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-              return states.contains(MaterialState.hovered)
-                  ? const BorderSide(color: AppColors.darkGreen)
-                  : const BorderSide(color: Color(0xCC005B40));
-            }),
-            foregroundColor:
-                MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-              return states.contains(MaterialState.hovered)
-                  ? AppColors.darkGreen
-                  : const Color(0xCC005B40);
-            }),
-            backgroundColor: MaterialStateProperty.all<Color>(
-              const Color(0xfff3f3f3),
-            ),
-            overlayColor: MaterialStateProperty.all<Color>(
-              const Color(0xfff3f3f3),
-            ),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-            textStyle: MaterialStateProperty.all<TextStyle?>(
-              AppFonts.defaultFont(fontSize: 18, fontWeight: FontWeight.w500),
-            ),
-          ),
-          onPressed: () {
+        child: OutlinedButtonWidget(
+          state: (bool value) {
+            Future.delayed(const Duration(milliseconds: 55), () async {
+              setState(() {
+                isHovered = value;
+              });
+            });
+          },
+          sideColor: AppColors.highlightGreen,
+          sideHoveredColor: AppColors.darkGreen,
+          foregroundColor: AppColors.highlightGreen,
+          foregroundHoveredColor: AppColors.darkGreen,
+          overlayColor: AppColors.grey0,
+          action: () {
             _locationLink = launchInBrowser(locationLink);
           },
           child: Row(
@@ -276,7 +237,9 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
               Container(
                 margin: const EdgeInsets.only(left: 16),
                 child: Image.asset(
-                  AppIcons.arrowIconDarkGreen,
+                  isHovered
+                      ? AppIcons.arrowIconDarkGreen
+                      : AppIcons.arrowIconHighlightGreen,
                   width: 20,
                   height: 20,
                 ),

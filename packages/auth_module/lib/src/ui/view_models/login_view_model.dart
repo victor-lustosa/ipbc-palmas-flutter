@@ -31,7 +31,9 @@ class LoginViewModel {
       return 'login inválido';
     }
   }
-
+  Future<double> teste() async{
+    return 0.00;
+  }
   logout() {
     Modular.to.navigate('/login');
   }

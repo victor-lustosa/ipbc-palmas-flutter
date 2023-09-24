@@ -10,7 +10,7 @@ class CreateAccountView extends StatefulWidget {
   @override
   State<CreateAccountView> createState() => _CreateAccountViewState();
 }
-
+//trocar os icon buttons e o text button de apps, e ajeitar as fontes do site
 class _CreateAccountViewState extends State<CreateAccountView> {
   final LoginViewModel viewModel = Modular.get<LoginViewModel>();
   @override
@@ -65,7 +65,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     ),
                     height: 48,
                     width: context.mediaQuery.size.width,
-                    child: ButtonWidget(
+                    child: ElevatedButtonWidget(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
@@ -114,7 +114,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     ),
                     height: 48,
                     width: context.mediaQuery.size.width,
-                    child: ButtonWidget(
+                    child: ElevatedButtonWidget(
                       backgroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
@@ -156,7 +156,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     ),
                     height: 48,
                     width: context.mediaQuery.size.width,
-                    child: ButtonWidget(
+                    child: ElevatedButtonWidget(
                       backgroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),

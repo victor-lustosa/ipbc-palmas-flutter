@@ -1,34 +1,37 @@
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../../../design_system.dart';
-
-class ButtonWidget extends StatelessWidget {
-  const ButtonWidget({
+class TextButtonWidget extends StatelessWidget {
+  const TextButtonWidget({
     Key? key,
     this.action,
     this.overlayColor,
-    this.child,
+    required this.child,
     this.foregroundColor,
     this.textStyle,
     this.shadowColor,
     this.backgroundColor,
-    this.shape,
     this.elevation,
     this.padding,
+    this.sideColor,
+    this.sideHoveredColor,
+    this.foregroundHoveredColor
   }) : super(key: key);
   final Color? overlayColor;
-  final Widget? child;
+  final Color? sideColor;
+  final Color? sideHoveredColor;
+  final Widget child;
   final EdgeInsetsGeometry? padding;
   final Color? foregroundColor;
+  final Color? foregroundHoveredColor;
   final TextStyle? textStyle;
   final Color? shadowColor;
   final double? elevation;
   final Color? backgroundColor;
   final VoidCallback? action;
-  final OutlinedBorder? shape;
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return TextButton(
         style: ButtonStyle(
           padding: padding == null
               ? null
@@ -39,26 +42,21 @@ class ButtonWidget extends StatelessWidget {
           overlayColor: overlayColor == null
               ? null
               : MaterialStateProperty.all<Color>(overlayColor!),
-          foregroundColor:foregroundColor == null
+          foregroundColor: foregroundColor == null && foregroundHoveredColor == null
               ? null
-              : MaterialStateProperty.all<Color>(foregroundColor!),
+              : MaterialStateProperty.resolveWith((Set<MaterialState> states) {
+            return states.isHovered
+                ? foregroundHoveredColor!
+                : foregroundColor!;
+          }),
           shadowColor: shadowColor == null
               ? null
               : MaterialStateProperty.all<Color>(shadowColor!),
           backgroundColor: backgroundColor == null
               ? null
               : MaterialStateProperty.all<Color>(backgroundColor!),
-          shape: MaterialStateProperty.all<OutlinedBorder>(
-            shape ?? RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-          ),
           textStyle: MaterialStateProperty.all<TextStyle?>(
-            textStyle ??
-                AppFonts.defaultFont(
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.white,
-                ),
+            textStyle ?? AppFonts.defaultFont(),
           ),
         ),
         onPressed: action,
@@ -66,3 +64,4 @@ class ButtonWidget extends StatelessWidget {
     );
   }
 }
+

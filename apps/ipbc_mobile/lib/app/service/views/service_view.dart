@@ -76,8 +76,7 @@ class _ServiceViewState extends State<ServiceView> {
                                 widget.entity.service.title,
                                 style: AppFonts.defaultFont(
                                   color: AppColors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500
                                 ),
                               ),
                             ],

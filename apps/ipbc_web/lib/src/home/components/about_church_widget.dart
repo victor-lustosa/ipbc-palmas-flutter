@@ -9,11 +9,13 @@ class AboutChurchWidget extends StatefulWidget {
 }
 
 class _AboutChurchWidgetState extends State<AboutChurchWidget> {
+  late double width;
+
   final List<String> assetsList = [
     AppImages.hero,
     AppIcons.announce,
     AppIcons.book,
-    AppIcons.volunteerActivismCube,
+    AppIcons.volunteerActivismCube
   ];
 
   final List<Image> imagesList = [];
@@ -36,9 +38,10 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (context.mediaQuery.size.width > 1200) {
+    width = context.mediaQuery.size.width;
+    if (width > 1200) {
       return web();
-    } else if (context.mediaQuery.size.width > 640) {
+    } else if (width > 640) {
       return tablet();
     } else {
       return mobile();
@@ -78,8 +81,8 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
           ),
           Container(
             margin: EdgeInsets.only(
-              left: context.mediaQuery.size.width * 0.03,
-              right: context.mediaQuery.size.width * 0.03,
+              left: width * 0.03,
+              right: width * 0.03,
               top: 100,
             ),
             width: 1200,
@@ -144,8 +147,8 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
           ),
           Container(
             margin: EdgeInsets.only(
-              left: context.mediaQuery.size.width * 0.01,
-              right: context.mediaQuery.size.width * 0.01,
+              left: width * 0.01,
+              right: width * 0.01,
               top: 100,
             ),
             width: 1200,
@@ -202,7 +205,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
           Container(
             margin: const EdgeInsets.only(top: 84),
             width: 1200,
-            decoration: const BoxDecoration(color: Color(0xffffffff)),
+            decoration: const BoxDecoration(color: AppColors.white),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -239,7 +242,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
           height: 1.5,
           fontSize: fontSize,
           fontWeight: FontWeight.w600,
-          color: const Color(0xff242426),
+          color: AppColors.grey12,
         ),
       );
 
@@ -253,7 +256,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
             height: 1.5,
             fontSize: fontSize,
             fontWeight: FontWeight.w500,
-            color: const Color(0xff545456),
+            color: AppColors.grey8,
           ),
         ),
       );
@@ -281,7 +284,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         style: AppFonts.defaultFont(
           fontSize: fontSize,
           fontWeight: FontWeight.w600,
-          color: const Color(0xff242426),
+          color: AppColors.grey12,
         ),
       );
 
@@ -295,10 +298,8 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
           textAlign: textAlign,
           'Há 30 anos em Palmas/TO, a Igreja Presbiteriana Central de Palmas existe para servir e nutrir os membros, ajudar a sociedade e espalhar as boas notícias do Evangelho.',
           style: AppFonts.defaultFont(
-            fontSize: 18,
             height: 1.4,
-            fontWeight: FontWeight.w400,
-            color: const Color(0xff545456),
+            color:  AppColors.grey8,
           ),
         ),
       );
@@ -368,7 +369,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                   fontSize: 20,
                   height: 1.5,
                   fontWeight: FontWeight.w500,
-                  color: const Color(0xff545456),
+                  color: AppColors.grey8,
                 ),
               ),
             ),

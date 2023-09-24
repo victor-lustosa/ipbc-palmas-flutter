@@ -9,6 +9,7 @@ class ContactFormWidget extends StatefulWidget {
 }
 
 class _ContactFormWidgetState extends State<ContactFormWidget> {
+  late double vWidth;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
@@ -30,7 +31,8 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (context.mediaQuery.size.width > mdSize) {
+    vWidth = context.mediaQuery.size.width;
+    if (vWidth > mdSize) {
       return web();
     } else {
       return mobile();
@@ -38,8 +40,8 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
   }
 
   web() => Container(
-        width: context.mediaQuery.size.width,
-        decoration: const BoxDecoration(color: Color(0xfff3f3f3)),
+        width: vWidth,
+        decoration: const BoxDecoration(color: AppColors.grey0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -54,36 +56,23 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
       );
 
   mobile() => Container(
-        width: context.mediaQuery.size.width,
-        decoration: const BoxDecoration(color: Color(0xfff3f3f3)),
+        decoration: const BoxDecoration(color: AppColors.grey0),
+        width: vWidth,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            title(),
-            subtitle(width: context.mediaQuery.size.width * .7),
-            nameField(
-              width: context.mediaQuery.size.width *
-                  (context.mediaQuery.size.width > mdSize
-                    ? .685
-                    : .655),
-            ),
-            emailField(
-              width: context.mediaQuery.size.width *
-                  (context.mediaQuery.size.width > mdSize
-                    ? .685
-                    : .655),
-            ),
-            messageField(
-              width: context.mediaQuery.size.width *
-                  (context.mediaQuery.size.width > mdSize
-                    ? .685
-                    : .655),
-            ),
-            sendButton(
-              width: context.mediaQuery.size.width *
-                  (context.mediaQuery.size.width > mdSize
-                    ? .685
-                    : .655),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  title(),
+                  subtitle(width: vWidth * .7),
+                  nameField(width: vWidth < 500 ? vWidth : 500),
+                  emailField(width: vWidth < 500 ? vWidth : 500),
+                  messageField(width: vWidth < 500 ? vWidth : 500),
+                  sendButton(width: vWidth < 500 ? vWidth : 500),
+                ],
+              ),
             ),
           ],
         ),
@@ -91,8 +80,8 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
 
   title() => Container(
         margin: const EdgeInsets.only(
-          bottom: 13,
-          top: 100,
+          top: 80,
+          bottom: 16,
         ),
         child: Text(
           'Entre em contato',
@@ -100,7 +89,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
           style: AppFonts.defaultFont(
             fontSize: 32,
             fontWeight: FontWeight.w700,
-            color: const Color(0xff242426),
+            color: AppColors.grey12,
           ),
         ),
       );
@@ -113,7 +102,6 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
           textAlign: TextAlign.center,
           style: AppFonts.defaultFont(
             height: 1.5,
-            fontSize: 18,
             color: const Color(0xff545456),
           ),
         ),
@@ -167,7 +155,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         errorText: messageErrorText,
         maxLines: 5,
         maxLength: 500,
-        fieldHeight: 110,
+        fieldHeight: 115,
         validator: (data) {
           return _messageValidation(data);
         },
@@ -180,7 +168,8 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
           contentPadding: const EdgeInsets.only(
             left: 10,
             right: 10,
-            top: 11,
+            top: 15,
+            //top 8 pra celular
           ),
         ),
       );
@@ -197,15 +186,20 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
           const EdgeInsets.only(
             left: 10,
             right: 10,
-            top: 15,
+            //top 11 pra celular
+            top: 16,
           ),
       counterStyle: AppFonts.defaultFont(
         fontSize: 10,
-        color: isValid ? const Color(0xff979797) : Colors.red,
+        color: isValid
+            ? const Color(0xff979797)
+            : Colors.red,
       ),
       hintStyle: AppFonts.defaultFont(
         fontSize: 14,
-        color: isValid ? const Color(0xff979797) : Colors.red,
+        color: isValid
+            ? const Color(0xff979797)
+            : Colors.red,
       ),
     );
   }
@@ -223,22 +217,19 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
       );
 
   sendButton({required double width}) => Container(
-        margin: const EdgeInsets.only(top: 32, bottom: 100),
+        margin: const EdgeInsets.only(top: 32, bottom: 80),
         width: width,
         height: 49,
-        child: ButtonWidget(
+        child: ElevatedButtonWidget(
+          shadowColor: AppColors.grey6,
           backgroundColor: _isSubmitted
               ? const Color(0xFF00E8A2)
               : AppColors.darkGreen,
-          shadowColor: AppColors.grey6,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
           overlayColor: _isSubmitted
               ? const Color(0xFF00E8A2)
               : null,
           foregroundColor: _isSubmitted
-              ? const Color(0xff242426)
+              ? AppColors.grey12
               : AppColors.white,
           action: () {
             if (_nameController.text.isEmpty && !_isSubmitted) {
@@ -272,13 +263,8 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                margin: const EdgeInsets.only(right: 12),
-                child: Center(
-                  child: Text(
-                    _isSubmitted ? 'Enviado!' : 'Enviar',
-                  ),
-                ),
+              Text(
+                _isSubmitted ? 'Enviado!' : 'Enviar',
               )
             ],
           ),

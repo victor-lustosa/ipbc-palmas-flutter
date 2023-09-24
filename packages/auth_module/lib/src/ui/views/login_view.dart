@@ -49,7 +49,6 @@ class _LoginViewState extends State<LoginView> {
                         text: "Esqueceu a senha?  ",
                         style: AppFonts.defaultFont(
                           color: AppColors.grey9,
-                          fontWeight: FontWeight.w400,
                           fontSize: 15,
                         ),
                       ),
@@ -76,7 +75,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 height: 48,
                 width: context.mediaQuery.size.width,
-                child: ButtonWidget(
+                child: ElevatedButtonWidget(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
@@ -127,7 +126,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 height: 48,
                 width: context.mediaQuery.size.width,
-                child: ButtonWidget(
+                child: ElevatedButtonWidget(
                   backgroundColor: AppColors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -169,7 +168,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 height: 48,
                 width: context.mediaQuery.size.width,
-                child: ButtonWidget(
+                child: ElevatedButtonWidget(
                   backgroundColor: AppColors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -205,7 +204,6 @@ class _LoginViewState extends State<LoginView> {
                       text: "Não possui conta?  ",
                       style: AppFonts.defaultFont(
                         color: AppColors.grey9,
-                        fontWeight: FontWeight.w400,
                         fontSize: 15,
                       ),
                     ),

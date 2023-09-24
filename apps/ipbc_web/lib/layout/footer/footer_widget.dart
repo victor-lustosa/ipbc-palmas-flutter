@@ -9,11 +9,14 @@ class FooterWidget extends StatefulWidget {
 }
 
 class _FooterWidgetState extends State<FooterWidget> {
+  late double vWidth;
   @override
   Widget build(BuildContext context) {
-    if (context.mediaQuery.size.width > 1200) {
+    vWidth = context.mediaQuery.size.width;
+
+    if (vWidth > 1200) {
       return web();
-    } else if (context.mediaQuery.size.width > 770) {
+    } else if (vWidth > 770) {
       return tablet();
     } else {
       return mobile();
@@ -21,8 +24,8 @@ class _FooterWidgetState extends State<FooterWidget> {
   }
 
   web() => Container(
-        decoration: const BoxDecoration(color: Color(0xff242426)),
-        width: context.mediaQuery.size.width,
+        decoration: const BoxDecoration(color: AppColors.grey12,),
+        width: vWidth,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -31,7 +34,6 @@ class _FooterWidgetState extends State<FooterWidget> {
               margin: const EdgeInsets.only(
                 top: 116,
                 bottom: 154,
-                right: 40,
               ),
               width: 910,
               child: Row(
@@ -54,14 +56,14 @@ class _FooterWidgetState extends State<FooterWidget> {
                 ],
               ),
             ),
-            footer()
+            footer(margin: const EdgeInsets.only(bottom: 47))
           ],
         ),
       );
 
   tablet() => Container(
-        decoration: const BoxDecoration(color: Color(0xff242426)),
-        width: context.mediaQuery.size.width,
+        decoration: const BoxDecoration(color: AppColors.grey12,),
+        width: vWidth,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -74,19 +76,19 @@ class _FooterWidgetState extends State<FooterWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                location(width: context.mediaQuery.size.width * .3),
-                contacts(width: context.mediaQuery.size.width * .3),
-                services(width: context.mediaQuery.size.width * .3),
+                location(width: vWidth * .3),
+                contacts(width: vWidth * .3),
+                services(width: vWidth * .3, margin:  const EdgeInsets.only(bottom: 138)),
               ],
             ),
-            footer()
+            footer(margin: const EdgeInsets.only(bottom: 96))
           ],
         ),
       );
 
   mobile() => Container(
-        decoration: const BoxDecoration(color: Color(0xff242426)),
-        width: context.mediaQuery.size.width,
+        decoration: const BoxDecoration(color: AppColors.grey12),
+        width: vWidth,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -101,10 +103,10 @@ class _FooterWidgetState extends State<FooterWidget> {
               children: [
                 location(width: 200),
                 contacts(width: 200),
-                services(width: 200),
+                services(width: 200, margin:  const EdgeInsets.only(bottom: 118)),
               ],
             ),
-            footer()
+            footer(width: context.mediaQuery.size.width * 0.75, margin: const EdgeInsets.only(bottom: 76))
           ],
         ),
       );
@@ -119,7 +121,6 @@ class _FooterWidgetState extends State<FooterWidget> {
   contacts({double? width, CrossAxisAlignment? crossAxisAlignment}) =>
       Container(
         margin: const EdgeInsets.only(bottom: 32),
-        //decoration: BoxDecoration(border: Border.all(color: Colors.red)),
         width: width,
         child: Column(
           crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
@@ -129,18 +130,17 @@ class _FooterWidgetState extends State<FooterWidget> {
               child: titleInfo('Contatos'),
             ),
             subtitleInfo('Secretaria da Igreja'),
-            const SizedBox(height: 8),
-            subtitleInfo('+55 (63) 3213-2775'),
-            const SizedBox(height: 8),
+            Container(
+              margin: const EdgeInsets.only(bottom: 8, top: 8),
+              child: subtitleInfo('+55 (63) 3213-2775'),
+            ),
             subtitleInfo('8h as 12h - 14h as 18h'),
           ],
         ),
       );
 
-  location({double? width, CrossAxisAlignment? crossAxisAlignment}) =>
-      Container(
-        margin: const EdgeInsets.only(bottom: 32),
-        //decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+  location({double? width, CrossAxisAlignment? crossAxisAlignment}) => Container(
+    margin: const EdgeInsets.only(bottom: 32),
         width: width,
         child: Column(
           crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
@@ -150,17 +150,18 @@ class _FooterWidgetState extends State<FooterWidget> {
               child: titleInfo('Localização'),
             ),
             subtitleInfo('Q. Arse 23, Av.Ns 06, Ai 09'),
-            const SizedBox(height: 8),
-            subtitleInfo('CEP: 77020-544'),
-            const SizedBox(height: 8),
+            Container(
+              margin: const EdgeInsets.only(bottom: 8, top: 8),
+              child: subtitleInfo('CEP: 77020-544'),
+            ),
             subtitleInfo('Palmas/TO'),
           ],
         ),
       );
 
-  services({double? width, CrossAxisAlignment? crossAxisAlignment}) =>
+  services({double? width, CrossAxisAlignment? crossAxisAlignment, EdgeInsetsGeometry? margin}) =>
       Container(
-        margin: const EdgeInsets.only(bottom: 118),
+        margin: margin,
         //decoration: BoxDecoration(border: Border.all(color: Colors.red)),
         width: width,
         child: Column(
@@ -179,21 +180,24 @@ class _FooterWidgetState extends State<FooterWidget> {
         ),
       );
 
-  footer() => Container(
-        width: context.mediaQuery.size.width * 0.75,
-        margin: const EdgeInsets.only(bottom: 60),
-        child: subtitleInfo(
-          'Copyright © 2023 Igreja Presbiteriana Central em Palmas/TO',
-          textAlign: TextAlign.center,
+  footer({double? width, required EdgeInsetsGeometry margin}) => Center(
+        child: Container(
+          width: width,
+         // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+          margin: margin,
+          child: subtitleInfo(
+            'Copyright © 2023 Igreja Presbiteriana Central em Palmas/TO',
+            textAlign: TextAlign.center,
+          ),
         ),
       );
 
-  titleInfo(String text, {TextAlign? textAlign}) => Text(
+  titleInfo(String text) => Text(
         text,
         style: AppFonts.defaultFont(
           fontSize: 14,
           fontWeight: FontWeight.w700,
-          color: const Color(0xffffffff),
+          color: AppColors.white,
         ),
       );
 
@@ -202,7 +206,7 @@ class _FooterWidgetState extends State<FooterWidget> {
         textAlign: textAlign,
         style: AppFonts.defaultFont(
           fontSize: 14,
-          color: const Color(0xffffffff),
+          color: const Color.fromRGBO(255, 255, 255, 0.80),
         ),
       );
 }

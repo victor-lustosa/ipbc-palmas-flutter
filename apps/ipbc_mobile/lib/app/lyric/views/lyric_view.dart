@@ -245,7 +245,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                     height: 77,
                     width: 145,
                     decoration: const BoxDecoration(
-                      color: AppColors.grey11,
+                      color: AppColors.vagalumeBackground,
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
                     child: Column(

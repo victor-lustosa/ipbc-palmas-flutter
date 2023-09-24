@@ -40,7 +40,7 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
-        height: 60,
+        height: 45,
         currentIndex: widget.selectedIndex,
         activeColor: AppColors.darkGreen,
         backgroundColor: AppColors.white,
@@ -58,25 +58,27 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
             return CupertinoTabView(
               onGenerateRoute: AppRoutes.onGenerateRoute,
               builder: (context) {
-                return viewRoute(const HomeRoutes());
+                return cupertinoView(const HomeRoutes());
               },
             );
           case 1:
-            return viewRoute(const LyricsListView());
+            return cupertinoView(const LyricsListView());
 
           case 2:
-            return viewRoute(const OffersView());
+            return cupertinoView(const OffersView());
 
           default:
-            return viewRoute(const UnknownRouteView());
+            return cupertinoView(const UnknownRouteView());
         }
       },
     );
   }
-  Widget viewRoute(Widget view){
+  Widget cupertinoView(Widget view){
     return CupertinoPageScaffold(
         navigationBar: const CupertinoNavigationBar(
-          backgroundColor: Color(0xFFFFFFFF),
-        ), child: view);
+          backgroundColor: AppColors.white,
+        ),
+      child: view,
+    );
   }
 }

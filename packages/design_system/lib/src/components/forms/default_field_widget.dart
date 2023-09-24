@@ -90,7 +90,7 @@ class _DefaultFieldWidgetState extends State<DefaultFieldWidget> {
             ),
         fieldDecoration: widget.fieldDecoration ??
             BoxDecoration(
-              color: const Color(0xffffffff),
+              color: AppColors.white,
               border: Border.all(
                 color: widget.isValid ? AppColors.white : Colors.red,
               ),

@@ -12,14 +12,17 @@ class TopBarWidget extends StatefulWidget {
 }
 
 class _TopBarWidgetState extends State<TopBarWidget> {
+  late double vWidth;
   bool isPressed = false;
   final double lgSize = 1200;
 
   @override
   Widget build(BuildContext context) {
-    if (context.mediaQuery.size.width < 600) {
+    vWidth = context.mediaQuery.size.width;
+
+    if (vWidth < 600) {
       return mobile();
-    } else if (context.mediaQuery.size.width < 915) {
+    } else if (vWidth < 915) {
       return tablet();
     } else {
       return web();
@@ -33,7 +36,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                heroImage(),
+                logo(),
                 SizedBox(
                   width: 693,
                   child: Row(
@@ -48,37 +51,31 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                             TabButtonsWidget(
                               label: 'Localização',
                               action: () {
-                                scrollPage(
-                                    context.mediaQuery.size.width > lgSize
-                                        ? 1575
-                                        : 1656);
+                                scrollPage(vWidth > lgSize ? 1575 : 1656);
                               },
                             ),
                             TabButtonsWidget(
                               label: 'Programação',
                               action: () {
-                                scrollPage(
-                                    context.mediaQuery.size.width > lgSize
-                                        ? 2175
-                                        : 2534);
+                                scrollPage(vWidth > lgSize ? 2175 : 2534);
                               },
                             ),
                             TabButtonsWidget(
                               label: 'Aplicativo',
                               action: () {
-                                scrollPage(
-                                    context.mediaQuery.size.width > lgSize
-                                        ? 3232
-                                        : 3560);
+                                scrollPage(vWidth > lgSize ? 3232 : 3560);
                               },
                             ),
                           ],
                         ),
                       ),
                       contactButton(
-                          position: context.mediaQuery.size.width > lgSize
-                              ? 3965
-                              : 4280)
+                        width: 259,
+                        height: 49,
+                        position: vWidth > lgSize ? 3965 : 4230,
+                        leftMargin: 16,
+                        label: 'Entrar em contato',
+                      )
                     ],
                   ),
                 ),
@@ -98,7 +95,16 @@ class _TopBarWidgetState extends State<TopBarWidget> {
             margin: upperMargin(value: 12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [heroImage(), contactButton(position: 4185)],
+              children: [
+                logo(),
+                contactButton(
+                  width: 259,
+                  height: 49,
+                  position: 4185,
+                  leftMargin: 16,
+                  label: 'Entrar em contato',
+                )
+              ],
             ),
           ),
           Container(
@@ -115,8 +121,14 @@ class _TopBarWidgetState extends State<TopBarWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                heroImage(),
-                smallContactButton(position: 4250),
+                logo(),
+                contactButton(
+                  width: 166,
+                  height: 49,
+                  position: 4200,
+                  leftMargin: 8,
+                  label: 'Contato',
+                )
               ],
             ),
           ),
@@ -127,83 +139,50 @@ class _TopBarWidgetState extends State<TopBarWidget> {
         ],
       );
 
-  heroImage() => const Image(
+  logo() => const Image(
         width: 100,
         image: AssetImage(
           AppImages.logo,
         ),
       );
 
-  contactButton({required double position}) => SizedBox(
-        width: 259,
-        height: 49,
-        child: ButtonWidget(
+  contactButton(
+          {required double position,
+          required double width,
+          required double height,
+          required double leftMargin,
+          required String label}) =>
+      SizedBox(
+        width: width,
+        height: height,
+        child: ElevatedButtonWidget(
           foregroundColor:
-              isPressed ? const Color(0xff242426) : AppColors.white,
+              isPressed ? AppColors.grey12 : AppColors.white,
           shadowColor: AppColors.grey6,
           backgroundColor:
               isPressed ? const Color(0xFF00E8A2) : AppColors.darkGreen,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
           action: () => _onPressed(position: position),
-          child: Center(
-            child: SizedBox(
-              width: 198,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Entrar em contato'),
-                  Container(
-                    margin: const EdgeInsets.only(left: 16),
-                    child: Image.asset(
-                      isPressed
-                          ? AppIcons.darkGreenCallIcon
-                          : AppIcons.callIcon,
-                      width: 24,
-                      height: 24,
-                    ),
-                  ),
-                ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(label),
+              Container(
+                margin: EdgeInsets.only(left: leftMargin),
+                child: Image.asset(
+                  isPressed ? AppIcons.contactIconDarkGreen : AppIcons.contactIcon,
+                  width: 24,
+                  height: 24,
+                ),
               ),
-            ),
-          ),
-        ),
-      );
-
-  smallContactButton({required double position}) => SizedBox(
-        width: 88,
-        height: 49,
-        child: ButtonWidget(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          action: () => _onPressed(position: position),
-          foregroundColor:
-              isPressed
-                  ? const Color(0xff242426)
-                  : AppColors.white,
-          shadowColor: AppColors.grey6,
-          backgroundColor:
-              isPressed
-                  ? const Color(0xFF00E8A2)
-                  : AppColors.darkGreen,
-          child: Center(
-            child: Image.asset(
-              isPressed
-                  ? AppIcons.darkGreenCallIcon
-                  : AppIcons.callIcon,
-              width: 24,
-              height: 24,
-            ),
+            ],
           ),
         ),
       );
 
   upperMargin({required double value}) => EdgeInsets.only(
         top: value,
-        left: TopBarResponsive.leftWidth(context.mediaQuery.size.width),
-        right: TopBarResponsive.rightWidth(context.mediaQuery.size.width),
+        left: TopBarResponsive.leftWidth(vWidth),
+        right: TopBarResponsive.rightWidth(vWidth),
         bottom: value,
       );
 

@@ -9,6 +9,7 @@ class AppStoresWidget extends StatefulWidget {
 }
 
 class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
+  late double width;
   Future<void>? _appStoreLink;
   Future<void>? _playStoreLink;
 
@@ -26,24 +27,20 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
 
   @override
   Widget build(BuildContext context) {
-    if (context.mediaQuery.size.width > 1200) {
+    width = context.mediaQuery.size.width;
+    if (width > 1200) {
       return web();
-    } else if (context.mediaQuery.size.width > 800) {
+    } else if (width > 800) {
       return tablet();
     } else {
-      return AppStoresMobile(
-        title: title(fontSize: 32),
-        subtitle: subtitle(),
-        playButton: playButton(),
-        appButton: appButton(),
-      );
+      return mobile();
     }
   }
 
   web() =>
       Container(
         height: 734,
-        width: context.mediaQuery.size.width,
+        width: width,
         decoration: const BoxDecoration(color: Color(0xff005b40)),
         child: Container(
           margin: const EdgeInsets.only(left: 120, top: 100),
@@ -53,7 +50,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
                 left: 170,
                 top: 15,
                 child: SizedBox(
-                  width: context.mediaQuery.size.width,
+                  width: width,
                   height: 684.81,
                   child: const Image(
                     image: AssetImage(AppImages.bannerStore),
@@ -96,7 +93,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
   tablet() =>
       Container(
         height: 780,
-        width: context.mediaQuery.size.width,
+        width: width,
         decoration: const BoxDecoration(color: Color(0xff005b40)),
         child: Container(
           margin: const EdgeInsets.only(top: 80),
@@ -106,7 +103,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
                 top: 200,
                 right: 1,
                 child: SizedBox(
-                  width: context.mediaQuery.size.width,
+                  width: width,
                   height: 684.81,
                   child: const Image(
                     image: AssetImage(AppImages.bannerStore),
@@ -146,6 +143,50 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
           ),
         ),
       );
+  mobile()=> Container(
+    height: 780,
+    width: width,
+    decoration: const BoxDecoration(color: Color(0xff005b40)),
+    child: Container(
+      margin: const EdgeInsets.only(left: 0, top: 60),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned(
+            child: SizedBox(
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 23),
+                    child: title(fontSize: 32),
+                  ),
+                  Container(
+                    width: 400,
+                    margin: const EdgeInsets.only(bottom: 40),
+                    child: subtitle(),
+                  ),
+                  appButton(),
+                  Container(
+                    margin: const EdgeInsets.only(top: 24),
+                    child: playButton(),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: 420,
+            child: SizedBox(
+              width: width,
+              child: const Image(
+                image: AssetImage(AppImages.bannerStore),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 
   title({required double fontSize}) =>
       Text(
@@ -153,7 +194,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         style: AppFonts.defaultFont(
           fontSize: fontSize,
           fontWeight: FontWeight.w600,
-          color: const Color(0xffffffff),
+          color: AppColors.white,
         ),
       );
 
@@ -162,9 +203,8 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
     textAlign:TextAlign.center,
         'Acompanhe a liturgia dos cultos, as letras das músicas cantadas e em breve, comunicações, eventos e mensagens pregadas.',
         style: AppFonts.defaultFont(
-          fontSize: 18,
           height: 1.5,
-          color: const Color(0xffffffff),
+          color: AppColors.white,
         ),
       );
 
@@ -187,66 +227,6 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
       );
 }
 
-class AppStoresMobile extends StatelessWidget {
-  const AppStoresMobile(
-      {super.key,
-      required this.title,
-      required this.subtitle,
-      required this.appButton,
-      required this.playButton});
-  final dynamic title;
-  final dynamic subtitle;
-  final dynamic appButton;
-  final dynamic playButton;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 780,
-      width: context.mediaQuery.size.width,
-      decoration: const BoxDecoration(color: Color(0xff005b40)),
-      child: Container(
-        margin: const EdgeInsets.only(left: 0, top: 60),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Positioned(
-              child: SizedBox(
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 23),
-                      child: title,
-                    ),
-                    Container(
-                      width: 400,
-                      margin: const EdgeInsets.only(bottom: 40),
-                      child: subtitle,
-                    ),
-                    appButton,
-                    Container(
-                        margin: const EdgeInsets.only(top: 24),
-                        child: playButton,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              top: 420,
-              child: SizedBox(
-                width: context.mediaQuery.size.width,
-                child: const Image(
-                  image: AssetImage(AppImages.bannerStore),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class StoreButton extends StatelessWidget {
   const StoreButton(
@@ -265,7 +245,7 @@ class StoreButton extends StatelessWidget {
       height: 80,
       width: 272,
       decoration: BoxDecoration(
-        color: const Color(0xff242426),
+        color: AppColors.grey12,
         borderRadius: BorderRadius.circular(20),
       ),
       child: TextButton(
@@ -283,9 +263,8 @@ class StoreButton extends StatelessWidget {
               child: Text(
                 labelStore,
                 style: AppFonts.defaultFont(
-                  fontSize: 18,
                   fontWeight: FontWeight.w500,
-                  color: const Color(0xffffffff),
+                  color: AppColors.white,
                 ),
               ),
             ),
