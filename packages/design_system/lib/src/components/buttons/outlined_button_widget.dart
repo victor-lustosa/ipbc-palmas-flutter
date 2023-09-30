@@ -64,7 +64,7 @@ class _OutlinedButtonWidgetState extends State<OutlinedButtonWidget> {
                 widget.foregroundHoveredColor == null
             ? null
             : MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-                Future.delayed(const Duration(milliseconds: 55), () async {
+                Future.delayed(const Duration(milliseconds: 62), () async {
                     widget.state(states.isHovered);
                 });
 

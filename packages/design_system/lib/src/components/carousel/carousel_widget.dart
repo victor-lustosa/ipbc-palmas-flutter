@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:core_module/core_module.dart';
 
@@ -134,7 +135,48 @@ class CarouselWidgetState extends State<CarouselWidget> {
             ),
           ),
         ),
+        Visibility(
+          visible: kIsWeb,
+          child: Container(
+            margin: const EdgeInsets.only(top: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                button(
+                  image: AppIcons.arrowBackDarkGreen,
+                  onPressed: () {
+                    _pageController.previousPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOutCubic,
+                    );
+                  },
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 45),
+                  child: button(
+                    image: AppIcons.arrowForwardDarkGreen,
+                    onPressed: () {
+                      _pageController.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOutCubic,
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
+
+  button({required String image, required VoidCallback onPressed}) => SizedBox(
+        width: 50,
+        height: 50,
+        child: IconButton(
+          onPressed: onPressed,
+          icon: Image.asset(image),
+        ),
+      );
 }

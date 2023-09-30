@@ -78,7 +78,7 @@ class _ServicesListViewState extends State<ServicesListView> {
                           "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
                           style: AppFonts.defaultFont(
                             fontSize: context.mediaQuery.size.width >
-                                    ResponsivityUtil.widthDevice
+                                    ResponsivityUtil.smallDeviceWidth
                                 ? 16
                                 : 15,
                             color: AppColors.grey9,

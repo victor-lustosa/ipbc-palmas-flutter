@@ -82,7 +82,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                         color: AppColors.grey9,
                                         fontWeight: FontWeight.w500,
                                         fontSize: context.mediaQuery.size.width >
-                                                    ResponsivityUtil.widthDevice
+                                                    ResponsivityUtil.smallDeviceWidth
                                                 ? 21
                                                 : 18,
                                       ),
@@ -95,7 +95,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                     style: AppFonts.defaultFont(
                                       color: AppColors.grey10,
                                       fontSize: context.mediaQuery.size.width >
-                                                  ResponsivityUtil.widthDevice
+                                                  ResponsivityUtil.smallDeviceWidth
                                               ? 15
                                               : 14,
                                     ),
@@ -183,7 +183,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                           fontSize: context.mediaQuery
                                                       .size
                                                       .width >
-                                                  ResponsivityUtil.widthDevice
+                                                  ResponsivityUtil.smallDeviceWidth
                                               ? 16
                                               : 14,
                                         ),
@@ -214,7 +214,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                 text:
                                     "  Esse sistema não possui fins lucrativos sobre a obra representada a cima. Todos os direitos reservados aos autores da letra. ",
                                 style: context.mediaQuery.size.width >
-                                        ResponsivityUtil.widthDevice
+                                        ResponsivityUtil.smallDeviceWidth
                                     ? AppFonts.copyright(fontSize: 13)
                                     : AppFonts.copyright(fontSize: 12),
                               ),

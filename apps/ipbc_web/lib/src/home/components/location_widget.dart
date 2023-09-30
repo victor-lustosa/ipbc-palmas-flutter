@@ -216,7 +216,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         margin: const EdgeInsets.only(top: 40),
         child: OutlinedButtonWidget(
           state: (bool value) {
-            Future.delayed(const Duration(milliseconds: 55), () async {
+            Future.delayed(const Duration(milliseconds: 62), () async {
               setState(() {
                 isHovered = value;
               });

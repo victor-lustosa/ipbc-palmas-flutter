@@ -94,7 +94,7 @@ class _FooterWidgetState extends State<FooterWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 76, bottom: 56),
+              margin: const EdgeInsets.only(top: 80, bottom: 56),
               child: logo(),
             ),
             Column(
@@ -103,10 +103,10 @@ class _FooterWidgetState extends State<FooterWidget> {
               children: [
                 location(width: 200),
                 contacts(width: 200),
-                services(width: 200, margin:  const EdgeInsets.only(bottom: 118)),
+                services(width: 200, margin:  const EdgeInsets.only(bottom: 120)),
               ],
             ),
-            footer(width: context.mediaQuery.size.width * 0.75, margin: const EdgeInsets.only(bottom: 76))
+            footer(width: context.mediaQuery.size.width * 0.75, margin: const EdgeInsets.only(bottom: 80))
           ],
         ),
       );

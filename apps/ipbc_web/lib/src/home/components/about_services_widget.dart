@@ -259,7 +259,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
       );
 
   horizontalCards() => Container(
-        margin: const EdgeInsets.only(bottom: 70, top: 50),
+        margin: const EdgeInsets.only(bottom: 80, top: 50),
         child: CarouselWidget(
           padding: const EdgeInsets.only(
             left: 26,
@@ -315,7 +315,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
           borderRadius: BorderRadius.circular(20),
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage(image),
+            image: NetworkImage(image),
           ),
         ),
         child: Text(

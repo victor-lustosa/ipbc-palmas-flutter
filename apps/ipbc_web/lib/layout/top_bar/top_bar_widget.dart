@@ -18,7 +18,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    vWidth = context.mediaQuery.size.width;
+    vWidth = MediaQuery.of(context).size.width;
 
     if (vWidth < 600) {
       return mobile();
@@ -125,7 +125,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                 contactButton(
                   width: 166,
                   height: 49,
-                  position: 4200,
+                  position: vWidth > ResponsivityUtil.smallDeviceWidth ? 4160 : 4330,
                   leftMargin: 8,
                   label: 'Contato',
                 )
