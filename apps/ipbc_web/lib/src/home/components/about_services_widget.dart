@@ -16,57 +16,58 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
 
   final List<ServicesEntity> servicesImagesLg = [
     ServicesModel.empty().copyWith(
-      image: AppImages.sundayEveningServiceLg,
       title: 'Culto Solene',
+      image: AppImages.sundayEveningServiceLg,
     ),
     ServicesModel.empty().copyWith(
-      image: AppImages.saturdayServiceLg,
       title: 'Culto de Jovens',
+      image: AppImages.saturdayServiceLg,
     ),
     ServicesModel.empty().copyWith(
-      image: AppImages.sundayMorningServiceLg,
       title: 'Escola Bíblica Dominical',
+      image: AppImages.sundayMorningServiceLg,
     ),
     ServicesModel.empty().copyWith(
-      image: AppImages.littleGroupLg,
       title: 'Pequeno Grupo',
+      image: AppImages.littleGroupLg,
     ),
   ];
 
   final List<ServicesEntity> servicesImagesMd = [
     ServicesModel.empty().copyWith(
-      image: AppImages.sundayEveningServiceMd,
       title: 'Culto Solene',
+      image: AppImages.sundayEveningServiceMd,
     ),
     ServicesModel.empty().copyWith(
-      image: AppImages.saturdayServiceMd,
       title: 'Culto de Jovens',
+      image: AppImages.saturdayServiceMd,
     ),
     ServicesModel.empty().copyWith(
-      image: AppImages.sundayMorningServiceMd,
       title: 'Escola Bíblica Dominical',
+      image: AppImages.sundayMorningServiceMd,
     ),
     ServicesModel.empty().copyWith(
-      image: AppImages.littleGroupMd,
       title: 'Pequeno Grupo',
+      image: AppImages.littleGroupMd,
     ),
   ];
 
   final List<ServicesEntity> servicesImagesSm = [
     ServicesModel.empty().copyWith(
-      image: AppImages.sundayEveningServiceSm,
       title: 'Culto Solene',
+      image: AppImages.sundayEveningServiceSm,
     ),
     ServicesModel.empty().copyWith(
-      image: AppImages.saturdayServiceSm,
       title: 'Culto de Jovens',
+      image: AppImages.saturdayServiceSm,
     ),
     ServicesModel.empty().copyWith(
-        image: AppImages.sundayMorningServiceSm,
-        title: 'Escola Bíblica Dominical'),
+      title: 'Escola Bíblica Dominical',
+      image: AppImages.sundayMorningServiceSm,
+    ),
     ServicesModel.empty().copyWith(
-      image: AppImages.littleGroupSm,
       title: 'Pequeno Grupo',
+      image: AppImages.littleGroupSm,
     ),
   ];
 
@@ -103,7 +104,10 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   descriptionServices(
-                      crossAxisAlignment: CrossAxisAlignment.start, width: 260),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    position: 3965,
+                    width: 260,
+                  ),
                   verticalCards(),
                 ],
               ),
@@ -132,8 +136,9 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   descriptionServices(
-                    width: 260,
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    position: 4205,
+                    width: 260,
                   ),
                   verticalCards(),
                 ],
@@ -159,10 +164,17 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   descriptionServices(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      width: vWidth > 580
-                          ? vWidth * 0.5
-                          : 280),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    position: vWidth > 580
+                        ? 4480
+                        : (vWidth < ResponsivityUtil.smallDeviceWidth
+                            ? 4272
+                            : 4200
+                    ),
+                    width: vWidth > 580
+                        ? vWidth * 0.5
+                        : 280,
+                  ),
                 ],
               ),
             ),
@@ -174,7 +186,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
   descriptionServices(
           {CrossAxisAlignment? crossAxisAlignment,
           MainAxisAlignment? mainAxisAlignment,
-          required double width}) =>
+          required double width,
+          required double position}) =>
       Container(
         margin: const EdgeInsets.only(top: 10, left: 24),
         width: width,
@@ -199,24 +212,24 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
               child: Text(
                 'Pequenos Grupos',
                 style: AppFonts.defaultFont(
-                  fontSize: 24,
                   fontWeight: FontWeight.w500,
                   color: AppColors.grey12,
+                  fontSize: 24,
                 ),
               ),
             ),
             RichText(
               text: TextSpan(
                 style: AppFonts.defaultFont(
+                  color: AppColors.grey8,
                   fontWeight: FontWeight.w500,
-                  color: const Color(0xff545456),
                 ),
                 children: [
                   TextSpan(
                     text: 'Durante a semana em diversas localidades. ',
                     style: AppFonts.defaultFont(
+                      color: AppColors.grey8,
                       height: 1.5,
-                      color: const Color(0xff545456),
                     ),
                   ),
                   TextSpan(
@@ -227,19 +240,18 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                               Modular.get<HomeViewModel>()
                                   .scrollController
                                   .animateTo(
-                                    duration: const Duration(
-                                      milliseconds: 1500,
-                                    ),
+                                    duration:
+                                        const Duration(milliseconds: 1500),
                                     curve: Curves.easeInOutQuint,
-                                    3985,
+                                    position,
                                   );
                             },
                           ),
                     style: AppFonts.defaultFont(
                       height: 1.5,
+                      color: AppColors.grey8,
+                      decorationColor: AppColors.grey8,
                       decoration: TextDecoration.underline,
-                      color: const Color(0xff545456),
-                      decorationColor: const Color(0xff545456),
                     ),
                   ),
                 ],
@@ -253,8 +265,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         'Programação',
         style: AppFonts.defaultFont(
           fontSize: fontSize,
-          fontWeight: FontWeight.w600,
           color: AppColors.grey12,
+          fontWeight: FontWeight.w600,
         ),
       );
 
@@ -271,8 +283,12 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
             color: AppColors.white,
           ),
           services: servicesImagesSm,
-          width: vWidth < 602 ? vWidth * .91 : 550,
-          height: vWidth < 602 ? vWidth * .84 : 510,
+          width: vWidth < 602
+              ? vWidth * .91
+              : 550,
+          height: vWidth < 602
+              ? vWidth * .84
+              : 510,
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
         ),
@@ -280,7 +296,9 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
 
   verticalCards() => SingleChildScrollView(
         child: SizedBox(
-          width: vWidth > 1100 ? 618 : 457,
+          width: vWidth > 1100
+              ? 618
+              : 457,
           height: 1333,
           child: ListView.separated(
             separatorBuilder: (BuildContext context, int index) {
@@ -303,7 +321,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  Widget cardImage({required String image,required String title}) => Container(
+  Widget cardImage({required String image, required String title}) => Container(
         padding: const EdgeInsets.only(
           left: 16,
           top: 270,
@@ -322,13 +340,14 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
           title,
           style: AppFonts.defaultFont(
             fontSize: 24,
-            fontWeight: FontWeight.w700,
             color: AppColors.white,
+            fontWeight: FontWeight.w700,
           ),
         ),
       );
 
-  Widget cardService({required String title, required String subtitle}) => Column(
+  Widget cardService({required String title, required String subtitle}) =>
+      Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
@@ -336,10 +355,10 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
             child: Text(
               title,
               style: AppFonts.defaultFont(
-                height: 1.5,
-                fontSize: 24,
                 fontWeight: FontWeight.w500,
                 color: AppColors.grey12,
+                fontSize: 24,
+                height: 1.5,
               ),
             ),
           ),
@@ -347,12 +366,10 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
             subtitle,
             style: AppFonts.defaultFont(
               height: 1.5,
-              color: const Color(0xff545456),
+              color: AppColors.grey8,
             ),
           ),
           const SizedBox(height: 40),
         ],
       );
 }
-
-

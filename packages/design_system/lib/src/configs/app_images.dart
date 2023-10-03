@@ -4,7 +4,7 @@ class AppImages {
   //web
   static const String bannerStore = 'assets/images/banner_store.png';
   static const String churchLocation = 'assets/images/church_location.png';
-  static const String hero = 'assets/images/hero.png';
+  static const String hero = 'https://xrvmfhpmelyvupfylnfk.supabase.co/storage/v1/object/public/covers/web_service_covers/hero.png?t=2023-09-30T02%3A55%3A23.947Z';
 
   static const String saturdayServiceLg = 'https://xrvmfhpmelyvupfylnfk.supabase.co/storage/v1/object/public/covers/web_service_covers/saturday_service_lg.png?t=2023-09-30T02%3A07%3A52.337Z';
   static const String saturdayServiceMd = 'https://xrvmfhpmelyvupfylnfk.supabase.co/storage/v1/object/public/covers/web_service_covers/saturday_service_md.png?t=2023-09-30T02%3A08%3A02.244Z';

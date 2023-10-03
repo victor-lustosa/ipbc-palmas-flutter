@@ -51,19 +51,28 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                             TabButtonsWidget(
                               label: 'Localização',
                               action: () {
-                                scrollPage(vWidth > lgSize ? 1575 : 1656);
+                                scrollPage(vWidth > lgSize
+                                    ? 1575
+                                    : 1656,
+                                );
                               },
                             ),
                             TabButtonsWidget(
                               label: 'Programação',
                               action: () {
-                                scrollPage(vWidth > lgSize ? 2175 : 2534);
+                                scrollPage(vWidth > lgSize
+                                    ? 2175
+                                    : 2534,
+                                );
                               },
                             ),
                             TabButtonsWidget(
                               label: 'Aplicativo',
                               action: () {
-                                scrollPage(vWidth > lgSize ? 3232 : 3560);
+                                scrollPage(vWidth > lgSize
+                                    ? 3232
+                                    : 3560,
+                                );
                               },
                             ),
                           ],
@@ -72,9 +81,11 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                       contactButton(
                         width: 259,
                         height: 49,
-                        position: vWidth > lgSize ? 3965 : 4230,
                         leftMargin: 16,
                         label: 'Entrar em contato',
+                        position: vWidth > lgSize
+                            ? 3965
+                            : 4230,
                       )
                     ],
                   ),
@@ -83,8 +94,8 @@ class _TopBarWidgetState extends State<TopBarWidget> {
             ),
           ),
           Container(
-            decoration: const BoxDecoration(color: AppColors.grey5),
             height: 0.4,
+            decoration: const BoxDecoration(color: AppColors.grey5),
           )
         ],
       );
@@ -108,8 +119,8 @@ class _TopBarWidgetState extends State<TopBarWidget> {
             ),
           ),
           Container(
-            decoration: const BoxDecoration(color: AppColors.grey5),
             height: 0.4,
+            decoration: const BoxDecoration(color: AppColors.grey5),
           )
         ],
       );
@@ -125,25 +136,25 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                 contactButton(
                   width: 166,
                   height: 49,
-                  position: vWidth > ResponsivityUtil.smallDeviceWidth ? 4160 : 4330,
                   leftMargin: 8,
                   label: 'Contato',
+                  position: vWidth > ResponsivityUtil.smallDeviceWidth
+                      ? 4160
+                      : 4330,
                 )
               ],
             ),
           ),
           Container(
-            decoration: const BoxDecoration(color: AppColors.grey5),
             height: 0.4,
+            decoration: const BoxDecoration(color: AppColors.grey5),
           )
         ],
       );
 
   logo() => const Image(
         width: 100,
-        image: AssetImage(
-          AppImages.logo,
-        ),
+        image: AssetImage(AppImages.logo),
       );
 
   contactButton(
@@ -157,10 +168,14 @@ class _TopBarWidgetState extends State<TopBarWidget> {
         height: height,
         child: ElevatedButtonWidget(
           foregroundColor:
-              isPressed ? AppColors.grey12 : AppColors.white,
+              isPressed
+                  ? AppColors.grey12
+                  : AppColors.white,
           shadowColor: AppColors.grey6,
           backgroundColor:
-              isPressed ? const Color(0xFF00E8A2) : AppColors.darkGreen,
+              isPressed
+                  ? AppColors.highlightGreen
+                  : AppColors.darkGreen,
           action: () => _onPressed(position: position),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -169,7 +184,9 @@ class _TopBarWidgetState extends State<TopBarWidget> {
               Container(
                 margin: EdgeInsets.only(left: leftMargin),
                 child: Image.asset(
-                  isPressed ? AppIcons.contactIconDarkGreen : AppIcons.contactIcon,
+                  isPressed
+                      ? AppIcons.contactIconDarkGreen
+                      : AppIcons.contactIcon,
                   width: 24,
                   height: 24,
                 ),
@@ -181,17 +198,18 @@ class _TopBarWidgetState extends State<TopBarWidget> {
 
   upperMargin({required double value}) => EdgeInsets.only(
         top: value,
+        bottom: value,
         left: TopBarResponsive.leftWidth(vWidth),
         right: TopBarResponsive.rightWidth(vWidth),
-        bottom: value,
       );
 
   scrollPage(double position) => setState(
         () {
           Modular.get<HomeViewModel>().scrollController.animateTo(
-              duration: const Duration(milliseconds: 1500),
-              curve: Curves.easeInOutQuint,
-              position);
+            position,
+            curve: Curves.easeInOutQuint,
+            duration: const Duration(milliseconds: 1500),
+          );
         },
       );
 
@@ -202,7 +220,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
         () {
           isPressed = true;
         },
-      ),
+      )
     );
     Future.delayed(
       const Duration(milliseconds: 500),

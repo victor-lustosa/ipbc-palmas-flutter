@@ -12,17 +12,17 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
   late double width;
 
   final List<String> assetsList = [
-    AppImages.hero,
     AppIcons.announce,
     AppIcons.book,
     AppIcons.volunteerActivismCube
   ];
-
+  late final Image heroImage;
   final List<Image> imagesList = [];
 
   @override
   void initState() {
     super.initState();
+    heroImage = Image.network(AppImages.hero);
     for (String imagePath in assetsList) {
       imagesList.add(Image.asset(imagePath));
     }
@@ -167,10 +167,12 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                 Container(
                   width: 605,
                   margin: const EdgeInsets.only(
+                    left: 24,
+                    right: 24,
                     top: 16,
                     bottom: 64,
                   ),
-                  child: aboutChurchText(textAlign: TextAlign.center),
+                  child: aboutChurchText(textAlign: TextAlign.center,),
                 ),
                 Container(
                   child: churchMissions(
@@ -203,7 +205,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    titlePage(fontSize: 40),
+                    titlePage(fontSize:  width < ResponsivityUtil.smallDeviceWidth ? 34 : 40),
                     subtitlePage(fontSize: 20, width: 422),
                     mainImage(height: 393),
                   ],
@@ -225,8 +227,8 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                   margin: const EdgeInsets.only(
                     top: 16,
                     bottom: 75,
-                    left: 24,
-                    right: 24,
+                    left: 20,
+                    right: 20,
                   ),
                   child: aboutChurchText(
                     textAlign: TextAlign.center,
@@ -235,8 +237,10 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                 churchMissions(
                   fontSize: 18,
                   insideMargin: const EdgeInsets.only(right: 18),
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  width: width < 400 ? 450 : 450,
+                  margin: const EdgeInsets.symmetric(horizontal: 28),
+                  width: width > 400
+                      ? width * .93
+                      : 450,
                   textHeight: 1.4,
                 ),
               ],
@@ -278,12 +282,9 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: AppColors.grey4,
-            image: const DecorationImage(
+            image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage(
-                AppImages.hero,
-              ),
+              image: heroImage.image,
             ),
           ),
         ),
@@ -300,17 +301,13 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
 
   aboutChurchText({
     required TextAlign textAlign,
-    EdgeInsetsGeometry? margin,
   }) =>
-      Container(
-        margin: margin ?? EdgeInsets.zero,
-        child: Text(
-          textAlign: textAlign,
-          'Há 30 anos em Palmas/TO, a Igreja Presbiteriana Central de Palmas existe para servir e nutrir os membros, ajudar a sociedade e espalhar as boas notícias do Evangelho.',
-          style: AppFonts.defaultFont(
-            height: 1.4,
-            color: AppColors.grey8,
-          ),
+      Text(
+        textAlign: textAlign,
+        'Há 30 anos em Palmas/TO, a Igreja Presbiteriana Central de Palmas existe para servir e nutrir os membros, ajudar a sociedade e espalhar as boas notícias do Evangelho.',
+        style: AppFonts.defaultFont(
+          height: 1.4,
+          color: AppColors.grey8,
         ),
       );
 
@@ -327,7 +324,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
           children: [
             cardMission(
               fontSize: fontSize,
-              image: imagesList[1].image,
+              image: imagesList[0].image,
               text: 'Anunciar o reino de Deus',
               width: width,
               insideMargin: insideMargin,
@@ -337,7 +334,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
               child: cardMission(
                 fontSize: fontSize,
                 insideMargin: insideMargin,
-                image: imagesList[2].image,
+                image: imagesList[1].image,
                 text: 'Educar para a vivência cristã',
                 width: width,
               ),
@@ -345,7 +342,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
             cardMission(
               fontSize: fontSize,
               insideMargin: insideMargin,
-              image: imagesList[3].image,
+              image: imagesList[2].image,
               text: 'Assistir o ser humano em suas necessidades',
               width: width,
             ),

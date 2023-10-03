@@ -40,7 +40,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
   web() => Container(
         height: 734,
         width: width,
-        decoration: const BoxDecoration(color: Color(0xff005b40)),
+        decoration: const BoxDecoration(color: AppColors.darkGreen),
         child: Container(
           margin: const EdgeInsets.only(left: 120, top: 100),
           child: Stack(
@@ -92,7 +92,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
   tablet() => Container(
         height: 780,
         width: width,
-        decoration: const BoxDecoration(color: Color(0xff005b40)),
+        decoration: const BoxDecoration(color: AppColors.darkGreen),
         child: Container(
           margin: const EdgeInsets.only(top: 80),
           child: Stack(
@@ -122,9 +122,9 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
                       ),
                       Container(
                         margin: const EdgeInsets.only(bottom: 40),
-                        child: subtitle(textAlign: width > 480
-                            ? TextAlign.left
-                            : TextAlign.center,
+                        child: subtitle(
+                          textAlign:
+                              width > 480 ? TextAlign.left : TextAlign.center,
                         ),
                       ),
                       Row(
@@ -147,9 +147,9 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
   mobile() => Container(
         height: 780,
         width: width,
-        decoration: const BoxDecoration(color: Color(0xff005b40)),
+        decoration: const BoxDecoration(color: AppColors.darkGreen),
         child: Container(
-          margin: const EdgeInsets.only(left: 0, top: 60),
+          margin: const EdgeInsets.only(top: 60),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -163,7 +163,11 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
                       ),
                       Container(
                         width: 400,
-                        margin: const EdgeInsets.only(bottom: 40),
+                        margin: const EdgeInsets.only(
+                          left: 10,
+                          right: 10,
+                          bottom: 40,
+                        ),
                         child: subtitle(textAlign: TextAlign.center),
                       ),
                       appButton(),
@@ -193,8 +197,8 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         'Baixe o IPBC App',
         style: AppFonts.defaultFont(
           fontSize: fontSize,
-          fontWeight: FontWeight.w600,
           color: AppColors.white,
+          fontWeight: FontWeight.w600,
         ),
       );
 
@@ -208,16 +212,16 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
       );
 
   playButton() => StoreButton(
-        labelStore: 'Baixe na PlayStore',
         iconPath: AppIcons.playIcon,
+        labelStore: 'Baixe na PlayStore',
         onPressed: () {
           _playStoreLink = launchInBrowser(playStoreLink);
         },
       );
 
   appButton() => StoreButton(
-        labelStore: 'Baixe na App Store',
         iconPath: AppIcons.appleIcon,
+        labelStore: 'Baixe na App Store',
         onPressed: () {
           //   _appStoreLink = launchInBrowser(appStoreLink);
         },

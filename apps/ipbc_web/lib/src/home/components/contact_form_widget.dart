@@ -67,10 +67,26 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
                 children: [
                   title(),
                   subtitle(width: vWidth * .7),
-                  nameField(width: vWidth < 500 ? vWidth : 500),
-                  emailField(width: vWidth < 500 ? vWidth : 500),
-                  messageField(width: vWidth < 500 ? vWidth : 500),
-                  sendButton(width: vWidth < 500 ? vWidth : 500),
+                  nameField(
+                    width: vWidth < 500
+                      ? vWidth
+                      : 500,
+                  ),
+                  emailField(
+                    width: vWidth < 500
+                      ? vWidth
+                      : 500,
+                  ),
+                  messageField(
+                    width: vWidth < 500
+                      ? vWidth
+                      : 500,
+                  ),
+                  sendButton(
+                    width: vWidth < 500
+                      ? vWidth
+                      : 500,
+                  ),
                 ],
               ),
             ),
@@ -79,17 +95,14 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
       );
 
   title() => Container(
-        margin: const EdgeInsets.only(
-          top: 80,
-          bottom: 16,
-        ),
+        margin: const EdgeInsets.only(top: 80, bottom: 16),
         child: Text(
           'Entre em contato',
           textAlign: TextAlign.center,
           style: AppFonts.defaultFont(
             fontSize: 32,
-            fontWeight: FontWeight.w700,
             color: AppColors.grey12,
+            fontWeight: FontWeight.w700,
           ),
         ),
       );
@@ -102,7 +115,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
           textAlign: TextAlign.center,
           style: AppFonts.defaultFont(
             height: 1.5,
-            color: const Color(0xff545456),
+            color: AppColors.grey8,
           ),
         ),
       );
@@ -148,11 +161,11 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
   messageField({required double width}) => DefaultFieldWidget(
         fieldKey: _messageKey,
         titleStyle: _titleStyle,
-        titleMargin: const EdgeInsets.only(top: 16, bottom: 8),
         title: 'Mensagem',
         isValid: _isMessageValid,
         controller: _messageController,
         errorText: messageErrorText,
+        titleMargin: const EdgeInsets.only(top: 16, bottom: 8),
         maxLines: 5,
         maxLength: 500,
         fieldHeight: 115,
@@ -193,13 +206,13 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         fontSize: 10,
         color: isValid
             ? const Color(0xff979797)
-            : Colors.red,
+            : AppColors.delete,
       ),
       hintStyle: AppFonts.defaultFont(
         fontSize: 14,
         color: isValid
             ? const Color(0xff979797)
-            : Colors.red,
+            : AppColors.delete,
       ),
     );
   }
@@ -207,26 +220,28 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
   _fieldStyle(isValid) {
     return AppFonts.defaultFont(
       fontSize: 14,
-      color: isValid ? const Color(0xff979797) : Colors.red,
+      color: isValid
+          ? const Color(0xff979797)
+          : AppColors.delete,
     );
   }
 
   get _titleStyle => AppFonts.defaultFont(
         fontSize: 14,
-        color: const Color(0xff545456),
+        color: AppColors.grey8,
       );
 
   sendButton({required double width}) => Container(
-        margin: const EdgeInsets.only(top: 32, bottom: 80),
         width: width,
         height: 49,
+        margin: const EdgeInsets.only(top: 32, bottom: 80),
         child: ElevatedButtonWidget(
           shadowColor: AppColors.grey6,
           backgroundColor: _isSubmitted
-              ? const Color(0xFF00E8A2)
+              ? AppColors.highlightGreen
               : AppColors.darkGreen,
           overlayColor: _isSubmitted
-              ? const Color(0xFF00E8A2)
+              ? AppColors.highlightGreen
               : null,
           foregroundColor: _isSubmitted
               ? AppColors.grey12
@@ -264,7 +279,9 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                _isSubmitted ? 'Enviado!' : 'Enviar',
+                _isSubmitted
+                    ? 'Enviado!'
+                    : 'Enviar',
               )
             ],
           ),

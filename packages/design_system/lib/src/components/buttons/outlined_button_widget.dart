@@ -16,14 +16,14 @@ class OutlinedButtonWidget extends StatefulWidget {
       this.padding,
       this.sideColor,
       this.sideHoveredColor,
-      required this.state,
+      this.state,
       this.foregroundHoveredColor})
       : super(key: key);
 
   final Color? overlayColor;
   final Color? sideColor;
   final Color? sideHoveredColor;
-  final Function(bool) state;
+  final Function(bool)? state;
   final Widget? child;
   final EdgeInsetsGeometry? padding;
   final Color? foregroundColor;
@@ -46,11 +46,13 @@ class _OutlinedButtonWidgetState extends State<OutlinedButtonWidget> {
       style: ButtonStyle(
         side: widget.sideColor == null && widget.sideHoveredColor == null
             ? null
-            : MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-                return states.isHovered
-                    ? BorderSide(color: widget.sideHoveredColor!)
-                    : BorderSide(color: widget.sideColor!);
-              }),
+            : MaterialStateProperty.resolveWith(
+                (Set<MaterialState> states) {
+                  return states.isHovered
+                      ? BorderSide(color: widget.sideColor!)
+                      : BorderSide(color: widget.sideColor!);
+                },
+              ),
         padding: widget.padding == null
             ? null
             : MaterialStateProperty.all<EdgeInsetsGeometry>(widget.padding!),
@@ -63,15 +65,16 @@ class _OutlinedButtonWidgetState extends State<OutlinedButtonWidget> {
         foregroundColor: widget.foregroundColor == null &&
                 widget.foregroundHoveredColor == null
             ? null
-            : MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-                Future.delayed(const Duration(milliseconds: 62), () async {
-                    widget.state(states.isHovered);
-                });
-
-                return states.isHovered
-                    ? widget.foregroundHoveredColor!
-                    : widget.foregroundColor!;
-              }),
+            : MaterialStateProperty.resolveWith(
+                (Set<MaterialState> states) {
+                  if (widget.state != null) {
+                    widget.state!(states.isPressed);
+                  }
+                  return states.isHovered
+                      ? widget.foregroundColor!
+                      : widget.foregroundColor!;
+                },
+              ),
         shadowColor: widget.shadowColor == null
             ? null
             : MaterialStateProperty.all<Color>(widget.shadowColor!),
@@ -79,16 +82,10 @@ class _OutlinedButtonWidgetState extends State<OutlinedButtonWidget> {
             ? null
             : MaterialStateProperty.all<Color>(widget.backgroundColor!),
         shape: MaterialStateProperty.all<OutlinedBorder>(
-          widget.shape ??
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
+          widget.shape ?? RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
         ),
         textStyle: MaterialStateProperty.all<TextStyle?>(
-          widget.textStyle ??
-              AppFonts.defaultFont(
-                fontWeight: FontWeight.w500,
-              ),
+          widget.textStyle ?? AppFonts.defaultFont(fontWeight: FontWeight.w500),
         ),
       ),
       onPressed: widget.action,

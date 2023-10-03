@@ -113,9 +113,7 @@ class _FooterWidgetState extends State<FooterWidget> {
 
   logo() => SizedBox(
         width: 99.34,
-        child: Image.asset(
-          AppImages.footerLogo,
-        ),
+        child: Image.asset(AppImages.footerLogo),
       );
 
   contacts({double? width, CrossAxisAlignment? crossAxisAlignment}) =>
@@ -196,8 +194,8 @@ class _FooterWidgetState extends State<FooterWidget> {
         text,
         style: AppFonts.defaultFont(
           fontSize: 14,
-          fontWeight: FontWeight.w700,
           color: AppColors.white,
+          fontWeight: FontWeight.w700,
         ),
       );
 

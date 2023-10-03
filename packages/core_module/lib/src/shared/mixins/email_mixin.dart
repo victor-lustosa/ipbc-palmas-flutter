@@ -7,12 +7,13 @@ import '../models/send_grid_model.dart';
 
 mixin EmailMixin {
   static const _apiSendGridURL = "https://api.sendgrid.com/v3/mail/send";
-  static const _apiBrevoURL = "https://api.sendgrid.com/v3/mail/send";
+  static const _apiBrevoURL = "https://api.brevo.com/v3/smtp/email";
 
-  Future<String> sendGrid(
-      {required String body,
-      required String subject,
-      required List<String> recipients}) async {
+  Future<String> sendGrid({
+    required String body,
+    required String subject,
+    required List<String> recipients,
+  }) async {
     final fromAddress = Address(recipients[0]);
     final content = Content('text/plain', body);
     const personalization = Personalization([Address('victor.olustosa@outlook.com')]);
@@ -36,13 +37,14 @@ mixin EmailMixin {
     }
   }
 
-  Future<String> brevo(
-      {required String body,
-        required String subject,
-        required List<String> recipients}) async {
+  Future<String> brevo({
+    required String body,
+    required String subject,
+    required List<String> recipients,
+  }) async {
     final fromAddress = Address(recipients[0]);
     final content = Content('text/plain', body);
-    const personalization =  Personalization([Address('victor.olustosa@outlook.com')]);
+    const personalization = Personalization([Address('victor.olustosa@outlook.com')]);
 
     final email = Email([personalization], fromAddress, subject, content: [content]);
     final v = jsonEncode(email.toJson());
