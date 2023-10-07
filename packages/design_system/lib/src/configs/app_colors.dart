@@ -35,4 +35,6 @@ class AppColors {
   static const Color warning = Color(0xFFFF9500);
   static const Color add = Color(0xFF007AFF);
   static const Color information = Color(0xFF30AAC7);
+
+  static var inputBorderGrey;
 }

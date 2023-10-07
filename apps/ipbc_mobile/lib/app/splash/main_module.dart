@@ -1,4 +1,5 @@
 import 'package:core_module/core_module.dart';
+import 'package:ipbc_palmas/app/recover/recover_password_view.dart';
 import '../home/home_module.dart';
 import '../lyric/lyric_module.dart';
 import 'blocs/database_bloc.dart';
@@ -8,6 +9,7 @@ import 'views/splash_view.dart';
 
 class MainModule extends Module {
   static const String splashRoute = '/splash';
+  static const String recoverRoute = '/recover';
   static const String authRoute = '/auth';
   static const String lyricsRoute = '/lyrics';
   static const String initRoute = '/init';
@@ -36,6 +38,7 @@ class MainModule extends Module {
   void routes(r) {
     r.module(authRoute, module: AuthModule());
     r.child(splashRoute, child: (_) => const SplashView());
+    r.child(recoverRoute, child: (_) => const RecoverPasswordView());
     r.module(initRoute, module: HomeModule());
     r.module(lyricsRoute, module: LyricModule());
   }
