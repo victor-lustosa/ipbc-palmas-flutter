@@ -1,5 +1,5 @@
 import 'package:core_module/core_module.dart';
-import 'package:ipbc_palmas/app/recover/recover_password_view.dart';
+
 import '../home/home_module.dart';
 import '../lyric/lyric_module.dart';
 import 'blocs/database_bloc.dart';

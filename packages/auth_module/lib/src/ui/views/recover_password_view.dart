@@ -1,5 +1,4 @@
 import 'package:core_module/core_module.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 //import '../../components/default_field_widget.dart';
@@ -24,7 +23,7 @@ class _RecoverPasswordViewState extends State<RecoverPasswordView> {
   _fieldDecoration({required isValid}) => BoxDecoration(
     color: const Color(0xffffffff),
     border: Border.all(
-      color: isValid ? AppColors.inputBorderGrey : Colors.red,
+      color: isValid ? AppColors.secondaryGrey : Colors.red,
     ),
     borderRadius: BorderRadius.circular(16),
   );
@@ -76,13 +75,13 @@ class _RecoverPasswordViewState extends State<RecoverPasswordView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                margin: EdgeInsets.only(top: 108),
+                margin: const EdgeInsets.only(top: 108),
                 child: Text(
                   "Redefinir senha",
                   style: AppFonts.defaultFont(
