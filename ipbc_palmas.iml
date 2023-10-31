@@ -27,6 +27,9 @@
       <excludeFolder url="file://$MODULE_DIR$/packages/service_module/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/packages/service_module/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/packages/service_module/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ipbc_mobile/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ipbc_mobile/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ipbc_mobile/build" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 33, extension level 3 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

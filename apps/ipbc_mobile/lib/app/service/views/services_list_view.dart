@@ -34,11 +34,7 @@ class _ServicesListViewState extends State<ServicesListView> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    bloc.close();
-    super.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +105,7 @@ class _ServicesListViewState extends State<ServicesListView> {
                               ),
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: AssetImage(
+                                image: NetworkImage(
                                   entitiesList[index].image,
                                 ),
                               ),

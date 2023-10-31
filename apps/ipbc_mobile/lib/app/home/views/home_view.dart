@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:core_module/core_module.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../layout/top-bar/main_top_bar_widget.dart';
@@ -16,7 +19,8 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin {
+class _HomeViewState extends State<HomeView>
+    with AutomaticKeepAliveClientMixin {
   late final ServicesListBloc bloc;
   late List<ServicesEntity> entitiesList;
   int position = 0;
@@ -50,7 +54,8 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
             } else if (state
                 is DataFetchedState<ServicesListState, ServicesEntity>) {
               entitiesList = state.entities;
-              Modular.get<DatabaseViewModel>().checkUpdateData(context, 'services');
+              Modular.get<DatabaseViewModel>()
+                  .checkUpdateData(context, 'services');
               return SingleChildScrollView(
                 child: SizedBox(
                   width: context.mediaQuery.size.width,
@@ -59,10 +64,25 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                     children: [
                       const MainTopBarWidget(),
                       title(text: "Eventos"),
-                      subtitle(right: 18, text: "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
+                      subtitle(
+                        right: 18,
+                        text:
+                            "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
                       ),
-                      title(text: "Cultos"),
-                      subtitle(right: 17, text: "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
+                      InkWell(
+                        onTap: (){
+                          print("Vasco");
+                        },
+                        child: Column(
+                          children: [
+                            title(text: "Cultos"),
+                            subtitle(
+                              right: 17,
+                              text:
+                                  "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
+                            ),
+                          ],
+                        ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 24.5),
@@ -72,7 +92,8 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                             fontWeight: FontWeight.w500,
                             color: AppColors.white,
                           ),
-                          margin: const EdgeInsets.only(left: 15.5, right: 15.5),
+                          margin:
+                              const EdgeInsets.only(left: 15.5, right: 15.5),
                           route: HomeModule.servicesCollectionRoute,
                           mainAxisAlignment: MainAxisAlignment.center,
                           width: context.mediaQuery.size.width,
@@ -93,22 +114,40 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
     );
   }
 
-  Widget title({required String text}) =>
-      Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(left: 17, top: 41),
-            child: Text(
+  Widget title({required String text}) => Container(
+   // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+    margin: EdgeInsets.symmetric(horizontal: 17),
+    child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
               text,
               style: AppFonts.title2,
             ),
-          ),
-        ],
-      );
+            Container(
+             // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+              width: Platform.isIOS ? 30 : 35,
+              child: IconButtonWidget(
+                size: Platform.isIOS ? null : 33,
+                color: AppColors.darkGreen,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                iOSIcon: CupertinoIcons.chevron_forward,
+                androidIcon: Icons.navigate_next_sharp,
+                action: () {
+                  Navigator.pushNamed(
+                    context,
+                    HomeModule.servicesListRoute,
+                  );
+                },
 
-  Widget subtitle({required double right, required String text}) =>
-      Align(
+              ),
+            ),
+          ],
+        ),
+  );
+
+  Widget subtitle({required double right, required String text}) => Align(
         alignment: Alignment.centerLeft,
         child: Container(
           margin: EdgeInsets.only(left: 18, top: 8, right: right),

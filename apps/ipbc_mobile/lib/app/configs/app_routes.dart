@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:ipbc_palmas/app/home/home_module.dart';
+import 'package:ipbc_palmas/app/service/views/services_list_view.dart';
 
 import '../home/views/home_view.dart';
 import '../lyric/views/lyric_view.dart';
@@ -63,7 +65,13 @@ class _HomeRoutesState extends State<HomeRoutes> {
             } else {
               return MaterialPageRoute(settings: settings, builder: (_) => const HomeView());
             }
-
+          case HomeModule.servicesListRoute:
+            return CustomTransitionPageRoute(
+                transitionSpeed: const Duration(milliseconds: 700),
+                reverseSpeed: const Duration(milliseconds: 700),
+                child: const ServicesListView(),
+                tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(CurveTween(curve: Curves.ease))
+            );
           case AppRoutes.serviceRoute:
             return CustomTransitionPageRoute(
                 transitionSpeed: const Duration(milliseconds: 700),
