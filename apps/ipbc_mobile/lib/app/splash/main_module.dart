@@ -1,6 +1,7 @@
 import 'package:core_module/core_module.dart';
 import '../home/home_module.dart';
 import '../lyric/lyric_module.dart';
+import '../service/service_module.dart';
 import 'blocs/database_bloc.dart';
 
 import '../shared/view-models/database_view_model.dart';
@@ -10,6 +11,7 @@ class MainModule extends Module {
   static const String splashRoute = '/splash';
   static const String authRoute = '/auth';
   static const String lyricsRoute = '/lyrics';
+  static const String servicesRoute = '/services';
   static const String initRoute = '/init';
 
   @override
@@ -38,5 +40,6 @@ class MainModule extends Module {
     r.child(splashRoute, child: (_) => const SplashView());
     r.module(initRoute, module: HomeModule());
     r.module(lyricsRoute, module: LyricModule());
+    r.module(servicesRoute, module: ServiceModule());
   }
 }

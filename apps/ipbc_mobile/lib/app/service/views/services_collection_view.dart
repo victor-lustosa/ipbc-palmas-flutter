@@ -3,10 +3,13 @@ import 'dart:io';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:ipbc_palmas/layout/top-bar/service_top_bar_widget.dart';
 
 import '../../home/home_module.dart';
 import '../../shared/blocs/generics.dart';
 import '../../shared/view-models/database_view_model.dart';
+import '../../splash/main_module.dart';
+import '../service_module.dart';
 import 'service_view.dart';
 import '../blocs/services_collection_bloc.dart';
 import '../../exception/views/generic_error_view.dart';
@@ -22,20 +25,21 @@ class ServicesCollectionView extends StatefulWidget {
 }
 
 class _ServicesCollectionViewState extends State<ServicesCollectionView> {
-  late final ServicesCollectionBloc bloc;
+  late final ServicesCollectionBloc _bloc;
   late List<ServiceEntity> entitiesList;
   late String path;
-
+  late final DatabaseViewModel _databaseViewModel;
   @override
   void initState() {
     super.initState();
     entitiesList = [];
     path = widget.entity.path;
-    bloc = Modular.get<ServicesCollectionBloc>();
-    if (Modular.get<DatabaseViewModel>().isNotUpdated(path)) {
-      bloc.add(CheckConnectivityEvent(path: path));
+    _bloc = Modular.get<ServicesCollectionBloc>();
+    _databaseViewModel = Modular.get<DatabaseViewModel>();
+    if (_databaseViewModel.isNotUpdated(path)) {
+      _bloc.add(CheckConnectivityEvent(path: path));
     } else {
-      bloc.add(GetInHiveEvent(path: path));
+      _bloc.add(GetInHiveEvent(path: path));
     }
   }
 
@@ -50,7 +54,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
               highlightColor: const Color(0x66BCBCBC),
             ),
             child: BlocBuilder<ServicesCollectionBloc, GenericState<ServicesCollectionState>>(
-              bloc: bloc,
+              bloc: _bloc,
               builder: (context, state) {
                if (state is LoadingState<ServicesCollectionState>) {
                   return const LoadingWidget();
@@ -58,62 +62,10 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                   return const NoConnectionView(index: 0);
                 } else if (state is DataFetchedState<ServicesCollectionState, ServiceEntity>) {
                   entitiesList = state.entities;
-                  Modular.get<DatabaseViewModel>().checkUpdateData(context, path);
+                  _databaseViewModel.checkUpdateData(context, path);
                   return Column(
                     children: [
-                      Container(
-                        height: 186,
-                        width: context.mediaQuery.size.width,
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(18),
-                            bottomRight: Radius.circular(18),
-                          ),
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                              widget.entity.image,
-                            ),
-                          ),
-                        ),
-                        child: Container(
-                          margin: const EdgeInsets.only(
-                            left: 5,
-                            right: 8,
-                            bottom: 8,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      IconButtonWidget(
-                                        size: Platform.isIOS ? null : 28,
-                                        color: AppColors.white,
-                                        splashColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        iOSIcon: CupertinoIcons.chevron_back,
-                                        androidIcon: Icons.arrow_back_rounded,
-                                        action: () => Navigator.pop(context),
-                                      ),
-                                      Text(
-                                        "Cultos de ${widget.entity.heading}",
-                                        style: AppFonts.defaultFont(
-                                          color: AppColors.white,
-                                          fontWeight: FontWeight.w500
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                       ServiceTopBarWidget(entity: widget.entity),
                       Container(
                         margin: const EdgeInsets.only(
                           top: 25,
@@ -216,7 +168,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
           ),
         ),
       ),
-      /*floatingActionButton: SizedBox(
+      floatingActionButton: SizedBox(
         height: 58,
         width: 58,
         child: FloatingActionButton(
@@ -225,10 +177,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
           focusElevation: 1.8,
           hoverElevation: 1.8,
           onPressed: () {
-            Navigator.pushNamed(
-              context,
-              AppRoutes.insertLyricsRoute
-            );
+            Modular.to.pushNamed(MainModule.servicesRoute + ServiceModule.insertServicesRoute);
           },
           backgroundColor: AppColors.add,
           child: const Icon(
@@ -238,7 +187,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
           ),
           // icon: Icon(Icons.map, size: 15, color: Colors.white)
         ),
-      ),*/
+      ),
     );
   }
 }

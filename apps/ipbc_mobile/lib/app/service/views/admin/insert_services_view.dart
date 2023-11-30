@@ -1,7 +1,7 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../../../shared/view-models/services_view_model.dart';
+import '../../../../layout/top-bar/service_top_bar_widget.dart';
 
 class InsertServicesView extends StatefulWidget {
   const InsertServicesView({super.key});
@@ -11,19 +11,18 @@ class InsertServicesView extends StatefulWidget {
 }
 
 class _InsertServicesViewState extends State<InsertServicesView> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(left: 19, top: 30),
-            child: SearchBarWidget(
-              controller: Modular.get<ServicesViewModel>().controller,
-              action: Modular.get<ServicesViewModel>().fetchingSearch,
-            ),
+      body: Container(
+        color: AppColors.grey4,
+        width: context.mediaQuery.size.width,
+        child: SafeArea(
+          child: ServiceTopBarWidget(
+            entity: ServicesModel.empty(),
           ),
-        ],
+        ),
       ),
     );
   }

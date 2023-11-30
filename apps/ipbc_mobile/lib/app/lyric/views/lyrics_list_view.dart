@@ -18,20 +18,22 @@ class LyricsListView extends StatefulWidget {
 }
 
 class _LyricsListViewState extends State<LyricsListView> with TickerProviderStateMixin {
-  late List<LyricEntity> lyricsFetched;
-  late final LyricBloc bloc;
+  late List<LyricEntity> _lyricsFetched;
+  late final LyricBloc _bloc;
+  late final DatabaseViewModel _databaseViewModel;
   bool isSelected = false;
   String selectedValue = '';
 
   @override
   void initState() {
     super.initState();
-    lyricsFetched = [];
-    bloc = Modular.get<LyricBloc>();
-    if (!Modular.get<DatabaseViewModel>().data.isLyricsUpdated) {
-      bloc.add(CheckConnectivityEvent<LyricEvent>());
+    _lyricsFetched = [];
+    _bloc = Modular.get<LyricBloc>();
+    _databaseViewModel = Modular.get<DatabaseViewModel>();
+    if (!_databaseViewModel.data.isLyricsUpdated) {
+      _bloc.add(CheckConnectivityEvent<LyricEvent>());
     } else {
-      bloc.add(GetInHiveEvent<LyricEvent>());
+      _bloc.add(GetInHiveEvent<LyricEvent>());
     }
   }
 
@@ -41,19 +43,19 @@ class _LyricsListViewState extends State<LyricsListView> with TickerProviderStat
       backgroundColor: AppColors.white,
       body: SafeArea(
         child: BlocBuilder<LyricBloc, GenericState<LyricState>>(
-          bloc: bloc,
+          bloc: _bloc,
           builder: (context, state) {
              if (state is LoadingState<LyricState>) {
               return const LoadingWidget();
             } else if (state is NoConnectionState<LyricState>) {
               return const NoConnectionView(index: 0);
             } else if (state is DataFetchedState<LyricState, LyricEntity>) {
-              lyricsFetched = state.entities;
-              Modular.get<DatabaseViewModel>().checkUpdateData(context, 'lyrics');
+              _lyricsFetched = state.entities;
+              _databaseViewModel.checkUpdateData(context, 'lyrics');
               return RefreshIndicator(
                 color: AppColors.darkGreen,
                 onRefresh: () async {
-                  bloc.add(CheckConnectivityEvent());
+                  _bloc.add(CheckConnectivityEvent());
                 },
                 child: SingleChildScrollView(
                   child: Column(
@@ -77,7 +79,7 @@ class _LyricsListViewState extends State<LyricsListView> with TickerProviderStat
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 20),
-                        child: LyricsListWidget(entitiesList: lyricsFetched),
+                        child: LyricsListWidget(entitiesList: _lyricsFetched),
                       ),
                     ],
                   ),

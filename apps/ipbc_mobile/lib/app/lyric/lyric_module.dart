@@ -8,8 +8,8 @@ import 'views/lyrics_list_view.dart';
 import 'blocs/lyric_bloc.dart';
 
 class LyricModule extends Module {
+
   static const String initialRoute = "/";
-  static const String insertLyricsRoute = "/insert-lyrics";
   static const String lyricsListRoute = "/lyrics-list";
   static const String lyricRoute = "/lyric";
 

@@ -1,7 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../../home/home_module.dart';
 import '../blocs/database_bloc.dart';
 import '../../exception/views/generic_error_view.dart';
 import '../../shared/view-models/database_view_model.dart';
@@ -15,13 +14,15 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
-  late final DatabaseBloc bloc;
+  late final DatabaseBloc _bloc;
+  late final DatabaseViewModel _databaseViewModel;
 
   @override
   initState() {
-    bloc = Modular.get<DatabaseBloc>();
-    bloc.add(GetDataEvent());
     super.initState();
+    _bloc = Modular.get<DatabaseBloc>();
+    _databaseViewModel = Modular.get<DatabaseViewModel>();
+    _bloc.add(GetDataEvent());
   }
 
   @override
@@ -30,12 +31,12 @@ class _SplashViewState extends State<SplashView> {
       body: BlocConsumer<DatabaseBloc, DatabasesState>(
         listener: (context, state) async {
           if (state is FetchingDataState) {
-            var data = await Modular.get<DatabaseViewModel>().validate(state.entity);
-            bloc.add(UpdateDataEvent(data: data));
+            var data = await _databaseViewModel.validate(state.entity);
+            _bloc.add(UpdateDataEvent(data: data));
             Modular.to.navigate(MainModule.initRoute);
           }
         },
-        bloc: bloc,
+        bloc: _bloc,
         builder: (context, state) {
           if (state is LoadingState || state is FetchingDataState) {
             return const LoadingWidget();

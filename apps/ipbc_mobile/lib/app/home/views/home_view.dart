@@ -27,6 +27,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
 
   @override
   void initState() {
+    super.initState();
     _bloc = Modular.get<ServicesListBloc>();
     _databaseViewModel = Modular.get<DatabaseViewModel>();
     if (!_databaseViewModel.data.isServicesUpdated) {
@@ -34,7 +35,6 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
     } else {
       _bloc.add(GetInHiveEvent());
     }
-    super.initState();
   }
 
   @override

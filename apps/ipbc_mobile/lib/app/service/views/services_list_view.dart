@@ -10,7 +10,6 @@ import '../../shared/view-models/database_view_model.dart';
 import '../blocs/services_list_bloc.dart';
 import '../../exception/views/no_connection_view.dart';
 import '../../exception/views/generic_error_view.dart';
-import '../../../layout/top-bar/main_top_bar_widget.dart';
 
 class ServicesListView extends StatefulWidget {
   const ServicesListView({super.key});
@@ -20,21 +19,20 @@ class ServicesListView extends StatefulWidget {
 }
 
 class _ServicesListViewState extends State<ServicesListView> {
-  late final ServicesListBloc bloc;
+  late final ServicesListBloc _bloc;
   late List<ServicesEntity> entitiesList;
-
+  late final DatabaseViewModel _databaseViewModel;
   @override
   void initState() {
-    bloc = Modular.get<ServicesListBloc>();
-    if (!Modular.get<DatabaseViewModel>().data.isServicesUpdated) {
-      bloc.add(CheckConnectivityEvent());
-    } else {
-      bloc.add(GetInHiveEvent());
-    }
     super.initState();
+    _bloc = Modular.get<ServicesListBloc>();
+    _databaseViewModel = Modular.get<DatabaseViewModel>();
+    if (!_databaseViewModel.data.isServicesUpdated) {
+      _bloc.add(CheckConnectivityEvent());
+    } else {
+      _bloc.add(GetInHiveEvent());
+    }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +40,7 @@ class _ServicesListViewState extends State<ServicesListView> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: BlocBuilder<ServicesListBloc, GenericState<ServicesListState>>(
-            bloc: bloc,
+            bloc: _bloc,
             builder: (context, state) {
                if (state is LoadingState<ServicesListState>) {
                 return const LoadingWidget();
@@ -50,37 +48,25 @@ class _ServicesListViewState extends State<ServicesListView> {
                 return const NoConnectionView(index: 0);
               } else if (state is DataFetchedState<ServicesListState, ServicesEntity>) {
                 entitiesList = state.entities;
-                Modular.get<DatabaseViewModel>().checkUpdateData(context, 'services');
+                _databaseViewModel.checkUpdateData(context, 'services');
                 return Column(
                   children: [
-                    const MainTopBarWidget(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
                           margin: const EdgeInsets.only(left: 17, top: 33),
-                          child: Text(
-                            "Cultos",
-                            style: AppFonts.title2,
+                          child: IconButtonWidget(
+                            size: Platform.isIOS ? null : 28,
+                            color: AppColors.darkGreen,
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            iOSIcon: CupertinoIcons.chevron_back,
+                            androidIcon: Icons.arrow_back_rounded,
+                            action: () => Navigator.pop(context),
                           ),
                         ),
                       ],
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        margin: const EdgeInsets.only(left: 18, top: 8),
-                        child: Text(
-                          "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
-                          style: AppFonts.defaultFont(
-                            fontSize: context.mediaQuery.size.width >
-                                    ResponsivityUtil.smallDeviceWidth
-                                ? 16
-                                : 15,
-                            color: AppColors.grey9,
-                          ),
-                        ),
-                      ),
                     ),
                     Container(
                       margin: const EdgeInsets.only(
@@ -136,7 +122,7 @@ class _ServicesListViewState extends State<ServicesListView> {
                                   ),
                                 ),
                                 onTap: () {
-                                  Modular.to.pushNamed(
+                                  Navigator.of(context).pushNamed(
                                     HomeModule.servicesCollectionRoute,
                                     arguments: entitiesList[index],
                                   );
