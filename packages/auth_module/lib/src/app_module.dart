@@ -1,10 +1,8 @@
 import 'package:auth_module/src/ui/views/success_created_new_password_view.dart';
 import 'package:core_module/core_module.dart';
 
-import 'infra/use_cases/auth_use_case.dart';
 import 'ui/views/create_account_view.dart';
 import 'ui/views/login_view.dart';
-import 'ui/view_models/login_view_model.dart';
 
 class AuthModule extends Module {
   @override
@@ -21,13 +19,16 @@ class AuthModule extends Module {
       ),
     );
   }
-
+  static const String initialRoute = '/';
+  static const String loginRoute = '/login';
+  static const String createAccountRoute = '/create-account';
+  static const String successPasswordChangeRoute = '/success-password';
   @override
   void routes(r) {
-    r.child('/', child: (context) => const LoginView());
-    r.child('/login', child: (context) => const LoginView());
-    r.child('/create-account', child: (context) => const CreateAccountView());
-    r.child('/sucess-created-new-password',
+    r.child(initialRoute, child: (context) => const LoginView());
+    r.child(loginRoute, child: (context) => const LoginView());
+    r.child(createAccountRoute, child: (context) => const CreateAccountView());
+    r.child(successPasswordChangeRoute,
         child: (context) => const CreatedNewPasswordsuccess());
   }
 }

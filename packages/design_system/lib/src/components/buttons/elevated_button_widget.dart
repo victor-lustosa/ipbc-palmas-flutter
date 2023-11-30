@@ -14,15 +14,16 @@ class ElevatedButtonWidget extends StatelessWidget {
     this.backgroundColor,
     this.shape,
     this.elevation,
-    this.padding, this.fixedSize,
+    this.fixedSize,
+    this.padding,
   }) : super(key: key);
   final Color? overlayColor;
   final Widget? child;
-  final EdgeInsetsGeometry? padding;
   final Color? foregroundColor;
   final TextStyle? textStyle;
   final Color? shadowColor;
   final double? elevation;
+  final EdgeInsets? padding;
   final Color? backgroundColor;
   final VoidCallback? action;
   final OutlinedBorder? shape;
@@ -33,12 +34,12 @@ class ElevatedButtonWidget extends StatelessWidget {
     return ElevatedButton(
         style: ButtonStyle(
           fixedSize: fixedSize == null ? null : MaterialStateProperty.all<Size>(fixedSize!),
-          padding: padding == null
-              ? null
-              : MaterialStateProperty.all<EdgeInsetsGeometry>(padding!),
           elevation: elevation == null
               ? null
               : MaterialStateProperty.all<double>(elevation!),
+          padding: padding == null
+              ? null
+              : MaterialStateProperty.all<EdgeInsets>(padding!),
           overlayColor: overlayColor == null
               ? null
               : MaterialStateProperty.all<Color>(overlayColor!),

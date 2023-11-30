@@ -19,19 +19,20 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView>
-    with AutomaticKeepAliveClientMixin {
-  late final ServicesListBloc bloc;
+class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin {
+  late final ServicesListBloc _bloc;
+  late final DatabaseViewModel _databaseViewModel;
   late List<ServicesEntity> entitiesList;
   int position = 0;
 
   @override
   void initState() {
-    bloc = Modular.get<ServicesListBloc>();
-    if (!Modular.get<DatabaseViewModel>().data.isServicesUpdated) {
-      bloc.add(CheckConnectivityEvent());
+    _bloc = Modular.get<ServicesListBloc>();
+    _databaseViewModel = Modular.get<DatabaseViewModel>();
+    if (!_databaseViewModel.data.isServicesUpdated) {
+      _bloc.add(CheckConnectivityEvent());
     } else {
-      bloc.add(GetInHiveEvent());
+      _bloc.add(GetInHiveEvent());
     }
     super.initState();
   }
@@ -45,17 +46,15 @@ class _HomeViewState extends State<HomeView>
     return Scaffold(
       body: SafeArea(
         child: BlocBuilder<ServicesListBloc, GenericState<ServicesListState>>(
-          bloc: bloc,
+          bloc: _bloc,
           builder: (context, state) {
             if (state is LoadingState<ServicesListState>) {
               return const LoadingWidget();
             } else if (state is NoConnectionState<ServicesListState>) {
               return const NoConnectionView(index: 0);
-            } else if (state
-                is DataFetchedState<ServicesListState, ServicesEntity>) {
+            } else if (state is DataFetchedState<ServicesListState, ServicesEntity>) {
               entitiesList = state.entities;
-              Modular.get<DatabaseViewModel>()
-                  .checkUpdateData(context, 'services');
+              _databaseViewModel.checkUpdateData(context, 'services');
               return SingleChildScrollView(
                 child: SizedBox(
                   width: context.mediaQuery.size.width,
@@ -63,41 +62,67 @@ class _HomeViewState extends State<HomeView>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const MainTopBarWidget(),
-                      title(text: "Eventos"),
-                      subtitle(
-                        right: 18,
-                        text:
-                            "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
-                      ),
-                      InkWell(
-                        onTap: (){
-                          print("Vasco");
-                        },
-                        child: Column(
-                          children: [
-                            title(text: "Cultos"),
-                            subtitle(
-                              right: 17,
-                              text:
-                                  "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
-                            ),
-                          ],
+                      Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.pushNamed(
+                              context,
+                              HomeModule.servicesListRoute,
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              title(text: "Cultos"),
+                              subtitle(
+                                right: 17,
+                                text: "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 24.5),
+                        margin: const EdgeInsets.only(top: 12),
                         child: CarouselWidget(
                           fontStyle: AppFonts.defaultFont(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                             color: AppColors.white,
                           ),
-                          margin:
-                              const EdgeInsets.only(left: 15.5, right: 15.5),
+                          margin: const EdgeInsets.only(left: 15.5, right: 15.5),
                           route: HomeModule.servicesCollectionRoute,
                           mainAxisAlignment: MainAxisAlignment.center,
                           width: context.mediaQuery.size.width,
+                          services: entitiesList,
                           height: 167,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: (){
+                            Navigator.pushNamed(
+                              context,
+                              HomeModule.servicesListRoute,
+                            );
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                                margin: const EdgeInsets.only(top: 24),
+                                child: title(text: "Eventos"),
+                            ),
+                            subtitle(
+                              right: 18,
+                              text: "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 12, bottom: 20),
+                        height: 268,
+                        child: SlideCardsWidget(
+                          route: HomeModule.servicesCollectionRoute,
                           services: entitiesList,
                         ),
                       ),
@@ -116,7 +141,7 @@ class _HomeViewState extends State<HomeView>
 
   Widget title({required String text}) => Container(
    // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
-    margin: EdgeInsets.symmetric(horizontal: 17),
+    margin: const EdgeInsets.only(left: 17, right: 9),
     child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -124,9 +149,9 @@ class _HomeViewState extends State<HomeView>
               text,
               style: AppFonts.title2,
             ),
-            Container(
-             // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
-              width: Platform.isIOS ? 30 : 35,
+            SizedBox(
+              width: 35,
+              height: 35,
               child: IconButtonWidget(
                 size: Platform.isIOS ? null : 33,
                 color: AppColors.darkGreen,
@@ -134,13 +159,6 @@ class _HomeViewState extends State<HomeView>
                 highlightColor: Colors.transparent,
                 iOSIcon: CupertinoIcons.chevron_forward,
                 androidIcon: Icons.navigate_next_sharp,
-                action: () {
-                  Navigator.pushNamed(
-                    context,
-                    HomeModule.servicesListRoute,
-                  );
-                },
-
               ),
             ),
           ],
@@ -150,7 +168,7 @@ class _HomeViewState extends State<HomeView>
   Widget subtitle({required double right, required String text}) => Align(
         alignment: Alignment.centerLeft,
         child: Container(
-          margin: EdgeInsets.only(left: 18, top: 8, right: right),
+          margin: EdgeInsets.only(left: 18, top: 4, right: right),
           child: Text(
             text,
             style: AppFonts.defaultFont(

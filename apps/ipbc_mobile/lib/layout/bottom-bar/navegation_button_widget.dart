@@ -22,8 +22,7 @@ class NavigationButtonWidget extends StatelessWidget {
         height: size,
         child: SvgPicture.asset(
           colorFilter: ColorFilter.mode(
-            color ?? AppColors.darkGreen,
-            BlendMode.srcIn,),
+            color ?? AppColors.darkGreen, BlendMode.srcIn,),
           iconName,
           matchTextDirection: true,
         ),

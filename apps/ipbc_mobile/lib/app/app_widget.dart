@@ -1,13 +1,15 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import 'splash/main_module.dart';
+
 class AppWidget extends StatelessWidget {
   const AppWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
-    Modular.setInitialRoute('/auth');
+    Modular.setInitialRoute(MainModule.splashRoute);
 
     return MaterialApp.router(
       builder: (context, Widget? child) {
