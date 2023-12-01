@@ -11,15 +11,10 @@ class CoreModule extends Module {
   @override
   void exportedBinds(Injector i) {
     i.addSingleton<AnalyticsUtil>(AnalyticsUtil.new);
-    i.addSingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
-    i.addSingleton<FirestoreDatasource>(
-      () => FirestoreDatasource(
-        firestore: i.get<FirebaseFirestore>(),
-      ),
-    );
+     i.addSingleton<SupabaseDatasource>(SupabaseDatasource.new);
     i.addSingleton<Repository<List<Map>>>(
-      () => Repository<List<Map>>(
-        datasource: i.get<FirestoreDatasource>(),
+          () => Repository<List<Map>>(
+        datasource: i.get<SupabaseDatasource>(),
       ),
     );
   }

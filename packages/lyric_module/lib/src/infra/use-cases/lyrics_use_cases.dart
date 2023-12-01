@@ -10,7 +10,7 @@ class LyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
   @override
   Future<Stream<List<LyricEntity>>> get(String url) async {
     var result = await repository.get(url);
-    return Stream.value(LyricAdapter.fromMapList(result));
+    return Stream.value(SupaLyricAdapter.fromMapList(result));
   }
 
   @override

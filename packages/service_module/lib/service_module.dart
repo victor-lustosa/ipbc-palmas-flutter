@@ -8,7 +8,7 @@ export 'src/infra/models/services_model.dart';
 export 'src/infra/models/hive-dtos/hive_collection_dto.dart';
 export 'src/infra/models/hive-dtos/hive_services_dto.dart';
 
-export 'src/infra/adapters/service_adapter.dart';
+export 'src/infra/adapters/supa/supa_service_adapter.dart';
 export 'src/infra/adapters/hive-dtos/hive_collection_adapter.dart';
 export 'src/infra/adapters/hive-dtos/hive_liturgy_adapter.dart';
 

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:core_module/core_module.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
@@ -9,34 +8,21 @@ import 'app/app_widget.dart';
 import 'app/splash/main_module.dart';
 
 void main() async {
-  runZonedGuarded<Future<void>>(
-    () async {
-      WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
-      await Future.wait([
-        Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
-        HiveDatasource.hiveInit()
-      ]);
+  await Future.wait([SupabaseDatasource.init(), HiveDatasource.init()]);
 
-      // if (kDebugMode) {
-        await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
-     // }
+  Bloc.observer = GenericBlocObserver();
 
-      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-      Bloc.observer = GenericBlocObserver();
-
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]).then(
-        (_) => runApp(
-          ModularApp(
-            module: MainModule(),
-            child: const AppWidget(),
-          ),
-        ),
-      );
-    },
-    (error, stackTrace) => FirebaseCrashlytics.instance.recordError(error, stackTrace),
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then(
+    (_) => runApp(
+      ModularApp(
+        module: MainModule(),
+        child: const AppWidget(),
+      ),
+    ),
   );
 }

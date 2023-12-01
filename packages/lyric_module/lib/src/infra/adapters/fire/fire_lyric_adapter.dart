@@ -1,9 +1,10 @@
 import 'dart:convert';
 
-import '../../../lyric_module.dart';
+import '../../../../lyric_module.dart';
+
 // ignore: depend_on_referenced_packages
 
-class LyricAdapter {
+/*class FireLyricAdapter {
 
   static List<LyricModel> fromJson(String source) => fromMapList(json.decode(source));
   static LyricModel fromUnknownJson(String source) => fromMap(json.decode(source));
@@ -71,3 +72,4 @@ class LyricAdapter {
   }
 
 }
+*/

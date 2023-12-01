@@ -9,7 +9,7 @@ class HiveDatasource<R> implements IDatasource {
     box = Hive.box<R>(boxLabel);
   }
 
-  static Future hiveInit() async {
+  static Future init() async {
     await Hive.initFlutter();
     _allAdapters();
     await Future.wait<void>([

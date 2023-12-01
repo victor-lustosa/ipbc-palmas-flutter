@@ -19,17 +19,16 @@ Future<void> firebaseInitialize() async {
 
 void main() async {
   await firebaseInitialize();
-  FirestoreDatasource fire = FirestoreDatasource(firestore: FirebaseFirestore.instance);
   List<LyricModel> lyricsInserted = [];
   List<LyricModel> unknownLyrics = [];
   try {
       //servicesListInserts(fire);
     //  LyricModel lyric0 = await convertUnknownLyric(fire, 'assets/data/unknown-lyrics/hino-13.json');
-    LyricModel lyric0 = await ServiceUtil.convertUnknownLyric(fire, 'assets/data/unknown-lyrics/hino-4.json');
+    //LyricModel lyric0 = await ServiceUtil.convertUnknownLyric(fire, 'assets/data/unknown-lyrics/hino-4.json');
     //LyricModel lyric1 = await ServiceUtil.convertUnknownLyric(fire, 'assets/data/unknown-lyrics/hino-395.json');
     //LyricModel lyric2 = await convertUnknownLyric(fire, 'assets/data/unknown-lyrics/salmo-27.json');
 
-    unknownLyrics.addAll([lyric0]);
+  //  unknownLyrics.addAll([lyric0]);
     /* List<LyricModel> saturdayLyrics = await insertService(
         'assets/data/saturday-services/saturday-service-29-04-23.json',
         'saturday-services',
@@ -47,16 +46,16 @@ void main() async {
     print('Sunday Evening lyrics have been successfully added');
     lyricsInserted.addAll(sundayEveningLyrics);
 */
-    List<LyricModel> sundayMorningLyrics = await ServiceUtil.insertService(
+    /*List<LyricModel> sundayMorningLyrics = await ServiceUtil.insertService(
         'assets/data/sunday-morning-services/sunday-morning-service-18-06-23.json',
         'sunday-morning-services',
         fire,
         unknownLyrics,
-    );
-    lyricsInserted.addAll(sundayMorningLyrics);
-    ServiceUtil.unknownLyricsInsert(fire, unknownLyrics);
-    ServiceUtil.insertLyrics(fire, lyricsInserted);
-    ServiceUtil.updateFireID(fire);
+    );*/
+   // lyricsInserted.addAll(sundayMorningLyrics);
+   // ServiceUtil.unknownLyricsInsert(fire, unknownLyrics);
+   // ServiceUtil.insertLyrics(fire, lyricsInserted);
+   // ServiceUtil.updateFireID(fire);
   } catch (e) {
     print('$e');
   }

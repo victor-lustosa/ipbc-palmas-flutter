@@ -31,6 +31,12 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher-6.1.14" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_windows-2.2.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/cloud_firestore_web-3.7.1" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/sign_in_with_apple-5.0.0" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/webview_flutter_android-3.12.1" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.9.4" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/sign_in_with_apple_web-1.0.1" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/app_links-3.4.5" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/webview_flutter-4.4.2" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

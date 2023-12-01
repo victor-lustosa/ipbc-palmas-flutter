@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'package:lyric_module/lyric_module.dart';
 
-import '../../../../service_module.dart';
-import 'liturgy_adapter.dart';
+import '../liturgy_adapter.dart';
 // ignore: depend_on_referenced_packages
 
-class ServiceAdapter {
+class SupaServiceAdapter {
   static ServiceModel fromJson(String source) => fromMap(json.decode(source));
 
   static ServiceModel fromMap(dynamic json) {
@@ -22,7 +21,7 @@ class ServiceAdapter {
       liturgyList: json.containsKey('liturgyList')
           ? LiturgyAdapter.fromMap(json['liturgyList'])
           : [],
-      lyricsList: LyricAdapter.fromMapList(json['lyricsList']),
+      lyricsList: SupaLyricAdapter.fromMapList(json['lyricsList']),
       hour: json['hour'],
     );
   }
@@ -38,7 +37,7 @@ class ServiceAdapter {
       'type': data.type,
       'theme': data.theme,
       'preacher': data.preacher,
-      'lyricsList': LyricAdapter.toMapList(data.lyricsList),
+      'lyricsList': SupaLyricAdapter.toMapList(data.lyricsList),
       'liturgyList': LiturgyAdapter.toMapList(data.liturgyList),
       'guideIsVisible': data.guideIsVisible
     };
@@ -51,10 +50,10 @@ class ServiceAdapter {
           type: entity['type'],
           hour: entity['hour'],
           liturgyList: LiturgyAdapter.fromMap(entity['liturgyList']),
-          lyricsList: LyricAdapter.fromMapList(entity['lyricsList']),
+          lyricsList: SupaLyricAdapter.fromMapList(entity['lyricsList']),
           createAt: entity['createAt'].runtimeType == String
               ? DateTime.parse(entity['createAt'])
-              : (entity['createAt'] as Timestamp).toDate(),
+              : (entity['createAt'] as DateTime),
           heading: entity['heading'],
           title: entity['title'],
           guideIsVisible: entity['guideIsVisible'],

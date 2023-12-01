@@ -10,6 +10,7 @@ export 'src/splash/infra/use-cases/databases_use_cases.dart';
 
 export 'src/core/external/firestore_datasource.dart';
 export 'src/core/external/hive_datasource.dart';
+export 'src/core/external/supabase_datasource.dart';
 
 export 'src/configs/firebase_options.dart';
 export 'src/configs/no_glow_behavior.dart';
@@ -30,9 +31,6 @@ export 'package:service_module/service_module.dart';
 export 'package:flutter_modular/flutter_modular.dart';
 export 'src/shared/utils/analytics_util.dart';
 export 'package:intl/intl.dart';
-export 'package:cloud_firestore/cloud_firestore.dart';
-export 'package:firebase_core/firebase_core.dart';
-export 'package:firebase_crashlytics/firebase_crashlytics.dart';
 export 'package:hive_flutter/hive_flutter.dart';
 export 'package:email_validator/email_validator.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';

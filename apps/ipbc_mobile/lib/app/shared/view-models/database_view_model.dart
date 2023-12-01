@@ -15,7 +15,7 @@ class DatabaseViewModel {
     _data = dataParam;
     //if ((ValidationUtil.validationDatasource() == fireDatabase) || (_data.fireId == initialId)) {
     if (_data.fireId != initialId) {
-      String fireId = await Modular.get<FirestoreDatasource>().verifyUpdateDatasource();
+      String fireId = await Modular.get<SupabaseDatasource>().verifyUpdateDatasource();
       if ((_data.fireId != fireId) && fireId.isNotEmpty) {
         _data = HiveDatabaseConfigsDTO.empty().copyWith(fireId: fireId);
       }

@@ -4,7 +4,7 @@ import 'package:mocktail/mocktail.dart';
 import '../../../../mocks/mocks.dart';
 
 void main() {
-  test('getting services collection in use case', () async {
+  /*test('getting services collection in use case in firestore', () async {
     Repository<List<Map>> repository = RepositoryMock();
     Timestamp timestamp = Timestamp.now();
     Map entity = {
@@ -53,5 +53,5 @@ void main() {
     final collectionUsecase = ServiceUseCases(repository: repository);
     final result = await collectionUsecase.get('saturday-services/20');
     expect(result, emits(isA<List<ServiceEntity>>()));
-  });
+  });*/
 }

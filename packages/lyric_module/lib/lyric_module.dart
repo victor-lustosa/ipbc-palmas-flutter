@@ -4,7 +4,7 @@ export 'src/domain/use-cases/lyrics_use_cases.dart';
 export 'src/domain/entities/lyric_entity.dart';
 export 'src/domain/entities/verse_entity.dart';
 
-export 'src/infra/adapters/lyric_adapter.dart';
+export 'src/infra/adapters/supa/supa_lyric_adapter.dart';
 export 'src/infra/adapters/verse_adapter.dart';
 
 export 'src/infra/adapters/hive-dtos/hive_lyric_adapter.dart';
