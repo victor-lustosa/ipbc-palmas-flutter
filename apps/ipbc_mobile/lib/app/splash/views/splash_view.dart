@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../blocs/database_bloc.dart';
 import '../../exception/views/generic_error_view.dart';
-import '../../shared/view-models/database_view_model.dart';
-import '../main_module.dart';
+//import '../../shared/view-models/database_view_model.dart';
+import '../../main_module.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -15,14 +15,14 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> {
   late final DatabaseBloc _bloc;
-  late final DatabaseViewModel _databaseViewModel;
+ // late final DatabaseViewModel _databaseViewModel;
 
   @override
   initState() {
     super.initState();
-    _bloc = Modular.get<DatabaseBloc>();
-    _databaseViewModel = Modular.get<DatabaseViewModel>();
-    _bloc.add(GetDataEvent());
+  //  _bloc = Modular.get<DatabaseBloc>();
+   // _databaseViewModel = Modular.get<DatabaseViewModel>();
+   // _bloc.add(GetDataEvent());
   }
 
   @override
@@ -31,8 +31,8 @@ class _SplashViewState extends State<SplashView> {
       body: BlocConsumer<DatabaseBloc, DatabasesState>(
         listener: (context, state) async {
           if (state is FetchingDataState) {
-            var data = await _databaseViewModel.validate(state.entity);
-            _bloc.add(UpdateDataEvent(data: data));
+       //     var data = await _databaseViewModel.validate(state.entity);
+        //    _bloc.add(UpdateDataEvent(data: data));
             Modular.to.navigate(MainModule.initRoute);
           }
         },

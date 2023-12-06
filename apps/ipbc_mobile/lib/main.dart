@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter/foundation.dart';
 import 'app/app_widget.dart';
-import 'app/splash/main_module.dart';
+import 'app/main_module.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

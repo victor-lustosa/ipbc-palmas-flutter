@@ -1,4 +1,4 @@
-import 'package:core_module/core_module.dart';
+/*import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 import '../../splash/blocs/database_bloc.dart';
@@ -66,4 +66,4 @@ class DatabaseViewModel {
     }
     Modular.get<DatabaseBloc>().add(UpdateDataEvent(data: _data));
   }
-}
+}*/

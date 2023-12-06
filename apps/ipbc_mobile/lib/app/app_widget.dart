@@ -1,7 +1,7 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import 'splash/main_module.dart';
+import 'main_module.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({Key? key}) : super(key: key);
@@ -9,7 +9,7 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Modular.setInitialRoute(MainModule.splashRoute);
+    Modular.setInitialRoute(MainModule.initRoute);
 
     return MaterialApp.router(
       builder: (context, Widget? child) {

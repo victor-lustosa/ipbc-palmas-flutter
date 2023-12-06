@@ -10,8 +10,8 @@ class CheckConnectivityEvent<R> extends GenericEvent<R>  {
   CheckConnectivityEvent({this.path = ''});
 }
 
-class GetInFireEvent<R> extends GenericEvent<R> {
-  GetInFireEvent();
+class GetInSupaEvent<R> extends GenericEvent<R> {
+  GetInSupaEvent();
 }
 
 class GetInHiveEvent<R> extends GenericEvent<R> {

@@ -4,26 +4,19 @@ import 'package:flutter/material.dart';
 import '../service/service_module.dart';
 import '../shared/view-models/services_view_model.dart';
 import 'views/lyric_view.dart';
-import 'views/lyrics_list_view.dart';
 import 'blocs/lyric_bloc.dart';
 
 class LyricModule extends Module {
 
   static const String initialRoute = "/";
-  static const String lyricsListRoute = "/lyrics-list";
   static const String lyricRoute = "/lyric";
 
   @override
   void exportedBinds(i) {
     i.addSingleton<LyricBloc>(
       () => LyricBloc(
-        fireUseCase: LyricsUseCases(
+        supaUseCase: LyricsUseCases(
           repository: i.get<Repository<List<Map>>>(),
-        ),
-        hiveUseCase: LyricsUseCases(
-          repository: Repository(
-            datasource: HiveDatasource<HiveLyricDTO>(boxLabel: 'lyrics'),
-          ),
         ),
         viewModel: i.get<ServicesViewModel>(),
         analyticsUtil: i.get<AnalyticsUtil>(),

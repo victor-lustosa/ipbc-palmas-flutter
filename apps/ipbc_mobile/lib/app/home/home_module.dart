@@ -23,12 +23,9 @@ class HomeModule extends Module {
   static const String servicesListRoute = '/services';
   static const String servicesCollectionRoute = '/services-collection';
 
-  static final GlobalKey<NavigatorState> _androidNavigatorKey =
-      GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> _androidNavigatorKey = GlobalKey<NavigatorState>();
 
-  static GlobalKey<NavigatorState> getAndroidNavigatorKey() {
-    return _androidNavigatorKey;
-  }
+  static GlobalKey<NavigatorState> getAndroidNavigatorKey() => _androidNavigatorKey;
 
   @override
   void binds(Injector i) {

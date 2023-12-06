@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 
 import '../../home/home_module.dart';
 import '../../shared/blocs/generics.dart';
-import '../../shared/view-models/database_view_model.dart';
 import '../blocs/services_list_bloc.dart';
 import '../../exception/views/no_connection_view.dart';
 import '../../exception/views/generic_error_view.dart';
@@ -21,17 +20,11 @@ class ServicesListView extends StatefulWidget {
 class _ServicesListViewState extends State<ServicesListView> {
   late final ServicesListBloc _bloc;
   late List<ServicesEntity> entitiesList;
-  late final DatabaseViewModel _databaseViewModel;
   @override
   void initState() {
     super.initState();
     _bloc = Modular.get<ServicesListBloc>();
-    _databaseViewModel = Modular.get<DatabaseViewModel>();
-    if (!_databaseViewModel.data.isServicesUpdated) {
-      _bloc.add(CheckConnectivityEvent());
-    } else {
-      _bloc.add(GetInHiveEvent());
-    }
+    _bloc.add(CheckConnectivityEvent());
   }
 
   @override
@@ -42,13 +35,12 @@ class _ServicesListViewState extends State<ServicesListView> {
           child: BlocBuilder<ServicesListBloc, GenericState<ServicesListState>>(
             bloc: _bloc,
             builder: (context, state) {
-               if (state is LoadingState<ServicesListState>) {
+              if (state is LoadingState<ServicesListState>) {
                 return const LoadingWidget();
               } else if (state is NoConnectionState<ServicesListState>) {
                 return const NoConnectionView(index: 0);
               } else if (state is DataFetchedState<ServicesListState, ServicesEntity>) {
                 entitiesList = state.entities;
-                _databaseViewModel.checkUpdateData(context, 'services');
                 return Column(
                   children: [
                     Row(

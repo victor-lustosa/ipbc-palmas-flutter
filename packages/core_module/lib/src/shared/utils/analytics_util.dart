@@ -12,7 +12,6 @@ class AnalyticsUtil {
     required StackTrace st,
   }) {
     _logger.d('Record Error analytics event: $name');
-      FirebaseCrashlytics.instance.recordError(error, st, reason: 'a non-fatal error');
     }
   void setCustomKey({
     required String name,
@@ -20,6 +19,5 @@ class AnalyticsUtil {
     required String value,
   }) {
     _logger.d('Custom Key analytics event: $name');
-    FirebaseCrashlytics.instance.setCustomKey(key, value);
   }
 }

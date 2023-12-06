@@ -4,7 +4,6 @@ import 'package:flutter/material.dart' ;
 
 import '../../shared/blocs/generics.dart';
 import '../../shared/components/lyrics_list_widget.dart';
-import '../../shared/view-models/database_view_model.dart';
 import '../blocs/lyric_bloc.dart';
 import '../../exception/views/generic_error_view.dart';
 import '../../exception/views/no_connection_view.dart';
@@ -20,7 +19,6 @@ class LyricsListView extends StatefulWidget {
 class _LyricsListViewState extends State<LyricsListView> with TickerProviderStateMixin {
   late List<LyricEntity> _lyricsFetched;
   late final LyricBloc _bloc;
-  late final DatabaseViewModel _databaseViewModel;
   bool isSelected = false;
   String selectedValue = '';
 
@@ -29,12 +27,7 @@ class _LyricsListViewState extends State<LyricsListView> with TickerProviderStat
     super.initState();
     _lyricsFetched = [];
     _bloc = Modular.get<LyricBloc>();
-    _databaseViewModel = Modular.get<DatabaseViewModel>();
-    if (!_databaseViewModel.data.isLyricsUpdated) {
-      _bloc.add(CheckConnectivityEvent<LyricEvent>());
-    } else {
-      _bloc.add(GetInHiveEvent<LyricEvent>());
-    }
+    _bloc.add(CheckConnectivityEvent<LyricEvent>());
   }
 
   @override
@@ -51,7 +44,6 @@ class _LyricsListViewState extends State<LyricsListView> with TickerProviderStat
               return const NoConnectionView(index: 0);
             } else if (state is DataFetchedState<LyricState, LyricEntity>) {
               _lyricsFetched = state.entities;
-              _databaseViewModel.checkUpdateData(context, 'lyrics');
               return RefreshIndicator(
                 color: AppColors.darkGreen,
                 onRefresh: () async {

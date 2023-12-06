@@ -21,13 +21,8 @@ class ServiceModule extends Module {
     );
     i.addLazySingleton<ServicesCollectionBloc>(
       () => ServicesCollectionBloc(
-        fireUseCases: ServiceUseCases(
+        supaUseCases: ServiceUseCases(
           repository: i.get<Repository<List<Map>>>(),
-        ),
-        hiveUseCases: ServiceUseCases(
-          repository: Repository<List<Map>>(
-            datasource: HiveDatasource<HiveCollectionDTO>(boxLabel: 'collection'),
-          ),
         ),
         viewModel: i.get<ServicesViewModel>(),
         analyticsUtil: i.get<AnalyticsUtil>(),
@@ -37,13 +32,8 @@ class ServiceModule extends Module {
 
     i.addLazySingleton<ServicesListBloc>(
       () => ServicesListBloc(
-        fireUseCases: ServicesUseCases(
+        supaUseCases: ServicesUseCases(
           repository: i.get<Repository<List<Map>>>(),
-        ),
-        hiveUseCases: ServicesUseCases(
-          repository: Repository<List<Map>>(
-            datasource: HiveDatasource<HiveServicesDTO>(boxLabel: 'services'),
-          ),
         ),
         viewModel: i.get<ServicesViewModel>(),
         analyticsUtil: i.get<AnalyticsUtil>(),

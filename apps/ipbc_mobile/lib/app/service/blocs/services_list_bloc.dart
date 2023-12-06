@@ -7,21 +7,17 @@ import '../../shared/blocs/generics.dart';
 import '../../shared/view-models/services_view_model.dart';
 
 class ServicesListBloc extends Bloc<GenericEvent<ServicesListEvent>, GenericState<ServicesListState>> {
-  final IUseCases fireUseCases;
-  final IUseCases hiveUseCases;
+  final IUseCases supaUseCases;
   final ServicesViewModel viewModel;
   final String path = 'services/20';
   final AnalyticsUtil analyticsUtil;
 
   ServicesListBloc(
       {required this.viewModel,
-      required this.fireUseCases,
-      required this.analyticsUtil,
-      required this.hiveUseCases})
+      required this.supaUseCases,
+      required this.analyticsUtil})
       : super(LoadingState()) {
-    on<GetInFireEvent<ServicesListEvent>>(_getInFire);
-    on<UpdateInHiveEvent<ServicesListEvent>>(_updateInHive);
-    on<GetInHiveEvent<ServicesListEvent>>(_getInHive);
+    on<GetInSupaEvent<ServicesListEvent>>(_getInSupa);
     on<CheckConnectivityEvent<ServicesListEvent>>(_checkConnectivity);
     on<LoadingEvent<ServicesListEvent>>(_loading);
   }
@@ -29,36 +25,21 @@ class ServicesListBloc extends Bloc<GenericEvent<ServicesListEvent>, GenericStat
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
     final isConnected = await viewModel.isConnected();
     if (isConnected) {
-      add(GetInFireEvent<ServicesListEvent>());
+      add(GetInSupaEvent<ServicesListEvent>());
     } else {
       emit(NoConnectionState<ServicesListState>());
     }
   }
 
-  Future<void> _getInFire(GetInFireEvent event, emit) async {
+  Future<void> _getInSupa(GetInSupaEvent event, emit) async {
     await emit.onEach<List<ServicesEntity>>(
-      await fireUseCases.get(path),
+      await supaUseCases.get(path),
       onData: (services) {
-        add(UpdateInHiveEvent<ServicesListEvent>(entities: services));
         emit(DataFetchedState<ServicesListState, ServicesEntity>(entities: services));
       },
       onError: (error, st) async {
-        analyticsUtil.recordError(name: 'fire services bloc', error: error, st: st);
-        analyticsUtil.setCustomKey(name: 'fire services bloc',key: 'get fire services bloc',value: error.toString());
-        emit(ExceptionState<ServicesListState>(message: error.toString()));
-      },
-    );
-  }
-
-  Future<void> _getInHive(GetInHiveEvent event, emit) async {
-    await emit.onEach<List<ServicesEntity>>(
-      await hiveUseCases.get(path),
-      onData: (service) {
-        emit(DataFetchedState<ServicesListState, ServicesEntity>(entities: service));
-      },
-      onError: (error, st) async {
-        analyticsUtil.recordError(name: 'hive services bloc',error: error,st: st,);
-        analyticsUtil.setCustomKey(name: 'hive services bloc', key:'get hive services bloc',value: error.toString());
+        analyticsUtil.recordError(name: 'supa services bloc', error: error, st: st);
+        analyticsUtil.setCustomKey(name: 'supa services bloc',key: 'get supa services bloc',value: error.toString());
         emit(ExceptionState<ServicesListState>(message: error.toString()));
       },
     );
@@ -66,10 +47,6 @@ class ServicesListBloc extends Bloc<GenericEvent<ServicesListEvent>, GenericStat
 
   Future<void> _loading(event, emit) async {
     emit(LoadingState<ServicesListState>());
-  }
-
-  Future<void> _updateInHive(UpdateInHiveEvent event, emit) async {
-    await hiveUseCases.update(path, event.entities);
   }
 }
 

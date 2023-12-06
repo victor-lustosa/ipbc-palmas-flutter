@@ -9,7 +9,6 @@ import '../../exception/views/generic_error_view.dart';
 import '../../exception/views/no_connection_view.dart';
 import '../../service/blocs/services_list_bloc.dart';
 import '../../shared/blocs/generics.dart';
-import '../../shared/view-models/database_view_model.dart';
 import '../home_module.dart';
 
 class HomeView extends StatefulWidget {
@@ -21,7 +20,6 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin {
   late final ServicesListBloc _bloc;
-  late final DatabaseViewModel _databaseViewModel;
   late List<ServicesEntity> entitiesList;
   int position = 0;
 
@@ -29,12 +27,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
   void initState() {
     super.initState();
     _bloc = Modular.get<ServicesListBloc>();
-    _databaseViewModel = Modular.get<DatabaseViewModel>();
-    if (!_databaseViewModel.data.isServicesUpdated) {
-      _bloc.add(CheckConnectivityEvent());
-    } else {
-      _bloc.add(GetInHiveEvent());
-    }
+    _bloc.add(CheckConnectivityEvent());
   }
 
   @override
@@ -54,7 +47,6 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
               return const NoConnectionView(index: 0);
             } else if (state is DataFetchedState<ServicesListState, ServicesEntity>) {
               entitiesList = state.entities;
-              _databaseViewModel.checkUpdateData(context, 'services');
               return SingleChildScrollView(
                 child: SizedBox(
                   width: context.mediaQuery.size.width,
@@ -65,7 +57,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                       Container(
                         margin: const EdgeInsets.only(top: 20),
                         child: InkWell(
-                          onTap: (){
+                          onTap: () {
                             Navigator.pushNamed(
                               context,
                               HomeModule.servicesListRoute,
@@ -90,7 +82,10 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                             fontWeight: FontWeight.w500,
                             color: AppColors.white,
                           ),
-                          margin: const EdgeInsets.only(left: 15.5, right: 15.5),
+                          margin: const EdgeInsets.only(
+                            left: 15.5,
+                            right: 15.5,
+                          ),
                           route: HomeModule.servicesCollectionRoute,
                           mainAxisAlignment: MainAxisAlignment.center,
                           width: context.mediaQuery.size.width,
@@ -99,17 +94,17 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                         ),
                       ),
                       InkWell(
-                        onTap: (){
-                            Navigator.pushNamed(
-                              context,
-                              HomeModule.servicesListRoute,
-                            );
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            HomeModule.servicesListRoute,
+                          );
                         },
                         child: Column(
                           children: [
                             Container(
-                                margin: const EdgeInsets.only(top: 24),
-                                child: title(text: "Eventos"),
+                              margin: const EdgeInsets.only(top: 24),
+                              child: title(text: "Eventos"),
                             ),
                             subtitle(
                               right: 18,
@@ -140,9 +135,8 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
   }
 
   Widget title({required String text}) => Container(
-   // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
-    margin: const EdgeInsets.only(left: 17, right: 9),
-    child: Row(
+        margin: const EdgeInsets.only(left: 17, right: 9),
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
@@ -163,7 +157,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
             ),
           ],
         ),
-  );
+      );
 
   Widget subtitle({required double right, required String text}) => Align(
         alignment: Alignment.centerLeft,

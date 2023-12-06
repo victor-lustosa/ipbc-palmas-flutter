@@ -3,12 +3,11 @@ import 'dart:io';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ipbc_palmas/layout/top-bar/service_top_bar_widget.dart';
 
+import '../../../layout/top-bar/service_top_bar_widget.dart';
 import '../../home/home_module.dart';
 import '../../shared/blocs/generics.dart';
-import '../../shared/view-models/database_view_model.dart';
-import '../../splash/main_module.dart';
+import '../../main_module.dart';
 import '../service_module.dart';
 import 'service_view.dart';
 import '../blocs/services_collection_bloc.dart';
@@ -28,19 +27,13 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
   late final ServicesCollectionBloc _bloc;
   late List<ServiceEntity> entitiesList;
   late String path;
-  late final DatabaseViewModel _databaseViewModel;
   @override
   void initState() {
     super.initState();
     entitiesList = [];
     path = widget.entity.path;
     _bloc = Modular.get<ServicesCollectionBloc>();
-    _databaseViewModel = Modular.get<DatabaseViewModel>();
-    if (_databaseViewModel.isNotUpdated(path)) {
-      _bloc.add(CheckConnectivityEvent(path: path));
-    } else {
-      _bloc.add(GetInHiveEvent(path: path));
-    }
+    _bloc.add(CheckConnectivityEvent(path: path));
   }
 
   @override
@@ -53,19 +46,19 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
               splashColor: const Color(0x66C8C8C8),
               highlightColor: const Color(0x66BCBCBC),
             ),
-            child: BlocBuilder<ServicesCollectionBloc, GenericState<ServicesCollectionState>>(
+            child: BlocBuilder<ServicesCollectionBloc,
+                GenericState<ServicesCollectionState>>(
               bloc: _bloc,
               builder: (context, state) {
-               if (state is LoadingState<ServicesCollectionState>) {
+                if (state is LoadingState<ServicesCollectionState>) {
                   return const LoadingWidget();
                 } else if (state is NoConnectionState<ServicesCollectionState>) {
                   return const NoConnectionView(index: 0);
                 } else if (state is DataFetchedState<ServicesCollectionState, ServiceEntity>) {
                   entitiesList = state.entities;
-                  _databaseViewModel.checkUpdateData(context, path);
                   return Column(
                     children: [
-                       ServiceTopBarWidget(entity: widget.entity),
+                      ServiceTopBarWidget(entity: widget.entity),
                       Container(
                         margin: const EdgeInsets.only(
                           top: 25,
@@ -75,7 +68,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                         child: SizedBox(
                           width: context.mediaQuery.size.width,
                           child: ListView.separated(
-                            separatorBuilder: (BuildContext context, int index) {
+                            separatorBuilder:
+                                (BuildContext context, int index) {
                               return const SizedBox(height: 16);
                             },
                             scrollDirection: Axis.vertical,
@@ -92,7 +86,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                 child: ListTile(
                                   visualDensity: VisualDensity.comfortable,
                                   horizontalTitleGap: 2,
-                                  contentPadding: const EdgeInsets.symmetric(vertical: 9),
+                                  contentPadding:
+                                      const EdgeInsets.symmetric(vertical: 9),
                                   title: Container(
                                     margin: const EdgeInsets.only(left: 16),
                                     child: Text(
@@ -107,9 +102,11 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                     ),
                                   ),
                                   subtitle: Container(
-                                    margin: const EdgeInsets.only(left: 16, top: 4),
+                                    margin:
+                                        const EdgeInsets.only(left: 16, top: 4),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           overflow: TextOverflow.ellipsis,
@@ -177,7 +174,9 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
           focusElevation: 1.8,
           hoverElevation: 1.8,
           onPressed: () {
-            Modular.to.pushNamed(MainModule.servicesRoute + ServiceModule.insertServicesRoute);
+            Modular.to.pushNamed(
+              MainModule.servicesRoute + ServiceModule.insertServicesRoute,
+            );
           },
           backgroundColor: AppColors.add,
           child: const Icon(
@@ -185,7 +184,6 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
             Icons.add_rounded,
             color: AppColors.white,
           ),
-          // icon: Icon(Icons.map, size: 15, color: Colors.white)
         ),
       ),
     );
