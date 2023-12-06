@@ -13,7 +13,7 @@ class HiveDatasource<R> implements IDatasource {
     await Hive.initFlutter();
     _allAdapters();
     await Future.wait<void>([
-      Hive.openBox<HiveDatabaseConfigsDTO>('database-configs'),
+      //Hive.openBox<HiveDatabaseConfigsDTO>('database-configs'),
       Hive.openBox<HiveLyricDTO>('lyrics'),
       Hive.openBox<HiveAuthDTO>('auth'),
       Hive.openBox<HiveCollectionDTO>('collection'),
@@ -22,7 +22,7 @@ class HiveDatasource<R> implements IDatasource {
   }
 
   static _allAdapters() {
-    Hive.registerAdapter(HiveDatabaseConfigsDTOAdapter());
+    //Hive.registerAdapter(HiveDatabaseConfigsDTOAdapter());
     Hive.registerAdapter(HiveServicesDTOAdapter());
     Hive.registerAdapter(HiveAuthDTOAdapter());
     Hive.registerAdapter(HiveServiceDTOAdapter());
@@ -53,9 +53,9 @@ class HiveDatasource<R> implements IDatasource {
         var result = box.values.where((entity) => (entity as HiveAuthDTO).password == params[2]  && entity.email == params[1]).toList();
         return result.isNotEmpty ? (result[0] as HiveAuthDTO) : HiveAuthDTO.empty();
 
-      case 'database-configs':
-        var result = box.get(params[0]);
-        return result != null ? (result as HiveDatabaseConfigsDTO) : HiveDatabaseConfigsDTO.empty();
+    //  case 'database-configs':
+    //    var result = box.get(params[0]);
+       // return result != null ? (result as HiveDatabaseConfigsDTO) : HiveDatabaseConfigsDTO.empty();
     }
   }
 

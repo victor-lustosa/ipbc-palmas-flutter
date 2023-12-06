@@ -3,16 +3,12 @@ library core_module;
 export 'src/core/domain/repositories/repository.dart';
 export 'src/core/domain/use-cases/use_cases.dart';
 export 'src/core/infra/datasources/datasource.dart';
-export 'src/splash/infra/models/hive-dtos/hive_database_configs_dto.dart';
 export 'src/core/infra/repositories/repository.dart';
-
-export 'src/splash/infra/use-cases/databases_use_cases.dart';
 
 export 'src/core/external/firestore_datasource.dart';
 export 'src/core/external/hive_datasource.dart';
 export 'src/core/external/supabase_datasource.dart';
 
-export 'src/configs/firebase_options.dart';
 export 'src/configs/no_glow_behavior.dart';
 export 'src/configs/generic_bloc_observer.dart';
 
