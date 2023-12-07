@@ -41,6 +41,7 @@ class AppImages {
   static const String noConnectionImage = 'assets/images/perm_scan_wifi.png';
   static const String logo = 'assets/images/logo.png';
   static const String lock = 'assets/images/lock.png';
+  static const String mailCheck = 'assets/images/mail_check.png';
   static const String logoLoginImage = 'assets/images/auth/logo_ipbc_login.png';
 
   static final List<String> defaultCoversList = [
