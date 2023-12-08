@@ -31,14 +31,12 @@ class SupaServiceAdapter {
       'id': data.id,
       'hour': data.hour,
       'image': data.image,
-      'createAt': data.createAt,
+      'createAt': data.createAt.toString(),
       'heading': data.heading,
       'title': data.title,
       'type': data.type,
       'theme': data.theme,
       'preacher': data.preacher,
-      'lyricsList': SupaLyricAdapter.toMapList(data.lyricsList),
-      'liturgyList': LiturgyAdapter.toMapList(data.liturgyList),
       'guideIsVisible': data.guideIsVisible
     };
   }
@@ -51,9 +49,7 @@ class SupaServiceAdapter {
           hour: entity['hour'],
           liturgyList: LiturgyAdapter.fromMap(entity['liturgyList']),
           lyricsList: SupaLyricAdapter.fromMapList(entity['lyricsList']),
-          createAt: entity['createAt'].runtimeType == String
-              ? DateTime.parse(entity['createAt'])
-              : (entity['createAt'] as DateTime),
+          createAt: DateTime.parse(entity['createAt']),
           heading: entity['heading'],
           title: entity['title'],
           guideIsVisible: entity['guideIsVisible'],

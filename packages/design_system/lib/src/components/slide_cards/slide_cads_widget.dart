@@ -68,7 +68,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                   ),
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    colorFilter: const ColorFilter.mode(
+                    colorFilter: ColorFilter.mode(
                       Color.fromRGBO(0, 66, 46, 0.40),
                       BlendMode.color,
                     ),

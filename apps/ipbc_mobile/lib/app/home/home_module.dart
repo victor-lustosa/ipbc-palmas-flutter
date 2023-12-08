@@ -28,11 +28,6 @@ class HomeModule extends Module {
   static GlobalKey<NavigatorState> getAndroidNavigatorKey() => _androidNavigatorKey;
 
   @override
-  void binds(Injector i) {
-    i.add(HomeViewModel.new);
-  }
-
-  @override
   List<Module> get imports => [LyricModule(), ServiceModule()];
 
   @override
@@ -72,7 +67,7 @@ class _HomeRoutesState extends State<HomeRoutes> {
             return CustomTransitionPageRoute(
               transitionSpeed: const Duration(milliseconds: 700),
               reverseSpeed: const Duration(milliseconds: 700),
-              child: const ServicesListView(),
+              child: ServicesListView(entitiesList: Modular.args.data ?? []),
               tween: Tween(begin: const Offset(1, 0), end: Offset.zero)
                   .chain(CurveTween(curve: Curves.ease)),
             );

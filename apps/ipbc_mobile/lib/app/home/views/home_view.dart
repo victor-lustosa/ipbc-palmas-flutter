@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../../../layout/top-bar/main_top_bar_widget.dart';
 import '../../exception/views/generic_error_view.dart';
 import '../../exception/views/no_connection_view.dart';
-import '../../service/blocs/services_list_bloc.dart';
+import '../blocs/home_bloc.dart';
 import '../../shared/blocs/generics.dart';
 import '../home_module.dart';
 
@@ -19,14 +19,13 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin {
-  late final ServicesListBloc _bloc;
-  late List<ServicesEntity> entitiesList;
-  int position = 0;
+  late final HomeBloc _bloc;
+  late List<ServicesEntity> _servicesList;
 
   @override
   void initState() {
     super.initState();
-    _bloc = Modular.get<ServicesListBloc>();
+    _bloc = Modular.get<HomeBloc>();
     _bloc.add(CheckConnectivityEvent());
   }
 
@@ -38,15 +37,15 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
     super.build(context);
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<ServicesListBloc, GenericState<ServicesListState>>(
+        child: BlocBuilder<HomeBloc, GenericState<HomeState>>(
           bloc: _bloc,
           builder: (context, state) {
-            if (state is LoadingState<ServicesListState>) {
+            if (state is LoadingState<HomeState>) {
               return const LoadingWidget();
-            } else if (state is NoConnectionState<ServicesListState>) {
+            } else if (state is NoConnectionState<HomeState>) {
               return const NoConnectionView(index: 0);
-            } else if (state is DataFetchedState<ServicesListState, ServicesEntity>) {
-              entitiesList = state.entities;
+            } else if (state is DataFetchedState<HomeState, ServicesEntity>) {
+              _servicesList = state.entities;
               return SingleChildScrollView(
                 child: SizedBox(
                   width: context.mediaQuery.size.width,
@@ -61,6 +60,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                             Navigator.pushNamed(
                               context,
                               HomeModule.servicesListRoute,
+                              arguments: _servicesList,
                             );
                           },
                           child: Column(
@@ -89,7 +89,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                           route: HomeModule.servicesCollectionRoute,
                           mainAxisAlignment: MainAxisAlignment.center,
                           width: context.mediaQuery.size.width,
-                          services: entitiesList,
+                          services: _servicesList,
                           height: 167,
                         ),
                       ),
@@ -118,7 +118,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                         height: 268,
                         child: SlideCardsWidget(
                           route: HomeModule.servicesCollectionRoute,
-                          services: entitiesList,
+                          services: _servicesList,
                         ),
                       ),
                     ],

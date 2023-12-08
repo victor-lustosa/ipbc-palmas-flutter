@@ -5,7 +5,6 @@ export 'src/core/domain/use-cases/use_cases.dart';
 export 'src/core/infra/datasources/datasource.dart';
 export 'src/core/infra/repositories/repository.dart';
 
-export 'src/core/external/firestore_datasource.dart';
 export 'src/core/external/hive_datasource.dart';
 export 'src/core/external/supabase_datasource.dart';
 
@@ -15,8 +14,10 @@ export 'src/configs/generic_bloc_observer.dart';
 export 'src/shared/mixins/launch_url_mixin.dart';
 export 'src/shared/mixins/clipboard_mixin.dart';
 export 'src/shared/mixins/email_mixin.dart';
+export 'src/shared/mixins/connectivity_mixin.dart';
 export 'src/shared/utils/validation_util.dart';
 export 'src/shared/utils/responsivity_util.dart';
+export 'src/shared/utils/supa_services_util.dart';
 export 'src/app_module.dart';
 export 'src/configs/app_configs.dart';
 

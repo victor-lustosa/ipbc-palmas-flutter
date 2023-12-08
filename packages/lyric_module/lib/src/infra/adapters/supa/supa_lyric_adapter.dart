@@ -42,9 +42,7 @@ class SupaLyricAdapter {
         LyricModel(
           albumCover: lyric['albumCover'],
           id: lyric['id'],
-          createAt: lyric['createAt'].runtimeType == String
-              ? DateTime.parse(lyric['createAt'])
-              : (lyric['createAt'] as DateTime),
+          createAt: DateTime.parse(lyric['createAt']),
           title: lyric['title'],
           group: lyric['group'],
           verses: [
@@ -62,7 +60,7 @@ class SupaLyricAdapter {
         .map((entity) => {
       'id': entity.id,
       'title': entity.title,
-      'createAt': entity.createAt,
+      'createAt': entity.createAt.toString(),
       'albumCover': entity.albumCover,
       'group': entity.group,
       'verses': VerseAdapter.toMapList(entity.verses),

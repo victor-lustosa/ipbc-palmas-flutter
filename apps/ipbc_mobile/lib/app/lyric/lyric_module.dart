@@ -2,12 +2,10 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 import '../service/service_module.dart';
-import '../shared/view-models/services_view_model.dart';
 import 'views/lyric_view.dart';
 import 'blocs/lyric_bloc.dart';
 
 class LyricModule extends Module {
-
   static const String initialRoute = "/";
   static const String lyricRoute = "/lyric";
 
@@ -18,8 +16,6 @@ class LyricModule extends Module {
         supaUseCase: LyricsUseCases(
           repository: i.get<Repository<List<Map>>>(),
         ),
-        viewModel: i.get<ServicesViewModel>(),
-        analyticsUtil: i.get<AnalyticsUtil>(),
       ),
       config: CoreModule.blocConfig(),
     );
@@ -39,7 +35,9 @@ class LyricModule extends Module {
         reverseTransitionDuration: const Duration(milliseconds: 500),
         transitionBuilder: (context, anim1, anim2, child) {
           return SlideTransition(
-            position: anim1.drive(Tween(begin: const Offset(0, 1), end: Offset.zero).chain(CurveTween(curve: Curves.ease))),
+            position: anim1.drive(
+                Tween(begin: const Offset(0, 1), end: Offset.zero)
+                    .chain(CurveTween(curve: Curves.ease))),
             child: child,
           );
         },

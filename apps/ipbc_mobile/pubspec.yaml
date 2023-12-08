@@ -37,7 +37,6 @@ dependencies:
   flutter_svg: ^2.0.5
   path_provider: ^2.0.14
   upgrader: ^7.0.0
-  connectivity_plus: ^4.0.0
   flutter_lints: ^2.0.1
   build_runner: ^2.3.3   # <-- and make sure that is also there
   cupertino_icons: ^1.0.5

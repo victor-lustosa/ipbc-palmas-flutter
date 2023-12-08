@@ -1,5 +1,5 @@
 {
-  "id": "",
+  "id": 0,
   "createAt": "",
   "image": "assets/images/sunday_morning.jpg",
   "title": "Domingo de manhã",
@@ -37,7 +37,7 @@
   ],
   "lyricsList": [
     {
-      "id": "",
+      "id": 0,
       "title": "Sonda-me",
       "group": "Aline Barros",
       "albumCover": "",
@@ -45,7 +45,7 @@
       "verses": []
     },
     {
-      "id": "",
+      "id": 1,
       "title": "Nele Você Pode Confiar",
       "group": "Rebanhão",
       "albumCover": "",

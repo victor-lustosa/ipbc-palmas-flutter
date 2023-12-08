@@ -17,6 +17,7 @@ dependencies:
   http: ^1.1.0
   logger: ^1.3.0
   intl: ^0.18.1
+  connectivity_plus: ^4.0.0
   url_launcher: ^6.1.10
   email_validator: ^2.1.17
   flutter_modular: ^6.3.1
@@ -41,7 +42,10 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
-    - assets/data/
+    - assets/data/saturday-services/
+    - assets/data/sunday-morning-services/
+    - assets/data/sunday-evening-services/
+    - assets/data/unknown-lyrics/
 # To add assets to your package, add an assets section, like this:
 # assets:
 #   - images/a_dot_burr.jpeg

@@ -4,17 +4,12 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../shared/blocs/generics.dart';
-import '../../shared/view-models/services_view_model.dart';
 
-class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>> {
+class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>> with ConnectivityMixin{
   final ILyricsUseCases supaUseCase;
-  final ServicesViewModel viewModel;
-  final AnalyticsUtil analyticsUtil;
   final String path = 'lyrics/20';
 
   LyricBloc({
-    required this.viewModel,
-    required this.analyticsUtil,
     required this.supaUseCase,
   }) : super(LoadingState<LyricState>()) {
     on<GetInSupaEvent<LyricEvent>>(_getInSupa);
@@ -25,8 +20,8 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
 
   Future<void> _checkConnectivity(
       CheckConnectivityEvent<LyricEvent> event, emit) async {
-    final isConnected = await viewModel.isConnected();
-    if (isConnected) {
+    final response = await isConnected();
+    if (response) {
       add(GetInSupaEvent<LyricEvent>());
     } else {
       emit(NoConnectionState<LyricState>());
@@ -40,8 +35,8 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
         emit(DataFetchedState<LyricState, LyricEntity>(entities: lyrics));
       },
       onError: (error, st) {
-        analyticsUtil.recordError(name: 'lyric bloc', error: error, st: st);
-        analyticsUtil.setCustomKey(name: 'lyric bloc', key: 'get supa lyrics bloc', value: error.toString());
+        AnalyticsUtil.recordError(name: 'lyric bloc', error: error, st: st);
+        AnalyticsUtil.setCustomKey(name: 'lyric bloc', key: 'get supa lyrics bloc', value: error.toString());
         emit(ExceptionState<LyricState>(message: error.toString()));
       },
     );

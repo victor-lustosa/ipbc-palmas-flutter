@@ -12,7 +12,6 @@ class CoreModule extends Module {
 
   @override
   void exportedBinds(Injector i) {
-    i.addSingleton<AnalyticsUtil>(AnalyticsUtil.new);
      i.addSingleton<SupabaseDatasource>(() => SupabaseDatasource(supabaseClient: Supabase.instance.client));
     i.addSingleton<Repository<List<Map>>>(
           () => Repository<List<Map>>(

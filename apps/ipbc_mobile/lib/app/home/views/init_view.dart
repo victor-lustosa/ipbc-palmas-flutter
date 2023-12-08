@@ -25,7 +25,7 @@ class _InitViewState extends State<InitView> {
   @override
   void initState() {
     super.initState();
-    _viewModel = Modular.get<HomeViewModel>();
+    _viewModel = HomeViewModel();
   }
 
   void onItemTapped(int index) {

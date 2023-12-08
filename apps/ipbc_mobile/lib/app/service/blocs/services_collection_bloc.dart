@@ -4,28 +4,20 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../shared/blocs/generics.dart';
-import '../../shared/view-models/services_view_model.dart';
 
-class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
-    GenericState<ServicesCollectionState>> {
+class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>, GenericState<ServicesCollectionState>> with ConnectivityMixin{
   final IUseCases supaUseCases;
-  final ServicesViewModel viewModel;
-  final AnalyticsUtil analyticsUtil;
   String path = '';
 
-  ServicesCollectionBloc(
-      {required this.viewModel,
-      required this.supaUseCases,
-      required this.analyticsUtil})
-      : super(LoadingState()) {
+  ServicesCollectionBloc({required this.supaUseCases}) : super(LoadingState()) {
     on<GetInSupaEvent<ServicesCollectionEvent>>(_getInSupa);
     on<LoadingEvent<ServicesCollectionEvent>>(_loading);
     on<CheckConnectivityEvent<ServicesCollectionEvent>>(_checkConnectivity);
   }
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
     path = event.path;
-    final isConnected = await viewModel.isConnected();
-    if (isConnected) {
+    final response = await isConnected();
+    if (response) {
       add(GetInSupaEvent<ServicesCollectionEvent>());
     } else {
       emit(NoConnectionState<ServicesCollectionState>());
@@ -42,9 +34,9 @@ class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
         emit(DataFetchedState<ServicesCollectionState, ServiceEntity>(entities: services));
       },
       onError: (error, st) async {
-        analyticsUtil.recordError(
+        AnalyticsUtil.recordError(
             name: 'supa collection bloc', error: error, st: st);
-        analyticsUtil.setCustomKey(
+        AnalyticsUtil.setCustomKey(
             name: 'supa collection bloc',
             key: 'get supa collection bloc',
             value: error.toString());

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../configs/app_routes.dart';
@@ -20,5 +20,9 @@ class HomeViewModel extends ChangeNotifier {
   jumpToPage(int index){
     selectedIndex = index;
     notifyListeners();
+  }
+
+  fetchingSearch() {
+    //print('chegueii');
   }
 }

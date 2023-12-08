@@ -3,16 +3,16 @@ import 'package:logger/logger.dart';
 
 class AnalyticsUtil {
 
-  final _logger = Logger();
+  static final _logger = Logger();
 
-  void recordError({
+  static void recordError({
     required String name,
     required Exception error,
     required StackTrace st,
   }) {
     _logger.d('Record Error analytics event: $name');
     }
-  void setCustomKey({
+  static void  setCustomKey({
     required String name,
     required String key,
     required String value,

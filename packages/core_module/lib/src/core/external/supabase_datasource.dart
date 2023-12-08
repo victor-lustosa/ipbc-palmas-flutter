@@ -1,9 +1,8 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core_module.dart';
+import '../../configs/api_keys.dart';
 
 class SupabaseDatasource implements IDatasource {
-  static const supabaseUrl = 'YOUR_SUPABASE_URL';
-  static const supabaseKey = 'YOUR_ANON_KEY';
 
   SupabaseDatasource({required SupabaseClient supabaseClient}) : _supaClient = supabaseClient;
 
@@ -12,15 +11,20 @@ class SupabaseDatasource implements IDatasource {
   List<String> params = [];
 
   static Future init() async {
-    await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
+    await Supabase.initialize(url: ApiKeys.supabaseUrl, anonKey: ApiKeys.supabaseKey);
   }
 
   @override
   Future<Map<String, dynamic>> get(String path) async {
     params = path.split('/');
     Map<String,dynamic> result = {};
-    final data = await _supaClient.from(params[0]).select().order(params[1], ascending: params[3].toLowerCase() == 'true');
-    print(data);
+    if(params.length > 3){
+      final data = await _supaClient.from(params[0]).select().eq(params[1],params[2]).order(params[4], ascending: params[5].toLowerCase() == 'true');
+      print(data);
+    } else{
+      final data = await _supaClient.from(params[0]).select().order(params[1], ascending: params[2].toLowerCase() == 'true');
+      print(data);
+    }
     return result;
   }
 
