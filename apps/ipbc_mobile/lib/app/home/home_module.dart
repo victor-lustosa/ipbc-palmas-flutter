@@ -12,6 +12,7 @@ import '../service/service_module.dart';
 import '../lyric/lyric_module.dart';
 import '../configs/app_routes.dart';
 
+import 'blocs/home_bloc.dart';
 import 'view-models/home_view_model.dart';
 import 'views/home_view.dart';
 import 'views/init_view.dart';
@@ -29,7 +30,15 @@ class HomeModule extends Module {
 
   @override
   List<Module> get imports => [LyricModule(), ServiceModule()];
-
+ @override
+  void binds(Injector i) {
+   i.addLazySingleton<HomeBloc>(
+         () => HomeBloc(
+       supaUseCases: ServicesUseCases(repository: i.get<Repository<List<dynamic>>>()),
+     ),
+     config: CoreModule.blocConfig(),
+   );
+  }
   @override
   void routes(r) {
     r.child(initialRoute, child: (_) => const InitView());

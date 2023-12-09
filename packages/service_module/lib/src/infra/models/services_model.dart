@@ -2,7 +2,7 @@ import 'package:lyric_module/lyric_module.dart';
 
 class ServicesModel extends ServicesEntity {
   ServicesModel({
-    required String id,
+    required int id,
     required String image,
     required String hour,
     required String path,
@@ -23,12 +23,12 @@ class ServicesModel extends ServicesEntity {
         hour: '',
         image: '',
         heading: '',
-        id: '',
+        id: SupaServicesUtil.createId(),
       );
 
   ServicesModel copyWith({
     String? title,
-    String? id,
+    int? id,
     String? path,
     String? hour,
     String? image,

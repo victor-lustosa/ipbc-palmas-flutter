@@ -15,17 +15,16 @@ class SupabaseDatasource implements IDatasource {
   }
 
   @override
-  Future<Map<String, dynamic>> get(String path) async {
+  Future<List<dynamic>> get(String path) async {
     params = path.split('/');
-    Map<String,dynamic> result = {};
+    final data;
     if(params.length > 3){
-      final data = await _supaClient.from(params[0]).select().eq(params[1],params[2]).order(params[4], ascending: params[5].toLowerCase() == 'true');
+      data = await _supaClient.from(params[0]).select().eq(params[1],params[2]).order(params[4], ascending: params[5].toLowerCase() == 'true');
       print(data);
     } else{
-      final data = await _supaClient.from(params[0]).select().order(params[1], ascending: params[2].toLowerCase() == 'true');
-      print(data);
+      data = await _supaClient.from(params[0]).select().order(params[1], ascending: params[2].toLowerCase() == 'true');
     }
-    return result;
+    return Future.value(data);
   }
 
   @override

@@ -2,7 +2,7 @@
 import 'package:lyric_module/lyric_module.dart';
 
 class ServiceUseCases implements IUseCases<Stream<List<ServiceEntity>>>{
-  final IRepository<List<Map>> repository;
+  final IRepository<List<dynamic>> repository;
   ServiceUseCases({required this.repository});
 
   @override

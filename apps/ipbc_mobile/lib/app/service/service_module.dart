@@ -16,14 +16,7 @@ class ServiceModule extends Module {
 
     i.addLazySingleton<ServicesCollectionBloc>(
       () => ServicesCollectionBloc(
-        supaUseCases: ServiceUseCases(repository: i.get<Repository<List<Map>>>()),
-      ),
-      config: CoreModule.blocConfig(),
-    );
-
-    i.addLazySingleton<HomeBloc>(
-      () => HomeBloc(
-        supaUseCases: ServicesUseCases(repository: i.get<Repository<List<Map>>>()),
+        supaUseCases: ServiceUseCases(repository: i.get<Repository<List<dynamic>>>()),
       ),
       config: CoreModule.blocConfig(),
     );
