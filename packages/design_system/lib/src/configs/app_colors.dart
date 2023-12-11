@@ -23,14 +23,17 @@ class AppColors {
 
   //secondary
   static const Color secondaryGreen = Color(0xFF00A876);
+  static const Color primaryGreen = Color(0xFF14C5A0);
+  static const Color cardGreen = Color(0xFF006D4E);
+  static const Color tabGreen = Color(0xFF00906b);
+  static const Color secondaryGreen2 = Color.fromRGBO(144, 194, 180, 1.000);
   static const Color secondaryGrey = Color(0xFFEBEBEB);
   static const Color vagalumeBackground = Color.fromRGBO(235, 235, 235, 40);
   static const Color highlightGreen = Color(0xFF00E8A2);
   static const Color timelineGuideTGreen = Color(0xFFCCDED9);
   static const Color badgeGreen = Color(0xFFE4F5F0);
-  static const Color hintInputForm = Color(0xFFA3A3A3);
 
-//system colors ios
+  static const Color hintInputForm = Color(0xFFA3A3A3); //system colors ios
   static const Color confirmation = Color(0xFF34C759);
   static const Color delete = Color(0xFFFF3B30);
   static const Color warning = Color(0xFFFF9500);
