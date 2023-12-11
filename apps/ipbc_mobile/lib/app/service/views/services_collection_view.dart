@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../layout/top-bar/service_top_bar_widget.dart';
-import '../../home/home_module.dart';
-import '../../shared/blocs/generics.dart';
-import '../../main_module.dart';
-import '../service_module.dart';
-import 'service_view.dart';
-import '../blocs/services_collection_bloc.dart';
 import '../../exception/views/generic_error_view.dart';
 import '../../exception/views/no_connection_view.dart';
+import '../../shared/blocs/generics.dart';
+import '../../home/home_module.dart';
+import '../../main_module.dart';
+import '../blocs/services_collection_bloc.dart';
+import '../service_module.dart';
+import 'service_view.dart';
 
 class ServicesCollectionView extends StatefulWidget {
   const ServicesCollectionView({Key? key, required this.entity})

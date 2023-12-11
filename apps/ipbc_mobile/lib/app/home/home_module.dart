@@ -13,7 +13,6 @@ import '../lyric/lyric_module.dart';
 import '../configs/app_routes.dart';
 
 import 'blocs/home_bloc.dart';
-import 'view-models/home_view_model.dart';
 import 'views/home_view.dart';
 import 'views/init_view.dart';
 

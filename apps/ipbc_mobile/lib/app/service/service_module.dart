@@ -1,7 +1,5 @@
 import 'package:core_module/core_module.dart' ;
 import 'package:flutter/material.dart';
-
-import '../home/blocs/home_bloc.dart';
 import 'blocs/services_collection_bloc.dart';
 import 'views/admin/insert_services_view.dart';
 

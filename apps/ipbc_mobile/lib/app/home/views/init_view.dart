@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../layout/bottom-bar/cupertino/cupertino_bottom_bar_widget.dart';
 import '../../../layout/bottom-bar/material/material_bottom_bar_widget.dart';
+import '../../configs/app_routes.dart';
 import '../home_module.dart';
 import '../view-models/home_view_model.dart';
 import '../../offers/views/offers_view.dart';
@@ -21,7 +23,7 @@ class _InitViewState extends State<InitView> {
   late final HomeViewModel _viewModel;
   int selectedIndex = 0;
   final _controller = PageController();
-  
+
   @override
   void initState() {
     super.initState();
@@ -39,10 +41,16 @@ class _InitViewState extends State<InitView> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: Platform.isIOS
-          ? null
-          : _viewModel.systemBackButtonPressed,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        GlobalKey<NavigatorState> navigatorKey = AppRoutes.getAndroidNavigatorKey();
+        if (navigatorKey.currentState != null && navigatorKey.currentState!.canPop()) {
+          navigatorKey.currentState?.pop(navigatorKey.currentContext);
+        } else {
+          SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
+        }
+      },
       child: Scaffold(
         backgroundColor: AppColors.white,
         body: SafeArea(
@@ -51,7 +59,7 @@ class _InitViewState extends State<InitView> {
             onPageChanged: (index) {
               setState(
                 () {
-                 selectedIndex = index;
+                  selectedIndex = index;
                 },
               );
             },

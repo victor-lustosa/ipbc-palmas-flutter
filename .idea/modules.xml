@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/apps/ipbc_mobile/android/android.iml" filepath="$PROJECT_DIR$/apps/ipbc_mobile/android/android.iml" />
       <module fileurl="file://$PROJECT_DIR$/apps/ipbc_mobile/ipbc_mobile.iml" filepath="$PROJECT_DIR$/apps/ipbc_mobile/ipbc_mobile.iml" />
       <module fileurl="file://$PROJECT_DIR$/ipbc_palmas.iml" filepath="$PROJECT_DIR$/ipbc_palmas.iml" />
     </modules>

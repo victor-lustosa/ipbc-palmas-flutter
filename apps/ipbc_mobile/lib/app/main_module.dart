@@ -1,7 +1,8 @@
 import 'package:core_module/core_module.dart';
-import 'home/home_module.dart';
-import 'lyric/lyric_module.dart';
+
 import 'service/service_module.dart';
+import 'lyric/lyric_module.dart';
+import 'home/home_module.dart';
 
 class MainModule extends Module {
   static const String authRoute = '/auth';
