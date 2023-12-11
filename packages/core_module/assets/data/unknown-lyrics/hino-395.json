@@ -1,12 +1,12 @@
 {
-  "id": "",
+  "id": 0,
   "title": "Hino 395 - Amor no lar",
   "group": "Hinário Novo Cântico",
   "albumCover": "",
   "createAt": "",
   "verses": [
     {
-      "id": "0",
+      "id": 0,
       "isChorus": false,
       "versesList": [
         {
@@ -18,7 +18,7 @@
       ]
     },
     {
-      "id": "1",
+      "id": 1,
       "isChorus": false,
       "versesList": [
         {
@@ -30,7 +30,7 @@
       ]
     },
     {
-      "id": "2",
+      "id": 2,
       "isChorus": false,
       "versesList": [
         {
@@ -42,7 +42,7 @@
       ]
     },
     {
-      "id": "3",
+      "id": 3,
       "isChorus": false,
       "versesList": [
         {
@@ -54,7 +54,7 @@
       ]
     },
     {
-      "id": "4",
+      "id": 5,
       "isChorus": false,
       "versesList": [
         {

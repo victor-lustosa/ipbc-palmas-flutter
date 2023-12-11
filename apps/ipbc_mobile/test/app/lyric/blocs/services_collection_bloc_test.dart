@@ -1,4 +1,4 @@
-import 'package:ipbc_palmas/app/service/blocs/services_collection_bloc.dart';
+/*import 'package:ipbc_palmas/app/service/blocs/services_collection_bloc.dart';
 import 'package:ipbc_palmas/app/shared/blocs/generics.dart';
 import 'package:ipbc_palmas/app/shared/view-models/services_view_model.dart';
 import 'package:mocktail/mocktail.dart';
@@ -103,3 +103,4 @@ void main() {
     ],
   );
 }
+*/

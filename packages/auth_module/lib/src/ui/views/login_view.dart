@@ -40,31 +40,28 @@ class _LoginViewState extends State<LoginView> {
                     )),
               ),
               AuthFields(controller: viewModel),
-              Container(
-                margin: const EdgeInsets.only(top: 17),
-                child: RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "Esqueceu a senha?  ",
-                        style: AppFonts.defaultFont(
-                          color: AppColors.grey9,
-                          fontSize: 15,
-                        ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 8, right: 15.5),
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            style: AppFonts.defaultFont(
+                              color: AppColors.darkGreen,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15,
+                              decorationColor: AppColors.darkGreen,
+                            ),
+                            text: "Esqueceu a senha? ",
+                          ),
+                        ],
                       ),
-                      TextSpan(
-                        style: AppFonts.defaultFont(
-                          color: AppColors.darkGreen,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15,
-                          decoration: TextDecoration.underline,
-                          decorationColor: AppColors.darkGreen,
-                        ),
-                        text: "Trocar senha ",
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
               Container(
                 margin: const EdgeInsets.only(
@@ -84,7 +81,7 @@ class _LoginViewState extends State<LoginView> {
                     if (message != '') {
                       Future.delayed(
                         Duration.zero,
-                            () async {
+                        () async {
                           if (mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -110,13 +107,15 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ),
               ),
-              Text(
-                "ou",
-                style: AppFonts.defaultFont(
-                  color: AppColors.grey9,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 17,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(border: Border.all(color: AppColors.loginLineDecoration)),
+
+                    width: 159,
+                  ),
+                ],
               ),
               Container(
                 margin: const EdgeInsets.only(
@@ -161,7 +160,7 @@ class _LoginViewState extends State<LoginView> {
               ),
               Container(
                 margin: const EdgeInsets.only(
-                  top: 16,
+                  top: 12,
                   left: 16,
                   bottom: 25,
                   right: 16,
@@ -219,9 +218,9 @@ class _LoginViewState extends State<LoginView> {
                       recognizer: TapGestureRecognizer()
                         ..onTap = () => setState(
                               () {
-                            viewModel.toCreateAccount();
-                          },
-                        ),
+                                viewModel.toCreateAccount();
+                              },
+                            ),
                     ),
                   ],
                 ),

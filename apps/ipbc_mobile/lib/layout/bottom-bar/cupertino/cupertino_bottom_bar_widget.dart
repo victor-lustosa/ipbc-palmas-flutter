@@ -1,11 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:core_module/core_module.dart';
-import 'package:flutter/cupertino.dart'
-    hide CupertinoTabBar, CupertinoTabScaffold;
-
+import 'package:flutter/cupertino.dart' hide CupertinoTabBar, CupertinoTabScaffold;
 
 import '../../../app/configs/app_routes.dart';
 import '../../../app/exception/views/unknown_route_view.dart';
+import '../../../app/home/home_module.dart';
+import '../../../app/lyric/lyric_module.dart';
+import '../../../app/lyric/views/lyric_view.dart';
 import '../../../app/lyric/views/lyrics_list_view.dart';
 import '../../../app/offers/views/offers_view.dart';
 import '../buttons_bar_mixin.dart';
@@ -46,7 +47,8 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
         backgroundColor: AppColors.white,
         items: buttons,
         onTap: (newValue) {
-          setState(() {
+          setState(
+            () {
               widget.callback(newValue);
             },
           );
@@ -56,7 +58,19 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
         switch (index) {
           case 0:
             return CupertinoTabView(
-              onGenerateRoute: AppRoutes.onGenerateRoute,
+              onGenerateRoute: (RouteSettings settings) {
+                switch (settings.name) {
+                  case LyricModule.lyricRoute:
+                    return CustomTransitionPageRoute(
+                      transitionSpeed: const Duration(milliseconds: 500),
+                      reverseSpeed: const Duration(milliseconds: 500),
+                      child: LyricView(entity: settings.arguments as LyricEntity),
+                      tween: Tween(begin: const Offset(0, 1), end: Offset.zero).chain(CurveTween(curve: Curves.ease)),
+                    );
+                  default:
+                    return unknownRoute();
+                }
+              },
               builder: (context) {
                 return cupertinoView(const HomeRoutes());
               },
@@ -73,11 +87,12 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
       },
     );
   }
-  Widget cupertinoView(Widget view){
+
+  Widget cupertinoView(Widget view) {
     return CupertinoPageScaffold(
-        navigationBar: const CupertinoNavigationBar(
-          backgroundColor: AppColors.white,
-        ),
+      navigationBar: const CupertinoNavigationBar(
+        backgroundColor: AppColors.white,
+      ),
       child: view,
     );
   }

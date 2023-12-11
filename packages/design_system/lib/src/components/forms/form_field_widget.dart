@@ -2,30 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class FormFieldWidget extends StatefulWidget {
-  const FormFieldWidget({
-    super.key,
-    required this.controller,
-    this.fieldKey,
-    this.isSubmitted,
-    this.maxLength,
-    this.fieldStyle,
-    required this.validator,
-    this.maxLines,
-    this.keyboardType,
-    this.cursorColor,
-    this.inputFormatters,
-    this.autoValidateMode,
-    required this.title,
-    this.titleMargin,
-    this.fieldWidth,
-    this.fieldHeight,
-    this.fieldDecoration,
-    required this.isValid,
-    required this.errorText,
-    this.titleStyle,
-    this.errorTextMargin,
-    required this.inputDecoration, this.fieldMargin,required this.obscureText, this.onChanged,
-  });
+  const FormFieldWidget(
+      {super.key,
+      required this.controller,
+      this.fieldKey,
+      this.isSubmitted,
+      this.maxLength,
+      this.fieldStyle,
+      required this.validator,
+      this.maxLines,
+      this.keyboardType,
+      this.cursorColor,
+      this.inputFormatters,
+      this.autoValidateMode,
+      required this.title,
+      this.titleMargin,
+      this.fieldWidth,
+      this.fieldHeight,
+      this.fieldDecoration,
+      required this.isValid,
+      required this.errorText,
+      this.titleStyle,
+      this.errorTextMargin,
+      required this.inputDecoration,
+      this.fieldMargin,
+      required this.obscureText});
 
   final String title;
   final EdgeInsetsGeometry? titleMargin;
@@ -50,7 +51,6 @@ class FormFieldWidget extends StatefulWidget {
   final AutovalidateMode? autoValidateMode;
   final List<TextInputFormatter>? inputFormatters;
   final bool obscureText;
-  final void Function(String)? onChanged;
   @override
   State<FormFieldWidget> createState() => _FormFieldWidgetState();
 }
@@ -76,7 +76,6 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
           child: TextFormField(
             obscureText: widget.obscureText,
             key: widget.fieldKey,
-            onChanged: widget.onChanged,
             enabled: widget.isSubmitted,
             cursorColor: widget.cursorColor,
             autovalidateMode:
@@ -95,9 +94,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
         Visibility(
           visible: !widget.isValid,
           child: Container(
-            margin: widget.errorTextMargin,
-            child: widget.errorText
-          ),
+              margin: widget.errorTextMargin, child: widget.errorText),
         )
       ],
     );

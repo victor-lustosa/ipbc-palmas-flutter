@@ -4,7 +4,6 @@ import 'package:flutter/material.dart' ;
 
 import '../../shared/blocs/generics.dart';
 import '../../shared/components/lyrics_list_widget.dart';
-import '../../shared/view-models/database_view_model.dart';
 import '../blocs/lyric_bloc.dart';
 import '../../exception/views/generic_error_view.dart';
 import '../../exception/views/no_connection_view.dart';
@@ -18,21 +17,17 @@ class LyricsListView extends StatefulWidget {
 }
 
 class _LyricsListViewState extends State<LyricsListView> with TickerProviderStateMixin {
-  late List<LyricEntity> lyricsFetched;
-  late final LyricBloc bloc;
+  late List<LyricEntity> _lyricsFetched;
+  late final LyricBloc _bloc;
   bool isSelected = false;
   String selectedValue = '';
 
   @override
   void initState() {
     super.initState();
-    lyricsFetched = [];
-    bloc = Modular.get<LyricBloc>();
-    if (!Modular.get<DatabaseViewModel>().data.isLyricsUpdated) {
-      bloc.add(CheckConnectivityEvent<LyricEvent>());
-    } else {
-      bloc.add(GetInHiveEvent<LyricEvent>());
-    }
+    _lyricsFetched = [];
+    _bloc = Modular.get<LyricBloc>();
+    _bloc.add(CheckConnectivityEvent<LyricEvent>());
   }
 
   @override
@@ -41,19 +36,18 @@ class _LyricsListViewState extends State<LyricsListView> with TickerProviderStat
       backgroundColor: AppColors.white,
       body: SafeArea(
         child: BlocBuilder<LyricBloc, GenericState<LyricState>>(
-          bloc: bloc,
+          bloc: _bloc,
           builder: (context, state) {
              if (state is LoadingState<LyricState>) {
               return const LoadingWidget();
             } else if (state is NoConnectionState<LyricState>) {
               return const NoConnectionView(index: 0);
             } else if (state is DataFetchedState<LyricState, LyricEntity>) {
-              lyricsFetched = state.entities;
-              Modular.get<DatabaseViewModel>().checkUpdateData(context, 'lyrics');
+              _lyricsFetched = state.entities;
               return RefreshIndicator(
                 color: AppColors.darkGreen,
                 onRefresh: () async {
-                  bloc.add(CheckConnectivityEvent());
+                  _bloc.add(CheckConnectivityEvent());
                 },
                 child: SingleChildScrollView(
                   child: Column(
@@ -77,7 +71,7 @@ class _LyricsListViewState extends State<LyricsListView> with TickerProviderStat
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 20),
-                        child: LyricsListWidget(entitiesList: lyricsFetched),
+                        child: LyricsListWidget(entitiesList: _lyricsFetched),
                       ),
                     ],
                   ),

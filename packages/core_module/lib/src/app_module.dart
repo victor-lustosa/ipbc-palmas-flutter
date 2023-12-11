@@ -1,3 +1,5 @@
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 import '../core_module.dart';
 
 class CoreModule extends Module {
@@ -10,16 +12,10 @@ class CoreModule extends Module {
 
   @override
   void exportedBinds(Injector i) {
-    i.addSingleton<AnalyticsUtil>(AnalyticsUtil.new);
-    i.addSingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
-    i.addSingleton<FirestoreDatasource>(
-      () => FirestoreDatasource(
-        firestore: i.get<FirebaseFirestore>(),
-      ),
-    );
-    i.addSingleton<Repository<List<Map>>>(
-      () => Repository<List<Map>>(
-        datasource: i.get<FirestoreDatasource>(),
+     i.addSingleton<SupabaseDatasource>(() => SupabaseDatasource(supabaseClient: Supabase.instance.client));
+    i.addSingleton<Repository<List<dynamic>>>(
+          () => Repository<List<dynamic>>(
+        datasource: i.get<SupabaseDatasource>(),
       ),
     );
   }

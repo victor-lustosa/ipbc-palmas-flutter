@@ -1,4 +1,4 @@
-import 'package:core_module/core_module.dart';
+/*import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 import '../../splash/blocs/database_bloc.dart';
@@ -15,7 +15,7 @@ class DatabaseViewModel {
     _data = dataParam;
     //if ((ValidationUtil.validationDatasource() == fireDatabase) || (_data.fireId == initialId)) {
     if (_data.fireId != initialId) {
-      String fireId = await Modular.get<FirestoreDatasource>().verifyUpdateDatasource();
+      String fireId = await Modular.get<SupabaseDatasource>().verifyUpdateDatasource();
       if ((_data.fireId != fireId) && fireId.isNotEmpty) {
         _data = HiveDatabaseConfigsDTO.empty().copyWith(fireId: fireId);
       }
@@ -66,4 +66,4 @@ class DatabaseViewModel {
     }
     Modular.get<DatabaseBloc>().add(UpdateDataEvent(data: _data));
   }
-}
+}*/

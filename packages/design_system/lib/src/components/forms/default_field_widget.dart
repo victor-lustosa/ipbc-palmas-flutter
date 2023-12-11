@@ -25,7 +25,6 @@ class DefaultFieldWidget extends StatefulWidget {
       this.fieldStyle,
       this.errorTextMargin,
       this.obscureText,
-      this.onChanged,
       this.cursorColor});
 
   final Key? fieldKey;
@@ -49,7 +48,6 @@ class DefaultFieldWidget extends StatefulWidget {
   final EdgeInsetsGeometry? errorTextMargin;
   final bool? isSubmitted;
   final bool? obscureText;
-  final void Function(String)? onChanged;
   @override
   State<DefaultFieldWidget> createState() => _DefaultFieldWidgetState();
 }
@@ -60,7 +58,6 @@ class _DefaultFieldWidgetState extends State<DefaultFieldWidget> {
     return Container(
       padding: widget.horizontalSymmetric,
       child: FormFieldWidget(
-        onChanged: widget.onChanged,
         titleMargin: widget.titleMargin,
         controller: widget.controller,
         fieldMargin: widget.fieldMargin,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   //primary
   static const Color darkGreen = Color(0xFF005B40);
+  static const Color loginLineDecoration = Color(0xFF338777);
 
   //neutral
   static const Color white = Color(0xFFFFFFFF);

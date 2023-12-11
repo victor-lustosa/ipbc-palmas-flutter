@@ -12,6 +12,7 @@ class CarouselWidget extends StatefulWidget {
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
   final TextStyle? fontStyle;
+
   const CarouselWidget({
     required this.services,
     required this.width,
@@ -33,7 +34,7 @@ class CarouselWidgetState extends State<CarouselWidget> {
   static late PageController _pageController;
   int activePage = 0;
   final List<Image> imagesList = [];
-  static get pageController => _pageController;
+
   @override
   void initState() {
     super.initState();
@@ -82,7 +83,12 @@ class CarouselWidgetState extends State<CarouselWidget> {
                         ),
                 child: AnimatedContainer(
                   padding: widget.padding ?? EdgeInsets.zero,
-                  margin: EdgeInsets.all(active ? 0 : 6),
+                  margin: EdgeInsets.only(
+                      top: active ? 0 : 4,
+                      bottom: active ? 0 : 4,
+                      left: active ? 0 : 10,
+                      right: active ? 0 : 10,
+                  ),
                   duration: const Duration(milliseconds: 300),
                   decoration: BoxDecoration(
                     color: AppColors.grey4,

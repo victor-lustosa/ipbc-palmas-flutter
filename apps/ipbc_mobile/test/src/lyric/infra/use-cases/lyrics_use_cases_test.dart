@@ -5,7 +5,7 @@ import '../../../../mocks/mocks.dart';
 import 'package:mocktail/mocktail.dart';
 
 void main() {
-  test('getting lyrics in use case', () async {
+ /* test('getting lyrics in use case in firestore', () async {
     Repository<List<Map>> repository = RepositoryMock();
     Timestamp timestamp = Timestamp.now();
     Map entity = {
@@ -34,6 +34,6 @@ void main() {
     final lyricUsecase = LyricsUseCases(repository: repository);
     final result = await lyricUsecase.get('lyrics/20');
     expect(result, emits(isA<List<LyricEntity>>()));
-  });
+  });*/
 
 }

@@ -31,6 +31,10 @@ class _AuthFieldsState extends State<AuthFields> {
     fieldDecoration: _fieldDecoration(isValid: _isEmailValid),
     title: 'Insira seu email',
     isValid: _isEmailValid,
+    titleStyle:  AppFonts.defaultFont(
+      fontSize: 13,
+      color: AppColors.grey8,
+    ),
     controller: widget.controller.emailController,
     inputDecoration: _inputDecoration(
       isValid: _isEmailValid,
@@ -52,6 +56,10 @@ class _AuthFieldsState extends State<AuthFields> {
     title: 'Insira sua senha',
     isValid: _isPasswordValid,
     obscureText: true,
+    titleStyle:  AppFonts.defaultFont(
+      fontSize: 13,
+      color: AppColors.grey8,
+    ),
     controller: widget.controller.passwordController,
     fieldHeight: 48,
     errorText: passwordErrorText,

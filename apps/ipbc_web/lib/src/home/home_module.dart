@@ -11,6 +11,7 @@ class MainModule extends Module {
 
   @override
   void routes(r) {
-    r.child('/', child: (_) => const HomeView());
+    r.child('/home', child: (_) => const HomeView());
+    r.module('/', module: AuthModule());
   }
 }

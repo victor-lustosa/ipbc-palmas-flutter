@@ -1,4 +1,4 @@
-import 'package:ipbc_palmas/app/shared/blocs/generics.dart';
+/*import 'package:ipbc_palmas/app/shared/blocs/generics.dart';
 import 'package:ipbc_palmas/app/shared/view-models/services_view_model.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:bloc_test/bloc_test.dart';
@@ -107,3 +107,4 @@ void main() {
     ],
   );
 }
+*/

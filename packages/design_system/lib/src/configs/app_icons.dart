@@ -21,6 +21,8 @@ class AppIcons {
 
   //mobile
   static const String lyrics = 'assets/icons/lyrics.svg';
+  static const String iosShare = 'assets/icons/ios_share.png';
+  static const String locationOn = 'assets/icons/location_on.png';
   static const String logo = 'assets/icons/logo.svg';
   static const String arrowBack = 'assets/icons/arrow_back_ios_new.svg';
   static const String home = 'assets/icons/home.svg';

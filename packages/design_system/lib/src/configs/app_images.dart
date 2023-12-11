@@ -37,6 +37,7 @@ class AppImages {
 
   //mobile
   static const String vagalumeImage = 'assets/images/vagalume_image.png';
+  static const String familyDayImage = 'assets/images/family_day.jpeg';
   static const String wifiIconImage = 'assets/images/wifi_icon.png';
   static const String noConnectionImage = 'assets/images/perm_scan_wifi.png';
   static const String logo = 'assets/images/logo.png';

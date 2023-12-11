@@ -4,7 +4,7 @@ import '../../../lyric_module.dart';
 
 class LyricModel extends LyricEntity {
   LyricModel(
-      {required String id,
+      {required int id,
       required String title,
       required DateTime createAt,
       required String albumCover,
@@ -20,7 +20,7 @@ class LyricModel extends LyricEntity {
         );
 
   factory LyricModel.empty() => LyricModel(
-        id: '',
+        id: SupaServicesUtil.createId(),
         createAt: DateTime.now(),
         title: '',
         group: '',
@@ -29,7 +29,7 @@ class LyricModel extends LyricEntity {
       );
 
   LyricModel copyWith({
-    String? id,
+    int? id,
     String? title,
     DateTime? createAt,
     String? group,

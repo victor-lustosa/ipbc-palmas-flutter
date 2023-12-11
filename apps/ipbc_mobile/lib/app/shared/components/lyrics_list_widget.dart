@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../lyric/lyric_module.dart';
-import '../../splash/main_module.dart';
+import '../../main_module.dart';
 import 'album_cover_widget.dart';
 
 class LyricsListWidget extends StatefulWidget {

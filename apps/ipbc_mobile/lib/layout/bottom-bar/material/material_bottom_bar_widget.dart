@@ -53,8 +53,8 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget> with 
           ),
           child: BottomNavigationBar(
             currentIndex: widget.selectedIndex,
-            unselectedLabelStyle: AppFonts.defaultFont(fontSize: 12),
-            selectedLabelStyle:  AppFonts.defaultFont(fontSize: 12),
+            unselectedLabelStyle: AppFonts.defaultFont(fontSize: 12, fontWeight: FontWeight.w500),
+            selectedLabelStyle:  AppFonts.defaultFont(fontSize: 12, fontWeight: FontWeight.w500),
             selectedItemColor: AppColors.darkGreen,
             unselectedItemColor: AppColors.grey5,
             backgroundColor: AppColors.white,

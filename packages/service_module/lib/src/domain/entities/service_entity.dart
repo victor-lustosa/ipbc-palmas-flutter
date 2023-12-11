@@ -19,7 +19,7 @@ class ServiceEntity {
       required this.lyricsList,
       required this.createAt});
 
-  final String id;
+  final int id;
   final String type;
   final String image;
   final String hour;
@@ -32,4 +32,8 @@ class ServiceEntity {
   final List<LyricModel> lyricsList;
   final List<LiturgyEntity> liturgyList;
 
+  @override
+  String toString() {
+    return 'ServiceEntity{id: $id, type: $type, image: $image, hour: $hour, createAt: $createAt, theme: $theme, preacher: $preacher, guideIsVisible: $guideIsVisible, title: $title, heading: $heading, lyricsList: $lyricsList, liturgyList: $liturgyList}';
+  }
 }
