@@ -18,14 +18,14 @@ class _BannerWidgetState extends State<BannerWidget> with ClipboardMixin {
   final String cc = "7293-1";
   final String cnpj = "38.136.701/0001-25";
 
-  final store = Modular.get<BannerController>();
+  final controller = Modular.get<BannerController>();
 
   @override
   Widget build(BuildContext context) {
     isSmallD = ResponsivityUtil.isSmallDevice(context);
-    return ListenableBuilder(
-      listenable: store,
-      builder: (context, child) {
+    return ValueListenableBuilder(
+      valueListenable: controller,
+      builder: (context, value, child) {
         return Container(
           decoration: BoxDecoration(
             color: AppColors.cardGreen,
@@ -34,7 +34,7 @@ class _BannerWidgetState extends State<BannerWidget> with ClipboardMixin {
           child: Column(
             children: [
               baseBanner(),
-              store.isPix ? pixBanner() : tedBanner(),
+              value ? pixBanner() : tedBanner(),
             ],
           ),
         );

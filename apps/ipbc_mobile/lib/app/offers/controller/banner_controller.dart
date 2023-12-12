@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-class BannerController extends ChangeNotifier {
-  bool isPix = true;
+class BannerController extends ValueNotifier {
+
+  BannerController() : super(true);
 
   void setPix() {
-    isPix = true;
+    value = true;
     notifyListeners();
   }
 
   void setTed(){
-    isPix = false;
+    value = false;
     notifyListeners();
   }
 }

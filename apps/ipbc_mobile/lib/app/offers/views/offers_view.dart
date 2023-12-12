@@ -16,7 +16,7 @@ class OffersView extends StatefulWidget {
 class _OffersViewState extends State<OffersView> with ClipboardMixin {
   final GlobalKey<TooltipState> tooltipKey = GlobalKey<TooltipState>();
 
-  final store = Modular.get<BannerController>();
+  final controller = Modular.get<BannerController>();
   final List<CardOffer> cardsList = const [
     CardOffer(
       title: 'Dízimo',
@@ -64,9 +64,9 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                         right: 17.5,
                         bottom: 24,
                       ),
-                      child: AnimatedBuilder(
-                        animation: store,
-                        builder: (context, child) {
+                      child: ValueListenableBuilder(
+                        valueListenable: controller,
+                        builder: (context,value, child) {
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -77,20 +77,20 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16),
                                   side: BorderSide(
-                                    color: store.isPix
+                                    color: value
                                         ? AppColors.tabGreen
                                         : AppColors.grey4,
                                   ),
                                 ),
-                                backgroundColor: store.isPix
+                                backgroundColor: value
                                     ? AppColors.tabGreen
                                     : AppColors.white,
                                 action: () {
-                                  store.setPix();
+                                  controller.setPix();
                                 },
                                 child: buttonLabel(
                                   'Pix',
-                                  store.isPix,
+                                  value,
                                 ),
                               ),
                               ElevatedButtonWidget(
@@ -102,20 +102,20 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16),
                                   side: BorderSide(
-                                    color: store.isPix
+                                    color: value
                                         ? AppColors.grey4
                                         : AppColors.tabGreen,
                                   ),
                                 ),
-                                backgroundColor: store.isPix
+                                backgroundColor: value
                                     ? AppColors.white
                                     : AppColors.tabGreen,
                                 action: () {
-                                  store.setTed();
+                                  controller.setTed();
                                 },
                                 child: buttonLabel(
                                   'Transferência bancária',
-                                  !store.isPix,
+                                  !value,
                                 ),
                               ),
                             ],
