@@ -61,7 +61,7 @@ class ElevatedButtonWidget extends StatelessWidget {
             textStyle ??
                 AppFonts.defaultFont(
                   fontWeight: FontWeight.w500,
-                  color: AppColors.white,
+                  color: AppColors.darkGreen
                 ),
           ),
         ),

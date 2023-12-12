@@ -4,6 +4,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../offers/controller/banner_controller.dart';
 import '../service/views/admin/insert_services_view.dart';
 import '../service/views/services_collection_view.dart';
 import '../service/views/services_list_view.dart';
@@ -37,6 +38,7 @@ class HomeModule extends Module {
      ),
      config: CoreModule.blocConfig(),
    );
+   i.addLazySingleton<BannerController>(BannerController.new);
   }
   @override
   void routes(r) {

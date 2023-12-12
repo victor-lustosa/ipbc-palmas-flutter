@@ -26,7 +26,7 @@ class AppColors {
   static const Color primaryGreen = Color(0xFF14C5A0);
   static const Color cardGreen = Color(0xFF006D4E);
   static const Color tabGreen = Color(0xFF00906b);
-  static const Color secondaryGreen2 = Color.fromRGBO(144, 194, 180, 1.000);
+  static const Color secondaryGreen2 = Color.fromRGBO(144, 194, 180, .5);
   static const Color secondaryGrey = Color(0xFFEBEBEB);
   static const Color vagalumeBackground = Color.fromRGBO(235, 235, 235, 40);
   static const Color highlightGreen = Color(0xFF00E8A2);

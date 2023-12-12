@@ -18,7 +18,7 @@ class CardOffer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 17, bottom: 17),
+      padding: const EdgeInsets.only(left: 20, top: 17, bottom: 17),
       child: Row(
         children: [
           Image.asset(
@@ -36,44 +36,14 @@ class CardOffer extends StatelessWidget {
               children: [
                 Text(
                   title,
+                  softWrap: true,
                   style: AppFonts.defaultFont(
-                      color: AppColors.grey12,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500),
+                    color: AppColors.grey12,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                price != null
-                    ? RichText(
-                        textAlign: TextAlign.start,
-                        text: TextSpan(
-                          style: AppFonts.defaultFont(
-                            color: AppColors.grey12,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          children: [
-                            const TextSpan(
-                              text: 'Acrescentar ',
-                            ),
-                            TextSpan(
-                              text: price!,
-                              style: const TextStyle(
-                                color: AppColors.cardGreen,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const TextSpan(
-                              text: 'ao final da sua \ntransferência.',
-                            ),
-                          ],
-                        ),
-                      )
-                    : Text(
-                        description!,
-                        style: AppFonts.defaultFont(
-                            color: AppColors.grey12,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400),
-                      ),
+                price != null ? withPrice() : withoutPrice()
               ],
             ),
           )
@@ -81,4 +51,39 @@ class CardOffer extends StatelessWidget {
       ),
     );
   }
+
+  withPrice() => RichText(
+        textAlign: TextAlign.start,
+        text: TextSpan(
+          style: AppFonts.defaultFont(
+            color: AppColors.grey12,
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+          ),
+          children: [
+            const TextSpan(
+              text: 'Acrescentar ',
+            ),
+            TextSpan(
+              text: price!,
+              style: const TextStyle(
+                color: AppColors.cardGreen,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const TextSpan(
+              text: 'ao final da sua \ntransferência.',
+            ),
+          ],
+        ),
+      );
+  withoutPrice() => Text(
+        softWrap: true,
+        description!,
+        style: AppFonts.defaultFont(
+          color: AppColors.grey12,
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+        ),
+      );
 }
