@@ -7,7 +7,7 @@ import 'blocs/lyric_bloc.dart';
 
 class LyricModule extends Module {
   static const String initialRoute = "/";
-  static const String lyricRoute = "/lyric";
+  static const String lyricRoute = "/lyric/";
 
   @override
   void exportedBinds(i) {

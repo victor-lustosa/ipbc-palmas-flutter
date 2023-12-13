@@ -5,10 +5,10 @@ import 'lyric/lyric_module.dart';
 import 'home/home_module.dart';
 
 class MainModule extends Module {
-  static const String authRoute = '/auth';
-  static const String lyricsRoute = '/lyrics';
-  static const String servicesRoute = '/services';
-  static const String initRoute = '/init';
+  static const String authRoute = '/auth/';
+  static const String lyricsRoute = '/lyrics/';
+  static const String servicesRoute = '/services/';
+  static const String initRoute = '/init/';
 
   @override
   List<Module> get imports => [CoreModule()];

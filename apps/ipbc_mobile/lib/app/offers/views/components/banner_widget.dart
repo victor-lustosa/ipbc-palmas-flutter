@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
@@ -18,13 +20,13 @@ class _BannerWidgetState extends State<BannerWidget> with ClipboardMixin {
   final String cc = "7293-1";
   final String cnpj = "38.136.701/0001-25";
 
-  final store = Modular.get<BannerController>();
+  final controller = Modular.get<BannerController>();
 
   @override
   Widget build(BuildContext context) {
     isSmallD = ResponsivityUtil.isSmallDevice(context);
     return ListenableBuilder(
-      listenable: store,
+      listenable: controller,
       builder: (context, child) {
         return Container(
           decoration: BoxDecoration(
@@ -34,7 +36,7 @@ class _BannerWidgetState extends State<BannerWidget> with ClipboardMixin {
           child: Column(
             children: [
               baseBanner(),
-              store.isPix ? pixBanner() : tedBanner(),
+              controller.isPix ? pixBanner() : tedBanner(),
             ],
           ),
         );

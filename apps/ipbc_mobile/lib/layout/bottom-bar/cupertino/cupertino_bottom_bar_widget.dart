@@ -10,7 +10,7 @@ import '../../../app/lyric/views/lyric_view.dart';
 import '../../../app/lyric/views/lyrics_list_view.dart';
 import '../../../app/offers/views/offers_view.dart';
 import '../buttons_bar_mixin.dart';
-
+//atualizar esses arquivos
 import 'custom_tab_scaffold.dart';
 import 'custom_bottom_tab_bar.dart';
 
@@ -42,6 +42,9 @@ class _CupertinoBottomBarWidgetState extends State<CupertinoBottomBarWidget>
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         height: 45,
+        border: const Border(
+          top: BorderSide(color: AppColors.grey1),
+        ),
         currentIndex: widget.selectedIndex,
         activeColor: AppColors.darkGreen,
         backgroundColor: AppColors.white,
