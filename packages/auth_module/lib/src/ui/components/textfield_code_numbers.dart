@@ -49,32 +49,31 @@ class _TextfieldCodeNumbersState extends State<TextfieldCodeNumbers> {
                     } else if (index < _focusNodes.length - 1) {
                       _focusNodes[index + 1].requestFocus();
                     }
+                    setState(() {});
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     counterText: '',
-                    contentPadding: EdgeInsets.all(10),
+                    contentPadding: const EdgeInsets.all(10),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 1,
-                        color: Colors.grey,
+                        color: _controllers[index].text.isEmpty
+                            ? AppColors.grey6
+                            : AppColors.darkGreen,
                       ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(8),
                       ),
                     ),
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         color: AppColors.darkGreen,
                       ),
                       borderRadius: BorderRadius.all(
-                        Radius.circular(5),
+                        Radius.circular(8),
                       ),
                     ),
-                    // Define a cor do texto aqui
-                    // Pode ajustar o tamanho da fonte, a cor, etc.
-                    // Usando a AppColors.darkGreen para a cor
-                    // e TextStyle para personalizar outros atributos do texto
-                    labelStyle: TextStyle(color: AppColors.darkGreen),
+                    labelStyle: const TextStyle(color: AppColors.darkGreen),
                   ),
                   cursorColor: AppColors.darkGreen,
                   cursorWidth: 1.5,
