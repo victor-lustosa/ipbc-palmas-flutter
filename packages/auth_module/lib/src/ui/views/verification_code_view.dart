@@ -14,7 +14,9 @@ class VerificationCodePage extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              const Image(image: AssetImage(AppImages.lock)),
+              Container(
+                  margin: const EdgeInsets.only(top: 40, bottom: 24),
+                  child: const Image(image: AssetImage(AppImages.lock))),
               const Text("Verifique o seu e-mail"),
               RichText(
                 textAlign: TextAlign.center,
