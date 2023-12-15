@@ -44,6 +44,8 @@ class AppImages {
   static const String lock = 'assets/images/lock.png';
   static const String mailCheck = 'assets/images/mail_check.png';
   static const String logoLoginImage = 'assets/images/auth/logo_ipbc_login.png';
+  static const String emailVerification =
+      'assets/images/email_verification.png';
 
   static final List<String> defaultCoversList = [
     'assets/images/default_cover_1.png',

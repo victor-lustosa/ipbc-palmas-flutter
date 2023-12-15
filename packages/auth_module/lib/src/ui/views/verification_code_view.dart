@@ -1,5 +1,6 @@
 import 'package:auth_module/src/ui/components/textfield_code_numbers.dart';
 import 'package:core_module/core_module.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class VerificationCodePage extends StatelessWidget {
@@ -9,46 +10,82 @@ class VerificationCodePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      child: Container(
-        margin: const EdgeInsets.only(top: 60, right: 16, left: 16),
-        child: Center(
-          child: Column(
-            children: [
+      child: Center(
+        child: Column(
+          children: [
+            Stack(children: [
               Container(
-                  margin: const EdgeInsets.only(top: 40, bottom: 24),
-                  child: const Image(image: AssetImage(AppImages.lock))),
-              const Text("Verifique o seu e-mail"),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(
-                      text:
-                          'Enviamos um código de recuperação de \n senha para o seu email. ',
-                      style: AppFonts.defaultFont(
-                        color: AppColors.grey10,
-                        fontSize: 15,
-                      ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.35),
+                    color: AppColors.badgeGreen),
+                margin: const EdgeInsets.only(top: 100, bottom: 24),
+                width: 100, // Define a largura como o máximo disponível
+                height: 91, // Define a altura conforme necessário
+              ),
+              Positioned.fill(
+                child: Container(
+                  margin: const EdgeInsets.only(top: 110, bottom: 24),
+                  child: const Image(
+                    image: AssetImage(
+                      AppImages.emailVerification,
                     ),
-                    TextSpan(
-                      text: 'Insira-o para \n continuar.',
-                      style: AppFonts.defaultFont(
-                        color: AppColors.grey10,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ],
+                    width: 60,
+                    height: 52,
+                  ),
                 ),
               ),
-              const Text("Código de Verificação"),
-              const TextfieldCodeNumbers(),
-              ElevatedButtonWidget(
+            ]),
+            Container(
+              margin: const EdgeInsets.only(
+                top: 8,
+              ),
+              child: Text(
+                "Verifique o seu e-mail",
+                style: AppFonts.defaultFont(
+                    color: AppColors.grey8,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                    text:
+                        'Enviamos um código de recuperação de \n senha para o seu email. ',
+                    style: AppFonts.defaultFont(
+                      color: AppColors.grey8,
+                      fontSize: 15,
+                    ),
+                  ),
+                  TextSpan(
+                    text: 'Insira-o para \n continuar.',
+                    style: AppFonts.defaultFont(
+                        color: AppColors.grey10,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+                margin: const EdgeInsets.only(top: 26.99, bottom: 16),
+                child: Text(
+                  "Código de Verificação",
+                  style: AppFonts.defaultFont(
+                      fontSize: 18, fontWeight: FontWeight.w400),
+                )),
+            const TextfieldCodeNumbers(),
+            Container(
+              margin: const EdgeInsets.only(top: 16, bottom: 36),
+              child: ElevatedButtonWidget(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
                 fixedSize: const Size(343, 48),
                 action: () {
-                  Modular.to.navigate('/auth');
+                  Modular.to.navigate('/ ');
                 },
                 backgroundColor: AppColors.darkGreen,
                 shadowColor: AppColors.grey0,
@@ -57,8 +94,30 @@ class VerificationCodePage extends StatelessWidget {
                   "Verificar",
                 ),
               ),
-            ],
-          ),
+            ),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                    text:
+                        'Não recebeu o e-mail? Verifique na caixa de spam, \n ',
+                    style: AppFonts.defaultFont(
+                        color: AppColors.grey8,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  TextSpan(
+                      text: 'tente novamente, clicando aqui.',
+                      style: AppFonts.defaultFont(
+                          color: AppColors.darkGreen,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700),
+                      recognizer: TapGestureRecognizer()..onTap = () {}),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     ));
