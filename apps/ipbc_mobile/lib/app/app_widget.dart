@@ -8,8 +8,8 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    Modular.setInitialRoute(MainModule.initRoute);
+    Modular.setInitialRoute(
+        MainModule.authRoute + AuthModule.verificationCodeRoute);
 
     return MaterialApp.router(
       builder: (context, Widget? child) {

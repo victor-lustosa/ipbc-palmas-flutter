@@ -1,4 +1,5 @@
 import 'package:auth_module/src/ui/views/success_created_new_password_view.dart';
+import 'package:auth_module/src/ui/views/verification_code_view.dart';
 import 'package:core_module/core_module.dart';
 
 import 'ui/views/create_account_view.dart';
@@ -19,15 +20,20 @@ class AuthModule extends Module {
       ),
     );
   }
+
   static const String initialRoute = '/';
   static const String loginRoute = '/login';
   static const String createAccountRoute = '/create-account';
   static const String successPasswordChangeRoute = '/success-password';
+  static const String verificationCodeRoute = '/verification-code';
+
   @override
   void routes(r) {
     r.child(initialRoute, child: (context) => const LoginView());
     r.child(loginRoute, child: (context) => const LoginView());
     r.child(createAccountRoute, child: (context) => const CreateAccountView());
+    r.child(verificationCodeRoute,
+        child: (context) => const VerificationCodePage());
     r.child(successPasswordChangeRoute,
         child: (context) => const CreatedNewPasswordsuccess());
   }
