@@ -1,3 +1,4 @@
+import 'package:auth_module/src/ui/components/custom_text_verification_code.dart';
 import 'package:auth_module/src/ui/components/textfield_code_numbers.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/gestures.dart';
@@ -47,27 +48,18 @@ class VerificationCodePage extends StatelessWidget {
                     fontWeight: FontWeight.w500),
               ),
             ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                    text:
-                        'Enviamos um código de recuperação de \n senha para o seu email. ',
-                    style: AppFonts.defaultFont(
-                      color: AppColors.grey8,
-                      fontSize: 15,
-                    ),
-                  ),
-                  TextSpan(
-                    text: 'Insira-o para \n continuar.',
-                    style: AppFonts.defaultFont(
-                        color: AppColors.grey10,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ],
+            CustomTextVerificationCode(
+              textOne:
+                  'Enviamos um código de recuperação de \n senha para o seu email. ',
+              styleOne: AppFonts.defaultFont(
+                color: AppColors.grey8,
+                fontSize: 15,
               ),
+              textTwo: 'Insira-o para \n continuar.',
+              styleTwo: AppFonts.defaultFont(
+                  color: AppColors.grey10,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700),
             ),
             Container(
                 margin: const EdgeInsets.only(top: 26.99, bottom: 16),
@@ -95,28 +87,21 @@ class VerificationCodePage extends StatelessWidget {
                 ),
               ),
             ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                    text:
-                        'Não recebeu o e-mail? Verifique na caixa de spam, \n ',
-                    style: AppFonts.defaultFont(
-                        color: AppColors.grey8,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  TextSpan(
-                      text: 'tente novamente, clicando aqui.',
-                      style: AppFonts.defaultFont(
-                          color: AppColors.darkGreen,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700),
-                      recognizer: TapGestureRecognizer()..onTap = () {}),
-                ],
-              ),
-            ),
+            CustomTextVerificationCode(
+                textOne:
+                    'Não recebeu o e-mail? Verifique na caixa de spam, \n ',
+                styleOne: AppFonts.defaultFont(
+                    color: AppColors.grey8,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w400),
+                textTwo: 'tente novamente, clicando aqui.',
+                styleTwo: AppFonts.defaultFont(
+                    color: AppColors.darkGreen,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700),
+                onTapTextTwo: () {
+                  print('Text');
+                }),
           ],
         ),
       ),
