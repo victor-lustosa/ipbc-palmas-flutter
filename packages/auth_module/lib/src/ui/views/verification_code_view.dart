@@ -1,7 +1,6 @@
 import 'package:auth_module/src/ui/components/custom_text_verification_code.dart';
 import 'package:auth_module/src/ui/components/textfield_code_numbers.dart';
 import 'package:core_module/core_module.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class VerificationCodePage extends StatelessWidget {
