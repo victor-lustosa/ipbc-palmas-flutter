@@ -28,12 +28,12 @@ class MyPainter extends CustomPainter {
     double h = 50;
     double r = 12; //<-- corner radius
 
-    Paint blackPaint = Paint()
+    Paint borderPaint = Paint()
       ..color = filled ? AppColors.grey6 : AppColors.darkGreen
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
 
-    Paint redPaint = Paint()
+    Paint gapPaint = Paint()
       ..color = AppColors.white
       ..style = PaintingStyle.stroke
       ..strokeWidth = 8;
@@ -43,12 +43,12 @@ class MyPainter extends CustomPainter {
       Radius.circular(r),
     );
 
-    Path topRightArc = Path()
+    Path rightGap = Path()
       ..moveTo(40, 25)
       ..arcToPoint(Offset(w, 18));
 
-    canvas.drawRRect(fullRect, blackPaint);
-    canvas.drawPath(topRightArc, redPaint);
+    canvas.drawRRect(fullRect, borderPaint);
+    canvas.drawPath(rightGap, gapPaint);
   }
 
   @override
