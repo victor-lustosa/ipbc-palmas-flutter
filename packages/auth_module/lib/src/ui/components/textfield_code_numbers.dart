@@ -95,7 +95,7 @@ class _TextfieldCodeNumbersState extends State<TextfieldCodeNumbers> {
               fixedSize: const Size(343, 48),
               action: () {
                 if (textFieldValues.every((value) => value.isNotEmpty)) {
-                  log('TODOS OS Valores dos TextFields: $textFieldValues');
+                  log('TODOS OS Valores dos TextFields preechidos: $textFieldValues');
                 } else {
                   log('Preencha todos os TextFields!');
                 }
