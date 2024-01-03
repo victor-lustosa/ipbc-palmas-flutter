@@ -5,6 +5,11 @@ import 'package:auth_module/src/ui/components/textfield_code_numbers.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+/*
+VALIDAR O CODIGO DIGITADO;
+COLOCAR COR VERMALHA NAS BORDAS DO TEXTFIELDS QUANDO CODIGO ERRADO;
+INPLEMENTAR A VERIFICAÇÃO DE E-MAIL;
+*/
 class VerificationCodePage extends StatefulWidget {
   const VerificationCodePage({super.key});
 
