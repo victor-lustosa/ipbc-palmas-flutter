@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart' hide BottomNavigationBar;
-import '../buttons_bar_mixin.dart';
+import 'buttons_bar_mixin.dart';
 import 'custom_bottom_navigation_bar.dart';
 
 class MaterialBottomBarWidget extends StatefulWidget {
@@ -18,7 +20,8 @@ class MaterialBottomBarWidget extends StatefulWidget {
       _MaterialBottomBarWidgetState();
 }
 
-class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget> with ButtonsBarMixin {
+class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
+    with ButtonsBarMixin {
   @override
   initState() {
     super.initState();
@@ -30,7 +33,7 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget> with 
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
       child: Container(
-        height: 56,
+        height: Platform.isIOS ? 90 : 56,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
             topRight: Radius.circular(22),
@@ -53,8 +56,10 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget> with 
           ),
           child: BottomNavigationBar(
             currentIndex: widget.selectedIndex,
-            unselectedLabelStyle: AppFonts.defaultFont(fontSize: 12, fontWeight: FontWeight.w500),
-            selectedLabelStyle:  AppFonts.defaultFont(fontSize: 12, fontWeight: FontWeight.w500),
+            unselectedLabelStyle:
+                AppFonts.defaultFont(fontSize: 12, fontWeight: FontWeight.w500),
+            selectedLabelStyle:
+                AppFonts.defaultFont(fontSize: 12, fontWeight: FontWeight.w500),
             selectedItemColor: AppColors.darkGreen,
             unselectedItemColor: AppColors.grey5,
             backgroundColor: AppColors.white,

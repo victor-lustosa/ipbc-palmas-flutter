@@ -10,42 +10,32 @@ class VerificationCodePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      child: Center(
+      child: SizedBox(
+        width: context.mediaQuery.size.width,
         child: Column(
           children: [
-            Stack(children: [
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.35),
-                    color: AppColors.badgeGreen),
-                margin: const EdgeInsets.only(top: 100, bottom: 24),
-                width: 100, // Define a largura como o máximo disponível
-                height: 91, // Define a altura conforme necessário
-              ),
-              Positioned.fill(
-                child: Container(
-                  margin: const EdgeInsets.only(top: 110, bottom: 24),
-                  child: const Image(
-                    image: AssetImage(
-                      AppImages.emailVerification,
-                    ),
-                    width: 60,
-                    height: 52,
-                  ),
-                ),
-              ),
-            ]),
             Container(
-              margin: const EdgeInsets.only(
-                top: 8,
+              width: 100, // Define a largura como o máximo disponível
+              height: 91, // Define a altura conforme necessário
+              margin: const EdgeInsets.only(top: 110, bottom: 32),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.35),
+                color: AppColors.badgeGreen,
               ),
-              child: Text(
-                "Verifique o seu e-mail",
-                style: AppFonts.defaultFont(
-                    color: AppColors.grey8,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500),
+              child: const Image(
+                image: AssetImage(
+                  AppImages.emailVerification,
+                ),
+                width: 60,
+                height: 52,
               ),
+            ),
+            Text(
+              "Verifique o seu e-mail",
+              style: AppFonts.defaultFont(
+                  color: AppColors.grey8,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500),
             ),
             CustomTextVerificationCode(
               textOne:
@@ -61,12 +51,13 @@ class VerificationCodePage extends StatelessWidget {
                   fontWeight: FontWeight.w700),
             ),
             Container(
-                margin: const EdgeInsets.only(top: 26.99, bottom: 16),
-                child: Text(
+              margin: const EdgeInsets.only(top: 26.99, bottom: 16),
+              child: Text(
                   "Código de Verificação",
-                  style: AppFonts.defaultFont(
-                      fontSize: 18, fontWeight: FontWeight.w400),
-                )),
+                style: AppFonts.defaultFont(
+                    fontSize: 18, fontWeight: FontWeight.w400),
+              ),
+            ),
             const TextfieldCodeNumbers(),
             Container(
               margin: const EdgeInsets.only(top: 16, bottom: 36),

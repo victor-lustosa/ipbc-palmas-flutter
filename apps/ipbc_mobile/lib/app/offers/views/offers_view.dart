@@ -15,8 +15,9 @@ class OffersView extends StatefulWidget {
 
 class _OffersViewState extends State<OffersView> with ClipboardMixin {
   final GlobalKey<TooltipState> tooltipKey = GlobalKey<TooltipState>();
-
-  final controlle = Modular.get<BannerController>();
+  late BorderRadiusGeometry? borderRadius;
+  late BoxBorder? border;
+  final controller = Modular.get<BannerController>();
   final List<CardOffer> cardsList = const [
     CardOffer(
       title: 'Dízimo',
@@ -65,7 +66,7 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                         bottom: 24,
                       ),
                       child: AnimatedBuilder(
-                        animation: controlle,
+                        animation: controller,
                         builder: (context, child) {
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -73,24 +74,26 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                               ElevatedButtonWidget(
                                 elevation: 0,
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 24, vertical: 4),
+                                  horizontal: 24,
+                                  vertical: 4,
+                                ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16),
                                   side: BorderSide(
-                                    color: controlle.isPix
+                                    color: controller.isPix
                                         ? AppColors.tabGreen
                                         : AppColors.grey4,
                                   ),
                                 ),
-                                backgroundColor: controlle.isPix
+                                backgroundColor: controller.isPix
                                     ? AppColors.tabGreen
                                     : AppColors.white,
                                 action: () {
-                                  controlle.setPix();
+                                  controller.setPix();
                                 },
                                 child: buttonLabel(
                                   'Pix',
-                                  controlle.isPix,
+                                  controller.isPix,
                                 ),
                               ),
                               ElevatedButtonWidget(
@@ -102,20 +105,20 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16),
                                   side: BorderSide(
-                                    color: controlle.isPix
+                                    color: controller.isPix
                                         ? AppColors.grey4
                                         : AppColors.tabGreen,
                                   ),
                                 ),
-                                backgroundColor: controlle.isPix
+                                backgroundColor: controller.isPix
                                     ? AppColors.white
                                     : AppColors.tabGreen,
                                 action: () {
-                                  controlle.setTed();
+                                  controller.setTed();
                                 },
                                 child: buttonLabel(
                                   'Transferência bancária',
-                                  !controlle.isPix,
+                                  !controller.isPix,
                                 ),
                               ),
                             ],
@@ -152,26 +155,7 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                       children: List<Widget>.generate(
                         cardsList.length,
                         (index) {
-                          BorderRadiusGeometry? borderRadius;
-                          BoxBorder? border = Border(
-                            top: index == 0
-                                ? const BorderSide(color: AppColors.grey3)
-                                : BorderSide.none,
-                            left: const BorderSide(color: AppColors.grey3),
-                            right: const BorderSide(color: AppColors.grey3),
-                            bottom: const BorderSide(color: AppColors.grey3),
-                          );
-                          if (index == 0) {
-                            borderRadius = const BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                topRight: Radius.circular(12)
-                            );
-                          } else if ((index + 1) == cardsList.length) {
-                            borderRadius = const BorderRadius.only(
-                              bottomLeft: Radius.circular(12),
-                              bottomRight: Radius.circular(12),
-                            );
-                          }
+                          calculateTheEdge(index);
                           return Container(
                             decoration: BoxDecoration(
                               border: border,
@@ -205,6 +189,28 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
         ),
       ),
     );
+  }
+
+  calculateTheEdge(int index) {
+    border = Border(
+      top: index == 0
+          ? const BorderSide(color: AppColors.grey3)
+          : BorderSide.none,
+      left: const BorderSide(color: AppColors.grey3),
+      right: const BorderSide(color: AppColors.grey3),
+      bottom: const BorderSide(color: AppColors.grey3),
+    );
+    if (index == 0) {
+      borderRadius = const BorderRadius.only(
+        topLeft: Radius.circular(12),
+        topRight: Radius.circular(12),
+      );
+    } else if ((index + 1) == cardsList.length) {
+      borderRadius = const BorderRadius.only(
+        bottomLeft: Radius.circular(12),
+        bottomRight: Radius.circular(12),
+      );
+    }
   }
 
   buttonLabel(String label, bool isPix) => Text(

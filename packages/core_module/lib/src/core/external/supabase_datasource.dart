@@ -17,10 +17,9 @@ class SupabaseDatasource implements IDatasource {
   @override
   Future<List<dynamic>> get(String path) async {
     params = path.split('/');
-    final data;
+    final dynamic data;
     if(params.length > 3){
       data = await _supaClient.from(params[0]).select().eq(params[1],params[2]).order(params[4], ascending: params[5].toLowerCase() == 'true');
-      print(data);
     } else{
       data = await _supaClient.from(params[0]).select().order(params[1], ascending: params[2].toLowerCase() == 'true');
     }

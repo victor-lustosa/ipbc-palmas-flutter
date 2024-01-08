@@ -12,11 +12,7 @@ class CoreModule extends Module {
 
   @override
   void exportedBinds(Injector i) {
-     i.addSingleton<SupabaseDatasource>(() => SupabaseDatasource(supabaseClient: Supabase.instance.client));
-    i.addSingleton<Repository<List<dynamic>>>(
-          () => Repository<List<dynamic>>(
-        datasource: i.get<SupabaseDatasource>(),
-      ),
-    );
+    i.addSingleton<SupabaseDatasource>(() => SupabaseDatasource(supabaseClient: Supabase.instance.client));
+    i.addSingleton<Repository<List<dynamic>>>(() => Repository<List<dynamic>>(datasource: i.get<SupabaseDatasource>()));
   }
 }

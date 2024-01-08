@@ -6,7 +6,7 @@ import 'views/admin/insert_services_view.dart';
 class ServiceModule extends Module {
 
   static const String insertServicesRoute = "/insert-services";
-  static const String serviceRoute = "/service";
+  static const String serviceRoute = "/services";
   static const String servicesCollectionRoute = "/services-collection";
 
   @override
