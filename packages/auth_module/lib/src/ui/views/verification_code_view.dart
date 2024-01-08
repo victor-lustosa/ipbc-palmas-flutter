@@ -22,6 +22,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
+ page_confirm_email
       child: SingleChildScrollView(
         child: SizedBox(
           width: context.mediaQuery.size.width,

@@ -20,7 +20,7 @@ dependencies:
   connectivity_plus: ^4.0.0
   url_launcher: ^6.1.10
   email_validator: ^2.1.17
-  flutter_modular: ^6.3.1
+  flutter_modular: ^6.3.2
   design_system:
     path: ../design_system
   lyric_module:

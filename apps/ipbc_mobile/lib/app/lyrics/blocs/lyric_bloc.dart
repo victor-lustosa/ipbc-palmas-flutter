@@ -35,8 +35,8 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
         emit(DataFetchedState<LyricState, LyricEntity>(entities: lyrics));
       },
       onError: (error, st) {
-        AnalyticsUtil.recordError(name: 'lyric bloc', error: error, st: st);
-        AnalyticsUtil.setCustomKey(name: 'lyric bloc', key: 'get supa lyrics bloc', value: error.toString());
+        AnalyticsUtil.recordError(name: 'lyrics bloc', error: error, st: st);
+        AnalyticsUtil.setCustomKey(name: 'lyrics bloc', key: 'get supa lyrics bloc', value: error.toString());
         emit(ExceptionState<LyricState>(message: error.toString()));
       },
     );

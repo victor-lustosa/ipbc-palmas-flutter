@@ -106,7 +106,9 @@ class _NoConnectionViewState extends State<NoConnectionView> {
                 homeViewModel.jumpToPage(widget.index);
               },
               backgroundColor: AppColors.darkGreen,
-              child: const Text("RECARREGAR"),
+              child: Text("RECARREGAR",style: AppFonts.defaultFont(
+                color: AppColors.white,
+              ),),
             ),
           )
         ],

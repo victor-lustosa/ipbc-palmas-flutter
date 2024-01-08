@@ -40,7 +40,7 @@ dependencies:
   flutter_lints: ^2.0.1
   build_runner: ^2.3.3   # <-- and make sure that is also there
   cupertino_icons: ^1.0.5
-
+  vector_math:
 dev_dependencies:
   flutter_test:
     sdk: flutter

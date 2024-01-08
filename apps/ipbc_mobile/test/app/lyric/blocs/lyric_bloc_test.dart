@@ -4,7 +4,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ipbc_palmas/app/lyric/blocs/lyric_bloc.dart';
+import 'package:ipbc_palmas/app/lyrics/blocs/lyric_bloc.dart';
 import '../../../mocks/mocks.dart';
 void main() {
   late ILyricsUseCases<Stream<List<LyricEntityMock>>> useCases;
