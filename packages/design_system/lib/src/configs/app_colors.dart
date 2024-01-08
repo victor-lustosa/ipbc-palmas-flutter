@@ -20,6 +20,7 @@ class AppColors {
   static const Color grey10 = Color(0xFF363638);
   static const Color grey12 = Color(0xFF242426);
   static const Color black = Color(0xFF171717);
+  static const Color fullBlack = Color(0xFF000000);
 
   //secondary
   static const Color secondaryGreen = Color(0xFF00A876);
@@ -32,6 +33,7 @@ class AppColors {
   static const Color highlightGreen = Color(0xFF00E8A2);
   static const Color timelineGuideTGreen = Color(0xFFCCDED9);
   static const Color badgeGreen = Color(0xFFE4F5F0);
+  static const Color disableButton = Color(0xFf7CA99C);
 
   static const Color hintInputForm = Color(0xFFA3A3A3); //system colors ios
   static const Color confirmation = Color(0xFF34C759);

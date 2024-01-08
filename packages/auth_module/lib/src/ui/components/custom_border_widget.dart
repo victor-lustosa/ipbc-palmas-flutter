@@ -9,7 +9,7 @@ class CustomBorder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 40,
+      width: 44,
       height: 50,
       child: CustomPaint(
         painter: MyPainter(filled: filled),
@@ -24,8 +24,8 @@ class MyPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    double w = 40;
-    double h = 50;
+    double w = 44;
+    double h = 48;
     double r = 12; //<-- corner radius
 
     Paint borderPaint = Paint()
