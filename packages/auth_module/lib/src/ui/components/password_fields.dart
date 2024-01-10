@@ -5,12 +5,14 @@ class CustomPasswordField extends StatefulWidget {
   final TextEditingController controller;
   final String textLabel;
   final Function(String)? onChanged;
+  final Color borderSideColor;
 
   const CustomPasswordField(
       {Key? key,
       required this.controller,
       required this.textLabel,
-      this.onChanged})
+      this.onChanged,
+      required this.borderSideColor})
       : super(key: key);
 
   @override
@@ -33,9 +35,9 @@ class CustomPasswordFieldState extends State<CustomPasswordField> {
           borderRadius: BorderRadius.all(Radius.circular(16)),
           borderSide: BorderSide(color: AppColors.secondaryGrey),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-          borderSide: BorderSide(color: AppColors.grey8),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
+          borderSide: BorderSide(color: widget.borderSideColor),
         ),
         contentPadding:
             const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
