@@ -30,6 +30,10 @@ class CustomPasswordFieldState extends State<CustomPasswordField> {
       onChanged: widget.onChanged,
       decoration: InputDecoration(
         hintText: widget.textLabel,
+        hintStyle: AppFonts.defaultFont(
+            color: AppColors.hintInputForm,
+            fontSize: 12,
+            fontWeight: FontWeight.w400),
         alignLabelWithHint: true,
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(16)),

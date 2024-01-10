@@ -2,6 +2,8 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 import '../components/password_fields.dart';
+import '../controller/confirm_pass_field_controller.dart';
+import '../controller/pass_field_controller.dart';
 
 class CreatingNewPasswordView extends StatefulWidget {
   const CreatingNewPasswordView({super.key});
@@ -12,11 +14,8 @@ class CreatingNewPasswordView extends StatefulWidget {
 }
 
 class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
-  TextEditingController passwordController1 = TextEditingController();
-  TextEditingController passwordController2 = TextEditingController();
-
-  String textController1 = '';
-  String textController2 = '';
+  final passwordController = PassFieldController();
+  final confirmPasswordController = ConfirmPassFieldController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +25,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
         child: Container(
           margin: const EdgeInsets.only(
             left: 16,
+            right: 16,
           ),
           child: Column(
             children: [
@@ -54,33 +54,38 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                 ),
               ),
               Container(
-                  margin: const EdgeInsets.only(top: 8, right: 16, bottom: 8),
+                  margin: const EdgeInsets.only(top: 8, bottom: 8),
                   child: Column(
                     children: [
                       CustomPasswordField(
-                        borderSideColor: isPasswordValid(textController1)
+                        borderSideColor: isPasswordValid(
+                                passwordController.passwordControllerValue)
                             ? AppColors.grey8
                             : AppColors.delete,
-                        controller: passwordController1,
+                        controller: passwordController.passwordController,
                         textLabel: 'Senha',
                         onChanged: (value) {
                           setState(() {
-                            textController1 = value;
+                            passwordController.setValuePass(value);
                           });
                         },
                       ),
                       const SizedBox(height: 8),
                       CustomPasswordField(
-                        borderSideColor: isPasswordValid(textController1) &&
+                        borderSideColor: isPasswordValid(passwordController
+                                    .passwordControllerValue) &&
                                 arePasswordsEqual(
-                                    textController1, textController2)
+                                    passwordController.passwordControllerValue,
+                                    confirmPasswordController
+                                        .confirmPasswordControllerValue)
                             ? AppColors.grey8
                             : AppColors.delete,
-                        controller: passwordController2,
+                        controller:
+                            confirmPasswordController.confirmPasswordController,
                         textLabel: 'Repetir senha',
                         onChanged: (value) {
                           setState(() {
-                            textController2 = value;
+                            confirmPasswordController.setValuePass(value);
                           });
                         },
                       )
@@ -91,7 +96,8 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                 child: Text(
                   " * Deve conter no mínimo 8 dígitos.",
                   style: AppFonts.defaultFont(
-                      color: isPasswordValid(textController1)
+                      color: isPasswordValid(
+                              passwordController.passwordControllerValue)
                           ? AppColors.darkGreen
                           : AppColors.grey8,
                       fontSize: 13,
@@ -100,7 +106,10 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
               ),
               Container(
                 alignment: Alignment.bottomLeft,
-                child: arePasswordsEqual(textController1, textController2)
+                child: arePasswordsEqual(
+                        passwordController.passwordControllerValue,
+                        confirmPasswordController
+                            .confirmPasswordControllerValue)
                     ? const SizedBox()
                     : Text(
                         " * Atenção! As senhas não correspondem.",
@@ -115,13 +124,19 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                   top: 87,
                 ),
                 child: ElevatedButtonWidget(
-                  action: () {},
+                  action: () {
+                    confirmPasswordController.confirmPasswordControllerValue;
+                  },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                   fixedSize: const Size(364, 48),
-                  backgroundColor: isPasswordValid(textController1) &&
-                          arePasswordsEqual(textController1, textController2)
+                  backgroundColor: isPasswordValid(
+                              passwordController.passwordControllerValue) &&
+                          arePasswordsEqual(
+                              passwordController.passwordControllerValue,
+                              confirmPasswordController
+                                  .confirmPasswordControllerValue)
                       ? AppColors.darkGreen
                       : AppColors.disableButton,
                   shadowColor: AppColors.grey0,
@@ -142,7 +157,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
     return password.length > 7;
   }
 
-  bool arePasswordsEqual(String password1, String password2) {
-    return password1 == password2;
+  bool arePasswordsEqual(String password, String confirmPassword) {
+    return password == confirmPassword;
   }
 }
