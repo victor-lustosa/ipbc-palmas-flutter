@@ -5,6 +5,7 @@ class CustomEmailField extends StatefulWidget {
   final TextEditingController controller;
   final String textLabel;
   final Color borderSideColor;
+  final Color inputTextColor;
   final String iconPath;
   final Function(String)? onChanged;
 
@@ -14,7 +15,8 @@ class CustomEmailField extends StatefulWidget {
       required this.textLabel,
       required this.borderSideColor,
       required this.iconPath,
-      this.onChanged})
+      this.onChanged,
+      required this.inputTextColor})
       : super(key: key);
 
   @override
@@ -27,12 +29,14 @@ class CustomEmailFieldState extends State<CustomEmailField> {
     return TextField(
       controller: widget.controller,
       onChanged: widget.onChanged,
+      style: TextStyle(
+          color: widget.controller.text.isEmpty
+              ? AppColors.grey8
+              : widget.inputTextColor),
       decoration: InputDecoration(
         hintText: widget.textLabel,
         hintStyle: AppFonts.defaultFont(
-            color: AppColors.hintInputForm,
-            fontSize: 12,
-            fontWeight: FontWeight.w400),
+            color: AppColors.grey8, fontSize: 12, fontWeight: FontWeight.w400),
         alignLabelWithHint: true,
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(16)),

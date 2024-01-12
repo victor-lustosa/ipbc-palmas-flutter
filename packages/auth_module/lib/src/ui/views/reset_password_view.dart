@@ -1,8 +1,7 @@
-import 'package:auth_module/src/ui/components/x_modal.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../components/circle_modal.dart';
+import '../components/banner_error.dart';
 import '../components/email_field.dart';
 
 class ResetPassword extends StatefulWidget {
@@ -55,26 +54,26 @@ class _ResetPasswordState extends State<ResetPassword> {
                   ),
                 ),
                 Container(
-                    margin: const EdgeInsets.only(top: 8, bottom: 8),
-                    child: Column(
-                      children: [
-                        CustomEmailField(
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                          textLabel: 'Email',
-                          borderSideColor: emailController.text.isEmpty
-                              ? AppColors.grey8
-                              : (emailMock == emailController.text
-                                  ? AppColors.disableButton
-                                  : AppColors.delete),
-                          controller: emailController,
-                          iconPath: emailMock == emailController.text
-                              ? AppIcons.emailSuccess
-                              : AppIcons.emailNotValid,
-                        ),
-                      ],
-                    )),
+                  margin: const EdgeInsets.only(top: 8, bottom: 8),
+                  child: CustomEmailField(
+                    onChanged: (value) {
+                      setState(() {});
+                    },
+                    textLabel: 'Email',
+                    inputTextColor: (emailMock == emailController.text
+                        ? AppColors.greenInputAccept
+                        : AppColors.delete),
+                    borderSideColor: emailController.text.isEmpty
+                        ? AppColors.grey8
+                        : (emailMock == emailController.text
+                            ? AppColors.disableButton
+                            : AppColors.delete),
+                    controller: emailController,
+                    iconPath: emailMock == emailController.text
+                        ? AppIcons.emailSuccess
+                        : AppIcons.emailNotValid,
+                  ),
+                ),
                 Container(
                   margin: const EdgeInsets.only(
                     top: 40,
@@ -84,7 +83,12 @@ class _ResetPasswordState extends State<ResetPassword> {
                       if (emailMock == emailController.text) {
                         // Lógica para o caso em que o email corresponde
                       } else {
-                        _showErrorDialog();
+                        //_showErrorDialog();
+                        showCustomErrorDialog(
+                          context,
+                          'E-mail inválido!',
+                          'Por favor, verifique seu e-mail e tente novamente.',
+                        );
                       }
                     },
                     shape: RoundedRectangleBorder(
@@ -106,83 +110,6 @@ class _ResetPasswordState extends State<ResetPassword> {
           ),
         ),
       ),
-    );
-  }
-
-  Future<void> _showErrorDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: true,
-      barrierColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return Stack(
-          children: [
-            Positioned(
-              bottom: 40, // Defina para altura do modal
-              left: 13,
-              right: 13,
-              child: AlertDialog(
-                clipBehavior: Clip.none,
-                insetPadding: const EdgeInsets.all(3),
-                contentPadding: const EdgeInsets.all(20),
-                backgroundColor: AppColors.redModal,
-                content: IntrinsicHeight(
-                  child: Row(
-                    children: [
-                      const CircleWithX(),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'E-mail inválido!',
-                              style: AppFonts.defaultFont(
-                                fontSize: 16,
-                                color: AppColors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              'Por favor, verifique seu e-mail e tente novamente.',
-                              style: AppFonts.defaultFont(
-                                fontSize: 12,
-                                color: AppColors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            style: ButtonStyle(
-                                alignment: Alignment.topRight,
-                                padding:
-                                    MaterialStateProperty.all(EdgeInsets.zero)),
-                            child: const Xmodal(),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
     );
   }
 }
