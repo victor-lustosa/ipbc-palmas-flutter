@@ -9,7 +9,7 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Modular.setInitialRoute(
-        MainModule.authRoute + AuthModule.creatingNewPassWordRoute);
+        MainModule.authRoute + AuthModule.resetPasswordRoute);
 
     return MaterialApp.router(
       builder: (context, Widget? child) {
