@@ -94,7 +94,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    fixedSize: const Size(364, 48),
+                    fixedSize: Size(MediaQuery.of(context).size.width, 48),
                     backgroundColor: emailMock == emailController.text
                         ? AppColors.darkGreen
                         : AppColors.disableButton,
