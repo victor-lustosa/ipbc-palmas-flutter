@@ -3,7 +3,7 @@ import 'package:lyric_module/lyric_module.dart';
 
 class ServiceModel extends ServiceEntity {
   ServiceModel(
-      {required String id,
+      {required int id,
       required String image,
       required String theme,
       required String hour,
@@ -42,12 +42,12 @@ class ServiceModel extends ServiceEntity {
       type: '',
       heading: '',
       guideIsVisible: false,
-      id: '');
+      id: SupaServicesUtil.createId());
 
   ServiceModel copyWith({
     DateTime? createAt,
     String? title,
-    String? id,
+    int? id,
     String? theme,
     String? preacher,
     String? type,

@@ -15,9 +15,7 @@ Projeto de aplicativo Android e iOS Open Source para a Igreja Presbiteriana Cent
 - Gerências de Estado: Bloc Pattern e ChangeNotifier
 - Gerenciamento das rotas: Modular
 - Injeção de Dependência: Modular
-- Databases NoSQL: Hive e Firestore (Brevemente Supabase)
-- Análise de Dados: firebase Crashlytics
-
+- Databases: Supabase datasource
 
 ### Execução
 ---

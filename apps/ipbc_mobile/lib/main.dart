@@ -1,42 +1,56 @@
-import 'dart:async';
-
 import 'package:core_module/core_module.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter/foundation.dart';
-import 'app/app_widget.dart';
-import 'app/splash/main_module.dart';
+
+import 'app/services/service_module.dart';
+import 'app/lyrics/lyric_module.dart';
+import 'app/home/home_module.dart';
 
 void main() async {
-  runZonedGuarded<Future<void>>(
-    () async {
-      WidgetsFlutterBinding.ensureInitialized();
 
-      await Future.wait([
-        Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
-        HiveDatasource.hiveInit()
-      ]);
-
-      // if (kDebugMode) {
-        await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
-     // }
-
-      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-      Bloc.observer = GenericBlocObserver();
-
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]).then(
-        (_) => runApp(
-          ModularApp(
-            module: MainModule(),
-            child: const AppWidget(),
-          ),
+  //Modular.setInitialRoute(MainModule.authRoute + AuthModule.verificationCodeRoute);
+  WidgetsFlutterBinding.ensureInitialized();
+  SupabaseDatasource.init();
+  Bloc.observer = GenericBlocObserver();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then(
+    (_) => runApp(
+      ModularApp(
+        module: MainModule(),
+        child: MaterialApp.router(
+          builder: (context, Widget? child) {
+            return ScrollConfiguration(
+              behavior: NoGlowBehavior(),
+              child: child!,
+            );
+          },
+          title: 'IPBC Palmas',
+          theme: lightTheme,
+          routerConfig: Modular.routerConfig,
+          debugShowCheckedModeBanner: false,
         ),
-      );
-    },
-    (error, stackTrace) => FirebaseCrashlytics.instance.recordError(error, stackTrace),
+      ),
+    ),
   );
+}
+
+class MainModule extends Module {
+  static const String authRoute = '/auth';
+  static const String lyricsRoute = '/lyrics';
+  static const String servicesRoute = '/services';
+  static const String initialRoute = '/';
+
+  @override
+  List<Module> get imports => [CoreModule()];
+
+  @override
+  void routes(r) {
+    r.module(initialRoute, module: HomeModule());
+    //r.module(authRoute, module: AuthModule());
+    //r.child(splashRoute, child: (_) => const SplashView());
+    r.module(lyricsRoute, module: LyricModule());
+    r.module(servicesRoute, module: ServiceModule());
+  }
 }

@@ -3,14 +3,14 @@ import 'package:core_module/core_module.dart';
 import '../../../lyric_module.dart';
 
 class LyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
-  final IRepository<List<Map>> repository;
+  final IRepository<List<dynamic>> repository;
 
   LyricsUseCases({required this.repository});
 
   @override
   Future<Stream<List<LyricEntity>>> get(String url) async {
     var result = await repository.get(url);
-    return Stream.value(LyricAdapter.fromMapList(result));
+    return Stream.value(SupaLyricAdapter.fromMapList(result));
   }
 
   @override

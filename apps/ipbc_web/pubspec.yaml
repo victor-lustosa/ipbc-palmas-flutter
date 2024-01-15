@@ -39,10 +39,6 @@ dependencies:
     sdk: flutter
   core_module:
     path: ../../packages/core_module
-  lyric_module:
-    path: ../../packages/lyric_module
-  auth_module:
-    path: ../../packages/auth_module
 dev_dependencies:
   flutter_test:
     sdk: flutter

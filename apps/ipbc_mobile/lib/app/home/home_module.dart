@@ -1,31 +1,36 @@
 import 'package:core_module/core_module.dart';
-import 'package:flutter/material.dart';
-import '../lyric/lyric_module.dart';
 
-import '../service/service_module.dart';
-import 'view-models/home_view_model.dart';
+import '../offers/controller/banner_controller.dart';
+import '../services/service_module.dart';
+import '../lyrics/lyric_module.dart';
+
+import 'blocs/home_bloc.dart';
 import 'views/init_view.dart';
 
 class HomeModule extends Module {
   static const String initialRoute = '/';
   static const String homeRoute = '/home';
-  static const String serviceRoute = '/service';
+  static const String serviceRoute = '/services';
   static const String servicesListRoute = '/services';
   static const String servicesCollectionRoute = '/services-collection';
 
-  static final GlobalKey<NavigatorState> _androidNavigatorKey =
-  GlobalKey<NavigatorState>();
-
-  static GlobalKey<NavigatorState> getAndroidNavigatorKey() {
-    return _androidNavigatorKey;
-  }
+  @override
+  List<Module> get imports => [
+        LyricModule(),
+        ServiceModule(),
+      ];
   @override
   void binds(Injector i) {
-    i.add(HomeViewModel.new);
+    i.addLazySingleton<HomeBloc>(
+      () => HomeBloc(
+        supaUseCases: ServicesUseCases(
+          repository: i.get<Repository<List<dynamic>>>(),
+        ),
+      ),
+      config: CoreModule.blocConfig(),
+    );
+    i.addLazySingleton<BannerController>(BannerController.new);
   }
-
-  @override
-  List<Module> get imports => [LyricModule(), ServiceModule()];
 
   @override
   void routes(r) {

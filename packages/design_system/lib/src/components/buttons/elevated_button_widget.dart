@@ -14,28 +14,32 @@ class ElevatedButtonWidget extends StatelessWidget {
     this.backgroundColor,
     this.shape,
     this.elevation,
+    this.fixedSize,
     this.padding,
   }) : super(key: key);
   final Color? overlayColor;
   final Widget? child;
-  final EdgeInsetsGeometry? padding;
   final Color? foregroundColor;
   final TextStyle? textStyle;
   final Color? shadowColor;
   final double? elevation;
+  final EdgeInsets? padding;
   final Color? backgroundColor;
   final VoidCallback? action;
   final OutlinedBorder? shape;
+  final Size? fixedSize;
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ButtonStyle(
-          padding: padding == null
-              ? null
-              : MaterialStateProperty.all<EdgeInsetsGeometry>(padding!),
+          fixedSize: fixedSize == null ? null : MaterialStateProperty.all<Size>(fixedSize!),
           elevation: elevation == null
               ? null
               : MaterialStateProperty.all<double>(elevation!),
+          padding: padding == null
+              ? null
+              : MaterialStateProperty.all<EdgeInsets>(padding!),
           overlayColor: overlayColor == null
               ? null
               : MaterialStateProperty.all<Color>(overlayColor!),
@@ -57,7 +61,7 @@ class ElevatedButtonWidget extends StatelessWidget {
             textStyle ??
                 AppFonts.defaultFont(
                   fontWeight: FontWeight.w500,
-                  color: AppColors.white,
+                  color: AppColors.darkGreen
                 ),
           ),
         ),

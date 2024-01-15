@@ -1,7 +1,7 @@
-import 'dart:developer';
+/*import 'dart:developer';
 import 'package:flutter/material.dart';
 import '../../../../core_module.dart';
-import '../../../shared/utils/service_util.dart';
+import '../../../shared/utils/fire_service_util.dart';
 
 // ignore_for_file: avoid_print
 Future<void> firebaseInitialize() async {
@@ -60,4 +60,4 @@ void main() async {
   } catch (e) {
     print('$e');
   }
-}
+}*/
