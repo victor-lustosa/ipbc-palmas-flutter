@@ -36,7 +36,7 @@ class CreatedNewPasswordsuccess extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  fixedSize: const Size(343, 48),
+                  fixedSize: const Size(MediaQuery.of(context).size.width, 48),
                   action: () {
                     Modular.to.navigate('/auth');
                   },
