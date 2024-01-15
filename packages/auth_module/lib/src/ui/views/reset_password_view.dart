@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../components/banner_error.dart';
 import '../components/email_field.dart';
+import '../controller/reset_password_controller.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
@@ -12,8 +13,7 @@ class ResetPassword extends StatefulWidget {
 }
 
 class _ResetPasswordState extends State<ResetPassword> {
-  TextEditingController emailController = TextEditingController();
-  String emailTyped = '';
+  final emailcontroller = ResetPasswordController();
 
   static const String emailMock = "victor@gmail.com";
 
@@ -57,19 +57,25 @@ class _ResetPasswordState extends State<ResetPassword> {
                   margin: const EdgeInsets.only(top: 8, bottom: 8),
                   child: CustomEmailField(
                     onChanged: (value) {
-                      setState(() {});
+                      setState(() {
+                        emailcontroller.setValueEmail(value);
+                      });
                     },
                     textLabel: 'Email',
-                    inputTextColor: (emailMock == emailController.text
+                    inputTextColor: (emailMock ==
+                            emailcontroller.resetPasswordControllerValue
                         ? AppColors.greenInputAccept
                         : AppColors.delete),
-                    borderSideColor: emailController.text.isEmpty
-                        ? AppColors.grey8
-                        : (emailMock == emailController.text
-                            ? AppColors.disableButton
-                            : AppColors.delete),
-                    controller: emailController,
-                    iconPath: emailMock == emailController.text
+                    borderSideColor:
+                        emailcontroller.resetPasswordControllerValue.isEmpty
+                            ? AppColors.grey8
+                            : (emailMock ==
+                                    emailcontroller.resetPasswordControllerValue
+                                ? AppColors.disableButton
+                                : AppColors.delete),
+                    controller: emailcontroller.resetPasswordController,
+                    iconPath: emailMock ==
+                            emailcontroller.resetPasswordControllerValue
                         ? AppIcons.emailSuccess
                         : AppIcons.emailNotValid,
                   ),
@@ -80,7 +86,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                   ),
                   child: ElevatedButtonWidget(
                     action: () {
-                      if (emailMock == emailController.text) {
+                      if (emailMock ==
+                          emailcontroller.resetPasswordControllerValue) {
                         // Lógica para o caso em que o email corresponde
                       } else {
                         //_showErrorDialog();
@@ -95,7 +102,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     fixedSize: Size(MediaQuery.of(context).size.width, 48),
-                    backgroundColor: emailMock == emailController.text
+                    backgroundColor: emailMock ==
+                            emailcontroller.resetPasswordControllerValue
                         ? AppColors.darkGreen
                         : AppColors.disableButton,
                     shadowColor: AppColors.grey0,
