@@ -13,9 +13,9 @@ class ResetPassword extends StatefulWidget {
 
 class _ResetPasswordState extends State<ResetPassword> {
   TextEditingController emailController = TextEditingController();
+  String emailTyped = '';
 
   static const String emailMock = "victor@gmail.com";
-  String emailTyped = '';
 
   @override
   Widget build(BuildContext context) {
