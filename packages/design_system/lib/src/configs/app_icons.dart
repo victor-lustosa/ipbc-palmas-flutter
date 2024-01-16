@@ -33,6 +33,7 @@ class AppIcons {
   static const String faceIcon = 'assets/icons/face-icon.png';
   static const String visibityOff = 'assets/icons/visibility_off.png';
   static const String visibityOn = 'assets/icons/visibility_on.png';
+  static const String close = 'assets/icons/close.png';
 
   static const String emailSuccess = 'assets/icons/email-success.png';
   static const String emailNotValid = 'assets/icons/email-not-valid.png';

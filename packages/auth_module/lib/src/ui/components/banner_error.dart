@@ -56,21 +56,20 @@ class CustomErrorDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                TextButton(
-                  onPressed: () {
+                InkWell(
+                  onTap: () {
                     Navigator.of(context).pop();
                     if (onClose != null) {
                       onClose!();
                     }
                   },
-                  style: ButtonStyle(
-                    alignment: Alignment.topRight,
-                    padding: MaterialStateProperty.all(EdgeInsets.zero),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 9),
+                    child: Image.asset(AppIcons.close, width: 10, height: 10),
                   ),
-                  child: const Xmodal(),
                 ),
               ],
-            ),
+            )
           ],
         ),
       ),
