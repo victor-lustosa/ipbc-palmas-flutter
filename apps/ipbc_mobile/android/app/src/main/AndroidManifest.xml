@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ipbc.ipbc_palmas">
+    package="com.ipbc.ipbc_mobile">
    <application
         android:label="IPBC Palmas"
         android:name="${applicationName}"

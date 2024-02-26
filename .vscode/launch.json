@@ -1,0 +1,148 @@
+{
+    // Use o IntelliSense para saber mais sobre os atributos possíveis.
+    // Focalizar para exibir as descrições dos atributos existentes.
+    // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "ipbc_mobile",
+            "cwd": "apps\\ipbc_mobile",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "ipbc_mobile (profile mode)",
+            "cwd": "apps\\ipbc_mobile",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "ipbc_mobile (release mode)",
+            "cwd": "apps\\ipbc_mobile",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "ipbc_web",
+            "cwd": "apps\\ipbc_web",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "ipbc_web (profile mode)",
+            "cwd": "apps\\ipbc_web",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "ipbc_web (release mode)",
+            "cwd": "apps\\ipbc_web",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "auth_module",
+            "cwd": "packages\\auth_module",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "auth_module (profile mode)",
+            "cwd": "packages\\auth_module",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "auth_module (release mode)",
+            "cwd": "packages\\auth_module",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "core_module",
+            "cwd": "packages\\core_module",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "core_module (profile mode)",
+            "cwd": "packages\\core_module",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "core_module (release mode)",
+            "cwd": "packages\\core_module",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "design_system",
+            "cwd": "packages\\design_system",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "design_system (profile mode)",
+            "cwd": "packages\\design_system",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "design_system (release mode)",
+            "cwd": "packages\\design_system",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "lyric_module",
+            "cwd": "packages\\lyric_module",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "lyric_module (profile mode)",
+            "cwd": "packages\\lyric_module",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "lyric_module (release mode)",
+            "cwd": "packages\\lyric_module",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "service_module",
+            "cwd": "packages\\service_module",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "service_module (profile mode)",
+            "cwd": "packages\\service_module",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "service_module (release mode)",
+            "cwd": "packages\\service_module",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
