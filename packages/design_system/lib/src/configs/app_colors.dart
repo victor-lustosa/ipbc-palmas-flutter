@@ -37,7 +37,10 @@ class AppColors {
 
   static const Color hintInputForm = Color(0xFFA3A3A3); //system colors ios
   static const Color confirmation = Color(0xFF34C759);
+  static const Color greenInputAccept = Color(0xFF80AD9F);
   static const Color delete = Color(0xFFFF3B30);
+  static const Color redModal = Color(0xffC72C41);
+  static const Color redCircleModal = Color(0xff9D2333);
   static const Color warning = Color(0xFFFF9500);
   static const Color add = Color(0xFF007AFF);
   static const Color information = Color(0xFF30AAC7);
