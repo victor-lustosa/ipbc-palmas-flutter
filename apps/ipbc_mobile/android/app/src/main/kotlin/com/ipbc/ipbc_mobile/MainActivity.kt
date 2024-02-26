@@ -1,0 +1,6 @@
+package com.ipbc.ipbc_mobile
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
