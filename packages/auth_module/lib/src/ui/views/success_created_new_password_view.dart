@@ -14,7 +14,7 @@ class CreatedNewPasswordsuccess extends StatelessWidget {
             children: [
               Container(
                 margin: const EdgeInsets.only(top: 162, bottom: 25),
-                  child: const Image(image: AssetImage(AppImages.lock)),
+                child: const Image(image: AssetImage(AppImages.lock)),
               ),
               Text(
                 'Nova senha',
@@ -31,12 +31,13 @@ class CreatedNewPasswordsuccess extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 376, left: 16.0, right: 16.0),
+                margin:
+                    const EdgeInsets.only(top: 376, left: 16.0, right: 16.0),
                 child: ElevatedButtonWidget(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  fixedSize: const Size(343, 48),
+                  fixedSize: Size(MediaQuery.of(context).size.width, 48),
                   action: () {
                     Modular.to.navigate('/auth');
                   },
