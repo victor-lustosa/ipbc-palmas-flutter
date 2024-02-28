@@ -23,7 +23,7 @@ class AuthModule extends Module {
     );
   }
 
-  static const String initialRoute = '/';
+  static const String initialRoute = '/auth';
   static const String loginRoute = '/login';
   static const String createAccountRoute = '/create-account';
   static const String verificationCodeRoute = '/verification-code';

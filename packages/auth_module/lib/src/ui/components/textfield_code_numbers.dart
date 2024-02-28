@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:auth_module/src/ui/components/banner_error.dart';
 import 'package:auth_module/src/ui/components/custom_border_widget.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,9 @@ class TextfieldCodeNumbers extends StatefulWidget {
 }
 
 class _TextfieldCodeNumbersState extends State<TextfieldCodeNumbers> {
-  final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
+  final List<int> code = [1, 2, 3, 4, 5, 6]; // Code Mockado;
 
+  final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
   final List<TextEditingController> controllers =
       List.generate(6, (index) => TextEditingController());
 
@@ -66,10 +68,8 @@ class _TextfieldCodeNumbersState extends State<TextfieldCodeNumbers> {
                           decoration: const InputDecoration(
                             counterText: '',
                             contentPadding: EdgeInsets.all(10),
-                            enabledBorder:
-                                InputBorder.none, // Removendo a borda
-                            focusedBorder: InputBorder
-                                .none, // Removendo a borda quando está focado
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
                             labelStyle: TextStyle(color: AppColors.darkGreen),
                           ),
                           cursorColor: AppColors.darkGreen,
@@ -96,8 +96,26 @@ class _TextfieldCodeNumbersState extends State<TextfieldCodeNumbers> {
               action: () {
                 if (textFieldValues.every((value) => value.isNotEmpty)) {
                   log('TODOS OS Valores dos TextFields preechidos: $textFieldValues');
+
+                  if (textFieldValues.join() == code.join()) {
+                    Navigator.pushNamed(
+                      context,
+                      AuthModule.initialRoute +
+                          AuthModule.creatingNewPassWordRoute,
+                    );
+                  } else {
+                    showCustomErrorDialog(
+                      context,
+                      'Código Inválido!',
+                      'Por favor, preencha o verifique o código, e tente novamente.',
+                    );
+                  }
                 } else {
-                  log('Preencha todos os TextFields!');
+                  showCustomErrorDialog(
+                    context,
+                    'Código não Preenchidos!',
+                    'Por favor, preencha o código de verificação e tente novamente.',
+                  );
                 }
               },
               backgroundColor:
