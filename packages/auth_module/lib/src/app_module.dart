@@ -1,3 +1,4 @@
+import 'package:auth_module/src/ui/controller/code_controller.dart';
 import 'package:auth_module/src/ui/views/success_created_new_password_view.dart';
 import 'package:auth_module/src/ui/views/verification_code_view.dart';
 import 'package:core_module/core_module.dart';
@@ -21,6 +22,7 @@ class AuthModule extends Module {
         ),
       ),
     );
+    i.addSingleton(CodeController.new);
   }
 
   static const String initialRoute = '/auth';

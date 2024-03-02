@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:auth_module/src/ui/components/banner_error.dart';
 import 'package:auth_module/src/ui/components/custom_text_verification_code.dart';
 import 'package:auth_module/src/ui/components/textfield_code_numbers.dart';
+import 'package:auth_module/src/ui/controller/code_controller.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
@@ -18,18 +20,49 @@ class VerificationCodePage extends StatefulWidget {
 }
 
 class _VerificationCodePageState extends State<VerificationCodePage> {
+  final codeController = Modular.get<CodeController>();
+
   @override
   Widget build(BuildContext context) {
+    List<String> textFieldValues = codeController.controllers
+        .map((controller) => controller.text)
+        .toList();
+    validation() {
+      if (textFieldValues.every((value) => value.isNotEmpty)) {
+        log('TODOS OS Valores dos TextFields preechidos: $textFieldValues');
+        log(textFieldValues.join() + '\n' + codeController.code.join());
+
+        if (textFieldValues.join() == codeController.code.join()) {
+          Navigator.pushNamed(
+            context,
+            AuthModule.initialRoute + AuthModule.creatingNewPassWordRoute,
+          );
+        } else {
+          showCustomErrorDialog(
+            context,
+            'Código Inválido!',
+            'Por favor, preencha o verifique o código, e tente novamente.',
+          );
+        }
+      } else {
+        showCustomErrorDialog(
+          context,
+          'Código não Preenchidos!',
+          'Por favor, preencha o código de verificação e tente novamente.',
+        );
+      }
+    }
+
     return Scaffold(
         body: SafeArea(
-        child: SingleChildScrollView(
+      child: SingleChildScrollView(
         child: SizedBox(
           width: context.mediaQuery.size.width,
           child: Column(
             children: [
               Container(
-                width: 100, // Define a largura como o máximo disponível
-                height: 91, // Define a altura conforme necessário
+                width: 100, // Definir largura
+                height: 91, // Definir altura
                 margin: const EdgeInsets.only(top: 110, bottom: 32),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12.35),
@@ -76,6 +109,27 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                 ),
               ),
               const TextfieldCodeNumbers(),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 16,
+                ),
+                child: ElevatedButtonWidget(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  fixedSize: const Size(343, 48),
+                  action: validation,
+                  backgroundColor:
+                      textFieldValues.every((value) => value.isNotEmpty)
+                          ? AppColors.darkGreen
+                          : AppColors.disableButton,
+                  shadowColor: AppColors.grey0,
+                  foregroundColor: AppColors.white,
+                  child: const Text(
+                    "Verificar",
+                  ),
+                ),
+              ),
               CustomTextVerificationCode(
                   textOne:
                       'Não recebeu o e-mail? Verifique na caixa de spam, \n ',
