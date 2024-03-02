@@ -7,8 +7,8 @@ import 'app/lyrics/lyric_module.dart';
 import 'app/home/home_module.dart';
 
 void main() async {
-
-  //Modular.setInitialRoute(MainModule.authRoute + AuthModule.verificationCodeRoute);
+  Modular.setInitialRoute(
+      MainModule.authRoute + AuthModule.verificationCodeRoute);
   WidgetsFlutterBinding.ensureInitialized();
   SupabaseDatasource.init();
   Bloc.observer = GenericBlocObserver();
@@ -48,7 +48,7 @@ class MainModule extends Module {
   @override
   void routes(r) {
     r.module(initialRoute, module: HomeModule());
-    //r.module(authRoute, module: AuthModule());
+    r.module(authRoute, module: AuthModule());
     //r.child(splashRoute, child: (_) => const SplashView());
     r.module(lyricsRoute, module: LyricModule());
     r.module(servicesRoute, module: ServiceModule());

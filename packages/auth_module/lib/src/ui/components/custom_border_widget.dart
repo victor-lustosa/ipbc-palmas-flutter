@@ -26,7 +26,7 @@ class MyPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     double w = 44;
     double h = 48;
-    double r = 12; //<-- corner radius
+    double r = 12; 
 
     Paint borderPaint = Paint()
       ..color = filled ? AppColors.grey6 : AppColors.darkGreen
