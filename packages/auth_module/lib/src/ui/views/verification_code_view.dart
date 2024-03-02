@@ -27,7 +27,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
     validation() {
       if (codeController.textingCode.isNotEmpty) {
         log('TODOS OS Valores dos TextFields preechidos: $codeController.textingCode');
-        log(codeController.textingCode + '\n' + codeController.code.join());
+        log('${codeController.textingCode}\n${codeController.code.join()}');
 
         if (codeController.textingCode == codeController.code.join()) {
           Navigator.pushNamed(
