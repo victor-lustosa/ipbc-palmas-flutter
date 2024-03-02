@@ -1,10 +1,10 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class CustomBorder extends StatelessWidget {
+class CustomBorderWidget extends StatelessWidget {
   final bool filled;
 
-  const CustomBorder({super.key, required this.filled});
+  const CustomBorderWidget({super.key, required this.filled});
 
   @override
   Widget build(BuildContext context) {

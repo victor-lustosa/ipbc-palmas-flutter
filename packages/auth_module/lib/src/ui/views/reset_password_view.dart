@@ -1,19 +1,19 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../components/banner_error.dart';
-import '../components/email_field.dart';
-import '../controller/reset_password_controller.dart';
+import '../components/error_dialog_widget.dart';
+import '../components/email_field_widget.dart';
+import '../view_models/password_view_model.dart';
 
-class ResetPassword extends StatefulWidget {
-  const ResetPassword({super.key});
+class ResetPasswordView extends StatefulWidget {
+  const ResetPasswordView({super.key});
 
   @override
-  State<ResetPassword> createState() => _ResetPasswordState();
+  State<ResetPasswordView> createState() => _ResetPasswordViewState();
 }
 
-class _ResetPasswordState extends State<ResetPassword> {
-  final emailcontroller = ResetPasswordController();
+class _ResetPasswordViewState extends State<ResetPasswordView> {
+  final emailcontroller = Modular.get<PasswordViewModel>();
 
   static const String emailMock = "victor@gmail.com";
 
@@ -55,7 +55,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, bottom: 8),
-                  child: CustomEmailField(
+                  child: EmailFieldWidget(
                     onChanged: (value) {
                       setState(() {
                         emailcontroller.setValueEmail(value);

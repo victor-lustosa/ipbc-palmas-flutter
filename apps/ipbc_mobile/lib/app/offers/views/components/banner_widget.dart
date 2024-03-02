@@ -7,6 +7,7 @@ import '../../controller/banner_controller.dart';
 
 class BannerWidget extends StatefulWidget {
   const BannerWidget({super.key});
+
   @override
   State<BannerWidget> createState() => _BannerWidgetState();
 }

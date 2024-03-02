@@ -1,15 +1,13 @@
-import 'package:auth_module/src/ui/components/circle_modal.dart';
+import 'package:auth_module/src/ui/components/modal_close_button_widget.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import 'x_modal.dart';
-
-class CustomErrorDialog extends StatelessWidget {
+class ErrorDialogWidget extends StatelessWidget {
   final String title;
   final String message;
   final Function()? onClose;
 
-  const CustomErrorDialog({
+  const ErrorDialogWidget({
     super.key,
     required this.title,
     required this.message,
@@ -26,7 +24,7 @@ class CustomErrorDialog extends StatelessWidget {
       content: IntrinsicHeight(
         child: Row(
           children: [
-            const CircleWithX(),
+            const ModalCloseButtonWidget(),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
@@ -91,7 +89,7 @@ Future<void> showCustomErrorDialog(
             bottom: 40,
             left: 13,
             right: 13,
-            child: CustomErrorDialog(
+            child: ErrorDialogWidget(
               title: title,
               message: message,
               onClose: onClose,

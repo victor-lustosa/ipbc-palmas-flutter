@@ -2,14 +2,14 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class CustomTextVerificationCode extends StatelessWidget {
+class TextVerificationWidget extends StatelessWidget {
   final String textOne;
   final TextStyle? styleOne;
   final String? textTwo;
   final TextStyle? styleTwo;
   final VoidCallback? onTapTextTwo;
 
-  const CustomTextVerificationCode({
+  const TextVerificationWidget({
     Key? key,
     required this.textOne,
     this.styleOne,

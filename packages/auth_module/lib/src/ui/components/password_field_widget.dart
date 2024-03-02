@@ -1,13 +1,13 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class CustomPasswordField extends StatefulWidget {
+class PasswordFieldWidget extends StatefulWidget {
   final TextEditingController controller;
   final String textLabel;
   final Function(String)? onChanged;
   final Color borderSideColor;
 
-  const CustomPasswordField(
+  const PasswordFieldWidget(
       {Key? key,
       required this.controller,
       required this.textLabel,
@@ -16,10 +16,10 @@ class CustomPasswordField extends StatefulWidget {
       : super(key: key);
 
   @override
-  CustomPasswordFieldState createState() => CustomPasswordFieldState();
+  PasswordFieldWidgetState createState() => PasswordFieldWidgetState();
 }
 
-class CustomPasswordFieldState extends State<CustomPasswordField> {
+class PasswordFieldWidgetState extends State<PasswordFieldWidget> {
   bool obscure = true;
 
   @override

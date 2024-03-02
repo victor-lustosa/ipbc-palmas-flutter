@@ -1,8 +1,7 @@
-import 'package:auth_module/src/ui/view_models/login_view_model.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../components/auth_fields.dart';
+import '../components/auth_fields_widget.dart';
 
 class CreateAccountView extends StatefulWidget {
   const CreateAccountView({super.key});
@@ -55,7 +54,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           fontSize: 22,
                         )),
                   ),
-                  AuthFields(controller: viewModel),
+                  AuthFieldsWidget(controller: viewModel),
                   Container(
                     margin: const EdgeInsets.only(
                       top: 40,
