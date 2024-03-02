@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PasswordViewModel extends ChangeNotifier {
-  final List<int> code = [1, 2, 3, 4, 5, 8]; // Code Mockado;
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
-  final List<TextEditingController> _controllers =
-      List.generate(6, (index) => TextEditingController());
-  List<String> textFieldValues = [];
+  final List<TextEditingController> _controllers = List.generate(6, (index) => TextEditingController());
 
   List<FocusNode> get focusNodes => _focusNodes;
 

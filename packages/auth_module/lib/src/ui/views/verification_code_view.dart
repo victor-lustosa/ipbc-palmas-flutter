@@ -21,13 +21,15 @@ class VerificationCodeView extends StatefulWidget {
 
 class _VerificationCodeViewState extends State<VerificationCodeView> {
   final codeController = Modular.get<PasswordViewModel>();
+  List<String> inputCode = [];
+  final List<int> code = [1, 2, 3, 4, 5, 8]; // Code Mockado;
 
   @override
   Widget build(BuildContext context) {
     validation() {
-      if (codeController.textFieldValues.every((value) => value.isNotEmpty)) {
-        if (codeController.textFieldValues.join() ==
-            codeController.code.join()) {
+      if (inputCode.every((value) => value.isNotEmpty)) {
+        inputCode = codeController.controllers.map((controller) => controller.text).toList();
+        if (inputCode.join() == code.join()) {
           Navigator.pushNamed(
             context,
             AuthModule.initialRoute + AuthModule.creatingNewPassWordRoute,
@@ -116,7 +118,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                     ),
                     fixedSize: const Size(343, 48),
                     action: validation,
-                    backgroundColor: codeController.textFieldValues.isNotEmpty
+                    backgroundColor: inputCode.isNotEmpty
                         ? AppColors.darkGreen
                         : AppColors.disableButton,
                     shadowColor: AppColors.grey0,

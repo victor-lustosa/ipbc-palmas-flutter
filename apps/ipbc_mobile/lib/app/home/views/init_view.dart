@@ -11,7 +11,6 @@ import '../../services/views/admin/insert_services_view.dart';
 import '../../services/views/services_collection_view.dart';
 import '../../services/views/services_list_view.dart';
 import '../../lyrics/views/lyrics_list_view.dart';
-import '../../services/views/service_view.dart';
 import '../../offers/views/offers_view.dart';
 import '../../services/service_module.dart';
 import '../../configs/app_routes.dart';
@@ -115,14 +114,6 @@ class _HomeRoutesState extends State<HomeRoutes> {
               transitionSpeed: const Duration(milliseconds: 700),
               reverseSpeed: const Duration(milliseconds: 700),
               child: ServicesListView(entitiesList: Modular.args.data ?? []),
-              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(CurveTween(curve: Curves.ease)),
-            );
-
-          case ServiceModule.serviceRoute:
-            return CustomTransitionPageRoute(
-              transitionSpeed: const Duration(milliseconds: 700),
-              reverseSpeed: const Duration(milliseconds: 700),
-              child: ServiceView(entity: settings.arguments as ServiceViewDTO),
               tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(CurveTween(curve: Curves.ease)),
             );
 

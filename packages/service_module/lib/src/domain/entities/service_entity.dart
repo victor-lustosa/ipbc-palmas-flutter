@@ -1,8 +1,6 @@
 
 import 'package:lyric_module/lyric_module.dart';
 
-import 'liturgy_entity.dart';
-
 class ServiceEntity {
   
   ServiceEntity({

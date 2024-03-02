@@ -41,10 +41,6 @@ class _TextCodeWidgetState extends State<TextCodeWidget> {
                           focusNode: codeController.focusNodes[index],
                           controller: codeController.controllers[index],
                           onChanged: (value) {
-                            codeController.textFieldValues = codeController
-                                .controllers
-                                .map((controller) => controller.text)
-                                .toList();
                             setState(() {
                               if (value.isEmpty) {
                                 if (index > 0) {
