@@ -24,15 +24,12 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> textFieldValues = codeController.controllers
-        .map((controller) => controller.text)
-        .toList();
     validation() {
-      if (textFieldValues.every((value) => value.isNotEmpty)) {
-        log('TODOS OS Valores dos TextFields preechidos: $textFieldValues');
-        log(textFieldValues.join() + '\n' + codeController.code.join());
+      if (codeController.textingCode.isNotEmpty) {
+        log('TODOS OS Valores dos TextFields preechidos: $codeController.textingCode');
+        log(codeController.textingCode + '\n' + codeController.code.join());
 
-        if (textFieldValues.join() == codeController.code.join()) {
+        if (codeController.textingCode == codeController.code.join()) {
           Navigator.pushNamed(
             context,
             AuthModule.initialRoute + AuthModule.creatingNewPassWordRoute,
@@ -119,10 +116,9 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                   ),
                   fixedSize: const Size(343, 48),
                   action: validation,
-                  backgroundColor:
-                      textFieldValues.every((value) => value.isNotEmpty)
-                          ? AppColors.darkGreen
-                          : AppColors.disableButton,
+                  backgroundColor: codeController.textingCode.isNotEmpty
+                      ? AppColors.darkGreen
+                      : AppColors.disableButton,
                   shadowColor: AppColors.grey0,
                   foregroundColor: AppColors.white,
                   child: const Text(

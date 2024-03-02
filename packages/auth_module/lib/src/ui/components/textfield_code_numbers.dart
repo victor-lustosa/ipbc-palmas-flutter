@@ -12,6 +12,7 @@ class TextfieldCodeNumbers extends StatefulWidget {
 
 class _TextfieldCodeNumbersState extends State<TextfieldCodeNumbers> {
   final codeController = Modular.get<CodeController>();
+
   final List<TextEditingController> textController =
       List.generate(6, (index) => TextEditingController());
 
@@ -25,6 +26,9 @@ class _TextfieldCodeNumbersState extends State<TextfieldCodeNumbers> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> textFieldValues = codeController.controllers
+        .map((controller) => controller.text)
+        .toList();
     return SizedBox(
       width: context.mediaQuery.size.width,
       height: 150,
@@ -51,17 +55,21 @@ class _TextfieldCodeNumbersState extends State<TextfieldCodeNumbers> {
                           focusNode: codeController.focusNodes[index],
                           controller: codeController.controllers[index],
                           onChanged: (value) {
-                            if (value.isEmpty) {
-                              if (index > 0) {
-                                codeController.focusNodes[index - 1]
+                            setState(() {
+                              if (value.isEmpty) {
+                                if (index > 0) {
+                                  codeController.focusNodes[index - 1]
+                                      .requestFocus();
+                                  codeController.textingCode = '';
+                                }
+                              } else if (index <
+                                  codeController.focusNodes.length - 1) {
+                                codeController.focusNodes[index + 1]
                                     .requestFocus();
+                                codeController.textingCode =
+                                    textFieldValues.join();
                               }
-                            } else if (index <
-                                codeController.focusNodes.length - 1) {
-                              codeController.focusNodes[index + 1]
-                                  .requestFocus();
-                            }
-                            setState(() {});
+                            });
                           },
                           decoration: const InputDecoration(
                             counterText: '',
