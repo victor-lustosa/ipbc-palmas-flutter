@@ -27,8 +27,10 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
   @override
   Widget build(BuildContext context) {
     validation() {
+      inputCode = codeController.controllers
+          .map((controller) => controller.text)
+          .toList();
       if (inputCode.every((value) => value.isNotEmpty)) {
-        inputCode = codeController.controllers.map((controller) => controller.text).toList();
         if (inputCode.join() == code.join()) {
           Navigator.pushNamed(
             context,
@@ -38,7 +40,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
           showCustomErrorDialog(
             context,
             'Código Inválido!',
-            'Por favor, preencha o verifique o código, e tente novamente.',
+            'Por favor, verifique o código, e tente novamente.',
           );
         }
       } else {
