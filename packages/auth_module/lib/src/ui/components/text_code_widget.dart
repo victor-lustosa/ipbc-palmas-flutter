@@ -1,37 +1,23 @@
 import 'package:auth_module/src/ui/components/custom_border_widget.dart';
-import 'package:auth_module/src/ui/controller/code_controller.dart';
+import 'package:auth_module/src/ui/view_models/password_view_model.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class TextfieldCodeNumbers extends StatefulWidget {
-  const TextfieldCodeNumbers({Key? key}) : super(key: key);
+class TextCodeWidget extends StatefulWidget {
+  const TextCodeWidget({Key? key}) : super(key: key);
 
   @override
-  State<TextfieldCodeNumbers> createState() => _TextfieldCodeNumbersState();
+  State<TextCodeWidget> createState() => _TextCodeWidgetState();
 }
 
-class _TextfieldCodeNumbersState extends State<TextfieldCodeNumbers> {
-  final codeController = Modular.get<CodeController>();
-
-  final List<TextEditingController> textController =
-      List.generate(6, (index) => TextEditingController());
-
-  @override
-  void dispose() {
-    for (var focusNode in codeController.focusNodes) {
-      focusNode.dispose();
-    }
-    super.dispose();
-  }
+class _TextCodeWidgetState extends State<TextCodeWidget> {
+  final codeController = Modular.get<PasswordViewModel>();
 
   @override
   Widget build(BuildContext context) {
-    List<String> textFieldValues = codeController.controllers
-        .map((controller) => controller.text)
-        .toList();
     return SizedBox(
       width: context.mediaQuery.size.width,
-      height: 150,
+      // height: 150,
       child: Column(
         children: [
           Row(
@@ -42,7 +28,7 @@ class _TextfieldCodeNumbersState extends State<TextfieldCodeNumbers> {
                 children: [
                   Stack(
                     children: [
-                      CustomBorder(
+                      CustomBorderWidget(
                           filled:
                               codeController.controllers[index].text.isEmpty),
                       SizedBox(
@@ -60,14 +46,11 @@ class _TextfieldCodeNumbersState extends State<TextfieldCodeNumbers> {
                                 if (index > 0) {
                                   codeController.focusNodes[index - 1]
                                       .requestFocus();
-                                  codeController.textingCode = '';
                                 }
                               } else if (index <
                                   codeController.focusNodes.length - 1) {
                                 codeController.focusNodes[index + 1]
                                     .requestFocus();
-                                codeController.textingCode =
-                                    textFieldValues.join();
                               }
                             });
                           },
@@ -93,5 +76,13 @@ class _TextfieldCodeNumbersState extends State<TextfieldCodeNumbers> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    for (var controller in codeController.controllers) {
+      controller.text = '';
+    }
+    super.dispose();
   }
 }

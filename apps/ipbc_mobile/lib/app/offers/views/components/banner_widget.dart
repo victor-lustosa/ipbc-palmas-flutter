@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import '../../controller/banner_controller.dart';
 
 class BannerWidget extends StatefulWidget {
   const BannerWidget({super.key});
+
   @override
   State<BannerWidget> createState() => _BannerWidgetState();
 }

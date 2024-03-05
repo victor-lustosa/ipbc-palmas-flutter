@@ -1,13 +1,12 @@
-import 'package:auth_module/src/ui/components/circle_modal.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class CustomSuccessDialog extends StatelessWidget {
+class SuccessDialogWidget extends StatelessWidget {
   final String title;
   final String message;
   final Function()? onClose;
 
-  const CustomSuccessDialog({
+  const SuccessDialogWidget({
     super.key,
     required this.title,
     required this.message,
@@ -89,7 +88,7 @@ Future<void> showCustomSuccessDialog(
             bottom: 40,
             left: 13,
             right: 13,
-            child: CustomSuccessDialog(
+            child: SuccessDialogWidget(
               title: title,
               message: message,
               onClose: onClose,

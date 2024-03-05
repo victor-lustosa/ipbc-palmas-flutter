@@ -2,7 +2,6 @@ name: auth_module
 description: A new Flutter package project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 0.0.1
-homepage:
 
 environment:
   sdk: '>=3.1.0 <4.0.0'

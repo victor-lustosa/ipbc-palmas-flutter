@@ -1,15 +1,15 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class AuthFields extends StatefulWidget {
+class AuthFieldsWidget extends StatefulWidget {
   final dynamic controller;
-  const AuthFields({super.key, required this.controller});
+  const AuthFieldsWidget({super.key, required this.controller});
 
   @override
-  State<AuthFields> createState() => _AuthFieldsState();
+  State<AuthFieldsWidget> createState() => _AuthFieldsWidgetState();
 }
 
-class _AuthFieldsState extends State<AuthFields> {
+class _AuthFieldsWidgetState extends State<AuthFieldsWidget> {
 
   String emailErrorText = 'por favor, insira um email válido.';
   String passwordErrorText = 'por favor, insira uma senha.';

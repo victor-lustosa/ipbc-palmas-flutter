@@ -1,8 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class CreatedNewPasswordsuccess extends StatelessWidget {
-  const CreatedNewPasswordsuccess({super.key});
+class NewPasswordView extends StatelessWidget {
+  const NewPasswordView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class CreatedNewPasswordsuccess extends StatelessWidget {
                   ),
                   fixedSize: Size(MediaQuery.of(context).size.width, 48),
                   action: () {
-                    Modular.to.navigate('/auth');
+                    Modular.to.navigate(AuthModule.initialRoute);
                   },
                   backgroundColor: AppColors.darkGreen,
                   shadowColor: AppColors.grey0,
@@ -47,11 +47,9 @@ class CreatedNewPasswordsuccess extends StatelessWidget {
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(Icons.arrow_back_ios_new),
                       Text(
                         "Continuar para o login",
                       ),
-                      Icon(Icons.arrow_back),
                     ],
                   ),
                 ),

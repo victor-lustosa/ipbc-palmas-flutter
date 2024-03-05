@@ -7,8 +7,7 @@ import 'app/lyrics/lyric_module.dart';
 import 'app/home/home_module.dart';
 
 void main() async {
-  Modular.setInitialRoute(
-      MainModule.authRoute + AuthModule.verificationCodeRoute);
+  Modular.setInitialRoute(MainModule.authRoute + AuthModule.resetPasswordRoute);
   WidgetsFlutterBinding.ensureInitialized();
   SupabaseDatasource.init();
   Bloc.observer = GenericBlocObserver();

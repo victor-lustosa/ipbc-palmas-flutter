@@ -1,9 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../components/password_fields.dart';
-import '../controller/confirm_pass_field_controller.dart';
-import '../controller/pass_field_controller.dart';
+import '../components/password_field_widget.dart';
+import '../view_models/password_view_model.dart';
 
 class CreatingNewPasswordView extends StatefulWidget {
   const CreatingNewPasswordView({super.key});
@@ -14,8 +13,7 @@ class CreatingNewPasswordView extends StatefulWidget {
 }
 
 class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
-  final passwordController = PassFieldController();
-  final confirmPasswordController = ConfirmPassFieldController();
+  final passwordController = Modular.get<PasswordViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +27,17 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
           ),
           child: Column(
             children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 33),
+                    child: const BackButtonWidget(
+                        route: AuthModule.initialRoute +
+                            AuthModule.verificationCodeRoute),
+                  ),
+                ],
+              ),
               Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.only(
@@ -57,7 +66,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                   margin: const EdgeInsets.only(top: 8, bottom: 8),
                   child: Column(
                     children: [
-                      CustomPasswordField(
+                      PasswordFieldWidget(
                         borderSideColor: isPasswordValid(
                                 passwordController.passwordControllerValue)
                             ? AppColors.grey8
@@ -71,21 +80,21 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                         },
                       ),
                       const SizedBox(height: 8),
-                      CustomPasswordField(
+                      PasswordFieldWidget(
                         borderSideColor: isPasswordValid(passwordController
                                     .passwordControllerValue) &&
                                 arePasswordsEqual(
                                     passwordController.passwordControllerValue,
-                                    confirmPasswordController
+                                    passwordController
                                         .confirmPasswordControllerValue)
                             ? AppColors.grey8
                             : AppColors.delete,
                         controller:
-                            confirmPasswordController.confirmPasswordController,
+                            passwordController.confirmPasswordController,
                         textLabel: 'Repetir senha',
                         onChanged: (value) {
                           setState(() {
-                            confirmPasswordController.setValuePass(value);
+                            passwordController.setValueConfirmPass(value);
                           });
                         },
                       )
@@ -108,8 +117,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                 alignment: Alignment.bottomLeft,
                 child: arePasswordsEqual(
                         passwordController.passwordControllerValue,
-                        confirmPasswordController
-                            .confirmPasswordControllerValue)
+                        passwordController.confirmPasswordControllerValue)
                     ? const SizedBox()
                     : Text(
                         " * Atenção! As senhas não correspondem.",
@@ -125,7 +133,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                 ),
                 child: ElevatedButtonWidget(
                   action: () {
-                    confirmPasswordController.confirmPasswordControllerValue;
+                    passwordController.confirmPasswordControllerValue;
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -135,8 +143,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                               passwordController.passwordControllerValue) &&
                           arePasswordsEqual(
                               passwordController.passwordControllerValue,
-                              confirmPasswordController
-                                  .confirmPasswordControllerValue)
+                              passwordController.confirmPasswordControllerValue)
                       ? AppColors.darkGreen
                       : AppColors.disableButton,
                   shadowColor: AppColors.grey0,

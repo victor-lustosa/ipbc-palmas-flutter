@@ -1,7 +1,7 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class CustomEmailField extends StatefulWidget {
+class EmailFieldWidget extends StatefulWidget {
   final TextEditingController controller;
   final String textLabel;
   final Color borderSideColor;
@@ -9,7 +9,7 @@ class CustomEmailField extends StatefulWidget {
   final String iconPath;
   final Function(String)? onChanged;
 
-  const CustomEmailField(
+  const EmailFieldWidget(
       {Key? key,
       required this.controller,
       required this.textLabel,
@@ -20,10 +20,10 @@ class CustomEmailField extends StatefulWidget {
       : super(key: key);
 
   @override
-  CustomEmailFieldState createState() => CustomEmailFieldState();
+  EmailFieldWidgetState createState() => EmailFieldWidgetState();
 }
 
-class CustomEmailFieldState extends State<CustomEmailField> {
+class EmailFieldWidgetState extends State<EmailFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return TextField(

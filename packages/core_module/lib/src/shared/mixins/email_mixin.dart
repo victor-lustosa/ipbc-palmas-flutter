@@ -20,7 +20,6 @@ mixin EmailMixin {
 
     final email = Email([personalization], fromAddress, subject, content: [content]);
     final v = jsonEncode(email.toJson());
-    print(v);
     try {
       http.post(
         Uri.parse(_apiSendGridURL),
@@ -48,7 +47,6 @@ mixin EmailMixin {
 
     final email = Email([personalization], fromAddress, subject, content: [content]);
     final v = jsonEncode(email.toJson());
-    print(v);
     try {
       http.post(
         Uri.parse(_apiBrevoURL),
