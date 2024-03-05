@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:auth_module/src/ui/components/error_dialog_widget.dart';
 import 'package:auth_module/src/ui/components/text_verification_widget.dart';
 import 'package:auth_module/src/ui/components/text_code_widget.dart';
 import 'package:auth_module/src/ui/view_models/password_view_model.dart';

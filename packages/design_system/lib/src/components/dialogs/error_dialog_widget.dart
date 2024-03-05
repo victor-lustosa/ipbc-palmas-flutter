@@ -1,6 +1,7 @@
-import 'package:auth_module/src/ui/components/modal_close_button_widget.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+
+import 'modal_close_button_widget.dart';
 
 class ErrorDialogWidget extends StatelessWidget {
   final String title;

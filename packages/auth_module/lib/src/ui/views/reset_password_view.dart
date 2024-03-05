@@ -1,7 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../components/error_dialog_widget.dart';
 import '../components/email_field_widget.dart';
 import '../view_models/password_view_model.dart';
 
