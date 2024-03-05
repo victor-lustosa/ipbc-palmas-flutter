@@ -2,8 +2,6 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'navegation_button_widget.dart';
-
 class MenuItem {
   const MenuItem(this.iconData, this.label);
   final String iconData;

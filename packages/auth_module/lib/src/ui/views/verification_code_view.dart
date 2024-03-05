@@ -64,9 +64,11 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(left: 17, top: 33),
-                      child: const BackButtonWidget(
-                          route: AuthModule.initialRoute +
-                              AuthModule.resetPasswordRoute),
+                      child: BackButtonWidget(
+                        action: () => Modular.to.navigate(
+                          AuthModule.initialRoute + AuthModule.resetPasswordRoute,
+                        ),
+                      ),
                     ),
                   ],
                 ),

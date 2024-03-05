@@ -1,6 +1,5 @@
 import 'package:core_module/core_module.dart' ;
 import 'package:flutter/material.dart';
-import 'ui/views/admin/insert_services_view.dart';
 import 'ui/blocs/services_collection_bloc.dart';
 
 class ServiceModule extends Module {

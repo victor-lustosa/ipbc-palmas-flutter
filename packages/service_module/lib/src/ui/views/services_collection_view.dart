@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../blocs/services_collection_bloc.dart';
-import '../../app_module.dart';
-import 'service_view.dart';
 
 class ServicesCollectionView extends StatefulWidget {
   const ServicesCollectionView({Key? key, required this.entity})

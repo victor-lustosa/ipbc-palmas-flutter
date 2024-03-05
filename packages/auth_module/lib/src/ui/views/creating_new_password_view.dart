@@ -32,9 +32,11 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(top: 33),
-                    child: const BackButtonWidget(
-                        route: AuthModule.initialRoute +
-                            AuthModule.verificationCodeRoute),
+                    child: BackButtonWidget(
+                      action: () => Modular.to.navigate(
+                        AuthModule.initialRoute + AuthModule.verificationCodeRoute,
+                      ),
+                    ),
                   ),
                 ],
               ),

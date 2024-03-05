@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 class BackButtonWidget extends StatelessWidget {
-  final String route;
-
+  final void Function()? action;
   const BackButtonWidget({
     Key? key,
-    required this.route,
+    required this.action,
   }) : super(key: key);
 
   @override
@@ -21,7 +20,7 @@ class BackButtonWidget extends StatelessWidget {
       highlightColor: Colors.transparent,
       iOSIcon: CupertinoIcons.chevron_back,
       androidIcon: Icons.arrow_back_rounded,
-      action: () => Modular.to.navigate(route),
+      action: action,
     );
   }
 }

@@ -11,10 +11,13 @@ dependencies:
     sdk: flutter
   google_fonts: ^5.1.0
   cupertino_icons: ^1.0.5
+  vector_math: ^2.1.4
+  flutter_svg: ^2.0.10+1
   core_module:
     path: ../core_module
   ipbc_mobile:
     path: ../../apps/ipbc_mobile
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

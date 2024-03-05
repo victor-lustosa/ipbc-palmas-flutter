@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:lyric_module/lyric_module.dart';
+import 'package:core_module/core_module.dart';
 
 import '../liturgy_adapter.dart';
 // ignore: depend_on_referenced_packages

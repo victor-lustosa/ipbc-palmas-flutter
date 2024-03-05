@@ -1,5 +1,4 @@
 
-import 'package:auth_module/src/domain/entities/auth_entity.dart';
 import 'package:core_module/core_module.dart';
 
 class AuthUseCase implements IUseCases<dynamic>{

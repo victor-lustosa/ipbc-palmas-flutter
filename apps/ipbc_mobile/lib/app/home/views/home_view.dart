@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../blocs/home_bloc.dart';
-import '../home_module.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

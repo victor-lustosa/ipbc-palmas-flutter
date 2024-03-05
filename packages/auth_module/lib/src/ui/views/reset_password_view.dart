@@ -36,8 +36,11 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(top: 33),
-                        child: const BackButtonWidget(
-                            route: AuthModule.initialRoute),
+                        child: BackButtonWidget(
+                          action: () => Modular.to.navigate(
+                            AuthModule.initialRoute,
+                          ),
+                        ),
                       ),
                     ],
                   ),

@@ -1,5 +1,5 @@
 
-import 'package:lyric_module/lyric_module.dart';
+import 'package:core_module/core_module.dart';
 
 class ServiceEntity {
   

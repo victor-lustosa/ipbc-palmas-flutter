@@ -1,17 +1,17 @@
 import 'package:core_module/core_module.dart';
-import 'package:flutter/material.dart';
 
 class LoginViewModel {
   LoginViewModel({required IUseCases useCase}) : _useCase = useCase;
 
   final IUseCases _useCase;
 
-  Future logIn() async {
+  Future logIn(String email, String password) async {
     var email = '';
     //Stream<HiveAuthDTO> credentials = await _useCase.get('auth/${emailController.text}/${passwordController.text}');
   //  await for(final value in credentials){
    //   email = value.token;
    // }
+    await _useCase.get('auth/$email/$password');
     if (email.isNotEmpty) {
       Modular.to.navigate('/home/');
       return '';

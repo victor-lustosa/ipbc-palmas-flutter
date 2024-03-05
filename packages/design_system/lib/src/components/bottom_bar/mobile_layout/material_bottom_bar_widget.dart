@@ -3,8 +3,6 @@ import 'dart:io';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart' hide BottomNavigationBar;
-import 'buttons_bar_mixin.dart';
-import 'custom_bottom_navigation_bar.dart';
 
 class MaterialBottomBarWidget extends StatefulWidget {
   final int selectedIndex;

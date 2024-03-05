@@ -4,8 +4,6 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../covers/album_cover_widget.dart';
-
 class LyricsListWidget extends StatefulWidget {
   const LyricsListWidget({Key? key, required this.entitiesList})
       : super(key: key);

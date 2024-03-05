@@ -76,7 +76,7 @@ class _LoginViewState extends State<LoginView> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   action: () async {
-                    var message = await viewModel.logIn();
+                    var message = await viewModel.logIn('','');
                     if (message != '') {
                       Future.delayed(
                         Duration.zero,

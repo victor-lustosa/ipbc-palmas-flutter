@@ -1,8 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../../circle_avatar/circle_avatar_widget.dart';
-
 class MainTopBarWidget extends StatelessWidget {
   const MainTopBarWidget({super.key});
 

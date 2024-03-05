@@ -31,7 +31,6 @@ export 'src/configs/app_configs.dart';
 
 export 'package:design_system/design_system.dart';
 export 'package:path_provider/path_provider.dart';
-export 'package:flutter_svg/flutter_svg.dart';
 export 'package:lyric_module/lyric_module.dart';
 export 'package:auth_module/auth_module.dart';
 export 'package:service_module/service_module.dart';

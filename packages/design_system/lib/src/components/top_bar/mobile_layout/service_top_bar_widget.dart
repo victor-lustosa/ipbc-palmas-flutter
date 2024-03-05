@@ -1,12 +1,12 @@
-import 'dart:io';
-
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ServiceTopBarWidget extends StatefulWidget {
   const ServiceTopBarWidget({super.key, required this.entity});
- final ServicesEntity entity;
+
+  final ServicesEntity entity;
+
   @override
   State<ServiceTopBarWidget> createState() => _ServiceTopBarWidgetState();
 }
@@ -44,21 +44,13 @@ class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget> {
               children: [
                 Row(
                   children: [
-                    IconButtonWidget(
-                      size: Platform.isIOS ? null : 28,
-                      color: AppColors.white,
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      iOSIcon: CupertinoIcons.chevron_back,
-                      androidIcon: Icons.arrow_back_rounded,
+                    BackButtonWidget(
                       action: () => Navigator.pop(context),
                     ),
                     Text(
                       "Cultos de ${widget.entity.heading}",
                       style: AppFonts.defaultFont(
-                          color: AppColors.white,
-                          fontWeight: FontWeight.w500
-                      ),
+                          color: AppColors.white, fontWeight: FontWeight.w500),
                     ),
                   ],
                 ),

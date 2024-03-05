@@ -4,7 +4,7 @@
 
 import 'dart:collection' show Queue;
 import 'dart:math' as math;
-
+// ignore_for_file: is_not_import
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 import 'package:flutter/material.dart';

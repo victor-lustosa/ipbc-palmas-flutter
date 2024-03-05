@@ -24,13 +24,7 @@ class _ServicesListViewState extends State<ServicesListView> {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(left: 17, top: 33),
-                    child: IconButtonWidget(
-                      size: Platform.isIOS ? null : 28,
-                      color: AppColors.darkGreen,
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      iOSIcon: CupertinoIcons.chevron_back,
-                      androidIcon: Icons.arrow_back_rounded,
+                    child:  BackButtonWidget(
                       action: () => Navigator.pop(context),
                     ),
                   ),

@@ -1,6 +1,5 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class NavigationButtonWidget extends StatelessWidget {
   const NavigationButtonWidget(

@@ -1,9 +1,6 @@
-import 'dart:io';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-
 
 class ServiceViewDTO {
   ServiceViewDTO({required this.service, required this.image});
@@ -59,13 +56,7 @@ class _ServiceViewState extends State<ServiceView> {
                         children: [
                           Row(
                             children: [
-                              IconButtonWidget(
-                                size: Platform.isIOS ? null : 28,
-                                color: AppColors.white,
-                                splashColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                iOSIcon: CupertinoIcons.chevron_back,
-                                androidIcon: Icons.arrow_back_rounded,
+                              BackButtonWidget(
                                 action: () => Navigator.pop(context),
                               ),
                               Text(
