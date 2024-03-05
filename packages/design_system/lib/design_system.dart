@@ -22,6 +22,7 @@ export 'src/components/slide_cards/slide_cads_widget.dart';
 export 'src/components/buttons/outlined_button_widget.dart';
 export 'src/components/buttons/text_button_widget.dart';
 export 'src/components/buttons/icon_button_widget.dart';
+export 'src/components/buttons/back_button_widget.dart';
 
 export 'src/components/forms/form_field_widget.dart';
 export 'src/components/forms/default_field_widget.dart';

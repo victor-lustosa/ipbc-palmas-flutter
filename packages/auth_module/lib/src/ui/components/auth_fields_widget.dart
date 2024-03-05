@@ -9,7 +9,6 @@ class AuthFieldsWidget extends StatefulWidget {
 }
 
 class _AuthFieldsWidgetState extends State<AuthFieldsWidget> {
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -25,65 +24,68 @@ class _AuthFieldsWidgetState extends State<AuthFieldsWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [emailField(), passwordField(),],
+      children: [
+        emailField(),
+        passwordField(),
+      ],
     );
   }
 
   emailField() => DefaultFieldWidget(
-    fieldKey: _emailKey,
-    horizontalSymmetric: const EdgeInsets.symmetric(horizontal: 16),
-    fieldMargin: const EdgeInsets.only(top: 4),
-    fieldDecoration: _fieldDecoration(isValid: _isEmailValid),
-    title: 'Insira seu email',
-    isValid: _isEmailValid,
-    titleStyle:  AppFonts.defaultFont(
-      fontSize: 13,
-      color: AppColors.grey8,
-    ),
-    controller: _emailController,
-    inputDecoration: _inputDecoration(
-      isValid: _isEmailValid,
-      hintText: 'Email',
-    ),
-    errorText: emailErrorText,
-    fieldHeight: 48,
-    validator: (data) {
-      return _emailValidation(data);
-    },
-  );
+        fieldKey: _emailKey,
+        horizontalSymmetric: const EdgeInsets.symmetric(horizontal: 16),
+        fieldMargin: const EdgeInsets.only(top: 4),
+        fieldDecoration: _fieldDecoration(isValid: _isEmailValid),
+        title: 'Insira seu email',
+        isValid: _isEmailValid,
+        titleStyle: AppFonts.defaultFont(
+          fontSize: 13,
+          color: AppColors.grey8,
+        ),
+        controller: _emailController,
+        inputDecoration: _inputDecoration(
+          isValid: _isEmailValid,
+          hintText: 'Email',
+        ),
+        errorText: emailErrorText,
+        fieldHeight: 48,
+        validator: (data) {
+          return _emailValidation(data);
+        },
+      );
 
   passwordField() => DefaultFieldWidget(
-    fieldKey: _passwordKey,
-    horizontalSymmetric: const EdgeInsets.symmetric(horizontal: 16),
-    titleMargin: EdgeInsets.only(top: _isEmailValid ? 24 : 12),
-    fieldMargin: const EdgeInsets.only(top: 4),
-    fieldDecoration: _fieldDecoration(isValid: _isPasswordValid),
-    title: 'Insira sua senha',
-    isValid: _isPasswordValid,
-    obscureText: true,
-    titleStyle:  AppFonts.defaultFont(
-      fontSize: 13,
-      color: AppColors.grey8,
-    ),
-    controller: _passwordController,
-    fieldHeight: 48,
-    errorText: passwordErrorText,
-    inputDecoration: _inputDecoration(
-      isValid: _isPasswordValid,
-      hintText: 'Senha',
-    ),
-    validator: (data) {
-      return _passwordValidation(data);
-    },
-  );
+        fieldKey: _passwordKey,
+        horizontalSymmetric: const EdgeInsets.symmetric(horizontal: 16),
+        titleMargin: EdgeInsets.only(top: _isEmailValid ? 24 : 12),
+        fieldMargin: const EdgeInsets.only(top: 4),
+        fieldDecoration: _fieldDecoration(isValid: _isPasswordValid),
+        title: 'Insira sua senha',
+        isValid: _isPasswordValid,
+        obscureText: true,
+        titleStyle: AppFonts.defaultFont(
+          fontSize: 13,
+          color: AppColors.grey8,
+        ),
+        controller: _passwordController,
+        fieldHeight: 48,
+        errorText: passwordErrorText,
+        inputDecoration: _inputDecoration(
+          isValid: _isPasswordValid,
+          hintText: 'Senha',
+        ),
+        validator: (data) {
+          return _passwordValidation(data);
+        },
+      );
 
   _fieldDecoration({required isValid}) => BoxDecoration(
-    color: AppColors.white,
-    border: Border.all(
-      color: isValid ? AppColors.secondaryGrey : Colors.red,
-    ),
-    borderRadius: BorderRadius.circular(16),
-  );
+        color: AppColors.white,
+        border: Border.all(
+          color: isValid ? AppColors.secondaryGrey : Colors.red,
+        ),
+        borderRadius: BorderRadius.circular(16),
+      );
 
   _inputDecoration({required isValid, required hintText}) {
     return InputDecoration(
@@ -107,7 +109,7 @@ class _AuthFieldsWidgetState extends State<AuthFieldsWidget> {
 
   _passwordBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
-      if(mounted){
+      if (mounted) {
         setState(() {
           _isPasswordValid = value;
         });
@@ -117,7 +119,7 @@ class _AuthFieldsWidgetState extends State<AuthFieldsWidget> {
 
   _emailBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
-      if(mounted){
+      if (mounted) {
         setState(() {
           _isEmailValid = value;
         });

@@ -14,7 +14,9 @@ class NewPasswordView extends StatelessWidget {
             children: [
               Container(
                 margin: const EdgeInsets.only(top: 162, bottom: 25),
-                child: const Image(image: AssetImage(AppImages.lock)),
+                child: const Image(
+                  image: AssetImage(AppImages.lock),
+                ),
               ),
               Text(
                 'Nova senha',
@@ -31,15 +33,18 @@ class NewPasswordView extends StatelessWidget {
                 ),
               ),
               Container(
-                margin:
-                    const EdgeInsets.only(top: 376, left: 16.0, right: 16.0),
+                margin: const EdgeInsets.only(
+                  top: 376,
+                  left: 16.0,
+                  right: 16.0,
+                ),
                 child: ElevatedButtonWidget(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                   fixedSize: Size(MediaQuery.of(context).size.width, 48),
                   action: () {
-                    Modular.to.navigate('/auth');
+                    Modular.to.navigate(AuthModule.initialRoute);
                   },
                   backgroundColor: AppColors.darkGreen,
                   shadowColor: AppColors.grey0,
@@ -47,11 +52,9 @@ class NewPasswordView extends StatelessWidget {
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(Icons.arrow_back_ios_new),
                       Text(
                         "Continuar para o login",
                       ),
-                      Icon(Icons.arrow_back),
                     ],
                   ),
                 ),

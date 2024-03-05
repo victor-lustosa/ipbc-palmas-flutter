@@ -8,7 +8,8 @@ class CreatingNewPasswordView extends StatefulWidget {
   const CreatingNewPasswordView({super.key});
 
   @override
-  State<CreatingNewPasswordView> createState() => _CreatingNewPasswordViewState();
+  State<CreatingNewPasswordView> createState() =>
+      _CreatingNewPasswordViewState();
 }
 
 class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
@@ -26,6 +27,17 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
           ),
           child: Column(
             children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 33),
+                    child: const BackButtonWidget(
+                        route: AuthModule.initialRoute +
+                            AuthModule.verificationCodeRoute),
+                  ),
+                ],
+              ),
               Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.only(
