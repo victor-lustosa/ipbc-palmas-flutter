@@ -59,12 +59,23 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
             width: context.mediaQuery.size.width,
             child: Column(
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 17, top: 33),
+                      child: const BackButtonWidget(
+                          route: AuthModule.initialRoute +
+                              AuthModule.resetPasswordRoute),
+                    ),
+                  ],
+                ),
                 Container(
                   width: 100,
                   // Definir largura
                   height: 91,
                   // Definir altura
-                  margin: const EdgeInsets.only(top: 110, bottom: 32),
+                  margin: const EdgeInsets.only(bottom: 32),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.35),
                     color: AppColors.badgeGreen,

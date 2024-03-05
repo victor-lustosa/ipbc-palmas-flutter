@@ -80,8 +80,8 @@ class _TextCodeWidgetState extends State<TextCodeWidget> {
 
   @override
   void dispose() {
-    for (var focusNode in codeController.focusNodes) {
-      focusNode.dispose();
+    for (var controller in codeController.controllers) {
+      controller.text = '';
     }
     super.dispose();
   }
