@@ -5,18 +5,9 @@ part 'hive_auth_dto.g.dart';
 @HiveType(typeId: 6)
 class HiveAuthDTO {
   @HiveField(0)
-  String email;
+  String token;
 
-  @HiveField(1)
-  String password;
+  HiveAuthDTO({required this.token});
 
-  HiveAuthDTO({
-    required this.email,
-    required this.password,
-  });
-
-  factory HiveAuthDTO.empty() => HiveAuthDTO(
-        email: '',
-        password: '',
-      );
+  factory HiveAuthDTO.empty() => HiveAuthDTO(token: '');
 }

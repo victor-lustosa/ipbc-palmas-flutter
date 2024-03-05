@@ -10,8 +10,11 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^5.1.0
+  cupertino_icons: ^1.0.5
   core_module:
-    path: ../../packages/core_module
+    path: ../core_module
+  ipbc_mobile:
+    path: ../../apps/ipbc_mobile
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -4,11 +4,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../layout/top-bar/main_top_bar_widget.dart';
-import '../../exception/views/generic_error_view.dart';
-import '../../exception/views/no_connection_view.dart';
 import '../blocs/home_bloc.dart';
-import '../../shared/blocs/generics.dart';
 import '../home_module.dart';
 
 class HomeView extends StatefulWidget {
@@ -59,7 +55,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                           onTap: () {
                             Navigator.pushNamed(
                               context,
-                              HomeModule.servicesListRoute,
+                              ServiceModule.servicesListRoute,
                               arguments: _servicesList,
                             );
                           },
@@ -86,7 +82,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                             left: 15.5,
                             right: 15.5,
                           ),
-                          route: HomeModule.servicesCollectionRoute,
+                          route: ServiceModule.servicesCollectionRoute,
                           mainAxisAlignment: MainAxisAlignment.center,
                           width: context.mediaQuery.size.width,
                           services: _servicesList,
@@ -97,7 +93,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                         onTap: () {
                           Navigator.pushNamed(
                             context,
-                            HomeModule.servicesListRoute,
+                            ServiceModule.servicesListRoute,
                           );
                         },
                         child: Column(
@@ -117,7 +113,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                         margin: const EdgeInsets.only(top: 12, bottom: 20),
                         height: 268,
                         child: SlideCardsWidget(
-                          route: HomeModule.servicesCollectionRoute,
+                          route: ServiceModule.servicesCollectionRoute,
                           services: _servicesList,
                         ),
                       ),

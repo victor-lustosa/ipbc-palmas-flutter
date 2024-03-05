@@ -1,4 +1,4 @@
-name: ipbc_palmas
+name: ipbc_mobile
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -34,13 +34,6 @@ dependencies:
   core_module:
     path: ../../packages/core_module
 
-  flutter_svg: ^2.0.5
-  path_provider: ^2.0.14
-  upgrader: ^7.0.0
-  flutter_lints: ^2.0.1
-  build_runner: ^2.3.3   # <-- and make sure that is also there
-  cupertino_icons: ^1.0.5
-  vector_math:
 dev_dependencies:
   flutter_test:
     sdk: flutter

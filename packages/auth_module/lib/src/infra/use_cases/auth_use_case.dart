@@ -2,14 +2,14 @@
 import 'package:auth_module/src/domain/entities/auth_entity.dart';
 import 'package:core_module/core_module.dart';
 
-class AuthUseCase implements IUseCases<AuthEntity>{
+class AuthUseCase implements IUseCases<dynamic>{
   final IRepository<dynamic> repository;
   AuthUseCase({required this.repository});
 
   @override
-  Future<AuthEntity> get(String url) async {
+  Future<dynamic> get(String url) async {
     var result = await repository.get(url);
-    return HiveAuthAdapter.fromMap(result);
+    return result;
   }
 
   @override

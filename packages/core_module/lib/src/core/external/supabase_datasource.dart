@@ -10,6 +10,13 @@ class SupabaseDatasource implements IDatasource {
 
   List<String> params = [];
 
+  Future<void> signInWithEmail() async {
+    final AuthResponse res = await _supaClient.auth.signInWithPassword(
+        email: 'example@email.com',
+        password: 'example-password'
+    );
+  }
+
   static Future init() async {
     await Supabase.initialize(url: ApiKeys.supabaseUrl, anonKey: ApiKeys.supabaseKey);
   }

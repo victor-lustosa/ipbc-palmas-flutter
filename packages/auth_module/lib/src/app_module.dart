@@ -9,29 +9,33 @@ import 'ui/views/login_view.dart';
 import 'ui/views/reset_password_view.dart';
 
 class AuthModule extends Module {
-  @override
-  List<Module> get imports => [CoreModule()];
-  @override
-  void binds(i) {
-    i.add(
-      () => LoginViewModel(
-        useCase: AuthUseCase(
-          repository: Repository<HiveAuthDTO>(
-            datasource: HiveDatasource<HiveAuthDTO>(boxLabel: 'auth'),
-          ),
-        ),
-      ),
-    );
-    i.addSingleton(PasswordViewModel.new);
-  }
 
   static const String initialRoute = '/auth';
+  static const String authRoute = '/auth';
   static const String loginRoute = '/login';
   static const String createAccountRoute = '/create-account';
   static const String verificationCodeRoute = '/verification-code';
   static const String creatingNewPassWordRoute = '/creating-new-password';
   static const String successPasswordChangeRoute = '/success-password';
   static const String resetPasswordRoute = '/reset-password';
+
+  @override
+  List<Module> get imports => [CoreModule()];
+  @override
+  void binds(i) {
+    i.add(()=> AuthUseCase(
+      repository: Repository<dynamic>(
+        datasource: HiveDatasource<HiveAuthDTO>(boxLabel: 'auth'),
+      ),
+    ),);
+    i.add(
+      () => LoginViewModel(
+        useCase: i.get<AuthUseCase>(),
+      ),
+    );
+    i.addSingleton(PasswordViewModel.new);
+  }
+
 
   @override
   void routes(r) {

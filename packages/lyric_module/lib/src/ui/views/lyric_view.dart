@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../shared/components/album_cover_widget.dart';
 
 class LyricView extends StatefulWidget{
   const LyricView({super.key, required this.entity});

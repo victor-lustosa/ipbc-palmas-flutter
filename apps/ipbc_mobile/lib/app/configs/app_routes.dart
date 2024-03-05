@@ -1,9 +1,8 @@
 import 'dart:io';
 
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-
-import '../../../app/exception/views/unknown_route_view.dart';
 
 class AppRoutes {
   AppRoutes._();

@@ -4,9 +4,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../main.dart';
-import '../../lyrics/lyric_module.dart';
-import 'album_cover_widget.dart';
+import '../covers/album_cover_widget.dart';
 
 class LyricsListWidget extends StatefulWidget {
   const LyricsListWidget({Key? key, required this.entitiesList})
@@ -90,7 +88,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                       ),
                       onTap: () {
                         Modular.to.pushNamed(
-                          '${MainModule.lyricsRoute}${LyricModule.lyricRoute}',
+                          '/lyrics/lyric',
                           arguments: widget.entitiesList[index],
                         );
                       },

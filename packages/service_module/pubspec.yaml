@@ -11,8 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  lyric_module:
-    path: ../lyric_module
+  core_module:
+    path: ../core_module
 dev_dependencies:
   flutter_test:
     sdk: flutter

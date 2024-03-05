@@ -4,14 +4,8 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../layout/top-bar/service_top_bar_widget.dart';
-import '../../../main.dart';
-import '../../exception/views/generic_error_view.dart';
-import '../../exception/views/no_connection_view.dart';
-import '../../shared/blocs/generics.dart';
-import '../../home/home_module.dart';
 import '../blocs/services_collection_bloc.dart';
-import '../service_module.dart';
+import '../../app_module.dart';
 import 'service_view.dart';
 
 class ServicesCollectionView extends StatefulWidget {
@@ -141,7 +135,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                   ),
                                   onTap: () {
                                     Navigator.of(context).pushNamed(
-                                      HomeModule.serviceRoute,
+                                      ServiceModule.servicesRoute,
                                       arguments: ServiceViewDTO(
                                         service: entitiesList[index],
                                         image: widget.entity.image,
@@ -175,7 +169,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
           hoverElevation: 1.8,
           onPressed: () {
             Modular.to.pushNamed(
-              MainModule.servicesRoute + ServiceModule.insertServicesRoute,
+              ServiceModule.servicesRoute + ServiceModule.insertServicesRoute,
             );
           },
           backgroundColor: AppColors.add,

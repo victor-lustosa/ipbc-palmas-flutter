@@ -54,7 +54,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           fontSize: 22,
                         )),
                   ),
-                  AuthFieldsWidget(controller: viewModel),
+                  const AuthFieldsWidget(),
                   Container(
                     margin: const EdgeInsets.only(
                       top: 40,

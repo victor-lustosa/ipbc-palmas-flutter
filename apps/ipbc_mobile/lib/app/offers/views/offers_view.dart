@@ -1,7 +1,5 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-
-import '../../../layout/top-bar/title_top_bar_widget.dart';
 import '../controller/banner_controller.dart';
 import 'components/card_widget.dart';
 import 'components/banner_widget.dart';

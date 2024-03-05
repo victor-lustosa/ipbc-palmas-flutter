@@ -5,14 +5,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../layout/bottom-bar/material_bottom_bar_widget.dart';
-
-import '../../services/views/admin/insert_services_view.dart';
-import '../../services/views/services_collection_view.dart';
-import '../../services/views/services_list_view.dart';
-import '../../lyrics/views/lyrics_list_view.dart';
 import '../../offers/views/offers_view.dart';
-import '../../services/service_module.dart';
 import '../../configs/app_routes.dart';
 
 import '../views/home_view.dart';
@@ -109,7 +102,7 @@ class _HomeRoutesState extends State<HomeRoutes> {
               return MaterialPageRoute(settings: settings, builder: (_) => const HomeView());
             }
 
-          case HomeModule.servicesListRoute:
+          case ServiceModule.servicesListRoute:
             return CustomTransitionPageRoute(
               transitionSpeed: const Duration(milliseconds: 700),
               reverseSpeed: const Duration(milliseconds: 700),

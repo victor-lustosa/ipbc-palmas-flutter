@@ -4,8 +4,6 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../home/home_module.dart';
-
 class ServicesListView extends StatefulWidget {
   const ServicesListView({super.key, required this.entitiesList});
   final List<ServicesEntity> entitiesList;
@@ -93,7 +91,7 @@ class _ServicesListViewState extends State<ServicesListView> {
                           ),
                           onTap: () {
                             Navigator.of(context).pushNamed(
-                              HomeModule.servicesCollectionRoute,
+                              ServiceModule.servicesCollectionRoute,
                               arguments: widget.entitiesList[index],
                             );
                           },

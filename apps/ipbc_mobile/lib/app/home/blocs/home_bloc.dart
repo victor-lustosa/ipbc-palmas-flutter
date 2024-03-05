@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../shared/blocs/generics.dart';
 
 class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>> with ConnectivityMixin{
   final IUseCases supaUseCases;

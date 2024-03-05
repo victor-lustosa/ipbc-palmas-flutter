@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../shared/blocs/generics.dart';
-
 class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>> with ConnectivityMixin{
   final ILyricsUseCases supaUseCase;
   final String path = 'lyrics/20';

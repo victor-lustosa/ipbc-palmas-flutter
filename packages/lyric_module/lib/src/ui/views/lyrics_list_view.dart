@@ -2,12 +2,7 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart' ;
 
-import '../../shared/blocs/generics.dart';
-import '../../shared/components/lyrics_list_widget.dart';
 import '../blocs/lyric_bloc.dart';
-import '../../exception/views/generic_error_view.dart';
-import '../../exception/views/no_connection_view.dart';
-import '../../../layout/top-bar/title_top_bar_widget.dart';
 
 class LyricsListView extends StatefulWidget {
   const LyricsListView({super.key});

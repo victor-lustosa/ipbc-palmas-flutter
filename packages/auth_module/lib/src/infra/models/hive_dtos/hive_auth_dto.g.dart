@@ -17,19 +17,16 @@ class HiveAuthDTOAdapter extends TypeAdapter<HiveAuthDTO> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return HiveAuthDTO(
-      email: fields[0] as String,
-      password: fields[1] as String,
+      token: fields[0] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, HiveAuthDTO obj) {
     writer
-      ..writeByte(2)
-      ..writeByte(0)
-      ..write(obj.email)
       ..writeByte(1)
-      ..write(obj.password);
+      ..writeByte(0)
+      ..write(obj.token);
   }
 
   @override

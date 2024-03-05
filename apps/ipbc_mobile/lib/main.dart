@@ -2,15 +2,16 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
-import 'app/services/service_module.dart';
-import 'app/lyrics/lyric_module.dart';
-import 'app/home/home_module.dart';
+import 'app/splash/splash_module.dart';
+export 'app/home/view_models/home_view_model.dart';
 
 void main() async {
-  Modular.setInitialRoute(
-      MainModule.authRoute + AuthModule.verificationCodeRoute);
+  Modular.setInitialRoute(SplashModule.splashRoute);
   WidgetsFlutterBinding.ensureInitialized();
-  SupabaseDatasource.init();
+  await Future.wait([
+    SupabaseDatasource.init(),
+    HiveDatasource.init(),
+  ]);
   Bloc.observer = GenericBlocObserver();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -18,7 +19,7 @@ void main() async {
   ]).then(
     (_) => runApp(
       ModularApp(
-        module: MainModule(),
+        module: SplashModule(),
         child: MaterialApp.router(
           builder: (context, Widget? child) {
             return ScrollConfiguration(
@@ -36,21 +37,5 @@ void main() async {
   );
 }
 
-class MainModule extends Module {
-  static const String authRoute = '/auth';
-  static const String lyricsRoute = '/lyrics';
-  static const String servicesRoute = '/services';
-  static const String initialRoute = '/';
 
-  @override
-  List<Module> get imports => [CoreModule()];
 
-  @override
-  void routes(r) {
-    r.module(initialRoute, module: HomeModule());
-    r.module(authRoute, module: AuthModule());
-    //r.child(splashRoute, child: (_) => const SplashView());
-    r.module(lyricsRoute, module: LyricModule());
-    r.module(servicesRoute, module: ServiceModule());
-  }
-}

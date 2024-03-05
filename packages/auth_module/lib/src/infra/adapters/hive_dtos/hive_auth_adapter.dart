@@ -1,26 +1,17 @@
-import 'package:auth_module/src/domain/entities/auth_entity.dart';
 import 'package:core_module/core_module.dart';
 
+import '../../../domain/entities/auth_storage.dart';
+
 class HiveAuthAdapter {
-
-  static AuthEntity fromMap(dynamic json) {
-    return AuthEntity(
-      email: json['email'],
-      password: json['password'],
-    );
+  static AuthStorage fromMap(dynamic json) {
+    return AuthStorage(token: json['token']);
   }
 
-  static HiveAuthDTO toDTO(AuthEntity entity) {
-    return HiveAuthDTO(
-      email: entity.email,
-      password: entity.password,
-    );
+  static HiveAuthDTO toDTO(AuthStorage entity) {
+    return HiveAuthDTO(token: entity.token);
   }
 
-  static Map<String, dynamic> toMap(AuthEntity data) {
-    return {
-      'email': data.email,
-      'password': data.password,
-    };
+  static Map<String, dynamic> toMap(AuthStorage data) {
+    return {'token': data.token};
   }
 }

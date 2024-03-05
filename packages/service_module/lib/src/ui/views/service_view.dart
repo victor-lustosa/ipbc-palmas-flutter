@@ -4,7 +4,6 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../shared/components/lyrics_list_widget.dart';
 
 class ServiceViewDTO {
   ServiceViewDTO({required this.service, required this.image});

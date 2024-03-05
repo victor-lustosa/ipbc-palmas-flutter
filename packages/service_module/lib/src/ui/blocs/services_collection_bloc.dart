@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../shared/blocs/generics.dart';
-
 class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>, GenericState<ServicesCollectionState>> with ConnectivityMixin{
   final IUseCases supaUseCases;
   String path = '';

@@ -1,13 +1,13 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'ui/views/lyric_view.dart';
 
-import '../services/service_module.dart';
-import 'views/lyric_view.dart';
-import 'blocs/lyric_bloc.dart';
+import 'ui/blocs/lyric_bloc.dart';
 
 class LyricModule extends Module {
   static const String initialRoute = "/";
-  static const String lyricRoute = "/lyrics/";
+  static const String lyricRoute = "/lyric";
+  static const String lyricsRoute = "/lyrics";
 
   @override
   void exportedBinds(i) {

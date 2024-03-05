@@ -2,14 +2,19 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class AuthFieldsWidget extends StatefulWidget {
-  final dynamic controller;
-  const AuthFieldsWidget({super.key, required this.controller});
+  const AuthFieldsWidget({super.key});
 
   @override
   State<AuthFieldsWidget> createState() => _AuthFieldsWidgetState();
 }
 
 class _AuthFieldsWidgetState extends State<AuthFieldsWidget> {
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  final _emailKey = GlobalKey<FormState>();
+  final _passwordKey = GlobalKey<FormState>();
 
   String emailErrorText = 'por favor, insira um email válido.';
   String passwordErrorText = 'por favor, insira uma senha.';
@@ -25,7 +30,7 @@ class _AuthFieldsWidgetState extends State<AuthFieldsWidget> {
   }
 
   emailField() => DefaultFieldWidget(
-    fieldKey: widget.controller.emailKey,
+    fieldKey: _emailKey,
     horizontalSymmetric: const EdgeInsets.symmetric(horizontal: 16),
     fieldMargin: const EdgeInsets.only(top: 4),
     fieldDecoration: _fieldDecoration(isValid: _isEmailValid),
@@ -35,7 +40,7 @@ class _AuthFieldsWidgetState extends State<AuthFieldsWidget> {
       fontSize: 13,
       color: AppColors.grey8,
     ),
-    controller: widget.controller.emailController,
+    controller: _emailController,
     inputDecoration: _inputDecoration(
       isValid: _isEmailValid,
       hintText: 'Email',
@@ -48,7 +53,7 @@ class _AuthFieldsWidgetState extends State<AuthFieldsWidget> {
   );
 
   passwordField() => DefaultFieldWidget(
-    fieldKey: widget.controller.passwordKey,
+    fieldKey: _passwordKey,
     horizontalSymmetric: const EdgeInsets.symmetric(horizontal: 16),
     titleMargin: EdgeInsets.only(top: _isEmailValid ? 24 : 12),
     fieldMargin: const EdgeInsets.only(top: 4),
@@ -60,7 +65,7 @@ class _AuthFieldsWidgetState extends State<AuthFieldsWidget> {
       fontSize: 13,
       color: AppColors.grey8,
     ),
-    controller: widget.controller.passwordController,
+    controller: _passwordController,
     fieldHeight: 48,
     errorText: passwordErrorText,
     inputDecoration: _inputDecoration(
@@ -125,7 +130,7 @@ class _AuthFieldsWidgetState extends State<AuthFieldsWidget> {
       _emailBorderValidation(false);
       return null;
     } else {
-      if (EmailValidator.validate(widget.controller.emailController.text)) {
+      if (EmailValidator.validate(_emailController.text)) {
         _emailBorderValidation(true);
         return null;
       } else {

@@ -38,7 +38,7 @@ class _LoginViewState extends State<LoginView> {
                       fontSize: 22,
                     )),
               ),
-              AuthFieldsWidget(controller: viewModel),
+              const AuthFieldsWidget(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

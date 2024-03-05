@@ -6,24 +6,12 @@ class LoginViewModel {
 
   final IUseCases _useCase;
 
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  final _emailKey = GlobalKey<FormState>();
-  final _passwordKey = GlobalKey<FormState>();
-
-  TextEditingController get emailController => _emailController;
-  TextEditingController get passwordController => _passwordController;
-
-  GlobalKey get emailKey => _emailKey;
-  GlobalKey get passwordKey => _passwordKey;
-
   Future logIn() async {
     var email = '';
-    Stream<HiveAuthDTO> credentials = await _useCase.get('auth/${emailController.text}/${passwordController.text}');
-    await for(final value in credentials){
-      email = value.email;
-    }
+    //Stream<HiveAuthDTO> credentials = await _useCase.get('auth/${emailController.text}/${passwordController.text}');
+  //  await for(final value in credentials){
+   //   email = value.token;
+   // }
     if (email.isNotEmpty) {
       Modular.to.navigate('/home/');
       return '';
@@ -31,9 +19,7 @@ class LoginViewModel {
       return 'login inválido';
     }
   }
-  Future<double> teste() async{
-    return 0.00;
-  }
+
   logout() {
     Modular.to.navigate('/login');
   }
@@ -43,12 +29,7 @@ class LoginViewModel {
   }
 
   Future createAccount() async {
-    _useCase.add(
-        'auth',
-        HiveAuthDTO(
-          email: emailController.text,
-          password: passwordController.text,
-        ));
+    //_useCase.add('auth', HiveAuthDTO(token: emailController.text,));
     Future.delayed(const Duration(microseconds: 300), () {
       Modular.to.navigate('/login');
     });
