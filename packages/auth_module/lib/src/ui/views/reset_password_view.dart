@@ -101,8 +101,12 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       action: () {
                         if (emailMock ==
                             emailcontroller.resetPasswordControllerValue) {
-                          Modular.to.navigate(AuthModule.initialRoute +
-                              AuthModule.verificationCodeRoute);
+                          Future.delayed(const Duration(seconds: 3), () {
+                            Modular.to.navigate(AuthModule.initialRoute +
+                                AuthModule.verificationCodeRoute);
+                          });
+                          showCustomSuccessDialog(context, 'E-mail Correto',
+                              'Você digitou o email correto em instantes será direcionado');
                         } else {
                           //_showErrorDialog();
                           showCustomErrorDialog(

@@ -42,8 +42,8 @@ export 'src/components/bottom_bar/mobile_layout/custom_bottom_navigation_bar.dar
 export 'src/components/bottom_bar/mobile_layout/material_bottom_bar_widget.dart';
 export 'src/components/bottom_bar/mobile_layout/navegation_button_widget.dart';
 
-export 'src/components/dialogs/success_dialog_widget.dart';
 export 'src/components/dialogs/error_dialog_widget.dart';
+export 'src/components/dialogs/success_dialog_widget.dart';
 
 export 'src/components/side_bar/mobile_layout/side_bar_widget.dart';
 
