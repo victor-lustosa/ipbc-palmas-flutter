@@ -1,4 +1,5 @@
 import 'package:core_module/core_module.dart';
+import 'package:design_system/src/components/dialogs/modal_success_widget.dart';
 import 'package:flutter/material.dart';
 
 class SuccessDialogWidget extends StatelessWidget {
@@ -23,6 +24,7 @@ class SuccessDialogWidget extends StatelessWidget {
       content: IntrinsicHeight(
         child: Row(
           children: [
+            const ModalSuccessIconWidget(),
             //const CircleWithX(),
             const SizedBox(width: 16),
             Expanded(
