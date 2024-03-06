@@ -1,8 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class NewPasswordView extends StatelessWidget {
-  const NewPasswordView({super.key});
+class ResetPasswordSuccessView extends StatelessWidget {
+  const ResetPasswordSuccessView({super.key});
 
   @override
   Widget build(BuildContext context) {

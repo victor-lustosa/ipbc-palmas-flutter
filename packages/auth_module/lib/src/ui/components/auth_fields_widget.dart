@@ -1,6 +1,9 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import '../stores/login_state.dart';
+import '../stores/login_store.dart';
+
 class AuthFieldsWidget extends StatefulWidget {
   const AuthFieldsWidget({super.key});
 
@@ -9,6 +12,8 @@ class AuthFieldsWidget extends StatefulWidget {
 }
 
 class _AuthFieldsWidgetState extends State<AuthFieldsWidget> {
+  LoginStore store = Modular.get<LoginStore>();
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -23,11 +28,24 @@ class _AuthFieldsWidgetState extends State<AuthFieldsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        emailField(),
-        passwordField(),
-      ],
+    return ValueListenableBuilder(
+        valueListenable: store,
+        builder: (_, state, child) {
+          if(state is InitialLoginState){
+            return Column(
+              children: [
+                emailField(),
+                passwordField(),
+              ],
+            );
+          } else if(state is LoadingLoginState){
+            return Container();
+          } else if(state is SuccessLoginState){
+            return Container();
+          } else {
+            return Container();
+          }
+      }
     );
   }
 

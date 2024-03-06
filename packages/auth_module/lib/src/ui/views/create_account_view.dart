@@ -2,6 +2,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 import '../components/auth_fields_widget.dart';
+import '../stores/login_store.dart';
 
 class CreateAccountView extends StatefulWidget {
   const CreateAccountView({super.key});
@@ -11,7 +12,7 @@ class CreateAccountView extends StatefulWidget {
 }
 //trocar os icon buttons e o text button de apps, e ajeitar as fontes do site
 class _CreateAccountViewState extends State<CreateAccountView> {
-  final LoginViewModel viewModel = Modular.get<LoginViewModel>();
+  LoginStore store = Modular.get<LoginStore>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +70,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         borderRadius: BorderRadius.circular(16),
                       ),
                       action: () async {
-                        viewModel.createAccount();
+                        store.createAccount();
                         Future.delayed(
                           Duration.zero,
                               () async {

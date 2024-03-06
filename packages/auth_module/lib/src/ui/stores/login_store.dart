@@ -1,27 +1,24 @@
+import 'package:auth_module/src/ui/stores/login_state.dart';
 import 'package:core_module/core_module.dart';
+import 'package:flutter/cupertino.dart';
 
-class LoginViewModel {
-  LoginViewModel({required IUseCases useCase}) : _useCase = useCase;
+class LoginStore extends ValueNotifier<LoginState> {
+  LoginStore({required IUseCases useCases}) : _useCases = useCases, super(InitialLoginState());
+  final IUseCases _useCases;
 
-  final IUseCases _useCase;
-
-  Future logIn(String email, String password) async {
+  logIn(String email, String password) async {
     var email = '';
     //Stream<HiveAuthDTO> credentials = await _useCase.get('auth/${emailController.text}/${passwordController.text}');
-  //  await for(final value in credentials){
-   //   email = value.token;
-   // }
-    await _useCase.get('auth/$email/$password');
+    //  await for(final value in credentials){
+    //   email = value.token;
+    // }
+    await _useCases.get('auth/$email/$password');
     if (email.isNotEmpty) {
       Modular.to.navigate('/home/');
       return '';
     } else {
       return 'login inválido';
     }
-  }
-
-  logout() {
-    Modular.to.navigate('/login');
   }
 
   toCreateAccount() {

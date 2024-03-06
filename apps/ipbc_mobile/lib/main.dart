@@ -6,7 +6,7 @@ import 'app/splash/splash_module.dart';
 export 'app/home/view_models/home_view_model.dart';
 
 void main() async {
-  Modular.setInitialRoute(SplashModule.splashRoute);
+  Modular.setInitialRoute(AuthModule.authRoute + AuthModule.initialRoute);
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([
     SupabaseDatasource.init(),

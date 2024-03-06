@@ -35,9 +35,9 @@ class PasswordFieldWidgetState extends State<PasswordFieldWidget> {
             fontSize: 12,
             fontWeight: FontWeight.w400),
         alignLabelWithHint: true,
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-          borderSide: BorderSide(color: AppColors.secondaryGrey),
+        border:  OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
+          borderSide: BorderSide(color: widget.borderSideColor),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -52,18 +52,18 @@ class PasswordFieldWidgetState extends State<PasswordFieldWidget> {
             });
           },
           child: SizedBox(
-            height: 18.95,
-            width: 21.65,
+            height: 24,
+            width: 24,
             child: obscure
                 ? Image.asset(
                     AppIcons.visibityOff,
-                    width: 21.65,
-                    height: 18.95,
+                    width: 24,
+                    height: 24,
                   )
                 : Image.asset(
                     AppIcons.visibityOn,
-                    width: 21.65,
-                    height: 18.95,
+                    width: 24,
+                    height: 24,
                   ),
           ),
         ),

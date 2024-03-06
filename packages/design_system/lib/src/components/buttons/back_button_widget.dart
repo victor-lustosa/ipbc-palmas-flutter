@@ -14,7 +14,7 @@ class BackButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButtonWidget(
-      size: Platform.isIOS ? null : 28,
+      size: Platform.isIOS ? 30 : 30,
       color: AppColors.darkGreen,
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,

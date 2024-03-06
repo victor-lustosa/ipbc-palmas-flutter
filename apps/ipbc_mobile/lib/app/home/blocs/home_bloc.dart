@@ -32,7 +32,6 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>> wi
       },
       onError: (error, st) async {
         AnalyticsUtil.recordError(name: 'supa services bloc', error: error, st: st);
-        AnalyticsUtil.setCustomKey(name: 'supa services bloc',key: 'get supa services bloc',value: error.toString());
         emit(ExceptionState<HomeState>(message: error.toString()));
       },
     );
