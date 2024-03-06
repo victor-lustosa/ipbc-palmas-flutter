@@ -55,6 +55,11 @@ class _LoginViewState extends State<LoginView> {
                               decorationColor: AppColors.darkGreen,
                             ),
                             text: "Esqueceu a senha? ",
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Modular.to.navigate(AuthModule.initialRoute +
+                                    AuthModule.resetPasswordRoute);
+                              },
                           ),
                         ],
                       ),
@@ -76,7 +81,7 @@ class _LoginViewState extends State<LoginView> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   action: () async {
-                    var message = await viewModel.logIn('','');
+                    var message = await viewModel.logIn('', '');
                     if (message != '') {
                       Future.delayed(
                         Duration.zero,
@@ -110,8 +115,9 @@ class _LoginViewState extends State<LoginView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    decoration: BoxDecoration(border: Border.all(color: AppColors.loginLineDecoration)),
-
+                    decoration: BoxDecoration(
+                        border:
+                            Border.all(color: AppColors.loginLineDecoration)),
                     width: 159,
                   ),
                 ],
