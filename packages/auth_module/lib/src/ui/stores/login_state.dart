@@ -7,3 +7,5 @@ class SuccessLoginState extends LoginState{}
 class LoadingLoginState extends LoginState{}
 
 class ErrorLoginState extends LoginState{}
+
+class ValidateFieldsState extends LoginState{}

@@ -1,7 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../components/auth_fields_widget.dart';
 import '../stores/login_store.dart';
 
 class CreateAccountView extends StatefulWidget {
@@ -55,7 +54,6 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           fontSize: 22,
                         )),
                   ),
-                  const AuthFieldsWidget(),
                   Container(
                     margin: const EdgeInsets.only(
                       top: 40,

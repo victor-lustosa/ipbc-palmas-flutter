@@ -31,7 +31,7 @@ class AuthModule extends Module {
         ),
       ),
     );
-    i.add(
+    i.addSingleton(
       () => LoginStore(
         useCases: i.get<AuthUseCase>(),
       ),

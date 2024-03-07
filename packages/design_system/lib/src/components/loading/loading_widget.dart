@@ -6,28 +6,32 @@ import 'package:flutter/cupertino.dart';
 import '../../../design_system.dart';
 
 class LoadingWidget extends StatelessWidget {
-  const LoadingWidget({Key? key}) : super(key: key);
-
+  const LoadingWidget({Key? key, this.androidRadius, this.color, this.size, this.iosRadius}) : super(key: key);
+  final double? androidRadius;
+  final double? iosRadius;
+  final double? size;
+  final Color? color;
   @override
   Widget build(context) {
     return Platform.isIOS
         ? SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: const Center(
+            width: size ?? MediaQuery.of(context).size.width,
+            height: size ?? MediaQuery.of(context).size.height,
+            child: Center(
               child: CupertinoActivityIndicator(
-                color: AppColors.darkGreen,
-                radius: 17,
+                color: color ?? AppColors.darkGreen,
+                radius: iosRadius ?? 17,
               ),
             ),
           )
         : SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: const Center(
+            width: size ?? MediaQuery.of(context).size.width,
+            height: size ?? MediaQuery.of(context).size.height,
+            child: Center(
               child: CircularProgressIndicator(
+                strokeWidth: androidRadius!,
                 valueColor: AlwaysStoppedAnimation<Color>(
-                  AppColors.darkGreen,
+                  color ?? AppColors.darkGreen,
                 ),
               ),
             ),

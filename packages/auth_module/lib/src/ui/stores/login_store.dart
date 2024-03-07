@@ -7,20 +7,23 @@ class LoginStore extends ValueNotifier<LoginState> {
   final IUseCases _useCases;
 
   logIn(String email, String password) async {
+    value = LoadingLoginState();
     var email = '';
     //Stream<HiveAuthDTO> credentials = await _useCase.get('auth/${emailController.text}/${passwordController.text}');
     //  await for(final value in credentials){
     //   email = value.token;
     // }
-    await _useCases.get('auth/$email/$password');
-    if (email.isNotEmpty) {
-      Modular.to.navigate('/home/');
-      return '';
-    } else {
-      return 'login inválido';
-    }
+    //await _useCases.get('auth/$email/$password');
+    //if (email.isNotEmpty) {
+   //   Modular.to.navigate('/home/');
+   //   return '';
+  //  } else {
+   //   return 'login inválido';
+    //}
   }
-
+  validateFields(){
+    value = ValidateFieldsState();
+  }
   toCreateAccount() {
     Modular.to.navigate('/create-account');
   }
