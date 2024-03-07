@@ -1,8 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class FieldWidget extends StatefulWidget {
-  const FieldWidget(
+class TemplateFormWidget extends StatefulWidget {
+  const TemplateFormWidget(
       {super.key,
       required this.controller,
       required this.globalKey,
@@ -36,12 +36,10 @@ class FieldWidget extends StatefulWidget {
   final EdgeInsetsGeometry? titleMargin;
 
   @override
-  State<FieldWidget> createState() => _FieldWidgetState();
-
-
+  State<TemplateFormWidget> createState() => _TemplateFormWidgetState();
 }
 
-class _FieldWidgetState extends State<FieldWidget> {
+class _TemplateFormWidgetState extends State<TemplateFormWidget> {
   @override
   Widget build(BuildContext context) {
     return DefaultFieldWidget(
@@ -77,9 +75,9 @@ class _FieldWidgetState extends State<FieldWidget> {
 
 fieldInputDecoration(
     {required isValid,
-      required hintText,
-      Widget? suffixIcon,
-      EdgeInsetsGeometry? contentPadding}) {
+    required hintText,
+    Widget? suffixIcon,
+    EdgeInsetsGeometry? contentPadding}) {
   return InputDecoration(
     suffixIcon: suffixIcon,
     border: InputBorder.none,

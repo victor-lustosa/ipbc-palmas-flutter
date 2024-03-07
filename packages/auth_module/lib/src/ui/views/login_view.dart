@@ -63,7 +63,7 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                   ),
-                  FieldWidget(
+                  TemplateFormWidget(
                     controller: _emailController,
                     title: 'Insira seu email',
                     isValid: _isEmailValid,
@@ -78,7 +78,7 @@ class _LoginViewState extends State<LoginView> {
                       return _emailValidation(data);
                     },
                   ),
-                  FieldWidget(
+                  TemplateFormWidget(
                     controller: _passwordController,
                     titleMargin: EdgeInsets.only(top: _isEmailValid ? 24 : 12),
                     title: 'Insira sua senha',
@@ -187,7 +187,9 @@ class _LoginViewState extends State<LoginView> {
                         }
                       },
                       padding: EdgeInsets.zero,
-                      backgroundColor: AppColors.darkGreen,
+                      backgroundColor: _isEmailValid && _isPasswordValid
+                          ? AppColors.darkGreen
+                          : AppColors.disableButton,
                       shadowColor: AppColors.grey0,
                       foregroundColor: AppColors.white,
                       child: _isPressed
