@@ -11,9 +11,9 @@ class FieldWidget extends StatefulWidget {
       this.obscure,
       required this.isPressed,
       required this.title,
-      required this.hintText,
       required this.validator,
-      required this.inputDecoration, this.titleMargin});
+      required this.inputDecoration,
+      this.titleMargin});
 
   final TextEditingController controller;
 
@@ -22,8 +22,6 @@ class FieldWidget extends StatefulWidget {
   final String errorText;
 
   final String title;
-
-  final String hintText;
 
   final bool isValid;
 
@@ -39,6 +37,8 @@ class FieldWidget extends StatefulWidget {
 
   @override
   State<FieldWidget> createState() => _FieldWidgetState();
+
+
 }
 
 class _FieldWidgetState extends State<FieldWidget> {
@@ -73,4 +73,30 @@ class _FieldWidgetState extends State<FieldWidget> {
         ),
         borderRadius: BorderRadius.circular(16),
       );
+}
+
+fieldInputDecoration(
+    {required isValid,
+      required hintText,
+      Widget? suffixIcon,
+      EdgeInsetsGeometry? contentPadding}) {
+  return InputDecoration(
+    suffixIcon: suffixIcon,
+    border: InputBorder.none,
+    hintStyle: AppFonts.defaultFont(
+      fontSize: 12,
+      color: isValid ? AppColors.hintInputForm : Colors.red,
+    ),
+    contentPadding: contentPadding ??
+        const EdgeInsets.only(
+          left: 16,
+          bottom: 5,
+          right: 5,
+        ),
+    hintText: hintText,
+    counterStyle: AppFonts.defaultFont(
+      fontSize: 10,
+      color: isValid ? const Color(0xff979797) : Colors.red,
+    ),
+  );
 }

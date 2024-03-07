@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../components/field_widget.dart';
 import '../stores/login_store.dart';
 
 class LoginView extends StatefulWidget {
@@ -56,42 +55,39 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 24),
-                    child: Text('Fazer login',
-                        style: AppFonts.defaultFont(
-                          color: AppColors.grey10,
-                          fontSize: 22,
-                        )),
+                    child: Text(
+                      'Fazer login',
+                      style: AppFonts.defaultFont(
+                        color: AppColors.grey10,
+                        fontSize: 22,
+                      ),
+                    ),
                   ),
                   FieldWidget(
                     controller: _emailController,
-                    validator: (data) {
-                      return _emailValidation(data);
-                    },
                     title: 'Insira seu email',
                     isValid: _isEmailValid,
                     errorText: _emailErrorText,
                     globalKey: _emailKey,
                     isPressed: _isPressed,
-                    hintText: 'Email',
-                    inputDecoration: _inputDecoration(
+                    inputDecoration: fieldInputDecoration(
                       isValid: _isEmailValid,
                       hintText: 'Email',
                     ),
+                    validator: (data) {
+                      return _emailValidation(data);
+                    },
                   ),
                   FieldWidget(
                     controller: _passwordController,
-                    validator: (data) {
-                      return _passwordValidation(data);
-                    },
                     titleMargin: EdgeInsets.only(top: _isEmailValid ? 24 : 12),
                     title: 'Insira sua senha',
                     isValid: _isPasswordValid,
                     errorText: _passwordErrorText,
                     globalKey: _passwordKey,
                     isPressed: _isPressed,
-                    hintText: 'Senha',
                     obscure: _obscure,
-                    inputDecoration: _inputDecoration(
+                    inputDecoration: fieldInputDecoration(
                       isValid: _isPasswordValid,
                       hintText: 'Senha',
                       contentPadding: const EdgeInsets.only(
@@ -120,6 +116,9 @@ class _LoginViewState extends State<LoginView> {
                               ),
                       ),
                     ),
+                    validator: (data) {
+                      return _passwordValidation(data);
+                    },
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -170,22 +169,10 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       action: () async {
                         if (_emailController.text.isEmpty && !_isPressed) {
-                          Future.delayed(Duration.zero, () async {
-                            if (mounted) {
-                              setState(() {
-                                _isEmailValid = false;
-                              });
-                            }
-                          });
+                          _emailBorderValidation(false);
                         }
                         if (_passwordController.text.isEmpty && !_isPressed) {
-                          Future.delayed(Duration.zero, () async {
-                            if (mounted) {
-                              setState(() {
-                                _isPasswordValid = false;
-                              });
-                            }
-                          });
+                          _passwordBorderValidation(false);
                         }
                         if (_emailController.text.isNotEmpty &&
                             _passwordController.text.isNotEmpty &&
@@ -195,13 +182,7 @@ class _LoginViewState extends State<LoginView> {
                           if (EmailValidator.validate(_emailController.text)) {
                             await _store.logIn('', '');
                           } else {
-                            Future.delayed(Duration.zero, () async {
-                              if (mounted) {
-                                setState(() {
-                                  _isEmailValid = false;
-                                });
-                              }
-                            });
+                            _emailBorderValidation(false);
                           }
                         }
                       },
@@ -347,32 +328,6 @@ class _LoginViewState extends State<LoginView> {
           ),
         );
       },
-    );
-  }
-
-  _inputDecoration(
-      {required isValid,
-      required hintText,
-      Widget? suffixIcon,
-      EdgeInsetsGeometry? contentPadding}) {
-    return InputDecoration(
-      suffixIcon: suffixIcon,
-      border: InputBorder.none,
-      hintStyle: AppFonts.defaultFont(
-        fontSize: 12,
-        color: isValid ? AppColors.hintInputForm : Colors.red,
-      ),
-      contentPadding: contentPadding ??
-          const EdgeInsets.only(
-            left: 16,
-            bottom: 5,
-            right: 5,
-          ),
-      hintText: hintText,
-      counterStyle: AppFonts.defaultFont(
-        fontSize: 10,
-        color: isValid ? const Color(0xff979797) : Colors.red,
-      ),
     );
   }
 

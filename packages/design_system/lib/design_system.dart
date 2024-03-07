@@ -26,6 +26,7 @@ export 'src/components/buttons/back_button_widget.dart';
 
 export 'src/components/forms/form_field_widget.dart';
 export 'src/components/forms/default_field_widget.dart';
+export 'src/components/forms/field_widget.dart';
 
 export 'src/components/covers/album_cover_widget.dart';
 
