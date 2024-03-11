@@ -42,7 +42,7 @@ class TemplateFormWidget extends StatefulWidget {
 class _TemplateFormWidgetState extends State<TemplateFormWidget> {
   @override
   Widget build(BuildContext context) {
-    return DefaultFieldWidget(
+    return DefaultFormFieldWidget(
       fieldKey: widget.globalKey,
       isSubmitted: !widget.isPressed,
       horizontalSymmetric: const EdgeInsets.symmetric(horizontal: 16),

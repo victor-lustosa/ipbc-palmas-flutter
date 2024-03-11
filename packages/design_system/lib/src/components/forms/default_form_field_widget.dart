@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../design_system.dart';
 
-class DefaultFieldWidget extends StatefulWidget {
-  const DefaultFieldWidget(
+class DefaultFormFieldWidget extends StatefulWidget {
+  const DefaultFormFieldWidget(
       {super.key,
       this.fieldKey,
       this.fieldWidth,
@@ -49,10 +49,10 @@ class DefaultFieldWidget extends StatefulWidget {
   final bool? isSubmitted;
   final bool? obscureText;
   @override
-  State<DefaultFieldWidget> createState() => _DefaultFieldWidgetState();
+  State<DefaultFormFieldWidget> createState() => _DefaultFormFieldWidgetState();
 }
 
-class _DefaultFieldWidgetState extends State<DefaultFieldWidget> {
+class _DefaultFormFieldWidgetState extends State<DefaultFormFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(

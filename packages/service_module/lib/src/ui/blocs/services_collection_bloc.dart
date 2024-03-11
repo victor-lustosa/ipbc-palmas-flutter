@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>, GenericState<ServicesCollectionState>> with ConnectivityMixin{
+class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
+    GenericState<ServicesCollectionState>> with ConnectivityMixin {
   final IUseCases supaUseCases;
   String path = '';
 
@@ -12,6 +13,7 @@ class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
     on<LoadingEvent<ServicesCollectionEvent>>(_loading);
     on<CheckConnectivityEvent<ServicesCollectionEvent>>(_checkConnectivity);
   }
+
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
     path = event.path;
     final response = await isConnected();
@@ -29,15 +31,14 @@ class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
     await emit.onEach<List<ServiceEntity>>(
       await supaUseCases.get(path),
       onData: (services) {
-        emit(DataFetchedState<ServicesCollectionState, ServiceEntity>(entities: services));
+        emit(
+          DataFetchedState<ServicesCollectionState, ServiceEntity>(
+              entities: services),
+        );
       },
       onError: (error, st) async {
         AnalyticsUtil.recordError(
             name: 'supa collection bloc', error: error, st: st);
-        AnalyticsUtil.setCustomKey(
-            name: 'supa collection bloc',
-            key: 'get supa collection bloc',
-            value: error.toString());
         emit(
             ExceptionState<ServicesCollectionState>(message: error.toString()));
       },

@@ -2,34 +2,47 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core_module.dart';
 import '../../configs/api_keys.dart';
 
-class SupabaseDatasource implements IDatasource {
-
-  SupabaseDatasource({required SupabaseClient supabaseClient}) : _supaClient = supabaseClient;
+class SupabaseDatasource implements IDatasource, IAuth {
+  SupabaseDatasource({required SupabaseClient supabaseClient})
+      : _supaClient = supabaseClient;
 
   late final SupabaseClient _supaClient;
 
   List<String> params = [];
 
-  Future<void> signInWithEmail() async {
-    /*final AuthResponse res = await _supaClient.auth.signInWithPassword(
-        email: 'example@email.com',
-        password: 'example-password'
-    );*/
-
+  @override
+  Future<String> signInWithEmail(String email, String password) async {
+    final AuthResponse res = await _supaClient.auth.signInWithPassword(
+      email: email,
+      password: password,
+    );
+    return res.session?.accessToken != null
+        ? res.session!.accessToken
+        : '';
   }
 
   static Future init() async {
-    await Supabase.initialize(url: ApiKeys.supabaseUrl, anonKey: ApiKeys.supabaseKey);
+    await Supabase.initialize(
+      url: ApiKeys.supabaseUrl,
+      anonKey: ApiKeys.supabaseKey,
+    );
   }
 
   @override
   Future<List<dynamic>> get(String path) async {
     params = path.split('/');
     final dynamic data;
-    if(params.length > 3){
-      data = await _supaClient.from(params[0]).select().eq(params[1],params[2]).order(params[4], ascending: params[5].toLowerCase() == 'true');
-    } else{
-      data = await _supaClient.from(params[0]).select().order(params[1], ascending: params[2].toLowerCase() == 'true');
+    if (params.length > 3) {
+      data = await _supaClient
+          .from(params[0])
+          .select()
+          .eq(params[1], params[2])
+          .order(params[4], ascending: params[5].toLowerCase() == 'true');
+    } else {
+      data = await _supaClient
+          .from(params[0])
+          .select()
+          .order(params[1], ascending: params[2].toLowerCase() == 'true');
     }
     return Future.value(data);
   }

@@ -2,9 +2,11 @@ import 'package:auth_module/src/ui/stores/login_state.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../domain/use_cases/auth_use_cases.dart';
+
 class LoginStore extends ValueNotifier<LoginState> {
-  LoginStore({required IUseCases useCases}) : _useCases = useCases, super(InitialLoginState());
-  final IUseCases _useCases;
+  LoginStore({required IAuthUseCases useCases}) : _useCases = useCases, super(InitialLoginState());
+  final IAuthUseCases _useCases;
 
   logIn(String email, String password) async {
     value = LoadingLoginState();

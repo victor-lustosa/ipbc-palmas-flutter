@@ -1,13 +1,14 @@
+
 import 'package:core_module/core_module.dart';
 
-class ServiceUseCases implements IUseCases<Stream<List<ServiceEntity>>>{
+class UseCases implements IUseCases<Stream<List<dynamic>>> {
   final IRepository<List<dynamic>> repository;
-  ServiceUseCases({required this.repository});
+  UseCases({required this.repository});
 
   @override
-  Future<Stream<List<ServiceEntity>>?> get(String url) async {
+  Future<Stream<List<dynamic>>> get(String url) async {
     var result = await repository.get(url);
-    return Stream.value(SupaServiceAdapter.fromMapList(result));
+    return Stream.value(ServicesAdapter.fromMapList(result));
   }
 
   @override
@@ -16,7 +17,7 @@ class ServiceUseCases implements IUseCases<Stream<List<ServiceEntity>>>{
   }
 
   @override
-  Future<void> update(path, data) async {
+  Future<void> update(String path, data) async {
     repository.update(path, data);
   }
 }

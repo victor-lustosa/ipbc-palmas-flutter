@@ -40,3 +40,4 @@ export 'package:intl/intl.dart';
 export 'package:hive_flutter/hive_flutter.dart';
 export 'package:email_validator/email_validator.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
+export 'package:supabase_flutter/supabase_flutter.dart';

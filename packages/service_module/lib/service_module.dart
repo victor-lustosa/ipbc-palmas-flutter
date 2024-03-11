@@ -3,7 +3,6 @@ library service_module;
 export 'src/app_module.dart';
 
 export 'src/infra/use_cases/services_use_cases.dart';
-export 'src/infra/use_cases/service_use_cases.dart';
 
 export 'src/infra/adapters/services_adapter.dart';
 export 'src/infra/adapters/supa/supa_service_adapter.dart';

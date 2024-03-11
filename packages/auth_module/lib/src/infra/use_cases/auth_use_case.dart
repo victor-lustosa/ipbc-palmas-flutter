@@ -1,23 +1,16 @@
 
-import 'package:core_module/core_module.dart';
+import 'package:auth_module/src/domain/repositories/auth_repository.dart';
+import 'package:auth_module/src/domain/use_cases/auth_use_cases.dart';
 
-class AuthUseCase implements IUseCases<dynamic>{
-  final IRepository<dynamic> repository;
+class AuthUseCase implements IAuthUseCases<dynamic>{
+
+  final IAuthRepository<dynamic> repository;
+
   AuthUseCase({required this.repository});
 
   @override
-  Future<dynamic> get(String url) async {
-    var result = await repository.get(url);
-    return result;
-  }
-
-  @override
-  Future<void> add(path, data) async {
-    repository.add(path, data);
-  }
-
-  @override
-  Future<void> update(path, data) async {
-    repository.update(path, data);
+  Future<String> signInWithEmail(String email, String password) {
+    var dfd = repository.signInWithEmail(email);
+    return Future.value(dfd as String);
   }
 }
