@@ -1,7 +1,8 @@
 
+import 'package:auth_module/src/infra/datasources/auth_datasource.dart';
 import 'package:core_module/core_module.dart';
 
-class SupabaseAuthDatasource implements IAuth {
+class SupabaseAuthDatasource implements IAuthDatasource {
   SupabaseAuthDatasource({required SupabaseClient supabaseClient})
       : _supaClient = supabaseClient;
 

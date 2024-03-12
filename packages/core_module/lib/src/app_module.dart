@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../core_module.dart';
+import 'core/infra/use_cases/use_cases.dart';
 
 class CoreModule extends Module {
   static BindConfig<T> blocConfig<T extends Bloc>() {
@@ -20,6 +21,11 @@ class CoreModule extends Module {
     i.addSingleton<Repository<List<dynamic>>>(
       () => Repository<List<dynamic>>(
         datasource: i.get<SupabaseDatasource>(),
+      ),
+    );
+    i.addSingleton<UseCases>(
+      () => UseCases(
+        repository: i.get<Repository<List<dynamic>>>(),
       ),
     );
   }

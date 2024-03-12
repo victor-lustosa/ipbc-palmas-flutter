@@ -1,9 +1,11 @@
+import 'package:auth_module/src/external/supabase_auth_datasource.dart';
 import 'package:auth_module/src/ui/stores/login_store.dart';
 import 'package:auth_module/src/ui/view_models/password_view_model.dart';
 import 'package:auth_module/src/ui/views/reset_password_success_view.dart';
 import 'package:auth_module/src/ui/views/verification_code_view.dart';
 import 'package:core_module/core_module.dart';
 
+import 'infra/repositories/auth_repository.dart';
 import 'ui/views/create_account_view.dart';
 import 'ui/views/creating_new_password_view.dart';
 import 'ui/views/login_view.dart';
@@ -26,8 +28,10 @@ class AuthModule extends Module {
   void binds(i) {
     i.add(
       () => AuthUseCase(
-        repository: Repository<dynamic>(
-          datasource: HiveDatasource<HiveAuthDTO>(boxLabel: 'auth'),
+        repository: AuthRepository<dynamic>(
+          datasource: SupabaseAuthDatasource(
+            supabaseClient: Supabase.instance.client,
+          ),
         ),
       ),
     );

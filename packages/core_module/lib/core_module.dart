@@ -5,6 +5,7 @@ export 'src/core/domain/use_cases/use_cases.dart';
 
 export 'src/core/infra/datasources/datasource.dart';
 export 'src/core/infra/repositories/repository.dart';
+export 'src/core/infra/use_cases/use_cases.dart';
 
 export 'src/core/external/hive_datasource.dart';
 export 'src/core/external/supabase_datasource.dart';

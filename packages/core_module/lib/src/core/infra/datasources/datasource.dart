@@ -5,16 +5,10 @@ abstract class IDatasource<R>
         IDeleteDatasource,
         IUpdateDatasource {}
 
-abstract class IAuth<R>
-    implements
-        ISignInEmailDatasource {}
+
 
 abstract class IGetDatasource <R> {
   Future<R?> get(String path);
-}
-
-abstract class ISignInEmailDatasource {
-  Future<String> signInWithEmail(String email, String password);
 }
 
 abstract class IAddDatasource {

@@ -1,25 +1,14 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 import '../../../core_module.dart';
 import '../../configs/api_keys.dart';
 
-class SupabaseDatasource implements IDatasource, IAuth {
+class SupabaseDatasource implements IDatasource{
   SupabaseDatasource({required SupabaseClient supabaseClient})
       : _supaClient = supabaseClient;
 
   late final SupabaseClient _supaClient;
 
   List<String> params = [];
-
-  @override
-  Future<String> signInWithEmail(String email, String password) async {
-    final AuthResponse res = await _supaClient.auth.signInWithPassword(
-      email: email,
-      password: password,
-    );
-    return res.session?.accessToken != null
-        ? res.session!.accessToken
-        : '';
-  }
 
   static Future init() async {
     await Supabase.initialize(
