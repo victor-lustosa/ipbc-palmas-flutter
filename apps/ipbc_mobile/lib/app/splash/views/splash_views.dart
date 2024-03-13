@@ -27,7 +27,7 @@ class _SplashViewState extends State<SplashView> {
       body: BlocConsumer<DatabaseBloc, DatabasesState>(
         listener: (context, state) async {
           if (state is FetchingDataState) {
-            if(!state.isData){
+            if(state.isData){
               Modular.to.navigate(HomeModule.initialRoute);
             } else {
               Modular.to.navigate(AuthModule.authRoute + AuthModule.loginRoute);
@@ -37,7 +37,11 @@ class _SplashViewState extends State<SplashView> {
         bloc: bloc,
         builder: (context, state) {
           if (state is LoadingState || state is FetchingDataState) {
-            return const LoadingWidget();
+            return const LoadingWidget(
+              androidRadius: 4,
+              iosRadius: 12,
+              color: AppColors.darkGreen,
+            );
           } else {
             return const GenericErrorView();
           }

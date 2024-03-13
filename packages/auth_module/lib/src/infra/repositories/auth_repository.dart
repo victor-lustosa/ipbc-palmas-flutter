@@ -6,7 +6,7 @@ import '../datasources/auth_datasource.dart';
 class AuthRepository<R> implements IAuthRepository<R> {
   AuthRepository({required this.datasource});
 
-  final IAuthDatasource datasource;
+  final IAuthDatasource<R> datasource;
 
   @override
   Future signInWithEmail(String path) async {

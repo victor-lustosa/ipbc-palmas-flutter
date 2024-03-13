@@ -37,16 +37,16 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
           );
         } else {
           showCustomErrorDialog(
-            context,
-            'Código Inválido!',
-            'Por favor, verifique o código, e tente novamente.',
+           context: context,
+            title: 'Código Inválido!',
+            message: 'Por favor, verifique o código, e tente novamente.',
           );
         }
       } else {
         showCustomErrorDialog(
-          context,
-          'Código não Preenchidos!',
-          'Por favor, preencha o código de verificação e tente novamente.',
+          context: context,
+          title: 'Código não Preenchidos!',
+          message: 'Por favor, preencha o código de verificação e tente novamente.',
         );
       }
     }

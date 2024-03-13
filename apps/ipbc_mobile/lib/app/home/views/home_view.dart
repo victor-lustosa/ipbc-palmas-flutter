@@ -14,7 +14,8 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin {
+class _HomeViewState extends State<HomeView>
+    with AutomaticKeepAliveClientMixin {
   late final HomeBloc _bloc;
   List<ServicesEntity> _servicesList = [];
   int activePage = 0;
@@ -50,7 +51,11 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
           bloc: _bloc,
           builder: (context, state) {
             if (state is LoadingState<HomeState>) {
-              return const LoadingWidget();
+              return const LoadingWidget(
+                androidRadius: 3.5,
+                iosRadius: 12,
+                color: AppColors.darkGreen,
+              );
             } else if (state is NoConnectionState<HomeState>) {
               return const NoConnectionView(index: 0);
             } else if (state is DataFetchedState<HomeState, ServicesEntity>) {
@@ -77,7 +82,8 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                               title(text: "Cultos"),
                               subtitle(
                                 right: 17,
-                                text: "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
+                                text:
+                                    "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
                               ),
                             ],
                           ),
@@ -117,7 +123,8 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                             ),
                             subtitle(
                               right: 18,
-                              text: "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
+                              text:
+                                  "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
                             ),
                           ],
                         ),

@@ -43,7 +43,11 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
               bloc: _bloc,
               builder: (context, state) {
                 if (state is LoadingState<ServicesCollectionState>) {
-                  return const LoadingWidget();
+                  return const LoadingWidget(
+                    androidRadius: 3.5,
+                    iosRadius: 12,
+                    color: AppColors.darkGreen,
+                  );
                 } else if (state is NoConnectionState<ServicesCollectionState>) {
                   return const NoConnectionView(index: 0);
                 } else if (state is DataFetchedState<ServicesCollectionState, ServiceEntity>) {

@@ -76,9 +76,9 @@ class ErrorDialogWidget extends StatelessWidget {
   }
 }
 
-Future<void> showCustomErrorDialog(
-    BuildContext context, String title, String message,
-    {Function()? onClose}) async {
+Future<void> showCustomErrorDialog({
+    required BuildContext context, required String title,required String message,
+    Function()? onClose}) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: true,

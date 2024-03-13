@@ -38,6 +38,9 @@ class _LoginViewState extends State<LoginView> {
         if (state is LoadingLoginState) {
           _isPressed = true;
         }
+        if (state is InitialLoginState) {
+          _isPressed = false;
+        }
         return Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(
@@ -138,9 +141,11 @@ class _LoginViewState extends State<LoginView> {
                                 text: "Esqueceu a senha? ",
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    Modular.to.navigate(
-                                        AuthModule.initialRoute +
-                                            AuthModule.resetPasswordRoute);
+                                    if (!_isPressed) {
+                                      Modular.to.navigate(
+                                          AuthModule.initialRoute +
+                                              AuthModule.resetPasswordRoute);
+                                    }
                                   },
                               ),
                             ],
@@ -160,7 +165,7 @@ class _LoginViewState extends State<LoginView> {
                       right: 16,
                     ),
                     width: _isPressed ? 48 : context.mediaQuery.size.width,
-                    height: _isPressed ? 48 : 48,
+                    height: 48,
                     duration: const Duration(milliseconds: 750),
                     curve: Curves.fastOutSlowIn,
                     child: ElevatedButtonWidget(
@@ -180,7 +185,8 @@ class _LoginViewState extends State<LoginView> {
                             _isPasswordValid &&
                             !_isPressed) {
                           if (EmailValidator.validate(_emailController.text)) {
-                            await _store.logIn('', '');
+                            await _store.logIn(_emailController.text,
+                                _passwordController.text, context);
                           } else {
                             _emailBorderValidation(false);
                           }
@@ -317,7 +323,9 @@ class _LoginViewState extends State<LoginView> {
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => setState(
                                   () {
-                                    _store.toCreateAccount();
+                                    if (!_isPressed) {
+                                      _store.toCreateAccount();
+                                    }
                                   },
                                 ),
                         ),

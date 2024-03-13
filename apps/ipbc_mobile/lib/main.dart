@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 
 import 'app/splash/splash_module.dart';
 export 'app/home/view_models/home_view_model.dart';
+export 'app/home/views/home_view.dart';
 
 void main() async {
-  Modular.setInitialRoute(SplashModule.initialRoute);
+  Modular.setInitialRoute(SplashModule.splashRoute);
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([
     SupabaseDatasource.init(),

@@ -2,7 +2,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
-  final IUseCases useCases;
+  final AuthUseCase useCases;
   final String path = 'auth';
 
   DatabaseBloc({required this.useCases})
@@ -11,12 +11,12 @@ class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
   }
 
   _getData(GetDataEvent event, emit) async {
-    var data = await useCases.get(path);
-    if((data as HiveAuthDTO).token != ""){
-      emit(FetchingDataState(true));
-    } else {
+    //var data = await useCases.get(path);
+   // if((data as HiveAuthDTO).token != ""){
       emit(FetchingDataState(false));
-    }
+  //  } else {
+   //   emit(FetchingDataState(true));
+   // }
   }
 }
 

@@ -34,7 +34,11 @@ class _LyricsListViewState extends State<LyricsListView> with TickerProviderStat
           bloc: _bloc,
           builder: (context, state) {
              if (state is LoadingState<LyricState>) {
-              return const LoadingWidget();
+              return const LoadingWidget(
+                androidRadius: 3.5,
+                iosRadius: 12,
+                color: AppColors.darkGreen,
+              );
             } else if (state is NoConnectionState<LyricState>) {
               return const NoConnectionView(index: 0);
             } else if (state is DataFetchedState<LyricState, LyricEntity>) {

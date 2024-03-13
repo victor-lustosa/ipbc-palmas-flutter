@@ -99,9 +99,9 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                         } else {
                           //_showErrorDialog();
                           showCustomErrorDialog(
-                            context,
-                            'E-mail inválido!',
-                            'Por favor, verifique seu e-mail e tente novamente.',
+                            context: context,
+                            title: 'E-mail inválido!',
+                            message: 'Por favor, verifique seu e-mail e tente novamente.',
                           );
                         }
                       },
