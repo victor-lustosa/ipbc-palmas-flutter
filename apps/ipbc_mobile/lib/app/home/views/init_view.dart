@@ -4,10 +4,12 @@ import 'dart:io';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ipbc_mobile/app/events/views/events_list_view.dart';
 
 import '../../offers/views/offers_view.dart';
 import '../../configs/app_routes.dart';
 
+import '../../splash/splash_module.dart';
 import '../views/home_view.dart';
 import '../home_module.dart';
 
@@ -125,6 +127,13 @@ class _HomeRoutesState extends State<HomeRoutes> {
               transitionSpeed: const Duration(milliseconds: 700),
               reverseSpeed: const Duration(milliseconds: 700),
               child: const InsertServicesView(),
+              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(CurveTween(curve: Curves.ease)),
+            );
+          case SplashModule.eventsListRoute:
+            return CustomTransitionPageRoute(
+              transitionSpeed: const Duration(milliseconds: 700),
+              reverseSpeed: const Duration(milliseconds: 700),
+              child: const EventsListView(),
               tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(CurveTween(curve: Curves.ease)),
             );
 
