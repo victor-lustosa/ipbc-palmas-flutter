@@ -16,13 +16,26 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin {
   late final HomeBloc _bloc;
-  late List<ServicesEntity> _servicesList;
+  List<ServicesEntity> _servicesList = [];
+  int activePage = 0;
+  final List<Image> imagesList = [];
 
   @override
   void initState() {
     super.initState();
+    for (int i = 0; i < _servicesList.length; i++) {
+      imagesList.add(Image.network(_servicesList[i].image));
+    }
     _bloc = Modular.get<HomeBloc>();
     _bloc.add(CheckConnectivityEvent());
+  }
+
+  @override
+  void didChangeDependencies() {
+    for (Image image in imagesList) {
+      precacheImage(image.image, context);
+    }
+    super.didChangeDependencies();
   }
 
   @override
@@ -113,6 +126,8 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                         margin: const EdgeInsets.only(top: 12, bottom: 20),
                         height: 268,
                         child: SlideCardsWidget(
+                          width: 319,
+                          scrollDirection: Axis.horizontal,
                           route: ServiceModule.servicesCollectionRoute,
                           services: _servicesList,
                         ),

@@ -203,6 +203,8 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
         topLeft: Radius.circular(12),
         topRight: Radius.circular(12),
       );
+    } else if (index != 0 && (index + 1) != cardsList.length) {
+      borderRadius = const BorderRadius.only();
     } else if ((index + 1) == cardsList.length) {
       borderRadius = const BorderRadius.only(
         bottomLeft: Radius.circular(12),

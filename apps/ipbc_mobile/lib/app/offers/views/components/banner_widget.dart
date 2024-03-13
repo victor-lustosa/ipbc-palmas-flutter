@@ -44,48 +44,43 @@ class _BannerWidgetState extends State<BannerWidget> with ClipboardMixin {
     );
   }
 
-  baseBanner() => Container(
-        margin: EdgeInsets.only(
+  baseBanner() => Column(
+    children: [
+      Container(
+        margin:  EdgeInsets.only(
           left: isSmallD ? 24 : 35,
-          right: isSmallD ? 20 : 24,
+          top: 24,
+          bottom: 16,
         ),
-        child: Column(
+        child: Row(
           children: [
             Container(
-              margin: const EdgeInsets.only(
-                top: 24,
-                bottom: 16,
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(right: isSmallD ? 15 : 24),
-                    child: Text(
-                      'PARA',
-                      style: AppFonts.defaultFont(
-                        color: AppColors.secondaryGreen2,
-                        fontSize: 13,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    'IGREJA PRESBITERIANA DE PALMAS',
-                    style: AppFonts.defaultFont(
-                      color: AppColors.white,
-                      fontSize: 13,
-                    ),
-                  ),
-                ],
+              margin: EdgeInsets.only(right: isSmallD ? 15 : 24),
+              child: Text(
+                'PARA',
+                style: AppFonts.defaultFont(
+                  color: AppColors.secondaryGreen2,
+                  fontSize: 13,
+                ),
               ),
             ),
-            Container(
-              height: 1,
-              width: context.mediaQuery.size.width * .78,
-              color: AppColors.secondaryGreen2,
+            Text(
+              'IGREJA PRESBITERIANA DE PALMAS',
+              style: AppFonts.defaultFont(
+                color: AppColors.white,
+                fontSize: 13,
+              ),
             ),
           ],
         ),
-      );
+      ),
+      Container(
+        height: 1,
+        width: context.mediaQuery.size.width * .78,
+        color: AppColors.secondaryGreen2,
+      ),
+    ],
+  );
 
   pixBanner() => Container(
         margin: EdgeInsets.only(
