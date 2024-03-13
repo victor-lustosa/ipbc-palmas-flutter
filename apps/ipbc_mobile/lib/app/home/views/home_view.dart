@@ -4,6 +4,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../splash/splash_module.dart';
 import '../blocs/home_bloc.dart';
 
 class HomeView extends StatefulWidget {
@@ -92,7 +93,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                         onTap: () {
                           Navigator.pushNamed(
                             context,
-                            ServiceModule.servicesListRoute,
+                            SplashModule.eventsListRoute,
                           );
                         },
                         child: Column(
