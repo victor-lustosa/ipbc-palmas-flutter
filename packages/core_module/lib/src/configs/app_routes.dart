@@ -1,18 +1,9 @@
 import 'dart:io';
 
-import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-class AppRoutes {
-  AppRoutes._();
-
-  static final GlobalKey<NavigatorState> _androidNavigatorKey = GlobalKey<NavigatorState>();
-
-  static GlobalKey<NavigatorState> getAndroidNavigatorKey() {
-    return _androidNavigatorKey;
-  }
-}
+import '../../core_module.dart';
 
 unknownRoute() {
   if (Platform.isIOS) {

@@ -3,10 +3,9 @@ import 'dart:io';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ipbc_mobile/app/events/views/events_list_view.dart';
 
+import '../../events/views/events_list_view.dart';
 import '../../offers/views/offers_view.dart';
-import '../../configs/app_routes.dart';
 
 import '../../splash/splash_module.dart';
 import '../views/home_view.dart';
@@ -84,6 +83,11 @@ class _InitViewState extends State<InitView> {
 class HomeRoutes extends StatefulWidget {
   const HomeRoutes({super.key});
 
+  static final GlobalKey<NavigatorState> _androidNavigatorKey =
+      GlobalKey<NavigatorState>();
+
+  get androidNavigatorKey => _androidNavigatorKey;
+
   @override
   State<HomeRoutes> createState() => _HomeRoutesState();
 }
@@ -92,18 +96,22 @@ class _HomeRoutesState extends State<HomeRoutes> {
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      key: Platform.isIOS ? null : AppRoutes.getAndroidNavigatorKey(),
+      key: Platform.isIOS ? null : widget.androidNavigatorKey,
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
           case HomeModule.initialRoute:
             if (Platform.isIOS) {
               return CupertinoPageRoute(
-                  settings: settings,
-                  builder: (_) =>
-                      const CupertinoPageScaffold(child: HomeView()));
+                settings: settings,
+                builder: (_) => const CupertinoPageScaffold(
+                  child: HomeView(),
+                ),
+              );
             } else {
               return MaterialPageRoute(
-                  settings: settings, builder: (_) => const HomeView());
+                settings: settings,
+                builder: (_) => const HomeView(),
+              );
             }
 
           case ServiceModule.servicesListRoute:

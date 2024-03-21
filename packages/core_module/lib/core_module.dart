@@ -30,6 +30,7 @@ export 'src/shared/blocs/generics.dart';
 export 'src/app_module.dart';
 
 export 'src/configs/app_configs.dart';
+export 'src/configs/app_routes.dart';
 
 export 'package:design_system/design_system.dart';
 export 'package:path_provider/path_provider.dart';

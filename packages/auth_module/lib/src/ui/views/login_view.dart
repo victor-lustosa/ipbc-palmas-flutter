@@ -96,7 +96,6 @@ class _LoginViewState extends State<LoginView> {
                       contentPadding: const EdgeInsets.only(
                         left: 16,
                         top: 9,
-                        right: 0,
                       ),
                       suffixIcon: InkWell(
                         onTap: () {

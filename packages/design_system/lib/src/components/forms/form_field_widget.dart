@@ -1,34 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../design_system.dart';
+
 class FormFieldWidget extends StatefulWidget {
   const FormFieldWidget(
       {super.key,
+      required this.validator,
+      required this.isValid,
+      required this.inputDecoration,
       required this.controller,
       this.fieldKey,
       this.isSubmitted,
       this.maxLength,
       this.fieldStyle,
-      required this.validator,
       this.maxLines,
       this.keyboardType,
       this.cursorColor,
       this.inputFormatters,
       this.autoValidateMode,
-      required this.title,
+      this.title,
       this.titleMargin,
       this.fieldWidth,
       this.fieldHeight,
       this.fieldDecoration,
-      required this.isValid,
-      required this.errorText,
+      this.errorText,
       this.titleStyle,
-      this.errorTextMargin,
-      required this.inputDecoration,
       this.fieldMargin,
-      required this.obscureText});
+      this.obscureText,
+      this.errorTextMargin,
+      this.horizontalSymmetric, this.inputPadding});
 
-  final String title;
+  final String? errorText;
+  final EdgeInsetsGeometry? errorTextMargin;
+  final String? title;
   final EdgeInsetsGeometry? titleMargin;
   final EdgeInsetsGeometry? fieldMargin;
   final Key? fieldKey;
@@ -38,8 +43,6 @@ class FormFieldWidget extends StatefulWidget {
   final TextInputType? keyboardType;
   final Color? cursorColor;
   final bool isValid;
-  final Text errorText;
-  final EdgeInsetsGeometry? errorTextMargin;
   final TextStyle? titleStyle;
   final TextStyle? fieldStyle;
   final double? fieldWidth;
@@ -50,7 +53,10 @@ class FormFieldWidget extends StatefulWidget {
   final int? maxLines;
   final AutovalidateMode? autoValidateMode;
   final List<TextInputFormatter>? inputFormatters;
-  final bool obscureText;
+  final bool? obscureText;
+  final EdgeInsetsGeometry? horizontalSymmetric;
+  final EdgeInsetsGeometry? inputPadding;
+
   @override
   State<FormFieldWidget> createState() => _FormFieldWidgetState();
 }
@@ -58,45 +64,80 @@ class FormFieldWidget extends StatefulWidget {
 class _FormFieldWidgetState extends State<FormFieldWidget> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          margin: widget.titleMargin,
-          child: Text(
-            widget.title,
-            style: widget.titleStyle,
+    return Container(
+      padding: widget.horizontalSymmetric,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+            visible: widget.title != null,
+            child: Container(
+              margin: widget.titleMargin,
+              child: Text(
+                widget.title ?? '',
+                style: widget.titleStyle ??
+                    AppFonts.defaultFont(
+                      fontSize: 16,
+                      color: AppColors.grey9,
+                    ),
+              ),
+            ),
           ),
-        ),
-        Container(
-          margin: widget.fieldMargin,
-          width: widget.fieldWidth,
-          height: widget.fieldHeight,
-          decoration: widget.fieldDecoration,
-          child: TextFormField(
-            obscureText: widget.obscureText,
-            key: widget.fieldKey,
-            enabled: widget.isSubmitted,
-            cursorColor: widget.cursorColor,
-            autovalidateMode:
-                widget.autoValidateMode ?? AutovalidateMode.onUserInteraction,
-            controller: widget.controller,
-            validator: widget.validator,
-            maxLines: widget.maxLines,
-            maxLength: widget.maxLength,
-            keyboardType: widget.keyboardType ?? TextInputType.text,
-            inputFormatters:
-                widget.inputFormatters ?? const <TextInputFormatter>[],
-            decoration: widget.inputDecoration,
-            style: widget.fieldStyle,
+          Container(
+            padding: widget.inputPadding,
+            margin: widget.fieldMargin,
+            width: widget.fieldWidth,
+            height: widget.fieldHeight ?? 42,
+            decoration: widget.fieldDecoration ??
+                BoxDecoration(
+                  color: AppColors.white,
+                  border: Border.all(
+                    color: widget.isValid ? AppColors.white : Colors.red,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+            child: TextFormField(
+              obscureText: widget.obscureText ?? false,
+              key: widget.fieldKey,
+              enabled: widget.isSubmitted,
+              cursorColor: widget.cursorColor ?? const Color(0xff979797),
+              autovalidateMode:
+                  widget.autoValidateMode ?? AutovalidateMode.onUserInteraction,
+              controller: widget.controller,
+              validator: widget.validator,
+              maxLines: widget.maxLines ?? 1,
+              maxLength: widget.maxLength,
+              keyboardType: widget.keyboardType ?? TextInputType.text,
+              inputFormatters:
+                  widget.inputFormatters ?? const <TextInputFormatter>[],
+              decoration: widget.inputDecoration,
+              style: widget.fieldStyle ??
+                  AppFonts.defaultFont(
+                    fontSize: 14,
+                    color:
+                        widget.isValid ? const Color(0xff979797) : Colors.red,
+                  ),
+            ),
           ),
-        ),
-        Visibility(
-          visible: !widget.isValid,
-          child: Container(
-              margin: widget.errorTextMargin, child: widget.errorText),
-        )
-      ],
+          Visibility(
+            visible: !widget.isValid,
+            child: Container(
+              margin: widget.errorTextMargin ??
+                  const EdgeInsets.only(
+                    top: 4,
+                    left: 2,
+                  ),
+              child: Text(
+                widget.errorText ?? '',
+                style: AppFonts.defaultFont(
+                  fontSize: 14,
+                  color: Colors.red,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

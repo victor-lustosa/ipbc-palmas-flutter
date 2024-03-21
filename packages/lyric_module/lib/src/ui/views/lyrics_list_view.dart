@@ -1,6 +1,5 @@
-
 import 'package:core_module/core_module.dart';
-import 'package:flutter/material.dart' ;
+import 'package:flutter/material.dart';
 
 import '../blocs/lyric_bloc.dart';
 
@@ -11,11 +10,13 @@ class LyricsListView extends StatefulWidget {
   State<LyricsListView> createState() => _LyricsListViewState();
 }
 
-class _LyricsListViewState extends State<LyricsListView> with TickerProviderStateMixin {
+class _LyricsListViewState extends State<LyricsListView>
+    with TickerProviderStateMixin {
   late List<LyricEntity> _lyricsFetched;
   late final LyricBloc _bloc;
   bool isSelected = false;
   String selectedValue = '';
+  final TextEditingController controller = TextEditingController();
 
   @override
   void initState() {
@@ -33,7 +34,7 @@ class _LyricsListViewState extends State<LyricsListView> with TickerProviderStat
         child: BlocBuilder<LyricBloc, GenericState<LyricState>>(
           bloc: _bloc,
           builder: (context, state) {
-             if (state is LoadingState<LyricState>) {
+            if (state is LoadingState<LyricState>) {
               return const LoadingWidget(
                 androidRadius: 3,
                 iosRadius: 14,
@@ -52,6 +53,16 @@ class _LyricsListViewState extends State<LyricsListView> with TickerProviderStat
                   child: Column(
                     children: [
                       const TitleTopBarWidget(title: "Músicas"),
+                      Container(
+                        margin: const EdgeInsets.only(
+                          top: 38,
+                          bottom: 13,
+                        ),
+                        child: SearchBarWidget(
+                          controller: controller,
+                          action: () {},
+                        ),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [

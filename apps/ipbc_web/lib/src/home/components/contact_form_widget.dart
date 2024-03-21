@@ -120,7 +120,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         ),
       );
 
-  nameField({required double width}) => DefaultFormFieldWidget(
+  nameField({required double width}) => FormFieldWidget(
         fieldKey: _nameKey,
         titleMargin: const EdgeInsets.only(bottom: 8),
         title: 'Nome',
@@ -138,7 +138,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         fieldStyle: _fieldStyle(_isNameValid),
       );
 
-  emailField({required double width}) => DefaultFormFieldWidget(
+  emailField({required double width}) => FormFieldWidget(
         fieldKey: _emailKey,
         titleStyle: _titleStyle,
         titleMargin: const EdgeInsets.only(top: 16, bottom: 8),
@@ -158,7 +158,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         },
       );
 
-  messageField({required double width}) => DefaultFormFieldWidget(
+  messageField({required double width}) => FormFieldWidget(
         fieldKey: _messageKey,
         titleStyle: _titleStyle,
         title: 'Mensagem',
