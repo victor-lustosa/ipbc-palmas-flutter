@@ -86,7 +86,7 @@ class _LyricsListViewState extends State<LyricsListView>
                         ],
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 20),
+                        margin: const EdgeInsets.only(top: 14),
                         child: LyricsListWidget(entitiesList: _lyricsFetched),
                       ),
                     ],
