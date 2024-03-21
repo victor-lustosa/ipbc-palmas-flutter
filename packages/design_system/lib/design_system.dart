@@ -25,6 +25,10 @@ export 'src/components/buttons/icon_button_widget.dart';
 export 'src/components/buttons/back_button_widget.dart';
 
 export 'src/components/forms/form_field_widget.dart';
+
+export 'src/components/chips/choice_chips_widget.dart';
+export 'src/components/chips/own_choice_chips_widget.dart';
+
 export 'src/components/forms/template_form_widget.dart';
 
 export 'src/components/covers/album_cover_widget.dart';

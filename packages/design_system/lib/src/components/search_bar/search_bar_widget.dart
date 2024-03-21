@@ -37,7 +37,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         fieldWidth: context.mediaQuery.size.width,
         controller: widget.controller,
         fieldDecoration: BoxDecoration(
-          color: AppColors.grey0,
+          color: AppColors.searchBar,
           border: Border.all(
             color: AppColors.secondaryGrey,
           ),
@@ -49,7 +49,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           suffixIcon: InkWell(
             onTap: () {},
             child: IconButtonWidget(
-              size: 20,
+              size: 28,
               color: AppColors.grey7,
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
@@ -65,7 +65,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           ),
           contentPadding: const EdgeInsets.only(
             left: 16,
-            top: 9,
+            top: 10,
           ),
           hintText: 'Digite o termo de pesquisa',
         ),

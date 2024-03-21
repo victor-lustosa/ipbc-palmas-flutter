@@ -83,20 +83,18 @@ class _InitViewState extends State<InitView> {
 class HomeRoutes extends StatefulWidget {
   const HomeRoutes({super.key});
 
-  static final GlobalKey<NavigatorState> _androidNavigatorKey =
-      GlobalKey<NavigatorState>();
-
-  get androidNavigatorKey => _androidNavigatorKey;
-
   @override
   State<HomeRoutes> createState() => _HomeRoutesState();
 }
 
 class _HomeRoutesState extends State<HomeRoutes> {
+  final GlobalKey<NavigatorState> _androidNavigatorKey =
+      GlobalKey<NavigatorState>(debugLabel: 'home_key');
+
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      key: Platform.isIOS ? null : widget.androidNavigatorKey,
+      key: Platform.isIOS ? null : _androidNavigatorKey,
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
           case HomeModule.initialRoute:

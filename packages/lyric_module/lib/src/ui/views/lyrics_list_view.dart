@@ -63,11 +63,17 @@ class _LyricsListViewState extends State<LyricsListView>
                           action: () {},
                         ),
                       ),
+                      Container(
+                        margin: const EdgeInsets.only(
+                          left: 21.5,
+                        ),
+                        child: const OwnChoiceChipsWidget(),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
-                            margin: const EdgeInsets.only(top: 36, left: 17),
+                            margin: const EdgeInsets.only(top: 24, left: 17),
                             child: Text(
                               "Adicionados recentemente",
                               style: AppFonts.defaultFont(
