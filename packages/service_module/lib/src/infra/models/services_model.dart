@@ -2,7 +2,7 @@ import 'package:core_module/core_module.dart';
 
 class ServicesModel extends ServicesEntity {
   ServicesModel({
-    required int id,
+    required String id,
     required String image,
     required String hour,
     required String path,
@@ -23,12 +23,12 @@ class ServicesModel extends ServicesEntity {
         hour: '',
         image: '',
         heading: '',
-        id: SupaServicesUtil.createId(),
+        id: SupaServicesUtil.createId().toString(),
       );
 
   ServicesModel copyWith({
     String? title,
-    int? id,
+    String? id,
     String? path,
     String? hour,
     String? image,

@@ -10,7 +10,7 @@ class ServicesEntity {
   final String heading;
   final String path;
   final String title;
-  final int id;
+  final String id;
   final String image;
   final String hour;
 }

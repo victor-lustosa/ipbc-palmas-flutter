@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:core_module/core_module.dart';
@@ -29,7 +28,7 @@ class _InitViewState extends State<InitView> {
   @override
   void initState() {
     super.initState();
-   // _viewModel = HomeViewModel();
+    // _viewModel = HomeViewModel();
   }
 
   void onItemTapped(int index) {
@@ -67,21 +66,20 @@ class _InitViewState extends State<InitView> {
         animation: _controller,
         builder: (__, _) {
           return MaterialBottomBarWidget(
-                  selectedIndex: selectedIndex,
-                  callback: (int index) {
-                    setState(
-                      () {
-                        onItemTapped(index);
-                      },
-                    );
-                  },
-                );
+            selectedIndex: selectedIndex,
+            callback: (int index) {
+              setState(
+                () {
+                  onItemTapped(index);
+                },
+              );
+            },
+          );
         },
       ),
     );
   }
 }
-
 
 class HomeRoutes extends StatefulWidget {
   const HomeRoutes({super.key});
@@ -99,17 +97,24 @@ class _HomeRoutesState extends State<HomeRoutes> {
         switch (settings.name) {
           case HomeModule.initialRoute:
             if (Platform.isIOS) {
-              return CupertinoPageRoute(settings: settings, builder: (_) => const CupertinoPageScaffold(child: HomeView()));
+              return CupertinoPageRoute(
+                  settings: settings,
+                  builder: (_) =>
+                      const CupertinoPageScaffold(child: HomeView()));
             } else {
-              return MaterialPageRoute(settings: settings, builder: (_) => const HomeView());
+              return MaterialPageRoute(
+                  settings: settings, builder: (_) => const HomeView());
             }
 
           case ServiceModule.servicesListRoute:
             return CustomTransitionPageRoute(
               transitionSpeed: const Duration(milliseconds: 700),
               reverseSpeed: const Duration(milliseconds: 700),
-              child: ServicesListView(entitiesList: Modular.args.data ?? []),
-              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(CurveTween(curve: Curves.ease)),
+              child: ServicesListView(
+                  entitiesList: settings.arguments as List<ServicesEntity>),
+              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
+                CurveTween(curve: Curves.ease),
+              ),
             );
 
           case ServiceModule.servicesCollectionRoute:
@@ -119,7 +124,9 @@ class _HomeRoutesState extends State<HomeRoutes> {
               child: ServicesCollectionView(
                 entity: settings.arguments as ServicesEntity,
               ),
-              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(CurveTween(curve: Curves.ease)),
+              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
+                CurveTween(curve: Curves.ease),
+              ),
             );
 
           case ServiceModule.insertServicesRoute:
@@ -127,14 +134,19 @@ class _HomeRoutesState extends State<HomeRoutes> {
               transitionSpeed: const Duration(milliseconds: 700),
               reverseSpeed: const Duration(milliseconds: 700),
               child: const InsertServicesView(),
-              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(CurveTween(curve: Curves.ease)),
+              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
+                CurveTween(curve: Curves.ease),
+              ),
             );
+
           case SplashModule.eventsListRoute:
             return CustomTransitionPageRoute(
               transitionSpeed: const Duration(milliseconds: 700),
               reverseSpeed: const Duration(milliseconds: 700),
               child: const EventsListView(),
-              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(CurveTween(curve: Curves.ease)),
+              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
+                CurveTween(curve: Curves.ease),
+              ),
             );
 
           default:

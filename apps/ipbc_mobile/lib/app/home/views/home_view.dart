@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+//import 'package:flutter/services.dart';
 
 import '../../splash/splash_module.dart';
 import '../blocs/home_bloc.dart';
@@ -19,25 +20,25 @@ class _HomeViewState extends State<HomeView>
   late final HomeBloc _bloc;
   List<ServicesEntity> _servicesList = [];
   int activePage = 0;
-  final List<Image> imagesList = [];
+  //final List<Image> imagesList = [];
 
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < _servicesList.length; i++) {
+    /*for (int i = 0; i < _servicesList.length; i++) {
       imagesList.add(Image.network(_servicesList[i].image));
-    }
+    }*/
     _bloc = Modular.get<HomeBloc>();
     _bloc.add(CheckConnectivityEvent());
   }
 
-  @override
+ /* @override
   void didChangeDependencies() {
     for (Image image in imagesList) {
       precacheImage(image.image, context);
     }
     super.didChangeDependencies();
-  }
+  }*/
 
   @override
   bool get wantKeepAlive => true;
@@ -52,8 +53,8 @@ class _HomeViewState extends State<HomeView>
           builder: (context, state) {
             if (state is LoadingState<HomeState>) {
               return const LoadingWidget(
-                androidRadius: 3.5,
-                iosRadius: 12,
+                androidRadius: 3,
+                iosRadius: 14,
                 color: AppColors.darkGreen,
               );
             } else if (state is NoConnectionState<HomeState>) {

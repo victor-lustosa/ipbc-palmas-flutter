@@ -60,6 +60,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/mocks/
     - assets/images/auth/
   #   - images/a_dot_ham.jpeg
 

@@ -41,8 +41,8 @@ class SupaLyricAdapter {
       lyricsList.add(
         LyricModel(
           albumCover: lyric['albumCover'],
-          id: lyric['id'],
-          createAt: DateTime.parse(lyric['createAt']),
+          id: lyric['id'].toString(),
+          createAt: DateFormat("dd/MM/yyyy").parse(lyric['createAt']),
           title: lyric['title'],
           group: lyric['group'],
           verses: [

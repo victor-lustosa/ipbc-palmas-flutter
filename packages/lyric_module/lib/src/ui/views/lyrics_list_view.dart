@@ -35,8 +35,8 @@ class _LyricsListViewState extends State<LyricsListView> with TickerProviderStat
           builder: (context, state) {
              if (state is LoadingState<LyricState>) {
               return const LoadingWidget(
-                androidRadius: 3.5,
-                iosRadius: 12,
+                androidRadius: 3,
+                iosRadius: 14,
                 color: AppColors.darkGreen,
               );
             } else if (state is NoConnectionState<LyricState>) {
@@ -51,7 +51,7 @@ class _LyricsListViewState extends State<LyricsListView> with TickerProviderStat
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      const TitleTopBarWidget(title: "Músicas/Letras"),
+                      const TitleTopBarWidget(title: "Músicas"),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [

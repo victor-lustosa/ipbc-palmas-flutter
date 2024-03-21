@@ -23,6 +23,7 @@ export 'src/shared/utils/validation_util.dart';
 export 'src/shared/utils/responsivity_util.dart';
 export 'src/shared/utils/supa_services_util.dart';
 export 'src/shared/utils/analytics_util.dart';
+export 'src/shared/utils/mock_util.dart';
 
 export 'src/shared/blocs/generics.dart';
 

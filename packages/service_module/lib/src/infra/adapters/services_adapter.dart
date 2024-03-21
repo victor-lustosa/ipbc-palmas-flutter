@@ -1,7 +1,10 @@
 import '../../domain/entities/services_entity.dart';
+import 'dart:convert';
 
 class ServicesAdapter {
-
+  static String toJson(List<ServicesEntity> source) =>
+      json.encode(toMapList(source));
+  static List<ServicesEntity> fromJson(String source) => fromMapList(json.decode(source));
   static ServicesEntity fromMap(dynamic json) {
     return ServicesEntity(
       heading: json['heading'],
@@ -12,7 +15,18 @@ class ServicesAdapter {
       id: json['id'],
     );
   }
-
+  static List<Map<String, dynamic>> toMapList(List<ServicesEntity> data) {
+    return data
+        .map((e) => {
+      'heading': e.heading,
+      'path': e.path,
+      'id': e.id,
+      'hour': e.hour,
+      'title': e.title,
+      'image': e.image,
+    })
+        .toList();
+  }
   static Map<String, dynamic> toMap(ServicesEntity data) {
     return {
       'heading': data.heading,
@@ -33,7 +47,7 @@ class ServicesAdapter {
         path: entity['path'],
         image: entity['image'],
         hour: entity['hour'],
-        id: entity['id'],
+        id: entity['id'].runtimeType == String ? entity['id'] : entity['id'].toString(),
       ));
     }
     return list;

@@ -1,7 +1,5 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../core_module.dart';
-import 'core/infra/use_cases/use_cases.dart';
 
 class CoreModule extends Module {
   static BindConfig<T> blocConfig<T extends Bloc>() {

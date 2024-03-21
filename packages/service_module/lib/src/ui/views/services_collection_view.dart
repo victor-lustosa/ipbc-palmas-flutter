@@ -44,8 +44,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
               builder: (context, state) {
                 if (state is LoadingState<ServicesCollectionState>) {
                   return const LoadingWidget(
-                    androidRadius: 3.5,
-                    iosRadius: 12,
+                    androidRadius: 3,
+                    iosRadius: 14,
                     color: AppColors.darkGreen,
                   );
                 } else if (state is NoConnectionState<ServicesCollectionState>) {

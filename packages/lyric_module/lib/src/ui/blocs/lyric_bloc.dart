@@ -3,10 +3,11 @@ import 'dart:async';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>> with ConnectivityMixin{
+class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
+    with ConnectivityMixin {
   final ILyricsUseCases supaUseCase;
-  final String path = 'lyrics/20';
 
+  //final String path = 'lyrics/20';
   LyricBloc({
     required this.supaUseCase,
   }) : super(LoadingState<LyricState>()) {
@@ -27,6 +28,17 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   }
 
   Future<void> _getInSupa(GetInSupaEvent<LyricEvent> event, emit) async {
+    List<LyricEntity>? lyricsList =
+        await MockUtil.convertMockJson<List<LyricModel>>(
+      'assets/mocks/lyrics_mock.json',
+      'lyrics',
+    );
+    if (lyricsList!.isNotEmpty) {
+      emit(DataFetchedState<LyricState, LyricEntity>(entities: lyricsList));
+    }
+  }
+
+  /*Future<void> _getInSupa(GetInSupaEvent<LyricEvent> event, emit) async {
     await emit.onEach<List<LyricEntity>>(
       await supaUseCase.get(path),
       onData: (lyrics) {
@@ -38,14 +50,15 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
         emit(ExceptionState<LyricState>(message: error.toString()));
       },
     );
-  }
+  }*/
 
   Future<void> _loading(_, emit) async {
     emit(LoadingState<LyricState>());
   }
 
   Future<void> _filter(FilterEvent<LyricEvent> event, emit) async {
-    List<LyricEntity> lyricsList = await supaUseCase.lettersFilter(event.lyrics);
+    List<LyricEntity> lyricsList =
+        await supaUseCase.lettersFilter(event.lyrics);
     emit(DataFetchedState<LyricState, LyricEntity>(entities: lyricsList));
   }
 }
@@ -58,5 +71,6 @@ abstract class LyricState {}
 
 class FilterEvent<R> extends GenericEvent<R> {
   List<LyricEntity> lyrics;
+
   FilterEvent({required this.lyrics});
 }

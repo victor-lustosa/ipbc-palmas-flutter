@@ -1,7 +1,7 @@
 import 'verse_entity.dart';
 
 class LyricEntity {
-  final int id;
+  final String id;
   final String title;
   final String group;
   final String albumCover;

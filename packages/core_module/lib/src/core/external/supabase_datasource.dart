@@ -26,7 +26,7 @@ class SupabaseDatasource implements IDatasource{
           .from(params[0])
           .select()
           .eq(params[1], params[2])
-          .order(params[4], ascending: params[5].toLowerCase() == 'true');
+          .order(params[3], ascending: params[4].toLowerCase() == 'true');
     } else {
       data = await _supaClient
           .from(params[0])

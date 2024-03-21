@@ -1,0 +1,1037 @@
+[
+  {
+    "id": "DKikpNyP",
+    "title": "NEle a gente pode confiar",
+    "createAt": "18/06/2023",
+    "albumCover": "assets/images/default_cover_2.png",
+    "group": "Rebanhão",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Conheci um grande amigo",
+          "Ele é filho de Deus Pai",
+          "O seu nome é Jesus Cristo",
+          "E nele a gente pode confiar"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": false,
+        "versesList": [
+          "Jesus, Jesus",
+          "Nele a gente pode confiar (bis)"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1NRYrPMt",
+    "title": "Sonda-me",
+    "createAt": "18/06/2023",
+    "albumCover": "assets/images/default_cover_1.png",
+    "group": "Aline Barros",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Senhor, tu me sondas e me conheces",
+          "Sabes quando assento e levanto",
+          "Esquadrinhas meu andar e o meu deitar",
+          "Conheces todos os meus caminhos"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": false,
+        "versesList": [
+          "Ainda a palavra não me chegou á boca, não",
+          "E tu já conheces, Senhor",
+          "Tu me cercas por trás e por diante",
+          "E sobre mim põe tua mão"
+        ]
+      },
+      {
+        "id": 2,
+        "isChorus": false,
+        "versesList": [
+          "Sonda-me, ó Deus, conhece o meu coração",
+          "Prova-me os pensamentos",
+          "Vê se há em mim algum caminho mal",
+          "E guia-me pelo caminho eterno"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fx9YiTmC",
+    "title": "Hino 4 - Culto a trindade",
+    "createAt": "18/06/2023",
+    "albumCover": "assets/images/default_cover_2.png",
+    "group": "Hinário Novo Cântico",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Deus está no templo!",
+          "Pai Onipotente!",
+          "A seus pés nos humilhamos.",
+          "Servos consagrados,",
+          "Reverentemente,",
+          "Ao Deus santo adoramos.",
+          "Por favor, com amor,",
+          "Espiritualmente Deus está no templo!"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": false,
+        "versesList": [
+          "Cristo está no templo!",
+          "Sumo benefício",
+          "Por seu sangue nos foi dado",
+          "Ele, o bom Cordeiro,",
+          "Foi o sacrifício",
+          "Que expiou o vil pecado.",
+          "Escolheu e sofreu",
+          "O cabal suplício; Cristo está no templo!"
+        ]
+      },
+      {
+        "id": 2,
+        "isChorus": false,
+        "versesList": [
+          "Tu, que estás no templo,",
+          "Preceptor divino,",
+          "E os corações habitas;",
+          "Tu, paciente Mestre,",
+          "Dá-nos teu ensino,",
+          "Aclarando as leis benditas.",
+          "Que prazer conhecer",
+          "A graça infinita! Sim, está no templo!"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "taYJbUDz",
+    "title": "Hino 395 - Amor no lar",
+    "createAt": "11/06/2023",
+    "albumCover": "assets/images/default_cover_3.png",
+    "group": "Hinário Novo Cântico",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Mui felizes nos correm os dias",
+          "E depressa se esvai nossa dor!",
+          "São benditas as sãs alegrias,",
+          "Quando reina no lar doce amor!"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": false,
+        "versesList": [
+          "Os caminhos pisamos juncados,",
+          "Sim, juncados de ramos em flor!",
+          "Surgem bênçãos de todos os lados,",
+          "Quando reina no lar doce amor!"
+        ]
+      },
+      {
+        "id": 2,
+        "isChorus": false,
+        "versesList": [
+          "Saboroso é o pão que fruímos,",
+          "Se o fruímos de nosso labor!",
+          "Sim, contente, em tudo sorrimos,",
+          "Quando reina no lar doce amor!"
+        ]
+      },
+      {
+        "id": 3,
+        "isChorus": false,
+        "versesList": [
+          "Os pais crentes aos filhos afirmam",
+          "As verdades da Lei do Senhor!",
+          "E com obras o ensino confirmam,",
+          "Quando reina no lar doce amor!"
+        ]
+      },
+      {
+        "id": 4,
+        "isChorus": false,
+        "versesList": [
+          "Se sentimos em casa a pobreza,",
+          "Se há pobreza também ao redor,",
+          "Suportável será, com certeza,",
+          "Quando reina no lar doce amor!"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "YEpqp5L2",
+    "title": "Hino 320 - Bilha no viver",
+    "createAt": "11/06/2023",
+    "albumCover": "assets/images/default_cover_4.png",
+    "group": "Hinário Novo Cântico",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Não somente ao se fazer trabalho singular",
+          "É mister agir com muito ardor",
+          "Mas as coisas mais humildes a executar",
+          "Deves fazê-las com fervor."
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": true,
+        "versesList": [
+          "Brilha no meio do teu viver,",
+          "Brilha no meio do teu viver!",
+          "Pois talvez algum aflito possas socorrer",
+          "Brilha no meio do teu viver!"
+        ]
+      },
+      {
+        "id": 2,
+        "isChorus": false,
+        "versesList": [
+          "Oh! Talvez alguma vida possas confortar",
+          "Com palavras brandas de amor.",
+          "Ou, talvez, algumas almas tristes alcançar",
+          "Com a mensagem do Senhor."
+        ]
+      },
+      {
+        "id": 3,
+        "isChorus": false,
+        "versesList": [
+          "Por maior que venha ser o teu esforço aqui,",
+          "Por mais firme a tua devoção,",
+          "Quantas almas inda jazem ao redor de ti,",
+          "Na mais total escuridão."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gcKdaSFs",
+    "title": "Quao Grande É o Meu Deus",
+    "createAt": "11/06/2023",
+    "albumCover": "assets/images/default_cover_4.png",
+    "group": "Corinhos Evangélicos",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Quão Grande é o meu Deus",
+          " Cantarei Quão Grande é o meu Deus",
+          " E todos ão de ver quão Grande é o meu Deus",
+          " ",
+          "Com Esplendor de um Rei",
+          " Em Majestade e Luz",
+          " Faz a terra se alegrar, faz a terra se alegrar.",
+          " Ele é a própria Luz",
+          " E as trevas vão fugir",
+          " Tremer com Sua Voz, tremer com Sua Voz.",
+          " ",
+          "Quão Grande é o meu Deus",
+          " Cantarei quão Grande é o meu Deus",
+          " E todos ão de ver quão Grande é o meu Deus",
+          " ",
+          "Por gerações Ele é",
+          " O tempo está em tuas Mãos",
+          " O começo e o fim, o começo e o fim.",
+          " Três se formam em Um",
+          " Filho, Espírito e Pai",
+          " Cordeiro e leão, cordeiro e leão.",
+          " ",
+          "Quão Grande é o meu Deus",
+          " Eu cantarei qão Grande é o meu Deus",
+          " E todos ão de ver quão Grande é o meu Deus",
+          " ",
+          "Sobre todo nome é o Seu",
+          " Tu és digno do louvor, eu cantarei tão grande é o meu Deus.",
+          " É o meu Deus",
+          " ",
+          "Quão Grande é o meu Deus",
+          " Eu cantarei qão Grande é o meu Deus",
+          " E todos ão de ver quão Grande é o meu Deus"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Ubtn3gvA",
+    "title": "Primeiro Amor",
+    "createAt": "11/06/2023",
+    "albumCover": "assets/images/default_cover_3.png",
+    "group": "Aline Barros",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Quero voltar ao início de tudo",
+          "Encontrar me contigo Senhor",
+          "Quero rever meus conceitos",
+          "Valores eu Quero reconstruir",
+          "Vou regressar ao caminho",
+          "Vou ver as primeiras obras Senhor"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": false,
+        "versesList": [
+          "Eu me arrependo Senhor,",
+          "Me arrependo Senhor",
+          "Me arrependo Senhor"
+        ]
+      },
+      {
+        "id": 2,
+        "isChorus": false,
+        "versesList": [
+          "Eu quero voltar",
+          "Ao primeiro amor",
+          "Ao primeiro amor",
+          "Eu quero voltar a Deus"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "srIupjQK",
+    "title": "Confiarei",
+    "createAt": "11/06/2023",
+    "albumCover": "assets/images/default_cover_4.png",
+    "group": "Ministério Ame",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Se o mundo tenta me parar",
+          "eu não vou desanimar, eu confiarei em Ti",
+          "E se no deserto eu passar",
+          "eu não vou desanimar, eu confiarei em Ti"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": false,
+        "versesList": [
+          "Minha fé está firmada no meu salvador",
+          "Meu castelo forte Ele é",
+          "Meu refúgio e segurança nele firme estou",
+          "No Senhor não vou me abalar"
+        ]
+      },
+      {
+        "id": 2,
+        "isChorus": false,
+        "versesList": [
+          "Confiarei em Ti",
+          "Se o Senhor é por mim Quem será contra mim",
+          "Confiarei, não temerei"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sME4nipZ",
+    "title": "Hino 28 - Coroação",
+    "createAt": "06/06/2023",
+    "albumCover": "assets/images/default_cover_1.png",
+    "group": "Hinário Novo Cântico",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Tuas obras te coroam",
+          "Como um halo de esplendor!",
+          "Astros, anjos, céus entoam",
+          "Hino eterno a ti Senhor!",
+          "Campos, matas, vales, montes,",
+          "Verde outeiro e verde mar,",
+          "Aves e sonoras fontes",
+          "Formam coro singular!"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": true,
+        "versesList": [
+          "Nós, mortais, por ti remidos,",
+          "Deus de glória, Deus de amor,",
+          "Corações aos céus erguidos,",
+          "Celebramos teu louvor!",
+          "Revelaste amor profundo,",
+          "Insondável, sem igual,",
+          "Enviando Cristo ao mundo",
+          "A vencer por nós o mal!"
+        ]
+      },
+      {
+        "id": 2,
+        "isChorus": false,
+        "versesList": [
+          "Fonte és de alegria e vida,",
+          "És do bem o Inspirador;",
+          "Tua graça nos convida",
+          "A viver em mútuo amor",
+          "Quais alegres peregrinos,",
+          "Sempre em marcha triunfal,",
+          "Cantaremos gratos hinos",
+          "Na jornada até o final!"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "X4sL4rXv",
+    "title": "Compromisso",
+    "createAt": "28/05/2023",
+    "albumCover": "assets/images/default_cover_2.png",
+    "group": "Kadoshi",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Não existe nada melhor",
+          "Do que estar diante de Deus",
+          "Pode o mundo se abalar",
+          "Seguro estou em ti, seguro estou em ti"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": false,
+        "versesList": [
+          "Tudo foi criado por ti",
+          "Nós também pra teu louvor",
+          "Quero sempre te exaltar",
+          "Pois és fiel a mim, pois tu és fiel a mim"
+        ]
+      },
+      {
+        "id": 2,
+        "isChorus": true,
+        "versesList": [
+          "Bom é estar te servindo",
+          "Com compromisso contigo",
+          "Nada vai nos separar",
+          "Do teu amor, Jesus (2x)"
+        ]
+      },
+      {
+        "id": 3,
+        "isChorus": false,
+        "versesList": [
+          "Não existe nada melhor",
+          "Do que estar diante de Deus",
+          "Pode o mundo se abalar",
+          "Seguro estou em ti, seguro estou em ti"
+        ]
+      },
+      {
+        "id": 4,
+        "isChorus": false,
+        "versesList": [
+          "Tudo foi criado por ti",
+          "Nós também pra teu louvor",
+          "Quero sempre te exaltar",
+          "Pois és fiel a mim, pois tu és fiel a mim"
+        ]
+      },
+      {
+        "id": 5,
+        "isChorus": true,
+        "versesList": [
+          "Bom é estar te servindo",
+          "Com compromisso contigo",
+          "Nada vai nos separar",
+          "Do teu amor, Jesus (4x)"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "MBomqYxp",
+    "title": "Nosso General",
+    "createAt": "28/05/2023",
+    "albumCover": "assets/images/default_cover_2.png",
+    "group": "Adhemar de Campos",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Pelo senhor marchamos sim",
+          "O seu exército poderoso é",
+          "Sua glória será vista em toda a terra"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": false,
+        "versesList": [
+          "Vamos cantar o canto da vitória",
+          "Glória a Deus vencemos a batalha",
+          "Toda arma contra nós perecerá"
+        ]
+      },
+      {
+        "id": 2,
+        "isChorus": true,
+        "versesList": [
+          "O nosso general é Cristo",
+          "Seguimos os seus passos",
+          "Nenhum inimigo nos resistirá (2 vezes)"
+        ]
+      },
+      {
+        "id": 3,
+        "isChorus": false,
+        "versesList": [
+          "Com o Messias marchamos sim",
+          "Em suas mãos a chave da vitória",
+          "Que nos leva a possuir a terra prometida"
+        ]
+      },
+      {
+        "id": 4,
+        "isChorus": false,
+        "versesList": [
+          "Pelo senhor marchamos sim",
+          "O Seu exército poderoso é",
+          "Sua glória será vista em toda a terra"
+        ]
+      },
+      {
+        "id": 5,
+        "isChorus": false,
+        "versesList": [
+          "Vamos cantar o canto da vitória",
+          "Glória a Deus vencemos a batalha",
+          "Toda arma contra nós perecerá"
+        ]
+      },
+      {
+        "id": 6,
+        "isChorus": false,
+        "versesList": [
+          "O nosso general é Cristo",
+          "Seguimos os seus passos",
+          "Nenhum inimigo nos resistirá (4 vezes)"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "f6ud5m94",
+    "title": "Uma coisa peço ao Senhor",
+    "createAt": "28/05/2023",
+    "albumCover": "assets/images/default_cover_2.png",
+    "group": "Hinário Novo Cântico",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "O Senhor é a minha luz",
+          "E a minha salvação",
+          "quem temerei se o Senhor",
+          "É a força da minha vida",
+          "Quando o mal me sobrevém",
+          "E tenta me destruir",
+          "Todos os meus opressores",
+          "Eles quem tropeçam e caem"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": false,
+        "versesList": [
+          "Ainda que um exército se acampe contra mim",
+          "Oh, Deus não temerá o meu coração",
+          "E se diante de mim vier a guerra",
+          "Ainda sim em ti confiarei"
+        ]
+      },
+      {
+        "id": 2,
+        "isChorus": true,
+        "versesList": [
+          "Uma coisa peço ao Senhor",
+          "E a buscarei",
+          "Que em tua casa eu possa habitar",
+          "Pra sempre",
+          "Todo dia, enquanto eu viver",
+          "E tua beleza contemplarei"
+        ]
+      },
+      {
+        "id": 3,
+        "isChorus": true,
+        "versesList": [
+          "Pois no dia da provação",
+          "Me esconderá",
+          "Dentro de sua tenda, o Senhor",
+          "Me acolherá",
+          "Tu me guardas e me conduz",
+          "Me elevarás sobre uma rocha"
+        ]
+      },
+      {
+        "id": 3,
+        "isChorus": false,
+        "versesList": [
+          "Ouve-me quando eu clamar",
+          "Compadece-te de mim",
+          "Convém ao meu coração",
+          "O buscar a tua presença",
+          "Não rejeite a mim, Senhor",
+          "Não te ires contra mim",
+          "Tu és meu auxílio e socorro",
+          "Minha força e Salvação"
+        ]
+      },
+      {
+        "id": 4,
+        "isChorus": false,
+        "versesList": [
+          "Ainda que meus pais venham a mim desamparar",
+          "Eu sei que o Senhor me acolherá",
+          "Ensina-me, Senhor o teu caminho",
+          "E frustes os que querem ver meu fim."
+        ]
+      },
+      {
+        "id": 5,
+        "isChorus": false,
+        "versesList": [
+          "Não me entregues á vontade do acusador",
+          "Pois crueldade intentam contra mim",
+          "Tua bondade na terra dos homens se mostrará",
+          "Com alegria em ti, oh Deus, esperarei"
+        ]
+      },
+      {
+        "id": 6,
+        "isChorus": false,
+        "versesList": [
+          "Agora exaltarás minha cabeça",
+          "Perante meus inimigos",
+          "Em tuas moradas, Senhor, Sacrificarei",
+          "E salmodiarei"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "qNWlzsWT",
+    "title": "Hino 97 - Súplica do Redimido",
+    "createAt": "28/05/2023",
+    "albumCover": "assets/images/default_cover_2.png",
+    "group": "Hinário Novo Cântico",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Meu pecado resgatado Foi na cruz , por teu amor!",
+          "E da mortem triste sorte! - Me livraste, ó Redentor!"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": true,
+        "versesList": [
+          "Cristo, inflama viva chama",
+          "Em meu peito, ó Salvador!",
+          "Pois te adora quem te implora:",
+          "Vem guiar-me, bom Senhor!"
+        ]
+      },
+      {
+        "id": 2,
+        "isChorus": false,
+        "versesList": [
+          "Se hesitante, vacilante, Ouço a voz do tentador,",
+          "Tu me guias, me auxilias, E me tornas vencedor."
+        ]
+      },
+      {
+        "id": 3,
+        "isChorus": false,
+        "versesList": [
+          "Redimida só tem vida A minha alma em teu amor!",
+          "Com apreço reconheço Quanto devo a ti, Senhor."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "I354DR3O",
+    "title": "Hino 04 - Culto á Trindade.",
+    "createAt": "28/05/2023",
+    "albumCover": "assets/images/default_cover_3.png",
+    "group": "Hinário Novo Cântico",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Deus está no templo!",
+          "Pai Onipotente!",
+          "A seus pés nos humilhamos.",
+          "Servos consagrados,",
+          "Reverentemente,",
+          "Ao Deus Santo adoramos.",
+          "Por favor, com amor,",
+          "Espiritualmente Deus está no templo!"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": true,
+        "versesList": [
+          "Cristo está no templo!",
+          "Sumo benefício",
+          "Por seu sangue nos foi dado.",
+          "Ele, o bom Cordeiro,",
+          "Foi o sacrifício",
+          "Que expirou o vil pecado.",
+          "Escolheu e sofreu",
+          "O cabal suplício; Cristo está no templo!"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": true,
+        "versesList": [
+          "Tu, que estás no templo,",
+          "Preceptor divino,",
+          "E os corações habitas;",
+          "Tu, paciente Mestre,",
+          "Dá-nos teu ensino,",
+          "Aclarando as leis benditas.",
+          "Que prazer conhecer",
+          "A graça infinita! Sim, está no templo!"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "s00PZDy7",
+    "title": "És Tu única razão",
+    "createAt": "26/05/2023",
+    "albumCover": "assets/images/default_cover_4.png",
+    "group": "Corinhos Evangélicos",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "És tu",
+          "Ãšnica razão",
+          "Da minha adoração",
+          "Oh jesus"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": false,
+        "versesList": [
+          "És tu",
+          "Ãšnica esperança",
+          "Que anelo ter",
+          "Oh jesus"
+        ]
+      },
+      {
+        "id": 2,
+        "isChorus": false,
+        "versesList": [
+          "Confiei em ti, fui ajudado",
+          "A salvação tem me alegrado",
+          "Hoje há gozo em meu coração",
+          "Com meu canto te louvarei"
+        ]
+      },
+      {
+        "id": 3,
+        "isChorus": false,
+        "versesList": [
+          "Eu te louvarei",
+          "Te glorificarei",
+          "Eu te louvarei meu bom jesus"
+        ]
+      },
+      {
+        "id": 4,
+        "isChorus": false,
+        "versesList": [
+          "Eu te louvarei",
+          "Te glorificarei",
+          "Eu te louvarei meu bom jesus"
+        ]
+      },
+      {
+        "id": 5,
+        "isChorus": false,
+        "versesList": [
+          "Em todo o tempo te louvarei",
+          "Em todo o tempo te adorarei"
+        ]
+      },
+      {
+        "id": 6,
+        "isChorus": false,
+        "versesList": [
+          "Eu te louvarei",
+          "Te glorificarei",
+          "Eu te louvarei meu bom jesus"
+        ]
+      },
+      {
+        "id": 7,
+        "isChorus": false,
+        "versesList": [
+          "Eu te louvarei",
+          "Te glorificarei",
+          "Eu te louvarei meu bom jesus"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "OULWJpKd",
+    "title": "Seja Engrandecido",
+    "createAt": "26/05/2023",
+    "albumCover": "assets/images/default_cover_3.png",
+    "group": "Genésio de Souza",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Seja engrandecido",
+          "Ã“h Deus da minha vida",
+          "Tú És o Deus da minha salvação,",
+          "És a minha Rocha",
+          "A minha segurança",
+          "Meus lábios sempre Te exaltarão"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": false,
+        "versesList": [
+          "Aleluia, Te louvo",
+          "Pois sei que sobre todos És Senhor",
+          "Aleluia, Te louvo",
+          "Pois sei que sobre todos És Senhor"
+        ]
+      },
+      {
+        "id": 2,
+        "isChorus": false,
+        "versesList": [
+          "Aleluia (aleluia), aleluia, (aleluia),",
+          "Aleluia, louvemos ao Senhor"
+        ]
+      },
+      {
+        "id": 3,
+        "isChorus": false,
+        "versesList": [
+          "Aleluia (aleluia), aleluia, (aleluia),",
+          "Aleluia, louvemos ao Senhor"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lCSchmiq",
+    "title": "Não tenhas sobre ti",
+    "createAt": "26/05/2023",
+    "albumCover": "assets/images/default_cover_1.png",
+    "group": "Paulo Cesar Baruk",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Não tenhas sobre ti",
+          "Um só cuidado qualquer que seja",
+          "Pois um, somente um",
+          "Seria muito para ti"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": false,
+        "versesList": [
+          "É meu",
+          "Somente meu todo o trabalho",
+          "E o teu trabalho é descansar em mim"
+        ]
+      },
+      {
+        "id": 2,
+        "isChorus": false,
+        "versesList": [
+          "Não temas quando enfim",
+          "Tiveres que tomar decisão",
+          "Entrega tudo a mim",
+          "Confia de todo o coração"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sfNuROqd",
+    "title": "Eu vejo a glória",
+    "createAt": "26/05/2023",
+    "albumCover": "assets/images/default_cover_2.png",
+    "group": "Marcos Góes",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Eu vejo a glória do Senhor hoje aqui,",
+          "A sua mão e o seu poder sobre mim.",
+          "Os céus abertos hoje eu vou contemplar",
+          "O amor descer neste lugar."
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": false,
+        "versesList": [
+          "Eu quero ver agora o teu poder,",
+          "A tua glória inundando meu ser,",
+          "Vou levantar as mãos vou receber.",
+          "Vou louvando o teu nome,",
+          "Porque eu sinto o Senhor me tocar."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "PNpJrRJa",
+    "title": "Obrigado Jesus",
+    "createAt": "26/05/2023",
+    "albumCover": "assets/images/default_cover_3.png",
+    "group": "Alda Célia",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Pelo sol da manhã,",
+          " Obrigado Jesus",
+          " Pelo dia que nasce,",
+          " Obrigado, Jesus",
+          " Pelo irmão que esta do meu lado",
+          " Obrigado, Obrigado Jesus!!!"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": false,
+        "versesList": [
+          " Obrigado, Jesus",
+          " Pelo amor que não morre",
+          " Pela nova aliança que foi feita na cruz",
+          " Pela fé e esperança",
+          " Pela vida eterna",
+          " Obrigado, Obrigado Jesus!!!"
+        ]
+      },
+      {
+        "id": 2,
+        "isChorus": false,
+        "versesList": [
+          " Pelo ar que respiro",
+          " Obrigado, Jesus",
+          " Pelo pão que alimenta",
+          " Obrigado, Jesus",
+          " Pela chuva que cai sobre a Terra",
+          " Obrigado, Obrigado Jesus!!!"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "x9HOM8bj",
+    "title": "Grande é o Senhor",
+    "createAt": "26/05/2023",
+    "albumCover": "assets/images/default_cover_3.png",
+    "group": "Adhemar de Campos",
+    "verses": [
+      {
+        "id": 0,
+        "isChorus": false,
+        "versesList": [
+          "Grande é o Senhor",
+          "E mui digno de louvor",
+          "Na cidade do nosso Deus",
+          "Seu Santo monte",
+          "Alegria de toda terra"
+        ]
+      },
+      {
+        "id": 1,
+        "isChorus": false,
+        "versesList": [
+          "Grande é o Senhor",
+          "Em quem nós temos a vitória",
+          "E que nos ajuda",
+          "Contra o inimigo",
+          "Por isso diante Dele",
+          "Nos prostramos"
+        ]
+      },
+      {
+        "id": 2,
+        "isChorus": false,
+        "versesList": [
+          "Queremos o Teu",
+          "Nome engrandecer",
+          "E agradecer-Te",
+          "Por Tua obra",
+          "Em nossas vidas"
+        ]
+      },
+      {
+        "id": 3,
+        "isChorus": false,
+        "versesList": [
+          "Confiamos em Teu",
+          "Infinito amor",
+          "Pois só Tu és",
+          "O Deus eterno",
+          "Sobre toda terra e céus"
+        ]
+      }
+    ]
+  }
+]

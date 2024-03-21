@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../core_module.dart';
 //import '../../../shared/utils/supa_services_util.dart';
