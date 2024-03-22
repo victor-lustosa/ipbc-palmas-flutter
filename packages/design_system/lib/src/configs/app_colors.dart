@@ -28,6 +28,7 @@ class AppColors {
   static const Color searchBar = Color(0xFFEFEFEF);
   static const Color cardGreen = Color(0xFF006D4E);
   static const Color tabGreen = Color(0xFF00906b);
+  static const Color dividerModal = Color(0xFFA9A9A9);
   static const Color secondaryGreen2 = Color.fromRGBO(144, 194, 180, .5);
   static const Color secondaryGrey = Color(0xFFEBEBEB);
   static const Color vagalumeBackground = Color.fromRGBO(235, 235, 235, 40);

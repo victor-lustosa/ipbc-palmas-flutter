@@ -1,8 +1,7 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'ui/views/lyric_view.dart';
-
 import 'ui/blocs/lyric_bloc.dart';
+import 'ui/views/lyric_view.dart';
 
 class LyricModule extends Module {
   static const String initialRoute = "/";
