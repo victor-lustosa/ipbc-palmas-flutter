@@ -112,12 +112,23 @@ class _HomeRoutesState extends State<HomeRoutes> {
               );
             }
 
+          case ServiceModule.serviceRoute:
+            return CustomTransitionPageRoute(
+              transitionSpeed: const Duration(milliseconds: 700),
+              reverseSpeed: const Duration(milliseconds: 700),
+              child: ServiceView(
+                  entity: settings.arguments as ServiceViewDTO),
+              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
+                CurveTween(curve: Curves.ease),
+              ),
+            );
+
           case ServiceModule.servicesListRoute:
             return CustomTransitionPageRoute(
               transitionSpeed: const Duration(milliseconds: 700),
               reverseSpeed: const Duration(milliseconds: 700),
               child: ServicesListView(
-                  entitiesList: settings.arguments as List<ServicesEntity>),
+                  entities: settings.arguments as List<ServicesEntity>),
               tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
                 CurveTween(curve: Curves.ease),
               ),

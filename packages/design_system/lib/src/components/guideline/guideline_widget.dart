@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import '../../../design_system.dart';
 
 class GuidelineWidget extends StatelessWidget {
-  const GuidelineWidget({Key? key, required this.liturgyList})
+  const GuidelineWidget({Key? key, required this.liturgiesList})
       : super(key: key);
-  final List<dynamic> liturgyList;
+  final List<dynamic> liturgiesList;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class GuidelineWidget extends StatelessWidget {
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: liturgyList.length,
+      itemCount: liturgiesList.length,
       itemBuilder: (context, index) {
         return Row(
           children: <Widget>[
@@ -22,7 +22,7 @@ class GuidelineWidget extends StatelessWidget {
               children: <Widget>[
                 Container(
                   width: 1.7,
-                  height: liturgyList[index].isAdditional
+                  height: liturgiesList[index].isAdditional
                       ? 29
                       : 18,
                   color: index == 0
@@ -39,10 +39,10 @@ class GuidelineWidget extends StatelessWidget {
                 ),
                 Container(
                   width: 2,
-                  height: liturgyList[index].isAdditional
+                  height: liturgiesList[index].isAdditional
                       ? 28
                       : 18,
-                  color: index == liturgyList.length - 1
+                  color: index == liturgiesList.length - 1
                       ? Colors.white
                       : AppColors.timelineGuideTGreen,
                 ),
@@ -58,18 +58,18 @@ class GuidelineWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      liturgyList[index].sequence,
+                      liturgiesList[index].sequence,
                       style: AppFonts.defaultFont(
                         color: AppColors.grey9,
                         fontSize: 17,
                       ),
                     ),
                     Visibility(
-                      visible: liturgyList[index].isAdditional,
+                      visible: liturgiesList[index].isAdditional,
                       child: Container(
                         margin: const EdgeInsets.only(top: 4),
                         child: Text(
-                          liturgyList[index].additional,
+                          liturgiesList[index].additional,
                           style: AppFonts.defaultFont(
                             color: AppColors.grey8,
                             fontSize: 13,

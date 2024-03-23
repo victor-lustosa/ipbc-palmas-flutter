@@ -17,9 +17,9 @@ class _InsertServicesViewState extends State<InsertServicesView> {
       body: Container(
         color: AppColors.grey4,
         width: context.mediaQuery.size.width,
-        child: SafeArea(
+        child: const SafeArea(
           child: ServiceTopBarWidget(
-            entity: ServicesModel.empty(),
+            image: 'https://xrvmfhpmelyvupfylnfk.supabase.co/storage/v1/object/public/covers/mobile_service_covers/saturday_evening.png', createAt: '',
           ),
         ),
       ),

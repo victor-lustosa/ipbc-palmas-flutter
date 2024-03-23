@@ -6,6 +6,7 @@ import '../liturgy_adapter.dart';
 
 class SupaServiceAdapter {
   static ServiceModel fromJson(String source) => fromMap(json.decode(source));
+  static List<ServiceEntity> fromJsonList(String source) => fromMapList(json.decode(source));
 
   static ServiceModel fromMap(dynamic json) {
     return ServiceModel(
@@ -18,8 +19,8 @@ class SupaServiceAdapter {
       heading: json['heading'],
       title: json['title'],
       guideIsVisible: json['guideIsVisible'],
-      liturgyList: json.containsKey('liturgyList')
-          ? LiturgyAdapter.fromMap(json['liturgyList'])
+      liturgiesList: json.containsKey('liturgiesList')
+          ? LiturgyAdapter.fromMap(json['liturgiesList'])
           : [],
       lyricsList: SupaLyricAdapter.fromMapList(json['lyricsList']),
       hour: json['hour'],
@@ -47,9 +48,9 @@ class SupaServiceAdapter {
         ServiceEntity(
           type: entity['type'],
           hour: entity['hour'],
-          liturgyList: LiturgyAdapter.fromMap(entity['liturgyList']),
+          liturgiesList: LiturgyAdapter.fromMap(entity['liturgiesList']),
           lyricsList: SupaLyricAdapter.fromMapList(entity['lyricsList']),
-          createAt: DateTime.parse(entity['createAt']),
+          createAt: DateFormat("dd/MM/yyyy").parse(entity['createAt']),
           heading: entity['heading'],
           title: entity['title'],
           guideIsVisible: entity['guideIsVisible'],

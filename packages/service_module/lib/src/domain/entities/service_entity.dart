@@ -13,11 +13,11 @@ class ServiceEntity {
       required this.title,
       required this.guideIsVisible,
       required this.heading,
-      required this.liturgyList,
+      required this.liturgiesList,
       required this.lyricsList,
       required this.createAt});
 
-  final int id;
+  final String id;
   final String type;
   final String image;
   final String hour;
@@ -28,10 +28,10 @@ class ServiceEntity {
   final String title;
   final String heading;
   final List<LyricModel> lyricsList;
-  final List<LiturgyEntity> liturgyList;
+  final List<LiturgyEntity> liturgiesList;
 
   @override
   String toString() {
-    return 'ServiceEntity{id: $id, type: $type, image: $image, hour: $hour, createAt: $createAt, theme: $theme, preacher: $preacher, guideIsVisible: $guideIsVisible, title: $title, heading: $heading, lyricsList: $lyricsList, liturgyList: $liturgyList}';
+    return 'ServiceEntity{id: $id, type: $type, image: $image, hour: $hour, createAt: $createAt, theme: $theme, preacher: $preacher, guideIsVisible: $guideIsVisible, title: $title, heading: $heading, lyricsList: $lyricsList, liturgiesList: $liturgiesList}';
   }
 }

@@ -9,7 +9,7 @@
   "heading": "domingo à noite",
   "type": "sunday-evening-services",
   "guideIsVisible": true,
-  "liturgyList": [
+  "liturgiesList": [
   {
     "isAdditional":  false,
     "sequence": "Oração",

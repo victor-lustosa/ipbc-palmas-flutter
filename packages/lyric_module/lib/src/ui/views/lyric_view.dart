@@ -1,11 +1,9 @@
-import 'dart:io';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-
 
 class LyricView extends StatefulWidget{
   const LyricView({super.key, required this.entity});
@@ -55,8 +53,8 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                     Radius.circular(20),
                                   ),
                                   child: AlbumCoverWidget(
-                                    height: 75,
-                                    width: 75,
+                                    height: 72,
+                                    width: 72,
                                     albumCover: widget.entity.albumCover,
                                   ),
                                 ),
@@ -66,7 +64,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                               width: context.mediaQuery.size.width *
                                   ResponsivityUtil.resolutionDeviceProportion(
                                       context.mediaQuery.size.width,
-                                      0.56,
+                                      0.573,
                                       0.5),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,8 +80,8 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                         fontWeight: FontWeight.w500,
                                         fontSize: context.mediaQuery.size.width >
                                                     ResponsivityUtil.smallDeviceWidth
-                                                ? 21
-                                                : 18,
+                                                ? 20
+                                                : 17,
                                       ),
                                     ),
                                   ),
@@ -92,7 +90,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                     overflow: TextOverflow.ellipsis,
                                     widget.entity.group,
                                     style: AppFonts.defaultFont(
-                                      color: AppColors.grey10,
+                                      color: AppColors.grey9,
                                       fontSize: context.mediaQuery.size.width >
                                                   ResponsivityUtil.smallDeviceWidth
                                               ? 15
@@ -105,7 +103,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                           ],
                         ),
                         IconButtonWidget(
-                          size: Platform.isIOS ? 30 : 33,
+                          size: 33,
                           color: AppColors.darkGreen,
                           splashColor: Colors.transparent,
                           highlightColor: Colors.transparent,
@@ -118,7 +116,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                   ),
                   Container(
                     //top: 15, sem a validacao de se é refrao ou nao
-                    margin: const EdgeInsets.only(top: 30),
+                    margin: const EdgeInsets.only(top: 28),
                     child: ListView.separated(
                       separatorBuilder: (__, _) {
                         return const SizedBox();
@@ -200,42 +198,40 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                   Container(
                     margin: const EdgeInsets.only(
                       top: 60,
-                      left: 10,
+                      left: 16,
+                      right: 16,
                       bottom: 30,
                     ),
                     child: Center(
-                      child: SizedBox(
-                        width: context.mediaQuery.size.width * 0.85,
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text:
-                                    "  Esse sistema não possui fins lucrativos sobre a obra representada a cima. Todos os direitos reservados aos autores da letra. ",
-                                style: context.mediaQuery.size.width >
-                                        ResponsivityUtil.smallDeviceWidth
-                                    ? AppFonts.copyright(fontSize: 13)
-                                    : AppFonts.copyright(fontSize: 12),
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text:
+                                  "Esse sistema não possui fins lucrativos sobre a obra representada a cima. Todos os direitos reservados aos autores da letra. ",
+                              style: context.mediaQuery.size.width >
+                                      ResponsivityUtil.smallDeviceWidth
+                                  ? AppFonts.copyright(fontSize: 13)
+                                  : AppFonts.copyright(fontSize: 12),
+                            ),
+                            TextSpan(
+                              style: AppFonts.defaultFont(
+                                color: AppColors.darkGreen,
+                                fontWeight: FontWeight.w300,
+                                fontSize: 13,
                               ),
-                              TextSpan(
-                                style: AppFonts.defaultFont(
-                                  color: AppColors.darkGreen,
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 13,
-                                ),
-                                text: "Saiba mais.",
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () => setState(
-                                        () {
-                                          _launched = launchInBrowser(toLaunch);
-                                          if (kDebugMode) {
-                                            print(_launched);
-                                          }
-                                        },
-                                      ),
-                              ),
-                            ],
-                          ),
+                              text: "Saiba mais.",
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => setState(
+                                      () {
+                                        _launched = launchInBrowser(toLaunch);
+                                        if (kDebugMode) {
+                                          print(_launched);
+                                        }
+                                      },
+                                    ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -243,6 +239,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                   Container(
                     height: 77,
                     width: 145,
+                    margin: const EdgeInsets.only(bottom: 50),
                     decoration: const BoxDecoration(
                       color: AppColors.vagalumeBackground,
                       borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -274,7 +271,6 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 40)
                 ],
               ),
             ),

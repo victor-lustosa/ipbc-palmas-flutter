@@ -9,7 +9,7 @@
   "heading": "domingo de manhã",
   "type": "sunday-morning-services",
   "guideIsVisible": true,
-  "liturgyList": [
+  "liturgiesList": [
     {
       "isAdditional":  false,
       "sequence": "Abertura",

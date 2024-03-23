@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:lyric_module/lyric_module.dart';
 
 import '../../../core_module.dart';
 
 class MockUtil {
 
-  MockUtil._privateConstructor();
+  MockUtil._();
 
  static Future<T?> convertMockJson<T>(String path, String option) async {
     final String json = await rootBundle.loadString(path);
@@ -15,6 +16,8 @@ class MockUtil {
         return Future.value(SupaLyricAdapter.fromJson(json) as T?);
       case 'services':
         return Future.value(ServicesAdapter.fromJson(json) as T?);
+      case 'saturday-services' || 'sunday-morning-services' || 'sunday-evening-services':
+        return Future.value(SupaServiceAdapter.fromJsonList(json) as T?);
     }
     return null;
   }

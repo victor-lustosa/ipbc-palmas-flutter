@@ -100,6 +100,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(left: 8),
+                                width: context.mediaQuery.size.width * .61,
                                 child: Text(
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,

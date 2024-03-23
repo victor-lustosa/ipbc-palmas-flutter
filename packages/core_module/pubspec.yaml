@@ -40,6 +40,7 @@ dev_dependencies:
     sdk: flutter
 
   bloc_test: ^9.1.1
+  melos: ^3.4.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

@@ -3,7 +3,7 @@ import 'package:core_module/core_module.dart';
 
 class ServiceModel extends ServiceEntity {
   ServiceModel(
-      {required int id,
+      {required String id,
       required String image,
       required String theme,
       required String hour,
@@ -12,7 +12,7 @@ class ServiceModel extends ServiceEntity {
       required bool guideIsVisible,
       required DateTime createAt,
       required List<LyricModel> lyricsList,
-      required List<LiturgyEntity> liturgyList,
+      required List<LiturgyEntity> liturgiesList,
       required String title,
       required String heading
       }): super(
@@ -25,7 +25,7 @@ class ServiceModel extends ServiceEntity {
     guideIsVisible: guideIsVisible,
     createAt: createAt,
     lyricsList: lyricsList,
-    liturgyList: liturgyList,
+    liturgiesList: liturgiesList,
     title: title,
     heading: heading,
   );
@@ -33,7 +33,7 @@ class ServiceModel extends ServiceEntity {
   factory ServiceModel.empty() => ServiceModel(
       createAt: DateTime.now(),
       lyricsList: [],
-      liturgyList: [],
+      liturgiesList: [],
       title: '',
       theme: '',
       hour: '',
@@ -42,12 +42,12 @@ class ServiceModel extends ServiceEntity {
       type: '',
       heading: '',
       guideIsVisible: false,
-      id: SupaServicesUtil.createId());
+      id: SupaServicesUtil.createId().toString());
 
   ServiceModel copyWith({
     DateTime? createAt,
     String? title,
-    int? id,
+    String? id,
     String? theme,
     String? preacher,
     String? type,
@@ -56,7 +56,7 @@ class ServiceModel extends ServiceEntity {
     String? heading,
     bool? guideIsVisible,
     List<LyricModel>? lyricsList,
-    List<LiturgyEntity>? liturgyList}) {
+    List<LiturgyEntity>? liturgiesList}) {
     return ServiceModel(
       title: title ?? this.title,
       image: image ?? this.image,
@@ -64,7 +64,7 @@ class ServiceModel extends ServiceEntity {
       heading: heading ?? this.heading,
       createAt: createAt ?? this.createAt,
       lyricsList: lyricsList ?? this.lyricsList,
-      liturgyList: liturgyList ?? this.liturgyList,
+      liturgiesList: liturgiesList ?? this.liturgiesList,
       guideIsVisible: guideIsVisible ?? this.guideIsVisible,
       id: id ?? this.id,
       theme: theme ?? this.theme,

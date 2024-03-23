@@ -19,6 +19,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
   late final ServicesCollectionBloc _bloc;
   late List<ServiceEntity> entitiesList;
   late String path;
+
   @override
   void initState() {
     super.initState();
@@ -33,138 +34,145 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Theme(
-            data: ThemeData(
-              splashColor: const Color(0x66C8C8C8),
-              highlightColor: const Color(0x66BCBCBC),
-            ),
-            child: BlocBuilder<ServicesCollectionBloc,
-                GenericState<ServicesCollectionState>>(
-              bloc: _bloc,
-              builder: (context, state) {
-                if (state is LoadingState<ServicesCollectionState>) {
-                  return const LoadingWidget(
-                    androidRadius: 3,
-                    iosRadius: 14,
-                    color: AppColors.darkGreen,
-                  );
-                } else if (state is NoConnectionState<ServicesCollectionState>) {
-                  return const NoConnectionView(index: 0);
-                } else if (state is DataFetchedState<ServicesCollectionState, ServiceEntity>) {
-                  entitiesList = state.entities;
-                  return Column(
-                    children: [
-                      ServiceTopBarWidget(entity: widget.entity),
-                      Container(
-                        margin: const EdgeInsets.only(
-                          top: 25,
-                          left: 16,
-                          right: 16,
-                        ),
-                        child: SizedBox(
-                          width: context.mediaQuery.size.width,
-                          child: ListView.separated(
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return const SizedBox(height: 16);
-                            },
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: entitiesList.length,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return Material(
-                                borderRadius: BorderRadius.circular(16),
-                                clipBehavior: Clip.hardEdge,
-                                color: index == 0
-                                    ? const Color.fromRGBO(0, 232, 162, 0.1)
-                                    : AppColors.grey0,
-                                child: ListTile(
-                                  visualDensity: VisualDensity.comfortable,
-                                  horizontalTitleGap: 2,
-                                  contentPadding:
-                                      const EdgeInsets.symmetric(vertical: 9),
-                                  title: Container(
-                                    margin: const EdgeInsets.only(left: 16),
-                                    child: Text(
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                      '${entitiesList[index].title} ${DateFormat('dd/MM/yyyy').format(entitiesList[index].createAt)} | ${widget.entity.hour}',
-                                      style: AppFonts.defaultFont(
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColors.grey9,
-                                        fontSize: 15,
-                                      ),
+          child: BlocBuilder<ServicesCollectionBloc,
+              GenericState<ServicesCollectionState>>(
+            bloc: _bloc,
+            builder: (context, state) {
+              if (state is LoadingState<ServicesCollectionState>) {
+                return const LoadingWidget(
+                  androidRadius: 3,
+                  iosRadius: 14,
+                  color: AppColors.darkGreen,
+                );
+              } else if (state
+                  is NoConnectionState<ServicesCollectionState>) {
+                return const NoConnectionView(index: 0);
+              } else if (state is DataFetchedState<ServicesCollectionState,
+                  ServiceEntity>) {
+                entitiesList = state.entities;
+                return Column(
+                  children: [
+                    ServiceTopBarWidget(
+                      image: widget.entity.image,
+                      title: "Cultos de ${widget.entity.heading}",
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(
+                        top: 24,
+                        left: 15.5,
+                        right: 15.5,
+                        bottom: 40,
+                      ),
+                      child: SizedBox(
+                        width: context.mediaQuery.size.width,
+                        child: ListView.separated(
+                          separatorBuilder:
+                              (BuildContext context, int index) {
+                            return const SizedBox(height: 16);
+                          },
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: entitiesList.length,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Material(
+                              borderRadius: BorderRadius.circular(16),
+                              clipBehavior: Clip.hardEdge,
+                              color: index == 0
+                                  ? AppColors.highlightGreen
+                                      .withOpacity(0.1)
+                                  : AppColors.grey0,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                    ServiceModule.serviceRoute,
+                                    arguments: ServiceViewDTO(
+                                      service: entitiesList[index],
+                                      image: widget.entity.image,
                                     ),
-                                  ),
-                                  subtitle: Container(
-                                    margin:
-                                        const EdgeInsets.only(left: 16, top: 4),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          'Messagem: ${entitiesList[index].theme}',
-                                          style: AppFonts.description(
-                                            color: AppColors.grey8,
+                                  );
+                                },
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                        left: 16,
+                                        top: 12,
+                                        bottom: 12,
+                                      ),
+                                      width:
+                                          context.mediaQuery.size.width * .76,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            '${entitiesList[index].title} ${DateFormat('dd/MM/yyyy').format(entitiesList[index].createAt)} | ${widget.entity.hour}',
+                                            style: AppFonts.defaultFont(
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.grey9,
+                                              fontSize: 15,
+                                            ),
                                           ),
-                                        ),
-                                        Container(
-                                          margin: const EdgeInsets.only(top: 4),
-                                          child: Text(
+                                          Container(
+                                            margin: const EdgeInsets.only(
+                                                bottom: 4, top: 4),
+                                            child: Text(
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                              'Messagem: ${entitiesList[index].theme}',
+                                              style: AppFonts.description(
+                                                color: AppColors.grey8,
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
                                             entitiesList[index].preacher,
                                             style: AppFonts.description(
                                               color: AppColors.grey8,
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  trailing: SizedBox(
-                                    width: Platform.isIOS ? 40 : 45,
-                                    child: IconButtonWidget(
-                                      size: Platform.isIOS ? null : 33,
-                                      color: AppColors.darkGreen,
-                                      splashColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      iOSIcon: CupertinoIcons.chevron_forward,
-                                      androidIcon: Icons.navigate_next_sharp,
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed(
-                                      ServiceModule.servicesRoute,
-                                      arguments: ServiceViewDTO(
-                                        service: entitiesList[index],
-                                        image: widget.entity.image,
+                                        ],
                                       ),
-                                    );
-                                  },
+                                    ),
+                                    const SizedBox(
+                                      width: 40,
+                                      height: 40,
+                                      child: IconButtonWidget(
+                                        size: 40,
+                                        color: AppColors.darkGreen,
+                                        splashColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        iOSIcon:
+                                            CupertinoIcons.chevron_forward,
+                                        androidIcon:
+                                            Icons.navigate_next_sharp,
+                                      ),
+                                    )
+                                  ],
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            );
+                          },
                         ),
                       ),
-                      const SizedBox(height: 40)
-                    ],
-                  );
-                } else {
-                  return const GenericErrorView();
-                }
-              },
-            ),
+                    ),
+                  ],
+                );
+              } else {
+                return const GenericErrorView();
+              }
+            },
           ),
         ),
       ),
       floatingActionButton: SizedBox(
-        height: 58,
-        width: 58,
+        height: 56,
+        width: 56,
         child: FloatingActionButton(
+          shape:const CircleBorder(),
           elevation: 1.8,
           highlightElevation: 1.8,
           focusElevation: 1.8,

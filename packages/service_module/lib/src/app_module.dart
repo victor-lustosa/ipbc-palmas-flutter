@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'ui/blocs/services_collection_bloc.dart';
 
 class ServiceModule extends Module {
-  static const String servicesRoute = '/services';
+  static const String serviceRoute = '/service';
   static const String insertServicesRoute = "/insert-services";
   static const String servicesCollectionRoute = "/services-collection";
-  static const String servicesListRoute = '/services';
+  static const String servicesListRoute = '/services-list';
+  static const String servicesRoute = '/services';
 
   @override
   void binds(i) {

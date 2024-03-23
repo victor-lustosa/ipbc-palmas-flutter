@@ -20,7 +20,7 @@ Future<void> showCustomOptionsDialog({
             alignment: const Alignment(1, .8),
             child: ClipRRect(
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Container(
                   margin: const EdgeInsets.only(right: 8),
                   decoration: BoxDecoration(
@@ -48,8 +48,8 @@ Future<void> showCustomOptionsDialog({
                           children: [
                             Container(
                               margin: const EdgeInsets.only(
-                                bottom: 10,
-                                top: 21,
+                                bottom: 12,
+                                top: 20,
                                 left: 13,
                               ),
                               child: Row(

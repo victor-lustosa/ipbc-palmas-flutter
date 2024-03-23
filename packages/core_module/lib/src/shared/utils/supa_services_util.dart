@@ -13,7 +13,9 @@ class SupaServicesUtil {
       Future.delayed(const Duration(seconds: 2), () => DateTime.now());
 
   static Future<ServiceModel> insertService(
-      String path, List<LyricModel> unknownLyrics) async {
+    String path,
+    List<LyricModel> unknownLyrics,
+  ) async {
     final String json = await rootBundle.loadString(path);
     ServiceModel service = SupaServiceAdapter.fromJson(json);
     List<LyricEntity> lyricsConverted =
@@ -31,7 +33,7 @@ class SupaServicesUtil {
       );
     }
     lyricsAux.addAll(unknownLyrics);
-    return service.copyWith(id: createId(), lyricsList: lyricsAux);
+    return service.copyWith(id: createId().toString(), lyricsList: lyricsAux);
   }
 
   static Future<List<LyricEntity>> _generateVersesList(

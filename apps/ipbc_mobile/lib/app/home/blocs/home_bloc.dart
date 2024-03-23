@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 
 class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>> with ConnectivityMixin{
   final IUseCases supaUseCases;
-  final String path = 'services/createAt/true';
+  final String path = 'services/createAt/false';
 
   HomeBloc({required this.supaUseCases})
       : super(LoadingState()) {

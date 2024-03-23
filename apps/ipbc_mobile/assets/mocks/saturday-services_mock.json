@@ -1,19 +1,18 @@
-{
-  "saturday_services": [
+[
     {
       "id": "ASG3wDvQ",
       "hour": "19h30",
       "image": "assets/images/saturday_evening.png",
       "createAt": "06/05/2023",
-      "heading": "sÃ¡bado",
-      "title": "SÃ¡bado",
+      "heading": "sábado",
+      "title": "Sábado",
       "type": "saturday-services",
-      "theme": "Trabalho: benÃ§Ã£o ou fardo?",
-      "preacher": "Pr IsaÃ­as",
+      "theme": "Trabalho: benção ou fardo?",
+      "preacher": "Pr Isaías",
       "lyricsList": [
         {
           "id": "v4NVGi03",
-          "title": "Vem estÃ¡ Ã© a hora",
+          "title": "Vem está é a hora",
           "createAt": "17/05/2023",
           "albumCover": "assets/images/default_cover_2.png",
           "group": "Vineyard",
@@ -22,10 +21,10 @@
               "id": 0,
               "isChorus": false,
               "versesList": [
-                "Vem, esta Ã© a hora da adoraÃ§Ã£o",
-                "Vem, dar a Ele seu coraÃ§Ã£o",
-                "Vem, assim como estÃ¡s para adorar",
-                "Vem, assim como estÃ¡s diante do Pai"
+                "Vem, esta é a hora da adoração",
+                "Vem, dar a Ele seu coração",
+                "Vem, assim como estás para adorar",
+                "Vem, assim como estás diante do Pai"
               ]
             },
             {
@@ -39,10 +38,10 @@
               "id": 2,
               "isChorus": true,
               "versesList": [
-                "Toda lÃ­ngua confessarÃ¡ ao Senhor",
-                "Todo joelho se dobrarÃ¡",
+                "Toda língua confessará ao Senhor",
+                "Todo joelho se dobrará",
                 "Mas aquele que a Ti escolher",
-                "O tesouro maior terÃ¡"
+                "O tesouro maior terá"
               ]
             }
           ]
@@ -52,7 +51,7 @@
           "title": "Eu te quero",
           "createAt": "17/05/2023",
           "albumCover": "assets/images/default_cover_3.png",
-          "group": "AdoraÃ§Ã£o e Adoradores",
+          "group": "Adoração e Adoradores",
           "verses": [
             {
               "id": 0,
@@ -72,11 +71,11 @@
               "isChorus": false,
               "versesList": [
                 "Te desejo, ",
-                "Mais do que mil benÃ§Ã£os",
+                "Mais do que mil bençãos",
                 "Meu anseio,",
-                "Ã‰ agradar teu coraÃ§Ã£o",
-                "Outro bem nÃ£o possuo",
-                "AlÃ©m de ti ",
+                "É agradar teu coração",
+                "Outro bem não possuo",
+                "Além de ti ",
                 "Senhor"
               ]
             },
@@ -84,10 +83,10 @@
               "id": 2,
               "isChorus": true,
               "versesList": [
-                "Tu Ã‰s a porÃ§Ã£o ",
-                "Da minha heranÃ§a ",
-                "Ã‰s o bem maior pra mim",
-                "O meu coraÃ§Ã£o nÃ£o pode mais ",
+                "Tu És a porção ",
+                "Da minha herança ",
+                "És o bem maior pra mim",
+                "O meu coração não pode mais ",
                 "Viver sem, o Teu Grande Amor"
               ]
             },
@@ -95,14 +94,14 @@
               "id": 3,
               "isChorus": false,
               "versesList": [
-                "O meu anseio, Ã‰s Tu Jesus (4x)"
+                "O meu anseio, És Tu Jesus (4x)"
               ]
             }
           ]
         },
         {
           "id": "v2vDYqLr",
-          "title": "Tua graÃ§a me basta",
+          "title": "Tua graça me basta",
           "createAt": "17/05/2023",
           "albumCover": "assets/images/default_cover_2.png",
           "group": "Rachel Novaes",
@@ -112,11 +111,11 @@
               "isChorus": false,
               "versesList": [
                 "Nas noites mais sombrias",
-                "Na escuridÃ£o da alma",
-                "Tua graÃ§a me basta",
+                "Na escuridão da alma",
+                "Tua graça me basta",
                 "Nas madrugadas frias",
-                "Na solidÃ£o da estrada",
-                "Tua graÃ§a me basta"
+                "Na solidão da estrada",
+                "Tua graça me basta"
               ]
             },
             {
@@ -125,20 +124,20 @@
               "versesList": [
                 "No vento incessante",
                 "Toda hora e a cada instante",
-                "Tua graÃ§a me basta",
-                "Na imensidÃ£o do mundo",
+                "Tua graça me basta",
+                "Na imensidão do mundo",
                 "No abismo mais profundo",
-                "Tua graÃ§a me basta"
+                "Tua graça me basta"
               ]
             },
             {
               "id": 2,
               "isChorus": true,
               "versesList": [
-                "AperfeiÃ§oa-me",
-                "Molda meu coraÃ§Ã£o",
-                "OuÃ§a o som que flui",
-                "Da minha adoraÃ§Ã£o"
+                "Aperfeiçoa-me",
+                "Molda meu coração",
+                "Ouça o som que flui",
+                "Da minha adoração"
               ]
             },
             {
@@ -147,14 +146,14 @@
               "versesList": [
                 "Suba perante Ti",
                 "Este sincero amor",
-                "Seja a expressÃ£o",
+                "Seja a expressão",
                 "De todo o meu louvor"
               ]
             }
           ]
         }
       ],
-      "liturgyList": [],
+      "liturgiesList": [],
       "guideIsVisible": false
     },
     {
@@ -162,8 +161,8 @@
       "hour": "19h30",
       "image": "assets/images/saturday_evening.png",
       "createAt": "29/04/2023",
-      "heading": "sÃ¡bado",
-      "title": "SÃ¡bado",
+      "heading": "sábado",
+      "title": "Sábado",
       "type": "saturday-services",
       "theme": "O dever de nos alegramos em Deus",
       "preacher": "Pb Cid",
@@ -180,7 +179,7 @@
               "isChorus": false,
               "versesList": [
                 "Eis-me aqui, outra vez",
-                "Diante de ti abro o meu coraÃ§Ã£o",
+                "Diante de ti abro o meu coração",
                 "Meu clamor, tu escutas",
                 "E fazes cair as barreiras em mim"
               ]
@@ -189,8 +188,8 @@
               "id": 1,
               "isChorus": false,
               "versesList": [
-                "Ã‰s fiel senhor, e dizes",
-                "Palavras de amor e esperanÃ§as sem fim",
+                "És fiel senhor, e dizes",
+                "Palavras de amor e esperanças sem fim",
                 "Ao sentir, teu toque",
                 "Com tua bondade libertas meu ser"
               ]
@@ -213,7 +212,7 @@
                 "Me derramar,",
                 "Dizer que sou grato,",
                 "Me derramar,",
-                "Dizer qÃºe Ã©s formoso."
+                "Dizer qÃºe és formoso."
               ]
             }
           ]
@@ -229,8 +228,8 @@
               "id": 0,
               "isChorus": false,
               "versesList": [
-                "Nos galhos secos de uma Ã¡rvore qualquer",
-                "Onde ninguÃ©m jamais pudesse imaginar",
+                "Nos galhos secos de uma árvore qualquer",
+                "Onde ninguém jamais pudesse imaginar",
                 "O Criador vÃª uma flor Ã  brotar"
               ]
             },
@@ -245,7 +244,7 @@
               "id": 2,
               "isChorus": false,
               "versesList": [
-                "Os lÃ­rios cresceram no campo",
+                "Os lírios cresceram no campo",
                 "E o Senhor nosso Deus",
                 "Os tÃªm alimentado para nossa alegria"
               ]
@@ -264,15 +263,15 @@
           "title": "Perto quero estar",
           "createAt": "17/05/2023",
           "albumCover": "assets/images/default_cover_3.png",
-          "group": "MinistÃ©rio Toque No Altar",
+          "group": "Ministério Toque No Altar",
           "verses": [
             {
               "id": 0,
               "isChorus": false,
               "versesList": [
                 "Perto quero estar",
-                "Junto aos teus pÃ©s",
-                "Pois prazer maior nÃ£o hÃ¡",
+                "Junto aos teus pés",
+                "Pois prazer maior não há",
                 "Que me render e te adorar"
               ]
             },
@@ -280,9 +279,9 @@
               "id": 1,
               "isChorus": false,
               "versesList": [
-                "Tudo que hÃ¡ em mim",
+                "Tudo que há em mim",
                 "Quero te ofertar",
-                "Mas ainda Ã© pouco, eu sei",
+                "Mas ainda é pouco, eu sei",
                 "Se comparado ao que ganhei"
               ]
             },
@@ -290,7 +289,7 @@
               "id": 2,
               "isChorus": false,
               "versesList": [
-                "NÃ£o sou apenas servo",
+                "Não sou apenas servo",
                 "Teu amigo me tornei"
               ]
             },
@@ -299,7 +298,7 @@
               "isChorus": true,
               "versesList": [
                 "Te louvarei",
-                "NÃ£o importam as circunstÃ¢ncias",
+                "Não importam as circunstâncias",
                 "Adorarei",
                 "Somente a ti, Jesus"
               ]
@@ -307,8 +306,7 @@
           ]
         }
       ],
-      "liturgyList": [],
+      "liturgiesList": [],
       "guideIsVisible": false
     }
   ]
-}

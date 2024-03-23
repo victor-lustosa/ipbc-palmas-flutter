@@ -44,7 +44,7 @@ void main() {
           "verses": []
         },
       ],
-      "liturgyList": [],
+      "liturgiesList": [],
     };
     when(() => repository.get('saturday-services/20')).thenAnswer(
       (_) => Future.value([entity]

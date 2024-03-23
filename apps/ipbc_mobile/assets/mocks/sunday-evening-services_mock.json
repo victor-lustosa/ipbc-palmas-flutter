@@ -1,5 +1,4 @@
-{
-  "sunday_evening": [
+[
     {
       "id": "4YBw4PFl",
       "hour": "19h",
@@ -34,7 +33,7 @@
               "versesList": [
                 "Minha fé está firmada no meu salvador",
                 "Meu castelo forte Ele é",
-                "Meu refÃºgio e segurança nele firme estou",
+                "Meu refúgio e segurança nele firme estou",
                 "No Senhor não vou me abalar"
               ]
             },
@@ -91,7 +90,7 @@
         },
         {
           "id": "gcKdaSFs",
-          "title": "Quao Grande Ã‰ o Meu Deus",
+          "title": "Quao Grande É o Meu Deus",
           "createAt": "11/06/2023",
           "albumCover": "assets/images/default_cover_4.png",
           "group": "Corinhos Evangélicos",
@@ -128,7 +127,7 @@
                 " ",
                 "Sobre todo nome é o Seu",
                 " Tu és digno do louvor, eu cantarei tão grande é o meu Deus.",
-                " Ã‰ o meu Deus",
+                " É o meu Deus",
                 " ",
                 "Quão Grande é o meu Deus",
                 " Eu cantarei qão Grande é o meu Deus",
@@ -149,7 +148,7 @@
               "isChorus": false,
               "versesList": [
                 "Não somente ao se fazer trabalho singular",
-                "Ã‰ mister agir com muito ardor",
+                "É mister agir com muito ardor",
                 "Mas as coisas mais humildes a executar",
                 "Deves fazá-las com fervor."
               ]
@@ -246,7 +245,7 @@
           ]
         }
       ],
-      "liturgyList": [
+      "liturgiesList": [
         {
           "isAdditional": false,
           "sequence": "Oração",
@@ -351,9 +350,9 @@
               "isChorus": false,
               "versesList": [
                 "Fonte és de alegria e vida,",
-                "Ã‰s do bem o Inspirador;",
+                "És do bem o Inspirador;",
                 "Tua graça nos convida",
-                "A viver em mÃºtuo amor",
+                "A viver em mútuo amor",
                 "Quais alegres peregrinos,",
                 "Sempre em marcha triunfal,",
                 "Cantaremos gratos hinos",
@@ -363,7 +362,7 @@
           ]
         }
       ],
-      "liturgyList": [
+      "liturgiesList": [
         {
           "isAdditional": false,
           "sequence": "Oração",
@@ -617,7 +616,7 @@
         },
         {
           "id": "8x6Pga4n",
-          "title": "Hino 97 - SÃºplica do Redimido",
+          "title": "Hino 97 - Súplica do Redimido",
           "createAt": "28/05/2023",
           "albumCover": "assets/images/default_cover_1.png",
           "group": "Hinário Novo Cântico",
@@ -672,7 +671,7 @@
                 "O Senhor é a minha luz",
                 "E a minha salvação",
                 "quem temerei se o Senhor",
-                "Ã‰ a força da minha vida",
+                "É a força da minha vida",
                 "Quando o mal me sobrevém",
                 "E tenta me destruir",
                 "Todos os meus opressores",
@@ -760,7 +759,7 @@
           ]
         }
       ],
-      "liturgyList": [
+      "liturgiesList": [
         {
           "isAdditional": false,
           "sequence": "Oração",
@@ -799,7 +798,7 @@
         {
           "isAdditional": true,
           "sequence": "Hino 97",
-          "additional": "SÃºplica do redimido"
+          "additional": "Súplica do redimido"
         },
         {
           "isAdditional": false,
@@ -827,7 +826,7 @@
       "lyricsList": [
         {
           "id": "JBpt805t",
-          "title": "Ãguas Purificadoras",
+          "title": "Águas Purificadoras",
           "createAt": "26/05/2023",
           "albumCover": "assets/images/default_cover_2.png",
           "group": "Diante do Trono",
@@ -838,8 +837,8 @@
               "versesList": [
                 "Existe um rio, Senhor",
                 "Que flui do Teu grande amor",
-                "Ãguas que correm do Trono",
-                "Ãguas que curam",
+                "Águas que correm do Trono",
+                "Águas que curam",
                 "Que limpam"
               ]
             },
@@ -899,14 +898,14 @@
                 "Os anjos e os homens ",
                 "os céus e a terra",
                 "Montanhas e mares ",
-                "declaram quem tÃº és.."
+                "declaram quem tú és.."
               ]
             },
             {
               "id": 2,
               "isChorus": false,
               "versesList": [
-                "TÃº és Senhor e Rei ",
+                "Tú és Senhor e Rei ",
                 "governas sobre o universo",
                 "Justo e fiel",
                 "vestido de glória e poder",
@@ -924,14 +923,14 @@
                 "nos entregamos a tí",
                 "Toma o teu lugar ",
                 "e habita entre nós",
-                "Ã“h Santo Deus"
+                "Óh Santo Deus"
               ]
             },
             {
               "id": 4,
               "isChorus": false,
               "versesList": [
-                "Ã“h Santo Deus",
+                "Óh Santo Deus",
                 "(Santo Deus, Santo Deus, Santo Deus)"
               ]
             }
@@ -953,9 +952,9 @@
                 "Para entrar em comunhão",
                 "Pois tenho sede e fome",
                 "Da Tua presença",
-                "Ã‰ o que mais quero ter",
+                "É o que mais quero ter",
                 "Da Tua presença",
-                "Ã‰ o meu maior prazer",
+                "É o meu maior prazer",
                 "Te quero, Deus "
               ]
             },
@@ -969,7 +968,7 @@
                 "Tua presença",
                 "O pão Vivo que desce do céu",
                 "A palavra mais doce que o mel",
-                "Ã‰ o Teu Rio de Vida que me sustenta"
+                "É o Teu Rio de Vida que me sustenta"
               ]
             },
             {
@@ -1100,7 +1099,7 @@
           ]
         }
       ],
-      "liturgyList": [
+      "liturgiesList": [
         {
           "isAdditional": false,
           "sequence": "Oração",
@@ -1193,7 +1192,7 @@
               "id": 2,
               "isChorus": false,
               "versesList": [
-                "Ã‰s um Deus tremendo, Pai de amor bondoso",
+                "És um Deus tremendo, Pai de amor bondoso",
                 "Venho pois a cada dia, venho cheio de alegria"
               ]
             },
@@ -1361,7 +1360,7 @@
               "versesList": [
                 "Vem já! Vem já! Alma cansada, vem já!",
                 "Manso e suave, Jesus convidando,",
-                "Chama: â€œÃ“ pecador, vem!â€"
+                "Chama: 'O pecador, vem!'"
               ]
             },
             {
@@ -1427,7 +1426,7 @@
           ]
         }
       ],
-      "liturgyList": [
+      "liturgiesList": [
         {
           "isAdditional": false,
           "sequence": "Oração",
@@ -1578,8 +1577,8 @@
               "id": 4,
               "isChorus": false,
               "versesList": [
-                "Ã‰s quem traz paz ao caos dos homens",
-                "Ã‰s escudo aos indefesos",
+                "És quem traz paz ao caos dos homens",
+                "És escudo aos indefesos",
                 "O rei da glória",
                 "O poderoso Deus"
               ]
@@ -1631,7 +1630,7 @@
                 "No perdão que tenho em ti",
                 "Aprendo a perdoar.",
                 "Quem serve o vinho e parte o pão",
-                "Ã‰ o próprio Cristo ressurreto e nosso irmão.",
+                "É o próprio Cristo ressurreto e nosso irmão.",
                 "O Rei da terra e céus é nosso anfitrião,",
                 "Com vinho e pão nós celebramos comunhão."
               ]
@@ -1719,7 +1718,7 @@
           ]
         }
       ],
-      "liturgyList": [
+      "liturgiesList": [
         {
           "isAdditional": false,
           "sequence": "Oração",
@@ -1963,7 +1962,7 @@
         },
         {
           "id": "DmlrXqlN",
-          "title": "Ao Ãºnico",
+          "title": "Ao único",
           "createAt": "26/05/2023",
           "albumCover": "assets/images/default_cover_2.png",
           "group": "Aline Barros",
@@ -1972,7 +1971,7 @@
               "id": 0,
               "isChorus": false,
               "versesList": [
-                "Ao Ãºnico,que é digno de receber",
+                "Ao único,que é digno de receber",
                 "A honra e a glória, a força e o poder",
                 "Ao Rei eterno imortal, invisível mas real",
                 "A ele ministramos o louvor (2x)"
@@ -2075,7 +2074,7 @@
               "isChorus": false,
               "versesList": [
                 "Ao Deus de amor e de imensa bondade,",
-                "Com voz de jÃºbilo, vinde aclamai!",
+                "Com voz de júbilo, vinde aclamai!",
                 "Com coração transbordante de graças,",
                 "Seu grande amor, todos, vinde louvai."
               ]
@@ -2123,7 +2122,7 @@
           ]
         }
       ],
-      "liturgyList": [
+      "liturgiesList": [
         {
           "isAdditional": false,
           "sequence": "Oração",
@@ -2178,4 +2177,3 @@
       "guideIsVisible": true
     }
   ]
-}
