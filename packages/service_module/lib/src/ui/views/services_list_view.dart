@@ -92,17 +92,13 @@ class _ServicesListViewState extends State<ServicesListView> {
                             ),
                             Container(
                               margin: const EdgeInsets.only(right: 5),
-                              child: const SizedBox(
-                                width: 34,
-                                height: 34,
-                                child: IconButtonWidget(
-                                  size: 34,
-                                  color: AppColors.white,
-                                  splashColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  iOSIcon: CupertinoIcons.chevron_forward,
-                                  androidIcon: Icons.navigate_next_sharp,
-                                ),
+                              child: const IconButtonWidget(
+                                size: 34,
+                                color: AppColors.white,
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                iOSIcon: CupertinoIcons.chevron_forward,
+                                androidIcon: Icons.navigate_next_sharp,
                               ),
                             ),
                           ],

@@ -105,13 +105,13 @@ class _LoginViewState extends State<LoginView> {
                         },
                         child: _obscure
                             ? const IconButtonWidget(
-                                size: 24,
+                          size: 24,
                                 color: AppColors.grey7,
                                 iOSIcon: CupertinoIcons.eye_slash,
                                 androidIcon: Icons.visibility_off_outlined,
                               )
                             : const IconButtonWidget(
-                                size: 24,
+                          size: 24,
                                 color: AppColors.grey7,
                                 iOSIcon: CupertinoIcons.eye,
                                 androidIcon: Icons.visibility_outlined,

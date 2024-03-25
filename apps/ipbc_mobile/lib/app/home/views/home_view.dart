@@ -69,7 +69,7 @@ class _HomeViewState extends State<HomeView>
                     children: [
                       const MainTopBarWidget(),
                       Container(
-                        margin: const EdgeInsets.only(top: 20),
+                        margin: const EdgeInsets.only(top: 24),
                         child: InkWell(
                           onTap: () {
                             Navigator.pushNamed(
@@ -91,7 +91,7 @@ class _HomeViewState extends State<HomeView>
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 12),
+                        margin: const EdgeInsets.only(top: 2),
                         child: CarouselWidget(
                           fontStyle: AppFonts.defaultFont(
                             fontSize: 20,
@@ -99,14 +99,15 @@ class _HomeViewState extends State<HomeView>
                             color: AppColors.white,
                           ),
                           margin: const EdgeInsets.only(
-                            left: 15.5,
-                            right: 15.5,
+                            left: 6,
+                            right: 6,
+                            bottom: 9
                           ),
                           route: ServiceModule.servicesCollectionRoute,
                           mainAxisAlignment: MainAxisAlignment.center,
                           width: context.mediaQuery.size.width,
                           services: _servicesList,
-                          height: 167,
+                          height: 182,
                         ),
                       ),
                       InkWell(
@@ -119,7 +120,7 @@ class _HomeViewState extends State<HomeView>
                         child: Column(
                           children: [
                             Container(
-                              margin: const EdgeInsets.only(top: 24),
+                              margin: const EdgeInsets.only(top: 15),
                               child: title(text: "Eventos"),
                             ),
                             subtitle(
@@ -162,17 +163,13 @@ class _HomeViewState extends State<HomeView>
               text,
               style: AppFonts.title2,
             ),
-            SizedBox(
-              width: 35,
-              height: 35,
-              child: IconButtonWidget(
-                size: Platform.isIOS ? null : 33,
-                color: AppColors.darkGreen,
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                iOSIcon: CupertinoIcons.chevron_forward,
-                androidIcon: Icons.navigate_next_sharp,
-              ),
+            IconButtonWidget(
+              size: Platform.isIOS ? 30 : 35,
+              color: AppColors.darkGreen,
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              iOSIcon: CupertinoIcons.chevron_forward,
+              androidIcon: Icons.navigate_next_sharp,
             ),
           ],
         ),
@@ -186,6 +183,7 @@ class _HomeViewState extends State<HomeView>
             text,
             style: AppFonts.defaultFont(
               fontSize: 15,
+              height:1.2,
               color: AppColors.grey9,
             ),
           ),

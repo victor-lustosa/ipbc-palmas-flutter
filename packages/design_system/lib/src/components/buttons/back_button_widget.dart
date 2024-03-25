@@ -16,18 +16,14 @@ class BackButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: size ?? 30,
-      height: size ?? 30,
-      child: IconButtonWidget(
-        size: size ?? 30,
-        color: color ?? AppColors.darkGreen,
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        iOSIcon: CupertinoIcons.chevron_back,
-        androidIcon: Icons.arrow_back_rounded,
-        action: action,
-      ),
+    return IconButtonWidget(
+      size: size ?? 30,
+      color: color ?? AppColors.darkGreen,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      iOSIcon: CupertinoIcons.chevron_back,
+      androidIcon: Icons.arrow_back_rounded,
+      action: action,
     );
   }
 }

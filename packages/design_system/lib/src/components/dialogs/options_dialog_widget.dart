@@ -74,18 +74,16 @@ Future<void> showCustomOptionsDialog({
                                 ],
                               ),
                             ),
-                            SizedBox(
-                              height: 40,
-                              width: 40,
-                              child: IconButtonWidget(
-                                  size: 20,
-                                  action: () {
-                                    callback(false);
-                                    Modular.to.pop(context);
-                                  },
-                                  color: AppColors.grey10,
-                                  iOSIcon: CupertinoIcons.clear,
-                                  androidIcon: Icons.clear),
+                            IconButtonWidget(
+                                sizeIcon: 20,
+                                size: 40,
+                                action: () {
+                                  callback(false);
+                                  Modular.to.pop(context);
+                                },
+                                color: AppColors.grey10,
+                                iOSIcon: CupertinoIcons.clear,
+                                androidIcon: Icons.clear,
                             ),
                           ],
                         ),
