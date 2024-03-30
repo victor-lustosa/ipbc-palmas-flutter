@@ -11,11 +11,15 @@ class CreateEventView extends StatefulWidget {
 
 class _CreateEventViewState extends State<CreateEventView> {
   final TextEditingController _eventTitleController = TextEditingController();
-  final TextEditingController _eventLocationController = TextEditingController();
-  final TextEditingController _eventDescriptionController = TextEditingController();
+  final TextEditingController _eventLocationController =
+      TextEditingController();
+  final TextEditingController _eventDescriptionController =
+      TextEditingController();
   final String _eventTitleErrorText = 'por favor, insira o título do evento.';
-  final String _eventLocationErrorText = 'por favor, insira o título do evento.';
-  final String _eventDescriptionErrorText = 'por favor, insira o título do evento.';
+  final String _eventLocationErrorText =
+      'por favor, insira o título do evento.';
+  final String _eventDescriptionErrorText =
+      'por favor, insira o título do evento.';
   final _eventTitleKey = GlobalKey<FormState>();
   final _eventLocationKey = GlobalKey<FormState>();
   final _eventDescriptionKey = GlobalKey<FormState>();
@@ -97,9 +101,9 @@ class _CreateEventViewState extends State<CreateEventView> {
                   ),
                 ),
                 Container(
-                  margin:  const EdgeInsets.only(top: 16),
+                  margin: const EdgeInsets.only(top: 16),
                   child: TemplateFormWidget(
-                    titleMargin: const EdgeInsets.only(bottom: 4) ,
+                    titleMargin: const EdgeInsets.only(bottom: 4),
                     controller: _eventTitleController,
                     title: 'Título do evento',
                     isValid: _isEventTitleValid,
@@ -116,9 +120,9 @@ class _CreateEventViewState extends State<CreateEventView> {
                   ),
                 ),
                 Container(
-                  margin:  const EdgeInsets.only(top: 16),
+                  margin: const EdgeInsets.only(top: 16),
                   child: TemplateFormWidget(
-                    titleMargin: const EdgeInsets.only(bottom: 4) ,
+                    titleMargin: const EdgeInsets.only(bottom: 4),
                     controller: _eventDescriptionController,
                     title: 'Descrição',
                     maxLines: 4,
@@ -137,9 +141,9 @@ class _CreateEventViewState extends State<CreateEventView> {
                   ),
                 ),
                 Container(
-                  margin:  const EdgeInsets.only(top: 16),
+                  margin: const EdgeInsets.only(top: 16),
                   child: TemplateFormWidget(
-                    titleMargin: const EdgeInsets.only(bottom: 4) ,
+                    titleMargin: const EdgeInsets.only(bottom: 4),
                     controller: _eventLocationController,
                     title: 'Localização',
                     maxLines: 4,
@@ -148,20 +152,27 @@ class _CreateEventViewState extends State<CreateEventView> {
                     globalKey: _eventLocationKey,
                     isPressed: _isPressed,
                     inputDecoration: fieldInputDecoration(
-                      prefixIcon: SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: Image.asset(scale: 0.1, AppIcons.eventLocation),
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 8,
+                          top: 10,
+                          bottom: 10,
+                          right: 2
+                        ),
+                        child: SvgPicture.asset(AppIcons.eventLocation),
                       ),
+                      contentPadding:
+                          const EdgeInsets.only(
+                            top: 10,
+                          ),
                       isValid: _isEventLocationValid,
-                      hintText: '',
+                      hintText: 'Selecione a localização',
                     ),
                     validator: (data) {
                       return _emailValidation(data);
                     },
                   ),
                 ),
-
               ],
             ),
           ),

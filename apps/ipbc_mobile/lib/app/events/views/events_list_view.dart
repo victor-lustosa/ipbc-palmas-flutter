@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:core_module/core_module.dart';
-import 'package:ipbc_mobile/app/events/event_module.dart';
+
+import '../event_module.dart';
 
 class EventsListView extends StatefulWidget {
   const EventsListView({
@@ -29,7 +30,10 @@ class EventsListViewState extends State<EventsListView> {
                 Row(
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(top: 24, left: 16),
+                      margin: const EdgeInsets.only(
+                        top: 24,
+                        left: 16,
+                      ),
                       child: BackButtonWidget(
                         action: () => Navigator.pop(context),
                       ),
@@ -56,7 +60,14 @@ class EventsListViewState extends State<EventsListView> {
           ),
         ),
       ),
-      floatingActionButton:  FloatingButtonWidget(action: () => Modular.to.pushNamed(EventModule.eventRoute + EventModule.createEventRoute)),
+      floatingActionButton: FloatingButtonWidget(
+        action: () => Modular.to.pushNamed(
+          EventModule.eventRoute + EventModule.createEventRoute,
+        ),
+        iconColor: AppColors.white,
+        backgroundColor: AppColors.add,
+        icon: Icons.add,
+      ),
     );
   }
 }
