@@ -84,10 +84,13 @@ fieldInputDecoration(
     required hintText,
     Widget? suffixIcon,
     Widget? prefixIcon,
+    BoxConstraints? prefixIconConstraints,
+    TextStyle? hintStyle,
     EdgeInsetsGeometry? contentPadding}) {
   return InputDecoration(
     suffixIcon: suffixIcon,
     prefixIcon: prefixIcon,
+    prefixIconConstraints: prefixIconConstraints,
     border: InputBorder.none,
     hintStyle: AppFonts.defaultFont(
       fontSize: 12,

@@ -126,14 +126,25 @@ class _CreateEventViewState extends State<CreateEventView> {
                     controller: _eventDescriptionController,
                     title: 'Descrição',
                     maxLines: 4,
-                    fieldHeight: 92,
+                    fieldHeight: 110,
                     isValid: _isEventDescriptionValid,
                     errorText: _eventDescriptionErrorText,
                     globalKey: _eventDescriptionKey,
                     isPressed: _isPressed,
                     inputDecoration: fieldInputDecoration(
+                      contentPadding: const EdgeInsets.only(
+                        left: 16,
+                        top: 9,
+                        right: 10,
+                      ),
+                      hintStyle: AppFonts.defaultFont(
+                        fontSize: 12,
+                        color: _isEventDescriptionValid
+                            ? AppColors.grey5
+                            : Colors.red,
+                      ),
                       isValid: _isEventDescriptionValid,
-                      hintText: '',
+                      hintText: 'Descrição do evento',
                     ),
                     validator: (data) {
                       return _emailValidation(data);
@@ -152,19 +163,18 @@ class _CreateEventViewState extends State<CreateEventView> {
                     globalKey: _eventLocationKey,
                     isPressed: _isPressed,
                     inputDecoration: fieldInputDecoration(
+                      prefixIconConstraints: const BoxConstraints(
+                        minWidth: 24,
+                        minHeight: 24,
+                      ),
                       prefixIcon: Padding(
                         padding: const EdgeInsets.only(
-                          left: 8,
-                          top: 10,
-                          bottom: 10,
-                          right: 2
-                        ),
-                        child: SvgPicture.asset(AppIcons.eventLocation),
+                            left: 10, top: 10, bottom: 10, right: 4),
+                        child: Image.asset(AppIcons.eventLocation),
                       ),
-                      contentPadding:
-                          const EdgeInsets.only(
-                            top: 10,
-                          ),
+                      contentPadding: const EdgeInsets.only(
+                        top: 10,
+                      ),
                       isValid: _isEventLocationValid,
                       hintText: 'Selecione a localização',
                     ),

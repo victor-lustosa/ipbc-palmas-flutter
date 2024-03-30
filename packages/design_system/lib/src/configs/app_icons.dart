@@ -30,7 +30,7 @@ class AppIcons {
   static const String visibityOn = 'assets/icons/visibility_on.png';
   static const String close = 'assets/icons/close.png';
   static const String folderUpload = 'assets/icons/drive_folder_upload.png';
-  static const String eventLocation = 'assets/icons/event-location.svg';
+  static const String eventLocation = 'assets/icons/event-location.png';
 
   static const String emailSuccess = 'assets/icons/email-success.png';
   static const String trash = 'assets/icons/delete.png';
