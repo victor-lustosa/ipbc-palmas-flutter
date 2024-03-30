@@ -44,7 +44,7 @@ class ResetPasswordSuccessView extends StatelessWidget {
                   ),
                   fixedSize: Size(MediaQuery.of(context).size.width, 48),
                   action: () {
-                    Modular.to.navigate(AuthModule.initialRoute);
+                    Modular.to.navigate(AuthModule.authRoute);
                   },
                   backgroundColor: AppColors.darkGreen,
                   shadowColor: AppColors.grey0,

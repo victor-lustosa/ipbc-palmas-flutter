@@ -4,10 +4,8 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../events/views/events_list_view.dart';
 import '../offers/controller/banner_controller.dart';
 
-import '../splash/splash_module.dart';
 import 'blocs/home_bloc.dart';
 import 'views/home_view.dart';
 import 'views/init_view.dart';
@@ -114,16 +112,6 @@ class _HomeRoutesState extends State<HomeRoutes> {
               transitionSpeed: const Duration(milliseconds: 700),
               reverseSpeed: const Duration(milliseconds: 700),
               child: EditLiturgiesView(dto: settings.arguments as EditLiturgiesDTO,),
-              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
-                CurveTween(curve: Curves.ease),
-              ),
-            );
-
-          case SplashModule.eventsListRoute:
-            return CustomTransitionPageRoute(
-              transitionSpeed: const Duration(milliseconds: 700),
-              reverseSpeed: const Duration(milliseconds: 700),
-              child: const EventsListView(),
               tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
                 CurveTween(curve: Curves.ease),
               ),

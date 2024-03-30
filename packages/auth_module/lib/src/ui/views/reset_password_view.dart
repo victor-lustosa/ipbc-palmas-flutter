@@ -38,7 +38,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                         margin: const EdgeInsets.only(top: 33),
                         child: BackButtonWidget(
                           action: () => Modular.to.navigate(
-                              AuthModule.initialRoute + AuthModule.authRoute),
+                              AuthModule.authRoute + AuthModule.authRoute),
                         ),
                       ),
                     ],
@@ -95,7 +95,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     child: ElevatedButtonWidget(
                       action: () {
                         if (emailMock == _resetPasswordController.text) {
-                          Modular.to.navigate(AuthModule.initialRoute + AuthModule.verificationCodeRoute);
+                          Modular.to.navigate(AuthModule.authRoute + AuthModule.verificationCodeRoute);
                         } else {
                           //_showErrorDialog();
                           showCustomErrorDialog(
