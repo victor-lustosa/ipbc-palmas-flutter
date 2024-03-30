@@ -38,7 +38,7 @@ class ElevatedButtonWidget extends StatelessWidget {
               ? null
               : MaterialStateProperty.all<double>(elevation!),
           padding: padding == null
-              ? null
+              ? MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero)
               : MaterialStateProperty.all<EdgeInsets>(padding!),
           overlayColor: overlayColor == null
               ? null

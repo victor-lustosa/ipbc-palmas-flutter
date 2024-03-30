@@ -33,6 +33,8 @@ class AppIcons {
   static const String emailSuccess = 'assets/icons/email-success.png';
   static const String trash = 'assets/icons/delete.png';
   static const String edit = 'assets/icons/edit_square.png';
+  static const String info = 'assets/icons/info.png';
+  static const String editIcon = 'assets/icons/edit.png';
   static const String emailNotValid = 'assets/icons/email-not-valid.png';
 
   static final sideBarIconsList = [

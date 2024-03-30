@@ -159,25 +159,15 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
           ),
         ),
       ),
-      floatingActionButton: SizedBox(
-        height: 56,
-        width: 56,
-        child: FloatingActionButton(
-          shape: const CircleBorder(),
-          elevation: 1.8,
-          highlightElevation: 1.8,
-          focusElevation: 1.8,
-          hoverElevation: 1.8,
-          onPressed: () {
-            Modular.to.pushNamed(
-              ServiceModule.servicesRoute + ServiceModule.insertServicesRoute,
-            );
-          },
-          backgroundColor: AppColors.add,
-          child: const Icon(
-            size: 45,
-            Icons.add_rounded,
-            color: AppColors.white,
+      floatingActionButton: FloatingButtonWidget(
+        iconColor: AppColors.white,
+        backgroundColor: AppColors.add,
+        icon: Icons.add,
+        action: () => Modular.to.navigate(
+          ServiceModule.servicesRoute + ServiceModule.editLiturgiesRoute,
+          arguments: EditLiturgiesDTO(
+            image: widget.entity.image,
+            heading: widget.entity.heading,
           ),
         ),
       ),

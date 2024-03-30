@@ -37,6 +37,8 @@ class _ServiceViewState extends State<ServiceView> {
                 child: Container(
                   margin: const EdgeInsets.only(top: 18, left: 16),
                   child: GuidelineWidget(
+                    circleColor: AppColors.cardBallsGrey,
+                    timelineColor: AppColors.timelineGuideTGreen,
                     liturgiesList: widget.entity.service.liturgiesList,
                   ),
                 ),

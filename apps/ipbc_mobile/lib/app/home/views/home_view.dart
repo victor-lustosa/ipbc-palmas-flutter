@@ -20,6 +20,7 @@ class _HomeViewState extends State<HomeView>
   late final HomeBloc _bloc;
   List<ServicesEntity> _servicesList = [];
   int activePage = 0;
+
   //final List<Image> imagesList = [];
 
   @override
@@ -32,7 +33,7 @@ class _HomeViewState extends State<HomeView>
     _bloc.add(CheckConnectivityEvent());
   }
 
- /* @override
+  /* @override
   void didChangeDependencies() {
     for (Image image in imagesList) {
       precacheImage(image.image, context);
@@ -99,10 +100,7 @@ class _HomeViewState extends State<HomeView>
                             color: AppColors.white,
                           ),
                           margin: const EdgeInsets.only(
-                            left: 6,
-                            right: 6,
-                            bottom: 9
-                          ),
+                              left: 6, right: 6, bottom: 9),
                           route: ServiceModule.servicesCollectionRoute,
                           mainAxisAlignment: MainAxisAlignment.center,
                           width: context.mediaQuery.size.width,
@@ -132,7 +130,10 @@ class _HomeViewState extends State<HomeView>
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 12, bottom: 20),
+                        margin: const EdgeInsets.only(
+                          top: 12,
+                          bottom: 20,
+                        ),
                         height: 268,
                         child: SlideCardsWidget(
                           width: 319,
@@ -183,7 +184,7 @@ class _HomeViewState extends State<HomeView>
             text,
             style: AppFonts.defaultFont(
               fontSize: 15,
-              height:1.2,
+              height: 1.2,
               color: AppColors.grey9,
             ),
           ),

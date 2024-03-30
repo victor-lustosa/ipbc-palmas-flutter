@@ -25,7 +25,6 @@ class _OwnChoiceChipsWidgetState extends State<OwnChoiceChipsWidget> {
               onTap: () {
                 setState(() {
                   _selectedIndex = index;
-                  print('option: ${_options[index]}');
                 });
               },
               child: Container(

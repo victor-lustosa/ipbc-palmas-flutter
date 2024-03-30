@@ -22,6 +22,7 @@ export 'src/components/slide_cards/slide_cads_widget.dart';
 export 'src/components/buttons/outlined_button_widget.dart';
 export 'src/components/buttons/text_button_widget.dart';
 export 'src/components/buttons/icon_button_widget.dart';
+export 'src/components/buttons/floating_button_widget.dart';
 export 'src/components/buttons/back_button_widget.dart';
 
 export 'src/components/forms/form_field_widget.dart';
@@ -34,6 +35,7 @@ export 'src/components/forms/template_form_widget.dart';
 export 'src/components/covers/album_cover_widget.dart';
 
 export 'src/components/lists/lyrics_list_widget.dart';
+export 'src/components/lists/custom_reorderable_list_widget.dart';
 
 export 'src/components/carousel/carousel_widget.dart';
 
