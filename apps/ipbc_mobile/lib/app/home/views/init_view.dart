@@ -4,12 +4,13 @@ import 'dart:io';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../events/event_module.dart';
 import '../../events/views/events_list_view.dart';
 
 import '../../offers/views/offers_view.dart';
+import '../views/home_view.dart';
 import '../home_module.dart';
-import 'home_view.dart';
 
 class InitView extends StatefulWidget {
   const InitView({super.key});

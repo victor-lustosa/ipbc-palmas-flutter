@@ -181,7 +181,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
           contentPadding: const EdgeInsets.only(
             left: 10,
             right: 10,
-            top: 15,
+            top: 12,
             //top 8 pra celular
           ),
         ),
@@ -200,7 +200,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
             left: 10,
             right: 10,
             //top 11 pra celular
-            top: 16,
+            top: 12,
           ),
       counterStyle: AppFonts.defaultFont(
         fontSize: 10,
@@ -235,7 +235,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         width: width,
         height: 49,
         margin: const EdgeInsets.only(top: 32, bottom: 80),
-        child: ElevatedButtonWidget(
+        child: ButtonWidget(
           shadowColor: AppColors.grey6,
           backgroundColor: _isSubmitted
               ? AppColors.highlightGreen

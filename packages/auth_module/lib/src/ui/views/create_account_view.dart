@@ -63,7 +63,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     ),
                     height: 48,
                     width: context.mediaQuery.size.width,
-                    child: ElevatedButtonWidget(
+                    child: ButtonWidget(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
@@ -112,7 +112,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     ),
                     height: 48,
                     width: context.mediaQuery.size.width,
-                    child: ElevatedButtonWidget(
+                    child: ButtonWidget(
                       backgroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
@@ -154,7 +154,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     ),
                     height: 48,
                     width: context.mediaQuery.size.width,
-                    child: ElevatedButtonWidget(
+                    child: ButtonWidget(
                       backgroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),

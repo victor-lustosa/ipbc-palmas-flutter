@@ -38,7 +38,7 @@ class ResetPasswordSuccessView extends StatelessWidget {
                   left: 16.0,
                   right: 16.0,
                 ),
-                child: ElevatedButtonWidget(
+                child: ButtonWidget(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),

@@ -92,7 +92,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     margin: const EdgeInsets.only(
                       top: 40,
                     ),
-                    child: ElevatedButtonWidget(
+                    child: ButtonWidget(
                       action: () {
                         if (emailMock == _resetPasswordController.text) {
                           Modular.to.navigate(AuthModule.authRoute + AuthModule.verificationCodeRoute);

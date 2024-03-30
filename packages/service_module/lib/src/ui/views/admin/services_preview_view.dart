@@ -86,7 +86,7 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                     right: 15.5,
                     bottom: 30,
                   ),
-                  child: ElevatedButtonWidget(
+                  child: ButtonWidget(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),

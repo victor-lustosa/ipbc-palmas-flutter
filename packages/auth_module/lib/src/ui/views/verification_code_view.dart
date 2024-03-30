@@ -126,7 +126,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                   margin: const EdgeInsets.only(
                     top: 16,
                   ),
-                  child: ElevatedButtonWidget(
+                  child: ButtonWidget(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),

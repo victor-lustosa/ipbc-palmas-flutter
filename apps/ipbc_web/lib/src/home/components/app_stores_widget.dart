@@ -42,7 +42,10 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         width: width,
         decoration: const BoxDecoration(color: AppColors.darkGreen),
         child: Container(
-          margin: const EdgeInsets.only(left: 120, top: 100),
+          margin: const EdgeInsets.only(
+            left: 120,
+            top: 100,
+          ),
           child: Stack(
             children: [
               Positioned(
@@ -59,17 +62,18 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
               Positioned(
                 child: SizedBox(
                   width: 571,
-                  height: 253,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(bottom: 23),
+                        margin: const EdgeInsets.only(bottom: 24),
                         child: title(fontSize: 46),
                       ),
                       Container(
                         margin: const EdgeInsets.only(bottom: 40),
-                        child: subtitle(textAlign: TextAlign.left),
+                        child: subtitle(
+                          textAlign: TextAlign.left,
+                        ),
                       ),
                       Row(
                         children: [
@@ -112,12 +116,11 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
                 left: 120,
                 child: SizedBox(
                   width: 571,
-                  height: 253,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(bottom: 23),
+                        margin: const EdgeInsets.only(bottom: 24),
                         child: title(fontSize: 46),
                       ),
                       Container(
@@ -144,6 +147,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
           ),
         ),
       );
+
   mobile() => Container(
         height: 780,
         width: width,
@@ -153,31 +157,27 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Positioned(
-                child: SizedBox(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 23),
-                        child: title(fontSize: 32),
-                      ),
-                      Container(
-                        width: 400,
-                        margin: const EdgeInsets.only(
-                          left: 10,
-                          right: 10,
-                          bottom: 40,
-                        ),
-                        child: subtitle(textAlign: TextAlign.center),
-                      ),
-                      appButton(),
-                      Container(
-                        margin: const EdgeInsets.only(top: 24),
-                        child: playButton(),
-                      ),
-                    ],
+              Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 23),
+                    child: title(fontSize: 32),
                   ),
-                ),
+                  Container(
+                    width: 400,
+                    margin: const EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      bottom: 40,
+                    ),
+                    child: subtitle(textAlign: TextAlign.center),
+                  ),
+                  appButton(),
+                  Container(
+                    margin: const EdgeInsets.only(top: 24),
+                    child: playButton(),
+                  ),
+                ],
               ),
               Positioned(
                 top: 420,
@@ -248,8 +248,10 @@ class StoreButton extends StatelessWidget {
         color: AppColors.grey12,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: TextButton(
-        onPressed: onPressed,
+      child: ButtonWidget(
+        fixedSize: const Size(272, 80),
+        adaptiveButtonType: AdaptiveButtonType.text,
+        action: onPressed,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

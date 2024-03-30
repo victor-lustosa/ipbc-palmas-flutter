@@ -65,6 +65,8 @@ class EventsListViewState extends State<EventsListView> {
           EventModule.eventRoute + EventModule.createEventRoute,
         ),
         backgroundColor: AppColors.add,
+        iconColor: AppColors.white,
+        icon: Icons.add,
       ),
     );
   }

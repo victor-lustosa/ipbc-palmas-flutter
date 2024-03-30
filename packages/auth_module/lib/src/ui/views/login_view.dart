@@ -164,7 +164,7 @@ class _LoginViewState extends State<LoginView> {
                     height: 48,
                     duration: const Duration(milliseconds: 750),
                     curve: Curves.fastOutSlowIn,
-                    child: ElevatedButtonWidget(
+                    child: ButtonWidget(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
@@ -188,7 +188,6 @@ class _LoginViewState extends State<LoginView> {
                           }
                         }
                       },
-                      padding: EdgeInsets.zero,
                       backgroundColor: _isEmailValid && _isPasswordValid
                           ? AppColors.darkGreen
                           : AppColors.disableButton,
@@ -226,7 +225,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     height: 48,
                     width: context.mediaQuery.size.width,
-                    child: ElevatedButtonWidget(
+                    child: ButtonWidget(
                       backgroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
@@ -268,7 +267,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     height: 48,
                     width: context.mediaQuery.size.width,
-                    child: ElevatedButtonWidget(
+                    child: ButtonWidget(
                       backgroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
