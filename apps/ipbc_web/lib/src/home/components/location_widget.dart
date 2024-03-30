@@ -32,16 +32,20 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
   }
 
   web() => Container(
-        height: 600,
         width: vWidth,
-        margin: const EdgeInsets.only(top: 100),
+        margin: const EdgeInsets.only(
+          top: 100,
+        ),
+        padding: const EdgeInsets.only(
+          top: 100,
+          bottom: 100,
+          left: 40,
+          right: 40
+        ),
         decoration: const BoxDecoration(color: AppColors.grey0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              margin: const EdgeInsets.only(left: 20),
-              width: 1200,
+            SizedBox(width: 1200,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -50,18 +54,14 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
                     decoration: imageShadow(),
                     child: locationImage(width: 573.26),
                   ),
-                  Container(
-                    height: 273,
-                    margin: const EdgeInsets.only(right: 69.74),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        title(fontSize: 46),
-                        subtitle(textAlign: TextAlign.start),
-                        address(width: 480),
-                        locationButton(width: 215, height: 49),
-                      ],
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      title(fontSize: 46),
+                      subtitle(textAlign: TextAlign.start),
+                      address(width: 480),
+                      locationButton(size: 215),
+                    ],
                   ),
                 ],
               ),
@@ -71,9 +71,14 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
       );
 
   tablet() => Container(
-        height: 880,
         width: vWidth,
-        margin: const EdgeInsets.only(top: 100),
+        margin: const EdgeInsets.only(
+          top: 80,
+        ),
+        padding: const EdgeInsets.only(
+          top: 80,
+          bottom: 80,
+        ),
         decoration: const BoxDecoration(color: AppColors.grey0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,11 +92,8 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
               ),
             ),
             Container(
-              height: 273,
               margin: const EdgeInsets.only(
                 top: 40,
-                left: 80,
-                right: 69.74,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,7 +101,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
                   title(fontSize: 46),
                   subtitle(textAlign: TextAlign.start),
                   address(width: 480),
-                  locationButton(width: 215, height: 49),
+                  locationButton(size: 215),
                 ],
               ),
             ),
@@ -108,9 +110,14 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
       );
 
   mobile() => Container(
-        height: 750,
         width: vWidth,
-        margin: const EdgeInsets.only(top: 60),
+    margin: const EdgeInsets.only(
+        top: 60,
+    ),
+    padding: const EdgeInsets.only(
+      top: 60,
+      bottom: 60,
+    ),
         decoration: const BoxDecoration(color: AppColors.grey0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -136,7 +143,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
                   title(fontSize: 32),
                   subtitle(textAlign: TextAlign.center, width: 360),
                   address(width: 360),
-                  locationButton(width: 342, height: 49),
+                  locationButton(size: 342),
                 ],
               ),
             ),
@@ -151,7 +158,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
       );
 
   title({required double fontSize}) => Container(
-        margin: const EdgeInsets.only(bottom: 23),
+        margin: const EdgeInsets.only(bottom: 24),
         child: Text(
           'Localização',
           style: AppFonts.defaultFont(
@@ -213,19 +220,14 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ],
       );
 
-  locationButton({required double width, required double height}) => Container(
-        width: width,
-        height: height,
+  locationButton({required double size}) => Container(
         margin: const EdgeInsets.only(top: 40),
-        child: OutlinedButtonWidget(
-          sideColor:
-          isPressed
-              ? AppColors.highlightGreen
-              : AppColors.darkGreen,
+        child: ButtonWidget(
+          adaptiveButtonType: AdaptiveButtonType.outlined,
+          fixedSize: Size(size, 49),
+          sideColor: isPressed ? AppColors.highlightGreen : AppColors.darkGreen,
           foregroundColor:
-          isPressed
-              ? AppColors.highlightGreen
-              : AppColors.darkGreen,
+              isPressed ? AppColors.highlightGreen : AppColors.darkGreen,
           overlayColor: AppColors.grey0,
           sideHoveredColor: AppColors.highlightGreen,
           foregroundHoveredColor: AppColors.highlightGreen,
@@ -235,16 +237,26 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
                 isPressed = true;
               });
             });
-            Future.delayed(const Duration(milliseconds: 600), () {
-              setState(() {
-                _locationLink = launchInBrowser(locationLink);
-              },);
-            },);
-            Future.delayed(const Duration(milliseconds: 600), () {
-              setState(() {
-                isPressed = false;
-              },);
-            },);
+            Future.delayed(
+              const Duration(milliseconds: 600),
+              () {
+                setState(
+                  () {
+                    _locationLink = launchInBrowser(locationLink);
+                  },
+                );
+              },
+            );
+            Future.delayed(
+              const Duration(milliseconds: 600),
+              () {
+                setState(
+                  () {
+                    isPressed = false;
+                  },
+                );
+              },
+            );
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

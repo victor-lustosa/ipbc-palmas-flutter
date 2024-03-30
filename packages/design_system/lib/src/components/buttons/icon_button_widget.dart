@@ -6,15 +6,16 @@ import 'package:flutter/cupertino.dart';
 class IconButtonWidget extends StatelessWidget {
   const IconButtonWidget(
       {Key? key,
-      this.size,
-      this.action,
-      required this.color,
-      this.splashColor,
-      this.highlightColor,
-      required this.iOSIcon,
-      required this.androidIcon})
+        this.size,
+        this.action,
+        required this.color,
+        this.splashColor,
+        this.highlightColor,
+        required this.iOSIcon,
+        required this.androidIcon, this.sizeIcon})
       : super(key: key);
   final double? size;
+  final double? sizeIcon;
   final IconData iOSIcon;
   final IconData androidIcon;
   final Color? color;
@@ -23,26 +24,30 @@ class IconButtonWidget extends StatelessWidget {
   final Color? highlightColor;
   @override
   Widget build(BuildContext context) {
-    return Platform.isIOS
-        ? CupertinoButton(
-          padding: EdgeInsets.zero,
-            onPressed: action,
-            child: Icon(
-              size: size,
-              color: color,
-              iOSIcon,
-            ),
-          )
-        : IconButton(
-            padding: EdgeInsets.zero,
-            onPressed: action,
-            splashColor: splashColor,
-            highlightColor: highlightColor,
-            icon: Icon(
-              size: size,
-              androidIcon,
-              color: color,
-            ),
-          );
+    return SizedBox(
+      height: size,
+      width: size,
+      child: Platform.isIOS
+          ? CupertinoButton(
+        padding: EdgeInsets.zero,
+        onPressed: action,
+        child: Icon(
+          size: sizeIcon ?? size,
+          color: color,
+          iOSIcon,
+        ),
+      )
+          : IconButton(
+        padding: EdgeInsets.zero,
+        onPressed: action,
+        splashColor: splashColor,
+        highlightColor: highlightColor,
+        icon: Icon(
+          size: sizeIcon ?? size,
+          androidIcon,
+          color: color,
+        ),
+      ),
+    );
   }
 }

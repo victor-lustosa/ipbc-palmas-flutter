@@ -28,7 +28,6 @@ class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget> {
       height: 184,
       width: context.mediaQuery.size.width,
       decoration: BoxDecoration(
-        color: AppColors.grey4,
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(18),
           bottomRight: Radius.circular(18),
@@ -65,7 +64,6 @@ class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget> {
                       ),
                     ),
                     SizedBox(
-                      width: dateIsVisible ? context.mediaQuery.size.width * .53 : null,
                       child: Text(
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -88,6 +86,7 @@ class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget> {
                     ),
                     margin: const EdgeInsets.only(
                       right: 15,
+
                     ),
                     child: Container(
                       margin: const EdgeInsets.only(

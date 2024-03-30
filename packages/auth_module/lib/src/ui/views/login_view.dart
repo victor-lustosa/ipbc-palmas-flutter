@@ -32,6 +32,9 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    suffixAction() => setState(() {
+      _obscure = !_obscure;
+    });
     return ValueListenableBuilder(
       valueListenable: _store,
       builder: (_, state, child) {
@@ -97,26 +100,21 @@ class _LoginViewState extends State<LoginView> {
                         left: 16,
                         top: 9,
                       ),
-                      suffixIcon: InkWell(
-                        onTap: () {
-                          setState(() {
-                            _obscure = !_obscure;
-                          });
-                        },
-                        child: _obscure
-                            ? const IconButtonWidget(
-                                size: 24,
-                                color: AppColors.grey7,
-                                iOSIcon: CupertinoIcons.eye_slash,
-                                androidIcon: Icons.visibility_off_outlined,
-                              )
-                            : const IconButtonWidget(
-                                size: 24,
-                                color: AppColors.grey7,
-                                iOSIcon: CupertinoIcons.eye,
-                                androidIcon: Icons.visibility_outlined,
-                              ),
-                      ),
+                      suffixIcon: _obscure
+                          ? IconButtonWidget(
+                              action: suffixAction,
+                              size: 24,
+                              color: AppColors.grey7,
+                              iOSIcon: CupertinoIcons.eye_slash,
+                              androidIcon: Icons.visibility_off_outlined,
+                            )
+                          : IconButtonWidget(
+                              action: suffixAction,
+                              size: 24,
+                              color: AppColors.grey7,
+                              iOSIcon: CupertinoIcons.eye,
+                              androidIcon: Icons.visibility_outlined,
+                            ),
                     ),
                     validator: (data) {
                       return _passwordValidation(data);
@@ -141,9 +139,8 @@ class _LoginViewState extends State<LoginView> {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     if (!_isPressed) {
-                                      Modular.to.navigate(
-                                          AuthModule.initialRoute +
-                                              AuthModule.resetPasswordRoute);
+                                      Modular.to.navigate(AuthModule.authRoute +
+                                          AuthModule.resetPasswordRoute);
                                     }
                                   },
                               ),
@@ -167,7 +164,7 @@ class _LoginViewState extends State<LoginView> {
                     height: 48,
                     duration: const Duration(milliseconds: 750),
                     curve: Curves.fastOutSlowIn,
-                    child: ElevatedButtonWidget(
+                    child: ButtonWidget(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
@@ -191,7 +188,6 @@ class _LoginViewState extends State<LoginView> {
                           }
                         }
                       },
-                      padding: EdgeInsets.zero,
                       backgroundColor: _isEmailValid && _isPasswordValid
                           ? AppColors.darkGreen
                           : AppColors.disableButton,
@@ -229,7 +225,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     height: 48,
                     width: context.mediaQuery.size.width,
-                    child: ElevatedButtonWidget(
+                    child: ButtonWidget(
                       backgroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
@@ -271,7 +267,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     height: 48,
                     width: context.mediaQuery.size.width,
-                    child: ElevatedButtonWidget(
+                    child: ButtonWidget(
                       backgroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),

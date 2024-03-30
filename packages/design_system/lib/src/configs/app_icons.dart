@@ -29,10 +29,14 @@ class AppIcons {
   static const String visibityOff = 'assets/icons/visibility_off.png';
   static const String visibityOn = 'assets/icons/visibility_on.png';
   static const String close = 'assets/icons/close.png';
+  static const String folderUpload = 'assets/icons/drive_folder_upload.png';
+  static const String eventLocation = 'assets/icons/event-location.png';
 
   static const String emailSuccess = 'assets/icons/email-success.png';
   static const String trash = 'assets/icons/delete.png';
   static const String edit = 'assets/icons/edit_square.png';
+  static const String info = 'assets/icons/info.png';
+  static const String editIcon = 'assets/icons/edit.png';
   static const String emailNotValid = 'assets/icons/email-not-valid.png';
 
   static final sideBarIconsList = [

@@ -33,7 +33,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
         if (inputCode.join() == code.join()) {
           Navigator.pushNamed(
             context,
-            AuthModule.initialRoute + AuthModule.creatingNewPassWordRoute,
+            AuthModule.authRoute + AuthModule.creatingNewPassWordRoute,
           );
         } else {
           showCustomErrorDialog(
@@ -65,7 +65,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                       margin: const EdgeInsets.only(left: 17, top: 33),
                       child: BackButtonWidget(
                         action: () => Modular.to.navigate(
-                          AuthModule.initialRoute + AuthModule.resetPasswordRoute,
+                          AuthModule.authRoute + AuthModule.resetPasswordRoute,
                         ),
                       ),
                     ),
@@ -126,7 +126,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                   margin: const EdgeInsets.only(
                     top: 16,
                   ),
-                  child: ElevatedButtonWidget(
+                  child: ButtonWidget(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),

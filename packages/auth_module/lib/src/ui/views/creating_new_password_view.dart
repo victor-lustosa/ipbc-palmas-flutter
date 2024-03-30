@@ -34,7 +34,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                     margin: const EdgeInsets.only(top: 60),
                     child: BackButtonWidget(
                       action: () => Modular.to.navigate(
-                        AuthModule.initialRoute +
+                        AuthModule.authRoute +
                             AuthModule.verificationCodeRoute,
                       ),
                     ),
@@ -126,7 +126,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                 margin: const EdgeInsets.only(
                   top: 93,
                 ),
-                child: ElevatedButtonWidget(
+                child: ButtonWidget(
                   action: () {
                     if (isValid) {
                       Modular.to.navigate(AuthModule.authRoute +

@@ -15,7 +15,7 @@ class LoginStore extends ValueNotifier<LoginState> {
     value = LoadingLoginState();
     Future.delayed(const Duration(seconds: 1), () {
       if (_email == email && _password == password) {
-        Modular.to.navigate(AuthModule.initialRoute + AuthModule.homeRoute);
+        Modular.to.navigate(AuthModule.authRoute + AuthModule.homeRoute);
       } else {
         value = InitialLoginState();
         showCustomErrorDialog(

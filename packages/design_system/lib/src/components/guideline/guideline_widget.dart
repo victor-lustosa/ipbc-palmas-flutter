@@ -1,13 +1,14 @@
 
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../../../design_system.dart';
 
 class GuidelineWidget extends StatelessWidget {
-  const GuidelineWidget({Key? key, required this.liturgiesList})
+  const GuidelineWidget({Key? key, required this.liturgiesList, required this.timelineColor, required this.circleColor})
       : super(key: key);
-  final List<dynamic> liturgiesList;
-
+  final List<LiturgyEntity> liturgiesList;
+  final Color timelineColor;
+  final Color circleColor;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -21,30 +22,31 @@ class GuidelineWidget extends StatelessWidget {
             Column(
               children: <Widget>[
                 Container(
-                  width: 1.7,
+                  width: 1,
                   height: liturgiesList[index].isAdditional
                       ? 29
                       : 18,
                   color: index == 0
-                      ? Colors.white
-                      : AppColors.timelineGuideTGreen,
+                      ? AppColors.white
+                      : timelineColor,
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 5, right: 5),
-                  padding: const EdgeInsets.all(3.2),
+                  width: 6,
+                  height: 6,
+                  margin: const EdgeInsets.only(left: 6, right: 6),
                   decoration: BoxDecoration(
-                    color: AppColors.secondaryGreen,
+                    color: circleColor,
                     borderRadius: BorderRadius.circular(50),
                   ),
                 ),
                 Container(
-                  width: 2,
+                  width: 1,
                   height: liturgiesList[index].isAdditional
                       ? 28
                       : 18,
                   color: index == liturgiesList.length - 1
-                      ? Colors.white
-                      : AppColors.timelineGuideTGreen,
+                      ? AppColors.white
+                      : timelineColor,
                 ),
               ],
             ),

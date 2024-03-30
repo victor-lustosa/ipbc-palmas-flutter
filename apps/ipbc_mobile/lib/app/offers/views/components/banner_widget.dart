@@ -44,7 +44,7 @@ class _BannerWidgetState extends State<BannerWidget> with ClipboardMixin {
     );
   }
 
-  baseBanner() => Column(
+Widget baseBanner() => Column(
     children: [
       Container(
         margin:  EdgeInsets.only(

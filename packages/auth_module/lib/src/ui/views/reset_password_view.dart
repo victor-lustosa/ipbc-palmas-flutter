@@ -36,6 +36,22 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       child: BackButtonWidget(
                         action: () => Modular.to.navigate(
                             AuthModule.initialRoute + AuthModule.authRoute),
+            child: Container(
+              margin: const EdgeInsets.only(
+                left: 16,
+                right: 16,
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 33),
+                        child: BackButtonWidget(
+                          action: () => Modular.to.navigate(
+                              AuthModule.authRoute + AuthModule.authRoute),
+                        ),
                       ),
                     ),
                   ],
@@ -103,6 +119,31 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     foregroundColor: AppColors.white,
                     child: const Text(
                       "Enviar",
+                    child: ButtonWidget(
+                      action: () {
+                        if (emailMock == _resetPasswordController.text) {
+                          Modular.to.navigate(AuthModule.authRoute + AuthModule.verificationCodeRoute);
+                        } else {
+                          //_showErrorDialog();
+                          showCustomErrorDialog(
+                            context: context,
+                            title: 'E-mail inválido!',
+                            message: 'Por favor, verifique seu e-mail e tente novamente.',
+                          );
+                        }
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      fixedSize: Size(MediaQuery.of(context).size.width, 48),
+                      backgroundColor: emailMock == _resetPasswordController.text
+                          ? AppColors.darkGreen
+                          : AppColors.disableButton,
+                      shadowColor: AppColors.grey0,
+                      foregroundColor: AppColors.white,
+                      child: const Text(
+                        "Enviar",
+                      ),
                     ),
                   ),
                 ),

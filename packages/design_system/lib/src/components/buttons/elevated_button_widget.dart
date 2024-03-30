@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 
 import '../../../design_system.dart';
 
@@ -38,7 +38,7 @@ class ElevatedButtonWidget extends StatelessWidget {
               ? null
               : MaterialStateProperty.all<double>(elevation!),
           padding: padding == null
-              ? null
+              ? MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero)
               : MaterialStateProperty.all<EdgeInsets>(padding!),
           overlayColor: overlayColor == null
               ? null
@@ -69,4 +69,4 @@ class ElevatedButtonWidget extends StatelessWidget {
         child: child,
     );
   }
-}
+}*/

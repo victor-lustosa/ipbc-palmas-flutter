@@ -14,7 +14,6 @@ import 'ui/views/reset_password_view.dart';
 import 'ui/views/verification_code_view.dart';
 
 class AuthModule extends Module {
-  static const String initialRoute = '/auth';
   static const String authRoute = '/auth';
   static const String homeRoute = '/home';
   static const String loginRoute = '/login';
@@ -46,7 +45,7 @@ class AuthModule extends Module {
 
   @override
   void routes(r) {
-    r.child(initialRoute, child: (_) => const LoginView());
+    r.child(authRoute, child: (_) => const LoginView());
     r.module(homeRoute, module: HomeModule());
     r.child(loginRoute, child: (_) => const LoginView());
     r.child(createAccountRoute, child: (_) => const CreateAccountView());

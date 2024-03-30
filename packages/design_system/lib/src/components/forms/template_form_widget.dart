@@ -13,7 +13,12 @@ class TemplateFormWidget extends StatefulWidget {
       required this.title,
       required this.validator,
       required this.inputDecoration,
-      this.titleMargin});
+      this.titleMargin,
+      this.maxLines, this.fieldHeight,});
+
+  final int? maxLines;
+
+  final double? fieldHeight;
 
   final TextEditingController controller;
 
@@ -51,6 +56,7 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
       fieldDecoration: _fieldDecoration(isValid: widget.isValid),
       title: widget.title,
       isValid: widget.isValid,
+      maxLines:widget.maxLines,
       titleStyle: AppFonts.defaultFont(
         fontSize: 13,
         color: AppColors.grey8,
@@ -59,7 +65,7 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
       inputDecoration: widget.inputDecoration,
       obscureText: widget.obscure,
       errorText: widget.errorText,
-      fieldHeight: 48,
+      fieldHeight: widget.fieldHeight??48,
       validator: widget.validator,
     );
   }
@@ -77,9 +83,14 @@ fieldInputDecoration(
     {required isValid,
     required hintText,
     Widget? suffixIcon,
+    Widget? prefixIcon,
+    BoxConstraints? prefixIconConstraints,
+    TextStyle? hintStyle,
     EdgeInsetsGeometry? contentPadding}) {
   return InputDecoration(
     suffixIcon: suffixIcon,
+    prefixIcon: prefixIcon,
+    prefixIconConstraints: prefixIconConstraints,
     border: InputBorder.none,
     hintStyle: AppFonts.defaultFont(
       fontSize: 12,

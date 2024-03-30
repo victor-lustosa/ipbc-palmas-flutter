@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:core_module/core_module.dart';
 
+import '../event_module.dart';
+
 class EventsListView extends StatefulWidget {
   const EventsListView({
     Key? key,
@@ -28,7 +30,10 @@ class EventsListViewState extends State<EventsListView> {
                 Row(
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(top: 24, left: 16),
+                      margin: const EdgeInsets.only(
+                        top: 24,
+                        left: 16,
+                      ),
                       child: BackButtonWidget(
                         action: () => Navigator.pop(context),
                       ),
@@ -54,6 +59,14 @@ class EventsListViewState extends State<EventsListView> {
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingButtonWidget(
+        action: () => Modular.to.pushNamed(
+          EventModule.eventRoute + EventModule.createEventRoute,
+        ),
+        backgroundColor: AppColors.add,
+        iconColor: AppColors.white,
+        icon: Icons.add,
       ),
     );
   }
