@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ipbc_mobile/app/events/views/create_event_view.dart';
 
+import '../../events/event_module.dart';
 import '../../events/views/events_list_view.dart';
 import '../../offers/views/offers_view.dart';
 
@@ -156,7 +158,7 @@ class _HomeRoutesState extends State<HomeRoutes> {
               ),
             );
 
-          case SplashModule.eventsListRoute:
+          case EventModule.eventsListRoute:
             return CustomTransitionPageRoute(
               transitionSpeed: const Duration(milliseconds: 700),
               reverseSpeed: const Duration(milliseconds: 700),

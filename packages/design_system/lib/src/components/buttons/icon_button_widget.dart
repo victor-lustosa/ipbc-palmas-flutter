@@ -6,13 +6,13 @@ import 'package:flutter/cupertino.dart';
 class IconButtonWidget extends StatelessWidget {
   const IconButtonWidget(
       {Key? key,
-      this.size,
-      this.action,
-      required this.color,
-      this.splashColor,
-      this.highlightColor,
-      required this.iOSIcon,
-      required this.androidIcon, this.sizeIcon})
+        this.size,
+        this.action,
+        required this.color,
+        this.splashColor,
+        this.highlightColor,
+        required this.iOSIcon,
+        required this.androidIcon, this.sizeIcon})
       : super(key: key);
   final double? size;
   final double? sizeIcon;
@@ -29,25 +29,25 @@ class IconButtonWidget extends StatelessWidget {
       width: size,
       child: Platform.isIOS
           ? CupertinoButton(
-            padding: EdgeInsets.zero,
-              onPressed: action,
-              child: Icon(
-                size: sizeIcon ?? size,
-                color: color,
-                iOSIcon,
-              ),
-            )
+        padding: EdgeInsets.zero,
+        onPressed: action,
+        child: Icon(
+          size: sizeIcon ?? size,
+          color: color,
+          iOSIcon,
+        ),
+      )
           : IconButton(
-              padding: EdgeInsets.zero,
-              onPressed: action,
-              splashColor: splashColor,
-              highlightColor: highlightColor,
-              icon: Icon(
-                size: sizeIcon ?? size,
-                androidIcon,
-                color: color,
-              ),
-            ),
+        padding: EdgeInsets.zero,
+        onPressed: action,
+        splashColor: splashColor,
+        highlightColor: highlightColor,
+        icon: Icon(
+          size: sizeIcon ?? size,
+          androidIcon,
+          color: color,
+        ),
+      ),
     );
   }
 }

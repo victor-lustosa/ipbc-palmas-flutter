@@ -23,6 +23,7 @@ export 'src/components/buttons/outlined_button_widget.dart';
 export 'src/components/buttons/text_button_widget.dart';
 export 'src/components/buttons/icon_button_widget.dart';
 export 'src/components/buttons/back_button_widget.dart';
+export 'src/components/buttons/floating_button_widget.dart';
 
 export 'src/components/forms/form_field_widget.dart';
 
