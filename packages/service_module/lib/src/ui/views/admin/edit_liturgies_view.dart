@@ -89,88 +89,88 @@ class _EditLiturgiesViewState extends State<EditLiturgiesView> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 19),
+                  margin: const EdgeInsets.only(
+                    left: 19,
+                    right: 19,
+                    bottom: 24,
+                  ),
                   child: ReorderableListView.builder(
                     shrinkWrap: true,
                     itemCount: _items.length,
-                    buildDefaultDragHandles: false,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (BuildContext context, int index) {
-                      return Container(
+                      return GestureDetector(
                         key: Key('${_items[index].id}'),
-                        color: Colors.transparent,
-                        padding: const EdgeInsets.only(top: 8, bottom: 8),
-                        child: GestureDetector(
-                          onLongPress: () {},
-                          child: ReorderableDragStartListener(
-                            index: index,
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                color: AppColors.searchBar,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(16),
-                                ),
+                        onTap: () {},
+                        child: Container(
+                          color: Colors.transparent,
+                          padding: const EdgeInsets.only(top: 8, bottom: 8),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.searchBar,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(16),
                               ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(
-                                      left: 12,
-                                    ),
-                                    height: 16,
-                                    width: 10,
-                                    child: GridView.count(
-                                      crossAxisCount: 2,
-                                      mainAxisSpacing: 2,
-                                      crossAxisSpacing: 2,
-                                      children: List.generate(6, (index) {
-                                        return Container(
-                                          height: 2.5,
-                                          width: 2.5,
-                                          decoration: BoxDecoration(
-                                            color: AppColors.cardBallsGrey,
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                          ),
-                                        );
-                                      }),
-                                    ),
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                    left: 12,
                                   ),
-                                  Expanded(
-                                    child: Container(
-                                      margin: const EdgeInsets.only(
-                                          left: 12, bottom: 12, top: 12),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Text(
-                                            _items[index].sequence,
-                                            style: AppFonts.defaultFont(
-                                              color: AppColors.grey9,
-                                              fontSize: 17,
-                                            ),
+                                  height: 16,
+                                  width: 10,
+                                  child: GridView.count(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 2,
+                                    crossAxisSpacing: 2,
+                                    children: List.generate(6, (index) {
+                                      return Container(
+                                        height: 2.5,
+                                        width: 2.5,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.cardBallsGrey,
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    margin: const EdgeInsets.only(
+                                        left: 12, bottom: 12, top: 12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          _items[index].sequence,
+                                          style: AppFonts.defaultFont(
+                                            color: AppColors.grey9,
+                                            fontSize: 17,
                                           ),
-                                          Visibility(
-                                            visible: _items[index].isAdditional,
-                                            child: Container(
-                                              margin:
-                                                  const EdgeInsets.only(top: 4),
-                                              child: Text(
-                                                _items[index].additional,
-                                                style: AppFonts.defaultFont(
-                                                  color: AppColors.grey8,
-                                                  fontSize: 13,
-                                                ),
+                                        ),
+                                        Visibility(
+                                          visible: _items[index].isAdditional,
+                                          child: Container(
+                                            margin:
+                                                const EdgeInsets.only(top: 4),
+                                            child: Text(
+                                              _items[index].additional,
+                                              style: AppFonts.defaultFont(
+                                                color: AppColors.grey8,
+                                                fontSize: 13,
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),

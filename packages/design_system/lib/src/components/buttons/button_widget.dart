@@ -23,8 +23,11 @@ class ButtonWidget extends StatefulWidget {
     this.padding,
     this.adaptiveButtonType,
     this.sideColor,
-    this.sideHoveredColor, this.state, this.foregroundHoveredColor,
+    this.sideHoveredColor,
+    this.state,
+    this.foregroundHoveredColor,
   }) : super(key: key);
+
   final Color? overlayColor;
   final Widget? child;
   final Color? foregroundColor;
@@ -47,68 +50,78 @@ class ButtonWidget extends StatefulWidget {
 }
 
 class _ButtonWidgetState extends State<ButtonWidget> {
+  styleButton({
+    required MaterialStateProperty<BorderSide?>? side,
+    required MaterialStateProperty<Color?>? foregroundColor,
+    required TextStyle? textStyle,
+  }) =>
+      ButtonStyle(
+        side: side,
+        fixedSize: widget.fixedSize == null
+            ? null
+            : MaterialStateProperty.all<Size>(widget.fixedSize!),
+        padding: widget.padding == null
+            ? MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero)
+            : MaterialStateProperty.all<EdgeInsets>(widget.padding!),
+        elevation: widget.elevation == null
+            ? null
+            : MaterialStateProperty.all<double>(widget.elevation!),
+        overlayColor: widget.overlayColor == null
+            ? null
+            : MaterialStateProperty.all<Color>(widget.overlayColor!),
+        foregroundColor: foregroundColor,
+        shadowColor: widget.shadowColor == null
+            ? null
+            : MaterialStateProperty.all<Color>(widget.shadowColor!),
+        backgroundColor: widget.backgroundColor == null
+            ? null
+            : MaterialStateProperty.all<Color>(widget.backgroundColor!),
+        textStyle: MaterialStateProperty.all<TextStyle?>(textStyle),
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+          widget.shape ??
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+        ),
+      );
+
+  get sideStyle => widget.sideColor == null && widget.sideHoveredColor == null
+      ? null
+      : MaterialStateProperty.resolveWith(
+          (Set<MaterialState> states) {
+            return states.isHovered
+                ? BorderSide(color: widget.sideColor!)
+                : BorderSide(color: widget.sideColor!);
+          },
+        );
+
   @override
   Widget build(BuildContext context) {
     switch (widget.adaptiveButtonType ?? AdaptiveButtonType.elevated) {
       case AdaptiveButtonType.text:
         return TextButton(
-          style: ButtonStyle(
-            fixedSize: widget.fixedSize == null
-                ? null
-                : MaterialStateProperty.all<Size>(widget.fixedSize!),
-            padding: widget.padding == null
-                ? MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero)
-                : MaterialStateProperty.all<EdgeInsets>(widget.padding!),
-            elevation: widget.elevation == null
-                ? null
-                : MaterialStateProperty.all<double>(widget.elevation!),
-            overlayColor: widget.overlayColor == null
-                ? null
-                : MaterialStateProperty.all<Color>(widget.overlayColor!),
-            foregroundColor: widget.foregroundColor == null && widget.foregroundHoveredColor == null
-                ? null
-                : MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-              return states.isHovered
-                  ? widget.foregroundHoveredColor!
-                  : widget.foregroundColor!;
-            },),
-            shadowColor: widget.shadowColor == null
-                ? null
-                : MaterialStateProperty.all<Color>(widget.shadowColor!),
-            backgroundColor: widget.backgroundColor == null
-                ? null
-                : MaterialStateProperty.all<Color>(widget.backgroundColor!),
-            textStyle: MaterialStateProperty.all<TextStyle?>(
-              widget.textStyle ?? AppFonts.defaultFont(),
-            ),
-          ),
-          onPressed: widget.action,
-          child: widget.child!,
-        );
-      case AdaptiveButtonType.outlined:
-        return OutlinedButton(
-          style: ButtonStyle(
-            fixedSize: widget.fixedSize == null
-                ? null
-                : MaterialStateProperty.all<Size>(widget.fixedSize!),
-            side: widget.sideColor == null && widget.sideHoveredColor == null
+          style: styleButton(
+            side: sideStyle,
+            foregroundColor: widget.foregroundColor == null &&
+                    widget.foregroundHoveredColor == null
                 ? null
                 : MaterialStateProperty.resolveWith(
                     (Set<MaterialState> states) {
                       return states.isHovered
-                          ? BorderSide(color: widget.sideColor!)
-                          : BorderSide(color: widget.sideColor!);
+                          ? widget.foregroundHoveredColor!
+                          : widget.foregroundColor!;
                     },
                   ),
-            padding: widget.padding == null
-                ? MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero)
-                : MaterialStateProperty.all<EdgeInsets>(widget.padding!),
-            elevation: widget.elevation == null
-                ? null
-                : MaterialStateProperty.all<double>(widget.elevation!),
-            overlayColor: widget.overlayColor == null
-                ? null
-                : MaterialStateProperty.all<Color>(widget.overlayColor!),
+            textStyle: widget.textStyle ?? AppFonts.defaultFont(),
+          ),
+          onPressed: widget.action,
+          child: widget.child!,
+        );
+
+      case AdaptiveButtonType.outlined:
+        return OutlinedButton(
+          style: styleButton(
+            side: sideStyle,
             foregroundColor: widget.foregroundColor == null &&
                     widget.foregroundHoveredColor == null
                 ? null
@@ -122,58 +135,29 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                           : widget.foregroundColor!;
                     },
                   ),
-            shadowColor: widget.shadowColor == null
-                ? null
-                : MaterialStateProperty.all<Color>(widget.shadowColor!),
-            backgroundColor: widget.backgroundColor == null
-                ? null
-                : MaterialStateProperty.all<Color>(widget.backgroundColor!),
-            shape: MaterialStateProperty.all<OutlinedBorder>(widget.shape ??
-                RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20))),
-            textStyle: MaterialStateProperty.all<TextStyle?>(
-              widget.textStyle ??
-                  AppFonts.defaultFont(fontWeight: FontWeight.w500),
-            ),
+            textStyle: widget.textStyle ??
+                AppFonts.defaultFont(
+                  fontWeight: FontWeight.w500,
+                ),
           ),
           onPressed: widget.action,
           child: widget.child,
         );
+
       case AdaptiveButtonType.elevated:
         return ElevatedButton(
-          style: ButtonStyle(
-            fixedSize: widget.fixedSize == null
-                ? null
-                : MaterialStateProperty.all<Size>(widget.fixedSize!),
-            elevation: widget.elevation == null
-                ? null
-                : MaterialStateProperty.all<double>(widget.elevation!),
-            padding: widget.padding == null
-                ? MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero)
-                : MaterialStateProperty.all<EdgeInsets>(widget.padding!),
-            overlayColor: widget.overlayColor == null
-                ? null
-                : MaterialStateProperty.all<Color>(widget.overlayColor!),
+          style: styleButton(
+            side: sideStyle,
+            textStyle: widget.textStyle ??
+                AppFonts.defaultFont(
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.darkGreen,
+                ),
             foregroundColor: widget.foregroundColor == null
                 ? null
-                : MaterialStateProperty.all<Color>(widget.foregroundColor!),
-            shadowColor: widget.shadowColor == null
-                ? null
-                : MaterialStateProperty.all<Color>(widget.shadowColor!),
-            backgroundColor: widget.backgroundColor == null
-                ? null
-                : MaterialStateProperty.all<Color>(widget.backgroundColor!),
-            shape: MaterialStateProperty.all<OutlinedBorder>(
-              widget.shape ??
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                : MaterialStateProperty.all<Color>(
+                    widget.foregroundColor!,
                   ),
-            ),
-            textStyle: MaterialStateProperty.all<TextStyle?>(
-              widget.textStyle ??
-                  AppFonts.defaultFont(
-                      fontWeight: FontWeight.w500, color: AppColors.darkGreen),
-            ),
           ),
           onPressed: widget.action,
           child: widget.child,

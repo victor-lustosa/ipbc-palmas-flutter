@@ -84,7 +84,7 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                   margin: const EdgeInsets.only(
                     left: 15.5,
                     right: 15.5,
-                    bottom: 30,
+                    bottom: 40,
                   ),
                   child: ButtonWidget(
                     shape: RoundedRectangleBorder(
@@ -112,6 +112,7 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                           ),
                         ),
                         const IconButtonWidget(
+                          size: 28,
                           iOSIcon: CupertinoIcons.chevron_forward,
                           androidIcon: Icons.navigate_next_sharp,
                           color: AppColors.white,

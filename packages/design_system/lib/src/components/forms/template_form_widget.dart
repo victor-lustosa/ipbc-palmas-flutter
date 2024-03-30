@@ -2,19 +2,21 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class TemplateFormWidget extends StatefulWidget {
-  const TemplateFormWidget(
-      {super.key,
-      required this.controller,
-      required this.globalKey,
-      required this.errorText,
-      required this.isValid,
-      this.obscure,
-      required this.isPressed,
-      required this.title,
-      required this.validator,
-      required this.inputDecoration,
-      this.titleMargin,
-      this.maxLines, this.fieldHeight,});
+  const TemplateFormWidget({
+    super.key,
+    required this.controller,
+    required this.globalKey,
+    required this.errorText,
+    required this.isValid,
+    this.obscure,
+    required this.isPressed,
+    required this.title,
+    required this.validator,
+    required this.inputDecoration,
+    this.titleMargin,
+    this.maxLines,
+    this.fieldHeight, this.horizontalSymmetric,
+  });
 
   final int? maxLines;
 
@@ -40,6 +42,8 @@ class TemplateFormWidget extends StatefulWidget {
 
   final EdgeInsetsGeometry? titleMargin;
 
+  final EdgeInsetsGeometry? horizontalSymmetric;
+
   @override
   State<TemplateFormWidget> createState() => _TemplateFormWidgetState();
 }
@@ -48,7 +52,8 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
   @override
   Widget build(BuildContext context) {
     return FormFieldWidget(
-      horizontalSymmetric: const EdgeInsets.symmetric(horizontal: 16),
+      horizontalSymmetric: widget.horizontalSymmetric ??
+          const EdgeInsets.symmetric(horizontal: 16),
       fieldKey: widget.globalKey,
       isSubmitted: !widget.isPressed,
       fieldMargin: const EdgeInsets.only(top: 4),
@@ -56,7 +61,7 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
       fieldDecoration: _fieldDecoration(isValid: widget.isValid),
       title: widget.title,
       isValid: widget.isValid,
-      maxLines:widget.maxLines,
+      maxLines: widget.maxLines,
       titleStyle: AppFonts.defaultFont(
         fontSize: 13,
         color: AppColors.grey8,
@@ -65,7 +70,7 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
       inputDecoration: widget.inputDecoration,
       obscureText: widget.obscure,
       errorText: widget.errorText,
-      fieldHeight: widget.fieldHeight??48,
+      fieldHeight: widget.fieldHeight ?? 48,
       validator: widget.validator,
     );
   }

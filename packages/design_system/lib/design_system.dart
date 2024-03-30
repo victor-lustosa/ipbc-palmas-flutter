@@ -15,12 +15,8 @@ export 'src/components/guideline/guideline_widget.dart';
 
 export 'src/components/circle_avatar/circle_avatar_widget.dart';
 
-export 'src/components/buttons/elevated_button_widget.dart';
-
 export 'src/components/slide_cards/slide_cads_widget.dart';
 
-export 'src/components/buttons/outlined_button_widget.dart';
-export 'src/components/buttons/text_button_widget.dart';
 export 'src/components/buttons/icon_button_widget.dart';
 export 'src/components/buttons/floating_button_widget.dart';
 export 'src/components/buttons/back_button_widget.dart';

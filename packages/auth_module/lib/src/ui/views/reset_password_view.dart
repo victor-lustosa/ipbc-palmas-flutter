@@ -14,8 +14,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
   final String _emailErrorText = 'por favor, insira um email válido.';
   final _emailKey = GlobalKey<FormState>();
 
-  final TextEditingController _resetPasswordController =
-      TextEditingController();
+  final TextEditingController _resetPasswordController = TextEditingController();
   bool _isEmailValid = true;
   final bool _isPressed = false;
 
@@ -24,127 +23,84 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: SizedBox(
+          child: Container(
+            margin: const EdgeInsets.only(
+              left: 16,
+              right: 16,
+              top: 60,
+            ),
             width: context.mediaQuery.size.width,
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 60),
-                      child: BackButtonWidget(
-                        action: () => Modular.to.navigate(
-                            AuthModule.initialRoute + AuthModule.authRoute),
-            child: Container(
-              margin: const EdgeInsets.only(
-                left: 16,
-                right: 16,
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(top: 33),
-                        child: BackButtonWidget(
-                          action: () => Modular.to.navigate(
-                              AuthModule.authRoute + AuthModule.authRoute),
-                        ),
+                    BackButtonWidget(
+                      action: () => Modular.to.navigate(
+                        AuthModule.authRoute + AuthModule.authRoute,
                       ),
                     ),
                   ],
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.only(
-                    bottom: 53.89,
-                  ),
-                  child: Text(
-                    "Redefinir senha",
-                    style: AppFonts.defaultFont(
-                        color: AppColors.grey10,
-                        fontSize: 22,
-                        fontWeight: FontWeight.w400),
+                Text(
+                  "Redefinir senha",
+                  style: AppFonts.defaultFont(
+                    color: AppColors.grey10,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
-                TemplateFormWidget(
-                  controller: _resetPasswordController,
-                  title: 'Insira seu e-mail ou telefone',
-                  isValid: _isEmailValid,
-                  errorText: _emailErrorText,
-                  globalKey: _emailKey,
-                  isPressed: _isPressed,
-                  inputDecoration: fieldInputDecoration(
+                Container(
+                  margin: const EdgeInsets.only(
+                    top: 32,
+                    bottom: 200,
+                  ),
+                  child: TemplateFormWidget(
+                    titleMargin: const EdgeInsets.only(bottom: 4),
+                    horizontalSymmetric: EdgeInsets.zero,
+                    controller: _resetPasswordController,
+                    title: 'Insira seu e-mail ou telefone',
                     isValid: _isEmailValid,
-                    hintText: 'Email',
-                  ),
-                  validator: (data) {
-                    return _emailValidation(data);
-                  },
-                ),
-                Container(
-                  margin: const EdgeInsets.only(
-                    left: 16,
-                    right: 16,
-                    top: 200,
-                  ),
-                  child: ElevatedButtonWidget(
-                    action: () {
-                      if (_resetPasswordController.text.isEmpty &&
-                          !_isPressed) {
-                        _emailBorderValidation(false);
-                      }
-                      if (emailMock == _resetPasswordController.text) {
-                        Modular.to.navigate(AuthModule.initialRoute +
-                            AuthModule.verificationCodeRoute);
-                      } else {
-                        showCustomErrorDialog(
-                          context: context,
-                          title: 'E-mail inválido!',
-                          message:
-                              'Por favor, verifique seu e-mail e tente novamente.',
-                        );
-                      }
+                    errorText: _emailErrorText,
+                    globalKey: _emailKey,
+                    isPressed: _isPressed,
+                    inputDecoration: fieldInputDecoration(
+                      isValid: _isEmailValid,
+                      hintText: 'Email',
+                    ),
+                    validator: (data) {
+                      return _emailValidation(data);
                     },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    fixedSize: Size(MediaQuery.of(context).size.width, 48),
-                    backgroundColor: emailMock == _resetPasswordController.text
-                        ? AppColors.darkGreen
-                        : AppColors.disableButton,
-                    shadowColor: AppColors.grey0,
-                    foregroundColor: AppColors.white,
-                    child: const Text(
-                      "Enviar",
-                    child: ButtonWidget(
-                      action: () {
-                        if (emailMock == _resetPasswordController.text) {
-                          Modular.to.navigate(AuthModule.authRoute + AuthModule.verificationCodeRoute);
-                        } else {
-                          //_showErrorDialog();
-                          showCustomErrorDialog(
-                            context: context,
-                            title: 'E-mail inválido!',
-                            message: 'Por favor, verifique seu e-mail e tente novamente.',
-                          );
-                        }
-                      },
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      fixedSize: Size(MediaQuery.of(context).size.width, 48),
-                      backgroundColor: emailMock == _resetPasswordController.text
-                          ? AppColors.darkGreen
-                          : AppColors.disableButton,
-                      shadowColor: AppColors.grey0,
-                      foregroundColor: AppColors.white,
-                      child: const Text(
-                        "Enviar",
-                      ),
-                    ),
+                  ),
+                ),
+                ButtonWidget(
+                  action: () {
+                    if (_resetPasswordController.text.isEmpty && !_isPressed) {
+                      _emailBorderValidation(false);
+                    }
+                    if (emailMock == _resetPasswordController.text) {
+                      Modular.to.navigate(AuthModule.authRoute +
+                          AuthModule.verificationCodeRoute);
+                    } else {
+                      showCustomErrorDialog(
+                        context: context,
+                        title: 'E-mail inválido!',
+                        message:
+                            'Por favor, verifique seu e-mail e tente novamente.',
+                      );
+                    }
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  fixedSize: Size(context.mediaQuery.size.width, 48),
+                  backgroundColor: emailMock == _resetPasswordController.text
+                      ? AppColors.darkGreen
+                      : AppColors.disableButton,
+                  shadowColor: AppColors.grey0,
+                  foregroundColor: AppColors.white,
+                  child: const Text(
+                    "Enviar",
                   ),
                 ),
               ],

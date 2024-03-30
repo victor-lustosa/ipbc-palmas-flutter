@@ -1,8 +1,7 @@
 import 'package:core_module/core_module.dart';
-import 'package:ipbc_mobile/app/events/event_module.dart';
-import 'package:ipbc_mobile/app/events/views/events_list_view.dart';
 
 import '../../app/splash/views/splash_views.dart';
+import '../events/event_module.dart';
 import '../home/home_module.dart';
 import 'blocs/database_bloc.dart';
 
