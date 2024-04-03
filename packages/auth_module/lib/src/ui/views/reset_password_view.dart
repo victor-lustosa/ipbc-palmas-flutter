@@ -14,9 +14,11 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
   final String _emailErrorText = 'por favor, insira um email válido.';
   final _emailKey = GlobalKey<FormState>();
 
-  final TextEditingController _resetPasswordController = TextEditingController();
+  final TextEditingController _resetPasswordController =
+      TextEditingController();
   bool _isEmailValid = true;
   final bool _isPressed = false;
+  bool _isVerified = false;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,13 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     errorText: _emailErrorText,
                     globalKey: _emailKey,
                     isPressed: _isPressed,
+                    color: _isVerified && _isEmailValid
+                        ? AppColors.darkGreen
+                        : null,
                     inputDecoration: fieldInputDecoration(
+                      hintColor: _isVerified && _isEmailValid
+                          ? AppColors.darkGreen
+                          : null,
                       isValid: _isEmailValid,
                       hintText: 'Email',
                     ),
@@ -76,7 +84,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                 ButtonWidget(
                   action: () {
                     if (_resetPasswordController.text.isEmpty && !_isPressed) {
-                      _emailBorderValidation(false);
+                      _emailBorderValidation(false, false);
                     }
                     if (emailMock == _resetPasswordController.text) {
                       Modular.to.navigate(AuthModule.authRoute +
@@ -111,11 +119,12 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
     );
   }
 
-  _emailBorderValidation(bool value) {
+  _emailBorderValidation(bool value, bool valueVerify) {
     Future.delayed(Duration.zero, () async {
       if (mounted) {
         setState(() {
           _isEmailValid = value;
+          _isVerified = valueVerify;
         });
       }
     });
@@ -123,12 +132,15 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
 
   _emailValidation(String? data) {
     if (data == null || data.isEmpty) {
-      _emailBorderValidation(false);
+      _emailBorderValidation(false, false);
+      _isVerified = false;
     } else {
       if (EmailValidator.validate(_resetPasswordController.text)) {
-        _emailBorderValidation(true);
+        _emailBorderValidation(true, true);
+        _isVerified = true;
       } else {
-        _emailBorderValidation(false);
+        _emailBorderValidation(false, false);
+        _isVerified = false;
       }
     }
   }
