@@ -132,16 +132,13 @@ class _CreateEventViewState extends State<CreateEventView> {
                     globalKey: _eventDescriptionKey,
                     isPressed: _isPressed,
                     inputDecoration: fieldInputDecoration(
+                      hintColor: _isEventDescriptionValid
+                          ? AppColors.grey5
+                          : Colors.red,
                       contentPadding: const EdgeInsets.only(
                         left: 16,
                         top: 9,
                         right: 10,
-                      ),
-                      hintStyle: AppFonts.defaultFont(
-                        fontSize: 12,
-                        color: _isEventDescriptionValid
-                            ? AppColors.grey5
-                            : Colors.red,
                       ),
                       isValid: _isEventDescriptionValid,
                       hintText: 'Descrição do evento',
