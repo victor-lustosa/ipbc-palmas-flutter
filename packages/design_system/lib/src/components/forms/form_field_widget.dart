@@ -29,7 +29,8 @@ class FormFieldWidget extends StatefulWidget {
       this.fieldMargin,
       this.obscureText,
       this.errorTextMargin,
-      this.horizontalSymmetric, this.inputPadding});
+      this.horizontalSymmetric,
+      this.inputPadding});
 
   final String? errorText;
   final EdgeInsetsGeometry? errorTextMargin;
@@ -115,7 +116,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
                   AppFonts.defaultFont(
                     fontSize: 14,
                     color:
-                        widget.isValid ? const Color(0xff979797) : Colors.red,
+                        widget.isValid ? AppColors.darkGreen : AppColors.delete,
                   ),
             ),
           ),
