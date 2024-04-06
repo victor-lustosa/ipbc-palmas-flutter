@@ -62,7 +62,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             top: 10,
           ),
           hintText: 'Digite o termo de pesquisa',
-        ),
+        ), colorStyle: AppColors.hintInputForm,
       ),
     );
   }

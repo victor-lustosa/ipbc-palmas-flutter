@@ -117,6 +117,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                     validator: (data) {
                       return _emailValidation(data);
                     },
+                    defaultHintColor: AppColors.hintInputForm,
                   ),
                 ),
                 Container(
@@ -146,6 +147,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                     validator: (data) {
                       return _emailValidation(data);
                     },
+                    defaultHintColor: AppColors.hintInputForm,
                   ),
                 ),
                 Container(
@@ -178,6 +180,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                     validator: (data) {
                       return _emailValidation(data);
                     },
+                    defaultHintColor: AppColors.hintInputForm,
                   ),
                 ),
               ],

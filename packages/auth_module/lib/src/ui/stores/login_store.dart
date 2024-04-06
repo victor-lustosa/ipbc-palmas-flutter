@@ -1,23 +1,23 @@
-import 'package:auth_module/src/ui/stores/login_state.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-class LoginStore extends ValueNotifier<LoginState> {
+class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   LoginStore({required IAuthUseCases useCases})
       : _useCases = useCases,
-        super(InitialLoginState());
+        super(InitialState<LoginState>());
+
   final IAuthUseCases _useCases;
 
   final String _email = 'victor.olustosa@outlook.com';
   final String _password = '!Helena2209';
 
   logIn(String email, String password, BuildContext context) async {
-    value = LoadingLoginState();
+    value = LoadingState<LoginState>();
     Future.delayed(const Duration(seconds: 1), () {
       if (_email == email && _password == password) {
         Modular.to.navigate(AuthModule.authRoute + AuthModule.homeRoute);
       } else {
-        value = InitialLoginState();
+        value = InitialState<LoginState>();
         showCustomErrorDialog(
           title: 'Dados Incorretos',
           message: 'Verifique se a senha e o email estão corretos.',
@@ -55,3 +55,8 @@ class LoginStore extends ValueNotifier<LoginState> {
     });
   }
 }
+
+@immutable
+abstract class LoginState{}
+
+class ValidateFieldsState extends GenericState<LoginState> {}

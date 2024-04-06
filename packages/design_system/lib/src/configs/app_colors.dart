@@ -26,6 +26,8 @@ class AppColors {
   static const Color secondaryGreen = Color(0xFF00A876);
   static const Color primaryGreen = Color(0xFF14C5A0);
   static const Color searchBar = Color(0xFFEFEFEF);
+  static const Color chorusColor = Color(0xFFEDF7F4);
+  static const Color backgroundG = Color(0xFFEDF7F4);
   static const Color cardGreen = Color(0xFF006D4E);
   static const Color cardBallsGrey = Color(0xFFCCCCCC);
   static const Color tabGreen = Color(0xFF00906b);
@@ -43,6 +45,7 @@ class AppColors {
   static const Color confirmation = Color(0xFF34C759);
   static const Color greenInputAccept = Color(0xFF80AD9F);
   static const Color delete = Color(0xFFFF3B30);
+  static const Color codeBorderError = Color(0xFFC72C41);
   static const Color redModal = Color(0xffC72C41);
   static const Color redCircleModal = Color(0xff9D2333);
   static const Color warning = Color(0xFFFF9500);

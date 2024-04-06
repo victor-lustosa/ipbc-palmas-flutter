@@ -1,6 +1,6 @@
-projectKey=ipbc_palmas
+projectKey=ipbc_mobile
 serverUrl=http://localhost:9000
-serverVersion=9.9.1.69595
-dashboardUrl=http://localhost:9000/dashboard?id=ipbc_palmas
-ceTaskId=AYh0-9TIdSUpB6FU6_Df
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYh0-9TIdSUpB6FU6_Df
+serverVersion=9.9.4.87374
+dashboardUrl=http://localhost:9000/dashboard?id=ipbc_mobile
+ceTaskId=AY5pBhFP11gQcZxIvVY0
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AY5pBhFP11gQcZxIvVY0

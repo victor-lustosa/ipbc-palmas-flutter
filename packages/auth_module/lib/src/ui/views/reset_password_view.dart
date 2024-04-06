@@ -19,6 +19,9 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
   bool _isEmailValid = true;
   final bool _isPressed = false;
   bool _isVerified = false;
+  bool _isInit = true;
+
+  get verifiedValidation => _isVerified && _isEmailValid;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                   children: [
                     BackButtonWidget(
                       action: () => Modular.to.navigate(
-                        AuthModule.authRoute + AuthModule.authRoute,
+                        AuthModule.authRoute + AuthModule.loginRoute,
                       ),
                     ),
                   ],
@@ -58,6 +61,9 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     bottom: 200,
                   ),
                   child: TemplateFormWidget(
+                    defaultHintColor: _isEmailValid
+                            ? AppColors.darkGreen
+                            : AppColors.delete,
                     titleMargin: const EdgeInsets.only(bottom: 4),
                     horizontalSymmetric: EdgeInsets.zero,
                     controller: _resetPasswordController,
@@ -66,13 +72,28 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     errorText: _emailErrorText,
                     globalKey: _emailKey,
                     isPressed: _isPressed,
-                    color: _isVerified && _isEmailValid
-                        ? AppColors.darkGreen
-                        : null,
+                    color: verifiedValidation ? AppColors.darkGreen : null,
                     inputDecoration: fieldInputDecoration(
-                      hintColor: _isVerified && _isEmailValid
-                          ? AppColors.darkGreen
-                          : null,
+                      suffixIconConstraints: const BoxConstraints(
+                        minWidth: 24,
+                        minHeight: 24,
+                      ),
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 16),
+                        child: _isInit
+                            ? null
+                            : Image.asset(
+                                width: 16,
+                                height: 16,
+                                verifiedValidation
+                                    ? AppIcons.emailSuccess
+                                    : AppIcons.emailNotValid,
+                              ),
+                      ),
+                      contentPadding:
+                          const EdgeInsets.only(bottom: 5, left: 16),
+                      hintColor:
+                          verifiedValidation ? AppColors.darkGreen : null,
                       isValid: _isEmailValid,
                       hintText: 'Email',
                     ),
@@ -86,23 +107,13 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     if (_resetPasswordController.text.isEmpty && !_isPressed) {
                       _emailBorderValidation(false, false);
                     }
-                    if (emailMock == _resetPasswordController.text) {
-                      Modular.to.navigate(AuthModule.authRoute +
-                          AuthModule.verificationCodeRoute);
-                    } else {
-                      showCustomErrorDialog(
-                        context: context,
-                        title: 'E-mail inválido!',
-                        message:
-                            'Por favor, verifique seu e-mail e tente novamente.',
-                      );
-                    }
+                      Modular.to.navigate(AuthModule.authRoute + AuthModule.verificationCodeRoute);
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                   fixedSize: Size(context.mediaQuery.size.width, 48),
-                  backgroundColor: emailMock == _resetPasswordController.text
+                  backgroundColor: verifiedValidation
                       ? AppColors.darkGreen
                       : AppColors.disableButton,
                   shadowColor: AppColors.grey0,
@@ -131,6 +142,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
   }
 
   _emailValidation(String? data) {
+    _isInit = false;
     if (data == null || data.isEmpty) {
       _emailBorderValidation(false, false);
       _isVerified = false;

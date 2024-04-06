@@ -7,7 +7,7 @@ class SearchLyricsView extends StatefulWidget {
     required this.dto,
   });
 
-  final EditLiturgiesDTO dto;
+  final EditLiturgyDTO dto;
 
   @override
   State<SearchLyricsView> createState() => _SearchLyricsViewState();
@@ -17,7 +17,15 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
   bool isSelected = false;
   String selectedValue = '';
   final TextEditingController controller = TextEditingController();
-  late List<LyricEntity> _lyricsFetched = [LyricEntity(id: '',title: '',createAt: DateTime.now(),albumCover: 'assets/images/default_cover_4.png',group: '',verses: [])];
+  late final List<LyricEntity> _lyricsFetched = [
+    LyricEntity(
+        id: 1,
+        title: '',
+        createAt: DateTime.now(),
+        albumCover: 'assets/images/default_cover_4.png',
+        group: '',
+        verses: [])
+  ];
 
   @override
   Widget build(BuildContext context) {

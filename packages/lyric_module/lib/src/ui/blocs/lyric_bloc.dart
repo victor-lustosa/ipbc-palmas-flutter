@@ -69,7 +69,7 @@ abstract class LyricEvent {}
 @immutable
 abstract class LyricState {}
 
-class FilterEvent<R> extends GenericEvent<R> {
+abstract class FilterEvent<R> extends GenericEvent<R> {
   List<LyricEntity> lyrics;
 
   FilterEvent({required this.lyrics});

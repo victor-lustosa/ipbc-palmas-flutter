@@ -135,7 +135,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         isSubmitted: !_isSubmitted,
         inputDecoration: _inputDecoration(
             isValid: _isNameValid, hintText: 'Seu nome completo'),
-        fieldStyle: _fieldStyle(_isNameValid),
+        fieldStyle: _fieldStyle(_isNameValid), colorStyle: AppColors.hintInputForm,
       );
 
   emailField({required double width}) => FormFieldWidget(
@@ -155,7 +155,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         fieldStyle: _fieldStyle(_isEmailValid),
         validator: (data) {
           return _emailValidation(data);
-        },
+        }, colorStyle: AppColors.hintInputForm,
       );
 
   messageField({required double width}) => FormFieldWidget(
@@ -184,7 +184,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
             top: 12,
             //top 8 pra celular
           ),
-        ),
+        ), colorStyle: AppColors.hintInputForm,
       );
 
   _inputDecoration(

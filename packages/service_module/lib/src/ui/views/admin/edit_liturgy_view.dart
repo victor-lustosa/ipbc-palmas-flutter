@@ -5,26 +5,26 @@ import 'package:flutter/material.dart';
 
 import 'services_preview_view.dart';
 
-class EditLiturgiesDTO {
-  EditLiturgiesDTO({required this.heading, required this.image});
+class EditLiturgyDTO {
+  EditLiturgyDTO({required this.heading, required this.image});
 
   final String heading;
   final String image;
 }
 
-class EditLiturgiesView extends StatefulWidget {
-  const EditLiturgiesView({
+class EditLiturgyView extends StatefulWidget {
+  const EditLiturgyView({
     super.key,
     required this.dto,
   });
 
-  final EditLiturgiesDTO dto;
+  final EditLiturgyDTO dto;
 
   @override
-  State<EditLiturgiesView> createState() => _EditLiturgiesViewState();
+  State<EditLiturgyView> createState() => _EditLiturgyViewState();
 }
 
-class _EditLiturgiesViewState extends State<EditLiturgiesView> {
+class _EditLiturgyViewState extends State<EditLiturgyView> {
   final _items = [
     LiturgyEntity(
         id: 0, isAdditional: false, sequence: 'Oração', additional: ''),
@@ -97,77 +97,57 @@ class _EditLiturgiesViewState extends State<EditLiturgiesView> {
                   child: ReorderableListView.builder(
                     shrinkWrap: true,
                     itemCount: _items.length,
+                    buildDefaultDragHandles: false,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         key: Key('${_items[index].id}'),
-                        onTap: () {},
+                        onLongPress: () {},
                         child: Container(
                           color: Colors.transparent,
-                          padding: const EdgeInsets.only(top: 8, bottom: 8),
+                          padding: const EdgeInsets.only(
+                            top: 8,
+                            bottom: 8,
+                          ),
                           child: Container(
                             decoration: const BoxDecoration(
                               color: AppColors.searchBar,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(16),
-                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16)),
                             ),
                             child: Row(
                               children: [
+                                GridBallsTileWidget(index: index),
                                 Container(
                                   margin: const EdgeInsets.only(
-                                    left: 12,
+                                    bottom: 12,
+                                    top: 12,
                                   ),
-                                  height: 16,
-                                  width: 10,
-                                  child: GridView.count(
-                                    crossAxisCount: 2,
-                                    mainAxisSpacing: 2,
-                                    crossAxisSpacing: 2,
-                                    children: List.generate(6, (index) {
-                                      return Container(
-                                        height: 2.5,
-                                        width: 2.5,
-                                        decoration: BoxDecoration(
-                                          color: AppColors.cardBallsGrey,
-                                          borderRadius:
-                                              BorderRadius.circular(50),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        _items[index].sequence,
+                                        style: AppFonts.defaultFont(
+                                          color: AppColors.grey9,
+                                          fontSize: 17,
                                         ),
-                                      );
-                                    }),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 12, bottom: 12, top: 12),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          _items[index].sequence,
-                                          style: AppFonts.defaultFont(
-                                            color: AppColors.grey9,
-                                            fontSize: 17,
-                                          ),
-                                        ),
-                                        Visibility(
-                                          visible: _items[index].isAdditional,
-                                          child: Container(
-                                            margin:
-                                                const EdgeInsets.only(top: 4),
-                                            child: Text(
-                                              _items[index].additional,
-                                              style: AppFonts.defaultFont(
-                                                color: AppColors.grey8,
-                                                fontSize: 13,
-                                              ),
+                                      ),
+                                      Visibility(
+                                        visible: _items[index].isAdditional,
+                                        child: Container(
+                                          margin: const EdgeInsets.only(top: 4),
+                                          child: Text(
+                                            _items[index].additional,
+                                            style: AppFonts.defaultFont(
+                                              color: AppColors.grey8,
+                                              fontSize: 13,
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],

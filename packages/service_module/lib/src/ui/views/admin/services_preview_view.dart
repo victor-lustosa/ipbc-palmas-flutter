@@ -94,7 +94,7 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                     action: () => Modular.to.pushNamed(
                       ServiceModule.servicesRoute +
                           ServiceModule.searchLyricsRoute,
-                      arguments: EditLiturgiesDTO(
+                      arguments: EditLiturgyDTO(
                         heading: widget.dto.heading,
                         image: widget.dto.image,
                       ),

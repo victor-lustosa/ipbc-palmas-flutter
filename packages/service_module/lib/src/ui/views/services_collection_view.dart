@@ -165,7 +165,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
         icon: Icons.add,
         action: () => Modular.to.navigate(
           ServiceModule.servicesRoute + ServiceModule.editLiturgiesRoute,
-          arguments: EditLiturgiesDTO(
+          arguments: EditLiturgyDTO(
             image: widget.entity.image,
             heading: widget.entity.heading,
           ),

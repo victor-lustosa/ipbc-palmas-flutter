@@ -1,4 +1,3 @@
-import 'package:auth_module/src/ui/stores/login_state.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -14,6 +13,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+
   final LoginStore _store = Modular.get<LoginStore>();
 
   final TextEditingController _emailController = TextEditingController();
@@ -33,17 +33,20 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     suffixAction() => setState(() {
-      _obscure = !_obscure;
-    });
+          _obscure = !_obscure;
+        });
     return ValueListenableBuilder(
       valueListenable: _store,
       builder: (_, state, child) {
-        if (state is LoadingLoginState) {
+
+        if (state is LoadingState<LoginState>) {
           _isPressed = true;
         }
-        if (state is InitialLoginState) {
+
+        if (state is InitialState<LoginState>) {
           _isPressed = false;
         }
+
         return Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(
@@ -83,10 +86,15 @@ class _LoginViewState extends State<LoginView> {
                     validator: (data) {
                       return _emailValidation(data);
                     },
+                    defaultHintColor: _isEmailValid
+                        ? AppColors.hintInputForm
+                        : AppColors.delete,
                   ),
                   TemplateFormWidget(
                     controller: _passwordController,
-                    titleMargin: EdgeInsets.only(top: _isEmailValid ? 24 : 12),
+                    titleMargin: EdgeInsets.only(
+                      top: _isEmailValid ? 24 : 12,
+                    ),
                     title: 'Insira sua senha',
                     isValid: _isPasswordValid,
                     errorText: _passwordErrorText,
@@ -119,6 +127,7 @@ class _LoginViewState extends State<LoginView> {
                     validator: (data) {
                       return _passwordValidation(data);
                     },
+                    defaultHintColor: AppColors.hintInputForm,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -150,60 +159,33 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ],
                   ),
-                  AnimatedContainer(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    margin: const EdgeInsets.only(
-                      top: 40,
-                      bottom: 24,
-                      left: 16,
-                      right: 16,
-                    ),
-                    width: _isPressed ? 48 : context.mediaQuery.size.width,
-                    height: 48,
-                    duration: const Duration(milliseconds: 750),
-                    curve: Curves.fastOutSlowIn,
-                    child: ButtonWidget(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      action: () async {
-                        if (_emailController.text.isEmpty && !_isPressed) {
+                  LoadingButtonWidget(
+                    marginTop: 40,
+                    marginBottom: 24,
+                    loadingWidth: 55,
+                    isPressed: _isPressed,
+                    action: () async {
+                      if (_emailController.text.isEmpty && !_isPressed) {
+                        _emailBorderValidation(false);
+                      }
+                      if (_passwordController.text.isEmpty && !_isPressed) {
+                        _passwordBorderValidation(false);
+                      }
+                      if (_emailController.text.isNotEmpty &&
+                          _passwordController.text.isNotEmpty &&
+                          _isEmailValid &&
+                          _isPasswordValid &&
+                          !_isPressed) {
+                        if (EmailValidator.validate(_emailController.text)) {
+                          await _store.logIn(_emailController.text,
+                              _passwordController.text, context);
+                        } else {
                           _emailBorderValidation(false);
                         }
-                        if (_passwordController.text.isEmpty && !_isPressed) {
-                          _passwordBorderValidation(false);
-                        }
-                        if (_emailController.text.isNotEmpty &&
-                            _passwordController.text.isNotEmpty &&
-                            _isEmailValid &&
-                            _isPasswordValid &&
-                            !_isPressed) {
-                          if (EmailValidator.validate(_emailController.text)) {
-                            await _store.logIn(_emailController.text,
-                                _passwordController.text, context);
-                          } else {
-                            _emailBorderValidation(false);
-                          }
-                        }
-                      },
-                      backgroundColor: _isEmailValid && _isPasswordValid
-                          ? AppColors.darkGreen
-                          : AppColors.disableButton,
-                      shadowColor: AppColors.grey0,
-                      foregroundColor: AppColors.white,
-                      child: _isPressed
-                          ? const LoadingWidget(
-                              androidRadius: 2,
-                              iosRadius: 11,
-                              size: 20,
-                              color: AppColors.white,
-                            )
-                          : const Text(
-                              "Entrar",
-                            ),
-                    ),
+                      }
+                    },
+                    isValid: _isEmailValid && _isPasswordValid,
+                    label: "Entrar",
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

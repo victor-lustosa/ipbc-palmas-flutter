@@ -1,42 +1,26 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class CustomBorderWidget extends StatelessWidget {
-  final bool filled;
+class CodePainterWidget extends CustomPainter {
+  final Color borderColor;
 
-  const CustomBorderWidget({super.key, required this.filled});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 44,
-      height: 50,
-      child: CustomPaint(
-        painter: MyPainter(filled: filled),
-      ),
-    );
-  }
-}
-
-class MyPainter extends CustomPainter {
-  final bool filled;
-  MyPainter({super.repaint, required this.filled});
+  CodePainterWidget({super.repaint, required this.borderColor});
 
   @override
   void paint(Canvas canvas, Size size) {
     double w = 44;
     double h = 48;
-    double r = 12; 
+    double r = 8;
 
     Paint borderPaint = Paint()
-      ..color = filled ? AppColors.grey6 : AppColors.darkGreen
+      ..color = borderColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
 
     Paint gapPaint = Paint()
       ..color = AppColors.white
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 8;
+      ..strokeWidth = 10;
 
     RRect fullRect = RRect.fromRectAndRadius(
       Rect.fromCenter(center: Offset(w / 2, h / 2), width: w, height: h),

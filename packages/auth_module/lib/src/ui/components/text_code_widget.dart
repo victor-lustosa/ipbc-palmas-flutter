@@ -1,5 +1,5 @@
-import 'package:auth_module/src/ui/components/custom_border_widget.dart';
-import 'package:auth_module/src/ui/view_models/password_view_model.dart';
+import 'package:auth_module/src/ui/components/code_painter_widget.dart';
+import 'package:auth_module/src/ui/stores/reset_password_store.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
@@ -11,76 +11,80 @@ class TextCodeWidget extends StatefulWidget {
 }
 
 class _TextCodeWidgetState extends State<TextCodeWidget> {
-  final codeController = Modular.get<PasswordViewModel>();
+  final _store = Modular.get<ResetPasswordStore>();
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: context.mediaQuery.size.width,
-      // height: 150,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              6,
-              (index) => Row(
-                children: [
-                  Stack(
-                    children: [
-                      CustomBorderWidget(
-                          filled:
-                              codeController.controllers[index].text.isEmpty),
-                      SizedBox(
-                        width: 48,
-                        height: 50,
-                        child: TextField(
-                          maxLength: 1,
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                          focusNode: codeController.focusNodes[index],
-                          controller: codeController.controllers[index],
-                          onChanged: (value) {
-                            setState(() {
-                              if (value.isEmpty) {
-                                if (index > 0) {
-                                  codeController.focusNodes[index - 1]
-                                      .requestFocus();
-                                }
-                              } else if (index <
-                                  codeController.focusNodes.length - 1) {
-                                codeController.focusNodes[index + 1]
-                                    .requestFocus();
-                              }
-                            });
-                          },
-                          decoration: const InputDecoration(
-                            counterText: '',
-                            contentPadding: EdgeInsets.all(10),
-                            enabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            labelStyle: TextStyle(color: AppColors.darkGreen),
-                          ),
-                          cursorColor: AppColors.darkGreen,
-                          cursorWidth: 1.5,
-                          style: const TextStyle(color: AppColors.darkGreen),
-                        ),
-                      ),
-                    ],
+    return ValueListenableBuilder(
+      valueListenable: _store,
+      builder: (_, context, child) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(
+            6,
+            (index) => Container(
+              margin: EdgeInsets.only(
+                left: index == 0 ? 0 : 12,
+              ),
+              width: 44,
+              height: 48,
+              child: CustomPaint(
+                painter: CodePainterWidget(
+                  borderColor: _store.isError
+                      ? AppColors.codeBorderError
+                      : _store.controllers[index].text.isEmpty
+                          ? AppColors.grey6
+                          : AppColors.darkGreen,
+                ),
+                child: TextField(
+                  maxLength: 1,
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.number,
+                  focusNode: _store.focusNodes[index],
+                  controller: _store.controllers[index],
+                  onChanged: (value) {
+                    setState(
+                      () {
+                        _store.focusControl(value: value, index: index);
+                        _store.colorBorder();
+                        _store.emptyBorder();
+                      },
+                    );
+                  },
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.only(
+                      left: 2.5,
+                      bottom: 4,
+                    ),
+                    counterText: '',
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
                   ),
-                  if (index < 5) const SizedBox(width: 10),
-                ],
+                  cursorColor: _store.isError
+                      ? AppColors.codeBorderError
+                      : _store.controllers[index].text.isEmpty
+                          ? AppColors.hintInputForm
+                          : AppColors.darkGreen,
+                  cursorWidth: 1.5,
+                  style: AppFonts.defaultFont(
+                    color: _store.isError
+                        ? AppColors.codeBorderError
+                        : AppColors.darkGreen,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ),
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
   @override
   void dispose() {
-    for (var controller in codeController.controllers) {
+    for (var controller in _store.controllers) {
       controller.text = '';
     }
     super.dispose();

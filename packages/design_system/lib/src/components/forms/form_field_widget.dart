@@ -30,7 +30,7 @@ class FormFieldWidget extends StatefulWidget {
       this.obscureText,
       this.errorTextMargin,
       this.horizontalSymmetric,
-      this.inputPadding});
+      this.inputPadding, required this.colorStyle});
 
   final String? errorText;
   final EdgeInsetsGeometry? errorTextMargin;
@@ -45,6 +45,7 @@ class FormFieldWidget extends StatefulWidget {
   final Color? cursorColor;
   final bool isValid;
   final TextStyle? titleStyle;
+  final Color colorStyle;
   final TextStyle? fieldStyle;
   final double? fieldWidth;
   final double? fieldHeight;
@@ -93,7 +94,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
                 BoxDecoration(
                   color: AppColors.white,
                   border: Border.all(
-                    color: widget.isValid ? AppColors.white : Colors.red,
+                    color: widget.isValid ? AppColors.white : AppColors.delete,
                   ),
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -101,7 +102,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
               obscureText: widget.obscureText ?? false,
               key: widget.fieldKey,
               enabled: widget.isSubmitted,
-              cursorColor: widget.cursorColor ?? const Color(0xff979797),
+              cursorColor: widget.cursorColor ?? AppColors.formGrey,
               autovalidateMode:
                   widget.autoValidateMode ?? AutovalidateMode.onUserInteraction,
               controller: widget.controller,
@@ -115,8 +116,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
               style: widget.fieldStyle ??
                   AppFonts.defaultFont(
                     fontSize: 14,
-                    color:
-                        widget.isValid ? AppColors.darkGreen : AppColors.delete,
+                    color: widget.colorStyle
                   ),
             ),
           ),
