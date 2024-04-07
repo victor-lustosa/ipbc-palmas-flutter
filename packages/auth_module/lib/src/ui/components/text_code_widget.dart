@@ -39,7 +39,6 @@ class _TextCodeWidgetState extends State<TextCodeWidget> {
                 child: TextField(
                   maxLength: 1,
                   textAlign: TextAlign.center,
-                  keyboardType: TextInputType.number,
                   focusNode: _store.focusNodes[index],
                   controller: _store.controllers[index],
                   onChanged: (value) {

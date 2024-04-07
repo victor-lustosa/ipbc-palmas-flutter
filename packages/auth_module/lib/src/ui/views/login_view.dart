@@ -93,7 +93,7 @@ class _LoginViewState extends State<LoginView> {
                   TemplateFormWidget(
                     controller: _passwordController,
                     titleMargin: EdgeInsets.only(
-                      top: _isEmailValid ? 24 : 12,
+                      top: _isPasswordValid ? 24 : 12,
                     ),
                     title: 'Insira sua senha',
                     isValid: _isPasswordValid,

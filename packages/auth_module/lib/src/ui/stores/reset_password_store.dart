@@ -23,34 +23,38 @@ class ResetPasswordStore extends ValueNotifier<GenericState<ResetPasswordState>>
 
   validateCode(BuildContext context){
     value = LoadingState<ResetPasswordState>();
-    Future.delayed(const Duration(seconds: 1), () {
-      inputCode = _controllers.map((controller) => controller.text).toList();
-      if (inputCode.every((value) => value.isNotEmpty)) {
-        if (inputCode.join() == code.join()) {
-          Navigator.pushNamed(
-            context,
-            AuthModule.authRoute + AuthModule.creatingNewPassWordRoute,
-          );
+    try{
+      Future.delayed(const Duration(seconds: 1), () {
+        inputCode = _controllers.map((controller) => controller.text).toList();
+        if (inputCode.every((value) => value.isNotEmpty)) {
+          if (inputCode.join() == code.join()) {
+            Navigator.pushNamed(
+              context,
+              AuthModule.authRoute + AuthModule.creatingNewPassWordRoute,
+            );
+          } else {
+            notifyBorderError(value: true);
+            showCustomErrorDialog(
+              context: context,
+              title: 'Código Inválido!',
+              message: 'Por favor, verifique o código, e tente novamente.',
+            );
+          }
         } else {
           notifyBorderError(value: true);
-          value = InitialState<ResetPasswordState>();
           showCustomErrorDialog(
             context: context,
-            title: 'Código Inválido!',
-            message: 'Por favor, verifique o código, e tente novamente.',
+            title: 'Código não Preenchidos!',
+            message:
+            'Por favor, preencha o código de verificação e tente novamente.',
           );
         }
-      } else {
-        notifyBorderError(value: true);
         value = InitialState<ResetPasswordState>();
-        showCustomErrorDialog(
-          context: context,
-          title: 'Código não Preenchidos!',
-          message:
-          'Por favor, preencha o código de verificação e tente novamente.',
-        );
-      }
-    });
+      });
+    } catch(e){
+      value = InitialState<ResetPasswordState>();
+    }
+
   }
 
   colorBorder(){

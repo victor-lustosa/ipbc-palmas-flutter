@@ -14,8 +14,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
   final String _emailErrorText = 'por favor, insira um email válido.';
   final _emailKey = GlobalKey<FormState>();
 
-  final TextEditingController _resetPasswordController =
-      TextEditingController();
+  final TextEditingController _resetPasswordController = TextEditingController();
   bool _isEmailValid = true;
   final bool _isPressed = false;
   bool _isVerified = false;
