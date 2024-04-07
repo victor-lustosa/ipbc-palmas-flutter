@@ -7,12 +7,14 @@ class LyricModule extends Module {
   static const String initialRoute = "/";
   static const String lyricRoute = "/lyric";
   static const String lyricsRoute = "/lyrics";
+  static const String lyricsListRoute = "/lyrics-list";
 
   @override
   void exportedBinds(i) {
     i.addSingleton<LyricBloc>(
       () => LyricBloc(
-        supaUseCase: LyricsUseCases(repository: i.get<Repository<List<dynamic>>>()),
+        supaUseCase:
+            LyricsUseCases(repository: i.get<Repository<List<dynamic>>>()),
       ),
       config: CoreModule.blocConfig(),
     );
@@ -33,8 +35,10 @@ class LyricModule extends Module {
         transitionBuilder: (context, anim1, anim2, child) {
           return SlideTransition(
             position: anim1.drive(
-                Tween(begin: const Offset(0, 1), end: Offset.zero)
-                    .chain(CurveTween(curve: Curves.ease))),
+              Tween(begin: const Offset(0, 1), end: Offset.zero).chain(
+                CurveTween(curve: Curves.ease),
+              ),
+            ),
             child: child,
           );
         },

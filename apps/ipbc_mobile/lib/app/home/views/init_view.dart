@@ -1,8 +1,6 @@
-
 import 'dart:io';
 
 import 'package:core_module/core_module.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../events/event_module.dart';
@@ -20,18 +18,12 @@ class InitView extends StatefulWidget {
 }
 
 class _InitViewState extends State<InitView> {
-  //pra vincular o botao de atualizar da tela de sem conexao com a tela correta
-  //late final HomeViewModel _viewModel;
+
   int selectedIndex = 0;
+
   final _controller = PageController();
 
-  @override
-  void initState() {
-    super.initState();
-    // _viewModel = HomeViewModel();
-  }
-
-  void onItemTapped(int index) {
+  void _onItemTapped(int index) {
     selectedIndex = index;
     _controller.animateToPage(
       index,
@@ -56,7 +48,7 @@ class _InitViewState extends State<InitView> {
           },
           children: const [
             HomeRoutes(),
-            LyricsListView(),
+            LyricRoutes(),
             OffersView(),
           ],
         ),
@@ -70,13 +62,43 @@ class _InitViewState extends State<InitView> {
             callback: (int index) {
               setState(
                 () {
-                  onItemTapped(index);
+                  _onItemTapped(index);
                 },
               );
             },
           );
         },
       ),
+    );
+  }
+}
+class LyricRoutes extends StatefulWidget {
+  const LyricRoutes({super.key});
+
+  @override
+  State<LyricRoutes> createState() => _LyricRoutesState();
+}
+
+class _LyricRoutesState extends State<LyricRoutes> {
+  final GlobalKey<NavigatorState> _androidNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'lyric_key');
+
+  @override
+  Widget build(BuildContext context) {
+    return Navigator(
+      key: Platform.isIOS ? null : _androidNavigatorKey,
+      onGenerateRoute: (RouteSettings settings) {
+        switch (settings.name) {
+          case LyricModule.initialRoute:
+              return CustomTransitionPageRoute(
+                child: const LyricsListView(),
+                tween: Tween(begin: const Offset(0, 0), end: Offset.zero).chain(
+                  CurveTween(curve: Curves.ease),
+                ),
+              );
+          default:
+            return unknownRoute();
+        }
+      },
     );
   }
 }
@@ -89,8 +111,7 @@ class HomeRoutes extends StatefulWidget {
 }
 
 class _HomeRoutesState extends State<HomeRoutes> {
-  final GlobalKey<NavigatorState> _androidNavigatorKey =
-      GlobalKey<NavigatorState>(debugLabel: 'home_key');
+  final GlobalKey<NavigatorState> _androidNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home_key');
 
   @override
   Widget build(BuildContext context) {
@@ -99,26 +120,18 @@ class _HomeRoutesState extends State<HomeRoutes> {
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
           case HomeModule.initialRoute:
-            if (Platform.isIOS) {
-              return CupertinoPageRoute(
-                settings: settings,
-                builder: (_) => const CupertinoPageScaffold(
-                  child: HomeView(),
-                ),
-              );
-            } else {
-              return MaterialPageRoute(
-                settings: settings,
-                builder: (_) => const HomeView(),
-              );
-            }
+            return CustomTransitionPageRoute(
+              child: const HomeView(),
+              tween: Tween(begin: const Offset(0, 0), end: Offset.zero).chain(
+                CurveTween(curve: Curves.ease),
+              ),
+            );
 
           case ServiceModule.serviceRoute:
             return CustomTransitionPageRoute(
               transitionSpeed: const Duration(milliseconds: 700),
               reverseSpeed: const Duration(milliseconds: 700),
-              child: ServiceView(
-                  entity: settings.arguments as ServiceViewDTO),
+              child: ServiceView(entity: settings.arguments as ServiceViewDTO),
               tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
                 CurveTween(curve: Curves.ease),
               ),

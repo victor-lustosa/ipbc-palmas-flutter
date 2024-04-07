@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../events/event_module.dart';
 import '../blocs/home_bloc.dart';
+import '../home_module.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -59,7 +60,11 @@ class _HomeViewState extends State<HomeView>
                 color: AppColors.darkGreen,
               );
             } else if (state is NoConnectionState<HomeState>) {
-              return const NoConnectionView(index: 0);
+              return NoConnectionView(
+                action: () => Navigator.of(context).pushReplacementNamed(
+                  HomeModule.initialRoute,
+                ),
+              );
             } else if (state is DataFetchedState<HomeState, ServicesEntity>) {
               _servicesList = state.entities;
               return SingleChildScrollView(

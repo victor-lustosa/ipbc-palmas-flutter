@@ -15,8 +15,6 @@ dependencies:
   flutter_svg: ^2.0.10+1
   core_module:
     path: ../core_module
-  ipbc_mobile:
-    path: ../../apps/ipbc_mobile
 
 dev_dependencies:
   flutter_test:

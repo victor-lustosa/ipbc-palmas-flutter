@@ -45,7 +45,11 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                   color: AppColors.darkGreen,
                 );
               } else if (state is NoConnectionState<ServicesCollectionState>) {
-                return const NoConnectionView(index: 0);
+                return NoConnectionView(
+                  action: () => Navigator.of(context).pushReplacementNamed(
+                    ServiceModule.servicesCollectionRoute,
+                  ),
+                );
               } else if (state
                   is DataFetchedState<ServicesCollectionState, ServiceEntity>) {
                 entitiesList = state.entities;

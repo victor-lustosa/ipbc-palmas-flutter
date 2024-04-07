@@ -16,17 +16,17 @@ unknownRoute() {
 class CustomTransitionPageRoute extends PageRouteBuilder {
   final Widget child;
   final Animatable<Offset> tween;
-  final Duration transitionSpeed;
-  final Duration reverseSpeed;
+  final Duration? transitionSpeed;
+  final Duration? reverseSpeed;
 
   CustomTransitionPageRoute(
-      {required this.transitionSpeed,
-        required this.reverseSpeed,
+      { this.transitionSpeed,
+         this.reverseSpeed,
         required this.tween,
         required this.child})
       : super(
-      reverseTransitionDuration: reverseSpeed,
-      transitionDuration: transitionSpeed,
+      reverseTransitionDuration: reverseSpeed ?? const Duration(milliseconds: 300),
+      transitionDuration: transitionSpeed ?? const Duration(milliseconds: 300),
       pageBuilder: (context, animation, secondaryAnimation) => child);
 
   @override

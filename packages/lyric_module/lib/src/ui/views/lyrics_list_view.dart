@@ -41,7 +41,11 @@ class _LyricsListViewState extends State<LyricsListView>
                 color: AppColors.darkGreen,
               );
             } else if (state is NoConnectionState<LyricState>) {
-              return const NoConnectionView(index: 0);
+              return NoConnectionView(
+                action: () => Navigator.of(context).pushReplacementNamed(
+                  LyricModule.initialRoute,
+                ),
+              );
             } else if (state is DataFetchedState<LyricState, LyricEntity>) {
               _lyricsFetched = state.entities;
               return RefreshIndicator(

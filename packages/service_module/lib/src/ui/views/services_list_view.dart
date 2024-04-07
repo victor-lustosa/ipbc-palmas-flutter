@@ -1,4 +1,3 @@
-
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,7 +23,10 @@ class _ServicesListViewState extends State<ServicesListView> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(left: 17, top: 30),
+                    margin: const EdgeInsets.only(
+                      left: 17,
+                      top: 30,
+                    ),
                     child: BackButtonWidget(
                       action: () => Navigator.pop(context),
                     ),
