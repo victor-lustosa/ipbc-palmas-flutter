@@ -12,7 +12,8 @@ class CreateAccountView extends StatefulWidget {
 class _CreateAccountViewState extends State<CreateAccountView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordController2 = TextEditingController();
+  final TextEditingController _passwordRepeatController =
+      TextEditingController();
 
   final _emailKey = GlobalKey<FormState>();
   final _passwordKey = GlobalKey<FormState>();
@@ -20,6 +21,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
   final String _emailErrorText = 'por favor, insira um email válido.';
   final String _passwordErrorText = 'por favor, insira uma senha.';
+  final String _differentPasswordErrorText =
+      'por favor, verefique se as senhas conferem.';
 
   bool _isEmailValid = true;
   bool _isPasswordValid = true;
@@ -127,7 +130,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                 defaultHintColor: AppColors.hintInputForm,
               ),
               TemplateFormWidget(
-                controller: _passwordController2,
+                controller: _passwordRepeatController,
                 titleMargin: const EdgeInsets.only(
                   top: 8,
                 ),
@@ -180,7 +183,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     );
                   }
                   if (_passwordController.text.isEmpty &&
-                      _passwordController2.text.isEmpty &&
+                      _passwordRepeatController.text.isEmpty &&
                       !_isPressed) {
                     _passwordBorderValidation(false);
                     showCustomErrorDialog(
@@ -189,6 +192,16 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       message:
                           'Por favor, preencha as senhas, e tente novamente.',
                     );
+
+                    if (_passwordController.text !=
+                        _passwordRepeatController.text) {
+                      _passwordBorderValidation(false);
+                      showCustomErrorDialog(
+                        context: context,
+                        title: 'Senhas diferentes!',
+                        message: _differentPasswordErrorText,
+                      );
+                    }
                   }
                 },
                 isValid: _isEmailValid && _isPasswordValid && _isPasswordSame,
@@ -311,17 +324,6 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     });
   }
 
-  _emailSameValidation(bool value) {
-    Future.delayed(Duration.zero, () async {
-      if (_passwordController.text == _passwordController2.text) {
-        setState(() {
-          _isPasswordSame = value;
-          print(_isPasswordSame);
-        });
-      }
-    });
-  }
-
   _emailValidation(String? data) {
     if (data == null || data.isEmpty) {
       _emailBorderValidation(false);
@@ -334,13 +336,23 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     }
   }
 
+  _passwordSameValidation(bool value) {
+    Future.delayed(Duration.zero, () async {
+      if (_passwordController.text == _passwordRepeatController.text) {
+        setState(() {
+          _isPasswordSame = true;
+        });
+      }
+    });
+  }
+
   _passwordValidation(String? data) {
     if (data == null || data.isEmpty) {
       _passwordBorderValidation(false);
-      _emailSameValidation(false);
+      _passwordSameValidation(false);
     } else {
       _passwordBorderValidation(true);
-      _emailSameValidation(true);
+      _passwordSameValidation(true);
     }
   }
 }
