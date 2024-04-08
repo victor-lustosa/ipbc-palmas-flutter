@@ -68,7 +68,6 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                 ],
               ),
             ),
-
             TemplateFormWidget(
               controller: _passwordController,
               titleMargin: EdgeInsets.only(

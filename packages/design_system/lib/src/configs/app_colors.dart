@@ -29,6 +29,7 @@ class AppColors {
   static const Color chorusColor = Color(0xFFEDF7F4);
   static const Color backgroundG = Color(0xFFEDF7F4);
   static const Color cardGreen = Color(0xFF006D4E);
+  static const Color createGreen = Color(0xFF80AD9F);
   static const Color cardBallsGrey = Color(0xFFCCCCCC);
   static const Color tabGreen = Color(0xFF00906b);
   static const Color dividerModal = Color(0xFFA9A9A9);

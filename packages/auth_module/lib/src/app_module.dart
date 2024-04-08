@@ -1,4 +1,3 @@
-
 import 'package:auth_module/src/ui/stores/reset_password_store.dart';
 import 'package:core_module/core_module.dart';
 import 'package:ipbc_mobile/app/home/home_module.dart';
@@ -45,7 +44,6 @@ class AuthModule extends Module {
 
   @override
   void routes(r) {
-
     r.child(authRoute, child: (_) => const LoginView());
     r.module(homeRoute, module: HomeModule());
     r.child(loginRoute, child: (_) => const LoginView());

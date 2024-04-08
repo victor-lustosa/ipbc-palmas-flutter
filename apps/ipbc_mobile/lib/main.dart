@@ -38,6 +38,3 @@ void main() async {
     ),
   );
 }
-
-
-
