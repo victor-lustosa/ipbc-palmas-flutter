@@ -9,7 +9,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   final IAuthUseCases _useCases;
 
   final String _email = 'victor.olustosa@outlook.com';
-  final String _password = '!Helena2209';
+  final String _password = '!Helena2201';
 
   logIn(String email, String password, BuildContext context) async {
     value = LoadingState<LoginState>();

@@ -19,6 +19,7 @@ class ResetPasswordSuccessView extends StatelessWidget {
                 ),
               ),
               Text(
+                textAlign: TextAlign.center,
                 'Nova senha',
                 style: AppFonts.defaultFont(
                   color: AppColors.grey10,
@@ -26,15 +27,16 @@ class ResetPasswordSuccessView extends StatelessWidget {
                 ),
               ),
               Text(
-                'Criada com sucesso!',
+                textAlign: TextAlign.center,
+                'criada com sucesso!',
                 style: AppFonts.defaultFont(
                   color: AppColors.grey10,
                   fontSize: 22,
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(
-                  top: 376,
+                margin: EdgeInsets.only(
+                  top: context.mediaQuery.size.height * .37,
                   left: 16.0,
                   right: 16.0,
                 ),
@@ -44,13 +46,13 @@ class ResetPasswordSuccessView extends StatelessWidget {
                   ),
                   fixedSize: Size(MediaQuery.of(context).size.width, 48),
                   action: () {
-                    Modular.to.navigate(AuthModule.authRoute);
+                    Modular.to.navigate(AuthModule.authRoute + AuthModule.authRoute);
                   },
                   backgroundColor: AppColors.darkGreen,
                   shadowColor: AppColors.grey0,
                   foregroundColor: AppColors.white,
                   child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Continuar para o login",

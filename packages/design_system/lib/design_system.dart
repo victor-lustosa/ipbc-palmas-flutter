@@ -61,4 +61,6 @@ export 'src/components/top_bar/mobile_layout/title_top_bar_widget.dart';
 export 'src/components/scroll_transform/scroll_transform_item.dart';
 export 'src/components/scroll_transform/scroll_transform_view.dart';
 
+export 'src/components/icons/hide_icon_widget.dart';
+
 export 'package:flutter_svg/flutter_svg.dart';

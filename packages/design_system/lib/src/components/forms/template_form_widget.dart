@@ -64,8 +64,10 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
       isSubmitted: !widget.isPressed,
       fieldMargin: const EdgeInsets.only(top: 4),
       titleMargin: widget.titleMargin,
-      fieldDecoration:
-          _fieldDecoration(isValid: widget.isValid, color: widget.color),
+      fieldDecoration: _fieldDecoration(
+        isValid: widget.isValid,
+        color: widget.color,
+      ),
       title: widget.title,
       isValid: widget.isValid,
       maxLines: widget.maxLines,
