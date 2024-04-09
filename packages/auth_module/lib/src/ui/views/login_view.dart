@@ -1,5 +1,4 @@
 import 'package:core_module/core_module.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -108,21 +107,10 @@ class _LoginViewState extends State<LoginView> {
                         left: 16,
                         top: 9,
                       ),
-                      suffixIcon: _obscure
-                          ? IconButtonWidget(
-                              action: suffixAction,
-                              size: 24,
-                              color: AppColors.grey7,
-                              iOSIcon: CupertinoIcons.eye_slash,
-                              androidIcon: Icons.visibility_off_outlined,
-                            )
-                          : IconButtonWidget(
-                              action: suffixAction,
-                              size: 24,
-                              color: AppColors.grey7,
-                              iOSIcon: CupertinoIcons.eye,
-                              androidIcon: Icons.visibility_outlined,
-                            ),
+                      suffixIcon: HideIconWidget(
+                        isObscure: _obscure,
+                        suffixAction: suffixAction,
+                      ),
                     ),
                     validator: (data) {
                       return _passwordValidation(data);

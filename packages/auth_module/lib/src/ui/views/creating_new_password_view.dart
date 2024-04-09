@@ -1,5 +1,4 @@
 import 'package:core_module/core_module.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CreatingNewPasswordView extends StatefulWidget {
@@ -32,177 +31,155 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
           _obscure = !_obscure;
         });
     return Scaffold(
-        body: SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: SizedBox(
+            width: context.mediaQuery.size.width,
+            child: Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 60),
-                  child: BackButtonWidget(
-                    action: () => Modular.to.navigate(
-                      AuthModule.authRoute + AuthModule.verificationCodeRoute,
+                  margin: const EdgeInsets.only(
+                    left: 16,
+                    top: 60,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      BackButtonWidget(
+                        action: () => Modular.to.navigate(
+                          AuthModule.authRoute +
+                              AuthModule.verificationCodeRoute,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(
+                    top: 10.11,
+                    bottom: 53.89,
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Criando uma nova senha",
+                        style: AppFonts.defaultFont(
+                          color: AppColors.grey10,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                TemplateFormWidget(
+                  controller: _passwordController,
+                  title: 'Crie sua senha',
+                  isValid: _isPasswordValid,
+                  titleMargin: const EdgeInsets.only(bottom: 4),
+                  errorText: _passwordErrorText,
+                  globalKey: _passwordKey,
+                  isPressed: _isPressed,
+                  obscure: _obscure,
+                  inputDecoration: fieldInputDecoration(
+                    isValid: _isPasswordValid,
+                    hintText: 'Senha',
+                    contentPadding: const EdgeInsets.only(
+                      left: 16,
+                      top: 9,
                     ),
+                    suffixIcon: HideIconWidget(
+                      isObscure: _obscure,
+                      suffixAction: suffixAction,
+                    ),
+                  ),
+                  validator: (data) {
+                    return _passwordValidation(data);
+                  },
+                  defaultHintColor: AppColors.hintInputForm,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 4),
+                  child: TemplateFormWidget(
+                    controller: _confirmPasswordController,
+                    isValid: _isConfirmPasswordValid,
+                    errorText: _confirmPasswordErrorText,
+                    globalKey: _confirmPasswordKey,
+                    isPressed: _isPressed,
+                    obscure: _obscure,
+                    inputDecoration: fieldInputDecoration(
+                      isValid: _isConfirmPasswordValid,
+                      hintText: 'Repetir senha',
+                      contentPadding: const EdgeInsets.only(
+                        left: 16,
+                        top: 9,
+                      ),
+                      suffixIcon: HideIconWidget(
+                        isObscure: _obscure,
+                        suffixAction: suffixAction,
+                      ),
+                    ),
+                    validator: (data) {
+                      return _confirmPasswordValidation(data);
+                    },
+                    defaultHintColor: AppColors.hintInputForm,
+                  ),
+                ),
+                Container(
+                  width: context.mediaQuery.size.width,
+                  margin: const EdgeInsets.only(
+                    left: 16,
+                    top: 8,
+                    right: 16,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        " * Deve conter no mínimo 8 dígitos.",
+                        style: AppFonts.defaultFont(
+                          color: isPasswordValid(_passwordController.text)
+                              ? AppColors.darkGreen
+                              : AppColors.grey8,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      Visibility(
+                        visible: false,
+                        child: Text(
+                          " * Atenção! As senhas não correspondem.",
+                          style: AppFonts.defaultFont(
+                            color: AppColors.delete,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(
+                    top: 93,
+                  ),
+                  child: LoadingButtonWidget(
+                    isPressed: _isPressed,
+                    action: () async {
+                      //if (isValid) {
+                        Modular.to.navigate(AuthModule.authRoute + AuthModule.resetPasswordSuccessRoute);
+                      //}
+                    },
+                    isValid: true,
+                    label: "Entrar",
                   ),
                 ),
               ],
             ),
-            Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(
-                top: 10.11,
-                bottom: 53.89,
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    "Criando uma nova senha",
-                    style: AppFonts.defaultFont(
-                      color: AppColors.grey10,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            TemplateFormWidget(
-              controller: _passwordController,
-              titleMargin: EdgeInsets.only(
-                top: _isPasswordValid ? 24 : 12,
-              ),
-              title: 'Crie sua senha',
-              isValid: _isPasswordValid,
-              errorText: _passwordErrorText,
-              globalKey: _passwordKey,
-              isPressed: _isPressed,
-              obscure: _obscure,
-              inputDecoration: fieldInputDecoration(
-                isValid: _isPasswordValid,
-                hintText: 'Senha',
-                contentPadding: const EdgeInsets.only(
-                  left: 16,
-                  top: 9,
-                ),
-                suffixIcon: _obscure
-                    ? IconButtonWidget(
-                        action: suffixAction,
-                        size: 24,
-                        color: AppColors.grey7,
-                        iOSIcon: CupertinoIcons.eye_slash,
-                        androidIcon: Icons.visibility_off_outlined,
-                      )
-                    : IconButtonWidget(
-                        action: suffixAction,
-                        size: 24,
-                        color: AppColors.grey7,
-                        iOSIcon: CupertinoIcons.eye,
-                        androidIcon: Icons.visibility_outlined,
-                      ),
-              ),
-              validator: (data) {
-                return _passwordValidation(data);
-              },
-              defaultHintColor: AppColors.hintInputForm,
-            ),
-            TemplateFormWidget(
-              controller: _confirmPasswordController,
-              titleMargin: EdgeInsets.only(
-                top: _isConfirmPasswordValid ? 24 : 12,
-              ),
-              isValid: _isConfirmPasswordValid,
-              errorText: _confirmPasswordErrorText,
-              globalKey: _confirmPasswordKey,
-              isPressed: _isPressed,
-              obscure: _obscure,
-              inputDecoration: fieldInputDecoration(
-                isValid: _isConfirmPasswordValid,
-                hintText: 'Repetir senha',
-                contentPadding: const EdgeInsets.only(
-                  left: 16,
-                  top: 9,
-                ),
-                suffixIcon: _obscure
-                    ? IconButtonWidget(
-                        action: suffixAction,
-                        size: 24,
-                        color: AppColors.grey7,
-                        iOSIcon: CupertinoIcons.eye_slash,
-                        androidIcon: Icons.visibility_off_outlined,
-                      )
-                    : IconButtonWidget(
-                        action: suffixAction,
-                        size: 24,
-                        color: AppColors.grey7,
-                        iOSIcon: CupertinoIcons.eye,
-                        androidIcon: Icons.visibility_outlined,
-                      ),
-              ),
-              validator: (data) {
-                return _confirmPasswordValidation(data);
-              },
-              defaultHintColor: AppColors.hintInputForm,
-            ),
-            Container(
-              alignment: Alignment.bottomLeft,
-              child: Text(
-                " * Deve conter no mínimo 8 dígitos.",
-                style: AppFonts.defaultFont(
-                  color: isPasswordValid(_passwordController.text)
-                      ? AppColors.darkGreen
-                      : AppColors.grey8,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.bottomLeft,
-              child: arePasswordsEqual(
-                _passwordController.text,
-                _confirmPasswordController.text,
-              )
-                  ? const SizedBox()
-                  : Text(
-                      " * Atenção! As senhas não correspondem.",
-                      style: AppFonts.defaultFont(
-                        color: AppColors.delete,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(
-                top: 93,
-              ),
-              child: ButtonWidget(
-                action: () {
-                  if (isValid) {
-                    Modular.to.navigate(AuthModule.authRoute +
-                        AuthModule.resetPasswordSuccessRoute);
-                  }
-                },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                fixedSize: const Size(364, 48),
-                backgroundColor:
-                    isValid ? AppColors.darkGreen : AppColors.disableButton,
-                shadowColor: AppColors.grey0,
-                foregroundColor: AppColors.white,
-                child: const Text(
-                  "Redefinir senha",
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
-    ));
+    );
   }
 
   bool get isValid =>

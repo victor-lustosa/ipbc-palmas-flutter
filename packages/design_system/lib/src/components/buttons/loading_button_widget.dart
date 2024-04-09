@@ -33,9 +33,7 @@ class LoadingButtonWidget extends StatelessWidget {
         left: 16,
         right: 16,
       ),
-      width: isPressed
-          ? (loadingWidth ?? 48)
-          : context.mediaQuery.size.width,
+      width: isPressed ? (loadingWidth ?? 48) : context.mediaQuery.size.width,
       height: 48,
       duration: const Duration(milliseconds: 750),
       curve: Curves.fastOutSlowIn,

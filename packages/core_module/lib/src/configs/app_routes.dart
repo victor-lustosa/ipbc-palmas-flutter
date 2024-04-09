@@ -4,7 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../core_module.dart';
+class AppRoutes{
+  AppRoutes._();
+  navigate(){
 
+  }
+  pushNamed(){
+
+  }
+  pop(){
+
+  }
+}
 unknownRoute() {
   if (Platform.isIOS) {
     return CupertinoPageRoute(builder: (_) => const CupertinoPageScaffold(child: UnknownRouteView()));
