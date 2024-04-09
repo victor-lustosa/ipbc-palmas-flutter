@@ -11,21 +11,29 @@ class CreateEventView extends StatefulWidget {
 
 class _CreateEventViewState extends State<CreateEventView> {
   final TextEditingController _eventTitleController = TextEditingController();
-  final TextEditingController _eventLocationController =
-      TextEditingController();
-  final TextEditingController _eventDescriptionController =
-      TextEditingController();
+  final TextEditingController _eventLocationController = TextEditingController();
+  final TextEditingController _eventLinkController = TextEditingController();
+  final TextEditingController _contactLinkController = TextEditingController();
+  final TextEditingController _eventLinkDescriptionController = TextEditingController();
+  final TextEditingController _eventDescriptionController = TextEditingController();
   final String _eventTitleErrorText = 'por favor, insira o título do evento.';
-  final String _eventLocationErrorText =
-      'por favor, insira o título do evento.';
-  final String _eventDescriptionErrorText =
-      'por favor, insira o título do evento.';
+  final String _contactLinkErrorText = 'por favor, insira o título do evento.';
+  final String _eventLocationErrorText = 'por favor, insira o título do evento.';
+  final String _eventDescriptionErrorText = 'por favor, insira o título do evento.';
+  final String _eventLinkErrorText = 'por favor, insira o link do evento.';
+  final String _eventLinkDescriptionErrorText = 'por favor, insira o link do evento.';
   final _eventTitleKey = GlobalKey<FormState>();
+  final _contactLinkKey = GlobalKey<FormState>();
+  final _eventLinkKey = GlobalKey<FormState>();
+  final _eventLinkDescriptionKey = GlobalKey<FormState>();
   final _eventLocationKey = GlobalKey<FormState>();
   final _eventDescriptionKey = GlobalKey<FormState>();
   bool _isEventTitleValid = true;
+  bool _isContactLinkValid = true;
   bool _isEventLocationValid = true;
   bool _isEventDescriptionValid = true;
+  bool _isEventLinkValid = true;
+  bool _isEventLinkDescriptionValid = true;
   bool _isPressed = false;
 
   _emailValidation(String? data) {
@@ -177,6 +185,81 @@ class _CreateEventViewState extends State<CreateEventView> {
                       ),
                       isValid: _isEventLocationValid,
                       hintText: 'Selecione a localização',
+                    ),
+                    validator: (data) {
+                      return _emailValidation(data);
+                    },
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 16),
+                  child: TemplateFormWidget(
+                    controller: _eventLinkController,
+                    title: 'Link',
+                    isValid: _isEventLinkValid,
+                    errorText: _eventLinkErrorText,
+                    globalKey: _eventLinkKey,
+                    isPressed: _isPressed,
+                    inputDecoration: fieldInputDecoration(
+                      prefixIconConstraints: const BoxConstraints(
+
+                      ),
+                      prefixIcon: Container(
+                        margin: const EdgeInsets.only(
+                            left: 10,  right: 4),
+                        child: Image.asset(AppIcons.linkIcon,
+                          width:20,
+                          height:13,),
+                      ),
+
+                      isValid: _isEventLocationValid,
+                      hintText: 'Link do evento',
+                    ),
+                    validator: (data) {
+                      return _emailValidation(data);
+                    },
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 8),
+                  child: TemplateFormWidget(
+                    controller: _eventLinkDescriptionController,
+                    isValid: _isEventLinkDescriptionValid,
+                    errorText: _eventLinkDescriptionErrorText,
+                    globalKey: _eventLinkDescriptionKey,
+                    isPressed: _isPressed,
+                    inputDecoration: fieldInputDecoration(
+                      isValid: _isEventLinkDescriptionValid,
+                      hintText: 'Descrição do link',
+                    ),
+                    validator: (data) {
+                      return _emailValidation(data);
+                    },
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 16),
+                  child: TemplateFormWidget(
+                    controller: _contactLinkController,
+                    title: 'Link para contato',
+                    isValid: _isContactLinkValid,
+                    errorText: _contactLinkErrorText,
+                    globalKey: _contactLinkKey,
+                    isPressed: _isPressed,
+                    inputDecoration: fieldInputDecoration(
+                      prefixIconConstraints: const BoxConstraints(
+
+                      ),
+                      prefixIcon: Container(
+                        margin: const EdgeInsets.only(
+                            left: 10,  right: 4),
+                        child: Image.asset(AppIcons.linkIcon,
+                          width:20,
+                          height:13,),
+                      ),
+
+                      isValid: _isContactLinkValid,
+                      hintText: 'Link do contato',
                     ),
                     validator: (data) {
                       return _emailValidation(data);

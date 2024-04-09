@@ -10,7 +10,7 @@ class TemplateFormWidget extends StatefulWidget {
       required this.isValid,
       this.obscure,
       required this.isPressed,
-      required this.title,
+      this.title,
       required this.validator,
       required this.inputDecoration,
       this.titleMargin,
@@ -26,7 +26,7 @@ class TemplateFormWidget extends StatefulWidget {
 
   final String errorText;
 
-  final String title;
+  final String? title;
 
   final bool isValid;
 
