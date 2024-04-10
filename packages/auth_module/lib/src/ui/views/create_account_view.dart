@@ -19,12 +19,9 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
   final String _emailErrorText = 'por favor, insira um email válido.';
   final String _passwordErrorText = 'por favor, insira uma senha.';
-  final String _differentPasswordErrorText =
-      'por favor, verefique se as senhas conferem.';
 
   bool _isEmailValid = true;
   bool _isPasswordValid = true;
-  bool _isPasswordSame = false;
   bool _obscure = true;
   bool _isPressed = false;
 
@@ -38,7 +35,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
       valueListenable: _store,
       builder: (_, state, child) {
         if (state is LoadingState<CreateAccountState>) {
-          _isPressed = true;
+          _isPressed = false;
         }
         if (state is InitialState<CreateAccountState>) {
           _isPressed = false;
@@ -97,7 +94,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       return _emailValidation(data);
                     },
                     defaultHintColor: _isEmailValid
-                        ? AppColors.createGreen
+                        ? AppColors.greenInputAccept
                         : AppColors.delete,
                   ),
                   TemplateFormWidget(
@@ -183,39 +180,23 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     loadingWidth: 55,
                     isPressed: _isPressed,
                     action: () async {
-                      if (_store.emailController.text.isEmpty && !_isPressed) {
-                        _emailBorderValidation(false);
-                        showCustomErrorDialog(
-                          context: context,
-                          title: 'Email não Prenchido!',
-                          message:
-                              'Por favor, preencha o email, e tente novamente.',
-                        );
-                      }
-                      if (_store.passwordController.text.isEmpty &&
-                          _store.passwordRepeatController.text.isEmpty &&
-                          !_isPressed) {
-                        _passwordBorderValidation(false);
-                        showCustomErrorDialog(
-                          context: context,
-                          title: 'Senhas não preenchida!',
-                          message:
-                              'Por favor, preencha as senhas, e tente novamente.',
-                        );
-
-                        if (_store.passwordController.text !=
-                            _store.passwordRepeatController.text) {
-                          _passwordBorderValidation(false);
+                      if (_store.email &&
+                          _store.password &&
+                          _store.passwordConfirm != null) {
+                        if (!_isPressed &&
+                            _store.password == _store.passwordConfirm &&
+                            _isEmailValid) {
                           showCustomErrorDialog(
                             context: context,
-                            title: 'Senhas diferentes!',
-                            message: _differentPasswordErrorText,
+                            title: 'ok!',
+                            message: 'ok.',
                           );
                         }
                       }
                     },
-                    isValid:
-                        _isEmailValid && _isPasswordValid && _isPasswordSame,
+                    isValid: _isEmailValid &&
+                        _isPasswordValid &&
+                        _store.arePasswordEqual,
                     label: "Criar Conta",
                   ),
                   Row(
@@ -350,24 +331,11 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     }
   }
 
-  _passwordSameValidation(bool value) {
-    Future.delayed(Duration.zero, () async {
-      if (_store.passwordController.text ==
-          _store.passwordRepeatController.text) {
-        setState(() {
-          _isPasswordSame = true;
-        });
-      }
-    });
-  }
-
   _passwordValidation(String? data) {
     if (data == null || data.isEmpty) {
       _passwordBorderValidation(false);
-      _passwordSameValidation(false);
     } else {
       _passwordBorderValidation(true);
-      _passwordSameValidation(true);
     }
   }
 }
