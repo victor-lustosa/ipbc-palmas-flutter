@@ -9,6 +9,7 @@ import 'ui/stores/reset_password_store.dart';
 import 'ui/views/create_account_view.dart';
 import 'ui/views/creating_new_password_view.dart';
 import 'ui/views/login_view.dart';
+import 'ui/views/registration_completion_view.dart';
 import 'ui/views/reset_password_success_view.dart';
 import 'ui/views/reset_password_view.dart';
 import 'ui/views/verification_code_view.dart';
@@ -22,6 +23,7 @@ class AuthModule extends Module {
   static const String creatingNewPassWordRoute = '/creating-new-password';
   static const String resetPasswordSuccessRoute = '/success-password';
   static const String resetPasswordRoute = '/reset-password';
+  static const String registrationCompletionRoute = '/registration-Completion';
 
   @override
   List<Module> get imports => [CoreModule()];
@@ -63,5 +65,7 @@ class AuthModule extends Module {
       resetPasswordSuccessRoute,
       child: (_) => const ResetPasswordSuccessView(),
     );
+    r.child(registrationCompletionRoute,
+        child: (_) => const RegistrationCompletionView());
   }
 }

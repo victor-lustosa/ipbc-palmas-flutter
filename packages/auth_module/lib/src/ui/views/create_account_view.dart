@@ -35,7 +35,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
       valueListenable: _store,
       builder: (_, state, child) {
         if (state is LoadingState<CreateAccountState>) {
-          _isPressed = false;
+          _isPressed = true;
         }
         if (state is InitialState<CreateAccountState>) {
           _isPressed = false;
@@ -180,19 +180,11 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     loadingWidth: 55,
                     isPressed: _isPressed,
                     action: () async {
-                      if (_store.email &&
-                          _store.password &&
-                          _store.passwordConfirm != null) {
-                        if (!_isPressed &&
-                            _store.password == _store.passwordConfirm &&
-                            _isEmailValid) {
-                          showCustomErrorDialog(
-                            context: context,
-                            title: 'ok!',
-                            message: 'ok.',
-                          );
-                        }
-                      }
+                      _store.emptyData &&
+                              _store.arePasswordEqual &&
+                              _isEmailValid
+                          ? _store.validateCode(context)
+                          : null;
                     },
                     isValid: _isEmailValid &&
                         _isPasswordValid &&

@@ -20,9 +20,16 @@ class CreateAccountStore
   get password => _passwordController.text;
   get passwordConfirm => _passwordRepeatController.text;
 
+  bool isError = false;
+
   bool get emptyPasswords =>
       _passwordController.text.isEmpty &&
       _passwordRepeatController.text.isEmpty;
+
+  bool get emptyData =>
+      _passwordController.text.isNotEmpty &&
+      _passwordRepeatController.text.isNotEmpty &&
+      _emailController.text.isNotEmpty;
 
   get arePasswordEqual {
     if (emptyPasswords) {
@@ -31,6 +38,34 @@ class CreateAccountStore
       _arePasswordEqual = password == passwordConfirm;
     }
     return _arePasswordEqual;
+  }
+
+  notifyBorderError({required value}) {
+    isError = value;
+  }
+
+  validateCode(BuildContext context) {
+    value = LoadingState<CreateAccountState>();
+    try {
+      Future.delayed(const Duration(seconds: 1), () {
+        if (_arePasswordEqual && emptyData) {
+          Navigator.pushNamed(
+            context,
+            AuthModule.authRoute + AuthModule.registrationCompletionRoute,
+          );
+        } else {
+          notifyBorderError(value: true);
+          showCustomErrorDialog(
+            context: context,
+            title: 'Dados Incorretos',
+            message: 'Por favor, Verifique os dados e tente novamente.',
+          );
+        }
+        value = InitialState<CreateAccountState>();
+      });
+    } catch (e) {
+      value = InitialState<CreateAccountState>();
+    }
   }
 }
 
