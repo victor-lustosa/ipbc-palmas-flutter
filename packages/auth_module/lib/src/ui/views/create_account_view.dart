@@ -86,6 +86,11 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     errorText: _emailErrorText,
                     globalKey: _emailKey,
                     isPressed: _isPressed,
+                    color: _store.emptyEmail
+                        ? AppColors.secondaryGrey
+                        : (_isEmailValid
+                            ? AppColors.greenInputAccept
+                            : AppColors.delete),
                     inputDecoration: fieldInputDecoration(
                       isValid: _isEmailValid,
                       hintText: 'Email',
@@ -108,6 +113,11 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     globalKey: _passwordKey,
                     isPressed: _isPressed,
                     obscure: _obscure,
+                    color: _store.emptyPasswords
+                        ? AppColors.secondaryGrey
+                        : (!_store.emptyPasswords && _store.arePasswordEqual
+                            ? AppColors.disableButton
+                            : AppColors.delete),
                     inputDecoration: fieldInputDecoration(
                       isValid: _isPasswordValid,
                       hintText: 'Senha',
@@ -134,7 +144,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     validator: (data) {
                       return _passwordValidation(data);
                     },
-                    defaultHintColor: AppColors.hintInputForm,
+                    defaultHintColor:
+                        _isPasswordValid && _store.arePasswordEqual
+                            ? AppColors.greenInputAccept
+                            : AppColors.delete,
                   ),
                   TemplateFormWidget(
                     controller: _store.passwordRepeatController,
@@ -146,6 +159,11 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     globalKey: _repeatPasswordKey,
                     isPressed: _isPressed,
                     obscure: _obscure,
+                    color: _store.emptyPasswords
+                        ? AppColors.secondaryGrey
+                        : (!_store.emptyPasswords && _store.arePasswordEqual
+                            ? AppColors.disableButton
+                            : AppColors.delete),
                     inputDecoration: fieldInputDecoration(
                       isValid: _isPasswordValid,
                       hintText: 'Repita a Senha',
@@ -172,14 +190,17 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     validator: (data) {
                       return _passwordValidation(data);
                     },
-                    defaultHintColor: AppColors.hintInputForm,
+                    defaultHintColor:
+                        _isPasswordValid && _store.arePasswordEqual
+                            ? AppColors.greenInputAccept
+                            : AppColors.delete,
                   ),
                   LoadingButtonWidget(
                     marginTop: 40,
                     marginBottom: 24,
                     loadingWidth: 55,
                     isPressed: _isPressed,
-                    action: () async {
+                    action: () {
                       _store.emptyData &&
                               _store.arePasswordEqual &&
                               _isEmailValid

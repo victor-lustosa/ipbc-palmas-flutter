@@ -22,6 +22,8 @@ class CreateAccountStore
 
   bool isError = false;
 
+  bool get emptyEmail => _emailController.text.isEmpty;
+
   bool get emptyPasswords =>
       _passwordController.text.isEmpty &&
       _passwordRepeatController.text.isEmpty;
