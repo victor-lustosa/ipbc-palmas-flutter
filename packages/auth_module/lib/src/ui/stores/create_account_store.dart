@@ -10,8 +10,6 @@ class CreateAccountStore
   final TextEditingController _passwordRepeatController =
       TextEditingController();
 
-  bool _arePasswordEqual = false;
-
   get emailController => _emailController;
   get passwordController => _passwordController;
   get passwordRepeatController => _passwordRepeatController;
@@ -24,6 +22,8 @@ class CreateAccountStore
 
   bool get emptyEmail => _emailController.text.isEmpty;
 
+  get isPasswordLengthValid => _passwordController.text.length > 7;
+
   bool get emptyPasswords =>
       _passwordController.text.isEmpty &&
       _passwordRepeatController.text.isEmpty;
@@ -33,14 +33,8 @@ class CreateAccountStore
       _passwordRepeatController.text.isNotEmpty &&
       _emailController.text.isNotEmpty;
 
-  get arePasswordEqual {
-    if (emptyPasswords) {
-      _arePasswordEqual = false;
-    } else {
-      _arePasswordEqual = password == passwordConfirm;
-    }
-    return _arePasswordEqual;
-  }
+  bool get isPasswordEqual =>
+      emptyPasswords ? false : password == passwordConfirm;
 
   notifyBorderError({required value}) {
     isError = value;
@@ -48,26 +42,30 @@ class CreateAccountStore
 
   validateCode(BuildContext context) {
     value = LoadingState<CreateAccountState>();
-    try {
-      Future.delayed(const Duration(seconds: 1), () {
-        if (_arePasswordEqual && emptyData) {
-          Navigator.pushNamed(
-            context,
-            AuthModule.authRoute + AuthModule.registrationCompletionRoute,
-          );
-        } else {
-          notifyBorderError(value: true);
-          showCustomErrorDialog(
-            context: context,
-            title: 'Dados Incorretos',
-            message: 'Por favor, Verifique os dados e tente novamente.',
-          );
-        }
-        value = InitialState<CreateAccountState>();
-      });
-    } catch (e) {
+    Future.delayed(const Duration(seconds: 1), () {
+      if (isPasswordEqual && emptyData) {
+        Navigator.pushNamed(
+          context,
+          AuthModule.authRoute + AuthModule.registrationCompletionRoute,
+        );
+      } else {
+        notifyBorderError(value: true);
+        showCustomErrorDialog(
+          context: context,
+          title: 'Dados Incorretos',
+          message: 'Por favor, Verifique os dados e tente novamente.',
+        );
+      }
       value = InitialState<CreateAccountState>();
-    }
+    });
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _passwordRepeatController.dispose();
+    super.dispose();
   }
 }
 

@@ -19,6 +19,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
   final String _emailErrorText = 'por favor, insira um email válido.';
   final String _passwordErrorText = 'por favor, insira uma senha.';
+  final String _passwordErrorConfirmText = 'por favor, Repita a senha.';
 
   bool _isEmailValid = true;
   bool _isPasswordValid = true;
@@ -115,7 +116,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     obscure: _obscure,
                     color: _store.emptyPasswords
                         ? AppColors.secondaryGrey
-                        : (!_store.emptyPasswords && _store.arePasswordEqual
+                        : (!_store.emptyPasswords && _store.isPasswordEqual
                             ? AppColors.disableButton
                             : AppColors.delete),
                     inputDecoration: fieldInputDecoration(
@@ -144,10 +145,9 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     validator: (data) {
                       return _passwordValidation(data);
                     },
-                    defaultHintColor:
-                        _isPasswordValid && _store.arePasswordEqual
-                            ? AppColors.greenInputAccept
-                            : AppColors.delete,
+                    defaultHintColor: _isPasswordValid && _store.isPasswordEqual
+                        ? AppColors.greenInputAccept
+                        : AppColors.delete,
                   ),
                   TemplateFormWidget(
                     controller: _store.passwordRepeatController,
@@ -155,13 +155,13 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       top: 8,
                     ),
                     isValid: _isPasswordValid,
-                    errorText: _passwordErrorText,
+                    errorText: _passwordErrorConfirmText,
                     globalKey: _repeatPasswordKey,
                     isPressed: _isPressed,
                     obscure: _obscure,
                     color: _store.emptyPasswords
                         ? AppColors.secondaryGrey
-                        : (!_store.emptyPasswords && _store.arePasswordEqual
+                        : (!_store.emptyPasswords && _store.isPasswordEqual
                             ? AppColors.disableButton
                             : AppColors.delete),
                     inputDecoration: fieldInputDecoration(
@@ -190,26 +190,66 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     validator: (data) {
                       return _passwordValidation(data);
                     },
-                    defaultHintColor:
-                        _isPasswordValid && _store.arePasswordEqual
-                            ? AppColors.greenInputAccept
-                            : AppColors.delete,
+                    defaultHintColor: _isPasswordValid && _store.isPasswordEqual
+                        ? AppColors.greenInputAccept
+                        : AppColors.delete,
+                  ),
+                  Container(
+                    width: context.mediaQuery.size.width,
+                    margin: const EdgeInsets.only(
+                      left: 16,
+                      top: 8,
+                      right: 16,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _store.isPasswordLengthValid
+                              ? " * A senha contém 8 dígitos."
+                              : " * Deve conter no mínimo 8 dígitos.",
+                          style: AppFonts.defaultFont(
+                            color: _store.emptyPasswords
+                                ? AppColors.grey10
+                                : _store.isPasswordLengthValid
+                                    ? AppColors.disableButton
+                                    : AppColors.delete,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        Text(
+                          _store.isPasswordEqual
+                              ? " * As senhas correspondem."
+                              : " * As senhas devem corresponder.",
+                          style: AppFonts.defaultFont(
+                            color: _store.emptyPasswords
+                                ? AppColors.grey10
+                                : _store.isPasswordEqual
+                                    ? AppColors.disableButton
+                                    : AppColors.delete,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                   LoadingButtonWidget(
-                    marginTop: 40,
+                    marginTop: 16,
                     marginBottom: 24,
                     loadingWidth: 55,
                     isPressed: _isPressed,
                     action: () {
                       _store.emptyData &&
-                              _store.arePasswordEqual &&
+                              _store.isPasswordEqual &&
                               _isEmailValid
                           ? _store.validateCode(context)
                           : null;
                     },
                     isValid: _isEmailValid &&
                         _isPasswordValid &&
-                        _store.arePasswordEqual,
+                        _store.isPasswordEqual,
                     label: "Criar Conta",
                   ),
                   Row(
