@@ -35,14 +35,14 @@ class HomeModule extends Module {
   }
 }
 
-class HomeRoutes extends StatefulWidget {
-  const HomeRoutes({super.key});
+class NativeHomeRoutes extends StatefulWidget {
+  const NativeHomeRoutes({super.key});
 
   @override
-  State<HomeRoutes> createState() => _HomeRoutesState();
+  State<NativeHomeRoutes> createState() => _NativeHomeRoutesState();
 }
 
-class _HomeRoutesState extends State<HomeRoutes> {
+class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
   final GlobalKey<NavigatorState> _androidNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home_key');
 
   @override

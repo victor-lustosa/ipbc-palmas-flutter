@@ -52,16 +52,15 @@ class LyricModule extends Module {
   }
 }
 
-class LyricRoutes extends StatefulWidget {
-  const LyricRoutes({super.key});
+class NativeLyricRoutes extends StatefulWidget {
+  const NativeLyricRoutes({super.key});
 
   @override
-  State<LyricRoutes> createState() => _LyricRoutesState();
+  State<NativeLyricRoutes> createState() => _NativeLyricRoutesState();
 }
 
-class _LyricRoutesState extends State<LyricRoutes> {
-  final GlobalKey<NavigatorState> _androidNavigatorKey =
-      GlobalKey<NavigatorState>(debugLabel: 'lyric_key');
+class _NativeLyricRoutesState extends State<NativeLyricRoutes> {
+  final GlobalKey<NavigatorState> _androidNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'lyric_key');
 
   @override
   Widget build(BuildContext context) {

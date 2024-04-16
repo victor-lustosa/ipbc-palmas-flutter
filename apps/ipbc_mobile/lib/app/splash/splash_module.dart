@@ -15,7 +15,7 @@ class SplashModule extends Module {
 
   @override
   void binds(i) {
-    i.add(
+    i.addSingleton(
       () => DatabaseBloc(
         useCases: i.get<AuthUseCase>(),
       ),

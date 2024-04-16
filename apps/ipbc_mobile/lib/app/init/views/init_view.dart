@@ -41,8 +41,8 @@ class _InitViewState extends State<InitView> {
             );
           },
           children: const [
-            HomeRoutes(),
-            LyricRoutes(),
+            NativeHomeRoutes(),
+            NativeLyricRoutes(),
             OffersView(),
           ],
         ),
