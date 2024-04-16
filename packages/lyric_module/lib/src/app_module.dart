@@ -15,22 +15,25 @@ class LyricModule extends Module {
   void exportedBinds(i) {
     i.addSingleton<LyricBloc>(
       () => LyricBloc(
-        supaUseCase:
-            LyricsUseCases(repository: i.get<Repository<List<dynamic>>>()),
+        supaUseCase: LyricsUseCases(
+          repository: i.get<Repository<List<dynamic>>>(),
+        ),
       ),
       config: CoreModule.blocConfig(),
     );
   }
 
   @override
-  List<Module> get imports => [CoreModule(), ServiceModule()];
+  List<Module> get imports => [CoreModule()];
 
   @override
   void routes(r) {
     r.child(
       lyricRoute,
       transition: TransitionType.custom,
-      child: (_) => LyricView(entity: r.args.data as LyricEntity),
+      child: (_) => LyricView(
+        entity: r.args.data as LyricEntity,
+      ),
       customTransition: CustomTransition(
         transitionDuration: const Duration(milliseconds: 500),
         reverseTransitionDuration: const Duration(milliseconds: 500),
@@ -57,7 +60,8 @@ class LyricRoutes extends StatefulWidget {
 }
 
 class _LyricRoutesState extends State<LyricRoutes> {
-  final GlobalKey<NavigatorState> _androidNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'lyric_key');
+  final GlobalKey<NavigatorState> _androidNavigatorKey =
+      GlobalKey<NavigatorState>(debugLabel: 'lyric_key');
 
   @override
   Widget build(BuildContext context) {

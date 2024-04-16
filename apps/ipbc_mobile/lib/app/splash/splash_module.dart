@@ -15,7 +15,11 @@ class SplashModule extends Module {
 
   @override
   void binds(i) {
-    i.add(() => DatabaseBloc(useCases: i.get<AuthUseCase>()));
+    i.add(
+      () => DatabaseBloc(
+        useCases: i.get<AuthUseCase>(),
+      ),
+    );
   }
 
   @override

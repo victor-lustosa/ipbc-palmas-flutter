@@ -2,6 +2,7 @@
 import '../core_module.dart';
 
 class CoreModule extends Module {
+
   static BindConfig<T> blocConfig<T extends Bloc>() {
     return BindConfig(
       notifier: (bloc) => bloc.stream,

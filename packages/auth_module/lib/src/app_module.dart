@@ -13,6 +13,7 @@ import 'ui/views/reset_password_view.dart';
 import 'ui/views/verification_code_view.dart';
 
 class AuthModule extends Module {
+
   static const String authRoute = '/auth';
   static const String homeRoute = '/home';
   static const String loginRoute = '/login';
@@ -23,6 +24,11 @@ class AuthModule extends Module {
   static const String resetPasswordRoute = '/reset-password';
 
   @override
+  List<Module> get imports => [
+    CoreModule(),
+  ];
+
+  @override
   void binds(i) {
     i.addSingleton(
       () => AuthUseCase(
@@ -31,7 +37,11 @@ class AuthModule extends Module {
         ),
       ),
     );
-    i.addLazySingleton(() => LoginStore(useCases: i.get<AuthUseCase>()));
+    i.addLazySingleton(
+      () => LoginStore(
+        useCases: i.get<AuthUseCase>(),
+      ),
+    );
     i.addLazySingleton(ResetPasswordStore.new);
   }
 
