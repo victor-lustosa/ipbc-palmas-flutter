@@ -91,7 +91,7 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     fixedSize: Size(context.mediaQuery.size.width, 48),
-                    action: () => Modular.to.pushNamed(
+                    action: () => pushNamed(
                       ServiceModule.servicesRoute +
                           ServiceModule.searchLyricsRoute,
                       arguments: EditLiturgyDTO(
@@ -131,7 +131,7 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
         backgroundColor: AppColors.warning,
         pngIcon: AppIcons.editIcon,
         size: 37,
-        action: () => Modular.to.pop(context),
+        action: () => pop(context),
       ),
     );
   }

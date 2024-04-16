@@ -10,7 +10,7 @@ class AuthRepository<R> implements IAuthRepository<R> {
 
   @override
   Future signInWithEmail(String path) async {
-    var result = await datasource.signInWithEmail(path,'');
+  //  var result = await datasource.signInWithEmail(path,'');
    // return result;
     throw UnimplementedError();
   }

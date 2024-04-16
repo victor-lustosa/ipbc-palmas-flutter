@@ -134,8 +134,7 @@ class _LoginViewState extends State<LoginView> {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     if (!_isPressed) {
-                                      Modular.to.navigate(AuthModule.authRoute +
-                                          AuthModule.resetPasswordRoute);
+                                      navigate(AuthModule.authRoute + AuthModule.resetPasswordRoute);
                                     }
                                   },
                               ),

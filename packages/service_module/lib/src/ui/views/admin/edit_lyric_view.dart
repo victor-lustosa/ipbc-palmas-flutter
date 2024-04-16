@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:service_module/src/ui/stores/states.dart';
 import 'package:service_module/src/ui/stores/edit_lyric_store.dart';
 
-
 class EditLyricView extends StatefulWidget {
   const EditLyricView({
     super.key,
@@ -19,13 +18,15 @@ class EditLyricView extends StatefulWidget {
 }
 
 class _EditLyricViewState extends State<EditLyricView> {
-   List<VerseEntity> versesList = [];
+  List<VerseEntity> versesList = [];
   final EditLyricStore _store = Modular.get<EditLyricStore>();
+
   @override
   void initState() {
     super.initState();
     _store.getLyrics();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +41,7 @@ class _EditLyricViewState extends State<EditLyricView> {
                 color: AppColors.darkGreen,
               );
             } else {
-              if (state is DataFetchedState<EditLyricState,LyricEntity>) {
+              if (state is DataFetchedState<EditLyricState, LyricEntity>) {
                 versesList = state.entities[0].verses;
               }
               return SingleChildScrollView(
@@ -74,13 +75,12 @@ class _EditLyricViewState extends State<EditLyricView> {
                         child: ReorderableListView.builder(
                           shrinkWrap: true,
                           itemCount: versesList.length,
-                            buildDefaultDragHandles :false,
+                          buildDefaultDragHandles: false,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
                               key: Key('${versesList[index].id}'),
-                              onLongPress: (){
-                                print('oooiii may');
+                              onLongPress: () {
                               },
                               child: Container(
                                 color: Colors.transparent,
@@ -98,8 +98,7 @@ class _EditLyricViewState extends State<EditLyricView> {
                                       GridBallsTileWidget(index: index),
                                       Expanded(
                                         child: VersesListWidget(
-                                            isEdit: true,
-                                            entity: versesList),
+                                            isEdit: true, entity: versesList),
                                       ),
                                     ],
                                   ),
@@ -147,7 +146,7 @@ class _EditLyricViewState extends State<EditLyricView> {
         backgroundColor: AppColors.confirmation,
         iconColor: AppColors.grey10,
         size: 33,
-        action: () => Modular.to.navigate(
+        action: () => navigate(
           ServiceModule.servicesRoute + ServiceModule.servicesPreviewRoute,
         ),
       ),

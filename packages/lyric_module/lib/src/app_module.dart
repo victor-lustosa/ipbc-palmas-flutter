@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'ui/blocs/lyric_bloc.dart';
@@ -13,22 +15,25 @@ class LyricModule extends Module {
   void exportedBinds(i) {
     i.addSingleton<LyricBloc>(
       () => LyricBloc(
-        supaUseCase:
-            LyricsUseCases(repository: i.get<Repository<List<dynamic>>>()),
+        supaUseCase: LyricsUseCases(
+          repository: i.get<Repository<List<dynamic>>>(),
+        ),
       ),
       config: CoreModule.blocConfig(),
     );
   }
 
   @override
-  List<Module> get imports => [CoreModule(), ServiceModule()];
+  List<Module> get imports => [CoreModule()];
 
   @override
   void routes(r) {
     r.child(
       lyricRoute,
       transition: TransitionType.custom,
-      child: (_) => LyricView(entity: r.args.data as LyricEntity),
+      child: (_) => LyricView(
+        entity: r.args.data as LyricEntity,
+      ),
       customTransition: CustomTransition(
         transitionDuration: const Duration(milliseconds: 500),
         reverseTransitionDuration: const Duration(milliseconds: 500),
@@ -43,6 +48,37 @@ class LyricModule extends Module {
           );
         },
       ),
+    );
+  }
+}
+
+class NativeLyricRoutes extends StatefulWidget {
+  const NativeLyricRoutes({super.key});
+
+  @override
+  State<NativeLyricRoutes> createState() => _NativeLyricRoutesState();
+}
+
+class _NativeLyricRoutesState extends State<NativeLyricRoutes> {
+  final GlobalKey<NavigatorState> _androidNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'lyric_key');
+
+  @override
+  Widget build(BuildContext context) {
+    return Navigator(
+      key: Platform.isIOS ? null : _androidNavigatorKey,
+      onGenerateRoute: (RouteSettings settings) {
+        switch (settings.name) {
+          case LyricModule.initialRoute:
+            return customTransitionRoute(
+              child: const LyricsListView(),
+              tween: Tween(begin: const Offset(0, 0), end: Offset.zero).chain(
+                CurveTween(curve: Curves.ease),
+              ),
+            );
+          default:
+            return unknownRoute();
+        }
+      },
     );
   }
 }

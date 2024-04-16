@@ -2,11 +2,11 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
 class LoginStore extends ValueNotifier<GenericState<LoginState>> {
-  LoginStore({required IAuthUseCases useCases})
-      : _useCases = useCases,
+  LoginStore({required IAuthUseCases useCases}):
+      //: _useCases = useCases,
         super(InitialState<LoginState>());
 
-  final IAuthUseCases _useCases;
+ // final IAuthUseCases _useCases;
 
   final String _email = 'victor.olustosa@outlook.com';
   final String _password = '!Helena2201';
@@ -15,7 +15,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     value = LoadingState<LoginState>();
     Future.delayed(const Duration(seconds: 1), () {
       if (_email == email && _password == password) {
-        Modular.to.navigate(AuthModule.authRoute + AuthModule.homeRoute);
+        navigate(AuthModule.authRoute + AuthModule.homeRoute);
       } else {
         value = InitialState<LoginState>();
         showCustomErrorDialog(
@@ -33,7 +33,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     // }
     //await _useCases.get('auth/$email/$password');
     //if (email.isNotEmpty) {
-    //   Modular.to.navigate('/home/');
+    //   navigate('/home/',isNative:false);
     //   return '';
     //  } else {
     //   return 'login inválido';
@@ -45,13 +45,13 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   }
 
   toCreateAccount() {
-    Modular.to.navigate('/create-account');
+   navigate('/create-account');
   }
 
   Future createAccount() async {
     //_useCase.add('auth', HiveAuthDTO(token: emailController.text,));
     Future.delayed(const Duration(microseconds: 300), () {
-      Modular.to.navigate('/login');
+      navigate('/login');
     });
   }
 }

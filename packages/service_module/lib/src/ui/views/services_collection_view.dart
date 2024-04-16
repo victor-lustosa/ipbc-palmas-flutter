@@ -46,8 +46,9 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                 );
               } else if (state is NoConnectionState<ServicesCollectionState>) {
                 return NoConnectionView(
-                  action: () => Navigator.of(context).pushReplacementNamed(
+                  action: () => nativeNavigate(
                     ServiceModule.servicesCollectionRoute,
+                    context,
                   ),
                 );
               } else if (state
@@ -85,13 +86,13 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                   : AppColors.grey0,
                               child: InkWell(
                                 onTap: () {
-                                  Navigator.of(context).pushNamed(
-                                    ServiceModule.serviceRoute,
-                                    arguments: ServiceViewDTO(
-                                      service: entitiesList[index],
-                                      image: widget.entity.image,
-                                    ),
-                                  );
+                                  nativePushNamed(
+                                      ServiceModule.serviceRoute,
+                                      arguments: ServiceViewDTO(
+                                        service: entitiesList[index],
+                                        image: widget.entity.image,
+                                      ),
+                                      context);
                                 },
                                 child: Row(
                                   children: [
@@ -167,7 +168,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
         iconColor: AppColors.white,
         backgroundColor: AppColors.add,
         icon: Icons.add,
-        action: () => Modular.to.navigate(
+        action: () => navigate(
           ServiceModule.servicesRoute + ServiceModule.editLiturgiesRoute,
           arguments: EditLiturgyDTO(
             image: widget.entity.image,

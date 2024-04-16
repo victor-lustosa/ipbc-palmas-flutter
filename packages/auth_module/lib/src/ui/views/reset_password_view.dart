@@ -9,12 +9,13 @@ class ResetPasswordView extends StatefulWidget {
 }
 
 class _ResetPasswordViewState extends State<ResetPasswordView> {
-  static const String emailMock = "victor@gmail.com";
+  //static const String emailMock = "victor@gmail.com";
 
   final String _emailErrorText = 'por favor, insira um email válido.';
   final _emailKey = GlobalKey<FormState>();
 
-  final TextEditingController _resetPasswordController = TextEditingController();
+  final TextEditingController _resetPasswordController =
+      TextEditingController();
   bool _isEmailValid = true;
   final bool _isPressed = false;
   bool _isVerified = false;
@@ -40,9 +41,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     BackButtonWidget(
-                      action: () => Modular.to.navigate(
-                        AuthModule.authRoute + AuthModule.loginRoute,
-                      ),
+                      action: () => navigate(AuthModule.authRoute + AuthModule.loginRoute),
                     ),
                   ],
                 ),
@@ -60,9 +59,8 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     bottom: 200,
                   ),
                   child: TemplateFormWidget(
-                    defaultHintColor: _isEmailValid
-                            ? AppColors.darkGreen
-                            : AppColors.delete,
+                    defaultHintColor:
+                        _isEmailValid ? AppColors.darkGreen : AppColors.delete,
                     titleMargin: const EdgeInsets.only(bottom: 4),
                     horizontalSymmetric: EdgeInsets.zero,
                     controller: _resetPasswordController,
@@ -106,7 +104,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     if (_resetPasswordController.text.isEmpty && !_isPressed) {
                       _emailBorderValidation(false, false);
                     }
-                      Modular.to.navigate(AuthModule.authRoute + AuthModule.verificationCodeRoute);
+                    navigate(AuthModule.authRoute + AuthModule.verificationCodeRoute);
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),

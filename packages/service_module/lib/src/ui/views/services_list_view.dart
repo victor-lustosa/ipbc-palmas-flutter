@@ -28,7 +28,7 @@ class _ServicesListViewState extends State<ServicesListView> {
                       top: 30,
                     ),
                     child: BackButtonWidget(
-                      action: () => Navigator.pop(context),
+                      action: () => nativePop(context),
                     ),
                   ),
                 ],
@@ -61,10 +61,8 @@ class _ServicesListViewState extends State<ServicesListView> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        Navigator.of(context).pushNamed(
-                          ServiceModule.servicesCollectionRoute,
-                          arguments: widget.entities[index],
-                        );
+                        nativeNavigate(ServiceModule.servicesCollectionRoute,
+                            arguments: widget.entities[index], context);
                       },
                       child: Container(
                         height: 110,

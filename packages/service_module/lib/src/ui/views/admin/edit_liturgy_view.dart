@@ -192,7 +192,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
         backgroundColor: AppColors.confirmation,
         iconColor: AppColors.grey10,
         size: 33,
-        action: () => Modular.to.navigate(
+        action: () => navigate(
           ServiceModule.servicesRoute + ServiceModule.servicesPreviewRoute,
           arguments: ServicesPreviewDTO(
             heading: widget.dto.heading,
