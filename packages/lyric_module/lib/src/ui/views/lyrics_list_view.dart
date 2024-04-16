@@ -42,8 +42,9 @@ class _LyricsListViewState extends State<LyricsListView>
               );
             } else if (state is NoConnectionState<LyricState>) {
               return NoConnectionView(
-                action: () => Navigator.of(context).pushReplacementNamed(
+                action: () => AppRoutes().nativeNavigate(
                   LyricModule.initialRoute,
+                  context,
                 ),
               );
             } else if (state is DataFetchedState<LyricState, LyricEntity>) {

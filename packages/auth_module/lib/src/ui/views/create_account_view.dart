@@ -24,7 +24,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                 margin: const EdgeInsets.only(left: 20, top: 20),
                 child: IconButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () => Modular.to.pop(context),
+                  onPressed: () => AppRoutes().pop(context),
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   color: AppColors.darkGreen,

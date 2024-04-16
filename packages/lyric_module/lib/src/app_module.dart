@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'ui/blocs/lyric_bloc.dart';
@@ -43,6 +45,37 @@ class LyricModule extends Module {
           );
         },
       ),
+    );
+  }
+}
+
+class LyricRoutes extends StatefulWidget {
+  const LyricRoutes({super.key});
+
+  @override
+  State<LyricRoutes> createState() => _LyricRoutesState();
+}
+
+class _LyricRoutesState extends State<LyricRoutes> {
+  final GlobalKey<NavigatorState> _androidNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'lyric_key');
+
+  @override
+  Widget build(BuildContext context) {
+    return Navigator(
+      key: Platform.isIOS ? null : _androidNavigatorKey,
+      onGenerateRoute: (RouteSettings settings) {
+        switch (settings.name) {
+          case LyricModule.initialRoute:
+            return CustomTransitionPageRoute(
+              child: const LyricsListView(),
+              tween: Tween(begin: const Offset(0, 0), end: Offset.zero).chain(
+                CurveTween(curve: Curves.ease),
+              ),
+            );
+          default:
+            return AppRoutes().unknownRoute();
+        }
+      },
     );
   }
 }

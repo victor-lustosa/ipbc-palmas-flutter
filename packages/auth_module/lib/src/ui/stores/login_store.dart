@@ -15,7 +15,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     value = LoadingState<LoginState>();
     Future.delayed(const Duration(seconds: 1), () {
       if (_email == email && _password == password) {
-        Modular.to.navigate(AuthModule.authRoute + AuthModule.homeRoute);
+        AppRoutes().navigate(AuthModule.authRoute + AuthModule.homeRoute);
       } else {
         value = InitialState<LoginState>();
         showCustomErrorDialog(
@@ -33,7 +33,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     // }
     //await _useCases.get('auth/$email/$password');
     //if (email.isNotEmpty) {
-    //   Modular.to.navigate('/home/');
+    //   AppRoutes().navigate('/home/',isNative:false);
     //   return '';
     //  } else {
     //   return 'login inválido';
@@ -45,13 +45,13 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   }
 
   toCreateAccount() {
-    Modular.to.navigate('/create-account');
+   AppRoutes().navigate('/create-account');
   }
 
   Future createAccount() async {
     //_useCase.add('auth', HiveAuthDTO(token: emailController.text,));
     Future.delayed(const Duration(microseconds: 300), () {
-      Modular.to.navigate('/login');
+      AppRoutes().navigate('/login');
     });
   }
 }

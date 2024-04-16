@@ -4,25 +4,66 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../core_module.dart';
-class AppRoutes{
+
+class AppRoutes {
+  factory AppRoutes() {
+    _singleton ??= AppRoutes._();
+    return _singleton!;
+  }
+
   AppRoutes._();
-  navigate(){
 
+  static AppRoutes? _singleton;
+
+  nativeNavigate(
+    String route,
+    BuildContext context, {
+    Object? arguments,
+  }) {
+    Navigator.of(context).pushReplacementNamed(route, arguments: arguments);
   }
-  pushNamed(){
 
+  navigate(
+    String route, {
+    Object? arguments,
+  }) {
+    Modular.to.navigate(route, arguments: arguments);
   }
-  pop(){
 
+  nativePushNamed(
+    String route,
+    BuildContext context, {
+    Object? arguments,
+  }) {
+    Navigator.of(context).pushNamed(route, arguments: arguments);
+  }
+
+  pushNamed(
+    String route, {
+    Object? arguments,
+  }) {
+    Modular.to.pushNamed(route, arguments: arguments);
+  }
+
+  nativePop(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
+  pop(BuildContext context) {
+    Modular.to.pop(context);
+  }
+
+  PageRoute unknownRoute() {
+    if (Platform.isIOS) {
+      return CupertinoPageRoute(
+          builder: (_) => const CupertinoPageScaffold(child: UnknownRouteView()));
+    } else {
+      return MaterialPageRoute(builder: (_) => const UnknownRouteView());
+    }
   }
 }
-unknownRoute() {
-  if (Platform.isIOS) {
-    return CupertinoPageRoute(builder: (_) => const CupertinoPageScaffold(child: UnknownRouteView()));
-  } else {
-    return MaterialPageRoute(builder: (_) => const UnknownRouteView());
-  }
-}
+
+
 
 class CustomTransitionPageRoute extends PageRouteBuilder {
   final Widget child;
@@ -31,18 +72,20 @@ class CustomTransitionPageRoute extends PageRouteBuilder {
   final Duration? reverseSpeed;
 
   CustomTransitionPageRoute(
-      { this.transitionSpeed,
-         this.reverseSpeed,
-        required this.tween,
-        required this.child})
+      {this.transitionSpeed,
+      this.reverseSpeed,
+      required this.tween,
+      required this.child})
       : super(
-      reverseTransitionDuration: reverseSpeed ?? const Duration(milliseconds: 300),
-      transitionDuration: transitionSpeed ?? const Duration(milliseconds: 300),
-      pageBuilder: (context, animation, secondaryAnimation) => child);
+            reverseTransitionDuration:
+                reverseSpeed ?? const Duration(milliseconds: 300),
+            transitionDuration:
+                transitionSpeed ?? const Duration(milliseconds: 300),
+            pageBuilder: (context, animation, secondaryAnimation) => child);
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) =>
+          Animation<double> secondaryAnimation, Widget child) =>
       SlideTransition(
         position: animation.drive(tween),
         child: child,

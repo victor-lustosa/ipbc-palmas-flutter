@@ -61,7 +61,7 @@ class EventsListViewState extends State<EventsListView> {
         ),
       ),
       floatingActionButton: FloatingButtonWidget(
-        action: () => Modular.to.pushNamed(
+        action: () => AppRoutes().pushNamed(
           EventModule.eventRoute + EventModule.createEventRoute,
         ),
         backgroundColor: AppColors.add,

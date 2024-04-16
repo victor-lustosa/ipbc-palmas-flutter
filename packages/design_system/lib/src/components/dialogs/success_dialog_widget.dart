@@ -57,7 +57,7 @@ class SuccessDialogWidget extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).pop();
+                    AppRoutes().nativePop(context);
                     if (onClose != null) {
                       onClose!();
                     }

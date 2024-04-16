@@ -61,9 +61,7 @@ class _HomeViewState extends State<HomeView>
               );
             } else if (state is NoConnectionState<HomeState>) {
               return NoConnectionView(
-                action: () => Navigator.of(context).pushReplacementNamed(
-                  HomeModule.initialRoute,
-                ),
+                action: () => AppRoutes().nativeNavigate(HomeModule.homeRoute, context),
               );
             } else if (state is DataFetchedState<HomeState, ServicesEntity>) {
               _servicesList = state.entities;

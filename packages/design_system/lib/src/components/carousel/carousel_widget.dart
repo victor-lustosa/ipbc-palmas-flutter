@@ -79,9 +79,10 @@ class CarouselWidgetState extends State<CarouselWidget> {
               return InkWell(
                 onTap: widget.route == null
                     ? () {}
-                    : () => Navigator.of(context).pushNamed(
+                    : () => AppRoutes().nativePushNamed(
                           widget.route!,
                           arguments: widget.services[position],
+                          context,
                         ),
                 child: AnimatedContainer(
                   padding: EdgeInsets.zero,

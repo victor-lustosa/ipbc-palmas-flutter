@@ -1,5 +1,7 @@
 import 'package:core_module/core_module.dart' hide LoadingState;
 import 'package:flutter/material.dart';
+import 'package:ipbc_mobile/app/init/init_module.dart';
+import 'package:ipbc_mobile/app/splash/splash_module.dart';
 
 import '../../home/home_module.dart';
 import '../blocs/database_bloc.dart';
@@ -27,10 +29,10 @@ class _SplashViewState extends State<SplashView> {
       body: BlocConsumer<DatabaseBloc, DatabasesState>(
         listener: (context, state) async {
           if (state is FetchingDataState) {
-            if (state.isData) {
-              Modular.to.navigate(HomeModule.initialRoute);
+            if (!state.isData) {
+              AppRoutes().navigate(InitModule.initialRoute);
             } else {
-              Modular.to.navigate(AuthModule.authRoute + AuthModule.loginRoute);
+              AppRoutes().navigate(AuthModule.authRoute + AuthModule.loginRoute);
             }
           }
         },

@@ -4,13 +4,15 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../events/event_module.dart';
+import '../events/views/events_list_view.dart';
 import '../offers/controller/banner_controller.dart';
 
 import 'blocs/home_bloc.dart';
 import 'views/home_view.dart';
-import 'views/init_view.dart';
 
 class HomeModule extends Module {
+  static const String homeRoute = '/home';
   static const String initialRoute = '/';
 
   @override
@@ -34,11 +36,6 @@ class HomeModule extends Module {
     );
     i.addLazySingleton<BannerController>(BannerController.new);
   }
-
-  @override
-  void routes(r) {
-    r.child(initialRoute, child: (_) => const InitView());
-  }
 }
 
 class HomeRoutes extends StatefulWidget {
@@ -50,7 +47,7 @@ class HomeRoutes extends StatefulWidget {
 
 class _HomeRoutesState extends State<HomeRoutes> {
   final GlobalKey<NavigatorState> _androidNavigatorKey =
-  GlobalKey<NavigatorState>(debugLabel: 'home_key');
+      GlobalKey<NavigatorState>(debugLabel: 'home_key');
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +55,7 @@ class _HomeRoutesState extends State<HomeRoutes> {
       key: Platform.isIOS ? null : _androidNavigatorKey,
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
-          case HomeModule.initialRoute:
+          case HomeModule.homeRoute || HomeModule.initialRoute:
             if (Platform.isIOS) {
               return CupertinoPageRoute(
                 settings: settings,
@@ -77,8 +74,7 @@ class _HomeRoutesState extends State<HomeRoutes> {
             return CustomTransitionPageRoute(
               transitionSpeed: const Duration(milliseconds: 700),
               reverseSpeed: const Duration(milliseconds: 700),
-              child: ServiceView(
-                  entity: settings.arguments as ServiceViewDTO),
+              child: ServiceView(entity: settings.arguments as ServiceViewDTO),
               tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
                 CurveTween(curve: Curves.ease),
               ),
@@ -111,14 +107,25 @@ class _HomeRoutesState extends State<HomeRoutes> {
             return CustomTransitionPageRoute(
               transitionSpeed: const Duration(milliseconds: 700),
               reverseSpeed: const Duration(milliseconds: 700),
-              child: EditLiturgyView(dto: settings.arguments as EditLiturgyDTO,),
+              child: EditLiturgyView(
+                dto: settings.arguments as EditLiturgyDTO,
+              ),
               tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
                 CurveTween(curve: Curves.ease),
               ),
             );
 
+          case EventModule.eventsListRoute:
+            return CustomTransitionPageRoute(
+              transitionSpeed: const Duration(milliseconds: 700),
+              reverseSpeed: const Duration(milliseconds: 700),
+              child: const EventsListView(),
+              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
+                CurveTween(curve: Curves.ease),
+              ),
+            );
           default:
-            return unknownRoute();
+            return AppRoutes().unknownRoute();
         }
       },
     );
