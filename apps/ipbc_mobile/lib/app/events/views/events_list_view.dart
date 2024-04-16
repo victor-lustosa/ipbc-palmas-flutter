@@ -35,7 +35,7 @@ class EventsListViewState extends State<EventsListView> {
                         left: 16,
                       ),
                       child: BackButtonWidget(
-                        action: () => Navigator.pop(context),
+                        action: () => AppRoutes().nativePop(context),
                       ),
                     ),
                   ],

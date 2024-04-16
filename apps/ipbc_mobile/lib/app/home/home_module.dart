@@ -16,10 +16,7 @@ class HomeModule extends Module {
   static const String initialRoute = '/';
 
   @override
-  List<Module> get imports => [
-        LyricModule(),
-        ServiceModule(),
-      ];
+  List<Module> get imports => [ServiceModule()];
 
   @override
   void binds(Injector i) {
@@ -46,8 +43,7 @@ class HomeRoutes extends StatefulWidget {
 }
 
 class _HomeRoutesState extends State<HomeRoutes> {
-  final GlobalKey<NavigatorState> _androidNavigatorKey =
-      GlobalKey<NavigatorState>(debugLabel: 'home_key');
+  final GlobalKey<NavigatorState> _androidNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home_key');
 
   @override
   Widget build(BuildContext context) {

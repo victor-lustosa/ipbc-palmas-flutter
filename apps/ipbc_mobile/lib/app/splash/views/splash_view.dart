@@ -1,9 +1,7 @@
 import 'package:core_module/core_module.dart' hide LoadingState;
 import 'package:flutter/material.dart';
-import 'package:ipbc_mobile/app/init/init_module.dart';
-import 'package:ipbc_mobile/app/splash/splash_module.dart';
 
-import '../../home/home_module.dart';
+import '../../init/init_module.dart';
 import '../blocs/database_bloc.dart';
 
 class SplashView extends StatefulWidget {

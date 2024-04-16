@@ -23,9 +23,6 @@ class AuthModule extends Module {
   static const String resetPasswordRoute = '/reset-password';
 
   @override
-  List<Module> get imports => [CoreModule()];
-
-  @override
   void binds(i) {
     i.addSingleton(
       () => AuthUseCase(

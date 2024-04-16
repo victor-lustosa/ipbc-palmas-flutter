@@ -20,7 +20,7 @@ class AppRoutes {
     BuildContext context, {
     Object? arguments,
   }) {
-    Navigator.of(context).pushReplacementNamed(route, arguments: arguments);
+    Navigator.pushReplacementNamed(context, route, arguments: arguments);
   }
 
   navigate(
@@ -35,7 +35,7 @@ class AppRoutes {
     BuildContext context, {
     Object? arguments,
   }) {
-    Navigator.of(context).pushNamed(route, arguments: arguments);
+    Navigator.pushNamed(context, route, arguments: arguments);
   }
 
   pushNamed(
@@ -46,7 +46,7 @@ class AppRoutes {
   }
 
   nativePop(BuildContext context) {
-    Navigator.of(context).pop();
+    Navigator.pop(context);
   }
 
   pop(BuildContext context) {

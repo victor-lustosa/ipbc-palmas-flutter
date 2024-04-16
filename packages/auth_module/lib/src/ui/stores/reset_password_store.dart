@@ -1,7 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-class ResetPasswordStore extends ValueNotifier<GenericState<ResetPasswordState>> {
+class ResetPasswordStore
+    extends ValueNotifier<GenericState<ResetPasswordState>> {
   ResetPasswordStore() : super(InitialState<ResetPasswordState>());
 
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
@@ -21,16 +22,16 @@ class ResetPasswordStore extends ValueNotifier<GenericState<ResetPasswordState>>
     isError = value;
   }
 
-  validateCode(BuildContext context){
+  validateCode(BuildContext context) {
     value = LoadingState<ResetPasswordState>();
-    try{
+    try {
       Future.delayed(const Duration(seconds: 1), () {
         inputCode = _controllers.map((controller) => controller.text).toList();
         if (inputCode.every((value) => value.isNotEmpty)) {
           if (inputCode.join() == code.join()) {
-            Navigator.pushNamed(
-              context,
+            AppRoutes().nativePushNamed(
               AuthModule.authRoute + AuthModule.creatingNewPassWordRoute,
+              context,
             );
           } else {
             notifyBorderError(value: true);
@@ -46,21 +47,22 @@ class ResetPasswordStore extends ValueNotifier<GenericState<ResetPasswordState>>
             context: context,
             title: 'Código não Preenchidos!',
             message:
-            'Por favor, preencha o código de verificação e tente novamente.',
+                'Por favor, preencha o código de verificação e tente novamente.',
           );
         }
         value = InitialState<ResetPasswordState>();
       });
-    } catch(e){
+    } catch (e) {
       value = InitialState<ResetPasswordState>();
     }
-
   }
 
-  colorBorder(){
-      isListFull = _controllers.where((e) => e.text != '').toList().length > 5 ? true : false;
-      notifyListeners();
-    }
+  colorBorder() {
+    isListFull = _controllers.where((e) => e.text != '').toList().length > 5
+        ? true
+        : false;
+    notifyListeners();
+  }
 
   emptyBorder() {
     if (_controllers.where((e) => e.text != '').toList().isEmpty) {

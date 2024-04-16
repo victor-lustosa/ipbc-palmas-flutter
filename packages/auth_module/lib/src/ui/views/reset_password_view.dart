@@ -9,7 +9,7 @@ class ResetPasswordView extends StatefulWidget {
 }
 
 class _ResetPasswordViewState extends State<ResetPasswordView> {
-  static const String emailMock = "victor@gmail.com";
+  //static const String emailMock = "victor@gmail.com";
 
   final String _emailErrorText = 'por favor, insira um email válido.';
   final _emailKey = GlobalKey<FormState>();

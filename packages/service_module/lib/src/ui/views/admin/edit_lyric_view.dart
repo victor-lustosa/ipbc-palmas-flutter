@@ -81,7 +81,6 @@ class _EditLyricViewState extends State<EditLyricView> {
                             return GestureDetector(
                               key: Key('${versesList[index].id}'),
                               onLongPress: () {
-                                print('oooiii may');
                               },
                               child: Container(
                                 color: Colors.transparent,

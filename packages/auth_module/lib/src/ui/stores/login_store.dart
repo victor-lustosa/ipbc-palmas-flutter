@@ -2,11 +2,11 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
 class LoginStore extends ValueNotifier<GenericState<LoginState>> {
-  LoginStore({required IAuthUseCases useCases})
-      : _useCases = useCases,
+  LoginStore({required IAuthUseCases useCases}):
+      //: _useCases = useCases,
         super(InitialState<LoginState>());
 
-  final IAuthUseCases _useCases;
+ // final IAuthUseCases _useCases;
 
   final String _email = 'victor.olustosa@outlook.com';
   final String _password = '!Helena2201';

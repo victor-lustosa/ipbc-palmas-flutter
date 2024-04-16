@@ -61,7 +61,10 @@ class _HomeViewState extends State<HomeView>
               );
             } else if (state is NoConnectionState<HomeState>) {
               return NoConnectionView(
-                action: () => AppRoutes().nativeNavigate(HomeModule.homeRoute, context),
+                action: () => AppRoutes().nativeNavigate(
+                  HomeModule.homeRoute,
+                  context,
+                ),
               );
             } else if (state is DataFetchedState<HomeState, ServicesEntity>) {
               _servicesList = state.entities;
@@ -76,9 +79,9 @@ class _HomeViewState extends State<HomeView>
                         margin: const EdgeInsets.only(top: 24),
                         child: InkWell(
                           onTap: () {
-                            Navigator.pushNamed(
-                              context,
+                            AppRoutes().nativePushNamed(
                               ServiceModule.servicesListRoute,
+                              context,
                               arguments: _servicesList,
                             );
                           },
@@ -113,9 +116,9 @@ class _HomeViewState extends State<HomeView>
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(
-                            context,
+                          AppRoutes().nativePushNamed(
                             EventModule.eventsListRoute,
+                            context,
                           );
                         },
                         child: Column(

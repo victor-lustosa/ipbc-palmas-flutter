@@ -1,5 +1,4 @@
 import 'package:core_module/core_module.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CreateEventView extends StatefulWidget {
@@ -50,7 +49,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                       Container(
                         margin: const EdgeInsets.only(left: 16, right: 17),
                         child: BackButtonWidget(
-                          action: () => Navigator.pop(context),
+                          action: () => AppRoutes().nativePop(context),
                         ),
                       ),
                       Text(
