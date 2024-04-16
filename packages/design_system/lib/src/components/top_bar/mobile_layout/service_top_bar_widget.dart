@@ -60,7 +60,7 @@ class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget> {
                       ),
                       child: BackButtonWidget(
                         color: AppColors.white,
-                        action: () => AppRoutes().nativePop(context),
+                        action: () => nativePop(context),
                       ),
                     ),
                     SizedBox(

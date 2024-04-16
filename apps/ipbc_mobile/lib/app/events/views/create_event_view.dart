@@ -49,7 +49,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                       Container(
                         margin: const EdgeInsets.only(left: 16, right: 17),
                         child: BackButtonWidget(
-                          action: () => AppRoutes().nativePop(context),
+                          action: () => nativePop(context),
                         ),
                       ),
                       Text(

@@ -32,7 +32,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
       itemCount: 3,
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
-          onTap: () => AppRoutes().nativePushNamed(
+          onTap: () => nativePushNamed(
             widget.route,
             arguments: widget.services[index],
             context,

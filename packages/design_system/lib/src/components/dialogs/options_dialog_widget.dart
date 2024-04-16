@@ -79,7 +79,7 @@ Future<void> showCustomOptionsDialog({
                                 size: 40,
                                 action: () {
                                   callback(false);
-                                 AppRoutes().pop(context);
+                                 pop(context);
                                 },
                                 color: AppColors.grey10,
                                 iOSIcon: CupertinoIcons.clear,

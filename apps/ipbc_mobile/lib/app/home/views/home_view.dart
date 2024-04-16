@@ -61,7 +61,7 @@ class _HomeViewState extends State<HomeView>
               );
             } else if (state is NoConnectionState<HomeState>) {
               return NoConnectionView(
-                action: () => AppRoutes().nativeNavigate(
+                action: () => nativeNavigate(
                   HomeModule.homeRoute,
                   context,
                 ),
@@ -79,7 +79,7 @@ class _HomeViewState extends State<HomeView>
                         margin: const EdgeInsets.only(top: 24),
                         child: InkWell(
                           onTap: () {
-                            AppRoutes().nativePushNamed(
+                            nativePushNamed(
                               ServiceModule.servicesListRoute,
                               context,
                               arguments: _servicesList,
@@ -116,7 +116,7 @@ class _HomeViewState extends State<HomeView>
                       ),
                       InkWell(
                         onTap: () {
-                          AppRoutes().nativePushNamed(
+                          nativePushNamed(
                             EventModule.eventsListRoute,
                             context,
                           );

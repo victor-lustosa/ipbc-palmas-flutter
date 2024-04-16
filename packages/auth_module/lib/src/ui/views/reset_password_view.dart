@@ -41,7 +41,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     BackButtonWidget(
-                      action: () => AppRoutes().navigate(AuthModule.authRoute + AuthModule.loginRoute),
+                      action: () => navigate(AuthModule.authRoute + AuthModule.loginRoute),
                     ),
                   ],
                 ),
@@ -104,7 +104,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     if (_resetPasswordController.text.isEmpty && !_isPressed) {
                       _emailBorderValidation(false, false);
                     }
-                    AppRoutes().navigate(AuthModule.authRoute + AuthModule.verificationCodeRoute);
+                    navigate(AuthModule.authRoute + AuthModule.verificationCodeRoute);
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),

@@ -29,7 +29,7 @@ class ResetPasswordStore
         inputCode = _controllers.map((controller) => controller.text).toList();
         if (inputCode.every((value) => value.isNotEmpty)) {
           if (inputCode.join() == code.join()) {
-            AppRoutes().nativePushNamed(
+            nativePushNamed(
               AuthModule.authRoute + AuthModule.creatingNewPassWordRoute,
               context,
             );

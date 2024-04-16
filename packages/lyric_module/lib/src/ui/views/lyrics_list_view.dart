@@ -42,7 +42,7 @@ class _LyricsListViewState extends State<LyricsListView>
               );
             } else if (state is NoConnectionState<LyricState>) {
               return NoConnectionView(
-                action: () => AppRoutes().nativeNavigate(
+                action: () => nativeNavigate(
                   LyricModule.initialRoute,
                   context,
                 ),

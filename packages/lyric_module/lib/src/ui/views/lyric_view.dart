@@ -111,7 +111,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                           highlightColor: Colors.transparent,
                           iOSIcon: CupertinoIcons.clear_thick,
                           androidIcon: Icons.close_rounded,
-                          action: () => AppRoutes().pop(context),
+                          action: () => pop(context),
                         ),
                       ],
                     ),

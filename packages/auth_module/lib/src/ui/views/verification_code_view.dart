@@ -50,7 +50,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                             top: 60,
                           ),
                           child: BackButtonWidget(
-                            action: () => AppRoutes().navigate(
+                            action: () => navigate(
                               AuthModule.authRoute + AuthModule.resetPasswordRoute,
                             ),
                           ),

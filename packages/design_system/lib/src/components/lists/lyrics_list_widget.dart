@@ -61,7 +61,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
               color: AppColors.white,
               child: InkWell(
                 onTap: () {
-                  AppRoutes().pushNamed(
+                  pushNamed(
                     '/lyrics/lyric',
                     arguments: widget.entitiesList[index],
                   );

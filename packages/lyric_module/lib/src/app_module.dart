@@ -69,14 +69,14 @@ class _NativeLyricRoutesState extends State<NativeLyricRoutes> {
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
           case LyricModule.initialRoute:
-            return CustomTransitionPageRoute(
+            return customTransitionRoute(
               child: const LyricsListView(),
               tween: Tween(begin: const Offset(0, 0), end: Offset.zero).chain(
                 CurveTween(curve: Curves.ease),
               ),
             );
           default:
-            return AppRoutes().unknownRoute();
+            return unknownRoute();
         }
       },
     );

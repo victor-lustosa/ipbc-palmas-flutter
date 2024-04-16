@@ -35,7 +35,7 @@ class EventsListViewState extends State<EventsListView> {
                         left: 16,
                       ),
                       child: BackButtonWidget(
-                        action: () => AppRoutes().nativePop(context),
+                        action: () => nativePop(context),
                       ),
                     ),
                   ],
@@ -61,7 +61,7 @@ class EventsListViewState extends State<EventsListView> {
         ),
       ),
       floatingActionButton: FloatingButtonWidget(
-        action: () => AppRoutes().pushNamed(
+        action: () => pushNamed(
           EventModule.eventRoute + EventModule.createEventRoute,
         ),
         backgroundColor: AppColors.add,

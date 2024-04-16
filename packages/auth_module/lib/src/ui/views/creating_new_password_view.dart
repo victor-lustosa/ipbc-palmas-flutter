@@ -46,7 +46,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BackButtonWidget(
-                        action: () => AppRoutes().navigate(AuthModule.authRoute + AuthModule.verificationCodeRoute),
+                        action: () => navigate(AuthModule.authRoute + AuthModule.verificationCodeRoute),
                       ),
                     ],
                   ),
@@ -164,7 +164,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                     isPressed: _isPressed,
                     action: () async {
                       //if (isValid) {
-                      AppRoutes().navigate(AuthModule.authRoute + AuthModule.resetPasswordSuccessRoute);
+                      navigate(AuthModule.authRoute + AuthModule.resetPasswordSuccessRoute);
                       //}
                     },
                     isValid: true,

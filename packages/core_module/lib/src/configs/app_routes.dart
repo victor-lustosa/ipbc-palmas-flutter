@@ -5,65 +5,70 @@ import 'package:flutter/cupertino.dart';
 
 import '../../core_module.dart';
 
-class AppRoutes {
-  factory AppRoutes() {
-    _singleton ??= AppRoutes._();
-    return _singleton!;
-  }
+nativeNavigate(
+  String route,
+  BuildContext context, {
+  Object? arguments,
+}) {
+  Navigator.pushReplacementNamed(context, route, arguments: arguments);
+}
 
-  AppRoutes._();
+navigate(
+  String route, {
+  Object? arguments,
+}) {
+  Modular.to.navigate(route, arguments: arguments);
+}
 
-  static AppRoutes? _singleton;
+nativePushNamed(
+  String route,
+  BuildContext context, {
+  Object? arguments,
+}) {
+  Navigator.pushNamed(context, route, arguments: arguments);
+}
 
-  nativeNavigate(
-    String route,
-    BuildContext context, {
-    Object? arguments,
-  }) {
-    Navigator.pushReplacementNamed(context, route, arguments: arguments);
-  }
+pushNamed(
+  String route, {
+  Object? arguments,
+}) {
+  Modular.to.pushNamed(route, arguments: arguments);
+}
 
-  navigate(
-    String route, {
-    Object? arguments,
-  }) {
-    Modular.to.navigate(route, arguments: arguments);
-  }
+nativePop(BuildContext context) {
+  Navigator.pop(context);
+}
 
-  nativePushNamed(
-    String route,
-    BuildContext context, {
-    Object? arguments,
-  }) {
-    Navigator.pushNamed(context, route, arguments: arguments);
-  }
+pop(BuildContext context) {
+  Modular.to.pop(context);
+}
 
-  pushNamed(
-    String route, {
-    Object? arguments,
-  }) {
-    Modular.to.pushNamed(route, arguments: arguments);
-  }
-
-  nativePop(BuildContext context) {
-    Navigator.pop(context);
-  }
-
-  pop(BuildContext context) {
-    Modular.to.pop(context);
-  }
-
-  PageRoute unknownRoute() {
-    if (Platform.isIOS) {
-      return CupertinoPageRoute(
-          builder: (_) => const CupertinoPageScaffold(child: UnknownRouteView()));
-    } else {
-      return MaterialPageRoute(builder: (_) => const UnknownRouteView());
-    }
+PageRoute unknownRoute() {
+  if (Platform.isIOS) {
+    return CupertinoPageRoute(
+        builder: (_) => const CupertinoPageScaffold(child: UnknownRouteView()));
+  } else {
+    return MaterialPageRoute(builder: (_) => const UnknownRouteView());
   }
 }
 
-
+CustomTransitionPageRoute customTransitionRoute({
+  required Widget child,
+  Animatable<Offset>? tween,
+  Curve? curve,
+  Duration? transitionSpeed,
+  Duration? reverseSpeed,
+}) {
+  return CustomTransitionPageRoute(
+    transitionSpeed: transitionSpeed ?? const Duration(milliseconds: 700),
+    reverseSpeed: reverseSpeed ?? const Duration(milliseconds: 700),
+    child: child,
+    tween: tween ??
+        Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
+          CurveTween(curve: curve ?? Curves.ease),
+        ),
+  );
+}
 
 class CustomTransitionPageRoute extends PageRouteBuilder {
   final Widget child;

@@ -52,76 +52,47 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
           case HomeModule.homeRoute || HomeModule.initialRoute:
-            if (Platform.isIOS) {
-              return CupertinoPageRoute(
-                settings: settings,
-                builder: (_) => const CupertinoPageScaffold(
-                  child: HomeView(),
-                ),
-              );
-            } else {
-              return MaterialPageRoute(
-                settings: settings,
-                builder: (_) => const HomeView(),
-              );
-            }
+            return customTransitionRoute(
+              child: const HomeView(),
+            );
 
           case ServiceModule.serviceRoute:
-            return CustomTransitionPageRoute(
-              transitionSpeed: const Duration(milliseconds: 700),
-              reverseSpeed: const Duration(milliseconds: 700),
-              child: ServiceView(entity: settings.arguments as ServiceViewDTO),
-              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
-                CurveTween(curve: Curves.ease),
+            return customTransitionRoute(
+              child: ServiceView(
+                entity: settings.arguments as ServiceViewDTO,
               ),
             );
 
           case ServiceModule.servicesListRoute:
-            return CustomTransitionPageRoute(
-              transitionSpeed: const Duration(milliseconds: 700),
-              reverseSpeed: const Duration(milliseconds: 700),
+            return customTransitionRoute(
               child: ServicesListView(
-                  entities: settings.arguments as List<ServicesEntity>),
-              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
-                CurveTween(curve: Curves.ease),
+                entities: settings.arguments as List<ServicesEntity>,
               ),
             );
 
           case ServiceModule.servicesCollectionRoute:
-            return CustomTransitionPageRoute(
-              transitionSpeed: const Duration(milliseconds: 700),
-              reverseSpeed: const Duration(milliseconds: 700),
+            return customTransitionRoute(
               child: ServicesCollectionView(
                 entity: settings.arguments as ServicesEntity,
-              ),
-              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
-                CurveTween(curve: Curves.ease),
               ),
             );
 
           case ServiceModule.editLiturgiesRoute:
-            return CustomTransitionPageRoute(
-              transitionSpeed: const Duration(milliseconds: 700),
-              reverseSpeed: const Duration(milliseconds: 700),
+            return customTransitionRoute(
               child: EditLiturgyView(
                 dto: settings.arguments as EditLiturgyDTO,
-              ),
-              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
-                CurveTween(curve: Curves.ease),
               ),
             );
 
           case EventModule.eventsListRoute:
-            return CustomTransitionPageRoute(
-              transitionSpeed: const Duration(milliseconds: 700),
-              reverseSpeed: const Duration(milliseconds: 700),
+            return customTransitionRoute(
               child: const EventsListView(),
-              tween: Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
+              tween: Tween(begin: const Offset(0, 0), end: Offset.zero).chain(
                 CurveTween(curve: Curves.ease),
               ),
             );
           default:
-            return AppRoutes().unknownRoute();
+            return unknownRoute();
         }
       },
     );

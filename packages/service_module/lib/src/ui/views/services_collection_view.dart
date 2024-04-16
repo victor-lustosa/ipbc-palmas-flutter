@@ -46,7 +46,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                 );
               } else if (state is NoConnectionState<ServicesCollectionState>) {
                 return NoConnectionView(
-                  action: () => AppRoutes().nativeNavigate(
+                  action: () => nativeNavigate(
                     ServiceModule.servicesCollectionRoute,
                     context,
                   ),
@@ -86,7 +86,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                   : AppColors.grey0,
                               child: InkWell(
                                 onTap: () {
-                                  AppRoutes().nativePushNamed(
+                                  nativePushNamed(
                                       ServiceModule.serviceRoute,
                                       arguments: ServiceViewDTO(
                                         service: entitiesList[index],
@@ -168,7 +168,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
         iconColor: AppColors.white,
         backgroundColor: AppColors.add,
         icon: Icons.add,
-        action: () => AppRoutes().navigate(
+        action: () => navigate(
           ServiceModule.servicesRoute + ServiceModule.editLiturgiesRoute,
           arguments: EditLiturgyDTO(
             image: widget.entity.image,
