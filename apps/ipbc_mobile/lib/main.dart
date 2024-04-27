@@ -7,8 +7,8 @@ export 'app/home/views/home_view.dart';
 
 void main() async {
   //  Modular.setInitialRoute(ServiceModule.servicesRoute + ServiceModule.editLyricRoute);
-  Modular.setInitialRoute(SplashModule.splashRoute);
-  // Modular.setInitialRoute(AuthModule.authRoute + AuthModule.resetPasswordRoute);
+  //Modular.setInitialRoute(SplashModule.splashRoute);
+  Modular.setInitialRoute(AuthModule.authRoute + AuthModule.loginRoute);
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([
     SupabaseDatasource.init(),

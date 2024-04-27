@@ -20,9 +20,9 @@ class CreateAccountStore
 
   bool isError = false;
 
-  bool get emptyEmail => _emailController.text.isEmpty;
-
   get isPasswordLengthValid => _passwordController.text.length > 7;
+
+  bool get emptyEmail => _emailController.text.isEmpty;
 
   bool get emptyPasswords =>
       _passwordController.text.isEmpty &&

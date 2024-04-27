@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TemplateFormWidget extends StatefulWidget {
   const TemplateFormWidget({
@@ -13,11 +14,13 @@ class TemplateFormWidget extends StatefulWidget {
     this.title,
     required this.validator,
     required this.inputDecoration,
+    this.inputFormatters,
     this.titleMargin,
     this.maxLines,
     this.fieldHeight,
     this.horizontalSymmetric,
     this.color,
+    this.textInputType,
     required this.defaultHintColor,
   });
 
@@ -39,6 +42,10 @@ class TemplateFormWidget extends StatefulWidget {
 
   final bool isPressed;
 
+  final List<TextInputFormatter>? inputFormatters;
+
+  final TextInputType? textInputType;
+
   final InputDecoration inputDecoration;
 
   final String? Function(dynamic) validator;
@@ -48,6 +55,7 @@ class TemplateFormWidget extends StatefulWidget {
   final EdgeInsetsGeometry? horizontalSymmetric;
 
   final Color? color;
+
   final Color defaultHintColor;
 
   @override
@@ -75,6 +83,8 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
         fontSize: 13,
         color: AppColors.grey8,
       ),
+      inputFormatters: widget.inputFormatters,
+      keyboardType: widget.textInputType,
       controller: widget.controller,
       inputDecoration: widget.inputDecoration,
       obscureText: widget.obscure,
