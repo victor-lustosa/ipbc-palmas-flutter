@@ -27,6 +27,7 @@ class _RegistrationCompletionViewState
 
   bool _isValidName = true;
   bool _isValidPhone = true;
+  final bool _isValidcep = true;
   final _isPressed = false;
 
   @override
@@ -72,7 +73,7 @@ class _RegistrationCompletionViewState
                         isValid: _isValidName,
                         isPressed: _isPressed,
                         validator: (data) {
-                          _nameValidation(data);
+                          return _nameValidation(data);
                         },
                         inputDecoration: fieldInputDecoration(
                           isValid: _isValidName,
@@ -82,7 +83,9 @@ class _RegistrationCompletionViewState
                     const SizedBox(height: 16),
                     TemplateFormWidget(
                         controller: _phoneController,
-                        inputFormatters: <TextInputFormatter>[PhoneFormatter()],
+                        inputFormatters: <TextInputFormatter>[
+                          PhoneInputFormatter()
+                        ],
                         textInputType: TextInputType.phone,
                         globalKey: _phoneKey,
                         errorText: 'Preencha o Telefone',
@@ -98,17 +101,20 @@ class _RegistrationCompletionViewState
                         defaultHintColor: AppColors.grey10),
                     const SizedBox(height: 16),
                     TemplateFormWidget(
+                        inputFormatters: <TextInputFormatter>[
+                          CepInputFormatter()
+                        ],
                         controller: _zipCodeController,
                         globalKey: _zipCodeKey,
                         textInputType: TextInputType.number,
                         errorText: 'Preencha o CEP',
-                        isValid: _isValidName,
+                        isValid: _isValidcep,
                         isPressed: _isPressed,
                         validator: (data) {
-                          _nameValidation(data);
+                          _phoneValidation(data);
                         },
                         inputDecoration: fieldInputDecoration(
-                          isValid: _isValidName,
+                          isValid: _isValidcep,
                           hintText: 'CEP',
                         ),
                         defaultHintColor: AppColors.grey10),
@@ -173,7 +179,7 @@ class _RegistrationCompletionViewState
   }
 
   _phoneValidation(String value) {
-    String regexpPhone = (r'(^[0-9]*$)');
+    String regexpPhone = (r'[\D]');
     RegExp regExp = RegExp(regexpPhone);
 
     if (value.isEmpty) {
@@ -187,26 +193,11 @@ class _RegistrationCompletionViewState
   }
 }
 
-class PhoneFormatter extends TextInputFormatter {
-  String phoneFormat(value) {
-    String nums = value.replaceAll(RegExp(r'[\D]'), '');
-    String internationalPhoneFormatted = nums.isNotEmpty
-        ? '${nums.isNotEmpty ? '(' : ''}${nums.substring(0, nums.length >= 2 ? 2 : null)}${nums.length > 1 ? ') ' : ''}${nums.length > 2 ? nums.substring(2, nums.length >= 7 ? 7 : null) + (nums.length > 7 ? '-${nums.substring(7, nums.length >= 11 ? 11 : null)}' : '') : ''}'
-        : nums;
-    return internationalPhoneFormatted;
+_phoneValidation(String value) {
+  if (value.isEmpty) {
+    return false;
+  } else if (value.trim().length != 9) {
+    return false;
   }
-
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    String text = newValue.text;
-
-    if (newValue.selection.baseOffset == 0) {
-      return newValue;
-    }
-
-    return newValue.copyWith(
-        text: phoneFormat(text),
-        selection: TextSelection.collapsed(offset: phoneFormat(text).length));
-  }
+  return true;
 }

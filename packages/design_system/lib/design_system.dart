@@ -64,3 +64,6 @@ export 'src/components/scroll_transform/scroll_transform_view.dart';
 export 'src/components/icons/hide_icon_widget.dart';
 
 export 'package:flutter_svg/flutter_svg.dart';
+
+export 'src/formatter/cep_input_formatter.dart';
+export 'src/formatter/phone_input_formatter.dart';
