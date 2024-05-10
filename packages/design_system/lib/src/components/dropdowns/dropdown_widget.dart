@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 
 class DropdownWidget extends StatefulWidget {
-  const DropdownWidget(this.list, this.callback, this.name,
-      {super.key, required this.width, required this.height});
+  const DropdownWidget(
+    this.callback, {
+    super.key,
+    required this.list,
+    required this.width,
+    required this.height,
+    required this.sizeBorderRadius,
+    required this.name,
+    this.colorBorder,
+    this.icon,
+  });
 
   final Function(String) callback;
   final List<String> list;
   final String name;
   final double width;
   final double height;
+  final Color? colorBorder;
+  final Icon? icon;
+  final double sizeBorderRadius;
 
   @override
   State<DropdownWidget> createState() => _DropdownWidgetState();
@@ -24,11 +36,11 @@ class _DropdownWidgetState extends State<DropdownWidget> {
       width: widget.width,
       height: widget.height,
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
+        borderRadius: BorderRadius.all(
+          Radius.circular(widget.sizeBorderRadius),
         ),
         border: Border.all(
-          color: Colors.black45,
+          color: widget.colorBorder ?? Colors.black45,
           width: 1.0,
           style: BorderStyle.solid,
         ),
@@ -38,6 +50,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
           //alignedDropdown: true,
           child: DropdownButton<String>(
             elevation: 2,
+            icon: widget.icon,
             isExpanded: true,
             borderRadius: const BorderRadius.all(Radius.circular(10)),
             padding: const EdgeInsets.only(

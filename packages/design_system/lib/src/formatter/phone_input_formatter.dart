@@ -4,7 +4,7 @@ class PhoneInputFormatter extends TextInputFormatter {
   String phoneFormat(value) {
     String nums = value.replaceAll(RegExp(r'[\D]'), '');
 
-    String phoneFormatted = nums.length > 1
+    String phoneFormatted = nums.length > 2
         ? '${nums.isNotEmpty ? '(' : ''}${nums.substring(0, nums.length >= 2 ? 2 : null)}${nums.length > 1 ? ') ' : ''}${nums.length > 2 ? nums.substring(2, nums.length >= 7 ? 7 : null) + (nums.length > 7 ? '-${nums.substring(7, nums.length >= 11 ? 11 : null)}' : '') : ''}'
         : nums;
     return phoneFormatted;

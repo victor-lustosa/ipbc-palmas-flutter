@@ -1,6 +1,7 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 class RegistrationCompletionView extends StatefulWidget {
   const RegistrationCompletionView({super.key});
@@ -27,9 +28,16 @@ class _RegistrationCompletionViewState
 
   bool _isValidName = true;
   bool _isValidPhone = true;
-  final bool _isValidcep = true;
+  bool _isValidCep = true;
   final _isPressed = false;
 
+  String dropdownvalue = 'Solteiro(a)';
+  var items = [
+    'Solteiro(a)',
+    'Casado(a)',
+    'Divorciado(a)',
+    'Viuvo(a)',
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,32 +116,31 @@ class _RegistrationCompletionViewState
                         globalKey: _zipCodeKey,
                         textInputType: TextInputType.number,
                         errorText: 'Preencha o CEP',
-                        isValid: _isValidcep,
+                        isValid: _isValidCep,
                         isPressed: _isPressed,
-                        validator: (data) {
-                          _phoneValidation(data);
-                        },
+                        validator: (data) {},
                         inputDecoration: fieldInputDecoration(
-                          isValid: _isValidcep,
+                          isValid: _isValidCep,
                           hintText: 'CEP',
                         ),
                         defaultHintColor: AppColors.grey10),
-                    const SizedBox(height: 16),
-                    TemplateFormWidget(
-                        controller: _maritalStatusController,
-                        globalKey: _maritalStatusKey,
-                        errorText: 'Preencha o estado civil',
-                        isValid: _isValidName,
-                        isPressed: _isPressed,
-                        validator: (data) {
-                          _nameValidation(data);
+                    Container(
+                      margin: const EdgeInsets.all(16),
+                      child: DropdownWidget(
+                        name: "Estado civil",
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        list: items,
+                        width: MediaQuery.of(context).size.width,
+                        height: 48,
+                        sizeBorderRadius: 16,
+                        colorBorder: AppColors.secondaryGrey,
+                        (String? newValue) {
+                          setState(() {
+                            dropdownvalue = newValue!;
+                          });
                         },
-                        inputDecoration: fieldInputDecoration(
-                          isValid: _isValidName,
-                          hintText: 'Estado civil',
-                        ),
-                        defaultHintColor: AppColors.grey10),
-                    const SizedBox(height: 16),
+                      ),
+                    ),
                     TemplateFormWidget(
                         controller: _dateOfBirthController,
                         globalKey: _dateOfBirthKey,
@@ -148,6 +155,33 @@ class _RegistrationCompletionViewState
                           hintText: 'Data de nascimento',
                         ),
                         defaultHintColor: AppColors.grey10),
+                    const SizedBox(height: 40),
+                    Text(
+                      'Você já é membro da Igreja IPB Palmas?',
+                      style: AppFonts.defaultFont(
+                          color: AppColors.grey9,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(height: 16),
+                    ButtonWidget(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      fixedSize: Size(MediaQuery.of(context).size.width, 48),
+                      action: () {},
+                      backgroundColor: AppColors.disableButton,
+                      shadowColor: AppColors.grey0,
+                      foregroundColor: AppColors.white,
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Salvar",
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -191,13 +225,4 @@ class _RegistrationCompletionViewState
     }
     return _isValidPhone = true;
   }
-}
-
-_phoneValidation(String value) {
-  if (value.isEmpty) {
-    return false;
-  } else if (value.trim().length != 9) {
-    return false;
-  }
-  return true;
 }
