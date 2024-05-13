@@ -69,3 +69,5 @@ export 'src/formatter/cep_input_formatter.dart';
 export 'src/formatter/phone_input_formatter.dart';
 
 export 'src/components/dropdowns/dropdown_widget.dart';
+
+export 'src/components/check_box/check_box.dart';

@@ -4,36 +4,39 @@ import 'package:flutter/services.dart';
 import '../../../design_system.dart';
 
 class FormFieldWidget extends StatefulWidget {
-  const FormFieldWidget(
-      {super.key,
-      required this.validator,
-      required this.isValid,
-      required this.inputDecoration,
-      required this.controller,
-      this.fieldKey,
-      this.isSubmitted,
-      this.maxLength,
-      this.fieldStyle,
-      this.maxLines,
-      this.keyboardType,
-      this.cursorColor,
-      this.inputFormatters,
-      this.autoValidateMode,
-      this.title,
-      this.titleMargin,
-      this.fieldWidth,
-      this.fieldHeight,
-      this.fieldDecoration,
-      this.errorText,
-      this.titleStyle,
-      this.fieldMargin,
-      this.obscureText,
-      this.errorTextMargin,
-      this.horizontalSymmetric,
-      this.inputPadding,
-      required this.colorStyle});
+  const FormFieldWidget({
+    super.key,
+    required this.validator,
+    required this.isValid,
+    required this.inputDecoration,
+    required this.controller,
+    this.fieldKey,
+    this.isSubmitted,
+    this.maxLength,
+    this.fieldStyle,
+    this.maxLines,
+    this.keyboardType,
+    this.cursorColor,
+    this.inputFormatters,
+    this.autoValidateMode,
+    this.title,
+    this.titleMargin,
+    this.fieldWidth,
+    this.fieldHeight,
+    this.fieldDecoration,
+    this.errorText,
+    this.titleStyle,
+    this.fieldMargin,
+    this.obscureText,
+    this.errorTextMargin,
+    this.horizontalSymmetric,
+    this.inputPadding,
+    required this.colorStyle,
+    this.readOnly,
+  });
 
   final String? errorText;
+  final bool? readOnly;
   final EdgeInsetsGeometry? errorTextMargin;
   final String? title;
   final EdgeInsetsGeometry? titleMargin;
@@ -100,6 +103,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
                   borderRadius: BorderRadius.circular(12),
                 ),
             child: TextFormField(
+              readOnly: widget.readOnly ?? false,
               obscureText: widget.obscureText ?? false,
               key: widget.fieldKey,
               enabled: widget.isSubmitted,

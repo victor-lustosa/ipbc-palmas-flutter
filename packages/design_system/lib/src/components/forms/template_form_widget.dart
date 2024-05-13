@@ -22,9 +22,15 @@ class TemplateFormWidget extends StatefulWidget {
     this.color,
     this.textInputType,
     required this.defaultHintColor,
+    this.readOnly,
+    this.fieldMargin,
   });
 
   final int? maxLines;
+
+  final EdgeInsetsGeometry? fieldMargin;
+
+  final bool? readOnly;
 
   final double? fieldHeight;
 
@@ -70,7 +76,7 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
           const EdgeInsets.symmetric(horizontal: 16),
       fieldKey: widget.globalKey,
       isSubmitted: !widget.isPressed,
-      fieldMargin: const EdgeInsets.only(top: 4),
+      fieldMargin: widget.fieldMargin ?? const EdgeInsets.only(top: 4),
       titleMargin: widget.titleMargin,
       fieldDecoration: _fieldDecoration(
         isValid: widget.isValid,
@@ -78,6 +84,7 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
       ),
       title: widget.title,
       isValid: widget.isValid,
+      readOnly: widget.readOnly,
       maxLines: widget.maxLines,
       titleStyle: AppFonts.defaultFont(
         fontSize: 13,
