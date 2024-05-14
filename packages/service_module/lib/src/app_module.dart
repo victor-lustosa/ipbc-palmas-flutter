@@ -19,17 +19,18 @@ class ServiceModule extends Module {
 
   @override
   void binds(i) {
+    i.addSingleton(
+          () => ServicesUseCases(
+        repository: i.get<Repository<List>>(),
+      ),
+    );
     i.addLazySingleton<ServicesCollectionBloc>(
       () => ServicesCollectionBloc(
         supaUseCases: i.get<ServicesUseCases>(),
       ),
       config: CoreModule.blocConfig(),
     );
-    i.addSingleton(
-          () => ServicesUseCases(
-        repository: i.get<Repository<List>>(),
-      ),
-    );
+
     i.addLazySingleton<EditLyricStore>(EditLyricStore.new);
   }
 

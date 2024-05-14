@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 
 class SearchBarWidget extends StatefulWidget {
   const SearchBarWidget(
-      {Key? key, required this.controller, required this.action})
-      : super(key: key);
+      {super.key, required this.controller, required this.action});
 
   final TextEditingController controller;
   final void Function() action;

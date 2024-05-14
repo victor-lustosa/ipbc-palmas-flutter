@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 
 class AlbumCoverWidget extends StatelessWidget {
   const AlbumCoverWidget(
-      {Key? key,
+      {super.key,
       required this.albumCover,
       required this.width,
-      required this.height})
-      : super(key: key);
+      required this.height});
 
   final String albumCover;
   final double width;

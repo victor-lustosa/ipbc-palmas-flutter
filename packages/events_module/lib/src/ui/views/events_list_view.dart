@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:core_module/core_module.dart';
 
-import '../event_module.dart';
+import '../../app_module.dart';
 
 class EventsListView extends StatefulWidget {
   const EventsListView({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<EventsListView> createState() => EventsListViewState();

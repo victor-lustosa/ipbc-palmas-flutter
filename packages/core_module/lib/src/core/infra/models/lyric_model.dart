@@ -1,23 +1,14 @@
-// ignore_for_file: depend_on_referenced_packages
 
 import 'package:core_module/core_module.dart';
 
 class LyricModel extends LyricEntity {
   LyricModel(
-      {required int id,
-      required String title,
-      required DateTime createAt,
-      required String albumCover,
-      required String group,
-      required List<VerseEntity> verses})
-      : super(
-          id: id,
-          title: title,
-          createAt: createAt,
-          group: group,
-          verses: verses,
-          albumCover: albumCover,
-        );
+      {required super.id,
+      required super.title,
+      required super.createAt,
+      required super.albumCover,
+      required super.group,
+      required super.verses});
 
   factory LyricModel.empty() => LyricModel(
         id: SupaServicesUtil.createId(),

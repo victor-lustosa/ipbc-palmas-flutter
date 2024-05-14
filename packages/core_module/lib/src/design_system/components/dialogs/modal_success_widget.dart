@@ -2,7 +2,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class ModalSuccessIconWidget extends StatelessWidget {
-  const ModalSuccessIconWidget({Key? key}) : super(key: key);
+  const ModalSuccessIconWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

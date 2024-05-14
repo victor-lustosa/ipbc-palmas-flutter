@@ -12,12 +12,12 @@ class SlideCardsWidget extends StatefulWidget {
   const SlideCardsWidget({
     required this.services,
     required this.scrollDirection,
-    Key? key,
+    super.key,
     required this.route,
     required this.width,
     this.physics,
     this.margin,
-  }) : super(key: key);
+  });
 
   @override
   State<SlideCardsWidget> createState() => SlideCardsWidgetState();

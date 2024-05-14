@@ -8,12 +8,11 @@ class CardOffer extends StatelessWidget {
   final String? description;
 
   const CardOffer(
-      {Key? key,
+      {super.key,
       required this.title,
       required this.imagePath,
       this.description,
-      this.price})
-      : super(key: key);
+      this.price});
 
   @override
   Widget build(BuildContext context) {

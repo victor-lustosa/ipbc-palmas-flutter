@@ -1,10 +1,10 @@
 import 'package:auth_module/auth_module.dart';
+import 'package:events_module/events_module.dart';
 import 'package:lyric_module/lyric_module.dart';
 import 'package:service_module/service_module.dart';
 
 import '../../app/splash/views/splash_view.dart';
 
-import '../events/event_module.dart';
 import '../init/init_module.dart';
 import 'blocs/database_bloc.dart';
 

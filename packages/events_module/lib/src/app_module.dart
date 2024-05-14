@@ -1,7 +1,7 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'views/create_event_view.dart';
+import 'ui/views/create_event_view.dart';
 
 class EventModule extends Module {
   static const String eventsListRoute = '/events-list';

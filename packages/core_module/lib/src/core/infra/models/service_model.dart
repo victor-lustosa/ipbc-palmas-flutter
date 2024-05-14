@@ -3,32 +3,19 @@ import 'package:core_module/core_module.dart';
 
 class ServiceModel extends ServiceEntity {
   ServiceModel(
-      {required int id,
-      required String image,
-      required String theme,
-      required String hour,
-      required String preacher,
-      required String type,
-      required bool guideIsVisible,
-      required DateTime createAt,
-      required List<LyricModel> lyricsList,
-      required List<LiturgyEntity> liturgiesList,
-      required String title,
-      required String heading
-      }): super(
-    id: id,
-    image: image,
-    theme: theme,
-    hour: hour,
-    preacher: preacher,
-    type: type,
-    guideIsVisible: guideIsVisible,
-    createAt: createAt,
-    lyricsList: lyricsList,
-    liturgiesList: liturgiesList,
-    title: title,
-    heading: heading,
-  );
+      {required super.id,
+      required super.image,
+      required super.theme,
+      required super.hour,
+      required super.preacher,
+      required super.type,
+      required super.guideIsVisible,
+      required super.createAt,
+      required super.lyricsList,
+      required super.liturgiesList,
+      required super.title,
+      required super.heading
+      });
 
   factory ServiceModel.empty() => ServiceModel(
       createAt: DateTime.now(),

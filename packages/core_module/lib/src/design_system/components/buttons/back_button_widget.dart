@@ -8,11 +8,11 @@ class BackButtonWidget extends StatelessWidget {
   final double? size;
 
   const BackButtonWidget({
-    Key? key,
+    super.key,
     required this.action,
     this.color,
     this.size,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

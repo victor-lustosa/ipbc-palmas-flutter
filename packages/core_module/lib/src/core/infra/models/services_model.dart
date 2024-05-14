@@ -2,20 +2,13 @@ import 'package:core_module/core_module.dart';
 
 class ServicesModel extends ServicesEntity {
   ServicesModel({
-    required String id,
-    required String image,
-    required String hour,
-    required String path,
-    required String title,
-    required String heading,
-  }) : super(
-          id: id,
-          image: image,
-          path: path,
-          hour: hour,
-          title: title,
-          heading: heading,
-        );
+    required super.id,
+    required super.image,
+    required super.hour,
+    required super.path,
+    required super.title,
+    required super.heading,
+  });
 
   factory ServicesModel.empty() => ServicesModel(
         title: '',

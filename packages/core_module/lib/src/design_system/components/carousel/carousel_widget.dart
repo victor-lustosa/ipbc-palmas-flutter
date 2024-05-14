@@ -17,14 +17,14 @@ class CarouselWidget extends StatefulWidget {
     required this.services,
     required this.width,
     required this.height,
-    Key? key,
+    super.key,
     this.mainAxisAlignment,
     this.crossAxisAlignment,
     this.fontStyle,
     this.padding,
     this.margin,
     this.route,
-  }) : super(key: key);
+  });
 
   @override
   State<CarouselWidget> createState() => CarouselWidgetState();

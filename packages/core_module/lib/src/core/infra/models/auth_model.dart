@@ -2,12 +2,9 @@ import '../../domain/entities/auth_entity.dart';
 
 class ServiceModel extends AuthEntity {
   ServiceModel(
-      {required String email,
-        required String password,
-      }): super(
-    email: email,
-    password: password,
-  );
+      {required super.email,
+        required super.password,
+      });
   static AuthEntity fromMap(dynamic json) {
     return AuthEntity(
       email: json['email'],

@@ -6,8 +6,7 @@ import 'package:flutter/cupertino.dart';
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget(
-      {Key? key, this.androidRadius, this.color, this.size, this.iosRadius})
-      : super(key: key);
+      {super.key, this.androidRadius, this.color, this.size, this.iosRadius});
   final double? androidRadius;
   final double? iosRadius;
   final double? size;

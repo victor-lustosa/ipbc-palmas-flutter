@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
 import 'app/splash/splash_module.dart';
-export 'app/home/views/home_view.dart';
 
 void main() async {
   //  Modular.setInitialRoute(ServiceModule.servicesRoute + ServiceModule.editLyricRoute);
@@ -29,7 +28,6 @@ void main() async {
               child: child!,
             );
           },
-          title: 'IPBC Palmas',
           theme: lightTheme,
           routerConfig: Modular.routerConfig,
           debugShowCheckedModeBanner: false,

@@ -25,7 +25,7 @@ dependencies:
   flutter_modular: ^6.3.2
   path_provider: ^2.0.14
   upgrader: ^7.0.0
-  flutter_lints: ^2.0.1
+  flutter_lints: 3.0.0
   google_fonts: ^5.1.0
   cupertino_icons: ^1.0.5
   vector_math: ^2.1.4

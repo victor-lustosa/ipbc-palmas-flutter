@@ -1,13 +1,11 @@
 import 'dart:io';
 
 import 'package:core_module/core_module.dart';
+import 'package:events_module/events_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:offers_module/offers_module.dart';
 import 'package:service_module/service_module.dart';
-
-import '../events/event_module.dart';
-import '../events/views/events_list_view.dart';
-import '../offers/controller/banner_controller.dart';
 
 import 'blocs/home_bloc.dart';
 import 'views/home_view.dart';
@@ -15,9 +13,12 @@ import 'views/home_view.dart';
 class HomeModule extends Module {
   static const String homeRoute = '/home';
   static const String initialRoute = '/';
+  static const String eventsListRoute = '/events-list';
+  static const String servicesCollectionRoute = "/services-collection";
+  static const String servicesListRoute = '/services-list';
 
   @override
-  List<Module> get imports => [ServiceModule()];
+  List<Module> get imports => [ServiceModule(), OffersModule()];
 
   @override
   void binds(Injector i) {
@@ -27,7 +28,6 @@ class HomeModule extends Module {
       ),
       config: CoreModule.blocConfig(),
     );
-    i.addLazySingleton<BannerController>(BannerController.new);
   }
 }
 
@@ -80,7 +80,7 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
               ),
             );
 
-          case EventModule.eventsListRoute:
+          case HomeModule.eventsListRoute:
             return customTransitionRoute(
               child: const EventsListView(),
               tween: Tween(begin: const Offset(0, 0), end: Offset.zero).chain(
@@ -93,5 +93,4 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
       },
     );
   }
-
 }

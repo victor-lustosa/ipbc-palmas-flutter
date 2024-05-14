@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:core_module/core_module.dart';
+import 'package:events_module/events_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:service_module/service_module.dart';
 //import 'package:flutter/services.dart';
 
-import '../../events/event_module.dart';
 import '../blocs/home_bloc.dart';
 import '../home_module.dart';
 

@@ -9,7 +9,7 @@ enum AdaptiveButtonType {
 
 class ButtonWidget extends StatefulWidget {
   const ButtonWidget({
-    Key? key,
+    super.key,
     this.action,
     this.overlayColor,
     this.child,
@@ -26,7 +26,7 @@ class ButtonWidget extends StatefulWidget {
     this.sideHoveredColor,
     this.state,
     this.foregroundHoveredColor,
-  }) : super(key: key);
+  });
 
   final Color? overlayColor;
   final Widget? child;

@@ -6,7 +6,7 @@ import '../../init/init_module.dart';
 import '../blocs/database_bloc.dart';
 
 class SplashView extends StatefulWidget {
-  const SplashView({Key? key}) : super(key: key);
+  const SplashView({super.key});
 
   @override
   State<SplashView> createState() => _SplashViewState();

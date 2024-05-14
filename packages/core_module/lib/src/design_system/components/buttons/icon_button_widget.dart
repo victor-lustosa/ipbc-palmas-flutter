@@ -5,15 +5,14 @@ import 'package:flutter/cupertino.dart';
 
 class IconButtonWidget extends StatelessWidget {
   const IconButtonWidget(
-      {Key? key,
+      {super.key,
         this.size,
         this.action,
         required this.color,
         this.splashColor,
         this.highlightColor,
         required this.iOSIcon,
-        required this.androidIcon, this.sizeIcon})
-      : super(key: key);
+        required this.androidIcon, this.sizeIcon});
   final double? size;
   final double? sizeIcon;
   final IconData iOSIcon;

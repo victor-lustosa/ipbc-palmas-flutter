@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 class LyricsListWidget extends StatefulWidget {
-  const LyricsListWidget({Key? key, required this.entitiesList})
-      : super(key: key);
+  const LyricsListWidget({super.key, required this.entitiesList});
   final List<LyricEntity> entitiesList;
 
   @override

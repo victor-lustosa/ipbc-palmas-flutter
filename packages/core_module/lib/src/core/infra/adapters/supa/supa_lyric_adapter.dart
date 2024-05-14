@@ -20,7 +20,7 @@ class SupaLyricAdapter {
         if (json.containsKey('verses'))
           ...(json['verses'] as List)
               .map(VerseAdapter.fromMap)
-              .toList(),
+              ,
       ],
     );
   }
@@ -48,7 +48,7 @@ class SupaLyricAdapter {
           group: lyric['group'],
           verses: [
             if (lyric.containsKey('verses'))
-              ...(lyric['verses'] as List).map(VerseAdapter.fromMap).toList(),
+              ...(lyric['verses'] as List).map(VerseAdapter.fromMap),
           ],
         ),
       );

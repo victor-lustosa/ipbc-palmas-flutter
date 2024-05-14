@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 
 
 class GuidelineWidget extends StatelessWidget {
-  const GuidelineWidget({Key? key, required this.liturgiesList, required this.timelineColor, required this.circleColor})
-      : super(key: key);
+  const GuidelineWidget({super.key, required this.liturgiesList, required this.timelineColor, required this.circleColor});
   final List<LiturgyEntity> liturgiesList;
   final Color timelineColor;
   final Color circleColor;
