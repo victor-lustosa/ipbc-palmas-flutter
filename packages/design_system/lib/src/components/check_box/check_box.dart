@@ -8,9 +8,13 @@ class CheckBoxCustom extends StatefulWidget {
   final Color? checkColor;
   final Color? activeColor;
   final Color? fillColor;
-  final double? checkedBorder;
   final EdgeInsets? margin;
   final Function(bool) onChanged;
+  final TextStyle? textStyle;
+  final double? borderRadiusCheckBox;
+  final IconData? iconCheckBox;
+  final double? sizeIcon;
+  final Color? colorBoder;
 
   const CheckBoxCustom({
     Key? key,
@@ -20,55 +24,66 @@ class CheckBoxCustom extends StatefulWidget {
     this.checkColor,
     this.activeColor,
     this.fillColor,
-    this.checkedBorder,
     this.margin,
+    this.textStyle,
+    this.borderRadiusCheckBox,
+    this.iconCheckBox,
+    this.sizeIcon,
+    this.colorBoder,
   }) : super(key: key);
 
   @override
-  _CheckBoxCustomState createState() => _CheckBoxCustomState();
+  CheckBoxCustomState createState() => CheckBoxCustomState();
 }
 
-class _CheckBoxCustomState extends State<CheckBoxCustom> {
+class CheckBoxCustomState extends State<CheckBoxCustom> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: widget.margin,
+      margin: widget.margin ?? const EdgeInsets.all(8),
       child: Row(
         children: [
           SizedBox(
-            width: 22,
-            height: 22,
+            width: 19,
+            height: 19,
             child: Transform.scale(
               scale: 1.2,
-              child: Checkbox(
-                checkColor: widget.checkColor ?? AppColors.darkGreen,
-                activeColor: widget.activeColor ?? AppColors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(widget.checkedBorder ?? 50),
-                ),
-                fillColor: MaterialStateProperty.all(
-                    widget.fillColor ?? AppColors.white),
-                value: widget.isChecked,
-                side: MaterialStateBorderSide.resolveWith(
-                  (states) => const BorderSide(
-                    width: 1,
-                    color: AppColors.grey2,
-                  ),
-                ),
-                onChanged: (bool? value) {
-                  widget.onChanged(value ?? false);
+              child: InkWell(
+                onTap: () {
+                  widget.onChanged(!widget.isChecked);
                 },
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(
+                        widget.borderRadiusCheckBox ?? 50),
+                    border: Border.all(
+                      width: 0.8,
+                      color: widget.colorBoder ?? AppColors.grey9,
+                    ),
+                    color: widget.isChecked
+                        ? widget.activeColor
+                        : widget.fillColor,
+                  ),
+                  child: widget.isChecked
+                      ? Icon(
+                          widget.iconCheckBox ?? Icons.circle,
+                          size: widget.sizeIcon ?? 14,
+                          color: widget.checkColor ?? AppColors.darkGreen,
+                        )
+                      : const SizedBox.shrink(),
+                ),
               ),
             ),
           ),
           const SizedBox(width: 8),
           Text(
             widget.textCheckedBox,
-            style: AppFonts.defaultFont(
-                color: AppColors.grey9,
-                fontSize: 17,
-                fontWeight: FontWeight.w400),
+            style: widget.textStyle ??
+                AppFonts.defaultFont(
+                    color: AppColors.grey9,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w400),
           ),
         ],
       ),

@@ -187,58 +187,76 @@ class _RegistrationCompletionViewState
                 ),
                 const SizedBox(height: 16),
                 CheckBoxCustom(
-                  isChecked: isChecked == true,
+                  isChecked: isChecked == false,
                   margin: const EdgeInsets.only(right: 16, left: 16),
                   textCheckedBox: 'Sim',
-                  onChanged: (bool? value) {
-                    setState(() {
-                      isChecked = value;
-                    });
-                  },
-                ),
-                CheckBoxCustom(
-                  isChecked: isChecked == false,
-                  margin: const EdgeInsets.only(top: 8, right: 16, left: 16),
-                  textCheckedBox: 'Não',
                   onChanged: (bool? value) {
                     setState(() {
                       isChecked = !value!;
                     });
                   },
                 ),
+                CheckBoxCustom(
+                  isChecked: isChecked == true,
+                  margin: const EdgeInsets.only(top: 8, right: 16, left: 16),
+                  textCheckedBox: 'Não',
+                  onChanged: (bool? value) {
+                    setState(() {
+                      isChecked = value;
+                    });
+                  },
+                ),
                 const SizedBox(height: 16),
-                isChecked == null
-                    ? const Text('')
-                    : isChecked!
-                        ? Column(
-                            children: [
-                              CheckBoxCustom(
-                                checkedBorder: 2,
-                                margin: const EdgeInsets.only(
-                                    top: 8, left: 16, right: 16, bottom: 8),
-                                isChecked: isCheckedMember,
-                                textCheckedBox: 'Quero me tornar membro',
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    isCheckedMember = value;
-                                  });
-                                },
-                              ),
-                              CheckBoxCustom(
-                                isChecked: isCheckedAcceptContact,
-                                checkedBorder: 2,
-                                margin: const EdgeInsets.only(
-                                    top: 8, left: 16, right: 16, bottom: 98),
-                                textCheckedBox: 'Aceito que entrem em contato',
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    isCheckedAcceptContact = value;
-                                  });
-                                },
-                              )
-                            ],
-                          )
-                        : const Text(''),
+                Column(
+                  children: [
+                    CheckBoxCustom(
+                      borderRadiusCheckBox: 2,
+                      colorBoder:
+                          isChecked == true ? AppColors.grey9 : AppColors.grey3,
+                      margin: const EdgeInsets.only(
+                          top: 8, left: 16, right: 16, bottom: 8),
+                      isChecked: isCheckedMember,
+                      iconCheckBox: Icons.check,
+                      sizeIcon: 19,
+                      textCheckedBox: 'Quero me tornar membro',
+                      textStyle: AppFonts.defaultFont(
+                          color: isChecked == true
+                              ? AppColors.grey9
+                              : AppColors.grey3,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w400),
+                      onChanged: (bool value) {
+                        setState(() {
+                          if (isChecked == true) {
+                            isCheckedMember = value;
+                          }
+                        });
+                      },
+                    ),
+                    CheckBoxCustom(
+                      colorBoder:
+                          isChecked == true ? AppColors.grey9 : AppColors.grey3,
+                      isChecked: isCheckedAcceptContact,
+                      iconCheckBox: Icons.check,
+                      sizeIcon: 19,
+                      borderRadiusCheckBox: 2,
+                      textStyle: AppFonts.defaultFont(
+                          color: isChecked == true
+                              ? AppColors.grey9
+                              : AppColors.grey3,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w400),
+                      margin: const EdgeInsets.only(
+                          top: 8, left: 16, right: 16, bottom: 98),
+                      textCheckedBox: 'Aceito que entrem em contato',
+                      onChanged: (bool value) {
+                        setState(() {
+                          isCheckedAcceptContact = value;
+                        });
+                      },
+                    )
+                  ],
+                ),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: ButtonWidget(
