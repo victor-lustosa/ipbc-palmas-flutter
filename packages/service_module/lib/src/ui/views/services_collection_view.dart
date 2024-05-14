@@ -45,7 +45,12 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                   color: AppColors.darkGreen,
                 );
               } else if (state is NoConnectionState<ServicesCollectionState>) {
-                return const NoConnectionView(index: 0);
+                return NoConnectionView(
+                  action: () => nativeNavigate(
+                    ServiceModule.servicesCollectionRoute,
+                    context,
+                  ),
+                );
               } else if (state
                   is DataFetchedState<ServicesCollectionState, ServiceEntity>) {
                 entitiesList = state.entities;
@@ -81,13 +86,13 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                   : AppColors.grey0,
                               child: InkWell(
                                 onTap: () {
-                                  Navigator.of(context).pushNamed(
-                                    ServiceModule.serviceRoute,
-                                    arguments: ServiceViewDTO(
-                                      service: entitiesList[index],
-                                      image: widget.entity.image,
-                                    ),
-                                  );
+                                  nativePushNamed(
+                                      ServiceModule.serviceRoute,
+                                      arguments: ServiceViewDTO(
+                                        service: entitiesList[index],
+                                        image: widget.entity.image,
+                                      ),
+                                      context);
                                 },
                                 child: Row(
                                   children: [
@@ -163,17 +168,14 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
         iconColor: AppColors.white,
         backgroundColor: AppColors.add,
         icon: Icons.add,
-        action: () => Modular.to.navigate(
+        action: () => navigate(
           ServiceModule.servicesRoute + ServiceModule.editLiturgiesRoute,
-          arguments: EditLiturgiesDTO(image: widget.entity.image, heading: widget.entity.heading),
+          arguments: EditLiturgyDTO(
+            image: widget.entity.image,
+            heading: widget.entity.heading,
+          ),
         ),
       ),
     );
   }
-}
-class EditLiturgiesDTO {
-  EditLiturgiesDTO({required this.heading, required this.image});
-
-  final String heading;
-  final String image;
 }

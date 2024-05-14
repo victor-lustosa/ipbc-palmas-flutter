@@ -16,13 +16,7 @@ class SearchBarWidget extends StatefulWidget {
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
-  /*List<String> searchOptions = [
-    'Trecho',
-    'Artista',
-    'Música',
-    'banco de dados'
-  ];
-  String selectedOption = 'Música';*/
+
   bool isValid = true;
 
   @override
@@ -68,7 +62,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             top: 10,
           ),
           hintText: 'Digite o termo de pesquisa',
-        ),
+        ), colorStyle: AppColors.hintInputForm,
       ),
     );
   }

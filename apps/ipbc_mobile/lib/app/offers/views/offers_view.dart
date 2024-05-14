@@ -69,7 +69,7 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ElevatedButtonWidget(
+                              ButtonWidget(
                                 elevation: 0,
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 24,
@@ -94,7 +94,7 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                                   controller.isPix,
                                 ),
                               ),
-                              ElevatedButtonWidget(
+                              ButtonWidget(
                                 elevation: 0,
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 16,

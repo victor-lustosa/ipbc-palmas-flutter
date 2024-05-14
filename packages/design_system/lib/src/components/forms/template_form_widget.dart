@@ -18,8 +18,10 @@ class TemplateFormWidget extends StatefulWidget {
     this.fieldHeight,
     this.horizontalSymmetric,
     this.color,
+
     this.defaultHintColor,
   });
+
 
 
   final int? maxLines;
@@ -49,7 +51,9 @@ class TemplateFormWidget extends StatefulWidget {
   final EdgeInsetsGeometry? horizontalSymmetric;
 
   final Color? color;
+
   final Color? defaultHintColor;
+
 
   @override
   State<TemplateFormWidget> createState() => _TemplateFormWidgetState();
@@ -83,6 +87,7 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
       fieldHeight: widget.fieldHeight ?? 48,
       validator: widget.validator,
       colorStyle: widget.defaultHintColor ?? AppColors.hintInputForm,
+
     );
   }
 
@@ -93,10 +98,12 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
     ),
     borderRadius: BorderRadius.circular(16),
   );
+
 }
 
 fieldInputDecoration(
     {required isValid,
+
       required hintText,
       Widget? suffixIcon,
       Widget? prefixIcon,
@@ -104,6 +111,7 @@ fieldInputDecoration(
       BoxConstraints? suffixIconConstraints,
       Color? hintColor,
       EdgeInsetsGeometry? contentPadding}) {
+
   return InputDecoration(
     suffixIcon: suffixIcon,
     prefixIcon: prefixIcon,
@@ -113,7 +121,9 @@ fieldInputDecoration(
     hintStyle: AppFonts.defaultFont(
       fontSize: 12,
       color:
+
       hintColor ?? (isValid ? AppColors.hintInputForm : AppColors.delete),
+
     ),
     contentPadding: contentPadding ??
         const EdgeInsets.only(

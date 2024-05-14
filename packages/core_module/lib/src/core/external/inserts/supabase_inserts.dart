@@ -10,7 +10,7 @@ void main() async {
 
   await SupabaseDatasource.init();
 
-  SupabaseDatasource supa = SupabaseDatasource(supabaseClient: Supabase.instance.client);
+  //SupabaseDatasource supa = SupabaseDatasource(supabaseClient: Supabase.instance.client);
   try {
     List<LyricModel> lyricsInserted = [];
     List<LyricModel> unknownLyrics = [];
@@ -49,9 +49,9 @@ void main() async {
 
     // inserindo lista de todas as letras
 
-    for (LyricEntity lyric in lyricsInserted) {
+  //  for (LyricEntity lyric in lyricsInserted) {
       //supa.add('lyrics', SupaLyricAdapter.toMap(lyric));
-    }
+   // }
 
     print('lyrics list have been successfully added');
     print('Total number of lyrics inserted: ${lyricsInserted.length}');

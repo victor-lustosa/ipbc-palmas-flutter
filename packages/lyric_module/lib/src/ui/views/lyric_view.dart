@@ -1,14 +1,14 @@
-
 import 'package:core_module/core_module.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
-class LyricView extends StatefulWidget{
+class LyricView extends StatefulWidget {
   const LyricView({super.key, required this.entity});
 
   final LyricEntity entity;
+
   @override
   State<LyricView> createState() => _LyricViewState();
 }
@@ -78,8 +78,10 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                       style: AppFonts.defaultFont(
                                         color: AppColors.grey9,
                                         fontWeight: FontWeight.w500,
-                                        fontSize: context.mediaQuery.size.width >
-                                                    ResponsivityUtil.smallDeviceWidth
+                                        fontSize:
+                                            context.mediaQuery.size.width >
+                                                    ResponsivityUtil
+                                                        .smallDeviceWidth
                                                 ? 20
                                                 : 17,
                                       ),
@@ -92,9 +94,9 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                     style: AppFonts.defaultFont(
                                       color: AppColors.grey9,
                                       fontSize: context.mediaQuery.size.width >
-                                                  ResponsivityUtil.smallDeviceWidth
-                                              ? 15
-                                              : 14,
+                                              ResponsivityUtil.smallDeviceWidth
+                                          ? 15
+                                          : 14,
                                     ),
                                   ),
                                 ],
@@ -109,7 +111,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                           highlightColor: Colors.transparent,
                           iOSIcon: CupertinoIcons.clear_thick,
                           androidIcon: Icons.close_rounded,
-                          action: () => Modular.to.pop(context),
+                          action: () => pop(context),
                         ),
                       ],
                     ),
@@ -117,82 +119,9 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                   Container(
                     //top: 15, sem a validacao de se é refrao ou nao
                     margin: const EdgeInsets.only(top: 28),
-                    child: ListView.separated(
-                      separatorBuilder: (__, _) {
-                        return const SizedBox();
-                      },
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: widget.entity.verses.length,
-                      itemBuilder: (_, index) {
-                        return Container(
-                          decoration:
-                              const BoxDecoration(color: AppColors.white),
-                          margin: widget.entity.verses[index].isChorus
-                              ? const EdgeInsets.only(left: 18, right: 16)
-                              : const EdgeInsets.only(left: 8),
-                          child: ClipRRect(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(16)),
-                            child: Container(
-                              alignment:
-                                  widget.entity.verses[index].isChorus
-                                      ? Alignment.centerRight
-                                      : Alignment.centerLeft,
-                              decoration: BoxDecoration(
-                                color: widget.entity.verses[index].isChorus
-                                    ? const Color.fromRGBO(0, 168, 118, .1)
-                                    : AppColors.white,
-                              ),
-                              child: Container(
-                                margin: EdgeInsets.only(
-                                  top: 14,
-                                  bottom: 14,
-                                  right:
-                                      widget.entity.verses[index].isChorus
-                                          ? 5
-                                          : 15,
-                                ),
-                                child: ListView.separated(
-                                  separatorBuilder: (__, _) {
-                                    return const SizedBox(
-                                      height: 10,
-                                    );
-                                  },
-                                  itemCount: widget.entity.verses[index]
-                                      .versesList.length,
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemBuilder: ((__, position) {
-                                    return Container(
-                                      margin: const EdgeInsets.only(
-                                        left: 18,
-                                        top: 2,
-                                        bottom: 2,
-                                      ),
-                                      child: Text(
-                                        widget.entity.verses[index]
-                                            .versesList[position],
-                                        style: AppFonts.defaultFont(
-                                          color: AppColors.grey10,
-                                          fontSize: context.mediaQuery
-                                                      .size
-                                                      .width >
-                                                  ResponsivityUtil.smallDeviceWidth
-                                              ? 16
-                                              : 14,
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+                    child: VersesListWidget(
+                      isEdit: false,
+                      entity: widget.entity.verses,
                     ),
                   ),
                   Container(

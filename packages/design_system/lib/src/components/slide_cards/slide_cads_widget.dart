@@ -32,9 +32,10 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
       itemCount: 3,
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
-          onTap: () => Navigator.of(context).pushNamed(
+          onTap: () => nativePushNamed(
             widget.route,
             arguments: widget.services[index],
+            context,
           ),
           child: Container(
             margin: widget.margin ??

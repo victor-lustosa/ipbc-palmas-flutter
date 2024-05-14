@@ -24,7 +24,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                 margin: const EdgeInsets.only(left: 20, top: 20),
                 child: IconButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () => Modular.to.pop(context),
+                  onPressed: () => pop(context),
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   color: AppColors.darkGreen,
@@ -63,7 +63,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     ),
                     height: 48,
                     width: context.mediaQuery.size.width,
-                    child: ElevatedButtonWidget(
+                    child: ButtonWidget(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
@@ -112,7 +112,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     ),
                     height: 48,
                     width: context.mediaQuery.size.width,
-                    child: ElevatedButtonWidget(
+                    child: ButtonWidget(
                       backgroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
@@ -154,7 +154,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     ),
                     height: 48,
                     width: context.mediaQuery.size.width,
-                    child: ElevatedButtonWidget(
+                    child: ButtonWidget(
                       backgroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),

@@ -6,6 +6,7 @@ import '../../../design_system.dart';
 class FormFieldWidget extends StatefulWidget {
   const FormFieldWidget(
       {super.key,
+
         required this.validator,
         required this.isValid,
         required this.inputDecoration,
@@ -115,8 +116,10 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
               decoration: widget.inputDecoration,
               style: widget.fieldStyle ??
                   AppFonts.defaultFont(
+
                       fontSize: 14,
                       color: widget.colorStyle
+
                   ),
             ),
           ),

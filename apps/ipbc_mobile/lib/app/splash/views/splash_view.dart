@@ -1,7 +1,7 @@
 import 'package:core_module/core_module.dart' hide LoadingState;
 import 'package:flutter/material.dart';
 
-import '../../home/home_module.dart';
+import '../../init/init_module.dart';
 import '../blocs/database_bloc.dart';
 
 class SplashView extends StatefulWidget {
@@ -28,9 +28,9 @@ class _SplashViewState extends State<SplashView> {
         listener: (context, state) async {
           if (state is FetchingDataState) {
             if (!state.isData) {
-              Modular.to.navigate(HomeModule.initialRoute);
+              navigate(InitModule.initialRoute);
             } else {
-              Modular.to.navigate(AuthModule.authRoute + AuthModule.loginRoute);
+              navigate(AuthModule.authRoute + AuthModule.loginRoute);
             }
           }
         },

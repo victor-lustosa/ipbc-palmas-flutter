@@ -25,7 +25,7 @@ class SupaServicesUtil {
     for (int line = 0; service.lyricsList.length > line; line++) {
       lyricsAux.add(
         service.lyricsList[line].copyWith(
-          id: createId().toString(),
+          id: createId(),
           verses: lyricsConverted[line].verses,
           albumCover: lyricsConverted[line].albumCover,
           createAt: await _dateNowDelayed(),
@@ -33,7 +33,7 @@ class SupaServicesUtil {
       );
     }
     lyricsAux.addAll(unknownLyrics);
-    return service.copyWith(id: createId().toString(), lyricsList: lyricsAux);
+    return service.copyWith(id: createId(), lyricsList: lyricsAux);
   }
 
   static Future<List<LyricEntity>> _generateVersesList(
@@ -68,7 +68,7 @@ class SupaServicesUtil {
     final String unknownJson = await rootBundle.loadString(path);
     LyricModel unknownLyric = SupaLyricAdapter.fromUnknownJson(unknownJson);
     return unknownLyric.copyWith(
-      id: SupaServicesUtil.createId().toString(),
+      id: SupaServicesUtil.createId(),
       albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
     );
   }

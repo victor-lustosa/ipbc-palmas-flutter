@@ -13,7 +13,7 @@ export 'src/infra/models/services_model.dart';
 export 'src/ui/views/services_collection_view.dart';
 export 'src/ui/views/service_view.dart';
 export 'src/ui/views/services_list_view.dart';
-export 'src/ui/views/admin/insert_services_view.dart';
+export 'src/ui/views/admin/edit_liturgy_view.dart';
 
 export 'src/domain/entities/service_entity.dart';
 export 'src/domain/entities/services_entity.dart';

@@ -1,10 +1,9 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:ipbc_mobile/app/home/view_models/home_view_model.dart';
 
 class NoConnectionView extends StatefulWidget {
-  const NoConnectionView({super.key, required this.index});
-  final int index;
+  const NoConnectionView({super.key, required this.action});
+  final VoidCallback action;
   @override
   State<NoConnectionView> createState() => _NoConnectionViewState();
 }
@@ -97,14 +96,11 @@ class _NoConnectionViewState extends State<NoConnectionView> {
           SizedBox(
             height: 48,
             width: 186,
-            child: ElevatedButtonWidget(
+            child: ButtonWidget(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
-              action: () {
-                final homeViewModel = Modular.get<HomeViewModel>();
-                homeViewModel.jumpToPage(widget.index);
-              },
+              action: widget.action,
               backgroundColor: AppColors.darkGreen,
               child: Text("RECARREGAR",style: AppFonts.defaultFont(
                 color: AppColors.white,

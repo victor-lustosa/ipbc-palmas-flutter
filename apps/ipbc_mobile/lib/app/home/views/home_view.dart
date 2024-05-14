@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../events/event_module.dart';
 import '../blocs/home_bloc.dart';
+import '../home_module.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -20,6 +21,7 @@ class _HomeViewState extends State<HomeView>
   late final HomeBloc _bloc;
   List<ServicesEntity> _servicesList = [];
   int activePage = 0;
+
   //final List<Image> imagesList = [];
 
   @override
@@ -32,7 +34,7 @@ class _HomeViewState extends State<HomeView>
     _bloc.add(CheckConnectivityEvent());
   }
 
- /* @override
+  /* @override
   void didChangeDependencies() {
     for (Image image in imagesList) {
       precacheImage(image.image, context);
@@ -58,7 +60,12 @@ class _HomeViewState extends State<HomeView>
                 color: AppColors.darkGreen,
               );
             } else if (state is NoConnectionState<HomeState>) {
-              return const NoConnectionView(index: 0);
+              return NoConnectionView(
+                action: () => nativeNavigate(
+                  HomeModule.homeRoute,
+                  context,
+                ),
+              );
             } else if (state is DataFetchedState<HomeState, ServicesEntity>) {
               _servicesList = state.entities;
               return SingleChildScrollView(
@@ -72,9 +79,9 @@ class _HomeViewState extends State<HomeView>
                         margin: const EdgeInsets.only(top: 24),
                         child: InkWell(
                           onTap: () {
-                            Navigator.pushNamed(
-                              context,
+                            nativePushNamed(
                               ServiceModule.servicesListRoute,
+                              context,
                               arguments: _servicesList,
                             );
                           },
@@ -99,10 +106,7 @@ class _HomeViewState extends State<HomeView>
                             color: AppColors.white,
                           ),
                           margin: const EdgeInsets.only(
-                            left: 6,
-                            right: 6,
-                            bottom: 9
-                          ),
+                              left: 6, right: 6, bottom: 9),
                           route: ServiceModule.servicesCollectionRoute,
                           mainAxisAlignment: MainAxisAlignment.center,
                           width: context.mediaQuery.size.width,
@@ -112,9 +116,9 @@ class _HomeViewState extends State<HomeView>
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(
-                            context,
+                          nativePushNamed(
                             EventModule.eventsListRoute,
+                            context,
                           );
                         },
                         child: Column(
@@ -132,7 +136,10 @@ class _HomeViewState extends State<HomeView>
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 12, bottom: 20),
+                        margin: const EdgeInsets.only(
+                          top: 12,
+                          bottom: 20,
+                        ),
                         height: 268,
                         child: SlideCardsWidget(
                           width: 319,
@@ -183,7 +190,7 @@ class _HomeViewState extends State<HomeView>
             text,
             style: AppFonts.defaultFont(
               fontSize: 15,
-              height:1.2,
+              height: 1.2,
               color: AppColors.grey9,
             ),
           ),

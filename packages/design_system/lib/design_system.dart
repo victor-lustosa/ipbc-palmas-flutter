@@ -15,15 +15,13 @@ export 'src/components/guideline/guideline_widget.dart';
 
 export 'src/components/circle_avatar/circle_avatar_widget.dart';
 
-export 'src/components/buttons/elevated_button_widget.dart';
-
 export 'src/components/slide_cards/slide_cads_widget.dart';
 
-export 'src/components/buttons/outlined_button_widget.dart';
-export 'src/components/buttons/text_button_widget.dart';
 export 'src/components/buttons/icon_button_widget.dart';
-export 'src/components/buttons/back_button_widget.dart';
 export 'src/components/buttons/floating_button_widget.dart';
+export 'src/components/buttons/back_button_widget.dart';
+export 'src/components/buttons/loading_button_widget.dart';
+export 'src/components/buttons/button_widget.dart';
 
 export 'src/components/forms/form_field_widget.dart';
 
@@ -35,6 +33,9 @@ export 'src/components/forms/template_form_widget.dart';
 export 'src/components/covers/album_cover_widget.dart';
 
 export 'src/components/lists/lyrics_list_widget.dart';
+export 'src/components/lists/grid_balls_tile_widget.dart';
+export 'src/components/lists/verses_list_widget.dart';
+export 'src/components/lists/custom_reorderable_list_widget.dart';
 
 export 'src/components/carousel/carousel_widget.dart';
 
@@ -59,5 +60,7 @@ export 'src/components/top_bar/mobile_layout/title_top_bar_widget.dart';
 
 export 'src/components/scroll_transform/scroll_transform_item.dart';
 export 'src/components/scroll_transform/scroll_transform_view.dart';
+
+export 'src/components/icons/hide_icon_widget.dart';
 
 export 'package:flutter_svg/flutter_svg.dart';

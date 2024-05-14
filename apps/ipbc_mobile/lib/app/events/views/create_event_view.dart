@@ -1,5 +1,4 @@
 import 'package:core_module/core_module.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CreateEventView extends StatefulWidget {
@@ -196,6 +195,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                     validator: (data) {
                       return _emailValidation(data);
                     },
+                    defaultHintColor: AppColors.hintInputForm,
                   ),
                 ),
                 Container(

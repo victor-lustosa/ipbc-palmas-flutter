@@ -16,6 +16,7 @@ class LyricsListWidget extends StatefulWidget {
 class _LyricsListWidgetState extends State<LyricsListWidget> {
   int _itemActive = 0;
   bool _elevationActive = false;
+
   @override
   void initState() {
     super.initState();
@@ -60,7 +61,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
               color: AppColors.white,
               child: InkWell(
                 onTap: () {
-                  Modular.to.pushNamed(
+                  pushNamed(
                     '/lyrics/lyric',
                     arguments: widget.entitiesList[index],
                   );
@@ -127,7 +128,8 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                         ],
                       ),
                       IconButtonWidget(
-                        size: Platform.isIOS ? 29 : 36,
+                        size: 36,
+                        sizeIcon: Platform.isIOS ? 29 : null,
                         color: AppColors.darkGreen,
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,

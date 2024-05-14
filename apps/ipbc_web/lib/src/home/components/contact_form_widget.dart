@@ -135,7 +135,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         isSubmitted: !_isSubmitted,
         inputDecoration: _inputDecoration(
             isValid: _isNameValid, hintText: 'Seu nome completo'),
-        fieldStyle: _fieldStyle(_isNameValid),
+        fieldStyle: _fieldStyle(_isNameValid), colorStyle: AppColors.hintInputForm,
       );
 
   emailField({required double width}) => FormFieldWidget(
@@ -155,7 +155,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         fieldStyle: _fieldStyle(_isEmailValid),
         validator: (data) {
           return _emailValidation(data);
-        },
+        }, colorStyle: AppColors.hintInputForm,
       );
 
   messageField({required double width}) => FormFieldWidget(
@@ -181,10 +181,10 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
           contentPadding: const EdgeInsets.only(
             left: 10,
             right: 10,
-            top: 15,
+            top: 12,
             //top 8 pra celular
           ),
-        ),
+        ), colorStyle: AppColors.hintInputForm,
       );
 
   _inputDecoration(
@@ -200,7 +200,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
             left: 10,
             right: 10,
             //top 11 pra celular
-            top: 16,
+            top: 12,
           ),
       counterStyle: AppFonts.defaultFont(
         fontSize: 10,
@@ -235,7 +235,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         width: width,
         height: 49,
         margin: const EdgeInsets.only(top: 32, bottom: 80),
-        child: ElevatedButtonWidget(
+        child: ButtonWidget(
           shadowColor: AppColors.grey6,
           backgroundColor: _isSubmitted
               ? AppColors.highlightGreen

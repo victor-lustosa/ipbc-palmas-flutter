@@ -166,7 +166,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
       SizedBox(
         width: width,
         height: height,
-        child: ElevatedButtonWidget(
+        child: ButtonWidget(
           foregroundColor:
               isPressed
                   ? AppColors.grey12

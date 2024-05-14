@@ -57,7 +57,7 @@ class ErrorDialogWidget extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).pop();
+                    nativePop(context);
                     if (onClose != null) {
                       onClose!();
                     }

@@ -2,7 +2,7 @@
   {
     "heading": "sábado à noite (UMP)",
     "path": "saturday-services/20",
-    "id": "MPkCzLdF",
+    "id": 345345435,
     "hour": "19h30",
     "title": "Sábado à noite",
     "image": "https://firebasestorage.googleapis.com/v0/b/ipbc-palmas-9d93d.appspot.com/o/service-covers%2Fh_saturday_evening.png?alt=media&token=bdfeec22-c201-4032-aa03-00c9d077e348"
@@ -10,7 +10,7 @@
   {
     "heading": "domingo pela manhã",
     "path": "sunday-morning-services/20",
-    "id": "XEOC3KGb",
+    "id": 333344,
     "hour": "9h",
     "title": "Domingo pela manhã",
     "image": "https://firebasestorage.googleapis.com/v0/b/ipbc-palmas-9d93d.appspot.com/o/service-covers%2Fh_sunday_morning.png?alt=media&token=0344d606-8d82-4d7d-984b-3dfcd9ae2a72"
@@ -18,7 +18,7 @@
   {
     "heading": "domingo à noite",
     "path": "sunday-evening-services/20",
-    "id": "ZAHoNHs9",
+    "id": 5454544,
     "hour": "19h",
     "title": "Domingo à noite",
     "image": "https://firebasestorage.googleapis.com/v0/b/ipbc-palmas-9d93d.appspot.com/o/service-covers%2Fh_sunday_evening.png?alt=media&token=b2991c8c-fb2e-4100-b072-fb3d8c150ffc"

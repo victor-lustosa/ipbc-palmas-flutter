@@ -1,6 +1,7 @@
 import 'package:core_module/core_module.dart';
 
 import '../../app/splash/views/splash_view.dart';
+
 import '../events/event_module.dart';
 import '../init/init_module.dart';
 import 'blocs/database_bloc.dart';

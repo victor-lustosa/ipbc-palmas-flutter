@@ -1,4 +1,3 @@
-
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,9 +23,12 @@ class _ServicesListViewState extends State<ServicesListView> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(left: 17, top: 30),
+                    margin: const EdgeInsets.only(
+                      left: 17,
+                      top: 30,
+                    ),
                     child: BackButtonWidget(
-                      action: () => Navigator.pop(context),
+                      action: () => nativePop(context),
                     ),
                   ),
                 ],
@@ -59,10 +61,8 @@ class _ServicesListViewState extends State<ServicesListView> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        Navigator.of(context).pushNamed(
-                          ServiceModule.servicesCollectionRoute,
-                          arguments: widget.entities[index],
-                        );
+                        nativeNavigate(ServiceModule.servicesCollectionRoute,
+                            arguments: widget.entities[index], context);
                       },
                       child: Container(
                         height: 110,

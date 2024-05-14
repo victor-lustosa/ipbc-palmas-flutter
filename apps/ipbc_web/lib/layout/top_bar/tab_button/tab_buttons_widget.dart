@@ -13,7 +13,8 @@ class TabButtonsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButtonWidget(
+    return ButtonWidget(
+      adaptiveButtonType: AdaptiveButtonType.text,
       action: action,
       overlayColor: Colors.white,
       backgroundColor: AppColors.white,
