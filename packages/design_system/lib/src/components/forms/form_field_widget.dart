@@ -6,30 +6,31 @@ import '../../../design_system.dart';
 class FormFieldWidget extends StatefulWidget {
   const FormFieldWidget(
       {super.key,
-      required this.validator,
-      required this.isValid,
-      required this.inputDecoration,
-      required this.controller,
-      this.fieldKey,
-      this.isSubmitted,
-      this.maxLength,
-      this.fieldStyle,
-      this.maxLines,
-      this.keyboardType,
-      this.cursorColor,
-      this.inputFormatters,
-      this.autoValidateMode,
-      this.title,
-      this.titleMargin,
-      this.fieldWidth,
-      this.fieldHeight,
-      this.fieldDecoration,
-      this.errorText,
-      this.titleStyle,
-      this.fieldMargin,
-      this.obscureText,
-      this.errorTextMargin,
-      this.horizontalSymmetric, this.inputPadding});
+        required this.validator,
+        required this.isValid,
+        required this.inputDecoration,
+        required this.controller,
+        this.fieldKey,
+        this.isSubmitted,
+        this.maxLength,
+        this.fieldStyle,
+        this.maxLines,
+        this.keyboardType,
+        this.cursorColor,
+        this.inputFormatters,
+        this.autoValidateMode,
+        this.title,
+        this.titleMargin,
+        this.fieldWidth,
+        this.fieldHeight,
+        this.fieldDecoration,
+        this.errorText,
+        this.titleStyle,
+        this.fieldMargin,
+        this.obscureText,
+        this.errorTextMargin,
+        this.horizontalSymmetric,
+        this.inputPadding, required this.colorStyle});
 
   final String? errorText;
   final EdgeInsetsGeometry? errorTextMargin;
@@ -44,6 +45,7 @@ class FormFieldWidget extends StatefulWidget {
   final Color? cursorColor;
   final bool isValid;
   final TextStyle? titleStyle;
+  final Color colorStyle;
   final TextStyle? fieldStyle;
   final double? fieldWidth;
   final double? fieldHeight;
@@ -92,7 +94,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
                 BoxDecoration(
                   color: AppColors.white,
                   border: Border.all(
-                    color: widget.isValid ? AppColors.white : Colors.red,
+                    color: widget.isValid ? AppColors.white : AppColors.delete,
                   ),
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -100,22 +102,21 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
               obscureText: widget.obscureText ?? false,
               key: widget.fieldKey,
               enabled: widget.isSubmitted,
-              cursorColor: widget.cursorColor ?? const Color(0xff979797),
+              cursorColor: widget.cursorColor ?? AppColors.formGrey,
               autovalidateMode:
-                  widget.autoValidateMode ?? AutovalidateMode.onUserInteraction,
+              widget.autoValidateMode ?? AutovalidateMode.onUserInteraction,
               controller: widget.controller,
               validator: widget.validator,
               maxLines: widget.maxLines ?? 1,
               maxLength: widget.maxLength,
               keyboardType: widget.keyboardType ?? TextInputType.text,
               inputFormatters:
-                  widget.inputFormatters ?? const <TextInputFormatter>[],
+              widget.inputFormatters ?? const <TextInputFormatter>[],
               decoration: widget.inputDecoration,
               style: widget.fieldStyle ??
                   AppFonts.defaultFont(
-                    fontSize: 14,
-                    color:
-                        widget.isValid ? const Color(0xff979797) : Colors.red,
+                      fontSize: 14,
+                      color: widget.colorStyle
                   ),
             ),
           ),

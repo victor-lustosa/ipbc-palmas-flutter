@@ -40,6 +40,15 @@ class _CreateEventViewState extends State<CreateEventView> {
     return null;
   }
 
+  get prefixLocationIcon => Container(
+    margin: const EdgeInsets.only(left: 18, right: 10),
+    child: Image.asset(
+      AppIcons.linkIcon,
+      width: 20,
+      height: 13,
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +67,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                       Container(
                         margin: const EdgeInsets.only(left: 16, right: 17),
                         child: BackButtonWidget(
-                          action: () => Navigator.pop(context),
+                          action: () => nativePop(context),
                         ),
                       ),
                       Text(
@@ -125,6 +134,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                     validator: (data) {
                       return _emailValidation(data);
                     },
+                    defaultHintColor: AppColors.hintInputForm,
                   ),
                 ),
                 Container(
@@ -140,16 +150,13 @@ class _CreateEventViewState extends State<CreateEventView> {
                     globalKey: _eventDescriptionKey,
                     isPressed: _isPressed,
                     inputDecoration: fieldInputDecoration(
+                      hintColor: _isEventDescriptionValid
+                          ? AppColors.grey5
+                          : Colors.red,
                       contentPadding: const EdgeInsets.only(
                         left: 16,
                         top: 9,
                         right: 10,
-                      ),
-                      hintStyle: AppFonts.defaultFont(
-                        fontSize: 12,
-                        color: _isEventDescriptionValid
-                            ? AppColors.grey5
-                            : Colors.red,
                       ),
                       isValid: _isEventDescriptionValid,
                       hintText: 'Descrição do evento',
@@ -157,6 +164,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                     validator: (data) {
                       return _emailValidation(data);
                     },
+                    defaultHintColor: AppColors.hintInputForm,
                   ),
                 ),
                 Container(
@@ -171,14 +179,13 @@ class _CreateEventViewState extends State<CreateEventView> {
                     globalKey: _eventLocationKey,
                     isPressed: _isPressed,
                     inputDecoration: fieldInputDecoration(
-                      prefixIconConstraints: const BoxConstraints(
-                        minWidth: 24,
-                        minHeight: 24,
-                      ),
+                      prefixIconConstraints: const BoxConstraints(),
                       prefixIcon: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10, top: 10, bottom: 10, right: 4),
-                        child: Image.asset(AppIcons.eventLocation),
+                        padding: const EdgeInsets.only(left: 16, right: 8),
+                        child: Image.asset(
+                          AppIcons.eventLocation,
+                          height: 22,
+                        ),
                       ),
                       contentPadding: const EdgeInsets.only(
                         top: 10,
@@ -201,17 +208,8 @@ class _CreateEventViewState extends State<CreateEventView> {
                     globalKey: _eventLinkKey,
                     isPressed: _isPressed,
                     inputDecoration: fieldInputDecoration(
-                      prefixIconConstraints: const BoxConstraints(
-
-                      ),
-                      prefixIcon: Container(
-                        margin: const EdgeInsets.only(
-                            left: 10,  right: 4),
-                        child: Image.asset(AppIcons.linkIcon,
-                          width:20,
-                          height:13,),
-                      ),
-
+                      prefixIconConstraints: const BoxConstraints(),
+                      prefixIcon: prefixLocationIcon,
                       isValid: _isEventLocationValid,
                       hintText: 'Link do evento',
                     ),
@@ -238,7 +236,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 16),
+                  margin: const EdgeInsets.only(top: 16, bottom: 60),
                   child: TemplateFormWidget(
                     controller: _contactLinkController,
                     title: 'Link para contato',
@@ -247,17 +245,8 @@ class _CreateEventViewState extends State<CreateEventView> {
                     globalKey: _contactLinkKey,
                     isPressed: _isPressed,
                     inputDecoration: fieldInputDecoration(
-                      prefixIconConstraints: const BoxConstraints(
-
-                      ),
-                      prefixIcon: Container(
-                        margin: const EdgeInsets.only(
-                            left: 10,  right: 4),
-                        child: Image.asset(AppIcons.linkIcon,
-                          width:20,
-                          height:13,),
-                      ),
-
+                      prefixIconConstraints: const BoxConstraints(),
+                      prefixIcon: prefixLocationIcon,
                       isValid: _isContactLinkValid,
                       hintText: 'Link do contato',
                     ),
@@ -271,6 +260,12 @@ class _CreateEventViewState extends State<CreateEventView> {
           ),
         ),
       ),
+      floatingActionButton: FloatingButtonWidget(
+          icon: Icons.check_rounded,
+          backgroundColor: AppColors.confirmation,
+          iconColor: AppColors.grey10,
+          size: 33,
+          action: () => {}),
     );
   }
 }

@@ -34,4 +34,5 @@ class HomeModule extends Module {
   void routes(r) {
     r.child(initialRoute, child: (_) => const InitView());
   }
+
 }
