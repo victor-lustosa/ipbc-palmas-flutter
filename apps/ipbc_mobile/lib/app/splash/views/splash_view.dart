@@ -1,5 +1,5 @@
 import 'package:auth_module/auth_module.dart';
-import 'package:core_module/core_module.dart' hide LoadingState;
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 import '../../init/init_module.dart';
@@ -18,16 +18,16 @@ class _SplashViewState extends State<SplashView> {
   @override
   initState() {
     bloc = Modular.get<DatabaseBloc>();
-    bloc.add(GetDataEvent());
+    bloc.add(GetInHiveEvent<DatabasesEvent>());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<DatabaseBloc, DatabasesState>(
+      body: BlocConsumer<DatabaseBloc, GenericState<DatabasesState>>(
         listener: (context, state) async {
-          if (state is FetchingDataState) {
+          if (state is FetchingDataState<DatabasesState>) {
             if (!state.isData) {
               navigate(InitModule.initialRoute);
             } else {
@@ -37,7 +37,7 @@ class _SplashViewState extends State<SplashView> {
         },
         bloc: bloc,
         builder: (context, state) {
-          if (state is LoadingState || state is FetchingDataState) {
+          if (state is LoadingState<DatabasesState> || state is FetchingDataState<DatabasesState>) {
             return const LoadingWidget(
               androidRadius: 4,
               iosRadius: 14,

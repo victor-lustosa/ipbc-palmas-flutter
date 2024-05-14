@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:core_module/core_module.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 
 class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>> with ConnectivityMixin{
@@ -12,7 +12,6 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>> wi
       : super(LoadingState()) {
     on<GetInSupaEvent<HomeEvent>>(_getInSupa);
     on<CheckConnectivityEvent<HomeEvent>>(_checkConnectivity);
-    on<LoadingEvent<HomeEvent>>(_loading);
   }
 
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
@@ -35,10 +34,6 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>> wi
         emit(ExceptionState<HomeState>(message: error.toString()));
       },
     );
-  }
-
-  Future<void> _loading(event, emit) async {
-    emit(LoadingState<HomeState>());
   }
 }
 

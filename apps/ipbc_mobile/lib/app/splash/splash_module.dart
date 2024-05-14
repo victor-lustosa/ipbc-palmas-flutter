@@ -12,10 +12,7 @@ class SplashModule extends Module {
   static const String splashRoute = '/splash';
 
   @override
-  List<Module> get imports => [
-        CoreModule(),
-        AuthModule(),
-      ];
+  List<Module> get imports => [CoreModule(), AuthModule()];
 
   @override
   void binds(i) {

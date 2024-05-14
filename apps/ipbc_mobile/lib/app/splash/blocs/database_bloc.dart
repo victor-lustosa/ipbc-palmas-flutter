@@ -2,19 +2,19 @@ import 'package:auth_module/auth_module.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
+class DatabaseBloc extends Bloc<GenericEvent<DatabasesEvent>, GenericState<DatabasesState>> {
   final AuthUseCase useCases;
   final String path = 'auth';
 
   DatabaseBloc({required this.useCases})
       : super(LoadingState()) {
-    on<GetDataEvent>(_getData);
+    on<GetInHiveEvent<DatabasesEvent>>(_getData);
   }
 
-  _getData(GetDataEvent event, emit) async {
+  _getData(GetInHiveEvent<DatabasesEvent> event, emit) async {
     //var data = await useCases.get(path);
    // if((data as HiveAuthDTO).token != ""){
-      emit(FetchingDataState(false));
+      emit(FetchingDataState<DatabasesState>(false));
   //  } else {
    //   emit(FetchingDataState(true));
    // }
@@ -24,23 +24,12 @@ class DatabaseBloc extends Bloc<DatabasesEvent, DatabasesState> {
 @immutable
 abstract class DatabasesEvent {}
 
-class GetDataEvent extends DatabasesEvent {
-  GetDataEvent();
-}
-
 @immutable
 abstract class DatabasesState {}
 
-class LoadingState extends DatabasesState {
-  LoadingState();
-}
 
-class ExceptionState extends DatabasesState {
-  final String message;
-  ExceptionState(this.message);
-}
-
-class FetchingDataState extends DatabasesState {
+class FetchingDataState<R> extends GenericState<R> {
   final bool isData;
   FetchingDataState(this.isData);
 }
+
