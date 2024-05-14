@@ -10,8 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  ipbc_mobile:
-    path: ../../apps/ipbc_mobile
   core_module:
     path: ../core_module
 

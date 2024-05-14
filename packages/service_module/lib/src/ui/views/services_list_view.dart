@@ -2,6 +2,8 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../service_module.dart';
+
 class ServicesListView extends StatefulWidget {
   const ServicesListView({super.key, required this.entities});
 

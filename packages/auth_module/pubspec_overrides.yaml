@@ -2,9 +2,3 @@
 dependency_overrides:
   core_module:
     path: ../core_module
-  design_system:
-    path: ../design_system
-  lyric_module:
-    path: ../lyric_module
-  service_module:
-    path: ../service_module

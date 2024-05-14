@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:service_module/service_module.dart';
 //import 'package:flutter/services.dart';
 
 import '../../events/event_module.dart';
@@ -106,7 +107,10 @@ class _HomeViewState extends State<HomeView>
                             color: AppColors.white,
                           ),
                           margin: const EdgeInsets.only(
-                              left: 6, right: 6, bottom: 9),
+                            left: 6,
+                            right: 6,
+                            bottom: 9,
+                          ),
                           route: ServiceModule.servicesCollectionRoute,
                           mainAxisAlignment: MainAxisAlignment.center,
                           width: context.mediaQuery.size.width,

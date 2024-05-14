@@ -1,3 +1,4 @@
+import 'package:auth_module/auth_module.dart';
 import 'package:core_module/core_module.dart' hide LoadingState;
 import 'package:flutter/material.dart';
 

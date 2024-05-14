@@ -4,8 +4,6 @@ dependency_overrides:
     path: ../../packages/auth_module
   core_module:
     path: ../../packages/core_module
-  design_system:
-    path: ../../packages/design_system
   lyric_module:
     path: ../../packages/lyric_module
   service_module:

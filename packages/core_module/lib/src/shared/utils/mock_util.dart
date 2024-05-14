@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:lyric_module/lyric_module.dart';
 
 import '../../../core_module.dart';
 

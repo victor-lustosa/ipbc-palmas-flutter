@@ -1,4 +1,3 @@
-import 'package:core_module/core_module.dart';
 
 import '../../../lyric_module.dart';
 

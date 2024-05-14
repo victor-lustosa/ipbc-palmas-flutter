@@ -6,6 +6,8 @@ import 'package:auth_module/src/ui/stores/reset_password_store.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import '../../../auth_module.dart';
+
 /*
 VALIDAR O CODIGO DIGITADO;
 COLOCAR COR VERMALHA NAS BORDAS DO TEXTFIELDS QUANDO CODIGO ERRADO;

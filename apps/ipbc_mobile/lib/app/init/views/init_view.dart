@@ -1,5 +1,6 @@
-import 'package:core_module/core_module.dart';
+
 import 'package:flutter/material.dart';
+import 'package:lyric_module/lyric_module.dart';
 
 import '../../offers/views/offers_view.dart';
 import '../../home/home_module.dart';

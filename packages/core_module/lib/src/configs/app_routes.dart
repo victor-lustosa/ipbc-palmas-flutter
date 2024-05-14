@@ -46,7 +46,10 @@ pop(BuildContext context) {
 PageRoute unknownRoute() {
   if (Platform.isIOS) {
     return CupertinoPageRoute(
-        builder: (_) => const CupertinoPageScaffold(child: UnknownRouteView()));
+      builder: (_) => const CupertinoPageScaffold(
+        child: UnknownRouteView(),
+      ),
+    );
   } else {
     return MaterialPageRoute(builder: (_) => const UnknownRouteView());
   }

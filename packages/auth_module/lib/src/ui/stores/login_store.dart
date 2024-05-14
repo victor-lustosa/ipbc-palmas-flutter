@@ -1,6 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../auth_module.dart';
+
 class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   LoginStore({required IAuthUseCases useCases}):
       //: _useCases = useCases,

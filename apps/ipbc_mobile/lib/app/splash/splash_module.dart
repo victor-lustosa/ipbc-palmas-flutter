@@ -1,4 +1,6 @@
-import 'package:core_module/core_module.dart';
+import 'package:auth_module/auth_module.dart';
+import 'package:lyric_module/lyric_module.dart';
+import 'package:service_module/service_module.dart';
 
 import '../../app/splash/views/splash_view.dart';
 

@@ -2,6 +2,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import '../../../auth_module.dart';
 import '../stores/login_store.dart';
 
 class LoginView extends StatefulWidget {

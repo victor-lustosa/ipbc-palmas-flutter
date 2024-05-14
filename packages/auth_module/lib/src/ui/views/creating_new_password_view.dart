@@ -1,6 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import '../../../auth_module.dart';
+
 class CreatingNewPasswordView extends StatefulWidget {
   const CreatingNewPasswordView({super.key});
 

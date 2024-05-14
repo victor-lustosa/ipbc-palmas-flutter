@@ -1,6 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../auth_module.dart';
+
 class ResetPasswordStore
     extends ValueNotifier<GenericState<ResetPasswordState>> {
   ResetPasswordStore() : super(InitialState<ResetPasswordState>());

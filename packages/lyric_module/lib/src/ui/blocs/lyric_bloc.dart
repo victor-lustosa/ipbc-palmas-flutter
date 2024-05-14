@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../../../lyric_module.dart';
 
 class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     with ConnectivityMixin {
