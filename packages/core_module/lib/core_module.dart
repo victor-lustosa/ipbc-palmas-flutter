@@ -5,10 +5,9 @@ export 'src/core/domain/use_cases/use_cases.dart';
 
 export 'src/core/infra/datasources/datasource.dart';
 export 'src/core/infra/repositories/repository.dart';
-export 'src/core/infra/use_cases/use_cases.dart';
 
 export 'src/core/external/hive_datasource.dart';
-export 'src/core/external/supabase_datasource.dart';
+export 'src/core/external/supa_datasource.dart';
 
 export 'src/configs/no_glow_behavior.dart';
 
@@ -21,7 +20,6 @@ export 'src/shared/mixins/connectivity_mixin.dart';
 
 export 'src/shared/utils/validation_util.dart';
 export 'src/shared/utils/responsivity_util.dart';
-export 'src/shared/utils/supa_services_util.dart';
 export 'src/shared/utils/analytics_util.dart';
 export 'src/shared/utils/mock_util.dart';
 
@@ -86,15 +84,16 @@ export 'src/design_system/components/icons/hide_icon_widget.dart';
 
 export 'package:flutter_svg/flutter_svg.dart';
 
-export 'src/core/infra/adapters/services_adapter.dart';
-export 'src/core/infra/adapters/supa/supa_service_adapter.dart';
-
-export 'src/core/infra/adapters/supa/supa_lyric_adapter.dart';
-export 'src/core/infra/adapters/verse_adapter.dart';
-export 'src/core/infra/adapters/hive/hive_auth_adapter.dart';
 export 'src/core/infra/models/hive_dtos/hive_auth_dto.dart';
 
 export 'src/core/domain/entities/lyric_entity.dart';
+export 'src/core/infra/adapters/services_adapter.dart';
+export 'src/core/infra/adapters/liturgy_adapter.dart';
+export 'src/core/infra/adapters/verse_adapter.dart';
+export 'src/core/infra/adapters/supa/supa_lyric_adapter.dart';
+export 'src/shared/utils/supa_services_util.dart';
+export 'src/core/infra/adapters/supa/supa_service_adapter.dart';
+export 'src/core/infra/adapters/hive/hive_auth_adapter.dart';
 export 'src/core/domain/entities/verse_entity.dart';
 export 'src/core/domain/entities/service_entity.dart';
 export 'src/core/domain/entities/services_entity.dart';

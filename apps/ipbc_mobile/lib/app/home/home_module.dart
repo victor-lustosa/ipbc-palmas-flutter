@@ -21,11 +21,6 @@ class HomeModule extends Module {
 
   @override
   void binds(Injector i) {
-    i.addSingleton(
-      () => ServicesUseCases(
-        repository: i.get<Repository<List<dynamic>>>(),
-      ),
-    );
     i.addLazySingleton<HomeBloc>(
       () => HomeBloc(
         supaUseCases: i.get<ServicesUseCases>(),

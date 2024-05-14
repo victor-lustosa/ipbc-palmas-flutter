@@ -17,15 +17,11 @@ class CoreModule extends Module {
         supabaseClient: Supabase.instance.client,
       ),
     );
-    i.addSingleton<Repository<List<dynamic>>>(
-      () => Repository<List<dynamic>>(
+    i.addSingleton<Repository<List>>(
+      () => Repository<List>(
         datasource: i.get<SupabaseDatasource>(),
       ),
     );
-    i.addSingleton<UseCases>(
-      () => UseCases(
-        repository: i.get<Repository<List<dynamic>>>(),
-      ),
-    );
+
   }
 }

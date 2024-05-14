@@ -1,9 +1,9 @@
 import 'dart:math' show Random;
 
+import 'package:core_module/core_module.dart';
 import 'package:flutter/services.dart';
 import 'package:uno/uno.dart';
 
-import '../../../core_module.dart';
 
 class SupaServicesUtil {
   static int createId() =>

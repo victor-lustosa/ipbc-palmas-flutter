@@ -1,8 +1,6 @@
 
 import 'package:core_module/core_module.dart';
 
-import '../../../service_module.dart';
-
 class ServicesUseCases implements IUseCases<Stream<List<ServicesEntity>>> {
   final IRepository<List<dynamic>> repository;
   ServicesUseCases({required this.repository});

@@ -2,7 +2,6 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'views/create_event_view.dart';
-import 'views/events_list_view.dart';
 
 class EventModule extends Module {
   static const String eventsListRoute = '/events-list';
@@ -11,7 +10,6 @@ class EventModule extends Module {
 
   @override
   void routes(r) {
-    r.child(eventsListRoute, child: (_) => const EventsListView());
     r.child(
       createEventRoute,
       transition: TransitionType.custom,

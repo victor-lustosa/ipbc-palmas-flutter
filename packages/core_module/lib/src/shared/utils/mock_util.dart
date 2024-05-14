@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 import '../../../core_module.dart';
+import '../../core/infra/adapters/services_adapter.dart';
+import '../../core/infra/adapters/supa/supa_lyric_adapter.dart';
+import '../../core/infra/adapters/supa/supa_service_adapter.dart';
 
 class MockUtil {
 

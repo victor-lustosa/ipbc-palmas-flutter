@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:core_module/core_module.dart';
 
-import '../liturgy_adapter.dart';
 // ignore: depend_on_referenced_packages
 
 class SupaServiceAdapter {

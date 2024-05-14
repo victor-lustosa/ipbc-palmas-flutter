@@ -1,4 +1,4 @@
-abstract class IAuthRepository<R>
+abstract class IAuthRepository
     implements
         ISignInEmailRepository{}
 

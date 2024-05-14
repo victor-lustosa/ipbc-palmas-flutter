@@ -25,6 +25,11 @@ class ServiceModule extends Module {
       ),
       config: CoreModule.blocConfig(),
     );
+    i.addSingleton(
+          () => ServicesUseCases(
+        repository: i.get<Repository<List>>(),
+      ),
+    );
     i.addLazySingleton<EditLyricStore>(EditLyricStore.new);
   }
 
