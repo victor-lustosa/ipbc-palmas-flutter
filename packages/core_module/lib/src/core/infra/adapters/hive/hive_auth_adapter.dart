@@ -1,7 +1,7 @@
 
 
 import '../../../../../core_module.dart';
-import '../../../domain/entities/auth_storage.dart';
+import '../../../domain/entities/auth_storage_entity.dart';
 
 class HiveAuthAdapter {
   static AuthStorage fromMap(dynamic json) {

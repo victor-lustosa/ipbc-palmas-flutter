@@ -1,6 +1,6 @@
 
-import 'package:auth_module/src/domain/repositories/auth_repository.dart';
 
+import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_datasource.dart';
 
 class AuthRepository implements IAuthRepository {

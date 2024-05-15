@@ -51,33 +51,33 @@ class ButtonWidget extends StatefulWidget {
 
 class _ButtonWidgetState extends State<ButtonWidget> {
   styleButton({
-    required MaterialStateProperty<BorderSide?>? side,
-    required MaterialStateProperty<Color?>? foregroundColor,
+    required WidgetStateProperty<BorderSide?>? side,
+    required WidgetStateProperty<Color?>? foregroundColor,
     required TextStyle? textStyle,
   }) =>
       ButtonStyle(
         side: side,
         fixedSize: widget.fixedSize == null
             ? null
-            : MaterialStateProperty.all<Size>(widget.fixedSize!),
+            : WidgetStateProperty.all<Size>(widget.fixedSize!),
         padding: widget.padding == null
-            ? MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero)
-            : MaterialStateProperty.all<EdgeInsets>(widget.padding!),
+            ? WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero)
+            : WidgetStateProperty.all<EdgeInsets>(widget.padding!),
         elevation: widget.elevation == null
             ? null
-            : MaterialStateProperty.all<double>(widget.elevation!),
+            : WidgetStateProperty.all<double>(widget.elevation!),
         overlayColor: widget.overlayColor == null
             ? null
-            : MaterialStateProperty.all<Color>(widget.overlayColor!),
+            : WidgetStateProperty.all<Color>(widget.overlayColor!),
         foregroundColor: foregroundColor,
         shadowColor: widget.shadowColor == null
             ? null
-            : MaterialStateProperty.all<Color>(widget.shadowColor!),
+            : WidgetStateProperty.all<Color>(widget.shadowColor!),
         backgroundColor: widget.backgroundColor == null
             ? null
-            : MaterialStateProperty.all<Color>(widget.backgroundColor!),
-        textStyle: MaterialStateProperty.all<TextStyle?>(textStyle),
-        shape: MaterialStateProperty.all<OutlinedBorder>(
+            : WidgetStateProperty.all<Color>(widget.backgroundColor!),
+        textStyle: WidgetStateProperty.all<TextStyle?>(textStyle),
+        shape: WidgetStateProperty.all<OutlinedBorder>(
           widget.shape ??
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -87,8 +87,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
 
   get sideStyle => widget.sideColor == null && widget.sideHoveredColor == null
       ? null
-      : MaterialStateProperty.resolveWith(
-          (Set<MaterialState> states) {
+      : WidgetStateProperty.resolveWith(
+          (Set<WidgetState> states) {
             return states.isHovered
                 ? BorderSide(color: widget.sideColor!)
                 : BorderSide(color: widget.sideColor!);
@@ -105,8 +105,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
             foregroundColor: widget.foregroundColor == null &&
                     widget.foregroundHoveredColor == null
                 ? null
-                : MaterialStateProperty.resolveWith(
-                    (Set<MaterialState> states) {
+                : WidgetStateProperty.resolveWith(
+                    (Set<WidgetState> states) {
                       return states.isHovered
                           ? widget.foregroundHoveredColor!
                           : widget.foregroundColor!;
@@ -125,8 +125,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
             foregroundColor: widget.foregroundColor == null &&
                     widget.foregroundHoveredColor == null
                 ? null
-                : MaterialStateProperty.resolveWith(
-                    (Set<MaterialState> states) {
+                : WidgetStateProperty.resolveWith(
+                    (Set<WidgetState> states) {
                       if (widget.state != null) {
                         widget.state!(states.isPressed);
                       }
@@ -155,7 +155,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                 ),
             foregroundColor: widget.foregroundColor == null
                 ? null
-                : MaterialStateProperty.all<Color>(
+                : WidgetStateProperty.all<Color>(
                     widget.foregroundColor!,
                   ),
           ),

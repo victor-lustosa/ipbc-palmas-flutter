@@ -1,9 +1,7 @@
 
 import 'package:core_module/core_module.dart';
 
-
 import '../infra/datasources/auth_datasource.dart';
-
 
 class HiveAuthDatasource implements IDatasource,IAuthDatasource {
 
