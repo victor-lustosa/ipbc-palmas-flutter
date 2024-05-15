@@ -60,7 +60,8 @@ class NativeLyricRoutes extends StatefulWidget {
 }
 
 class _NativeLyricRoutesState extends State<NativeLyricRoutes> {
-  final GlobalKey<NavigatorState> _androidNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'lyric_key');
+  final GlobalKey<NavigatorState> _androidNavigatorKey =
+      GlobalKey<NavigatorState>(debugLabel: 'lyric_key');
 
   @override
   Widget build(BuildContext context) {
@@ -69,11 +70,10 @@ class _NativeLyricRoutesState extends State<NativeLyricRoutes> {
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
           case LyricModule.initialRoute:
-            return customTransitionRoute(
+            return SlideTransitionPage(
               child: const LyricsListView(),
-              tween: Tween(begin: const Offset(0, 0), end: Offset.zero).chain(
-                CurveTween(curve: Curves.ease),
-              ),
+              begin: const Offset(0, 0),
+              end: Offset.zero,
             );
           default:
             return unknownRoute();

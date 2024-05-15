@@ -10,17 +10,23 @@ class CreateEventView extends StatefulWidget {
 
 class _CreateEventViewState extends State<CreateEventView> {
   final TextEditingController _eventTitleController = TextEditingController();
-  final TextEditingController _eventLocationController = TextEditingController();
+  final TextEditingController _eventLocationController =
+      TextEditingController();
   final TextEditingController _eventLinkController = TextEditingController();
   final TextEditingController _contactLinkController = TextEditingController();
-  final TextEditingController _eventLinkDescriptionController = TextEditingController();
-  final TextEditingController _eventDescriptionController = TextEditingController();
+  final TextEditingController _eventLinkDescriptionController =
+      TextEditingController();
+  final TextEditingController _eventDescriptionController =
+      TextEditingController();
   final String _eventTitleErrorText = 'por favor, insira o título do evento.';
   final String _contactLinkErrorText = 'por favor, insira o título do evento.';
-  final String _eventLocationErrorText = 'por favor, insira o título do evento.';
-  final String _eventDescriptionErrorText = 'por favor, insira o título do evento.';
+  final String _eventLocationErrorText =
+      'por favor, insira o título do evento.';
+  final String _eventDescriptionErrorText =
+      'por favor, insira o título do evento.';
   final String _eventLinkErrorText = 'por favor, insira o link do evento.';
-  final String _eventLinkDescriptionErrorText = 'por favor, insira o link do evento.';
+  final String _eventLinkDescriptionErrorText =
+      'por favor, insira o link do evento.';
   final _eventTitleKey = GlobalKey<FormState>();
   final _contactLinkKey = GlobalKey<FormState>();
   final _eventLinkKey = GlobalKey<FormState>();
@@ -40,13 +46,13 @@ class _CreateEventViewState extends State<CreateEventView> {
   }
 
   get prefixLocationIcon => Container(
-    margin: const EdgeInsets.only(left: 18, right: 10),
-    child: Image.asset(
-      AppIcons.linkIcon,
-      width: 20,
-      height: 13,
-    ),
-  );
+        margin: const EdgeInsets.only(left: 18, right: 10),
+        child: Image.asset(
+          AppIcons.linkIcon,
+          width: 20,
+          height: 13,
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +84,11 @@ class _CreateEventViewState extends State<CreateEventView> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(bottom: 8, top: 23, left: 16),
+                  margin: const EdgeInsets.only(
+                    bottom: 8,
+                    top: 23,
+                    left: 16,
+                  ),
                   child: Row(children: [
                     Text(
                       "Imagem de capa",
@@ -91,12 +101,19 @@ class _CreateEventViewState extends State<CreateEventView> {
                 ),
                 Container(
                   decoration: const BoxDecoration(
-                      color: AppColors.grey0,
-                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                    color: AppColors.grey0,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20.0),
+                    ),
+                  ),
                   width: context.mediaQuery.size.width,
                   height: 144,
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ),
                   child: Column(
                     children: [
                       Container(

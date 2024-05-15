@@ -19,11 +19,19 @@ class MaterialBottomBarWidget extends StatefulWidget {
 
 class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
     with ButtonsBarMixin {
+
   @override
   initState() {
     super.initState();
     buildButtonsBar();
   }
+
+  get border => const BorderRadius.only(
+    topRight: Radius.circular(22),
+    topLeft: Radius.circular(22),
+  );
+
+  get labelFont => AppFonts.defaultFont(fontSize: 12, fontWeight: FontWeight.w500);
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +40,7 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
       child: Container(
         height: Platform.isIOS ? 90 : 56,
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(22),
-            topLeft: Radius.circular(22),
-          ),
+          borderRadius: border,
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.4),
@@ -47,16 +52,11 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
           ],
         ),
         child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(22),
-            topRight: Radius.circular(22),
-          ),
+          borderRadius: border,
           child: BottomNavigationBar(
             currentIndex: widget.selectedIndex,
-            unselectedLabelStyle:
-                AppFonts.defaultFont(fontSize: 12, fontWeight: FontWeight.w500),
-            selectedLabelStyle:
-                AppFonts.defaultFont(fontSize: 12, fontWeight: FontWeight.w500),
+            unselectedLabelStyle: labelFont,
+            selectedLabelStyle: labelFont,
             selectedItemColor: AppColors.darkGreen,
             unselectedItemColor: AppColors.grey5,
             backgroundColor: AppColors.white,

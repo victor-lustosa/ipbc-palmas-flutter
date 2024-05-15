@@ -22,8 +22,8 @@ class _InitViewState extends State<InitView> {
     selectedIndex = index;
     _controller.animateToPage(
       index,
-      duration: const Duration(milliseconds: 250),
-      curve: Curves.easeInOutQuint,
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.ease,
     );
   }
 

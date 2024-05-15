@@ -47,46 +47,45 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
       key: Platform.isIOS ? null : _androidNavigatorKey,
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
+
           case HomeModule.homeRoute || HomeModule.initialRoute:
-            return customTransitionRoute(
+            return SlideTransitionPage(
               child: const HomeView(),
             );
 
           case ServiceModule.serviceRoute:
-            return customTransitionRoute(
+            return SlideTransitionPage(
               child: ServiceView(
                 entity: settings.arguments as ServiceViewDTO,
               ),
             );
 
           case ServiceModule.servicesListRoute:
-            return customTransitionRoute(
+            return SlideTransitionPage(
               child: ServicesListView(
                 entities: settings.arguments as List<ServicesEntity>,
               ),
             );
 
           case ServiceModule.servicesCollectionRoute:
-            return customTransitionRoute(
+            return SlideTransitionPage(
               child: ServicesCollectionView(
                 entity: settings.arguments as ServicesEntity,
               ),
             );
 
           case ServiceModule.editLiturgiesRoute:
-            return customTransitionRoute(
+            return SlideTransitionPage(
               child: EditLiturgyView(
                 dto: settings.arguments as EditLiturgyDTO,
               ),
             );
 
           case HomeModule.eventsListRoute:
-            return customTransitionRoute(
+            return SlideTransitionPage(
               child: const EventsListView(),
-              tween: Tween(begin: const Offset(0, 0), end: Offset.zero).chain(
-                CurveTween(curve: Curves.ease),
-              ),
             );
+
           default:
             return unknownRoute();
         }

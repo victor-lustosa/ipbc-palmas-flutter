@@ -55,47 +55,78 @@ PageRoute unknownRoute() {
   }
 }
 
-CustomTransitionPageRoute customTransitionRoute({
-  required Widget child,
-  Animatable<Offset>? tween,
-  Curve? curve,
-  Duration? transitionSpeed,
-  Duration? reverseSpeed,
-}) {
-  return CustomTransitionPageRoute(
-    transitionSpeed: transitionSpeed ?? const Duration(milliseconds: 700),
-    reverseSpeed: reverseSpeed ?? const Duration(milliseconds: 700),
-    child: child,
-    tween: tween ??
-        Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
-          CurveTween(curve: curve ?? Curves.ease),
-        ),
-  );
-}
-
-class CustomTransitionPageRoute extends PageRouteBuilder {
+class SlideTransitionPage extends PageRouteBuilder {
   final Widget child;
-  final Animatable<Offset> tween;
-  final Duration? transitionSpeed;
-  final Duration? reverseSpeed;
+  final Curve? curve;
+  final Offset? begin;
+  final Offset? end;
 
-  CustomTransitionPageRoute(
-      {this.transitionSpeed,
-      this.reverseSpeed,
-      required this.tween,
-      required this.child})
-      : super(
-            reverseTransitionDuration:
-                reverseSpeed ?? const Duration(milliseconds: 300),
-            transitionDuration:
-                transitionSpeed ?? const Duration(milliseconds: 300),
-            pageBuilder: (context, animation, secondaryAnimation) => child);
+  SlideTransitionPage({
+    Duration? transitionSpeed,
+    Duration? reverseSpeed,
+    this.curve,
+    this.begin,
+    this.end,
+    required this.child,
+  }) : super(
+          reverseTransitionDuration:
+              reverseSpeed ?? const Duration(milliseconds: 300),
+          transitionDuration:
+              transitionSpeed ?? const Duration(milliseconds: 300),
+          pageBuilder: (_, __, ___) => child,
+        );
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation, Widget child) =>
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) =>
       SlideTransition(
-        position: animation.drive(tween),
+        position: animation.drive(
+          Tween(
+            begin: begin ?? const Offset(1, 0),
+            end: end ?? Offset.zero,
+          ).chain(
+            CurveTween(curve: curve ?? Curves.ease),
+          ),
+        ),
+        child: child,
+      );
+/*  ScaleTransition(
+        scale : animation,
+        child: child,
+     );*/
+/*FadeTransition(opacity: animation, child: child);*/
+}
+
+class FadeTransitionPage extends PageRouteBuilder {
+  final Widget child;
+  final Curve? curve;
+
+  FadeTransitionPage({
+    Duration? transitionSpeed,
+    Duration? reverseSpeed,
+    this.curve,
+    required this.child,
+  }) : super(
+          reverseTransitionDuration:
+              reverseSpeed ?? const Duration(milliseconds: 300),
+          transitionDuration:
+              transitionSpeed ?? const Duration(milliseconds: 300),
+          pageBuilder: (_, __, ___) => child,
+        );
+
+  @override
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) =>
+      RotationTransition(
+        turns: animation,
         child: child,
       );
 /*  ScaleTransition(
