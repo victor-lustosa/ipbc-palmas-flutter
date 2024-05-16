@@ -13,8 +13,8 @@ class EditLiturgyDTO {
   final String image;
 }
 
-class EditLiturgyView extends StatefulWidget {
-  const EditLiturgyView({
+class EditLiturgiesView extends StatefulWidget {
+  const EditLiturgiesView({
     super.key,
     required this.dto,
   });
@@ -22,10 +22,10 @@ class EditLiturgyView extends StatefulWidget {
   final EditLiturgyDTO dto;
 
   @override
-  State<EditLiturgyView> createState() => _EditLiturgyViewState();
+  State<EditLiturgiesView> createState() => _EditLiturgiesViewState();
 }
 
-class _EditLiturgyViewState extends State<EditLiturgyView> {
+class _EditLiturgiesViewState extends State<EditLiturgiesView> {
   final _items = [
     LiturgyEntity(
         id: 0, isAdditional: false, sequence: 'Oração', additional: ''),
@@ -193,7 +193,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
         backgroundColor: AppColors.confirmation,
         iconColor: AppColors.grey10,
         size: 33,
-        action: () => navigate(
+        action: () => pushNamed(
           ServiceModule.servicesRoute + ServiceModule.servicesPreviewRoute,
           arguments: ServicesPreviewDTO(
             heading: widget.dto.heading,

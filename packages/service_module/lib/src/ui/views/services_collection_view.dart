@@ -169,7 +169,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
         iconColor: AppColors.white,
         backgroundColor: AppColors.add,
         icon: Icons.add,
-        action: () => navigate(
+        action: () => pushNamed(
           ServiceModule.servicesRoute + ServiceModule.editLiturgiesRoute,
           arguments: EditLiturgyDTO(
             image: widget.entity.image,

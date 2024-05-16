@@ -52,20 +52,20 @@ class ServiceModule extends Module {
     r.child(
       editLiturgiesRoute,
       transition: TransitionType.custom,
-      child: (_) => EditLiturgyView(dto: r.args.data as EditLiturgyDTO),
+      child: (_) => EditLiturgiesView(dto: r.args.data as EditLiturgyDTO),
       customTransition: ModularFadeTransition(),
     );
     r.child(
       servicesPreviewRoute,
       transition: TransitionType.custom,
       child: (_) => ServicesPreviewView(dto: r.args.data as ServicesPreviewDTO),
-      customTransition: ModularSlideTransition(),
+      customTransition: ModularFadeTransition(),
     );
     r.child(
       searchLyricsRoute,
       transition: TransitionType.custom,
       child: (_) => SearchLyricsView(dto: r.args.data as EditLiturgyDTO),
-      customTransition: ModularSlideTransition(),
+      customTransition: ModularFadeTransition(),
     );
   }
 }

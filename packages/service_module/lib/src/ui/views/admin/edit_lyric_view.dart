@@ -148,7 +148,7 @@ class _EditLyricViewState extends State<EditLyricView> {
         backgroundColor: AppColors.confirmation,
         iconColor: AppColors.grey10,
         size: 33,
-        action: () => navigate(
+        action: () => pushNamed(
           ServiceModule.servicesRoute + ServiceModule.servicesPreviewRoute,
         ),
       ),
