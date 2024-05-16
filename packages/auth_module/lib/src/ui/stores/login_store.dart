@@ -47,7 +47,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   }
 
   toCreateAccount() {
-   navigate('/create-account');
+   pushNamed(AuthModule.authRoute + AuthModule.createAccountRoute);
   }
 
   Future createAccount() async {

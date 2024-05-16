@@ -28,7 +28,7 @@ class _SplashViewState extends State<SplashView> {
       body: BlocConsumer<DatabaseBloc, GenericState<DatabasesState>>(
         listener: (context, state) async {
           if (state is FetchingDataState<DatabasesState>) {
-            if (!state.isData) {
+            if (state.isData) {
               navigate(InitModule.initialRoute);
             } else {
               navigate(AuthModule.authRoute + AuthModule.loginRoute);
