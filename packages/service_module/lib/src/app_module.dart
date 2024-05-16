@@ -62,20 +62,7 @@ class ServiceModule extends Module {
       editLiturgiesRoute,
       transition: TransitionType.custom,
       child: (_) => EditLiturgyView(dto: r.args.data as EditLiturgyDTO),
-      customTransition: CustomTransition(
-        transitionDuration: const Duration(milliseconds: 500),
-        reverseTransitionDuration: const Duration(milliseconds: 500),
-        transitionBuilder: (context, anim1, anim2, child) {
-          return SlideTransition(
-            position: anim1.drive(
-              Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
-                CurveTween(curve: Curves.ease),
-              ),
-            ),
-            child: child,
-          );
-        },
-      ),
+      customTransition: ModularFadeTransition(),
     );
     r.child(
       servicesPreviewRoute,

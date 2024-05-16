@@ -21,6 +21,7 @@ class _ServicesListViewState extends State<ServicesListView> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              const MainTopBarWidget(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -35,14 +36,32 @@ class _ServicesListViewState extends State<ServicesListView> {
                   ),
                 ],
               ),
-              Container(
-                margin: const EdgeInsets.only(
-                  top: 20,
-                  bottom: 20,
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 25, top: 10),
+                  child: Text(
+                    "Cultos",
+                    style: AppFonts.title2,
+                  ),
                 ),
-                child: Text(
-                  'Lista completa de cultos',
-                  style: AppFonts.title2,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  margin: const EdgeInsets.only(
+                    left: 25,
+                    top: 8,
+                    right: 20,
+                  ),
+                  child: Text(
+                    "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
+                    style: AppFonts.defaultFont(
+                      fontSize: 15,
+                      height: 1.2,
+                      color: AppColors.grey9,
+                    ),
+                  ),
                 ),
               ),
               Container(
@@ -63,8 +82,10 @@ class _ServicesListViewState extends State<ServicesListView> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        nativeNavigate(ServiceModule.servicesCollectionRoute,
-                            arguments: widget.entities[index], context);
+                        nativeNavigate(
+                            ServiceModule.servicesCollectionRoute,
+                            arguments: widget.entities[index],
+                            context);
                       },
                       child: Container(
                         height: 110,

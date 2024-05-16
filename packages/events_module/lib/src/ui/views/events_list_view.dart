@@ -40,6 +40,35 @@ class EventsListViewState extends State<EventsListView> {
                     ),
                   ],
                 ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 25, top: 10),
+                    child: Text(
+                      "Eventos",
+                      style: AppFonts.title2,
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                      left: 25,
+                      top: 8,
+                      right: 20,
+                      bottom: 12,
+                    ),
+                    child: Text(
+                      "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
+                      style: AppFonts.defaultFont(
+                        fontSize: 15,
+                        height: 1.2,
+                        color: AppColors.grey9,
+                      ),
+                    ),
+                  ),
+                ),
                 SizedBox(
                   height: context.mediaQuery.size.height,
                   child: SlideCardsWidget(

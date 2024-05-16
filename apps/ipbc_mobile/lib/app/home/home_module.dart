@@ -49,40 +49,40 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
         switch (settings.name) {
 
           case HomeModule.homeRoute || HomeModule.initialRoute:
-            return SlideTransitionPage(
+            return CustomFadeTransition(
               child: const HomeView(),
             );
 
           case ServiceModule.serviceRoute:
-            return SlideTransitionPage(
+            return CustomFadeTransition(
               child: ServiceView(
                 entity: settings.arguments as ServiceViewDTO,
               ),
             );
 
           case ServiceModule.servicesListRoute:
-            return SlideTransitionPage(
+            return CustomFadeTransition(
               child: ServicesListView(
                 entities: settings.arguments as List<ServicesEntity>,
               ),
             );
 
           case ServiceModule.servicesCollectionRoute:
-            return SlideTransitionPage(
+            return CustomSlideTransition(
               child: ServicesCollectionView(
                 entity: settings.arguments as ServicesEntity,
               ),
             );
 
           case ServiceModule.editLiturgiesRoute:
-            return SlideTransitionPage(
+            return CustomFadeTransition(
               child: EditLiturgyView(
                 dto: settings.arguments as EditLiturgyDTO,
               ),
             );
 
           case HomeModule.eventsListRoute:
-            return SlideTransitionPage(
+            return CustomFadeTransition(
               child: const EventsListView(),
             );
 

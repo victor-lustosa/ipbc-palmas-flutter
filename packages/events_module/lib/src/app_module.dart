@@ -15,15 +15,11 @@ class EventModule extends Module {
       transition: TransitionType.custom,
       child: (_) => const CreateEventView(),
       customTransition: CustomTransition(
-        transitionDuration: const Duration(milliseconds: 500),
-        reverseTransitionDuration: const Duration(milliseconds: 500),
+        transitionDuration: const Duration(milliseconds: 100),
+        reverseTransitionDuration: const Duration(milliseconds: 100),
         transitionBuilder: (context, anim1, anim2, child) {
-          return SlideTransition(
-            position: anim1.drive(
-              Tween(begin: const Offset(1, 0), end: Offset.zero).chain(
-                CurveTween(curve: Curves.ease),
-              ),
-            ),
+          return FadeTransition(
+            opacity: anim1,
             child: child,
           );
         },

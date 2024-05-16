@@ -25,7 +25,7 @@ class MainTopBarWidget extends StatelessWidget {
                   //  height: 75,width: 75,
                 ),
               ),
-             //  const CircleAvatarWidget(),
+             ///  const CircleAvatarWidget(),
             ],
           ),
         );

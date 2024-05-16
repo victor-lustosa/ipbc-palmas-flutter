@@ -55,13 +55,13 @@ PageRoute unknownRoute() {
   }
 }
 
-class SlideTransitionPage extends PageRouteBuilder {
+class CustomSlideTransition extends PageRouteBuilder {
   final Widget child;
   final Curve? curve;
   final Offset? begin;
   final Offset? end;
 
-  SlideTransitionPage({
+  CustomSlideTransition({
     Duration? transitionSpeed,
     Duration? reverseSpeed,
     this.curve,
@@ -101,20 +101,39 @@ class SlideTransitionPage extends PageRouteBuilder {
 /*FadeTransition(opacity: animation, child: child);*/
 }
 
-class FadeTransitionPage extends PageRouteBuilder {
+class ModularFadeTransition extends CustomTransition {
+  ModularFadeTransition(
+      {Duration? transitionDuration,
+      Duration? reverseTransitionDuration,
+      bool? opaque})
+      : super(
+            transitionBuilder: (context, anim1, anim2, child) {
+              return FadeTransition(
+                opacity: anim1,
+                child: child,
+              );
+            },
+            transitionDuration:
+                transitionDuration ?? const Duration(milliseconds: 150),
+            reverseTransitionDuration:
+                reverseTransitionDuration ?? const Duration(milliseconds: 150),
+            opaque: opaque ?? true);
+}
+
+class CustomFadeTransition extends PageRouteBuilder {
   final Widget child;
   final Curve? curve;
 
-  FadeTransitionPage({
+  CustomFadeTransition({
     Duration? transitionSpeed,
     Duration? reverseSpeed,
     this.curve,
     required this.child,
   }) : super(
           reverseTransitionDuration:
-              reverseSpeed ?? const Duration(milliseconds: 300),
+              reverseSpeed ?? const Duration(milliseconds: 150),
           transitionDuration:
-              transitionSpeed ?? const Duration(milliseconds: 300),
+              transitionSpeed ?? const Duration(milliseconds: 150),
           pageBuilder: (_, __, ___) => child,
         );
 
@@ -125,8 +144,8 @@ class FadeTransitionPage extends PageRouteBuilder {
     Animation<double> secondaryAnimation,
     Widget child,
   ) =>
-      RotationTransition(
-        turns: animation,
+      FadeTransition(
+        opacity: animation,
         child: child,
       );
 /*  ScaleTransition(
