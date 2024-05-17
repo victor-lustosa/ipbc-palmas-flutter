@@ -1,3 +1,4 @@
+import 'package:auth_module/src/ui/stores/registration_completion_store.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +14,8 @@ class RegistrationCompletionView extends StatefulWidget {
 
 class _RegistrationCompletionViewState
     extends State<RegistrationCompletionView> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _zipCodeController = TextEditingController();
-  final TextEditingController _dateOfBirthController = TextEditingController();
-  final TextEditingController _maritalStatusController =
-      TextEditingController();
+  final RegistrationCompletionStore _store =
+      Modular.get<RegistrationCompletionStore>();
 
   final _nameKey = GlobalKey<FormState>();
   final _phoneKey = GlobalKey<FormState>();
@@ -35,6 +32,7 @@ class _RegistrationCompletionViewState
   bool isCheckedMember = false;
 
   String dropdownvalue = 'Solteiro(a)';
+
   var items = [
     'Solteiro(a)',
     'Casado(a)',
@@ -77,7 +75,7 @@ class _RegistrationCompletionViewState
                 TemplateFormWidget(
                     fieldMargin: EdgeInsets.zero,
                     fieldHeight: 44,
-                    controller: _nameController,
+                    controller: _store.nameValue,
                     globalKey: _nameKey,
                     textInputType: TextInputType.text,
                     errorText: 'Preencha o nome completo',
@@ -95,7 +93,7 @@ class _RegistrationCompletionViewState
                 TemplateFormWidget(
                     fieldMargin: EdgeInsets.zero,
                     fieldHeight: 44,
-                    controller: _phoneController,
+                    controller: _store.phoneValue,
                     inputFormatters: <TextInputFormatter>[
                       PhoneInputFormatter()
                     ],
@@ -117,7 +115,7 @@ class _RegistrationCompletionViewState
                     inputFormatters: <TextInputFormatter>[CepInputFormatter()],
                     fieldHeight: 44,
                     fieldMargin: EdgeInsets.zero,
-                    controller: _zipCodeController,
+                    controller: _store.zipCodeValue,
                     readOnly: false,
                     globalKey: _zipCodeKey,
                     textInputType: TextInputType.number,
@@ -133,6 +131,7 @@ class _RegistrationCompletionViewState
                 Container(
                   margin: const EdgeInsets.all(16),
                   child: DropdownWidget(
+                    key: _maritalStatusKey,
                     name: "Estado civil",
                     icon: const Icon(Icons.keyboard_arrow_down),
                     list: items,
@@ -150,7 +149,7 @@ class _RegistrationCompletionViewState
                 TemplateFormWidget(
                     fieldMargin: EdgeInsets.zero,
                     fieldHeight: 44,
-                    controller: _dateOfBirthController,
+                    controller: _store.dateOfBirthValue,
                     readOnly: false,
                     textInputType: TextInputType.datetime,
                     globalKey: _dateOfBirthKey,
@@ -193,6 +192,8 @@ class _RegistrationCompletionViewState
                   onChanged: (bool? value) {
                     setState(() {
                       isChecked = !value!;
+                      isCheckedAcceptContact = false;
+                      isCheckedMember = false;
                     });
                   },
                 ),
@@ -251,7 +252,9 @@ class _RegistrationCompletionViewState
                       textCheckedBox: 'Aceito que entrem em contato',
                       onChanged: (bool value) {
                         setState(() {
-                          isCheckedAcceptContact = value;
+                          if (isChecked == true) {
+                            isCheckedAcceptContact = value;
+                          }
                         });
                       },
                     )
@@ -305,7 +308,7 @@ class _RegistrationCompletionViewState
     if (data == null || data.isEmpty) {
       _nameBorderValidation(false);
     } else {
-      _nameController.text.isNotEmpty
+      _store.nameValue.text.isNotEmpty
           ? _nameBorderValidation(true)
           : _nameBorderValidation(false);
     }
@@ -325,6 +328,15 @@ class _RegistrationCompletionViewState
     return _isValidPhone = true;
   }
 
+  bool validateCEP(String cep) {
+    cep = cep.replaceAll(RegExp(r'[^\d]'), '');
+
+    if (cep.length != 8) {
+      return isValidCep == false;
+    }
+    return isValidCep == true;
+  }
+
   Future<void> selectDate() async {
     DateTime? picked = await showDatePicker(
       initialDate: DateTime.now(),
@@ -334,7 +346,7 @@ class _RegistrationCompletionViewState
     );
     if (picked != null) {
       setState(() {
-        _dateOfBirthController.text = DateFormat('dd/MM/yyyy').format(picked);
+        _store.dateOfBirthValue.text = DateFormat('dd/MM/yyyy').format(picked);
       });
     }
   }

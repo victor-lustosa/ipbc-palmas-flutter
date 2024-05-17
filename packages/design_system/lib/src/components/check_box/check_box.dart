@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../design_system.dart';
 
 class CheckBoxCustom extends StatefulWidget {
@@ -15,6 +14,7 @@ class CheckBoxCustom extends StatefulWidget {
   final IconData? iconCheckBox;
   final double? sizeIcon;
   final Color? colorBoder;
+  final BoxShape? shape;
 
   const CheckBoxCustom({
     Key? key,
@@ -30,6 +30,7 @@ class CheckBoxCustom extends StatefulWidget {
     this.iconCheckBox,
     this.sizeIcon,
     this.colorBoder,
+    this.shape,
   }) : super(key: key);
 
   @override
@@ -54,7 +55,7 @@ class CheckBoxCustomState extends State<CheckBoxCustom> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
+                    shape: widget.shape ?? BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(
                         widget.borderRadiusCheckBox ?? 50),
                     border: Border.all(

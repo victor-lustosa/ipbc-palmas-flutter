@@ -6,7 +6,7 @@ import 'external/hive_auth_datasource.dart';
 import 'infra/repositories/auth_repository.dart';
 import 'ui/stores/create_account_store.dart';
 import 'ui/stores/login_store.dart';
-import 'ui/stores/reset_password_store.dart';
+import 'ui/stores/registration_completion_store.dart';
 import 'ui/views/create_account_view.dart';
 import 'ui/views/creating_new_password_view.dart';
 import 'ui/views/login_view.dart';
@@ -47,6 +47,7 @@ class AuthModule extends Module {
     );
     i.addSingleton(ResetPasswordStore.new);
     i.addLazySingleton(CreateAccountStore.new);
+    i.addSingleton(RegistrationCompletionStore.new);
   }
 
   @override
