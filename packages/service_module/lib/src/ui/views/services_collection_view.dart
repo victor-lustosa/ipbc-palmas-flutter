@@ -4,6 +4,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../service_module.dart';
 import '../blocs/services_collection_bloc.dart';
 
 class ServicesCollectionView extends StatefulWidget {
@@ -168,7 +169,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
         iconColor: AppColors.white,
         backgroundColor: AppColors.add,
         icon: Icons.add,
-        action: () => navigate(
+        action: () => pushNamed(
           ServiceModule.servicesRoute + ServiceModule.editLiturgiesRoute,
           arguments: EditLiturgyDTO(
             image: widget.entity.image,

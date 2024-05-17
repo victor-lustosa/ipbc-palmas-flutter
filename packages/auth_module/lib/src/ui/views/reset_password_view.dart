@@ -1,6 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import '../../../auth_module.dart';
+
 class ResetPasswordView extends StatefulWidget {
   const ResetPasswordView({super.key});
 
@@ -41,7 +43,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     BackButtonWidget(
-                      action: () => navigate(AuthModule.authRoute + AuthModule.loginRoute),
+                      action: () => pop(context),
                     ),
                   ],
                 ),
@@ -104,7 +106,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     if (_resetPasswordController.text.isEmpty && !_isPressed) {
                       _emailBorderValidation(false, false);
                     }
-                    navigate(AuthModule.authRoute + AuthModule.verificationCodeRoute);
+                    pushNamed(AuthModule.authRoute + AuthModule.verificationCodeRoute);
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),

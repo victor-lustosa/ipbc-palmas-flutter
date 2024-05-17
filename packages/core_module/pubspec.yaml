@@ -25,15 +25,11 @@ dependencies:
   flutter_modular: ^6.3.2
   path_provider: ^2.0.14
   upgrader: ^7.0.0
-  flutter_lints: ^2.0.1
-  design_system:
-    path: ../design_system
-  lyric_module:
-    path: ../lyric_module
-  service_module:
-    path: ../service_module
-  auth_module:
-    path: ../auth_module
+  flutter_lints: 3.0.0
+  google_fonts: ^5.1.0
+  cupertino_icons: ^1.0.5
+  vector_math: ^2.1.4
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:

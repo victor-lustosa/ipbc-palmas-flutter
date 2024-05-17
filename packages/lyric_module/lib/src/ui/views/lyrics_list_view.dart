@@ -1,6 +1,8 @@
+
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import '../../../lyric_module.dart';
 import '../blocs/lyric_bloc.dart';
 
 class LyricsListView extends StatefulWidget {

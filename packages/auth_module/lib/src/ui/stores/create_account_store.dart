@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
+import '../../../auth_module.dart';
 
 class CreateAccountStore
     extends ValueNotifier<GenericState<CreateAccountState>> {
@@ -44,8 +45,7 @@ class CreateAccountStore
     value = LoadingState<CreateAccountState>();
     Future.delayed(const Duration(seconds: 1), () {
       if (isPasswordEqual && emptyData) {
-        Navigator.pushNamed(
-          context,
+        pushNamed(
           AuthModule.authRoute + AuthModule.registrationCompletionRoute,
         );
       } else {

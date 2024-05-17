@@ -2,6 +2,7 @@ import 'package:auth_module/src/ui/stores/create_account_store.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../../auth_module.dart';
 
 class CreateAccountView extends StatefulWidget {
   const CreateAccountView({Key? key}) : super(key: key);

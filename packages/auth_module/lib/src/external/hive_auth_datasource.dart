@@ -1,27 +1,18 @@
 
 import 'package:core_module/core_module.dart';
+
 import '../infra/datasources/auth_datasource.dart';
 
-class HiveAuthDatasource<R> implements IAuthDatasource<R>,IDatasource {
-  String boxLabel;
-  late Box<R> box;
+class HiveAuthDatasource implements IDatasource,IAuthDatasource {
 
-  HiveAuthDatasource({required this.boxLabel}) {
-    box = Hive.box<R>(boxLabel);
-  }
+  Box<HiveAuthDTO> box;
 
-  static Future init() async {
-    await Hive.initFlutter();
-    Hive.registerAdapter(HiveAuthDTOAdapter());
-    await Future.wait<void>([
-      Hive.openBox<HiveAuthDTO>('auth'),
-    ]);
-  }
+  HiveAuthDatasource({required this.box});
 
   @override
   Future<dynamic> get(String path) async {
     var result = box.get(path);
-    return result != null ? HiveAuthAdapter.fromMap(result as HiveAuthDTO) : HiveAuthDTO.empty();
+    return result != null ? HiveAuthAdapter.fromMap(result) : HiveAuthDTO.empty();
   }
 
   @override
@@ -29,7 +20,7 @@ class HiveAuthDatasource<R> implements IAuthDatasource<R>,IDatasource {
 
   @override
   Future<void> update(String path, data) async {
-    box.put(path, HiveAuthAdapter.toDTO(data) as R);
+    box.put(path, HiveAuthAdapter.toDTO(data));
   }
 
   @override
@@ -41,4 +32,5 @@ class HiveAuthDatasource<R> implements IAuthDatasource<R>,IDatasource {
   Future<String> signInWithEmail(String email, String password) {
     throw UnimplementedError();
   }
+
 }

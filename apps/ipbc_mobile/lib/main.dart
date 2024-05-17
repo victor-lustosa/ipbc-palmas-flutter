@@ -1,13 +1,10 @@
-import 'package:core_module/core_module.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-
-import 'app/splash/splash_module.dart';
-export 'app/home/views/home_view.dart';
+import 'package:home_module/home_module.dart';
 
 void main() async {
   //  Modular.setInitialRoute(ServiceModule.servicesRoute + ServiceModule.editLyricRoute);
-  //Modular.setInitialRoute(SplashModule.splashRoute);
+  // Modular.setInitialRoute(SplashModule.splashRoute);
   Modular.setInitialRoute(AuthModule.authRoute + AuthModule.loginRoute);
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([
@@ -17,7 +14,6 @@ void main() async {
   Bloc.observer = GenericBlocObserver();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
   ]).then(
     (_) => runApp(
       ModularApp(
@@ -29,7 +25,6 @@ void main() async {
               child: child!,
             );
           },
-          title: 'IPBC Palmas',
           theme: lightTheme,
           routerConfig: Modular.routerConfig,
           debugShowCheckedModeBanner: false,

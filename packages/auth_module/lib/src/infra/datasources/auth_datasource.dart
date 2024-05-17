@@ -1,4 +1,4 @@
-abstract class IAuthDatasource<R>
+abstract class IAuthDatasource
     implements
         ISignInEmailDatasource {}
 

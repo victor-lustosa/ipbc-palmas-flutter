@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:service_module/src/ui/stores/states.dart';
 import 'package:service_module/src/ui/stores/edit_lyric_store.dart';
 
+import '../../../../service_module.dart';
+
 class EditLyricView extends StatefulWidget {
   const EditLyricView({
     super.key,
@@ -146,7 +148,7 @@ class _EditLyricViewState extends State<EditLyricView> {
         backgroundColor: AppColors.confirmation,
         iconColor: AppColors.grey10,
         size: 33,
-        action: () => navigate(
+        action: () => pushNamed(
           ServiceModule.servicesRoute + ServiceModule.servicesPreviewRoute,
         ),
       ),

@@ -1,6 +1,6 @@
-abstract class IAuthUseCases<R> implements ISignInEmailUseCases<R> {}
+abstract class IAuthUseCases implements ISignInEmailUseCases {}
 
-abstract class ISignInEmailUseCases<R> {
+abstract class ISignInEmailUseCases {
   Future<String> signInWithEmail(String email, String password);
 }
 

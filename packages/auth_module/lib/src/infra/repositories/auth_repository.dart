@@ -1,12 +1,12 @@
 
-import 'package:auth_module/src/domain/repositories/auth_repository.dart';
 
+import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_datasource.dart';
 
-class AuthRepository<R> implements IAuthRepository<R> {
+class AuthRepository implements IAuthRepository {
   AuthRepository({required this.datasource});
 
-  final IAuthDatasource<R> datasource;
+  final IAuthDatasource datasource;
 
   @override
   Future signInWithEmail(String path) async {

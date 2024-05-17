@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+
+import '../lyric_module.dart';
 import 'ui/blocs/lyric_bloc.dart';
 import 'ui/views/lyric_view.dart';
 
@@ -60,7 +62,8 @@ class NativeLyricRoutes extends StatefulWidget {
 }
 
 class _NativeLyricRoutesState extends State<NativeLyricRoutes> {
-  final GlobalKey<NavigatorState> _androidNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'lyric_key');
+  final GlobalKey<NavigatorState> _androidNavigatorKey =
+  GlobalKey<NavigatorState>(debugLabel: 'lyric_key');
 
   @override
   Widget build(BuildContext context) {
@@ -69,11 +72,10 @@ class _NativeLyricRoutesState extends State<NativeLyricRoutes> {
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
           case LyricModule.initialRoute:
-            return customTransitionRoute(
+            return CustomSlideTransition(
               child: const LyricsListView(),
-              tween: Tween(begin: const Offset(0, 0), end: Offset.zero).chain(
-                CurveTween(curve: Curves.ease),
-              ),
+              begin: const Offset(0, 0),
+              end: Offset.zero,
             );
           default:
             return unknownRoute();

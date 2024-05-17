@@ -1,6 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import '../../../auth_module.dart';
+
 class CreatingNewPasswordView extends StatefulWidget {
   const CreatingNewPasswordView({super.key});
 
@@ -46,8 +48,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BackButtonWidget(
-                        action: () => navigate(AuthModule.authRoute +
-                            AuthModule.verificationCodeRoute),
+                        action: () => pop(context),
                       ),
                     ],
                   ),
@@ -165,7 +166,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                     isPressed: _isPressed,
                     action: () async {
                       //if (isValid) {
-                      navigate(AuthModule.authRoute +
+                      pushNamed(AuthModule.authRoute +
                           AuthModule.resetPasswordSuccessRoute);
                       //}
                     },

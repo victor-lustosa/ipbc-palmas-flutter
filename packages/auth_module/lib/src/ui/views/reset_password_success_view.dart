@@ -1,6 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import '../../../auth_module.dart';
+
 class ResetPasswordSuccessView extends StatelessWidget {
   const ResetPasswordSuccessView({super.key});
 
@@ -46,7 +48,7 @@ class ResetPasswordSuccessView extends StatelessWidget {
                   ),
                   fixedSize: Size(MediaQuery.of(context).size.width, 48),
                   action: () {
-                    navigate(AuthModule.authRoute + AuthModule.authRoute);
+                    navigate(AuthModule.authRoute + AuthModule.loginRoute);
                   },
                   backgroundColor: AppColors.darkGreen,
                   shadowColor: AppColors.grey0,

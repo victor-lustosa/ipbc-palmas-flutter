@@ -3,6 +3,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../auth_module.dart';
 
 class RegistrationCompletionView extends StatefulWidget {
   const RegistrationCompletionView({super.key});
@@ -185,7 +186,7 @@ class _RegistrationCompletionViewState
                       fontWeight: FontWeight.w400),
                 ),
                 const SizedBox(height: 16),
-                CheckBoxCustom(
+                CustomCheckBox(
                   isChecked: isChecked == false,
                   margin: const EdgeInsets.only(right: 16, left: 16),
                   textCheckedBox: 'Sim',
@@ -197,7 +198,7 @@ class _RegistrationCompletionViewState
                     });
                   },
                 ),
-                CheckBoxCustom(
+                CustomCheckBox(
                   isChecked: isChecked == true,
                   margin: const EdgeInsets.only(top: 8, right: 16, left: 16),
                   textCheckedBox: 'Não',
@@ -210,7 +211,7 @@ class _RegistrationCompletionViewState
                 const SizedBox(height: 16),
                 Column(
                   children: [
-                    CheckBoxCustom(
+                    CustomCheckBox(
                       borderRadiusCheckBox: 2,
                       colorBoder:
                           isChecked == true ? AppColors.grey9 : AppColors.grey3,
@@ -234,7 +235,7 @@ class _RegistrationCompletionViewState
                         });
                       },
                     ),
-                    CheckBoxCustom(
+                    CustomCheckBox(
                       colorBoder:
                           isChecked == true ? AppColors.grey9 : AppColors.grey3,
                       isChecked: isCheckedAcceptContact,
