@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TemplateFormWidget extends StatefulWidget {
   const TemplateFormWidget({
@@ -8,23 +9,28 @@ class TemplateFormWidget extends StatefulWidget {
     required this.globalKey,
     required this.errorText,
     required this.isValid,
-    this.obscure,
     required this.isPressed,
-    this.title,
     required this.validator,
     required this.inputDecoration,
+    this.obscure,
+    this.title,
+    this.inputFormatters,
     this.titleMargin,
     this.maxLines,
     this.fieldHeight,
     this.horizontalSymmetric,
     this.color,
-
+    this.textInputType,
     this.defaultHintColor,
+    this.readOnly,
+    this.fieldMargin,
   });
 
-
-
   final int? maxLines;
+
+  final EdgeInsetsGeometry? fieldMargin;
+
+  final bool? readOnly;
 
   final double? fieldHeight;
 
@@ -42,6 +48,10 @@ class TemplateFormWidget extends StatefulWidget {
 
   final bool isPressed;
 
+  final List<TextInputFormatter>? inputFormatters;
+
+  final TextInputType? textInputType;
+
   final InputDecoration inputDecoration;
 
   final String? Function(dynamic) validator;
@@ -53,7 +63,6 @@ class TemplateFormWidget extends StatefulWidget {
   final Color? color;
 
   final Color? defaultHintColor;
-
 
   @override
   State<TemplateFormWidget> createState() => _TemplateFormWidgetState();
@@ -67,7 +76,7 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
           const EdgeInsets.symmetric(horizontal: 16),
       fieldKey: widget.globalKey,
       isSubmitted: !widget.isPressed,
-      fieldMargin: const EdgeInsets.only(top: 4),
+      fieldMargin: widget.fieldMargin ?? const EdgeInsets.only(top: 4),
       titleMargin: widget.titleMargin,
       fieldDecoration: _fieldDecoration(
         isValid: widget.isValid,
@@ -80,6 +89,8 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
         fontSize: 13,
         color: AppColors.grey8,
       ),
+      inputFormatters: widget.inputFormatters,
+      keyboardType: widget.textInputType,
       controller: widget.controller,
       inputDecoration: widget.inputDecoration,
       obscureText: widget.obscure,
@@ -87,31 +98,27 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
       fieldHeight: widget.fieldHeight ?? 48,
       validator: widget.validator,
       colorStyle: widget.defaultHintColor ?? AppColors.hintInputForm,
-
     );
   }
 
   _fieldDecoration({required isValid, Color? color}) => BoxDecoration(
-    color: AppColors.white,
-    border: Border.all(
-      color: color ?? (isValid ? AppColors.secondaryGrey : Colors.red),
-    ),
-    borderRadius: BorderRadius.circular(16),
-  );
-
+        color: AppColors.white,
+        border: Border.all(
+          color: color ?? (isValid ? AppColors.secondaryGrey : Colors.red),
+        ),
+        borderRadius: BorderRadius.circular(16),
+      );
 }
 
 fieldInputDecoration(
     {required isValid,
-
-      required hintText,
-      Widget? suffixIcon,
-      Widget? prefixIcon,
-      BoxConstraints? prefixIconConstraints,
-      BoxConstraints? suffixIconConstraints,
-      Color? hintColor,
-      EdgeInsetsGeometry? contentPadding}) {
-
+    required hintText,
+    Widget? suffixIcon,
+    Widget? prefixIcon,
+    BoxConstraints? prefixIconConstraints,
+    BoxConstraints? suffixIconConstraints,
+    Color? hintColor,
+    EdgeInsetsGeometry? contentPadding}) {
   return InputDecoration(
     suffixIcon: suffixIcon,
     prefixIcon: prefixIcon,
@@ -121,9 +128,7 @@ fieldInputDecoration(
     hintStyle: AppFonts.defaultFont(
       fontSize: 12,
       color:
-
-      hintColor ?? (isValid ? AppColors.hintInputForm : AppColors.delete),
-
+          hintColor ?? (isValid ? AppColors.hintInputForm : AppColors.delete),
     ),
     contentPadding: contentPadding ??
         const EdgeInsets.only(

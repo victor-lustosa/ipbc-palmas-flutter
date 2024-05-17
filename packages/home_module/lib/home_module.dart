@@ -4,4 +4,4 @@ export 'package:core_module/core_module.dart';
 export 'package:lyric_module/lyric_module.dart';
 
 export 'src/app_module.dart';
-
+export 'package:auth_module/auth_module.dart';

@@ -166,7 +166,8 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                     isPressed: _isPressed,
                     action: () async {
                       //if (isValid) {
-                      pushNamed(AuthModule.authRoute + AuthModule.resetPasswordSuccessRoute);
+                      pushNamed(AuthModule.authRoute +
+                          AuthModule.resetPasswordSuccessRoute);
                       //}
                     },
                     isValid: true,

@@ -1,10 +1,13 @@
+import 'package:auth_module/src/ui/views/registration_completion_view.dart';
 import 'package:core_module/core_module.dart';
 import 'package:home_module/home_module.dart';
 
 import '../auth_module.dart';
 import 'external/hive_auth_datasource.dart';
 import 'infra/repositories/auth_repository.dart';
+import 'ui/stores/create_account_store.dart';
 import 'ui/stores/login_store.dart';
+import 'ui/stores/registration_completion_store.dart';
 import 'ui/stores/reset_password_store.dart';
 import 'ui/views/create_account_view.dart';
 import 'ui/views/creating_new_password_view.dart';
@@ -21,9 +24,12 @@ class AuthModule extends Module {
   static const String creatingNewPassWordRoute = '/creating-new-password';
   static const String resetPasswordSuccessRoute = '/success-password';
   static const String resetPasswordRoute = '/reset-password';
+  static const String registrationCompletionRoute = '/registration-Completion';
 
   @override
-  List<Module> get imports => [CoreModule()];
+  List<Module> get imports => [
+        CoreModule(),
+      ];
 
   @override
   void binds(i) {
@@ -41,7 +47,9 @@ class AuthModule extends Module {
         useCases: i.get<AuthUseCase>(),
       ),
     );
-    i.addLazySingleton(ResetPasswordStore.new);
+    i.addSingleton(ResetPasswordStore.new);
+    i.addLazySingleton(CreateAccountStore.new);
+    i.addSingleton(RegistrationCompletionStore.new);
   }
 
   @override
@@ -61,6 +69,9 @@ class AuthModule extends Module {
       resetPasswordSuccessRoute,
       child: (_) => const ResetPasswordSuccessView(),
     );
-    r.module(HomeModule.initialRoute, module: InitModule());
+    r.child(
+      registrationCompletionRoute,
+      child: (_) => const RegistrationCompletionView(),
+    );
   }
 }

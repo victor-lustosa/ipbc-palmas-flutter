@@ -36,7 +36,7 @@ class SplashModule extends Module {
   @override
   void binds(i) {
     i.addSingleton(
-          () => DatabaseBloc(
+      () => DatabaseBloc(
         useCases: i.get<AuthUseCase>(),
       ),
     );
@@ -53,10 +53,9 @@ class SplashModule extends Module {
   }
 }
 
-
 class HomeModule extends Module {
   static const String homeRoute = '/home';
-  static const String initialRoute = '/';
+  static const String initialRoute = '/init';
   static const String eventsListRoute = '/events-list';
   static const String servicesCollectionRoute = "/services-collection";
   static const String servicesListRoute = '/services-list';

@@ -4,8 +4,8 @@ import 'package:home_module/home_module.dart';
 
 void main() async {
   //  Modular.setInitialRoute(ServiceModule.servicesRoute + ServiceModule.editLyricRoute);
-  Modular.setInitialRoute(SplashModule.splashRoute);
-  // Modular.setInitialRoute(AuthModule.authRoute + AuthModule.resetPasswordRoute);
+  // Modular.setInitialRoute(SplashModule.splashRoute);
+  Modular.setInitialRoute(AuthModule.authRoute + AuthModule.loginRoute);
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([
     SupabaseDatasource.init(),
@@ -33,6 +33,3 @@ void main() async {
     ),
   );
 }
-
-
-
