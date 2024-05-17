@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lyric_module/lyric_module.dart';
 import 'package:offers_module/offers_module.dart';
 
-import '../../home/home_module.dart';
+import '../../../home_module.dart';
 
 class InitView extends StatefulWidget {
   const InitView({super.key});

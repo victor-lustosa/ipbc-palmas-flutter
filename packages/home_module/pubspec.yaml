@@ -1,30 +1,39 @@
-name: auth_module
-description: A new Flutter package project.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+name: home_module
+description: "A new Flutter package project."
 version: 0.0.1
+homepage:
+publish_to: none
 
 environment:
-  sdk: '>=3.1.0 <4.0.0'
+  sdk: '>=3.4.0 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
+
   core_module:
     path: ../core_module
-  home_module:
-    path: ../home_module
+  service_module:
+    path: ../service_module
+  lyric_module:
+    path: ../lyric_module
+  offers_module:
+    path: ../offers_module
+  events_module:
+    path: ../events_module
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
-  melos: ^3.4.0
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
+
   # To add assets to your package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

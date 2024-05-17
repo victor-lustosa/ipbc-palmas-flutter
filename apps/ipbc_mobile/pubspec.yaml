@@ -43,6 +43,9 @@ dependencies:
     path: ../../packages/events_module
   offers_module:
     path: ../../packages/offers_module
+  home_module:
+     path: ../../packages/home_module
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

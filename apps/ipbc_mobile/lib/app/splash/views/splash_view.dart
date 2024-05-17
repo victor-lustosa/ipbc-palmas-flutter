@@ -1,8 +1,7 @@
 import 'package:auth_module/auth_module.dart';
-import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'package:home_module/home_module.dart';
 
-import '../../init/init_module.dart';
 import '../blocs/database_bloc.dart';
 
 class SplashView extends StatefulWidget {
@@ -28,7 +27,7 @@ class _SplashViewState extends State<SplashView> {
       body: BlocConsumer<DatabaseBloc, GenericState<DatabasesState>>(
         listener: (context, state) async {
           if (state is FetchingDataState<DatabasesState>) {
-            if (state.isData) {
+            if (!state.isData) {
               navigate(InitModule.initialRoute);
             } else {
               navigate(AuthModule.authRoute + AuthModule.loginRoute);

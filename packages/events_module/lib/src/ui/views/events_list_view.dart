@@ -26,7 +26,6 @@ class EventsListViewState extends State<EventsListView> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const MainTopBarWidget(),
                 Row(
                   children: [
                     Container(

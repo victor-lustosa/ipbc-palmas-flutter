@@ -21,7 +21,6 @@ class _ServicesListViewState extends State<ServicesListView> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const MainTopBarWidget(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

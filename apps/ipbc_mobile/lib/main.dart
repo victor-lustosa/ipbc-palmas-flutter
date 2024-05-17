@@ -16,7 +16,6 @@ void main() async {
   Bloc.observer = GenericBlocObserver();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
   ]).then(
     (_) => runApp(
       ModularApp(

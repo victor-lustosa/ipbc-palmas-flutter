@@ -1,4 +1,5 @@
 import 'package:core_module/core_module.dart';
+import 'package:home_module/home_module.dart';
 
 import '../auth_module.dart';
 import 'external/hive_auth_datasource.dart';
@@ -14,7 +15,6 @@ import 'ui/views/verification_code_view.dart';
 
 class AuthModule extends Module {
   static const String authRoute = '/auth';
-  static const String homeRoute = '/home';
   static const String loginRoute = '/login';
   static const String createAccountRoute = '/create-account';
   static const String verificationCodeRoute = '/verification-code';
@@ -61,5 +61,6 @@ class AuthModule extends Module {
       resetPasswordSuccessRoute,
       child: (_) => const ResetPasswordSuccessView(),
     );
+    r.module(HomeModule.initialRoute, module: InitModule());
   }
 }
