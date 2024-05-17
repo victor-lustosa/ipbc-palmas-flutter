@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:auth_module/auth_module.dart';
 import 'package:events_module/events_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +8,12 @@ import 'package:lyric_module/lyric_module.dart';
 import 'package:offers_module/offers_module.dart';
 import 'package:service_module/service_module.dart';
 
+import '../home_module.dart';
+import 'ui/blocs/database_bloc.dart';
 import 'ui/blocs/home_bloc.dart';
 import 'ui/views/home_view.dart';
 import 'ui/views/init_view.dart';
+import 'ui/views/splash_view.dart';
 
 class InitModule extends Module {
   static const String initialRoute = '/init';
@@ -22,6 +26,33 @@ class InitModule extends Module {
     r.child('/', child: (_) => const InitView());
   }
 }
+
+class SplashModule extends Module {
+  static const String splashRoute = '/splash';
+
+  @override
+  List<Module> get imports => [CoreModule(), AuthModule()];
+
+  @override
+  void binds(i) {
+    i.addSingleton(
+          () => DatabaseBloc(
+        useCases: i.get<AuthUseCase>(),
+      ),
+    );
+  }
+
+  @override
+  void routes(r) {
+    r.child(splashRoute, child: (_) => const SplashView());
+    r.module(InitModule.initialRoute, module: InitModule());
+    r.module(AuthModule.authRoute, module: AuthModule());
+    r.module(LyricModule.lyricsRoute, module: LyricModule());
+    r.module(ServiceModule.servicesRoute, module: ServiceModule());
+    r.module(EventModule.eventRoute, module: EventModule());
+  }
+}
+
 
 class HomeModule extends Module {
   static const String homeRoute = '/home';

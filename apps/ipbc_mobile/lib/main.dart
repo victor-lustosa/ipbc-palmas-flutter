@@ -1,8 +1,6 @@
-import 'package:core_module/core_module.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-
-import 'app/splash/splash_module.dart';
+import 'package:home_module/home_module.dart';
 
 void main() async {
   //  Modular.setInitialRoute(ServiceModule.servicesRoute + ServiceModule.editLyricRoute);

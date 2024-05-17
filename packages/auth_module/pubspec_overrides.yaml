@@ -2,3 +2,5 @@
 dependency_overrides:
   core_module:
     path: ../core_module
+  home_module:
+    path: ../home_module

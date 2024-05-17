@@ -4,6 +4,7 @@ import 'package:home_module/home_module.dart';
 
 import '../blocs/database_bloc.dart';
 
+
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
 

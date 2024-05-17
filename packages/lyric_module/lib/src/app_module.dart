@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+
 import '../lyric_module.dart';
 import 'ui/blocs/lyric_bloc.dart';
 import 'ui/views/lyric_view.dart';

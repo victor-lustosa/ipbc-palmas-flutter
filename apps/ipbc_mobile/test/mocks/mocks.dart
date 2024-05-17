@@ -1,5 +1,5 @@
 
-import 'package:lyric_module/lyric_module.dart';
+import 'package:home_module/home_module.dart';
 import 'package:mocktail/mocktail.dart';
 
 class LyricEntityMock extends Mock implements LyricEntity {}
