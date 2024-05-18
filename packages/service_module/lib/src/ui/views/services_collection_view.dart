@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 import '../../../service_module.dart';
 import '../blocs/services_collection_bloc.dart';
@@ -24,6 +25,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
   @override
   void initState() {
     super.initState();
+    setDarkAppBar();
     entitiesList = [];
     path = widget.entity.path;
     _bloc = Modular.get<ServicesCollectionBloc>();
@@ -31,49 +33,61 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
   }
 
   @override
+  void dispose() {
+    setLightAppBar();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant ServicesCollectionView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: BlocBuilder<ServicesCollectionBloc,
-              GenericState<ServicesCollectionState>>(
-            bloc: _bloc,
-            builder: (context, state) {
-              if (state is LoadingState<ServicesCollectionState>) {
-                return const LoadingWidget(
-                  androidRadius: 3,
-                  iosRadius: 14,
-                  color: AppColors.darkGreen,
-                );
-              } else if (state is NoConnectionState<ServicesCollectionState>) {
-                return NoConnectionView(
-                  action: () => nativeNavigate(
-                    ServiceModule.servicesCollectionRoute,
-                    context,
-                  ),
-                );
-              } else if (state
-                  is DataFetchedState<ServicesCollectionState, ServiceEntity>) {
-                entitiesList = state.entities;
-                return Column(
-                  children: [
-                    ServiceTopBarWidget(
-                      image: widget.entity.image,
-                      title: "Cultos de ${widget.entity.heading}",
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                        top: 24,
-                        left: 15.5,
-                        right: 15.5,
-                        bottom: 40,
+      body: BlocBuilder<ServicesCollectionBloc,
+          GenericState<ServicesCollectionState>>(
+        bloc: _bloc,
+        builder: (context, state) {
+          if (state is LoadingState<ServicesCollectionState>) {
+            return const LoadingWidget(
+              androidRadius: 3,
+              iosRadius: 14,
+              color: AppColors.darkGreen,
+            );
+          } else if (state is NoConnectionState<ServicesCollectionState>) {
+            return NoConnectionView(
+              action: () => nativeNavigate(
+                ServiceModule.servicesCollectionRoute,
+                context,
+              ),
+            );
+          } else if (state
+              is DataFetchedState<ServicesCollectionState, ServiceEntity>) {
+            entitiesList = state.entities;
+            return AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle.light,
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  width: context.mediaQuery.size.width,
+                  child: Column(
+                    children: [
+                      ServiceTopBarWidget(
+                        image: widget.entity.image,
+                        title: "Cultos de ${widget.entity.heading}",
                       ),
-                      child: SizedBox(
-                        width: context.mediaQuery.size.width,
+                      Container(
+                        margin: const EdgeInsets.only(
+                          top:24,
+                          left: 15.5,
+                          right: 15.5,
+                        ),
                         child: ListView.separated(
                           separatorBuilder: (BuildContext context, int index) {
                             return const SizedBox(height: 16);
                           },
+                          padding: EdgeInsets.zero,
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           itemCount: entitiesList.length,
@@ -155,15 +169,15 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                           },
                         ),
                       ),
-                    ),
-                  ],
-                );
-              } else {
-                return const GenericErrorView();
-              }
-            },
-          ),
-        ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return const GenericErrorView();
+          }
+        },
       ),
       floatingActionButton: FloatingButtonWidget(
         iconColor: AppColors.white,

@@ -31,24 +31,21 @@ class _InitViewState extends State<InitView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: SafeArea(
-        child: PageView(
-          controller: _controller,
-          onPageChanged: (index) {
-            setState(
-              () {
-                selectedIndex = index;
-              },
-            );
-          },
-          children: const [
-            NativeHomeRoutes(),
-            NativeLyricRoutes(),
-            OffersView(),
-          ],
-        ),
+      body: PageView(
+        controller: _controller,
+        onPageChanged: (index) {
+          setState(
+            () {
+              selectedIndex = index;
+            },
+          );
+        },
+        children: const [
+          NativeHomeRoutes(),
+          NativeLyricRoutes(),
+          OffersView(),
+        ],
       ),
-      extendBody: true,
       bottomNavigationBar: AnimatedBuilder(
         animation: _controller,
         builder: (__, _) {

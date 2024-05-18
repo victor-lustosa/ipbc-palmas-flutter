@@ -1,16 +1,21 @@
-
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-
 class GuidelineWidget extends StatelessWidget {
-  const GuidelineWidget({super.key, required this.liturgiesList, required this.timelineColor, required this.circleColor});
+  const GuidelineWidget(
+      {super.key,
+      required this.liturgiesList,
+      required this.timelineColor,
+      required this.circleColor});
+
   final List<LiturgyEntity> liturgiesList;
   final Color timelineColor;
   final Color circleColor;
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: EdgeInsets.zero,
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -22,12 +27,8 @@ class GuidelineWidget extends StatelessWidget {
               children: <Widget>[
                 Container(
                   width: 1,
-                  height: liturgiesList[index].isAdditional
-                      ? 29
-                      : 18,
-                  color: index == 0
-                      ? AppColors.white
-                      : timelineColor,
+                  height: liturgiesList[index].isAdditional ? 29 : 18,
+                  color: index == 0 ? AppColors.white : timelineColor,
                 ),
                 Container(
                   width: 6,
@@ -40,9 +41,7 @@ class GuidelineWidget extends StatelessWidget {
                 ),
                 Container(
                   width: 1,
-                  height: liturgiesList[index].isAdditional
-                      ? 28
-                      : 18,
+                  height: liturgiesList[index].isAdditional ? 28 : 18,
                   color: index == liturgiesList.length - 1
                       ? AppColors.white
                       : timelineColor,

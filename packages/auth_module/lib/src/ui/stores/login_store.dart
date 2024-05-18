@@ -18,7 +18,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     value = LoadingState<LoginState>();
     Future.delayed(const Duration(seconds: 1), () {
       if (_email == email && _password == password) {
-        navigate(HomeModule.initialRoute);
+        navigate(InitModule.initialRoute);
       } else {
         value = InitialState<LoginState>();
         showCustomErrorDialog(

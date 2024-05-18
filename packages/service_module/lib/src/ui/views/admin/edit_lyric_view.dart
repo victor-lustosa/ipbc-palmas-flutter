@@ -27,6 +27,7 @@ class _EditLyricViewState extends State<EditLyricView> {
   void initState() {
     super.initState();
     _store.getLyrics();
+    setDarkAppBar();
   }
 
   @override

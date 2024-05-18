@@ -36,6 +36,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
             height: 8,
           );
         },
+        padding: EdgeInsets.zero,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: widget.entitiesList.length,
@@ -74,7 +75,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                     context: context,
                     callback: (value) {
                       setState(() {
-                        _elevationActive = value;
+                        _elevationActive = value!;
                       });
                     },
                   );

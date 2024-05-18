@@ -63,128 +63,134 @@ class _EditLiturgiesViewState extends State<EditLiturgiesView> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    setDarkAppBar();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            color: AppColors.white,
-            width: context.mediaQuery.size.width,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ServiceTopBarWidget(
-                  image: widget.dto.image,
-                  title: "Cultos de ${widget.dto.heading}",
-                ),
-                Container(
-                  margin:
-                      const EdgeInsets.only(left: 16.5, top: 24.7, bottom: 16),
-                  child: Text(
-                    'Edite a liturgia do culto:',
-                    style: AppFonts.defaultFont(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 17,
-                      color: AppColors.grey10,
-                    ),
+      body: SingleChildScrollView(
+        child: Container(
+          color: AppColors.white,
+          width: context.mediaQuery.size.width,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ServiceTopBarWidget(
+                image: widget.dto.image,
+                title: "Cultos de ${widget.dto.heading}",
+              ),
+              Container(
+                margin:
+                    const EdgeInsets.only(left: 16.5, top: 24.7, bottom: 16),
+                child: Text(
+                  'Edite a liturgia do culto:',
+                  style: AppFonts.defaultFont(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 17,
+                    color: AppColors.grey10,
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(
-                    left: 19,
-                    right: 19,
-                    bottom: 24,
-                  ),
-                  child: ReorderableListView.builder(
-                    shrinkWrap: true,
-                    itemCount: _items.length,
-                    buildDefaultDragHandles: false,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        key: Key('${_items[index].id}'),
-                        onLongPress: () {},
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  left: 19,
+                  right: 19,
+                  bottom: 24,
+                ),
+                child: ReorderableListView.builder(
+                  shrinkWrap: true,
+                  itemCount: _items.length,
+                  buildDefaultDragHandles: false,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      key: Key('${_items[index].id}'),
+                      onLongPress: () {
+                        showCustomOptionsDialog(context: context);
+                      },
+                      child: Container(
+                        color: Colors.transparent,
+                        padding: const EdgeInsets.only(
+                          top: 8,
+                          bottom: 8,
+                        ),
                         child: Container(
-                          color: Colors.transparent,
-                          padding: const EdgeInsets.only(
-                            top: 8,
-                            bottom: 8,
+                          decoration: const BoxDecoration(
+                            color: AppColors.searchBar,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(16)),
                           ),
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              color: AppColors.searchBar,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(16)),
-                            ),
-                            child: Row(
-                              children: [
-                                GridBallsTileWidget(index: index),
-                                Container(
-                                  margin: const EdgeInsets.only(
-                                    bottom: 12,
-                                    top: 12,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        _items[index].sequence,
-                                        style: AppFonts.defaultFont(
-                                          color: AppColors.grey9,
-                                          fontSize: 17,
-                                        ),
+                          child: Row(
+                            children: [
+                              GridBallsTileWidget(index: index),
+                              Container(
+                                margin: const EdgeInsets.only(
+                                  bottom: 12,
+                                  top: 12,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      _items[index].sequence,
+                                      style: AppFonts.defaultFont(
+                                        color: AppColors.grey9,
+                                        fontSize: 17,
                                       ),
-                                      Visibility(
-                                        visible: _items[index].isAdditional,
-                                        child: Container(
-                                          margin: const EdgeInsets.only(top: 4),
-                                          child: Text(
-                                            _items[index].additional,
-                                            style: AppFonts.defaultFont(
-                                              color: AppColors.grey8,
-                                              fontSize: 13,
-                                            ),
+                                    ),
+                                    Visibility(
+                                      visible: _items[index].isAdditional,
+                                      child: Container(
+                                        margin: const EdgeInsets.only(top: 4),
+                                        child: Text(
+                                          _items[index].additional,
+                                          style: AppFonts.defaultFont(
+                                            color: AppColors.grey8,
+                                            fontSize: 13,
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                      );
-                    },
-                    onReorder: (int oldIndex, int newIndex) {
-                      setState(() {
-                        if (oldIndex < newIndex) {
-                          newIndex -= 1;
-                        }
-                        final LiturgyEntity item = _items.removeAt(oldIndex);
-                        _items.insert(newIndex, item);
-                      });
-                    },
-                    proxyDecorator: (Widget child, _, animation) {
-                      return AnimatedBuilder(
-                        animation: animation,
-                        builder: (BuildContext context, Widget? child) {
-                          final animValue =
-                              Curves.easeInOut.transform(animation.value);
-                          final scale = lerpDouble(1, 1.05, animValue)!;
-                          return Transform.scale(
-                            scale: scale,
-                            child: child,
-                          );
-                        },
-                        child: child,
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
+                  onReorder: (int oldIndex, int newIndex) {
+                    setState(() {
+                      if (oldIndex < newIndex) {
+                        newIndex -= 1;
+                      }
+                      final LiturgyEntity item = _items.removeAt(oldIndex);
+                      _items.insert(newIndex, item);
+                    });
+                  },
+                  proxyDecorator: (Widget child, _, animation) {
+                    return AnimatedBuilder(
+                      animation: animation,
+                      builder: (BuildContext context, Widget? child) {
+                        final animValue =
+                            Curves.easeInOut.transform(animation.value);
+                        final scale = lerpDouble(1, 1.05, animValue)!;
+                        return Transform.scale(
+                          scale: scale,
+                          child: child,
+                        );
+                      },
+                      child: child,
+                    );
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
