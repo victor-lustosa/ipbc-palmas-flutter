@@ -315,18 +315,24 @@ class _RegistrationCompletionViewState
     }
   }
 
-  _phoneValidation(String value) {
-    String regexpPhone = (r'[\D]');
-    RegExp regExp = RegExp(regexpPhone);
+  _phoneBorderValidation(bool value) {
+    Future.delayed(Duration.zero, () async {
+      if (mounted) {
+        setState(() {
+          _isValidPhone = value;
+        });
+      }
+    });
+  }
 
-    if (value.isEmpty) {
-      return _isValidPhone = false;
-    } else if (value.trim().length != 15) {
-      return _isValidPhone = false;
-    } else if (!regExp.hasMatch(value)) {
-      return _isValidPhone = false;
+  _phoneValidation(String? value) {
+    if (value == null || value.isEmpty) {
+      _phoneBorderValidation(false);
+    } else {
+      (_store.lengthPhone)
+          ? _phoneBorderValidation(true)
+          : _phoneBorderValidation(false);
     }
-    return _isValidPhone = true;
   }
 
   bool validateCEP(String cep) {
