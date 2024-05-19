@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../auth_module.dart';
 
 class CreateAccountView extends StatefulWidget {
-  const CreateAccountView({Key? key}) : super(key: key);
+  const CreateAccountView({super.key});
 
   @override
   State<CreateAccountView> createState() => _CreateAccountViewState();

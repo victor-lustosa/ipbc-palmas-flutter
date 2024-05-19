@@ -35,6 +35,8 @@ class AppIcons {
 
   static const String emailSuccess = 'assets/icons/email-success.png';
   static const String trash = 'assets/icons/delete.png';
+  static const String addNotes = 'assets/icons/add_notes.png';
+  static const String contentCopy = 'assets/icons/content_copy.png';
   static const String edit = 'assets/icons/edit_square.png';
   static const String info = 'assets/icons/info.png';
   static const String editIcon = 'assets/icons/edit.png';

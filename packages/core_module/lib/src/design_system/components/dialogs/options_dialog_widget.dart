@@ -11,92 +11,130 @@ Future<void> showCustomOptionsDialog({
   return showDialog<void>(
     context: context,
     barrierDismissible: true,
-    barrierColor: AppColors.black.withOpacity(0.15),
+    barrierColor: AppColors.black.withOpacity(0.3),
     builder: (BuildContext context) {
-      return Stack(
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Align(
-            child: ClipRRect(
-              child: Container(
-                height: 108,
-                width: MediaQuery.of(context).size.width * .8,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                      color: AppColors.dividerModal.withOpacity(0.1), width: 1),
-                ),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                  child: AlertDialog(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    insetPadding: EdgeInsets.zero,
-                    contentPadding: EdgeInsets.zero,
-                    surfaceTintColor: Colors.transparent,
-                    backgroundColor: Colors.white.withOpacity(0.7),
-                    content: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            width: context.mediaQuery.size.width,
+            child: Dialog(
+              insetPadding: EdgeInsets.zero,
+              surfaceTintColor: Colors.transparent,
+              backgroundColor: Colors.transparent,
+              child: Column(
+                children: [
+                  ClipRRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Column(
                           children: [
-                            Container(
-                              margin: const EdgeInsets.only(
-                                right: 10,
-                              ),
-                              child: SizedBox(
-                                height: 20,
-                                width: 20,
-                                child: Image.asset(AppIcons.edit),
-                              ),
+                            button(context: context,callback: callback, top: 20,bottom: 12,icon: AppIcons.addNotes, label:  'Add Box'),
+                            const Divider(
+                              height: 1,
+                              color: AppColors.cardBallsGrey,
                             ),
-                            Text(
-                              'Editar',
+                            button(context: context,callback: callback, top: 12,bottom: 12,icon: AppIcons.contentCopy, label:  'Duplicar'),
+                            const Divider(
+                              height: 1,
+                              color: AppColors.cardBallsGrey,
+                            ),
+                            button(context: context,callback: callback, top: 12,bottom: 20,icon: AppIcons.trash, label:  'Deletar'),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 16),
+                    child: ClipRRect(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                        child: SizedBox(
+                          width: context.mediaQuery.size.width,
+                          child: ButtonWidget(
+                            overlayColor: Colors.transparent,
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            adaptiveButtonType: AdaptiveButtonType.text,
+                            action: () {
+                              if (callback != null) {
+                                callback(false);
+                              }
+                              pop(context);
+                            },
+                            backgroundColor: Colors.white.withOpacity(0.8),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Text(
+                              'Cancelar',
                               style: AppFonts.defaultFont(
                                 fontSize: 17,
                                 color: AppColors.grey10,
                               ),
                             ),
-                          ],
-                        ),
-                        Divider(
-                          height: 1,
-                          color: AppColors.dividerModal.withOpacity(0.1),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(
-                            top: 12,
-                            left: 12,
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  right: 10,
-                                ),
-                                height: 20,
-                                width: 20,
-                                child: Image.asset(AppIcons.trash),
-                              ),
-                              Text(
-                                'Deletar',
-                                style: AppFonts.defaultFont(
-                                  fontSize: 17,
-                                  color: AppColors.grey10,
-                                ),
-                              ),
-                            ],
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
             ),
           ),
         ],
       );
     },
+  );
+}
+
+button({
+  required BuildContext context,
+  final Function(bool?)? callback,
+  required String icon,
+  required String label,
+  required double top,
+  required double bottom
+}) {
+  return ButtonWidget(
+    overlayColor: Colors.transparent,
+    padding: EdgeInsets.only(
+      top: top,
+      bottom: bottom,
+    ),
+    adaptiveButtonType: AdaptiveButtonType.text,
+    action: () {
+      if (callback != null) {
+        callback(false);
+      }
+      pop(context);
+    },
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          margin: EdgeInsets.only(
+            right: 10,
+            left: context.mediaQuery.size.width * .31,
+          ),
+          height: 20,
+          width: 20,
+          child: Image.asset(icon),
+        ),
+        Text(
+          label,
+          style: AppFonts.defaultFont(
+            fontSize: 17,
+            color: AppColors.grey10,
+          ),
+        ),
+      ],
+    ),
   );
 }

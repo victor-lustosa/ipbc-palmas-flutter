@@ -10,13 +10,13 @@ class TextVerificationWidget extends StatelessWidget {
   final VoidCallback? onTapTextTwo;
 
   const TextVerificationWidget({
-    Key? key,
+    super.key,
     required this.textOne,
     this.styleOne,
     this.textTwo,
     this.styleTwo,
     this.onTapTextTwo,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

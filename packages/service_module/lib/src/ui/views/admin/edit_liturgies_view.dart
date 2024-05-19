@@ -65,7 +65,7 @@ class _EditLiturgiesViewState extends State<EditLiturgiesView> {
   @override
   void initState() {
     super.initState();
-    setDarkAppBar();
+    setLightAppBar();
   }
 
   @override
@@ -84,7 +84,7 @@ class _EditLiturgiesViewState extends State<EditLiturgiesView> {
               ),
               Container(
                 margin:
-                    const EdgeInsets.only(left: 16.5, top: 24.7, bottom: 16),
+                    const EdgeInsets.only(left: 16.5, top: 24.7, bottom: 8),
                 child: Text(
                   'Edite a liturgia do culto:',
                   style: AppFonts.defaultFont(
@@ -96,9 +96,9 @@ class _EditLiturgiesViewState extends State<EditLiturgiesView> {
               ),
               Container(
                 margin: const EdgeInsets.only(
-                  left: 19,
-                  right: 19,
-                  bottom: 24,
+                  left: 16,
+                  right: 16,
+                  bottom: 40,
                 ),
                 child: ReorderableListView.builder(
                   shrinkWrap: true,
@@ -128,8 +128,8 @@ class _EditLiturgiesViewState extends State<EditLiturgiesView> {
                               GridBallsTileWidget(index: index),
                               Container(
                                 margin: const EdgeInsets.only(
-                                  bottom: 12,
-                                  top: 12,
+                                  bottom: 8,
+                                  top: 8,
                                 ),
                                 child: Column(
                                   crossAxisAlignment:

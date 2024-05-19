@@ -25,22 +25,10 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
   @override
   void initState() {
     super.initState();
-    setDarkAppBar();
     entitiesList = [];
     path = widget.entity.path;
     _bloc = Modular.get<ServicesCollectionBloc>();
     _bloc.add(CheckConnectivityEvent(path: path));
-  }
-
-  @override
-  void dispose() {
-    setLightAppBar();
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(covariant ServicesCollectionView oldWidget) {
-    super.didUpdateWidget(oldWidget);
   }
 
   @override

@@ -104,7 +104,7 @@ class _RegistrationCompletionViewState
                     isValid: _isValidPhone,
                     isPressed: _isPressed,
                     validator: (data) {
-                      _phoneValidation(data);
+                      return _phoneValidation(data);
                     },
                     inputDecoration: fieldInputDecoration(
                       isValid: _isValidPhone,
@@ -123,7 +123,9 @@ class _RegistrationCompletionViewState
                     errorText: 'Preencha o CEP',
                     isValid: isValidCep,
                     isPressed: _isPressed,
-                    validator: (data) {},
+                    validator: (data) {
+                      return null;
+                    },
                     inputDecoration: fieldInputDecoration(
                       isValid: isValidCep,
                       hintText: 'CEP',
@@ -157,7 +159,9 @@ class _RegistrationCompletionViewState
                     errorText: 'Preencha a data de nascimento',
                     isValid: _isValidName,
                     isPressed: _isPressed,
-                    validator: (data) {},
+                    validator: (data) {
+                      return null;
+                    },
                     inputDecoration: fieldInputDecoration(
                       suffixIconConstraints: const BoxConstraints(
                         minWidth: 24,
