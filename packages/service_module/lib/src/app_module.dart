@@ -31,6 +31,7 @@ class ServiceModule extends Module {
     );
 
     i.addLazySingleton<EditLyricStore>(EditLyricStore.new);
+    i.addSingleton<EditLiturgyViewModel>(EditLiturgyViewModel.new);
   }
 
   @override
@@ -52,7 +53,7 @@ class ServiceModule extends Module {
     r.child(
       editLiturgiesRoute,
       transition: TransitionType.custom,
-      child: (_) => EditLiturgiesView(dto: r.args.data as EditLiturgyDTO),
+      child: (_) => EditLiturgyView(dto: r.args.data as EditLiturgyDTO),
       customTransition: ModularFadeTransition(),
     );
     r.child(

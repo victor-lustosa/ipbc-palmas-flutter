@@ -114,7 +114,7 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
 
           case ServiceModule.editLiturgiesRoute:
             return CustomFadeTransition(
-              child: EditLiturgiesView(
+              child: EditLiturgyView(
                 dto: settings.arguments as EditLiturgyDTO,
               ),
             );

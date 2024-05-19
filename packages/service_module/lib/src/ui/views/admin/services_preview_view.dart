@@ -12,7 +12,7 @@ class ServicesPreviewDTO {
   });
 
   final String heading;
-  final List<LiturgyEntity> liturgiesList;
+  final List<LiturgyModel> liturgiesList;
   final String image;
 }
 
@@ -29,7 +29,6 @@ class ServicesPreviewView extends StatefulWidget {
 }
 
 class _ServicesPreviewViewState extends State<ServicesPreviewView> {
-
   @override
   void initState() {
     super.initState();
@@ -138,7 +137,13 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
         backgroundColor: AppColors.warning,
         pngIcon: AppIcons.editIcon,
         size: 37,
-        action: () => pop(context),
+        action: () => Navigator.popAndPushNamed(context,
+          ServiceModule.servicesRoute + ServiceModule.editLiturgiesRoute,
+          arguments: EditLiturgyDTO(
+            image: widget.dto.image,
+            heading: widget.dto.heading,
+          ),
+        ),
       ),
     );
   }

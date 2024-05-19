@@ -1,8 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'states.dart';
-
 
 class EditLyricStore extends ValueNotifier<GenericState<EditLyricState>> {
   EditLyricStore() : super(LoadingState());
@@ -14,3 +12,9 @@ class EditLyricStore extends ValueNotifier<GenericState<EditLyricState>> {
     }
   }
 }
+
+@immutable
+abstract class EditLyricState{}
+
+
+
