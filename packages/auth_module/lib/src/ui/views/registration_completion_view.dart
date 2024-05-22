@@ -131,7 +131,9 @@ class _RegistrationCompletionViewState
                     isValid: _isValidCep,
                     isPressed: _isPressed,
                     validator: (data) {
+
                       return _cepValidation(data);
+
                     },
                     inputDecoration: fieldInputDecoration(
                       isValid: _isValidCep,
@@ -177,7 +179,9 @@ class _RegistrationCompletionViewState
                     isValid: _isValidDate,
                     isPressed: _isPressed,
                     validator: (data) {
+
                       _dateValidation(data);
+
                     },
                     inputDecoration: fieldInputDecoration(
                       suffixIconConstraints: const BoxConstraints(

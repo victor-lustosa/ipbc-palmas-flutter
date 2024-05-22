@@ -17,7 +17,7 @@ class CustomCheckBox extends StatefulWidget {
   final BoxShape? shape;
 
   const CustomCheckBox({
-    Key? key,
+    super.key,
     required this.isChecked,
     required this.textCheckedBox,
     required this.onChanged,
@@ -31,7 +31,7 @@ class CustomCheckBox extends StatefulWidget {
     this.sizeIcon,
     this.colorBoder,
     this.shape,
-  }) : super(key: key);
+  });
 
   @override
   CheckBoxCustomState createState() => CheckBoxCustomState();

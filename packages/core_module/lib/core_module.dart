@@ -25,6 +25,8 @@ export 'src/shared/utils/mock_util.dart';
 
 export 'src/shared/blocs/generics.dart';
 
+export 'src/shared/view_models/edit_liturgy_view_model.dart';
+
 export 'src/app_module.dart';
 
 export 'src/configs/app_configs.dart';
@@ -105,4 +107,5 @@ export 'src/core/domain/entities/services_entity.dart';
 export 'src/core/domain/entities/liturgy_entity.dart';
 export 'src/core/infra/models/service_model.dart';
 export 'src/core/infra/models/services_model.dart';
+export 'src/core/infra/models/liturgy_model.dart';
 export 'src/core/infra/models/lyric_model.dart';

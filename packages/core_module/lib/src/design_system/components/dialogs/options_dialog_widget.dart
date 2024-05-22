@@ -2,115 +2,66 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:core_module/core_module.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Future<void> showCustomOptionsDialog({
   required BuildContext context,
-  required final Function(bool) callback,
+  final Function(bool?)? callback,
 }) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: false,
-    barrierColor: Colors.transparent,
+    barrierColor: AppColors.black.withOpacity(0.3),
     builder: (BuildContext context) {
-      return Stack(
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Align(
-            alignment: const Alignment(1, .8),
-            child: ClipRRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Container(
-                  margin: const EdgeInsets.only(right: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                        color: AppColors.dividerModal.withOpacity(0.1),
-                        width: 1),
-                  ),
-                  height: 108,
-                  width: 170,
-                  child: AlertDialog(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            width: context.mediaQuery.size.width,
+            child: Dialog(
+              insetPadding: EdgeInsets.zero,
+              surfaceTintColor: Colors.transparent,
+              backgroundColor: Colors.transparent,
+              child: Column(
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: AppColors.searchBar,
+                      borderRadius:
+                      BorderRadius.all(Radius.circular(16)),
                     ),
-                    insetPadding: EdgeInsets.zero,
-                    contentPadding: EdgeInsets.zero,
-                    surfaceTintColor: Colors.transparent,
-                    backgroundColor: Colors.transparent.withOpacity(0.01),
-                    content: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    margin: EdgeInsets.only(bottom: context.mediaQuery.size.height * .3),
+                    child: Row(
                       children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(
-                                bottom: 12,
-                                top: 20,
-                                left: 13,
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(
-                                      right: 10,
-                                    ),
-                                    child: SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: Image.asset(AppIcons.edit),
-                                    ),
-                                  ),
-                                  Text(
-                                    'Editar',
-                                    style: AppFonts.defaultFont(
-                                      fontSize: 17,
-                                      color: AppColors.grey10,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            IconButtonWidget(
-                                sizeIcon: 20,
-                                size: 40,
-                                action: () {
-                                  callback(false);
-                                 pop(context);
-                                },
-                                color: AppColors.grey10,
-                                iOSIcon: CupertinoIcons.clear,
-                                androidIcon: Icons.clear,
-                            ),
-                          ],
-                        ),
-                        Divider(
-                          height: 1,
-                          color: AppColors.dividerModal.withOpacity(0.1),
-                        ),
                         Container(
                           margin: const EdgeInsets.only(
-                            top: 12,
-                            left: 12,
+                            bottom: 18,
+                            left: 20,
+                            top: 18,
                           ),
-                          child: Row(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  right: 10,
-                                ),
-                                height: 20,
-                                width: 20,
-                                child: Image.asset(AppIcons.trash),
-                              ),
+                          child: Column(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                            children: <Widget>[
                               Text(
-                                'Deletar',
+                                Modular.get<EditLiturgyViewModel>().entity.sequence,
                                 style: AppFonts.defaultFont(
+                                  color: AppColors.grey9,
                                   fontSize: 17,
-                                  color: AppColors.grey10,
+                                ),
+                              ),
+                              Visibility(
+                                visible: Modular.get<EditLiturgyViewModel>().entity.isAdditional,
+                                child: Container(
+                                  margin: const EdgeInsets.only(top: 4),
+                                  child: Text(
+                                    Modular.get<EditLiturgyViewModel>().entity.additional,
+                                    style: AppFonts.defaultFont(
+                                      color: AppColors.grey8,
+                                      fontSize: 13,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -119,7 +70,96 @@ Future<void> showCustomOptionsDialog({
                       ],
                     ),
                   ),
-                ),
+                  ClipRRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Column(
+                          children: [
+                            actionButton(
+                              context: context,
+                              callback: callback,
+                              top: 20,
+                              bottom: 12,
+                              icon: AppIcons.addNotes,
+                              label: 'Add Box',
+                              action: () {
+                                Modular.get<EditLiturgyViewModel>().addBox();
+                                closeDialog(context: context,callback: callback);
+                              },
+                            ),
+                            const Divider(
+                              height: 1,
+                              color: AppColors.cardBallsGrey,
+                            ),
+                            actionButton(
+                              context: context,
+                              callback: callback,
+                              top: 12,
+                              bottom: 12,
+                              icon: AppIcons.contentCopy,
+                              label: 'Duplicar',
+                              action: () {
+                                Modular.get<EditLiturgyViewModel>().copyEntity();
+                                closeDialog(context: context,callback: callback);
+                              },
+                            ),
+                            const Divider(
+                              height: 1,
+                              color: AppColors.cardBallsGrey,
+                            ),
+                            actionButton(
+                              context: context,
+                              callback: callback,
+                              top: 12,
+                              bottom: 20,
+                              icon: AppIcons.trash,
+                              label: 'Deletar',
+                              action: () {
+                                Modular.get<EditLiturgyViewModel>().delete();
+                                closeDialog(context: context,callback: callback);
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 16),
+                    child: ClipRRect(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                        child: SizedBox(
+                          width: context.mediaQuery.size.width,
+                          child: ButtonWidget(
+                            overlayColor: Colors.transparent,
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            adaptiveButtonType: AdaptiveButtonType.text,
+                            action: () {
+                              closeDialog(context: context,callback: callback);
+                            },
+                            backgroundColor: Colors.white.withOpacity(0.8),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Text(
+                              'Cancelar',
+                              style: AppFonts.defaultFont(
+                                fontSize: 17,
+                                color: AppColors.grey10,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -127,4 +167,54 @@ Future<void> showCustomOptionsDialog({
       );
     },
   );
+}
+
+closeDialog(
+{required BuildContext context,
+final Function(bool?)? callback}){
+  if (callback != null) {
+    callback(false);
+  }
+  pop(context);
+}
+
+actionButton(
+    {required BuildContext context,
+    final Function(bool?)? callback,
+    required String icon,
+    required String label,
+    required double top,
+    required double bottom,
+    required VoidCallback? action}) {
+  return ButtonWidget(
+    overlayColor: Colors.transparent,
+    padding: EdgeInsets.only(
+      top: top,
+      bottom: bottom,
+    ),
+    adaptiveButtonType: AdaptiveButtonType.text,
+    action: action,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          margin: EdgeInsets.only(
+            right: 10,
+            left: context.mediaQuery.size.width * .31,
+          ),
+          height: 20,
+          width: 20,
+          child: Image.asset(icon),
+        ),
+        Text(
+          label,
+          style: AppFonts.defaultFont(
+            fontSize: 17,
+            color: AppColors.grey10,
+          ),
+        ),
+      ],
+    ),
+  );
+
 }

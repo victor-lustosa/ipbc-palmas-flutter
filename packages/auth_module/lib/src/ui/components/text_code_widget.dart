@@ -4,7 +4,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class TextCodeWidget extends StatefulWidget {
-  const TextCodeWidget({Key? key}) : super(key: key);
+  const TextCodeWidget({super.key});
 
   @override
   State<TextCodeWidget> createState() => _TextCodeWidgetState();

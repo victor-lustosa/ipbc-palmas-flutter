@@ -1,8 +1,6 @@
-import 'package:core_module/core_module.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:home_module/home_module.dart';
-
-import '../../../auth_module.dart';
 
 class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   LoginStore({required IAuthUseCases useCases}):
@@ -18,7 +16,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     value = LoadingState<LoginState>();
     Future.delayed(const Duration(seconds: 1), () {
       if (_email == email && _password == password) {
-        navigate(HomeModule.initialRoute);
+        navigate(InitModule.initialRoute);
       } else {
         value = InitialState<LoginState>();
         showCustomErrorDialog(

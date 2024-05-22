@@ -1,10 +1,8 @@
 import 'dart:io';
 
-import 'package:events_module/events_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:service_module/service_module.dart';
-//import 'package:flutter/services.dart';
+import 'package:flutter/services.dart';
 
 import '../blocs/home_bloc.dart';
 import '../../../home_module.dart';
@@ -16,7 +14,8 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin {
+class _HomeViewState extends State<HomeView>
+    with AutomaticKeepAliveClientMixin {
   late final HomeBloc _bloc;
   List<ServicesEntity> _servicesList = [];
   int activePage = 0;
@@ -47,117 +46,120 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
-      body: SafeArea(
-        child: BlocBuilder<HomeBloc, GenericState<HomeState>>(
-          bloc: _bloc,
-          builder: (context, state) {
-            if (state is LoadingState<HomeState>) {
-              return const LoadingWidget(
-                androidRadius: 3,
-                iosRadius: 14,
-                color: AppColors.darkGreen,
-              );
-            } else if (state is NoConnectionState<HomeState>) {
-              return NoConnectionView(
-                action: () => nativeNavigate(
-                  HomeModule.homeRoute,
-                  context,
-                ),
-              );
-            } else if (state is DataFetchedState<HomeState, ServicesEntity>) {
-              _servicesList = state.entities;
-              return SingleChildScrollView(
-                child: SizedBox(
-                  width: context.mediaQuery.size.width,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const MainTopBarWidget(),
-                      Container(
-                        margin: const EdgeInsets.only(top: 24),
-                        child: InkWell(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,
+      child: Scaffold(
+        body: SafeArea(
+          child: BlocBuilder<HomeBloc, GenericState<HomeState>>(
+            bloc: _bloc,
+            builder: (context, state) {
+              if (state is LoadingState<HomeState>) {
+                return const LoadingWidget(
+                  androidRadius: 3,
+                  iosRadius: 14,
+                  color: AppColors.darkGreen,
+                );
+              } else if (state is NoConnectionState<HomeState>) {
+                return NoConnectionView(
+                  action: () => nativeNavigate(
+                    HomeModule.homeRoute,
+                    context,
+                  ),
+                );
+              } else if (state is DataFetchedState<HomeState, ServicesEntity>) {
+                _servicesList = state.entities;
+                return SingleChildScrollView(
+                  child: SizedBox(
+                    width: context.mediaQuery.size.width,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const MainTopBarWidget(),
+                        Container(
+                          margin: const EdgeInsets.only(top: 24),
+                          child: InkWell(
+                            onTap: () {
+                              nativePushNamed(
+                                ServiceModule.servicesListRoute,
+                                context,
+                                arguments: _servicesList,
+                              );
+                            },
+                            child: Column(
+                              children: [
+                                title(text: "Cultos"),
+                                subtitle(
+                                  right: 17,
+                                  text:
+                                      "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 2),
+                          child: CarouselWidget(
+                            fontStyle: AppFonts.defaultFont(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.white,
+                            ),
+                            margin: const EdgeInsets.only(
+                              left: 6,
+                              right: 6,
+                              bottom: 9,
+                            ),
+                            route: ServiceModule.servicesCollectionRoute,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            width: context.mediaQuery.size.width,
+                            services: _servicesList,
+                            height: 182,
+                          ),
+                        ),
+                        InkWell(
                           onTap: () {
                             nativePushNamed(
-                              ServiceModule.servicesListRoute,
+                              EventModule.eventsListRoute,
                               context,
-                              arguments: _servicesList,
                             );
                           },
                           child: Column(
                             children: [
-                              title(text: "Cultos"),
+                              Container(
+                                margin: const EdgeInsets.only(top: 15),
+                                child: title(text: "Eventos"),
+                              ),
                               subtitle(
-                                right: 17,
+                                right: 18,
                                 text:
-                                    "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
+                                    "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
                               ),
                             ],
                           ),
                         ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 2),
-                        child: CarouselWidget(
-                          fontStyle: AppFonts.defaultFont(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.white,
-                          ),
+                        Container(
                           margin: const EdgeInsets.only(
-                            left: 6,
-                            right: 6,
-                            bottom: 9,
+                            top: 12,
+                            bottom: 20,
                           ),
-                          route: ServiceModule.servicesCollectionRoute,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          width: context.mediaQuery.size.width,
-                          services: _servicesList,
-                          height: 182,
+                          height: 268,
+                          child: SlideCardsWidget(
+                            width: 319,
+                            scrollDirection: Axis.horizontal,
+                            route: ServiceModule.servicesCollectionRoute,
+                            services: _servicesList,
+                          ),
                         ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          nativePushNamed(
-                            EventModule.eventsListRoute,
-                            context,
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(top: 15),
-                              child: title(text: "Eventos"),
-                            ),
-                            subtitle(
-                              right: 18,
-                              text:
-                                  "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(
-                          top: 12,
-                          bottom: 20,
-                        ),
-                        height: 268,
-                        child: SlideCardsWidget(
-                          width: 319,
-                          scrollDirection: Axis.horizontal,
-                          route: ServiceModule.servicesCollectionRoute,
-                          services: _servicesList,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              );
-            } else {
-              return const GenericErrorView();
-            }
-          },
+                );
+              } else {
+                return const GenericErrorView();
+              }
+            },
+          ),
         ),
       ),
     );
