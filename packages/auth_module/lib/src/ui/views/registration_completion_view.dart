@@ -310,9 +310,15 @@ class _RegistrationCompletionViewState
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                )
+                const SizedBox(height: 16),
+                Text(
+                  'Finalizar depois',
+                  style: AppFonts.defaultFont(
+                      color: AppColors.darkGreen,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 32),
               ],
             ),
           ],
