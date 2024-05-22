@@ -24,13 +24,14 @@ class _RegistrationCompletionViewState
   final _dateOfBirthKey = GlobalKey<FormState>();
   final _maritalStatusKey = GlobalKey<FormState>();
 
+  final _isPressed = false;
   bool _isValidName = true;
   bool _isValidPhone = true;
-  bool isValidCep = true;
+  bool _isValidCep = true;
   bool? isChecked;
-  final _isPressed = false;
   bool isCheckedAcceptContact = false;
   bool isCheckedMember = false;
+  bool _isValidDate = true;
 
   String dropdownvalue = 'Solteiro(a)';
 
@@ -40,6 +41,12 @@ class _RegistrationCompletionViewState
     'Divorciado(a)',
     'Viuvo(a)',
   ];
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +111,7 @@ class _RegistrationCompletionViewState
                     isValid: _isValidPhone,
                     isPressed: _isPressed,
                     validator: (data) {
-                      _phoneValidation(data);
+                      return _phoneValidation(data);
                     },
                     inputDecoration: fieldInputDecoration(
                       isValid: _isValidPhone,
@@ -121,11 +128,13 @@ class _RegistrationCompletionViewState
                     globalKey: _zipCodeKey,
                     textInputType: TextInputType.number,
                     errorText: 'Preencha o CEP',
-                    isValid: isValidCep,
+                    isValid: _isValidCep,
                     isPressed: _isPressed,
-                    validator: (data) {},
+                    validator: (data) {
+                      return _cepValidation(data);
+                    },
                     inputDecoration: fieldInputDecoration(
-                      isValid: isValidCep,
+                      isValid: _isValidCep,
                       hintText: 'CEP',
                     ),
                     defaultHintColor: AppColors.grey10),
@@ -135,9 +144,18 @@ class _RegistrationCompletionViewState
                     key: _maritalStatusKey,
                     name: "Estado civil",
                     icon: const Icon(Icons.keyboard_arrow_down),
+                    colorSelect: AppColors.grey10,
                     list: items,
+                    textStyle: AppFonts.defaultFont(
+                        fontSize: 13,
+                        color: AppColors.grey10,
+                        fontWeight: FontWeight.w400),
                     width: MediaQuery.of(context).size.width,
                     height: 48,
+                    marginContent: const EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                    ),
                     sizeBorderRadius: 16,
                     colorBorder: AppColors.secondaryGrey,
                     (String? newValue) {
@@ -154,10 +172,13 @@ class _RegistrationCompletionViewState
                     readOnly: false,
                     textInputType: TextInputType.datetime,
                     globalKey: _dateOfBirthKey,
+                    inputFormatters: <TextInputFormatter>[DataInputFormatter()],
                     errorText: 'Preencha a data de nascimento',
-                    isValid: _isValidName,
+                    isValid: _isValidDate,
                     isPressed: _isPressed,
-                    validator: (data) {},
+                    validator: (data) {
+                      _dateValidation(data);
+                    },
                     inputDecoration: fieldInputDecoration(
                       suffixIconConstraints: const BoxConstraints(
                         minWidth: 24,
@@ -173,17 +194,22 @@ class _RegistrationCompletionViewState
                           androidIcon: Icons.date_range,
                         ),
                       ),
-                      isValid: _isValidName,
+                      isValid: _isValidDate,
                       hintText: 'Data de nascimento',
                     ),
-                    defaultHintColor: AppColors.grey10),
+                    defaultHintColor:
+                        _isValidDate ? AppColors.grey10 : AppColors.delete),
                 const SizedBox(height: 40),
-                Text(
-                  'Você já é membro da Igreja IPB Palmas?',
-                  style: AppFonts.defaultFont(
-                      color: AppColors.grey9,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w400),
+                Container(
+                  margin: const EdgeInsets.only(left: 16),
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Você já é membro da Igreja IPB Palmas?',
+                    style: AppFonts.defaultFont(
+                        color: AppColors.grey9,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w400),
+                  ),
                 ),
                 const SizedBox(height: 16),
                 CustomCheckBox(
@@ -335,13 +361,24 @@ class _RegistrationCompletionViewState
     }
   }
 
-  bool validateCEP(String cep) {
-    cep = cep.replaceAll(RegExp(r'[^\d]'), '');
+  _cepBorderValidation(bool value) {
+    Future.delayed(Duration.zero, () async {
+      if (mounted) {
+        setState(() {
+          _isValidCep = value;
+        });
+      }
+    });
+  }
 
-    if (cep.length != 8) {
-      return isValidCep == false;
+  _cepValidation(String? value) {
+    if (value == null || value.isEmpty) {
+      _cepBorderValidation(false);
+    } else {
+      (value.length == 9)
+          ? _cepBorderValidation(true)
+          : _cepBorderValidation(false);
     }
-    return isValidCep == true;
   }
 
   Future<void> selectDate() async {
@@ -356,5 +393,74 @@ class _RegistrationCompletionViewState
         _store.dateOfBirthValue.text = DateFormat('dd/MM/yyyy').format(picked);
       });
     }
+  }
+
+  void _dateBorderValidation(bool value) {
+    Future.delayed(Duration.zero, () async {
+      if (mounted) {
+        setState(() {
+          _isValidDate = value;
+        });
+      }
+    });
+  }
+
+  _dateValidation(String? value) {
+    if (value == null || value.isEmpty) {
+      _dateBorderValidation(false);
+      return false;
+    } else {
+      bool isValidDate = _validateDate(value);
+      _dateBorderValidation(isValidDate);
+      return isValidDate;
+    }
+  }
+
+  bool _validateDate(String value) {
+    // formato "dd/MM/yyyy"
+    RegExp dateRegExp = RegExp(r'^\d{2}/\d{2}/\d{4}$');
+    if (!dateRegExp.hasMatch(value)) {
+      return false;
+    }
+
+    // Divide a string da data em dia, mês e ano
+    List<String> parts = value.split('/');
+    int day = int.parse(parts[0]);
+    int month = int.parse(parts[1]);
+    int year = int.parse(parts[2]);
+
+    // Verifica se o mês está entre 1 e 12
+    if (month < 1 || month > 12) {
+      return false;
+    }
+
+    // Verifica o número de dias em cada mês, considerando anos bissextos
+    List<int> daysInMonth = [
+      31,
+      (isLeapYear(year) ? 29 : 28),
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ];
+
+    // Verifica se o dia está dentro do limite para o mês específico
+    if (day < 1 || day > daysInMonth[month - 1]) {
+      return false;
+    }
+
+    return true;
+  }
+
+  bool isLeapYear(int year) {
+    if (year % 4 != 0) return false;
+    if (year % 100 == 0 && year % 400 != 0) return false;
+    return true;
   }
 }

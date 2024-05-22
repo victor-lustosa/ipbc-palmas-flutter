@@ -17,6 +17,7 @@ class RegistrationCompletionStore
   get dateOfBirthValue => _dateOfBirthController;
 
   get lengthPhone => _phoneController.text.length == 15;
+  get lengthcep => _zipCodeController.text.length == 9;
 }
 
 @immutable
