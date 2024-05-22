@@ -11,6 +11,9 @@ class DropdownWidget extends StatefulWidget {
     required this.name,
     this.colorBorder,
     this.icon,
+    this.colorSelect,
+    this.marginContent,
+    this.textStyle,
   });
 
   final Function(String) callback;
@@ -21,6 +24,9 @@ class DropdownWidget extends StatefulWidget {
   final Color? colorBorder;
   final Icon? icon;
   final double sizeBorderRadius;
+  final Color? colorSelect;
+  final EdgeInsets? marginContent;
+  final TextStyle? textStyle;
 
   @override
   State<DropdownWidget> createState() => _DropdownWidgetState();
@@ -53,10 +59,11 @@ class _DropdownWidgetState extends State<DropdownWidget> {
             icon: widget.icon,
             isExpanded: true,
             borderRadius: const BorderRadius.all(Radius.circular(10)),
-            padding: const EdgeInsets.only(
-              left: 10,
-              right: 7,
-            ),
+            padding: widget.marginContent ??
+                const EdgeInsets.only(
+                  left: 10,
+                  right: 7,
+                ),
             items: widget.list.map<DropdownMenuItem<String>>(
               (String val) {
                 return DropdownMenuItem<String>(
@@ -64,11 +71,12 @@ class _DropdownWidgetState extends State<DropdownWidget> {
                   child: Text(
                     textAlign: TextAlign.left,
                     val,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.black45,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    style: widget.textStyle ??
+                        TextStyle(
+                          fontSize: 12,
+                          color: widget.colorSelect ?? Colors.black45,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                   ),
                 );
               },
