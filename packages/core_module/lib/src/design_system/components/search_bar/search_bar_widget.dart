@@ -1,21 +1,23 @@
-
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SearchBarWidget extends StatefulWidget {
   const SearchBarWidget(
-      {super.key, required this.controller, required this.action});
+      {super.key,
+      required this.controller,
+      required this.action,
+      this.onChange});
 
   final TextEditingController controller;
   final void Function() action;
+  final void Function(String)? onChange;
 
   @override
   State<SearchBarWidget> createState() => _SearchBarWidgetState();
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
-
   bool isValid = true;
 
   @override
@@ -26,6 +28,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         right: 19,
       ),
       child: FormFieldWidget(
+        onChange: widget.onChange,
         fieldHeight: 48,
         fieldWidth: context.mediaQuery.size.width,
         controller: widget.controller,
@@ -40,7 +43,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         validator: (value) => null,
         inputDecoration: InputDecoration(
           suffixIcon: InkWell(
-            onTap: () {},
+            onTap: widget.action,
             child: IconButtonWidget(
               size: 28,
               color: AppColors.grey7,
@@ -61,7 +64,8 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             top: 10,
           ),
           hintText: 'Digite o termo de pesquisa',
-        ), colorStyle: AppColors.hintInputForm,
+        ),
+        colorStyle: AppColors.hintInputForm,
       ),
     );
   }

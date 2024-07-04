@@ -1,3 +1,4 @@
+import 'dart:ffi';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +31,24 @@ class _LyricsListViewState extends State<LyricsListView>
     _bloc.add(CheckConnectivityEvent<LyricEvent>());
   }
 
+  int selectedIndex = 0;
+
+  int selectOptions(int index) {
+    selectedIndex = index;
+    return selectedIndex;
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool escrevendo = controller.text.isNotEmpty;
+
+    controller.addListener(
+      () {
+        print('teste');
+      },
+    );
+
+    // int selectedIndex = 0;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -40,6 +57,7 @@ class _LyricsListViewState extends State<LyricsListView>
           child: BlocBuilder<LyricBloc, GenericState<LyricState>>(
             bloc: _bloc,
             builder: (context, state) {
+              print(state);
               if (state is LoadingState<LyricState>) {
                 return const LoadingWidget(
                   androidRadius: 3,
@@ -54,6 +72,7 @@ class _LyricsListViewState extends State<LyricsListView>
                   ),
                 );
               } else if (state is DataFetchedState<LyricState, LyricEntity>) {
+                // print(escrevendo);
                 _lyricsFetched = state.entities;
                 return RefreshIndicator(
                   color: AppColors.darkGreen,
@@ -71,14 +90,23 @@ class _LyricsListViewState extends State<LyricsListView>
                           ),
                           child: SearchBarWidget(
                             controller: controller,
-                            action: () {},
+                            onChange: (value) {
+                              if (value.length > 3) {
+                                _bloc.add(FilterEvent(
+                                    controller.text, value.length > 3));
+                              }
+                            },
+                            action: () {
+                              // _bloc.add(
+                              //     FilterEvent(controller.text, selectedIndex));
+                            },
                           ),
                         ),
                         Container(
                           margin: const EdgeInsets.only(
                             left: 21.5,
                           ),
-                          child: const OwnChoiceChipsWidget(),
+                          child: OwnChoiceChipsWidget(action: selectOptions),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -98,7 +126,7 @@ class _LyricsListViewState extends State<LyricsListView>
                         ),
                         Container(
                           margin: const EdgeInsets.only(top: 14),
-                          child: LyricsListWidget(entitiesList: _lyricsFetched),
+                          child: LyricsListWidget(entitiesList: state.entities),
                         ),
                       ],
                     ),

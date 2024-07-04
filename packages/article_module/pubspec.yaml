@@ -1,25 +1,20 @@
-name: lyric_module
-description: A new Flutter package project.
+name: article_module
+description: "A new Flutter package project."
 version: 0.0.1
-publish_to: 'none'
+homepage:
 
 environment:
-  sdk: '>=3.1.0 <4.0.0'
+  sdk: '>=3.4.0-190.1.beta <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  core_module:
-    path: ../core_module
-  
-  equatable: ^2.0.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
-  melos: ^3.4.0
+  flutter_lints: ^3.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

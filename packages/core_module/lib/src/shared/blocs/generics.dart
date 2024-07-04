@@ -12,7 +12,7 @@ class LoadingEvent<R> extends GenericEvent<R> {
 }
 
 @immutable
-class CheckConnectivityEvent<R> extends GenericEvent<R>  {
+class CheckConnectivityEvent<R> extends GenericEvent<R> {
   final String path;
   CheckConnectivityEvent({this.path = ''});
 }
@@ -58,5 +58,15 @@ class ExceptionState<R> extends GenericState<R> {
 @immutable
 class DataFetchedState<R, T> extends GenericState<R> {
   final List<T> entities;
-  DataFetchedState({required this.entities});
+  DataFetchedState({
+    this.entities = const [],
+  });
+
+  DataFetchedState copyWith({
+    List<T>? entities,
+  }) {
+    return DataFetchedState(
+      entities: entities ?? this.entities,
+    );
+  }
 }

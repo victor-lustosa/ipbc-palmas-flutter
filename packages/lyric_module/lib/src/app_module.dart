@@ -14,7 +14,7 @@ class LyricModule extends Module {
   static const String lyricsListRoute = "/lyrics-list";
 
   @override
-  void exportedBinds(i) {
+  void binds(i) {
     i.addSingleton<LyricBloc>(
       () => LyricBloc(
         supaUseCase: LyricsUseCases(
@@ -51,6 +51,25 @@ class LyricModule extends Module {
         },
       ),
     );
+    r.child(
+      lyricsListRoute,
+      transition: TransitionType.custom,
+      child: (_) => const LyricsListView(),
+      customTransition: CustomTransition(
+        transitionDuration: const Duration(milliseconds: 500),
+        reverseTransitionDuration: const Duration(milliseconds: 500),
+        transitionBuilder: (context, anim1, anim2, child) {
+          return SlideTransition(
+            position: anim1.drive(
+              Tween(begin: const Offset(0, 1), end: Offset.zero).chain(
+                CurveTween(curve: Curves.ease),
+              ),
+            ),
+            child: child,
+          );
+        },
+      ),
+    );
   }
 }
 
@@ -63,7 +82,7 @@ class NativeLyricRoutes extends StatefulWidget {
 
 class _NativeLyricRoutesState extends State<NativeLyricRoutes> {
   final GlobalKey<NavigatorState> _androidNavigatorKey =
-  GlobalKey<NavigatorState>(debugLabel: 'lyric_key');
+      GlobalKey<NavigatorState>(debugLabel: 'lyric_key');
 
   @override
   Widget build(BuildContext context) {
