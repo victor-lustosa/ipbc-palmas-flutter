@@ -41,7 +41,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
       body: SingleChildScrollView(
         child: Container(
           color: AppColors.white,
-          width: context.mediaQuery.size.width,
+          width: context.sizeOf.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -89,7 +89,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                       ),
                     ),
                     Container(
-                      width: context.mediaQuery.size.width * .83,
+                      width: context.sizeOf.width * .83,
                       margin: const EdgeInsets.only(left: 12),
                       child: Text(
                         style: AppFonts.defaultFont(

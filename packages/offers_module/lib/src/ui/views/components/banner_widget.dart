@@ -76,7 +76,7 @@ Widget baseBanner() => Column(
       ),
       Container(
         height: 1,
-        width: context.mediaQuery.size.width * .78,
+        width: context.sizeOf.width * .78,
         color: AppColors.secondaryGreen2,
       ),
     ],

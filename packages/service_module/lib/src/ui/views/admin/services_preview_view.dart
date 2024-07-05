@@ -41,7 +41,7 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
       body: SingleChildScrollView(
         child: Container(
           color: AppColors.white,
-          width: context.mediaQuery.size.width,
+          width: context.sizeOf.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -97,7 +97,7 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  fixedSize: Size(context.mediaQuery.size.width, 48),
+                  fixedSize: Size(context.sizeOf.width, 48),
                   action: () => pushNamed(
                     ServiceModule.servicesRoute +
                         ServiceModule.searchLyricsRoute,

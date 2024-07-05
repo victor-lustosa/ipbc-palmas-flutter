@@ -51,7 +51,7 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
               children: [
                 const TitleTopBarWidget(title: "Dízimos e Ofertas"),
                 Container(
-                  width: context.mediaQuery.size.width,
+                  width: context.sizeOf.width,
                   margin: const EdgeInsets.only(
                     left: 16,
                     right: 16,

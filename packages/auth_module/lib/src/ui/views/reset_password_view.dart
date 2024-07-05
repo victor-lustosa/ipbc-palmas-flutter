@@ -36,7 +36,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
               right: 16,
               top: 60,
             ),
-            width: context.mediaQuery.size.width,
+            width: context.sizeOf.width,
             child: Column(
               children: [
                 Row(
@@ -111,7 +111,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  fixedSize: Size(context.mediaQuery.size.width, 48),
+                  fixedSize: Size(context.sizeOf.width, 48),
                   backgroundColor: verifiedValidation
                       ? AppColors.darkGreen
                       : AppColors.disableButton,

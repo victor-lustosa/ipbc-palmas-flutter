@@ -6,7 +6,7 @@ class ResponsivityUtil{
  static double smallDeviceWidth = 370;
 
  static isSmallDevice(BuildContext context){
-  double vWidth = context.mediaQuery.size.width;
+  double vWidth = context.sizeOf.width;
    return ResponsivityUtil.smallDeviceWidth >= vWidth;
  }
 

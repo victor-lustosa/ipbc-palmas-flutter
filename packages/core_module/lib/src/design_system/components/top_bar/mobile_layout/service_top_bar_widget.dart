@@ -26,7 +26,7 @@ class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget> {
   Widget build(BuildContext context) {
     return Container(
       height: 184,
-      width: context.mediaQuery.size.width,
+      width: context.sizeOf.width,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(18),

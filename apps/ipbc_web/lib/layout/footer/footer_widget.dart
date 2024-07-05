@@ -12,7 +12,7 @@ class _FooterWidgetState extends State<FooterWidget> {
   late double vWidth;
   @override
   Widget build(BuildContext context) {
-    vWidth = context.mediaQuery.size.width;
+    vWidth = context.sizeOf.width;
 
     if (vWidth > 1200) {
       return web();
@@ -106,7 +106,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                 services(width: 200, margin:  const EdgeInsets.only(bottom: 120)),
               ],
             ),
-            footer(width: context.mediaQuery.size.width * 0.75, margin: const EdgeInsets.only(bottom: 80))
+            footer(width: context.sizeOf.width * 0.75, margin: const EdgeInsets.only(bottom: 80))
           ],
         ),
       );

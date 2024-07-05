@@ -12,8 +12,8 @@ class _NoConnectionViewState extends State<NoConnectionView> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: context.mediaQuery.size.width,
-      height: context.mediaQuery.size.height * 0.85,
+      width: context.sizeOf.width,
+      height: context.sizeOf.height * 0.85,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

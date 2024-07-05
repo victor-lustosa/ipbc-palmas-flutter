@@ -38,7 +38,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
 
   @override
   Widget build(BuildContext context) {
-    width = context.mediaQuery.size.width;
+    width = context.sizeOf.width;
     if (width > 1200) {
       return web();
     } else if (width > 640) {

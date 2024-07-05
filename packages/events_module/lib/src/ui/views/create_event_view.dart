@@ -59,8 +59,8 @@ class _CreateEventViewState extends State<CreateEventView> {
     return Scaffold(
       body: SafeArea(
         child: SizedBox(
-          width: context.mediaQuery.size.width,
-          height: context.mediaQuery.size.height,
+          width: context.sizeOf.width,
+          height: context.sizeOf.height,
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -106,7 +106,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                       Radius.circular(20.0),
                     ),
                   ),
-                  width: context.mediaQuery.size.width,
+                  width: context.sizeOf.width,
                   height: 144,
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,

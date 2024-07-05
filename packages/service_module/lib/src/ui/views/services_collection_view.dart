@@ -58,7 +58,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
               value: SystemUiOverlayStyle.light,
               child: SingleChildScrollView(
                 child: SizedBox(
-                  width: context.mediaQuery.size.width,
+                  width: context.sizeOf.width,
                   child: Column(
                     children: [
                       ServiceTopBarWidget(
@@ -106,7 +106,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                         bottom: 12,
                                       ),
                                       width:
-                                          context.mediaQuery.size.width * .77,
+                                          context.sizeOf.width * .77,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,

@@ -27,7 +27,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       ),
       child: FormFieldWidget(
         fieldHeight: 48,
-        fieldWidth: context.mediaQuery.size.width,
+        fieldWidth: context.sizeOf.width,
         controller: widget.controller,
         fieldDecoration: BoxDecoration(
           color: AppColors.searchBar,

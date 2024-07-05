@@ -1,9 +1,10 @@
-import 'package:auth_module/src/ui/stores/registration_completion_store.dart';
+
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../auth_module.dart';
+import '../stores/registration_completion_store.dart';
 
 class RegistrationCompletionView extends StatefulWidget {
   const RegistrationCompletionView({super.key});
@@ -152,7 +153,7 @@ class _RegistrationCompletionViewState
                         fontSize: 13,
                         color: AppColors.grey10,
                         fontWeight: FontWeight.w400),
-                    width: MediaQuery.of(context).size.width,
+                    width: context.sizeOf.width,
                     height: 48,
                     marginContent: const EdgeInsets.only(
                       left: 16,
@@ -179,9 +180,7 @@ class _RegistrationCompletionViewState
                     isValid: _isValidDate,
                     isPressed: _isPressed,
                     validator: (data) {
-
-                      _dateValidation(data);
-
+                      return _dateValidation(data);
                     },
                     inputDecoration: fieldInputDecoration(
                       suffixIconConstraints: const BoxConstraints(
@@ -297,7 +296,7 @@ class _RegistrationCompletionViewState
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    fixedSize: Size(MediaQuery.of(context).size.width, 48),
+                    fixedSize: Size(context.sizeOf.width, 48),
                     action: () {
                       selectDate();
                     },

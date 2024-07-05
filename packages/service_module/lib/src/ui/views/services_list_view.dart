@@ -69,7 +69,7 @@ class _ServicesListViewState extends State<ServicesListView> {
                   left: 16,
                   right: 16,
                 ),
-                width: context.mediaQuery.size.width,
+                width: context.sizeOf.width,
                 child: ListView.separated(
                   separatorBuilder: (BuildContext context, int index) {
                     return const SizedBox(height: 16);
