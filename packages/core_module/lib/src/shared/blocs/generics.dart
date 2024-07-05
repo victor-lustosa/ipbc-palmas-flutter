@@ -61,12 +61,12 @@ class DataFetchedState<R, T> extends GenericState<R> {
   DataFetchedState({
     this.entities = const [],
   });
+}
 
-  DataFetchedState copyWith({
-    List<T>? entities,
-  }) {
-    return DataFetchedState(
-      entities: entities ?? this.entities,
-    );
-  }
+@immutable
+class FilterEvent<R> extends GenericEvent<R> {
+  final String searchText;
+  final bool writing;
+
+  FilterEvent(this.searchText, this.writing);
 }

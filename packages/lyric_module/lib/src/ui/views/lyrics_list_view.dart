@@ -16,7 +16,6 @@ class LyricsListView extends StatefulWidget {
 
 class _LyricsListViewState extends State<LyricsListView>
     with TickerProviderStateMixin {
-  late List<LyricEntity> _lyricsFetched;
   late final LyricBloc _bloc;
   bool isSelected = false;
   String selectedValue = '';
@@ -26,7 +25,6 @@ class _LyricsListViewState extends State<LyricsListView>
   void initState() {
     super.initState();
     setLightAppBar();
-    _lyricsFetched = [];
     _bloc = Modular.get<LyricBloc>();
     _bloc.add(CheckConnectivityEvent<LyricEvent>());
   }
@@ -40,14 +38,6 @@ class _LyricsListViewState extends State<LyricsListView>
 
   @override
   Widget build(BuildContext context) {
-    bool escrevendo = controller.text.isNotEmpty;
-
-    controller.addListener(
-      () {
-        print('teste');
-      },
-    );
-
     // int selectedIndex = 0;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
@@ -73,7 +63,6 @@ class _LyricsListViewState extends State<LyricsListView>
                 );
               } else if (state is DataFetchedState<LyricState, LyricEntity>) {
                 // print(escrevendo);
-                _lyricsFetched = state.entities;
                 return RefreshIndicator(
                   color: AppColors.darkGreen,
                   onRefresh: () async {
@@ -91,10 +80,8 @@ class _LyricsListViewState extends State<LyricsListView>
                           child: SearchBarWidget(
                             controller: controller,
                             onChange: (value) {
-                              if (value.length > 3) {
-                                _bloc.add(FilterEvent(
-                                    controller.text, value.length > 3));
-                              }
+                              bool writing = value.length > 1;
+                              _bloc.add(FilterEvent(controller.text, writing, ));
                             },
                             action: () {
                               // _bloc.add(
