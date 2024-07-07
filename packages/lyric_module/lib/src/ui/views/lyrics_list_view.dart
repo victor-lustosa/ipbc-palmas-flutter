@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lyric_module/src/ui/blocs/type_filter.dart';
 
 import '../../../lyric_module.dart';
 import '../blocs/lyric_bloc.dart';
@@ -81,7 +82,10 @@ class _LyricsListViewState extends State<LyricsListView>
                             controller: controller,
                             onChange: (value) {
                               bool writing = value.length > 1;
-                              _bloc.add(FilterEvent(controller.text, writing, ));
+                              _bloc.add(
+                                FilterEvent(controller.text, writing,
+                                    FilterFactory(), selectedIndex),
+                              );
                             },
                             action: () {
                               // _bloc.add(
