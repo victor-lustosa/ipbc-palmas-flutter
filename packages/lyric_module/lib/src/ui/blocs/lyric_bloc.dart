@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:lyric_module/src/ui/view_models/type_filter.dart';
+import 'package:lyric_module/src/ui/blocs/type_filter.dart';
 
 import '../../../lyric_module.dart';
 
@@ -15,8 +15,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     required this.supaUseCase,
   }) : super(LoadingState<LyricState>()) {
     on<GetInSupaEvent<LyricEvent>>(_getInSupa);
-    on<FilterEvent<LyricEvent>>(_filterExcerpt);
-    // on<FilterEvent<LyricEvent>>(_filterGroup);
+    on<FilterEvent<LyricEvent>>(_filter);
     on<LoadingEvent<LyricEvent>>(_loading);
     on<CheckConnectivityEvent<LyricEvent>>(_checkConnectivity);
   }
@@ -46,38 +45,15 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     emit(LoadingState<LyricState>());
   }
 
-  Future<void> _filterExcerpt(FilterEvent event, emit) async {
-    MyFilter(
-            emit: emit(
-              DataFetchedState<LyricState, LyricEntity>(
-                  entities: lyricsList!
-                      .where(
-                        (element) => element.title
-                            .toLowerCase()
-                            .contains(event.searchText.toLowerCase()),
-                      )
-                      .toList()),
-            ),
-            addEvent: (GenericEvent addEvent) =>
-                add(GetInSupaEvent<LyricEvent>()))
-        .searchTypeFilter(event, lyricsList);
-  }
+  Future<void> _filter(FilterEvent event, emit) async {
+    if (event.writing && lyricsList != null) {
+      List<LyricEntity> list = event.typeFilter.filterListing(event, lyricsList)
+          as List<LyricEntity>;
 
-  Future<void> _filterGroup(FilterEvent event, emit) async {
-    MyFilter(
-            emit: emit(
-              DataFetchedState<LyricState, LyricEntity>(
-                  entities: lyricsList!
-                      .where(
-                        (element) => element.group
-                            .toLowerCase()
-                            .contains(event.searchText.toLowerCase()),
-                      )
-                      .toList()),
-            ),
-            addEvent: (GenericEvent addEvent) =>
-                add(GetInSupaEvent<LyricEvent>()))
-        .searchTypeFilter(event, lyricsList);
+      emit(DataFetchedState<LyricState, LyricEntity>(entities: list));
+    } else {
+      add(GetInSupaEvent<LyricEvent>());
+    }
   }
 }
 
@@ -86,3 +62,13 @@ abstract class LyricEvent {}
 
 @immutable
 abstract class LyricState {}
+
+@immutable
+class FilterEvent<R> extends GenericEvent<R> {
+  final String searchText;
+  final bool writing;
+  final Filter typeFilter;
+  final int selectIndex;
+
+  FilterEvent(this.searchText, this.writing, this.typeFilter, this.selectIndex);
+}
