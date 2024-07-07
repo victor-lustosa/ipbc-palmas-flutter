@@ -62,11 +62,3 @@ class DataFetchedState<R, T> extends GenericState<R> {
     this.entities = const [],
   });
 }
-
-@immutable
-class FilterEvent<R> extends GenericEvent<R> {
-  final String searchText;
-  final bool writing;
-
-  FilterEvent(this.searchText, this.writing);
-}
