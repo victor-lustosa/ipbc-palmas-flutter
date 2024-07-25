@@ -2,7 +2,7 @@ library core_module;
 
 export 'src/core/domain/repositories/repository.dart';
 export 'src/core/domain/use_cases/use_cases.dart';
-
+export 'package:google_maps_flutter/google_maps_flutter.dart';
 export 'src/core/infra/datasources/datasource.dart';
 export 'src/core/infra/repositories/repository.dart';
 

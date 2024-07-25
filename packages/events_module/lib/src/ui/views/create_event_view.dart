@@ -1,6 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import '../../../events_module.dart';
+
 class CreateEventView extends StatefulWidget {
   const CreateEventView({super.key});
 
@@ -265,7 +267,11 @@ class _CreateEventViewState extends State<CreateEventView> {
           backgroundColor: AppColors.confirmation,
           iconColor: AppColors.grey10,
           size: 33,
-          action: () => {}),
+        action: () => navigate(
+          EventModule.eventRoute + EventModule.detailEventRoute,
+        ),
+
+      ),
     );
   }
 }
