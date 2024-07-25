@@ -5,32 +5,32 @@ import 'package:core_module/core_module.dart';
 class FormFieldWidget extends StatefulWidget {
   const FormFieldWidget(
       {super.key,
-
-        required this.validator,
-        required this.isValid,
-        required this.inputDecoration,
-        required this.controller,
-        this.fieldKey,
-        this.isSubmitted,
-        this.maxLength,
-        this.fieldStyle,
-        this.maxLines,
-        this.keyboardType,
-        this.cursorColor,
-        this.inputFormatters,
-        this.autoValidateMode,
-        this.title,
-        this.titleMargin,
-        this.fieldWidth,
-        this.fieldHeight,
-        this.fieldDecoration,
-        this.errorText,
-        this.titleStyle,
-        this.fieldMargin,
-        this.obscureText,
-        this.errorTextMargin,
-        this.horizontalSymmetric,
-        this.inputPadding, required this.colorStyle});
+      required this.validator,
+      required this.isValid,
+      required this.inputDecoration,
+      required this.controller,
+      this.fieldKey,
+      this.isSubmitted,
+      this.maxLength,
+      this.fieldStyle,
+      this.maxLines,
+      this.keyboardType,
+      this.cursorColor,
+      this.inputFormatters,
+      this.autoValidateMode,
+      this.title,
+      this.titleMargin,
+      this.fieldWidth,
+      this.fieldHeight,
+      this.fieldDecoration,
+      this.errorText,
+      this.titleStyle,
+      this.fieldMargin,
+      this.obscureText,
+      this.errorTextMargin,
+      this.horizontalSymmetric,
+      this.inputPadding,
+      required this.colorStyle});
 
   final String? errorText;
   final EdgeInsetsGeometry? errorTextMargin;
@@ -104,22 +104,17 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
               enabled: widget.isSubmitted,
               cursorColor: widget.cursorColor ?? AppColors.formGrey,
               autovalidateMode:
-              widget.autoValidateMode ?? AutovalidateMode.onUserInteraction,
+                  widget.autoValidateMode ?? AutovalidateMode.onUserInteraction,
               controller: widget.controller,
               validator: widget.validator,
               maxLines: widget.maxLines ?? 1,
               maxLength: widget.maxLength,
               keyboardType: widget.keyboardType ?? TextInputType.text,
               inputFormatters:
-              widget.inputFormatters ?? const <TextInputFormatter>[],
+                  widget.inputFormatters ?? const <TextInputFormatter>[],
               decoration: widget.inputDecoration,
               style: widget.fieldStyle ??
-                  AppFonts.defaultFont(
-
-                      fontSize: 14,
-                      color: widget.colorStyle
-
-                  ),
+                  AppFonts.defaultFont(fontSize: 14, color: widget.colorStyle),
             ),
           ),
           Visibility(

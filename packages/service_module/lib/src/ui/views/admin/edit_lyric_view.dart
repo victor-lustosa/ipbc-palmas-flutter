@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:service_module/src/ui/stores/states.dart';
 import 'package:service_module/src/ui/stores/edit_lyric_store.dart';
 
 import '../../../../service_module.dart';
@@ -27,6 +26,7 @@ class _EditLyricViewState extends State<EditLyricView> {
   void initState() {
     super.initState();
     _store.getLyrics();
+    setDarkAppBar();
   }
 
   @override
@@ -49,7 +49,7 @@ class _EditLyricViewState extends State<EditLyricView> {
               return SingleChildScrollView(
                 child: Container(
                   color: AppColors.white,
-                  width: context.mediaQuery.size.width,
+                  width: context.sizeOf.width,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -113,8 +113,7 @@ class _EditLyricViewState extends State<EditLyricView> {
                               if (oldIndex < newIndex) {
                                 newIndex -= 1;
                               }
-                              final VerseEntity item =
-                                  versesList.removeAt(oldIndex);
+                              final VerseEntity item = versesList.removeAt(oldIndex);
                               versesList.insert(newIndex, item);
                             });
                           },
@@ -148,7 +147,7 @@ class _EditLyricViewState extends State<EditLyricView> {
         backgroundColor: AppColors.confirmation,
         iconColor: AppColors.grey10,
         size: 33,
-        action: () => navigate(
+        action: () => pushNamed(
           ServiceModule.servicesRoute + ServiceModule.servicesPreviewRoute,
         ),
       ),

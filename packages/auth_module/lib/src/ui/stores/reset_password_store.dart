@@ -31,10 +31,7 @@ class ResetPasswordStore
         inputCode = _controllers.map((controller) => controller.text).toList();
         if (inputCode.every((value) => value.isNotEmpty)) {
           if (inputCode.join() == code.join()) {
-            nativePushNamed(
-              AuthModule.authRoute + AuthModule.creatingNewPassWordRoute,
-              context,
-            );
+            pushNamed(AuthModule.authRoute + AuthModule.creatingNewPassWordRoute);
           } else {
             notifyBorderError(value: true);
             showCustomErrorDialog(

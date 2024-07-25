@@ -25,6 +25,8 @@ export 'src/shared/utils/mock_util.dart';
 
 export 'src/shared/blocs/generics.dart';
 
+export 'src/shared/view_models/edit_liturgy_view_model.dart';
+
 export 'src/app_module.dart';
 
 export 'src/configs/app_configs.dart';
@@ -58,12 +60,17 @@ export 'src/design_system/components/forms/form_field_widget.dart';
 export 'src/design_system/components/chips/choice_chips_widget.dart';
 export 'src/design_system/components/chips/own_choice_chips_widget.dart';
 export 'src/design_system/components/forms/template_form_widget.dart';
+export 'src/design_system/components/forms/formatters/phone_input_formatter.dart';
+export 'src/design_system/components/forms/formatters/cep_input_formatter.dart';
+export 'src/design_system/components/forms/formatters/date_input_formatter.dart';
 export 'src/design_system/components/covers/album_cover_widget.dart';
 export 'src/design_system/components/lists/lyrics_list_widget.dart';
 export 'src/design_system/components/lists/grid_balls_tile_widget.dart';
 export 'src/design_system/components/lists/verses_list_widget.dart';
 export 'src/design_system/components/lists/custom_reorderable_list_widget.dart';
 export 'src/design_system/components/carousel/carousel_widget.dart';
+export 'src/design_system/components/checkbox/custom_check_box.dart';
+export 'src/design_system/components/dropdowns/dropdown_widget.dart';
 export 'src/design_system/components/exceptions/views/generic_error_view.dart';
 export 'src/design_system/components/exceptions/views/no_connection_view.dart';
 export 'src/design_system/components/exceptions/views/unknown_route_view.dart';
@@ -100,4 +107,5 @@ export 'src/core/domain/entities/services_entity.dart';
 export 'src/core/domain/entities/liturgy_entity.dart';
 export 'src/core/infra/models/service_model.dart';
 export 'src/core/infra/models/services_model.dart';
+export 'src/core/infra/models/liturgy_model.dart';
 export 'src/core/infra/models/lyric_model.dart';

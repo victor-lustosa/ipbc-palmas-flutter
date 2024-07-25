@@ -26,182 +26,169 @@ class EditLiturgyView extends StatefulWidget {
 }
 
 class _EditLiturgyViewState extends State<EditLiturgyView> {
-  final _items = [
-    LiturgyEntity(
-        id: 0, isAdditional: false, sequence: 'Oração', additional: ''),
-    LiturgyEntity(
-        id: 1,
-        isAdditional: true,
-        sequence: 'Texto Bíblico',
-        additional: 'João 10:1-6'),
-    LiturgyEntity(
-        id: 2,
-        isAdditional: true,
-        sequence: 'Hino 151',
-        additional: 'O Bom Pastor'),
-    LiturgyEntity(
-        id: 3,
-        isAdditional: true,
-        sequence: 'Texto Bíblico',
-        additional: 'Lucas 15:1-7'),
-    LiturgyEntity(
-        id: 4,
-        isAdditional: false,
-        sequence: 'Oração de confissão de pecados',
-        additional: ''),
-    LiturgyEntity(
-        id: 5, isAdditional: false, sequence: 'Cânticos', additional: ''),
-    LiturgyEntity(
-        id: 6,
-        isAdditional: true,
-        sequence: 'Pregação',
-        additional: 'O Bom Pastor - Salmo 23'),
-    LiturgyEntity(
-        id: 7, isAdditional: false, sequence: 'Santa Ceia', additional: ''),
-    LiturgyEntity(
-        id: 8, isAdditional: false, sequence: 'Oração final', additional: ''),
-  ];
+  late EditLiturgyViewModel _editLiturgyViewModel;
+  late  List<LiturgyModel> _liturgiesList;
+  @override
+  void initState() {
+    super.initState();
+    _editLiturgyViewModel = Modular.get<EditLiturgyViewModel>();
+    setLightAppBar();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            color: AppColors.white,
-            width: context.mediaQuery.size.width,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ServiceTopBarWidget(
-                  image: widget.dto.image,
-                  title: "Cultos de ${widget.dto.heading}",
-                ),
-                Container(
-                  margin:
-                      const EdgeInsets.only(left: 16.5, top: 24.7, bottom: 16),
-                  child: Text(
-                    'Edite a liturgia do culto:',
-                    style: AppFonts.defaultFont(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 17,
-                      color: AppColors.grey10,
+    return ListenableBuilder(
+        listenable: _editLiturgyViewModel,
+        builder: (context, child) {
+          _liturgiesList = _editLiturgyViewModel.items;
+          return Scaffold(
+            body: SingleChildScrollView(
+              child: Container(
+                color: AppColors.white,
+                width: context.sizeOf.width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ServiceTopBarWidget(
+                      image: widget.dto.image,
+                      title: "Cultos de ${widget.dto.heading}",
                     ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(
-                    left: 19,
-                    right: 19,
-                    bottom: 24,
-                  ),
-                  child: ReorderableListView.builder(
-                    shrinkWrap: true,
-                    itemCount: _items.length,
-                    buildDefaultDragHandles: false,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        key: Key('${_items[index].id}'),
-                        onLongPress: () {},
-                        child: Container(
-                          color: Colors.transparent,
-                          padding: const EdgeInsets.only(
-                            top: 8,
-                            bottom: 8,
-                          ),
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              color: AppColors.searchBar,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(16)),
-                            ),
-                            child: Row(
-                              children: [
-                                GridBallsTileWidget(index: index),
-                                Container(
-                                  margin: const EdgeInsets.only(
-                                    bottom: 12,
-                                    top: 12,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        _items[index].sequence,
-                                        style: AppFonts.defaultFont(
-                                          color: AppColors.grey9,
-                                          fontSize: 17,
-                                        ),
+                    Container(
+                      margin: const EdgeInsets.only(
+                          left: 16.5, top: 24.7, bottom: 8),
+                      child: Text(
+                        'Edite a liturgia do culto:',
+                        style: AppFonts.defaultFont(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 17,
+                          color: AppColors.grey10,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                        bottom: 40,
+                      ),
+                      child: ReorderableListView.builder(
+                        shrinkWrap: true,
+                        itemCount: _liturgiesList.length,
+                        buildDefaultDragHandles: false,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            key: Key('${_liturgiesList[index].id}'),
+                            onLongPress: () {
+                              Modular.get<EditLiturgyViewModel>().entity =
+                                  _liturgiesList[index];
+                              Modular.get<EditLiturgyViewModel>().index = index;
+                              showCustomOptionsDialog(context: context);
+                            },
+                            child: Container(
+                              color: Colors.transparent,
+                              padding: const EdgeInsets.only(
+                                top: 8,
+                                bottom: 8,
+                              ),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: AppColors.searchBar,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(16)),
+                                ),
+                                child: Row(
+                                  children: [
+                                    GridBallsTileWidget(index: index),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                        bottom: 8,
+                                        top: 8,
                                       ),
-                                      Visibility(
-                                        visible: _items[index].isAdditional,
-                                        child: Container(
-                                          margin: const EdgeInsets.only(top: 4),
-                                          child: Text(
-                                            _items[index].additional,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            _liturgiesList[index].sequence,
                                             style: AppFonts.defaultFont(
-                                              color: AppColors.grey8,
-                                              fontSize: 13,
+                                              color: AppColors.grey9,
+                                              fontSize: 17,
                                             ),
                                           ),
-                                        ),
+                                          Visibility(
+                                            visible: _liturgiesList[index]
+                                                .isAdditional,
+                                            child: Container(
+                                              margin:
+                                                  const EdgeInsets.only(top: 4),
+                                              child: Text(
+                                                _liturgiesList[index]
+                                                    .additional,
+                                                style: AppFonts.defaultFont(
+                                                  color: AppColors.grey8,
+                                                  fontSize: 13,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                    },
-                    onReorder: (int oldIndex, int newIndex) {
-                      setState(() {
-                        if (oldIndex < newIndex) {
-                          newIndex -= 1;
-                        }
-                        final LiturgyEntity item = _items.removeAt(oldIndex);
-                        _items.insert(newIndex, item);
-                      });
-                    },
-                    proxyDecorator: (Widget child, _, animation) {
-                      return AnimatedBuilder(
-                        animation: animation,
-                        builder: (BuildContext context, Widget? child) {
-                          final animValue =
-                              Curves.easeInOut.transform(animation.value);
-                          final scale = lerpDouble(1, 1.05, animValue)!;
-                          return Transform.scale(
-                            scale: scale,
+                          );
+                        },
+                        onReorder: (int oldIndex, int newIndex) {
+                          setState(() {
+                            if (oldIndex < newIndex) {
+                              newIndex -= 1;
+                            }
+                            final LiturgyModel item =
+                                _liturgiesList.removeAt(oldIndex);
+                            _liturgiesList.insert(newIndex, item);
+                          });
+                        },
+                        proxyDecorator: (Widget child, _, animation) {
+                          return AnimatedBuilder(
+                            animation: animation,
+                            builder: (BuildContext context, Widget? child) {
+                              final animValue =
+                                  Curves.easeInOut.transform(animation.value);
+                              final scale = lerpDouble(1, 1.05, animValue)!;
+                              return Transform.scale(
+                                scale: scale,
+                                child: child,
+                              );
+                            },
                             child: child,
                           );
                         },
-                        child: child,
-                      );
-                    },
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingButtonWidget(
-        icon: Icons.check_rounded,
-        backgroundColor: AppColors.confirmation,
-        iconColor: AppColors.grey10,
-        size: 33,
-        action: () => navigate(
-          ServiceModule.servicesRoute + ServiceModule.servicesPreviewRoute,
-          arguments: ServicesPreviewDTO(
-            heading: widget.dto.heading,
-            image: widget.dto.image,
-            liturgiesList: _items,
-          ),
-        ),
-      ),
-    );
+            floatingActionButton: FloatingButtonWidget(
+              icon: Icons.check_rounded,
+              backgroundColor: AppColors.confirmation,
+              iconColor: AppColors.grey10,
+              size: 33,
+              action: () => Navigator.popAndPushNamed(
+                context,
+                ServiceModule.servicesRoute +
+                    ServiceModule.servicesPreviewRoute,
+                arguments: ServicesPreviewDTO(
+                  heading: widget.dto.heading,
+                  image: widget.dto.image,
+                  liturgiesList: _liturgiesList,
+                ),
+              ),
+            ),
+          );
+        });
   }
 }

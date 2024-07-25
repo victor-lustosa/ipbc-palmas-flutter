@@ -1,14 +1,52 @@
 import 'dart:io';
 
-import 'package:core_module/core_module.dart';
-import 'package:events_module/events_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:offers_module/offers_module.dart';
-import 'package:service_module/service_module.dart';
 
-import 'blocs/home_bloc.dart';
-import 'views/home_view.dart';
+import '../home_module.dart';
+import 'ui/blocs/database_bloc.dart';
+import 'ui/blocs/home_bloc.dart';
+import 'ui/views/home_view.dart';
+import 'ui/views/init_view.dart';
+import 'ui/views/splash_view.dart';
+
+class InitModule extends Module {
+  static const String initialRoute = '/init';
+
+  @override
+  List<Module> get imports => [HomeModule(), LyricModule()];
+
+  @override
+  void routes(r) {
+    r.child('/', child: (_) => const InitView());
+  }
+}
+
+class SplashModule extends Module {
+  static const String splashRoute = '/splash';
+
+  @override
+  List<Module> get imports => [CoreModule(), AuthModule()];
+
+  @override
+  void binds(i) {
+    i.addSingleton(
+      () => DatabaseBloc(
+        useCases: i.get<AuthUseCase>(),
+      ),
+    );
+  }
+
+  @override
+  void routes(r) {
+    r.child(splashRoute, child: (_) => const SplashView());
+    r.module(InitModule.initialRoute, module: InitModule());
+    r.module(AuthModule.authRoute, module: AuthModule());
+    r.module(LyricModule.lyricsRoute, module: LyricModule());
+    r.module(ServiceModule.servicesRoute, module: ServiceModule());
+    r.module(EventModule.eventRoute, module: EventModule());
+  }
+}
 
 class HomeModule extends Module {
   static const String homeRoute = '/home';
@@ -39,7 +77,8 @@ class NativeHomeRoutes extends StatefulWidget {
 }
 
 class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
-  final GlobalKey<NavigatorState> _androidNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home_key');
+  final GlobalKey<NavigatorState> _androidNavigatorKey =
+      GlobalKey<NavigatorState>(debugLabel: 'home_key');
 
   @override
   Widget build(BuildContext context) {
@@ -48,45 +87,43 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
           case HomeModule.homeRoute || HomeModule.initialRoute:
-            return customTransitionRoute(
+            return CustomFadeTransition(
               child: const HomeView(),
             );
 
           case ServiceModule.serviceRoute:
-            return customTransitionRoute(
+            return CustomFadeTransition(
               child: ServiceView(
                 entity: settings.arguments as ServiceViewDTO,
               ),
             );
 
           case ServiceModule.servicesListRoute:
-            return customTransitionRoute(
+            return CustomFadeTransition(
               child: ServicesListView(
                 entities: settings.arguments as List<ServicesEntity>,
               ),
             );
 
           case ServiceModule.servicesCollectionRoute:
-            return customTransitionRoute(
+            return CustomSlideTransition(
               child: ServicesCollectionView(
                 entity: settings.arguments as ServicesEntity,
               ),
             );
 
           case ServiceModule.editLiturgiesRoute:
-            return customTransitionRoute(
+            return CustomFadeTransition(
               child: EditLiturgyView(
                 dto: settings.arguments as EditLiturgyDTO,
               ),
             );
 
           case HomeModule.eventsListRoute:
-            return customTransitionRoute(
+            return CustomFadeTransition(
               child: const EventsListView(),
-              tween: Tween(begin: const Offset(0, 0), end: Offset.zero).chain(
-                CurveTween(curve: Curves.ease),
-              ),
             );
+
           default:
             return unknownRoute();
         }

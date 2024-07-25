@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../controller/banner_controller.dart';
 import 'components/card_widget.dart';
 import 'components/banner_widget.dart';
@@ -41,148 +42,151 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const TitleTopBarWidget(title: "Dízimos e Ofertas"),
-              Container(
-                width: context.mediaQuery.size.width,
-                margin: const EdgeInsets.only(
-                  left: 16,
-                  right: 16,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(
-                        top: 32,
-                        left: 17.5,
-                        right: 17.5,
-                        bottom: 24,
-                      ),
-                      child: AnimatedBuilder(
-                        animation: controller,
-                        builder: (context, child) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ButtonWidget(
-                                elevation: 0,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 24,
-                                  vertical: 4,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                  side: BorderSide(
-                                    color: controller.isPix
-                                        ? AppColors.tabGreen
-                                        : AppColors.grey4,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,
+      child: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const TitleTopBarWidget(title: "Dízimos e Ofertas"),
+                Container(
+                  width: context.sizeOf.width,
+                  margin: const EdgeInsets.only(
+                    left: 16,
+                    right: 16,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(
+                          top: 32,
+                          left: 17.5,
+                          right: 17.5,
+                          bottom: 24,
+                        ),
+                        child: AnimatedBuilder(
+                          animation: controller,
+                          builder: (context, child) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ButtonWidget(
+                                  elevation: 0,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 24,
+                                    vertical: 4,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                    side: BorderSide(
+                                      color: controller.isPix
+                                          ? AppColors.tabGreen
+                                          : AppColors.grey4,
+                                    ),
+                                  ),
+                                  backgroundColor: controller.isPix
+                                      ? AppColors.tabGreen
+                                      : AppColors.white,
+                                  action: () {
+                                    controller.setPix();
+                                  },
+                                  child: buttonLabel(
+                                    'Pix',
+                                    controller.isPix,
                                   ),
                                 ),
-                                backgroundColor: controller.isPix
-                                    ? AppColors.tabGreen
-                                    : AppColors.white,
-                                action: () {
-                                  controller.setPix();
-                                },
-                                child: buttonLabel(
-                                  'Pix',
-                                  controller.isPix,
-                                ),
-                              ),
-                              ButtonWidget(
-                                elevation: 0,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 4,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                  side: BorderSide(
-                                    color: controller.isPix
-                                        ? AppColors.grey4
-                                        : AppColors.tabGreen,
+                                ButtonWidget(
+                                  elevation: 0,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 4,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                    side: BorderSide(
+                                      color: controller.isPix
+                                          ? AppColors.grey4
+                                          : AppColors.tabGreen,
+                                    ),
+                                  ),
+                                  backgroundColor: controller.isPix
+                                      ? AppColors.white
+                                      : AppColors.tabGreen,
+                                  action: () {
+                                    controller.setTed();
+                                  },
+                                  child: buttonLabel(
+                                    'Transferência bancária',
+                                    !controller.isPix,
                                   ),
                                 ),
-                                backgroundColor: controller.isPix
-                                    ? AppColors.white
-                                    : AppColors.tabGreen,
-                                action: () {
-                                  controller.setTed();
-                                },
-                                child: buttonLabel(
-                                  'Transferência bancária',
-                                  !controller.isPix,
-                                ),
-                              ),
-                            ],
-                          );
-                        },
+                              ],
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 8),
-                      child: Center(
-                        child: Text(
-                          'Copie e cole o código pix em seu app bancário.',
-                          style: AppFonts.defaultFont(
-                            color: AppColors.grey10,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 8),
+                        child: Center(
+                          child: Text(
+                            'Copie e cole o código pix em seu app bancário.',
+                            style: AppFonts.defaultFont(
+                              color: AppColors.grey10,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const BannerWidget(),
-                    Container(
-                      margin: const EdgeInsets.only(top: 26, bottom: 8),
-                      child: Text(
-                        "Entenda como você pode ajudar!",
-                        style: AppFonts.body(
-                          color: AppColors.grey9,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17,
+                      const BannerWidget(),
+                      Container(
+                        margin: const EdgeInsets.only(top: 26, bottom: 8),
+                        child: Text(
+                          "Entenda como você pode ajudar!",
+                          style: AppFonts.body(
+                            color: AppColors.grey9,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 17,
+                          ),
                         ),
                       ),
-                    ),
-                    Column(
-                      children: List<Widget>.generate(
-                        cardsList.length,
-                        (index) {
-                          calculateTheEdge(index);
-                          return Container(
-                            decoration: BoxDecoration(
-                              border: border,
-                              borderRadius: borderRadius,
-                            ),
-                            child: cardsList[index],
-                          );
-                        },
+                      Column(
+                        children: List<Widget>.generate(
+                          cardsList.length,
+                          (index) {
+                            calculateTheEdge(index);
+                            return Container(
+                              decoration: BoxDecoration(
+                                border: border,
+                                borderRadius: borderRadius,
+                              ),
+                              child: cardsList[index],
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(
-                  top: 12,
-                  bottom: 32,
-                ),
-                child: Text(
-                  'O comprovante deve ser depositado \n no gazofilácio.',
-                  style: AppFonts.defaultFont(
-                    color: AppColors.grey7,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
+                    ],
                   ),
-                  textAlign: TextAlign.center,
                 ),
-              ),
-            ],
+                Container(
+                  margin: const EdgeInsets.only(
+                    top: 12,
+                    bottom: 32,
+                  ),
+                  child: Text(
+                    'O comprovante deve ser depositado \n no gazofilácio.',
+                    style: AppFonts.defaultFont(
+                      color: AppColors.grey7,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

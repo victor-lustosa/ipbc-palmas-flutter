@@ -11,7 +11,7 @@ class ResetPasswordSuccessView extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SizedBox(
-          width: context.mediaQuery.size.width,
+          width: context.sizeOf.width,
           child: Column(
             children: [
               Container(
@@ -38,7 +38,7 @@ class ResetPasswordSuccessView extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.only(
-                  top: context.mediaQuery.size.height * .37,
+                  top: context.sizeOf.height * .37,
                   left: 16.0,
                   right: 16.0,
                 ),
@@ -46,9 +46,9 @@ class ResetPasswordSuccessView extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  fixedSize: Size(MediaQuery.of(context).size.width, 48),
+                  fixedSize: Size(context.sizeOf.width, 48),
                   action: () {
-                    navigate(AuthModule.authRoute + AuthModule.authRoute);
+                    navigate(AuthModule.authRoute + AuthModule.loginRoute);
                   },
                   backgroundColor: AppColors.darkGreen,
                   shadowColor: AppColors.grey0,

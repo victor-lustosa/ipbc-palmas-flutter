@@ -36,14 +36,14 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
               right: 16,
               top: 60,
             ),
-            width: context.mediaQuery.size.width,
+            width: context.sizeOf.width,
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     BackButtonWidget(
-                      action: () => navigate(AuthModule.authRoute + AuthModule.loginRoute),
+                      action: () => pop(context),
                     ),
                   ],
                 ),
@@ -106,12 +106,12 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     if (_resetPasswordController.text.isEmpty && !_isPressed) {
                       _emailBorderValidation(false, false);
                     }
-                    navigate(AuthModule.authRoute + AuthModule.verificationCodeRoute);
+                    pushNamed(AuthModule.authRoute + AuthModule.verificationCodeRoute);
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  fixedSize: Size(context.mediaQuery.size.width, 48),
+                  fixedSize: Size(context.sizeOf.width, 48),
                   backgroundColor: verifiedValidation
                       ? AppColors.darkGreen
                       : AppColors.disableButton,

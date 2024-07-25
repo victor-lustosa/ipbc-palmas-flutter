@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:core_module/core_module.dart';
+import 'package:home_module/home_module.dart';
 import '../../../../mocks/mocks.dart';
 import 'package:mocktail/mocktail.dart';
 

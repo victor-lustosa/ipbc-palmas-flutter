@@ -13,7 +13,6 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-
   final LoginStore _store = Modular.get<LoginStore>();
 
   final TextEditingController _emailController = TextEditingController();
@@ -38,7 +37,6 @@ class _LoginViewState extends State<LoginView> {
     return ValueListenableBuilder(
       valueListenable: _store,
       builder: (_, state, child) {
-
         if (state is LoadingState<LoginState>) {
           _isPressed = true;
         }
@@ -137,7 +135,7 @@ class _LoginViewState extends State<LoginView> {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     if (!_isPressed) {
-                                      navigate(AuthModule.authRoute + AuthModule.resetPasswordRoute);
+                                      pushNamed(AuthModule.authRoute + AuthModule.resetPasswordRoute);
                                     }
                                   },
                               ),
@@ -194,7 +192,7 @@ class _LoginViewState extends State<LoginView> {
                       right: 16,
                     ),
                     height: 48,
-                    width: context.mediaQuery.size.width,
+                    width: context.sizeOf.width,
                     child: ButtonWidget(
                       backgroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
@@ -236,7 +234,7 @@ class _LoginViewState extends State<LoginView> {
                       right: 16,
                     ),
                     height: 48,
-                    width: context.mediaQuery.size.width,
+                    width: context.sizeOf.width,
                     child: ButtonWidget(
                       backgroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
@@ -289,7 +287,8 @@ class _LoginViewState extends State<LoginView> {
                             ..onTap = () => setState(
                                   () {
                                     if (!_isPressed) {
-                                      _store.toCreateAccount();
+                                      Modular.to.navigate(AuthModule.authRoute +
+                                          AuthModule.createAccountRoute);
                                     }
                                   },
                                 ),

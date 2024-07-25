@@ -21,12 +21,11 @@ class EventsListViewState extends State<EventsListView> {
     return Scaffold(
       body: SafeArea(
         child: SizedBox(
-          width: context.mediaQuery.size.width,
-          height: context.mediaQuery.size.height,
+          width: context.sizeOf.width,
+          height: context.sizeOf.height,
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const MainTopBarWidget(),
                 Row(
                   children: [
                     Container(
@@ -40,8 +39,37 @@ class EventsListViewState extends State<EventsListView> {
                     ),
                   ],
                 ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 25, top: 10),
+                    child: Text(
+                      "Eventos",
+                      style: AppFonts.title2,
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                      left: 25,
+                      top: 8,
+                      right: 20,
+                      bottom: 12,
+                    ),
+                    child: Text(
+                      "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
+                      style: AppFonts.defaultFont(
+                        fontSize: 15,
+                        height: 1.2,
+                        color: AppColors.grey9,
+                      ),
+                    ),
+                  ),
+                ),
                 SizedBox(
-                  height: context.mediaQuery.size.height,
+                  height: context.sizeOf.height,
                   child: SlideCardsWidget(
                     margin: const EdgeInsets.only(
                       top: 16,
@@ -49,7 +77,7 @@ class EventsListViewState extends State<EventsListView> {
                       right: 16,
                     ),
                     physics: const NeverScrollableScrollPhysics(),
-                    width: context.mediaQuery.size.width,
+                    width: context.sizeOf.width,
                     scrollDirection: Axis.vertical,
                     services: const [],
                     route: '',

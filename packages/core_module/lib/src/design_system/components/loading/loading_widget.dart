@@ -15,8 +15,8 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(context) {
     return SizedBox(
-      width: size ?? MediaQuery.of(context).size.width,
-      height: size ?? MediaQuery.of(context).size.height,
+      width: size ?? context.sizeOf.width,
+      height: size ?? context.sizeOf.height,
       child: Center(
         child: Platform.isIOS
             ? CupertinoActivityIndicator(

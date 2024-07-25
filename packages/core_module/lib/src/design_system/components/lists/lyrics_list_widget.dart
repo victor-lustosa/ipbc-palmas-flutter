@@ -29,13 +29,14 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
         left: 16,
         right: 11,
       ),
-      width: context.mediaQuery.size.width,
+      width: context.sizeOf.width,
       child: ListView.separated(
         separatorBuilder: (__, _) {
           return const SizedBox(
             height: 8,
           );
         },
+        padding: EdgeInsets.zero,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: widget.entitiesList.length,
@@ -74,7 +75,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                     context: context,
                     callback: (value) {
                       setState(() {
-                        _elevationActive = value;
+                        _elevationActive = value!;
                       });
                     },
                   );
@@ -100,7 +101,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(left: 8),
-                                width: context.mediaQuery.size.width * .61,
+                                width: context.sizeOf.width * .61,
                                 child: Text(
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,

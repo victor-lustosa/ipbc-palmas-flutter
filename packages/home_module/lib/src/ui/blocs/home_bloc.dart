@@ -3,13 +3,12 @@ import 'dart:async';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-
-class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>> with ConnectivityMixin{
+class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
+    with ConnectivityMixin {
   final IUseCases supaUseCases;
   final String path = 'services/createAt/false';
 
-  HomeBloc({required this.supaUseCases})
-      : super(LoadingState()) {
+  HomeBloc({required this.supaUseCases}) : super(LoadingState()) {
     on<GetInSupaEvent<HomeEvent>>(_getInSupa);
     on<CheckConnectivityEvent<HomeEvent>>(_checkConnectivity);
   }
@@ -30,7 +29,8 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>> wi
         emit(DataFetchedState<HomeState, ServicesEntity>(entities: services));
       },
       onError: (error, st) async {
-        AnalyticsUtil.recordError(name: 'supa services bloc', error: error, st: st);
+        AnalyticsUtil.recordError(
+            name: 'supa services bloc', error: error, st: st);
         emit(ExceptionState<HomeState>(message: error.toString()));
       },
     );
@@ -42,4 +42,3 @@ abstract class HomeEvent {}
 
 @immutable
 abstract class HomeState {}
-

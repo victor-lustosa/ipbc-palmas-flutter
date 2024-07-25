@@ -27,7 +27,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
 
   @override
   Widget build(BuildContext context) {
-    width = context.mediaQuery.size.width;
+    width = context.sizeOf.width;
     if (width > 1200) {
       return web();
     } else if (width > 800) {

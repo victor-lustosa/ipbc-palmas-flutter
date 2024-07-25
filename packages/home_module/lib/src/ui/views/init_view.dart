@@ -1,9 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:lyric_module/lyric_module.dart';
-import 'package:offers_module/offers_module.dart';
 
-import '../../home/home_module.dart';
+import '../../../home_module.dart';
 
 class InitView extends StatefulWidget {
   const InitView({super.key});
@@ -22,8 +20,8 @@ class _InitViewState extends State<InitView> {
     selectedIndex = index;
     _controller.animateToPage(
       index,
-      duration: const Duration(milliseconds: 250),
-      curve: Curves.easeInOutQuint,
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.ease,
     );
   }
 
@@ -31,24 +29,21 @@ class _InitViewState extends State<InitView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: SafeArea(
-        child: PageView(
-          controller: _controller,
-          onPageChanged: (index) {
-            setState(
-              () {
-                selectedIndex = index;
-              },
-            );
-          },
-          children: const [
-            NativeHomeRoutes(),
-            NativeLyricRoutes(),
-            OffersView(),
-          ],
-        ),
+      body: PageView(
+        controller: _controller,
+        onPageChanged: (index) {
+          setState(
+            () {
+              selectedIndex = index;
+            },
+          );
+        },
+        children: const [
+          NativeHomeRoutes(),
+          NativeLyricRoutes(),
+          OffersView(),
+        ],
       ),
-      extendBody: true,
       bottomNavigationBar: AnimatedBuilder(
         animation: _controller,
         builder: (__, _) {

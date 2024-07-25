@@ -50,7 +50,7 @@ class VersesListWidget extends StatelessWidget {
                       entity[index].versesList[position],
                       style: AppFonts.defaultFont(
                         color: AppColors.grey10,
-                        fontSize: context.mediaQuery.size.width >
+                        fontSize: context.sizeOf.width >
                                 ResponsivityUtil.smallDeviceWidth
                             ? 16
                             : 14,

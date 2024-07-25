@@ -1,6 +1,6 @@
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lyric_module/lyric_module.dart';
+import 'package:home_module/home_module.dart';
 void main() {
   test('converting json in a verse entity', () {
     final verse = VerseAdapter.fromMap({

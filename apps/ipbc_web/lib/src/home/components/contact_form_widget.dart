@@ -31,7 +31,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    vWidth = context.mediaQuery.size.width;
+    vWidth = context.sizeOf.width;
     if (vWidth > mdSize) {
       return web();
     } else {
