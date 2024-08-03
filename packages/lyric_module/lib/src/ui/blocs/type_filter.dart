@@ -49,7 +49,7 @@ class FilterFactory extends Filter<LyricEntity, FilterEvent> {
 
     if (event.selectIndex == 0) {
       filterList = MusicFilter().filterListing(event, list);
-    } else if (event.selectIndex == 2) {
+    } else if (event.selectIndex == 1) {
       filterList = ArtistFilter().filterListing(event, list);
     }
 

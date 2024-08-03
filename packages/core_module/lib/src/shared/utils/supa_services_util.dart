@@ -108,4 +108,11 @@ class SupaServicesUtil {
     ];
     return servicesList;
   }
+  static Future<List<LyricModel>> convertUnknownLyrics(String path) async {
+    final String unknownJson = await rootBundle.loadString(path);
+    List<LyricModel> unknownLyric = SupaLyricAdapter.fromJson(unknownJson);
+    return unknownLyric;
+  }
 }
+
+

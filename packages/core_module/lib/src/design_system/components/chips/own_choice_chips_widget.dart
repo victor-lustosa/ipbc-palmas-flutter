@@ -11,7 +11,9 @@ class OwnChoiceChipsWidget extends StatefulWidget {
 
 class _OwnChoiceChipsWidgetState extends State<OwnChoiceChipsWidget> {
   int _selectedIndex = 0;
-  final List<String> _options = ['autor', 'trecho', 'artista'];
+  // final List<String> _options = ['autor', 'trecho', 'artista'];
+  final List<String> _options = ['autor', 'artista'];
+
 
   @override
   Widget build(BuildContext context) {
