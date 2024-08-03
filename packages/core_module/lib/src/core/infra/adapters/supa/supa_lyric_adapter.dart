@@ -26,12 +26,10 @@ class SupaLyricAdapter {
 
   static Map<String, dynamic> toMap(LyricEntity data) {
     return {
-      'id': data.id,
       'title': data.title,
-      'createAt': toTimestampString(data.createAt.toString()),
+      'createAt': data.createAt.toIso8601String(),
       'albumCover': data.albumCover,
       'group': data.group,
-      'verses': VerseAdapter.toMapList(data.verses),
     };
   }
 
