@@ -9,8 +9,7 @@ import '../../../service_module.dart';
 import '../blocs/services_collection_bloc.dart';
 
 class ServicesCollectionView extends StatefulWidget {
-  const ServicesCollectionView({Key? key, required this.entity})
-      : super(key: key);
+  const ServicesCollectionView({super.key, required this.entity});
   final ServicesEntity entity;
 
   @override
