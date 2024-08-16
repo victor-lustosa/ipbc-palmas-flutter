@@ -1,18 +1,23 @@
-
 import 'package:core_module/core_module.dart';
 
 import '../../../lyric_module.dart';
 
-class LyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
+class LyricsUseCases implements ILyricsUseCases<List<LyricEntity>> {
   final IRepository<List<dynamic>> repository;
 
   LyricsUseCases({required this.repository});
 
   @override
-  Future<Stream<List<LyricEntity>>> get(String url) async {
+  Future<List<LyricEntity>?> get(String url) async {
     var result = await repository.get(url);
-    return Stream.value(SupaLyricAdapter.fromMapList(result));
+    return SupaLyricAdapter.fromMapList(result);
   }
+
+  // @override
+  // Future<Stream<List<LyricEntity>>> get(String url) async {
+  //   var result = await repository.get(url);
+  //   return Stream.value(SupaLyricAdapter.fromMapList(result));
+  // }
 
   @override
   Future<void> add(path, data) async {

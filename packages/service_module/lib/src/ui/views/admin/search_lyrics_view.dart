@@ -21,12 +21,13 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
   final TextEditingController controller = TextEditingController();
   late final List<LyricEntity> _lyricsFetched = [
     LyricEntity(
-        id: 1,
-        title: '',
-        createAt: DateTime.now(),
-        albumCover: 'assets/images/default_cover_4.png',
-        group: '',
-        verses: [])
+      id: 1,
+      title: '',
+      createAt: DateTime.now(),
+      albumCover: 'assets/images/default_cover_4.png',
+      group: '',
+      // verses: []
+    )
   ];
 
   @override

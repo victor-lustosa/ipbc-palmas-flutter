@@ -1,58 +1,13 @@
-import 'package:core_module/core_module.dart';
 import 'package:lyric_module/src/ui/blocs/lyric_bloc.dart';
 
 abstract class Filter<T, R> {
   List<T> filterListing(R event, List<T>? list);
 }
 
-// music filter
-
-class MusicFilter extends Filter<LyricEntity, FilterEvent> {
+class FilterFactory<R, T> extends Filter<T, FilterEvent<R, T>> {
   @override
-  List<LyricEntity> filterListing(FilterEvent event, List<LyricEntity>? list) {
-    List<LyricEntity> filterList;
-
-    filterList = list!
-        .where(
-          (element) => element.title
-              .toLowerCase()
-              .contains(event.searchText.toLowerCase()),
-        )
-        .toList();
-
-    return filterList;
-  }
-}
-//My artist filter
-
-class ArtistFilter extends Filter<LyricEntity, FilterEvent> {
-  @override
-  List<LyricEntity> filterListing(FilterEvent event, List<LyricEntity>? list) {
-    late List<LyricEntity> filterList;
-
-    filterList = list!
-        .where(
-          (element) => element.group
-              .toLowerCase()
-              .contains(event.searchText.toLowerCase()),
-        )
-        .toList();
-
-    return filterList;
-  }
-}
-
-class FilterFactory extends Filter<LyricEntity, FilterEvent> {
-  @override
-  List<LyricEntity> filterListing(FilterEvent event, List<LyricEntity>? list) {
-    late List<LyricEntity> filterList;
-
-    if (event.selectIndex == 0) {
-      filterList = MusicFilter().filterListing(event, list);
-    } else if (event.selectIndex == 1) {
-      filterList = ArtistFilter().filterListing(event, list);
-    }
-
-    return filterList;
+  List<T> filterListing(FilterEvent<R, T> event, List<T>? list) {
+    List<T> listEntity = event.typeFilter.filterListing(event, list);
+    return listEntity;
   }
 }

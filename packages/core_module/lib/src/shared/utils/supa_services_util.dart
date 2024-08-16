@@ -4,7 +4,6 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/services.dart';
 import 'package:uno/uno.dart';
 
-
 class SupaServicesUtil {
   static int createId() =>
       int.parse(DateTime.now().microsecondsSinceEpoch.toString());
@@ -26,7 +25,7 @@ class SupaServicesUtil {
       lyricsAux.add(
         service.lyricsList[line].copyWith(
           id: createId(),
-          verses: lyricsConverted[line].verses,
+          // verses: lyricsConverted[line].verses,
           albumCover: lyricsConverted[line].albumCover,
           createAt: await _dateNowDelayed(),
         ),
@@ -43,7 +42,7 @@ class SupaServicesUtil {
       Map result = await _getLyric(lyricsList[i].title, lyricsList[i].group);
       results.add(
         LyricModel.empty().copyWith(
-          verses: VerseAdapter.fromVagalume(result),
+          // verses: VerseAdapter.fromVagalume(result),
           albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
         ),
       );
@@ -108,11 +107,10 @@ class SupaServicesUtil {
     ];
     return servicesList;
   }
+
   static Future<List<LyricModel>> convertUnknownLyrics(String path) async {
     final String unknownJson = await rootBundle.loadString(path);
     List<LyricModel> unknownLyric = SupaLyricAdapter.fromJson(unknownJson);
     return unknownLyric;
   }
 }
-
-

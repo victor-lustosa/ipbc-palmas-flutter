@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +17,7 @@ class _LyricsListViewState extends State<LyricsListView>
     with TickerProviderStateMixin {
   late final LyricBloc _bloc;
   bool isSelected = false;
+
   String selectedValue = '';
   final TextEditingController controller = TextEditingController();
 
@@ -48,7 +47,6 @@ class _LyricsListViewState extends State<LyricsListView>
           child: BlocBuilder<LyricBloc, GenericState<LyricState>>(
             bloc: _bloc,
             builder: (context, state) {
-              print(state);
               if (state is LoadingState<LyricState>) {
                 return const LoadingWidget(
                   androidRadius: 3,
@@ -83,8 +81,14 @@ class _LyricsListViewState extends State<LyricsListView>
                             onChange: (value) {
                               bool writing = value.length > 1;
                               _bloc.add(
-                                FilterEvent(controller.text, writing,
-                                    FilterFactory(), selectedIndex),
+                                FilterEvent<LyricEvent, LyricEntity>(
+                                    controller.text,
+                                    writing,
+                                    selectedIndex == 0
+                                        ? MusicFilter()
+                                        : ArtistFilter(),
+                                    // FilterFactory<LyricEvent,LyricEntity>(index: selectedIndex),
+                                    selectedIndex),
                               );
                             },
                             action: () {

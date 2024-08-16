@@ -17,10 +17,10 @@ class SupaLyricAdapter {
       createAt: DateTime.now(),
       title: json['title'],
       group: json['group'],
-      verses: [
-        if (json.containsKey('verses'))
-          ...(json['verses'] as List).map(VerseAdapter.fromMap),
-      ],
+      // verses: [
+      //   if (json.containsKey('verses'))
+      //     ...(json['verses'] as List).map(VerseAdapter.fromMap),
+      // ],
     );
   }
 
@@ -43,10 +43,10 @@ class SupaLyricAdapter {
           createAt: DateTime.parse(lyric['createAt']),
           title: lyric['title'],
           group: lyric['group'],
-          verses: [
-            if (lyric.containsKey('verses'))
-              ...(lyric['verses'] as List).map(VerseAdapter.fromMap),
-          ],
+          // verses: [
+          //   if (lyric.containsKey('verses'))
+          //     ...(lyric['verses'] as List).map(VerseAdapter.fromMap),
+          // ],
         ),
       );
     }
@@ -61,7 +61,7 @@ class SupaLyricAdapter {
               'createAt': entity.createAt.toString(),
               'albumCover': entity.albumCover,
               'group': entity.group,
-              'verses': VerseAdapter.toMapList(entity.verses),
+              // 'verses': VerseAdapter.toMapList(entity.verses),
             })
         .toList();
   }
