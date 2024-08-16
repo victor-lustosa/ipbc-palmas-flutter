@@ -62,6 +62,7 @@ export 'src/design_system/components/chips/own_choice_chips_widget.dart';
 export 'src/design_system/components/forms/template_form_widget.dart';
 export 'src/design_system/components/forms/formatters/phone_input_formatter.dart';
 export 'src/design_system/components/forms/formatters/cep_input_formatter.dart';
+export 'src/design_system/components/forms/formatters/date_input_formatter.dart';
 export 'src/design_system/components/covers/album_cover_widget.dart';
 export 'src/design_system/components/lists/lyrics_list_widget.dart';
 export 'src/design_system/components/lists/grid_balls_tile_widget.dart';

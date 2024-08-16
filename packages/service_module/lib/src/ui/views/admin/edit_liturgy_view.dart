@@ -45,7 +45,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
             body: SingleChildScrollView(
               child: Container(
                 color: AppColors.white,
-                width: context.mediaQuery.size.width,
+                width: context.sizeOf.width,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

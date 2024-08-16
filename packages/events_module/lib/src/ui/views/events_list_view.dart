@@ -21,8 +21,8 @@ class EventsListViewState extends State<EventsListView> {
     return Scaffold(
       body: SafeArea(
         child: SizedBox(
-          width: context.mediaQuery.size.width,
-          height: context.mediaQuery.size.height,
+          width: context.sizeOf.width,
+          height: context.sizeOf.height,
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -69,7 +69,7 @@ class EventsListViewState extends State<EventsListView> {
                   ),
                 ),
                 SizedBox(
-                  height: context.mediaQuery.size.height,
+                  height: context.sizeOf.height,
                   child: SlideCardsWidget(
                     margin: const EdgeInsets.only(
                       top: 16,
@@ -77,7 +77,7 @@ class EventsListViewState extends State<EventsListView> {
                       right: 16,
                     ),
                     physics: const NeverScrollableScrollPhysics(),
-                    width: context.mediaQuery.size.width,
+                    width: context.sizeOf.width,
                     scrollDirection: Axis.vertical,
                     services: const [],
                     route: '',

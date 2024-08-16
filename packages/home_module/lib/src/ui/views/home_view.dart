@@ -70,7 +70,7 @@ class _HomeViewState extends State<HomeView>
                 _servicesList = state.entities;
                 return SingleChildScrollView(
                   child: SizedBox(
-                    width: context.mediaQuery.size.width,
+                    width: context.sizeOf.width,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -112,7 +112,7 @@ class _HomeViewState extends State<HomeView>
                             ),
                             route: ServiceModule.servicesCollectionRoute,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            width: context.mediaQuery.size.width,
+                            width: context.sizeOf.width,
                             services: _servicesList,
                             height: 182,
                           ),

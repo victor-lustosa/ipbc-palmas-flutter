@@ -73,8 +73,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    vWidth = context.mediaQuery.size.width;
-
+    vWidth = context.sizeOf.width;
     if (vWidth > 1200) {
       return web();
     } else if (vWidth > 770) {

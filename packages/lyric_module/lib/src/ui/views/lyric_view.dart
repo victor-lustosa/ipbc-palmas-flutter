@@ -61,9 +61,9 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                               ),
                             ),
                             SizedBox(
-                              width: context.mediaQuery.size.width *
+                              width: context.sizeOf.width *
                                   ResponsivityUtil.resolutionDeviceProportion(
-                                      context.mediaQuery.size.width,
+                                      context.sizeOf.width,
                                       0.573,
                                       0.5),
                               child: Column(
@@ -79,7 +79,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                         color: AppColors.grey9,
                                         fontWeight: FontWeight.w500,
                                         fontSize:
-                                            context.mediaQuery.size.width >
+                                            context.sizeOf.width >
                                                     ResponsivityUtil
                                                         .smallDeviceWidth
                                                 ? 20
@@ -93,7 +93,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                     widget.entity.group,
                                     style: AppFonts.defaultFont(
                                       color: AppColors.grey9,
-                                      fontSize: context.mediaQuery.size.width >
+                                      fontSize: context.sizeOf.width >
                                               ResponsivityUtil.smallDeviceWidth
                                           ? 15
                                           : 14,
@@ -138,7 +138,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                             TextSpan(
                               text:
                                   "Esse sistema não possui fins lucrativos sobre a obra representada a cima. Todos os direitos reservados aos autores da letra. ",
-                              style: context.mediaQuery.size.width >
+                              style: context.sizeOf.width >
                                       ResponsivityUtil.smallDeviceWidth
                                   ? AppFonts.copyright(fontSize: 13)
                                   : AppFonts.copyright(fontSize: 12),

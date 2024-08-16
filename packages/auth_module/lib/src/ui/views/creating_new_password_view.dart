@@ -36,7 +36,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: SizedBox(
-            width: context.mediaQuery.size.width,
+            width: context.sizeOf.width,
             child: Column(
               children: [
                 Container(
@@ -125,7 +125,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                   ),
                 ),
                 Container(
-                  width: context.mediaQuery.size.width,
+                  width: context.sizeOf.width,
                   margin: const EdgeInsets.only(
                     left: 16,
                     top: 8,

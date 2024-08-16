@@ -18,7 +18,7 @@ class _OwnChoiceChipsWidgetState extends State<OwnChoiceChipsWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: context.mediaQuery.size.width,
+      width: context.sizeOf.width,
       child: Wrap(
         spacing: 12,
         children: List<Widget>.generate(

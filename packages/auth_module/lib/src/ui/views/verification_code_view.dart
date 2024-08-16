@@ -38,7 +38,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
           body: SafeArea(
             child: SingleChildScrollView(
               child: SizedBox(
-                width: context.mediaQuery.size.width,
+                width: context.sizeOf.width,
                 child: Column(
                   children: [
                     Row(

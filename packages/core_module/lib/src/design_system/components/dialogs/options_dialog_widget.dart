@@ -18,7 +18,7 @@ Future<void> showCustomOptionsDialog({
         children: [
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
-            width: context.mediaQuery.size.width,
+            width: context.sizeOf.width,
             child: Dialog(
               insetPadding: EdgeInsets.zero,
               surfaceTintColor: Colors.transparent,
@@ -31,7 +31,7 @@ Future<void> showCustomOptionsDialog({
                       borderRadius:
                       BorderRadius.all(Radius.circular(16)),
                     ),
-                    margin: EdgeInsets.only(bottom: context.mediaQuery.size.height * .3),
+                    margin: EdgeInsets.only(bottom: context.sizeOf.height * .3),
                     child: Row(
                       children: [
                         Container(
@@ -135,7 +135,7 @@ Future<void> showCustomOptionsDialog({
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
                         child: SizedBox(
-                          width: context.mediaQuery.size.width,
+                          width: context.sizeOf.width,
                           child: ButtonWidget(
                             overlayColor: Colors.transparent,
                             padding: const EdgeInsets.symmetric(vertical: 12),
@@ -200,7 +200,7 @@ actionButton(
         Container(
           margin: EdgeInsets.only(
             right: 10,
-            left: context.mediaQuery.size.width * .31,
+            left: context.sizeOf.width * .31,
           ),
           height: 20,
           width: 20,

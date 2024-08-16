@@ -192,7 +192,7 @@ class _LoginViewState extends State<LoginView> {
                       right: 16,
                     ),
                     height: 48,
-                    width: context.mediaQuery.size.width,
+                    width: context.sizeOf.width,
                     child: ButtonWidget(
                       backgroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
@@ -234,7 +234,7 @@ class _LoginViewState extends State<LoginView> {
                       right: 16,
                     ),
                     height: 48,
-                    width: context.mediaQuery.size.width,
+                    width: context.sizeOf.width,
                     child: ButtonWidget(
                       backgroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(

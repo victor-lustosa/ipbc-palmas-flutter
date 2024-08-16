@@ -9,8 +9,7 @@ import '../../../service_module.dart';
 import '../blocs/services_collection_bloc.dart';
 
 class ServicesCollectionView extends StatefulWidget {
-  const ServicesCollectionView({Key? key, required this.entity})
-      : super(key: key);
+  const ServicesCollectionView({super.key, required this.entity});
   final ServicesEntity entity;
 
   @override
@@ -58,7 +57,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
               value: SystemUiOverlayStyle.light,
               child: SingleChildScrollView(
                 child: SizedBox(
-                  width: context.mediaQuery.size.width,
+                  width: context.sizeOf.width,
                   child: Column(
                     children: [
                       ServiceTopBarWidget(
@@ -106,7 +105,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                         bottom: 12,
                                       ),
                                       width:
-                                          context.mediaQuery.size.width * .77,
+                                          context.sizeOf.width * .77,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,

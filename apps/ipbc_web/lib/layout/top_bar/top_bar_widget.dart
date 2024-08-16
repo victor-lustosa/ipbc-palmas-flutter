@@ -18,7 +18,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    vWidth = MediaQuery.of(context).size.width;
+    vWidth = context.sizeOf.width;
 
     if (vWidth < 600) {
       return mobile();
