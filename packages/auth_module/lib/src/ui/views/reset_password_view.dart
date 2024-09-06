@@ -106,7 +106,8 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     if (_resetPasswordController.text.isEmpty && !_isPressed) {
                       _emailBorderValidation(false, false);
                     }
-                    pushNamed(AuthModule.authRoute + AuthModule.verificationCodeRoute);
+                    pushNamed(AuthModule.authRoute +
+                        AuthModule.verificationCodeRoute);
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
