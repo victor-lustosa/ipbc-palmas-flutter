@@ -109,3 +109,4 @@ export 'src/core/infra/models/service_model.dart';
 export 'src/core/infra/models/services_model.dart';
 export 'src/core/infra/models/liturgy_model.dart';
 export 'src/core/infra/models/lyric_model.dart';
+export 'src/core/domain/entities/event_entity.dart';

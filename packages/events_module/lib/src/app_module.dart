@@ -1,4 +1,5 @@
 import 'package:core_module/core_module.dart';
+import 'package:events_module/src/ui/views/events_detail_view.dart';
 
 import 'ui/views/create_event_view.dart';
 
@@ -15,6 +16,12 @@ class EventModule extends Module {
       transition: TransitionType.custom,
       child: (_) => const CreateEventView(),
       customTransition: ModularFadeTransition()
+    );
+    r.child(
+        detailEventRoute,
+        transition: TransitionType.custom,
+        child: (_) =>  EventsDetailView(eventEntity: r.args.data as EventEntity,),
+        customTransition: ModularFadeTransition(),
     );
   }
 }

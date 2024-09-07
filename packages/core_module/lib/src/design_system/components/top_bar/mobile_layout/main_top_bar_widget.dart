@@ -11,7 +11,7 @@ class MainTopBarWidget extends StatelessWidget {
         return Container(
           margin: margin?? const EdgeInsets.only(top: 32, left: 16, right: 18),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               SizedBox(
                 width: 78,

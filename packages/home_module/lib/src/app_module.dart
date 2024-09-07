@@ -51,9 +51,6 @@ class SplashModule extends Module {
 class HomeModule extends Module {
   static const String homeRoute = '/home';
   static const String initialRoute = '/';
-  static const String eventsListRoute = '/events-list';
-  static const String servicesCollectionRoute = "/services-collection";
-  static const String servicesListRoute = '/services-list';
 
   @override
   List<Module> get imports => [ServiceModule(), OffersModule()];
@@ -119,9 +116,16 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
               ),
             );
 
-          case HomeModule.eventsListRoute:
+          case EventModule.eventsListRoute:
             return CustomFadeTransition(
               child: const EventsListView(),
+            );
+
+          case EventModule.detailEventRoute:
+            return CustomFadeTransition(
+              child: EventsDetailView(
+                eventEntity: settings.arguments as EventEntity,
+              ),
             );
 
           default:

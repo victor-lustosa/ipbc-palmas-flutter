@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:core_module/core_module.dart';
 
 class SlideCardsWidget extends StatefulWidget {
-  final List<ServicesEntity> services;
+  final List entities;
   final String route;
   final double width;
   final EdgeInsetsGeometry? margin;
@@ -10,7 +10,7 @@ class SlideCardsWidget extends StatefulWidget {
   final Axis scrollDirection;
 
   const SlideCardsWidget({
-    required this.services,
+    required this.entities,
     required this.scrollDirection,
     super.key,
     required this.route,
@@ -29,12 +29,12 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
     return ListView.builder(
       scrollDirection: widget.scrollDirection,
       physics: widget.physics,
-      itemCount: 3,
+      itemCount: widget.entities.length,
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
           onTap: () => nativePushNamed(
             widget.route,
-            arguments: widget.services[index],
+            arguments: widget.entities[index],
             context,
           ),
           child: Container(

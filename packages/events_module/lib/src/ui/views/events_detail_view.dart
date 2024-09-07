@@ -8,21 +8,27 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../app_module.dart';
 
 class EventsDetailView extends StatefulWidget {
+  final EventEntity eventEntity;
+
   const EventsDetailView({
     super.key,
+    required this.eventEntity,
   });
 
   @override
   State<EventsDetailView> createState() => EventsDetailViewState();
 }
 
-class EventsDetailViewState extends State<EventsDetailView> with LaunchUrlMixin {
+class EventsDetailViewState extends State<EventsDetailView>
+    with LaunchUrlMixin {
+
   Future<void>? _locationLink;
   final Uri locationLink = Uri(
     scheme: 'https',
     host: 'maps.app.goo.gl',
     path: 'SGwA4JvUZ5SWNS287',
   );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +41,14 @@ class EventsDetailViewState extends State<EventsDetailView> with LaunchUrlMixin 
               children: [
                 const MainTopBarWidget(
                   margin: EdgeInsets.zero,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    BackButtonWidget(
+                      action: () => nativePop(context)
+                    ),
+                  ],
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24, bottom: 16),
@@ -59,7 +73,7 @@ class EventsDetailViewState extends State<EventsDetailView> with LaunchUrlMixin 
                           color: AppColors.grey10,
                           fontSize: 20,
                           fontWeight: FontWeight.w500),
-                      'Dia da Família'),
+                      widget.eventEntity.title),
                 ),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,7 +85,7 @@ class EventsDetailViewState extends State<EventsDetailView> with LaunchUrlMixin 
                                   color: AppColors.darkGreen,
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500),
-                              'Ter, 10 de Outubro'),
+                              widget.eventEntity.date),
                           Container(
                             margin: const EdgeInsets.only(
                               left: 4,
@@ -89,7 +103,7 @@ class EventsDetailViewState extends State<EventsDetailView> with LaunchUrlMixin 
                                   color: AppColors.darkGreen,
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500),
-                              '16h'),
+                              widget.eventEntity.hour),
                         ],
                       ),
                       Container(
@@ -111,7 +125,7 @@ class EventsDetailViewState extends State<EventsDetailView> with LaunchUrlMixin 
                           color: AppColors.grey10,
                           fontSize: 17,
                           fontWeight: FontWeight.w500),
-                      'Dia da família IPBC Palmas'),
+                      widget.eventEntity.subtitle),
                 ),
                 Row(
                   children: [
@@ -126,7 +140,7 @@ class EventsDetailViewState extends State<EventsDetailView> with LaunchUrlMixin 
                             color: AppColors.grey8,
                             fontSize: 12,
                             fontWeight: FontWeight.w400),
-                        'Parque Cesamar'),
+                        widget.eventEntity.location),
                   ],
                 ),
                 Container(
@@ -139,10 +153,7 @@ class EventsDetailViewState extends State<EventsDetailView> with LaunchUrlMixin 
                           color: AppColors.grey8,
                           fontSize: 13,
                           fontWeight: FontWeight.w400),
-                      'Lorem ipsum dolor sit amet consectetur. '
-                      'Egestas dictum in molestie tempor malesuada '
-                      'donec amet neque. Massa non ac neque habitant '
-                      'pellentesque lorem ullamcorper enim quis'),
+                      widget.eventEntity.description),
                 ),
                 ClipRRect(
                     borderRadius: BorderRadius.all(
@@ -165,24 +176,25 @@ class EventsDetailViewState extends State<EventsDetailView> with LaunchUrlMixin 
                             markerId: MarkerId('0'),
                             position:
                                 LatLng(-10.195851391811726, -48.31897737627334),
-                            onTap: () => {
-                            _locationLink = launchInBrowser(locationLink)
-                            },
+                            onTap: () =>
+                                {_locationLink = launchInBrowser(locationLink)},
                           )
                         },
                       ),
                     )),
                 Container(
                   margin: const EdgeInsets.only(
-                    bottom: 95.82,
-                    top: 14,
+                    bottom: 26,
+                    top: 26,
                   ),
                   child: Center(
                     child: InkWell(
-                      onTap: ()=> print('VASCO'),
+                      onTap: () => print('VASCO'),
                       child: SizedBox(
                         width: 121,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               margin: const EdgeInsets.only(
@@ -208,7 +220,20 @@ class EventsDetailViewState extends State<EventsDetailView> with LaunchUrlMixin 
                       ),
                     ),
                   ),
-                )
+                ),
+                ButtonWidget(
+                  action: () {},
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  fixedSize: Size(context.sizeOf.width, 48),
+                  backgroundColor: AppColors.darkGreen,
+                  shadowColor: AppColors.grey0,
+                  foregroundColor: AppColors.white,
+                  child: const Text(
+                    "Contato",
+                  ),
+                ),
               ],
             ),
           ),
