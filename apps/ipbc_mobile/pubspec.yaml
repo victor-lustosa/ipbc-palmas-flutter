@@ -15,10 +15,10 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.8+11
+version: 1.0.9
 
 environment:
-  sdk: ">=3.0.0 <3.13.2"
+  sdk: ">=3.5.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -39,8 +39,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   bloc_test: ^9.1.1
-  mocktail: ^0.3.0
-  melos: ^3.4.0
+  mocktail: ^1.0.4
+  melos: ^6.1.0
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
