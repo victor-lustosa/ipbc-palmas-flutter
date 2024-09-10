@@ -1,9 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:home_module/home_module.dart';
-
-import '../blocs/database_bloc.dart';
-
+import '../blocs/database_bloc.dart'; // Ajuste de acordo com sua estrutura de pastas
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -16,10 +13,23 @@ class _SplashViewState extends State<SplashView> {
   late final DatabaseBloc bloc;
 
   @override
-  initState() {
+  void initState() {
     bloc = Modular.get<DatabaseBloc>();
     bloc.add(GetInHiveEvent<DatabasesEvent>());
     super.initState();
+
+    // Verificação de autenticação do Supabase
+    _checkAuthState();
+  }
+
+  Future<void> _checkAuthState() async {
+    final user = supabase.auth.currentUser;
+
+    if (user != null) {
+      // Usuário já logado, vá para a tela inicial
+      navigate(InitModule.initialRoute);
+    }
+    // Caso contrário, o fluxo normal de navegação acontece no listener abaixo
   }
 
   @override
@@ -29,15 +39,18 @@ class _SplashViewState extends State<SplashView> {
         listener: (context, state) async {
           if (state is FetchingDataState<DatabasesState>) {
             if (state.isData) {
-              navigate(InitModule.initialRoute);
+              navigate(InitModule
+                  .initialRoute); // Usuário logado ou com dados válidos
             } else {
-              navigate(AuthModule.authRoute + AuthModule.loginRoute);
+              navigate(AuthModule.authRoute +
+                  AuthModule.loginRoute); // Tela de login
             }
           }
         },
         bloc: bloc,
         builder: (context, state) {
-          if (state is LoadingState<DatabasesState> || state is FetchingDataState<DatabasesState>) {
+          if (state is LoadingState<DatabasesState> ||
+              state is FetchingDataState<DatabasesState>) {
             return const LoadingWidget(
               androidRadius: 4,
               iosRadius: 14,

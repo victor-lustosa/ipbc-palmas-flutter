@@ -1,6 +1,7 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../auth_module.dart';
 import '../stores/login_store.dart';
@@ -28,6 +29,39 @@ class _LoginViewState extends State<LoginView> {
   bool _isPasswordValid = true;
   bool _obscure = true;
   bool _isPressed = false;
+
+  Future<void> _nativeGoogleSignIn() async {
+    const webClientId =
+        '1008470771689-epb30p58uki492nir9boo5h1epfhnc4g.apps.googleusercontent.com';
+
+    /// iOS Client ID that you registered with Google Cloud.
+    const iosClientId =
+        '1008470771689-pp267jst9mq6ptcon1mvuq2edo61i4dq.apps.googleusercontent.com';
+
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      clientId: iosClientId,
+      serverClientId: webClientId,
+    );
+    final googleUser = await googleSignIn.signIn();
+    final googleAuth = await googleUser!.authentication;
+    final accessToken = googleAuth.accessToken;
+    final idToken = googleAuth.idToken;
+
+    if (accessToken == null) {
+      throw 'No Access Token found.';
+    }
+    if (idToken == null) {
+      throw 'No ID Token found.';
+    }
+
+    await supabase.auth.signInWithIdToken(
+      provider: OAuthProvider.google,
+      idToken: idToken,
+      accessToken: accessToken,
+    );
+
+    accessToken.isNotEmpty ? _store.toHome() : null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +169,8 @@ class _LoginViewState extends State<LoginView> {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     if (!_isPressed) {
-                                      pushNamed(AuthModule.authRoute + AuthModule.resetPasswordRoute);
+                                      pushNamed(AuthModule.authRoute +
+                                          AuthModule.resetPasswordRoute);
                                     }
                                   },
                               ),
@@ -204,7 +239,9 @@ class _LoginViewState extends State<LoginView> {
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
-                      action: () {},
+                      action: () {
+                        _nativeGoogleSignIn();
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

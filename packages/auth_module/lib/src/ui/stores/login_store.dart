@@ -1,13 +1,13 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:home_module/home_module.dart';
 
 class LoginStore extends ValueNotifier<GenericState<LoginState>> {
-  LoginStore({required IAuthUseCases useCases}):
-      //: _useCases = useCases,
+  LoginStore({required IAuthUseCases useCases})
+      :
+        //: _useCases = useCases,
         super(InitialState<LoginState>());
 
- // final IAuthUseCases _useCases;
+  // final IAuthUseCases _useCases;
 
   final String _email = 'victor.olustosa@outlook.com';
   final String _password = '!Helena2201';
@@ -46,7 +46,11 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   }
 
   toCreateAccount() {
-   pushNamed(AuthModule.authRoute + AuthModule.createAccountRoute);
+    pushNamed(AuthModule.authRoute + AuthModule.createAccountRoute);
+  }
+
+  toHome() {
+    navigate(InitModule.initialRoute);
   }
 
   Future createAccount() async {
@@ -58,6 +62,6 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
 }
 
 @immutable
-abstract class LoginState{}
+abstract class LoginState {}
 
 class ValidateFieldsState extends GenericState<LoginState> {}

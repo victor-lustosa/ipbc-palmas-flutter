@@ -1,8 +1,8 @@
-
 import '../core_module.dart';
 
-class CoreModule extends Module {
+final supabase = Supabase.instance.client;
 
+class CoreModule extends Module {
   static BindConfig<T> blocConfig<T extends Bloc>() {
     return BindConfig(
       notifier: (bloc) => bloc.stream,
@@ -22,6 +22,5 @@ class CoreModule extends Module {
         datasource: i.get<SupabaseDatasource>(),
       ),
     );
-
   }
 }
