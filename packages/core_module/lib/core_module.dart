@@ -31,6 +31,7 @@ export 'src/app_module.dart';
 
 export 'src/configs/app_configs.dart';
 export 'src/configs/app_routes.dart';
+export 'src/configs/api_keys.dart';
 
 export 'package:path_provider/path_provider.dart';
 export 'package:flutter_modular/flutter_modular.dart';
