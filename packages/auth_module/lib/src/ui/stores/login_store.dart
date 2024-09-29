@@ -41,7 +41,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     //   return 'login inválido';
     //}
   }
-
+/*
   //Login Google
   Future<void> nativeGoogleSignIn() async {
     const webClientId = ApiKeys.webCredencial;
@@ -72,7 +72,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
 
     accessToken.isNotEmpty ? toHome() : null;
   }
-
+*/
   // Login Facebook
   Future<void> signInWithFacebook() async {
     await supabase.auth.signInWithOAuth(OAuthProvider.facebook);

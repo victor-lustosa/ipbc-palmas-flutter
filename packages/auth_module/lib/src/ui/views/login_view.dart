@@ -206,7 +206,7 @@ class _LoginViewState extends State<LoginView> {
                         fontWeight: FontWeight.w500,
                       ),
                       action: () {
-                        _store.nativeGoogleSignIn();
+                      //  _store.nativeGoogleSignIn();
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
