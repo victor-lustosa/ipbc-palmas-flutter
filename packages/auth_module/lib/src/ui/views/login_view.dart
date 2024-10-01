@@ -135,7 +135,8 @@ class _LoginViewState extends State<LoginView> {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     if (!_isPressed) {
-                                      pushNamed(AuthModule.authRoute + AuthModule.resetPasswordRoute);
+                                      pushNamed(AuthModule.authRoute +
+                                          AuthModule.resetPasswordRoute);
                                     }
                                   },
                               ),
@@ -204,7 +205,9 @@ class _LoginViewState extends State<LoginView> {
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
-                      action: () {},
+                      action: () {
+                      //  _store.nativeGoogleSignIn();
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -245,7 +248,9 @@ class _LoginViewState extends State<LoginView> {
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
-                      action: () {},
+                      action: () {
+                        _store.signInWithFacebook();
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

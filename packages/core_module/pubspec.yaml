@@ -24,8 +24,8 @@ dependencies:
   hive_generator: ^2.0.0 # <-- this line
   flutter_modular: ^6.3.2
   path_provider: ^2.0.14
-  upgrader: ^10.3.0
-  flutter_lints: ^4.0.0
+  upgrader: ^11.2.0
+  flutter_lints: ^5.0.0
   google_fonts: ^6.2.1
   cupertino_icons: ^1.0.5
   vector_math: ^2.1.4
