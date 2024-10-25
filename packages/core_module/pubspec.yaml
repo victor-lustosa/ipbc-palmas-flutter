@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.5
   vector_math: ^2.1.4
   flutter_svg: ^2.0.10+1
+  google_maps_flutter: ^2.7.0
 
 dev_dependencies:
   flutter_test:
@@ -47,6 +48,7 @@ flutter:
     - assets/data/sunday-morning-services/
     - assets/data/sunday-evening-services/
     - assets/data/unknown-lyrics/
+    - assets/data/events/
 # To add assets to your package, add an assets section, like this:
 # assets:
 #   - images/a_dot_burr.jpeg

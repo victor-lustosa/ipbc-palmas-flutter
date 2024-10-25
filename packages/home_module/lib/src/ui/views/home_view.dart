@@ -148,7 +148,7 @@ class _HomeViewState extends State<HomeView>
                             width: 319,
                             scrollDirection: Axis.horizontal,
                             route: ServiceModule.servicesCollectionRoute,
-                            services: _servicesList,
+                            entities: _servicesList,
                           ),
                         ),
                       ],

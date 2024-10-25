@@ -126,7 +126,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                             child: Text(
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 2,
-                                              'Messagem: ${entitiesList[index].theme}',
+                                              'Mensagem: ${entitiesList[index].theme}',
                                               style: AppFonts.description(
                                                 color: AppColors.grey8,
                                               ),

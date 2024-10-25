@@ -2,7 +2,7 @@ library core_module;
 
 export 'src/core/domain/repositories/repository.dart';
 export 'src/core/domain/use_cases/use_cases.dart';
-
+export 'package:google_maps_flutter/google_maps_flutter.dart';
 export 'src/core/infra/datasources/datasource.dart';
 export 'src/core/infra/repositories/repository.dart';
 
@@ -110,3 +110,4 @@ export 'src/core/infra/models/service_model.dart';
 export 'src/core/infra/models/services_model.dart';
 export 'src/core/infra/models/liturgy_model.dart';
 export 'src/core/infra/models/lyric_model.dart';
+export 'src/core/domain/entities/event_entity.dart';
