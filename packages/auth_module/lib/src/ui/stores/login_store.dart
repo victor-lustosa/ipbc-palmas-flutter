@@ -59,9 +59,6 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     final accessToken = googleAuth?.accessToken;
     final idToken = googleAuth?.idToken;
 
-    if (accessToken == null) {
-      throw 'No Access Token found.';
-    }
     if (idToken == null) {
       throw 'No ID Token found.';
     }
@@ -71,6 +68,10 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
       idToken: idToken,
       accessToken: accessToken,
     );
+
+    if (accessToken == null) {
+      throw 'No Access Token found.';
+    }
 
     accessToken.isNotEmpty ? toHome() : null;
   }
