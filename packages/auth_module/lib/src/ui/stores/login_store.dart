@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-//import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:home_module/home_module.dart';
 
 class LoginStore extends ValueNotifier<GenericState<LoginState>> {
@@ -43,7 +43,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     //   return 'login inválido';
     //}
   }
-/*
+
   //Login Google
   Future<void> nativeGoogleSignIn() async {
     const webClientId = ApiKeys.webCredencial;
@@ -55,9 +55,9 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
       serverClientId: webClientId,
     );
     final googleUser = await googleSignIn.signIn();
-    final googleAuth = await googleUser!.authentication;
-    final accessToken = googleAuth.accessToken;
-    final idToken = googleAuth.idToken;
+    final googleAuth = await googleUser?.authentication;
+    final accessToken = googleAuth?.accessToken;
+    final idToken = googleAuth?.idToken;
 
     if (accessToken == null) {
       throw 'No Access Token found.';
@@ -74,7 +74,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
 
     accessToken.isNotEmpty ? toHome() : null;
   }
-*/
+
   // Login Facebook
   Future<void> signInWithFacebook() async {
     await supabase.auth.signInWithOAuth(OAuthProvider.facebook);
