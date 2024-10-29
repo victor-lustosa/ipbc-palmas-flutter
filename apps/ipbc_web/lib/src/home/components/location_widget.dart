@@ -9,11 +9,11 @@ class LocationWidget extends StatefulWidget {
 }
 
 class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
-  Future<void>? _locationLink;
+  Future<void>? locationLink;
   late double vWidth;
   bool isPressed = false;
 
-  final Uri locationLink = Uri(
+  final Uri _locationLink = Uri(
     scheme: 'https',
     host: 'goo.gl',
     path: 'maps/p25aM3t4Azo23URo7',
@@ -242,7 +242,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
               () {
                 setState(
                   () {
-                    _locationLink = launchInBrowser(locationLink);
+                    locationLink = launchInBrowser(_locationLink);
                   },
                 );
               },

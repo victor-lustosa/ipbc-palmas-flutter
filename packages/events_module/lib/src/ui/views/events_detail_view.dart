@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:core_module/core_module.dart';
-import 'package:flutter/services.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../app_module.dart';
+//import 'package:flutter/services.dart';
+//import 'package:google_maps_flutter/google_maps_flutter.dart';
+//import '../../app_module.dart';
 
 class EventsDetailView extends StatefulWidget {
   final EventEntity eventEntity;
@@ -22,8 +22,8 @@ class EventsDetailView extends StatefulWidget {
 class EventsDetailViewState extends State<EventsDetailView>
     with LaunchUrlMixin {
 
-  Future<void>? _locationLink;
-  final Uri locationLink = Uri(
+  Future<void>? locationLink;
+  final Uri _locationLink = Uri(
     scheme: 'https',
     host: 'maps.app.goo.gl',
     path: 'SGwA4JvUZ5SWNS287',
@@ -159,7 +159,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                     borderRadius: BorderRadius.all(
                       Radius.circular(18),
                     ),
-                    child: Container(
+                    child: SizedBox(
                       width: context.mediaQuery.size.width,
                       height: 140,
                       child: GoogleMap(
@@ -177,7 +177,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                             position:
                                 LatLng(-10.195851391811726, -48.31897737627334),
                             onTap: () =>
-                                {_locationLink = launchInBrowser(locationLink)},
+                                {locationLink = launchInBrowser(_locationLink)},
                           )
                         },
                       ),
@@ -189,7 +189,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                   ),
                   child: Center(
                     child: InkWell(
-                      onTap: () => print('VASCO'),
+                      onTap: () {},
                       child: SizedBox(
                         width: 121,
                         child: Row(

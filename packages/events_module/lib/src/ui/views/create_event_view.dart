@@ -35,13 +35,13 @@ class _CreateEventViewState extends State<CreateEventView> {
   final _eventLinkDescriptionKey = GlobalKey<FormState>();
   final _eventLocationKey = GlobalKey<FormState>();
   final _eventDescriptionKey = GlobalKey<FormState>();
-  bool _isEventTitleValid = true;
-  bool _isContactLinkValid = true;
-  bool _isEventLocationValid = true;
-  bool _isEventDescriptionValid = true;
-  bool _isEventLinkValid = true;
-  bool _isEventLinkDescriptionValid = true;
-  bool _isPressed = false;
+  bool isEventTitleValid = true;
+  bool isContactLinkValid = true;
+  bool isEventLocationValid = true;
+  bool isEventDescriptionValid = true;
+  bool isEventLinkValid = true;
+  bool isEventLinkDescriptionValid = true;
+  bool isPressed = false;
 
   _emailValidation(String? data) {
     return null;
@@ -141,12 +141,12 @@ class _CreateEventViewState extends State<CreateEventView> {
                     titleMargin: const EdgeInsets.only(bottom: 4),
                     controller: _eventTitleController,
                     title: 'Título do evento',
-                    isValid: _isEventTitleValid,
+                    isValid: isEventTitleValid,
                     errorText: _eventTitleErrorText,
                     globalKey: _eventTitleKey,
-                    isPressed: _isPressed,
+                    isPressed: isPressed,
                     inputDecoration: fieldInputDecoration(
-                      isValid: _isEventTitleValid,
+                      isValid: isEventTitleValid,
                       hintText: 'Título do seu evento',
                     ),
                     validator: (data) {
@@ -163,12 +163,12 @@ class _CreateEventViewState extends State<CreateEventView> {
                     title: 'Descrição',
                     maxLines: 4,
                     fieldHeight: 110,
-                    isValid: _isEventDescriptionValid,
+                    isValid: isEventDescriptionValid,
                     errorText: _eventDescriptionErrorText,
                     globalKey: _eventDescriptionKey,
-                    isPressed: _isPressed,
+                    isPressed: isPressed,
                     inputDecoration: fieldInputDecoration(
-                      hintColor: _isEventDescriptionValid
+                      hintColor: isEventDescriptionValid
                           ? AppColors.grey5
                           : Colors.red,
                       contentPadding: const EdgeInsets.only(
@@ -176,7 +176,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                         top: 9,
                         right: 10,
                       ),
-                      isValid: _isEventDescriptionValid,
+                      isValid: isEventDescriptionValid,
                       hintText: 'Descrição do evento',
                     ),
                     validator: (data) {
@@ -192,10 +192,10 @@ class _CreateEventViewState extends State<CreateEventView> {
                     controller: _eventLocationController,
                     title: 'Localização',
                     maxLines: 4,
-                    isValid: _isEventLocationValid,
+                    isValid: isEventLocationValid,
                     errorText: _eventLocationErrorText,
                     globalKey: _eventLocationKey,
-                    isPressed: _isPressed,
+                    isPressed: isPressed,
                     inputDecoration: fieldInputDecoration(
                       prefixIconConstraints: const BoxConstraints(),
                       prefixIcon: Padding(
@@ -208,7 +208,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                       contentPadding: const EdgeInsets.only(
                         top: 10,
                       ),
-                      isValid: _isEventLocationValid,
+                      isValid: isEventLocationValid,
                       hintText: 'Selecione a localização',
                     ),
                     validator: (data) {
@@ -222,14 +222,14 @@ class _CreateEventViewState extends State<CreateEventView> {
                   child: TemplateFormWidget(
                     controller: _eventLinkController,
                     title: 'Link',
-                    isValid: _isEventLinkValid,
+                    isValid: isEventLinkValid,
                     errorText: _eventLinkErrorText,
                     globalKey: _eventLinkKey,
-                    isPressed: _isPressed,
+                    isPressed: isPressed,
                     inputDecoration: fieldInputDecoration(
                       prefixIconConstraints: const BoxConstraints(),
                       prefixIcon: prefixLocationIcon,
-                      isValid: _isEventLocationValid,
+                      isValid: isEventLocationValid,
                       hintText: 'Link do evento',
                     ),
                     validator: (data) {
@@ -241,12 +241,12 @@ class _CreateEventViewState extends State<CreateEventView> {
                   margin: const EdgeInsets.only(top: 8),
                   child: TemplateFormWidget(
                     controller: _eventLinkDescriptionController,
-                    isValid: _isEventLinkDescriptionValid,
+                    isValid: isEventLinkDescriptionValid,
                     errorText: _eventLinkDescriptionErrorText,
                     globalKey: _eventLinkDescriptionKey,
-                    isPressed: _isPressed,
+                    isPressed: isPressed,
                     inputDecoration: fieldInputDecoration(
-                      isValid: _isEventLinkDescriptionValid,
+                      isValid: isEventLinkDescriptionValid,
                       hintText: 'Descrição do link',
                     ),
                     validator: (data) {
@@ -259,14 +259,14 @@ class _CreateEventViewState extends State<CreateEventView> {
                   child: TemplateFormWidget(
                     controller: _contactLinkController,
                     title: 'Link para contato',
-                    isValid: _isContactLinkValid,
+                    isValid: isContactLinkValid,
                     errorText: _contactLinkErrorText,
                     globalKey: _contactLinkKey,
-                    isPressed: _isPressed,
+                    isPressed: isPressed,
                     inputDecoration: fieldInputDecoration(
                       prefixIconConstraints: const BoxConstraints(),
                       prefixIcon: prefixLocationIcon,
-                      isValid: _isContactLinkValid,
+                      isValid: isContactLinkValid,
                       hintText: 'Link do contato',
                     ),
                     validator: (data) {

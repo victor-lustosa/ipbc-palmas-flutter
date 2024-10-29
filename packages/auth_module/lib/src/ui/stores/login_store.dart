@@ -20,11 +20,13 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
         navigate(InitModule.initialRoute);
       } else {
         value = InitialState<LoginState>();
-        showCustomErrorDialog(
-          title: 'Dados Incorretos',
-          message: 'Verifique se a senha e o email estão corretos.',
-          context: context,
-        );
+        if(context.mounted){
+          showCustomErrorDialog(
+            title: 'Dados Incorretos',
+            message: 'Verifique se a senha e o email estão corretos.',
+            context: context,
+          );
+        }
       }
     });
 

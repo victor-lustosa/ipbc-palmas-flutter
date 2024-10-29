@@ -79,7 +79,8 @@ class EventsListViewState extends State<EventsListView> {
                     physics: const NeverScrollableScrollPhysics(),
                     width: context.sizeOf.width,
                     scrollDirection: Axis.vertical,
-                    entities: [EventEntity(
+                    entities: [
+                      EventEntity(
                       id: 0,
                       title: 'Dia da família',
                       subtitle: 'Dia da família IPBC Palmas',

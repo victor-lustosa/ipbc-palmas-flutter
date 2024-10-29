@@ -1,4 +1,4 @@
-library auth_module;
+library;
 
 export 'src/app_module.dart';
 

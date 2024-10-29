@@ -7,10 +7,10 @@ mixin ConnectivityMixin{
   Future<bool> isConnected() async {
     try {
       final connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult != ConnectivityResult.none) {
-        return true;
-      } else {
+      if (connectivityResult.contains(ConnectivityResult.none)) {
         return false;
+      } else {
+        return true;
       }
     } on PlatformException catch (e, st) {
       AnalyticsUtil.recordError(error: e, st: st, name: 'lyric view model');

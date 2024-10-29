@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core_module.dart';
 import '../../../shared/utils/supa_events_util.dart';
 import '../../infra/adapters/supa/supa_event_adapter.dart';
-import '../../infra/models/event_model.dart';
+//import '../../infra/models/event_model.dart';
 // ignore_for_file: avoid_print
 
 void main() async {

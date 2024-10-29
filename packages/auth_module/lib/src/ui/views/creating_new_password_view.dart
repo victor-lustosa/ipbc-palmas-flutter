@@ -25,7 +25,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
   bool _isConfirmPasswordValid = true;
   bool _isPasswordValid = true;
   bool _obscure = true;
-  bool _isPressed = false;
+  bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                   titleMargin: const EdgeInsets.only(bottom: 4),
                   errorText: _passwordErrorText,
                   globalKey: _passwordKey,
-                  isPressed: _isPressed,
+                  isPressed: isPressed,
                   obscure: _obscure,
                   inputDecoration: fieldInputDecoration(
                     isValid: _isPasswordValid,
@@ -104,7 +104,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                     isValid: _isConfirmPasswordValid,
                     errorText: _confirmPasswordErrorText,
                     globalKey: _confirmPasswordKey,
-                    isPressed: _isPressed,
+                    isPressed: isPressed,
                     obscure: _obscure,
                     inputDecoration: fieldInputDecoration(
                       isValid: _isConfirmPasswordValid,
@@ -163,7 +163,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                     top: 93,
                   ),
                   child: LoadingButtonWidget(
-                    isPressed: _isPressed,
+                    isPressed: isPressed,
                     action: () async {
                       //if (isValid) {
                       pushNamed(AuthModule.authRoute +

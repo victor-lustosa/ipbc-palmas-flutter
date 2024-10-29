@@ -50,11 +50,13 @@ class CreateAccountStore
         );
       } else {
         notifyBorderError(value: true);
-        showCustomErrorDialog(
-          context: context,
-          title: 'Dados Incorretos',
-          message: 'Por favor, Verifique os dados e tente novamente.',
-        );
+        if(context.mounted){
+          showCustomErrorDialog(
+            context: context,
+            title: 'Dados Incorretos',
+            message: 'Por favor, Verifique os dados e tente novamente.',
+          );
+        }
       }
       value = InitialState<CreateAccountState>();
     });

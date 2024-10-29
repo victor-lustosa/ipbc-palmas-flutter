@@ -34,20 +34,24 @@ class ResetPasswordStore
             pushNamed(AuthModule.authRoute + AuthModule.creatingNewPassWordRoute);
           } else {
             notifyBorderError(value: true);
-            showCustomErrorDialog(
-              context: context,
-              title: 'Código Inválido!',
-              message: 'Por favor, verifique o código, e tente novamente.',
-            );
+           if(context.mounted){
+             showCustomErrorDialog(
+               context: context,
+               title: 'Código Inválido!',
+               message: 'Por favor, verifique o código, e tente novamente.',
+             );
+           }
           }
         } else {
           notifyBorderError(value: true);
-          showCustomErrorDialog(
-            context: context,
-            title: 'Código não Preenchidos!',
-            message:
-                'Por favor, preencha o código de verificação e tente novamente.',
-          );
+          if(context.mounted){
+            showCustomErrorDialog(
+              context: context,
+              title: 'Código não Preenchidos!',
+              message:
+              'Por favor, preencha o código de verificação e tente novamente.',
+            );
+          }
         }
         value = InitialState<ResetPasswordState>();
       });
