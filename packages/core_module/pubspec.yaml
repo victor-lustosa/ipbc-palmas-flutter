@@ -12,6 +12,7 @@ dependencies:
 
   flutter_bloc: ^8.1.2
   supabase_flutter: ^2.6.0
+  isar: ^3.1.0+1
   hive_flutter: ^1.1.0
   uno: ^1.1.8
   http: ^1.1.0
