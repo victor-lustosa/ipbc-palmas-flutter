@@ -2,7 +2,8 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class OwnChoiceChipsWidget extends StatefulWidget {
-  const OwnChoiceChipsWidget({super.key});
+  final Function(int)? action;
+  const OwnChoiceChipsWidget({super.key, this.action});
 
   @override
   State<OwnChoiceChipsWidget> createState() => _OwnChoiceChipsWidgetState();
@@ -10,7 +11,9 @@ class OwnChoiceChipsWidget extends StatefulWidget {
 
 class _OwnChoiceChipsWidgetState extends State<OwnChoiceChipsWidget> {
   int _selectedIndex = 0;
-  final List<String> _options = ['autor', 'trecho', 'artista'];
+  // final List<String> _options = ['autor', 'trecho', 'artista'];
+  final List<String> _options = ['autor', 'artista'];
+
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class _OwnChoiceChipsWidgetState extends State<OwnChoiceChipsWidget> {
             return InkWell(
               onTap: () {
                 setState(() {
-                  _selectedIndex = index;
+                  _selectedIndex = widget.action!(index);
                 });
               },
               child: Container(

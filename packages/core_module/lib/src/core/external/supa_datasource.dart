@@ -1,13 +1,11 @@
-
 import '../../../core_module.dart';
 import '../../configs/api_keys.dart';
 
-class SupabaseDatasource implements IDatasource{
+class SupabaseDatasource implements IDatasource {
   SupabaseDatasource({required SupabaseClient supabaseClient})
       : _supaClient = supabaseClient;
 
   late final SupabaseClient _supaClient;
-
   List<String> params = [];
 
   static Future init() async {
@@ -28,10 +26,8 @@ class SupabaseDatasource implements IDatasource{
           .eq(params[1], params[2])
           .order(params[3], ascending: params[4].toLowerCase() == 'true');
     } else {
-      data = await _supaClient
-          .from(params[0])
-          .select()
-          .order(params[1], ascending: params[2].toLowerCase() == 'true');
+      data = await _supaClient.from('lyrics').select();
+      // .order(params[1], ascending: true);
     }
     return Future.value(data);
   }

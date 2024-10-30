@@ -30,7 +30,8 @@ class FormFieldWidget extends StatefulWidget {
       this.errorTextMargin,
       this.horizontalSymmetric,
       this.inputPadding,
-      required this.colorStyle});
+      required this.colorStyle,
+      this.onChange});
 
   final String? errorText;
   final EdgeInsetsGeometry? errorTextMargin;
@@ -58,6 +59,7 @@ class FormFieldWidget extends StatefulWidget {
   final bool? obscureText;
   final EdgeInsetsGeometry? horizontalSymmetric;
   final EdgeInsetsGeometry? inputPadding;
+  final void Function(String)? onChange;
 
   @override
   State<FormFieldWidget> createState() => _FormFieldWidgetState();
@@ -113,6 +115,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
               inputFormatters:
                   widget.inputFormatters ?? const <TextInputFormatter>[],
               decoration: widget.inputDecoration,
+              onChanged: widget.onChange,
               style: widget.fieldStyle ??
                   AppFonts.defaultFont(fontSize: 14, color: widget.colorStyle),
             ),

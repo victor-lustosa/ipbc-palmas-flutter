@@ -8,7 +8,8 @@ class LyricModel extends LyricEntity {
       required super.createAt,
       required super.albumCover,
       required super.group,
-      required super.verses});
+      // required super.verses
+      });
 
   factory LyricModel.empty() => LyricModel(
         id: SupaServicesUtil.createId(),
@@ -16,7 +17,7 @@ class LyricModel extends LyricEntity {
         title: '',
         group: '',
         albumCover: '',
-        verses: [],
+        // verses: [],
       );
 
   LyricModel copyWith({
@@ -25,7 +26,7 @@ class LyricModel extends LyricEntity {
     DateTime? createAt,
     String? group,
     String? albumCover,
-    List<VerseEntity>? verses,
+    // List<VerseEntity>? verses,
   }) {
     return LyricModel(
       id: id ?? this.id,
@@ -33,7 +34,7 @@ class LyricModel extends LyricEntity {
       createAt: createAt ?? this.createAt,
       albumCover: albumCover ?? this.albumCover,
       group: group ?? this.group,
-      verses: verses ?? this.verses,
+      // verses: verses ?? this.verses,
     );
   }
 }
