@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import '../../../core_module.dart';
 import '../../configs/api_keys.dart';
 
@@ -16,7 +18,9 @@ class SupabaseDatasource implements IDatasource {
   }
 
   @override
-  Future<List<dynamic>> get(String path) async {
+  Future<List<dynamic>> get(
+    String path,
+  ) async {
     params = path.split('/');
     final dynamic data;
     if (params.length > 3) {
@@ -26,7 +30,11 @@ class SupabaseDatasource implements IDatasource {
           .eq(params[1], params[2])
           .order(params[3], ascending: params[4].toLowerCase() == 'true');
     } else {
-      data = await _supaClient.from('lyrics').select();
+      int limit = int.parse(params[1]);
+      int offset = params.length > 1 ? int.parse(params[2]) : 0;
+      //Entrando aqui
+      data = await _supaClient.from(params[0]).select();
+      // .range(0, 9);
       // .order(params[1], ascending: true);
     }
     return Future.value(data);

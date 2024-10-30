@@ -30,119 +30,124 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
         right: 11,
       ),
       width: context.sizeOf.width,
-      child: ListView.separated(
-        separatorBuilder: (__, _) {
-          return const SizedBox(
-            height: 8,
-          );
-        },
-        padding: EdgeInsets.zero,
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: widget.entitiesList.length,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (__, index) {
-          return Container(
-            decoration: BoxDecoration(
-              boxShadow: _elevationActive && _itemActive == index
-                  ? [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        offset: const Offset(1, 2),
-                        spreadRadius: 3,
-                        blurRadius: 10,
-                      ),
-                    ]
-                  : [],
-            ),
-            child: Material(
-              borderRadius: BorderRadius.circular(10),
-              clipBehavior: Clip.hardEdge,
-              color: AppColors.white,
-              child: InkWell(
-                onTap: () {
-                  pushNamed(
-                    '/lyrics/lyric',
-                    arguments: widget.entitiesList[index],
-                  );
-                },
-                onLongPress: () {
-                  setState(() {
-                    _elevationActive = true;
-                    _itemActive = index;
-                  });
-                  showCustomOptionsDialog(
-                    context: context,
-                    callback: (value) {
-                      setState(() {
-                        _elevationActive = value!;
-                      });
-                    },
-                  );
-                },
-                child: Container(
-                  padding: const EdgeInsets.only(
-                    left: 8,
-                    top: 8,
-                    bottom: 8,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          AlbumCoverWidget(
-                            albumCover: widget.entitiesList[index].albumCover,
-                            height: 48,
-                            width: 48,
+      child: Column(
+        children: [
+          ListView.separated(
+            separatorBuilder: (__, _) {
+              return const SizedBox(
+                height: 8,
+              );
+            },
+            padding: EdgeInsets.zero,
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: widget.entitiesList.length,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (__, index) {
+              return Container(
+                decoration: BoxDecoration(
+                  boxShadow: _elevationActive && _itemActive == index
+                      ? [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            offset: const Offset(1, 2),
+                            spreadRadius: 3,
+                            blurRadius: 10,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        ]
+                      : [],
+                ),
+                child: Material(
+                  borderRadius: BorderRadius.circular(10),
+                  clipBehavior: Clip.hardEdge,
+                  color: AppColors.white,
+                  child: InkWell(
+                    onTap: () {
+                      pushNamed(
+                        '/lyrics/lyric',
+                        arguments: widget.entitiesList[index],
+                      );
+                    },
+                    onLongPress: () {
+                      setState(() {
+                        _elevationActive = true;
+                        _itemActive = index;
+                      });
+                      showCustomOptionsDialog(
+                        context: context,
+                        callback: (value) {
+                          setState(() {
+                            _elevationActive = value!;
+                          });
+                        },
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                        left: 8,
+                        top: 8,
+                        bottom: 8,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
                             children: [
-                              Container(
-                                margin: const EdgeInsets.only(left: 8),
-                                width: context.sizeOf.width * .61,
-                                child: Text(
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  widget.entitiesList[index].title,
-                                  style: AppFonts.subhead(
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.grey9,
-                                    fontSize: 15,
-                                  ),
-                                ),
+                              AlbumCoverWidget(
+                                albumCover:
+                                    widget.entitiesList[index].albumCover,
+                                height: 48,
+                                width: 48,
                               ),
-                              Container(
-                                margin: const EdgeInsets.only(left: 8),
-                                child: Text(
-                                  widget.entitiesList[index].group,
-                                  style: AppFonts.description(
-                                    color: AppColors.grey9,
-                                    fontSize: 13,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 8),
+                                    width: context.sizeOf.width * .61,
+                                    child: Text(
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      widget.entitiesList[index].title,
+                                      style: AppFonts.subhead(
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.grey9,
+                                        fontSize: 15,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 8),
+                                    child: Text(
+                                      widget.entitiesList[index].group,
+                                      style: AppFonts.description(
+                                        color: AppColors.grey9,
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
+                          IconButtonWidget(
+                            size: 36,
+                            sizeIcon: Platform.isIOS ? 29 : null,
+                            color: AppColors.darkGreen,
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            iOSIcon: CupertinoIcons.chevron_forward,
+                            androidIcon: Icons.navigate_next_sharp,
+                          ),
                         ],
                       ),
-                      IconButtonWidget(
-                        size: 36,
-                        sizeIcon: Platform.isIOS ? 29 : null,
-                        color: AppColors.darkGreen,
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        iOSIcon: CupertinoIcons.chevron_forward,
-                        androidIcon: Icons.navigate_next_sharp,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-          );
-        },
+              );
+            },
+          ),
+        ],
       ),
     );
   }

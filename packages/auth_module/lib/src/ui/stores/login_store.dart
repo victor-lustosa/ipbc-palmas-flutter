@@ -43,35 +43,35 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   }
 
   //Login Google
-  Future<void> nativeGoogleSignIn() async {
-    const webClientId = ApiKeys.webCredencial;
+  // Future<void> nativeGoogleSignIn() async {
+  //   const webClientId = ApiKeys.webCredencial;
 
-    const iosClientId = ApiKeys.iosCredencial;
+  //   const iosClientId = ApiKeys.iosCredencial;
 
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-      clientId: iosClientId,
-      serverClientId: webClientId,
-    );
-    final googleUser = await googleSignIn.signIn();
-    final googleAuth = await googleUser!.authentication;
-    final accessToken = googleAuth.accessToken;
-    final idToken = googleAuth.idToken;
+  //   final GoogleSignIn googleSignIn = GoogleSignIn(
+  //     clientId: iosClientId,
+  //     serverClientId: webClientId,
+  //   );
+  //   final googleUser = await googleSignIn.signIn();
+  //   final googleAuth = await googleUser!.authentication;
+  //   final accessToken = googleAuth.accessToken;
+  //   final idToken = googleAuth.idToken;
 
-    if (accessToken == null) {
-      throw 'No Access Token found.';
-    }
-    if (idToken == null) {
-      throw 'No ID Token found.';
-    }
+  //   if (accessToken == null) {
+  //     throw 'No Access Token found.';
+  //   }
+  //   if (idToken == null) {
+  //     throw 'No ID Token found.';
+  //   }
 
-    await supabase.auth.signInWithIdToken(
-      provider: OAuthProvider.google,
-      idToken: idToken,
-      accessToken: accessToken,
-    );
+  //   await supabase.auth.signInWithIdToken(
+  //     provider: OAuthProvider.google,
+  //     idToken: idToken,
+  //     accessToken: accessToken,
+  //   );
 
-    accessToken.isNotEmpty ? toHome() : null;
-  }
+  //   accessToken.isNotEmpty ? toHome() : null;
+  // }
 
   // Login Facebook
   Future<void> signInWithFacebook() async {
