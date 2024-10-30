@@ -8,7 +8,7 @@
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/AndroidManifest.xml"
-            line="6"
+            line="5"
             column="9"/>
     </issue>
 
@@ -19,7 +19,7 @@
         errorLine2="            ^">
         <location
             file="src/main/AndroidManifest.xml"
-            line="26"
+            line="25"
             column="13"/>
     </issue>
 
@@ -30,18 +30,18 @@
         errorLine2="     ~~~~~~~~~~~~~~~">
         <location
             file="src/main/AndroidManifest.xml"
-            line="40"
+            line="39"
             column="6"/>
     </issue>
 
     <issue
         id="GradleDependency"
-        message="A newer version of org.jetbrains.kotlin:kotlin-stdlib than 1.8.22 is available: 2.0.0"
+        message="A newer version of org.jetbrains.kotlin:kotlin-stdlib than 1.9.10 is available: 2.0.0"
         errorLine1="    implementation &quot;org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version&quot;"
         errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="build.gradle"
-            line="86"
+            line="85"
             column="20"/>
     </issue>
 
@@ -64,13 +64,6 @@
         message="Launcher icons should not fill every pixel of their square region; see the design guide for details">
         <location
             file="src/main/res/mipmap-mdpi/ic_launcher.png"/>
-    </issue>
-
-    <issue
-        id="IconLauncherShape"
-        message="Launcher icons should not fill every pixel of their square region; see the design guide for details">
-        <location
-            file="src/main/res/mipmap-xhdpi/ic_launcher.png"/>
     </issue>
 
     <issue
