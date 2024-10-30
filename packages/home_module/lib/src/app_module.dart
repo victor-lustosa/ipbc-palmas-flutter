@@ -14,7 +14,7 @@ class InitModule extends Module {
   static const String initialRoute = '/init';
 
   @override
-  List<Module> get imports => [HomeModule(), LyricModule()];
+  List<Module> get imports => [HomeModule(), CoreModule(), LyricModule()];
 
   @override
   void routes(r) {
@@ -32,7 +32,7 @@ class SplashModule extends Module {
   void binds(i) {
     i.addSingleton(
       () => DatabaseBloc(
-        useCases: i.get<AuthUseCase>(),
+        useCases: i.get<IOfflineAuthUseCases>(),
       ),
     );
   }

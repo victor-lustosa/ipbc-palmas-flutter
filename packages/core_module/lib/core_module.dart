@@ -104,6 +104,7 @@ export 'src/core/infra/adapters/hive/hive_auth_adapter.dart';
 export 'src/core/domain/entities/verse_entity.dart';
 export 'src/core/domain/entities/service_entity.dart';
 export 'src/core/domain/entities/services_entity.dart';
+export 'src/core/domain/entities/user_entity.dart';
 export 'src/core/domain/entities/liturgy_entity.dart';
 export 'src/core/infra/models/service_model.dart';
 export 'src/core/infra/models/services_model.dart';

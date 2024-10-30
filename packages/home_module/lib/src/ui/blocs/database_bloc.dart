@@ -1,9 +1,11 @@
-import 'package:auth_module/auth_module.dart';
+
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import '../../../home_module.dart';
+
 class DatabaseBloc extends Bloc<GenericEvent<DatabasesEvent>, GenericState<DatabasesState>> {
-  final AuthUseCase useCases;
+  final IOfflineAuthUseCases useCases;
   final String path = 'auth';
 
   DatabaseBloc({required this.useCases})
