@@ -2,9 +2,7 @@ import 'package:auth_module/src/infra/services/supa_auth_service.dart';
 import 'package:auth_module/src/ui/views/registration_completion_view.dart';
 import 'package:home_module/home_module.dart';
 
-import 'domain/use_cases/auth_use_cases.dart';
 import 'infra/repositories/hive_auth_repository.dart';
-import 'infra/use_cases/online_auth_use_case.dart';
 import 'ui/stores/create_account_store.dart';
 import 'ui/stores/login_store.dart';
 import 'ui/stores/registration_completion_store.dart';

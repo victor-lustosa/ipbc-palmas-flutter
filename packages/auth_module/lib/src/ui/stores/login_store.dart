@@ -48,7 +48,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   //Login Google
   Future<void> nativeGoogleSignIn() async {
     final String? accessToken = await _onlineUse.signInWithGoogle();
-    UserEntity currentUser = _onlineUse.getCurrentUser();
+    //UserEntity currentUser = _onlineUse.getCurrentUser();
     accessToken != null && accessToken.isNotEmpty ? toHome() : null;
   }
 
