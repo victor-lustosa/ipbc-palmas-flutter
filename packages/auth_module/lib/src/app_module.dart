@@ -73,3 +73,29 @@ class AuthModule extends Module {
     );
   }
 }
+
+
+/* @override
+  void binds(i) {
+    i.addSingleton<IOnlineAuthUseCases<HiveRepository>>(
+      () => OnlineAuthUseCases<HiveRepository>(
+        repository: HiveRepository<HiveAuthDTO>(
+          boxLabel: 'auth',
+        ),
+      ),
+    );
+    i.addSingleton<IOnlineAuthUseCases<SupabaseRepository>>(
+      () => OnlineAuthUseCases<SupabaseRepository>(
+        repository: i.get<SupabaseRepository>(),
+      ),
+    );
+    i.addLazySingleton(
+      () => LoginStore(
+        offlineUse: i.get<IOnlineAuthUseCases<HiveRepository>>(),
+        onlineUse: i.get<IOnlineAuthUseCases<SupabaseRepository>>(),
+      ),
+    );
+    i.addSingleton(ResetPasswordStore.new);
+    i.addLazySingleton(CreateAccountStore.new);
+    i.addSingleton(RegistrationCompletionStore.new);
+  }*/
