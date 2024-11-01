@@ -1,7 +1,7 @@
 
 import 'package:core_module/core_module.dart';
 
-class ServicesUseCases implements IUseCases<Stream<List<ServicesEntity>>> {
+class ServicesUseCases<T> implements IUseCases<Stream<List<ServicesEntity>>> {
   final IRepository repository;
   ServicesUseCases({required this.repository});
 

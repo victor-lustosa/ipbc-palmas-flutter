@@ -1,12 +1,12 @@
 
-import 'package:auth_module/src/domain/repositories/auth_repositories.dart';
+import 'package:core_module/core_module.dart';
 
 import '../../domain/use_cases/auth_use_cases.dart';
 
 
 class OfflineAuthUseCases implements IOfflineAuthUseCases{
 
-  final IOfflineAuthRepository repository;
+  final IRepository repository;
 
   OfflineAuthUseCases({required this.repository});
 

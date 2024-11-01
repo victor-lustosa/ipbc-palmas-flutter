@@ -23,9 +23,10 @@ class ServiceModule extends Module {
         repository: i.get<SupabaseRepository>(),
       ),
     );
+
     i.addLazySingleton<ServicesCollectionBloc>(
       () => ServicesCollectionBloc(
-        supaUseCases: i.get<ServicesUseCases>(),
+        onlineUseCases: i.get<ServicesUseCases<SupabaseRepository>>(),
       ),
       config: CoreModule.blocConfig(),
     );

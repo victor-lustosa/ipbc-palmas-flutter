@@ -5,10 +5,11 @@ import 'package:flutter/cupertino.dart';
 
 class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
     GenericState<ServicesCollectionState>> with ConnectivityMixin {
-  final IUseCases supaUseCases;
+  final IUseCases onlineUseCases;
+  final IUseCases? offlineUseCases;
   List<String> path = [];
 
-  ServicesCollectionBloc({required this.supaUseCases}) : super(LoadingState()) {
+  ServicesCollectionBloc({ required this.onlineUseCases, this.offlineUseCases, }) : super(LoadingState()) {
     on<GetInSupaEvent<ServicesCollectionEvent>>(_getInSupa);
     on<LoadingEvent<ServicesCollectionEvent>>(_loading);
     on<CheckConnectivityEvent<ServicesCollectionEvent>>(_checkConnectivity);
