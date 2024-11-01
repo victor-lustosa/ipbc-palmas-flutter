@@ -12,6 +12,7 @@ dependencies:
 
   flutter_bloc: ^8.1.2
   supabase_flutter: ^2.6.0
+  isar: ^3.1.0+1
   hive_flutter: ^1.1.0
   uno: ^1.1.8
   http: ^1.1.0
@@ -24,13 +25,16 @@ dependencies:
   hive_generator: ^2.0.0 # <-- this line
   flutter_modular: ^6.3.2
   path_provider: ^2.0.14
-  upgrader: ^10.3.0
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
   google_fonts: ^6.2.1
   cupertino_icons: ^1.0.5
   vector_math: ^2.1.4
   flutter_svg: ^2.0.10+1
+<<<<<<< HEAD
   equatable: ^2.0.5
+=======
+  google_maps_flutter: ^2.7.0
+>>>>>>> develop
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +52,7 @@ flutter:
     - assets/data/sunday-morning-services/
     - assets/data/sunday-evening-services/
     - assets/data/unknown-lyrics/
+    - assets/data/events/
 # To add assets to your package, add an assets section, like this:
 # assets:
 #   - images/a_dot_burr.jpeg

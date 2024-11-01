@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import '../../../core_module.dart';
-import '../../configs/api_keys.dart';
 
 class SupabaseDatasource implements IDatasource {
   SupabaseDatasource({required SupabaseClient supabaseClient})
@@ -18,9 +17,14 @@ class SupabaseDatasource implements IDatasource {
   }
 
   @override
+<<<<<<< HEAD
   Future<List<dynamic>> get(
     String path,
   ) async {
+=======
+  Future<List<dynamic>> get(String path) async {
+
+>>>>>>> develop
     params = path.split('/');
     final dynamic data;
     if (params.length > 3) {

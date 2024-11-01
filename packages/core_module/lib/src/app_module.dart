@@ -1,6 +1,5 @@
 import '../core_module.dart';
 
-final supabase = Supabase.instance.client;
 
 class CoreModule extends Module {
   static BindConfig<T> blocConfig<T extends Bloc>() {
@@ -12,9 +11,10 @@ class CoreModule extends Module {
 
   @override
   void exportedBinds(Injector i) {
+    i.addSingleton<SupabaseClient>(() => Supabase.instance.client);
     i.addSingleton<SupabaseDatasource>(
       () => SupabaseDatasource(
-        supabaseClient: Supabase.instance.client,
+        supabaseClient: i.get<SupabaseClient>(),
       ),
     );
     i.addSingleton<Repository<List>>(

@@ -23,7 +23,7 @@ class _SplashViewState extends State<SplashView> {
   }
 
   Future<void> _checkAuthState() async {
-    final user = supabase.auth.currentUser;
+    final user = Modular.get<Supabase>().client.auth.currentUser;
 
     if (user != null) {
       // Usuário já logado, vá para a tela inicial

@@ -10,16 +10,16 @@ class AppStoresWidget extends StatefulWidget {
 
 class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
   late double width;
-  Future<void>? _appStoreLink;
-  Future<void>? _playStoreLink;
+  Future<void>? appStoreLink;
+  Future<void>? playStoreLink;
 
-  final Uri appStoreLink = Uri(
+  /*final Uri _appStoreLink = Uri(
       scheme: 'https',
       host: 'play.google.com',
       path: 'store/apps/details',
-      queryParameters: {'id': 'com.ipbc.ipbc_palmas'});
+      queryParameters: {'id': 'com.ipbc.ipbc_palmas'});*/
 
-  final Uri playStoreLink = Uri(
+  final Uri _playStoreLink = Uri(
       scheme: 'https',
       host: 'play.google.com',
       path: 'store/apps/details',
@@ -215,7 +215,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         iconPath: AppIcons.playIcon,
         labelStore: 'Baixe na PlayStore',
         onPressed: () {
-          _playStoreLink = launchInBrowser(playStoreLink);
+          playStoreLink = launchInBrowser(_playStoreLink);
         },
       );
 
@@ -223,7 +223,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         iconPath: AppIcons.appleIcon,
         labelStore: 'Baixe na App Store',
         onPressed: () {
-          //   _appStoreLink = launchInBrowser(appStoreLink);
+          //   appStoreLink = launchInBrowser(_appStoreLink);
         },
       );
 }

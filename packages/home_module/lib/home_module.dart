@@ -1,4 +1,4 @@
-library home_module;
+library;
 
 export 'package:core_module/core_module.dart';
 export 'package:lyric_module/lyric_module.dart';

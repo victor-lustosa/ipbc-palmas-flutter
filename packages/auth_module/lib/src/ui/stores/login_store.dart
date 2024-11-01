@@ -1,17 +1,18 @@
 import 'package:flutter/cupertino.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:home_module/home_module.dart';
 
 class LoginStore extends ValueNotifier<GenericState<LoginState>> {
-  LoginStore({required IAuthUseCases useCases})
-      :
-        //: _useCases = useCases,
+  LoginStore({required IOfflineAuthUseCases offlineUse, required IOnlineAuthUseCases onlineUse})
+      : _offlineUse = offlineUse,
+        _onlineUse = onlineUse,
         super(InitialState<LoginState>());
 
-  // final IAuthUseCases _useCases;
+   final IOfflineAuthUseCases _offlineUse;
+   final IOnlineAuthUseCases _onlineUse;
 
   final String _email = 'victor.olustosa@outlook.com';
   final String _password = '!Helena2201';
+  final SupabaseClient _supaClient = Modular.get<SupabaseClient>();
 
   logIn(String email, String password, BuildContext context) async {
     value = LoadingState<LoginState>();
@@ -20,11 +21,13 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
         navigate(InitModule.initialRoute);
       } else {
         value = InitialState<LoginState>();
-        showCustomErrorDialog(
-          title: 'Dados Incorretos',
-          message: 'Verifique se a senha e o email estão corretos.',
-          context: context,
-        );
+        if(context.mounted){
+          showCustomErrorDialog(
+            title: 'Dados Incorretos',
+            message: 'Verifique se a senha e o email estão corretos.',
+            context: context,
+          );
+        }
       }
     });
 
@@ -43,6 +46,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   }
 
   //Login Google
+<<<<<<< HEAD
   // Future<void> nativeGoogleSignIn() async {
   //   const webClientId = ApiKeys.webCredencial;
 
@@ -72,10 +76,17 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
 
   //   accessToken.isNotEmpty ? toHome() : null;
   // }
+=======
+  Future<void> nativeGoogleSignIn() async {
+    final String? accessToken = await _onlineUse.signInWithGoogle();
+    //UserEntity currentUser = _onlineUse.getCurrentUser();
+    accessToken != null && accessToken.isNotEmpty ? toHome() : null;
+  }
+>>>>>>> develop
 
   // Login Facebook
   Future<void> signInWithFacebook() async {
-    await supabase.auth.signInWithOAuth(OAuthProvider.facebook);
+    await _supaClient.auth.signInWithOAuth(OAuthProvider.facebook);
   }
 
   validateFields() {
