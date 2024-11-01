@@ -1,13 +1,8 @@
 library;
 
-export 'src/core/domain/repositories/repository.dart';
+export 'src/core/domain/repositories/repositories.dart';
 export 'src/core/domain/use_cases/use_cases.dart';
 export 'package:google_maps_flutter/google_maps_flutter.dart';
-export 'src/core/infra/datasources/datasource.dart';
-export 'src/core/infra/repositories/repository.dart';
-
-export 'src/core/external/hive_datasource.dart';
-export 'src/core/external/supa_datasource.dart';
 
 export 'src/configs/no_glow_behavior.dart';
 
@@ -92,7 +87,8 @@ export 'src/design_system/components/icons/hide_icon_widget.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 
 export 'src/core/infra/models/hive_dtos/hive_auth_dto.dart';
-
+export 'src/core/infra/repositories/supa_repository.dart';
+export 'src/core/infra/repositories/hive_repository.dart';
 export 'src/core/domain/entities/lyric_entity.dart';
 export 'src/core/infra/adapters/services_adapter.dart';
 export 'src/core/infra/adapters/liturgy_adapter.dart';
@@ -111,3 +107,4 @@ export 'src/core/infra/models/services_model.dart';
 export 'src/core/infra/models/liturgy_model.dart';
 export 'src/core/infra/models/lyric_model.dart';
 export 'src/core/domain/entities/event_entity.dart';
+

@@ -20,7 +20,7 @@ class ServiceModule extends Module {
   void binds(i) {
     i.addSingleton(
       () => ServicesUseCases(
-        repository: i.get<Repository<List>>(),
+        repository: i.get<SupabaseRepository>(),
       ),
     );
     i.addLazySingleton<ServicesCollectionBloc>(

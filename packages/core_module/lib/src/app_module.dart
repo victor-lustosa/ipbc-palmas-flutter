@@ -1,3 +1,4 @@
+
 import '../core_module.dart';
 
 
@@ -12,15 +13,11 @@ class CoreModule extends Module {
   @override
   void exportedBinds(Injector i) {
     i.addSingleton<SupabaseClient>(() => Supabase.instance.client);
-    i.addSingleton<SupabaseDatasource>(
-      () => SupabaseDatasource(
+    i.addSingleton<SupabaseRepository>(
+      () => SupabaseRepository(
         supabaseClient: i.get<SupabaseClient>(),
       ),
     );
-    i.addSingleton<Repository<List>>(
-      () => Repository<List>(
-        datasource: i.get<SupabaseDatasource>(),
-      ),
-    );
+
   }
 }

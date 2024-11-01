@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core_module.dart';
-import '../../../shared/utils/supa_events_util.dart';
-import '../../infra/adapters/supa/supa_event_adapter.dart';
+import '../../../../../core_module.dart';
+import '../../../../shared/utils/supa_events_util.dart';
+import '../../adapters/supa/supa_event_adapter.dart';
+
 //import '../../infra/models/event_model.dart';
 // ignore_for_file: avoid_print
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SupabaseDatasource.init();
-  SupabaseDatasource supa =
-  SupabaseDatasource(supabaseClient: Supabase.instance.client);
+  await SupabaseRepository.init();
+  SupabaseRepository supa =
+  SupabaseRepository(supabaseClient: Supabase.instance.client);
   try {
     List<EventEntity> eventsInserted =
     await SupaEventsUtil.loadEventsList(

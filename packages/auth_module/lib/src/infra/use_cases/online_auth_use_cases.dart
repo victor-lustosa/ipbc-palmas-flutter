@@ -1,13 +1,14 @@
 
-import 'package:auth_module/src/domain/services/auth_service.dart';
 import 'package:auth_module/src/domain/use_cases/auth_use_cases.dart';
 import 'package:core_module/core_module.dart';
 
-class OnlineAuthUseCase implements IOnlineAuthUseCases{
+import '../../domain/repositories/auth_repositories.dart';
 
-  final IAuthService service;
+class OnlineAuthUseCases implements IOnlineAuthUseCases{
 
-  OnlineAuthUseCase({required this.service});
+  final IOnlineAuthRepository service;
+
+  OnlineAuthUseCases({required this.service});
 
   @override
   Future<String> signInWithEmail(String email, String password) {

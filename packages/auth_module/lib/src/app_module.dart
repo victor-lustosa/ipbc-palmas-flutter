@@ -1,8 +1,8 @@
-import 'package:auth_module/src/infra/services/supa_auth_service.dart';
+import 'package:auth_module/src/infra/repositories/supa_auth_repository.dart';
 import 'package:auth_module/src/ui/views/registration_completion_view.dart';
 import 'package:home_module/home_module.dart';
 
-import 'infra/repositories/hive_auth_repository.dart';
+import 'infra/repositories/isar_auth_repository.dart';
 import 'ui/stores/create_account_store.dart';
 import 'ui/stores/login_store.dart';
 import 'ui/stores/registration_completion_store.dart';
@@ -32,17 +32,15 @@ class AuthModule extends Module {
   @override
   void binds(i) {
     i.addSingleton<IOfflineAuthUseCases>(
-      () => OfflineAuthUseCase(
-        repository: HiveAuthRepository(
+      () => OfflineAuthUseCases(
+        repository: IsarAuthRepository(
           box: Hive.box<HiveAuthDTO>('auth'),
         ),
       ),
     );
     i.addSingleton<IOnlineAuthUseCases>(
-          () => OnlineAuthUseCase(
-        service: SupaAuthService(
-           supaClient: i.get<SupabaseClient>()
-        ),
+      () => OnlineAuthUseCases(
+        service: SupaAuthRepository(supaClient: i.get<SupabaseClient>()),
       ),
     );
     i.addLazySingleton(
@@ -61,10 +59,7 @@ class AuthModule extends Module {
     r.child(loginRoute, child: (_) => const LoginView());
     r.child(createAccountRoute, child: (_) => const CreateAccountView());
     r.child(resetPasswordRoute, child: (_) => const ResetPasswordView());
-    r.child(
-      verificationCodeRoute,
-      child: (_) => const VerificationCodeView(),
-    );
+    r.child(verificationCodeRoute, child: (_) => const VerificationCodeView());
     r.child(
       creatingNewPassWordRoute,
       child: (_) => const CreatingNewPasswordView(),

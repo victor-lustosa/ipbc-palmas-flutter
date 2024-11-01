@@ -1,10 +1,11 @@
 
-import 'package:auth_module/src/domain/services/auth_service.dart';
 import 'package:core_module/core_module.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class SupaAuthService implements IAuthService{
-  SupaAuthService({required SupabaseClient supaClient})
+import '../../domain/repositories/auth_repositories.dart';
+
+class SupaAuthRepository implements IOnlineAuthRepository{
+  SupaAuthRepository({required SupabaseClient supaClient})
       : _supaClient = supaClient;
 
   late final SupabaseClient _supaClient;

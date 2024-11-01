@@ -8,8 +8,8 @@ void main() async {
   //Modular.setInitialRoute(AuthModule.authRoute + AuthModule.loginRoute);
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([
-    SupabaseDatasource.init(),
-    HiveDatasource.init(),
+    SupabaseRepository.init(),
+    HiveRepository.init(),
   ]);
   // Bloc.observer = GenericBlocObserver();
   SystemChrome.setPreferredOrientations([

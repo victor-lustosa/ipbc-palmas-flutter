@@ -4,7 +4,7 @@ import 'package:core_module/core_module.dart';
 import '../../../lyric_module.dart';
 
 class LyricsUseCases implements ILyricsUseCases<Stream<List<LyricEntity>>> {
-  final IRepository<List<dynamic>> repository;
+  final IRepository repository;
 
   LyricsUseCases({required this.repository});
 

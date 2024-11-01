@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core_module.dart';
+import '../../../../../core_module.dart';
+
 //import '../../../shared/utils/supa_services_util.dart';
 
 // ignore_for_file: avoid_print
@@ -8,7 +9,7 @@ import '../../../../core_module.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await SupabaseDatasource.init();
+  await SupabaseRepository.init();
 
   //SupabaseDatasource supa = SupabaseDatasource(supabaseClient: Supabase.instance.client);
   try {

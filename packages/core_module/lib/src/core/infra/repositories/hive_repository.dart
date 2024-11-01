@@ -1,10 +1,10 @@
-import '../../../core_module.dart';
+import '../../../../core_module.dart';
 
-class HiveDatasource<R> implements IDatasource {
+class HiveRepository<R> implements IRepository {
   String boxLabel;
   late Box<R> box;
 
-  HiveDatasource({required this.boxLabel}) {
+  HiveRepository({required this.boxLabel}) {
     box = Hive.box<R>(boxLabel);
   }
 

@@ -18,7 +18,7 @@ class LyricModule extends Module {
     i.addSingleton<LyricBloc>(
       () => LyricBloc(
         supaUseCase: LyricsUseCases(
-          repository: i.get<Repository<List<dynamic>>>(),
+          repository: i.get<SupabaseRepository>(),
         ),
       ),
       config: CoreModule.blocConfig(),
