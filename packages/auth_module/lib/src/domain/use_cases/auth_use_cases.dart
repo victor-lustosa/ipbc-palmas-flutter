@@ -1,22 +1,22 @@
 
 import 'package:core_module/core_module.dart';
 
-abstract class IOfflineAuthUseCases implements IGetUserInMemoryUseCases {}
+abstract class IOfflineAuthUseCases implements IGetLocalUser {}
 
-abstract class IOnlineAuthUseCases implements ISignInEmailUseCases, ISignInGoogleUseCases, IGetCurrentUserUseCases {}
+abstract class IOnlineAuthUseCases implements ISignInEmail, ISignInGoogle, IGetCurrentUser {}
 
-abstract class ISignInEmailUseCases {
+abstract class ISignInEmail {
   Future<String> signInWithEmail(String email, String password);
 }
 
-abstract class ISignInGoogleUseCases {
+abstract class ISignInGoogle {
   Future<String?> signInWithGoogle();
 }
 
-abstract class IGetCurrentUserUseCases{
+abstract class IGetCurrentUser{
   UserEntity getCurrentUser();
 }
 
-abstract class IGetUserInMemoryUseCases{
+abstract class IGetLocalUser{
   void get();
 }

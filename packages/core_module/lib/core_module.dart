@@ -87,8 +87,8 @@ export 'src/design_system/components/icons/hide_icon_widget.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 
 export 'src/core/infra/models/hive_dtos/hive_auth_dto.dart';
-export 'src/core/infra/repositories/supa_repository.dart';
-export 'src/core/infra/repositories/hive_repository.dart';
+export 'src/core/external/repositories/supa_repository.dart';
+export 'src/core/external/repositories/hive_repository.dart';
 export 'src/core/domain/entities/lyric_entity.dart';
 export 'src/core/infra/adapters/services_adapter.dart';
 export 'src/core/infra/adapters/liturgy_adapter.dart';
