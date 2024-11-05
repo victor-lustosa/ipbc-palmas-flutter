@@ -1,6 +1,6 @@
 library;
 
-export 'src/core/domain/repositories/repositories.dart';
+export 'src/core/infra/repositories/repositories.dart';
 export 'src/core/domain/use_cases/use_cases.dart';
 export 'package:google_maps_flutter/google_maps_flutter.dart';
 
