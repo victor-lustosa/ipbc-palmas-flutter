@@ -15,7 +15,7 @@ void main() async {
   try {
     List<EventEntity> eventsInserted =
     await SupaEventsUtil.loadEventsList(
-        'assets/data/events/events_mock.json');
+        'assets/data/events/events-mock.json');
     // inserindo lista de todas as letras
     for (EventEntity event in eventsInserted) {
       supa.add('event', SupaEventAdapter.toMap(event));

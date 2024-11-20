@@ -15,8 +15,7 @@ class SupaEventAdapter {
       title: json['title'],
       subtitle: json['subtitle'],
       image: json['image'],
-      hour: json['hour'],
-      date: json['date'],
+      dateHour: json['date'],
       description: json['description'],
       location: json['location'],
       link: json['link'],
@@ -31,13 +30,12 @@ class SupaEventAdapter {
       'title': data.title,
       'subtitle': data.subtitle,
       'image': data.image,
-      'hour': data.hour,
-      'date': data.date,
+      'date_hour': data.dateHour.toIso8601String(),
       'description': data.description,
       'location': data.location,
       'link': data.link,
-      'linkDescription': data.linkDescription,
-      'createAt': data.createAt.toString(),
+      'link_description': data.linkDescription,
+      'create_at': data.createAt.toIso8601String(),
     };
   }
   static List<EventEntity> fromMapList(dynamic data) {
@@ -49,13 +47,12 @@ class SupaEventAdapter {
           title: entity['title'],
           subtitle: entity['subtitle'],
           image: entity['image'],
-          hour: entity['hour'],
-          date: entity['date'],
+          dateHour: DateTime.now(),
           description: entity['description'],
           location: entity['location'],
           link: entity['link'],
           linkDescription: entity['linkDescription'],
-          createAt: DateFormat("dd/MM/yyyy").parse(entity['createAt']),
+          createAt: DateTime.now(),
         ),
       );
     }

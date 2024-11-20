@@ -46,7 +46,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     BackButtonWidget(
-                      action: () => nativePop(context)
+                        action: () => nativePop(context)
                     ),
                   ],
                 ),
@@ -85,7 +85,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                                   color: AppColors.darkGreen,
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500),
-                              widget.eventEntity.date),
+                              widget.eventEntity.dateHour.toString()),
                           Container(
                             margin: const EdgeInsets.only(
                               left: 4,
@@ -103,7 +103,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                                   color: AppColors.darkGreen,
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500),
-                              widget.eventEntity.hour),
+                              widget.eventEntity.dateHour.hour.toString()),
                         ],
                       ),
                       Container(
@@ -168,16 +168,16 @@ class EventsDetailViewState extends State<EventsDetailView>
                         mapType: MapType.normal,
                         initialCameraPosition: CameraPosition(
                           target:
-                              LatLng(-10.195851391811726, -48.31897737627334),
+                          LatLng(-10.195851391811726, -48.31897737627334),
                           zoom: 15,
                         ),
                         markers: {
                           Marker(
                             markerId: MarkerId('0'),
                             position:
-                                LatLng(-10.195851391811726, -48.31897737627334),
+                            LatLng(-10.195851391811726, -48.31897737627334),
                             onTap: () =>
-                                {locationLink = launchInBrowser(_locationLink)},
+                            {locationLink = launchInBrowser(_locationLink)},
                           )
                         },
                       ),

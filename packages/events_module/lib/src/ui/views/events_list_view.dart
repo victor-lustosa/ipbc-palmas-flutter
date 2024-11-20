@@ -81,48 +81,45 @@ class EventsListViewState extends State<EventsListView> {
                     scrollDirection: Axis.vertical,
                     entities: [
                       EventEntity(
-                      id: 0,
-                      title: 'Dia da família',
-                      subtitle: 'Dia da família IPBC Palmas',
-                      image: AppImages.littleGroupMd,
-                      hour: '16h',
-                      date: 'Ter, 10 de Outubro',
-                      description: 'Lorem ipsum dolor sit amet consectetur. '
-                          'Egestas dictum in molestie tempor malesuada '
-                          'donec amet neque. Massa non ac neque habitant '
-                          'pellentesque lorem ullamcorper enim quis',
-                      location: 'Parque Cesamar',
-                      link: 'link',
-                      linkDescription: 'linkDescription',
-                        createAt: DateTime.now()), EventEntity(
-                        id: 0,
-                        title: 'Dia da família',
-                        subtitle: 'Dia da família IPBC Palmas',
-                        image: AppImages.littleGroupMd,
-                        hour: '16h',
-                        date: 'Ter, 10 de Outubro',
-                        description: 'Lorem ipsum dolor sit amet consectetur. '
-                            'Egestas dictum in molestie tempor malesuada '
-                            'donec amet neque. Massa non ac neque habitant '
-                            'pellentesque lorem ullamcorper enim quis',
-                        location: 'Parque Cesamar',
-                        link: 'link',
-                        linkDescription: 'linkDescription',
-                        createAt: DateTime.now()), EventEntity(
-                        id: 0,
-                        title: 'Dia da família',
-                        subtitle: 'Dia da família IPBC Palmas',
-                        image: AppImages.littleGroupMd,
-                        hour: '16h',
-                        date: 'Ter, 10 de Outubro',
-                        description: 'Lorem ipsum dolor sit amet consectetur. '
-                            'Egestas dictum in molestie tempor malesuada '
-                            'donec amet neque. Massa non ac neque habitant '
-                            'pellentesque lorem ullamcorper enim quis',
-                        location: 'Parque Cesamar',
-                        link: 'link',
-                        linkDescription: 'linkDescription',
-                    createAt: DateTime.now())],
+                          id: 0,
+                          title: 'Dia da família',
+                          subtitle: 'Dia da família IPBC Palmas',
+                          image: AppImages.littleGroupMd,
+                          dateHour: DateTime.now(),
+                          description: 'Lorem ipsum dolor sit amet consectetur. '
+                              'Egestas dictum in molestie tempor malesuada '
+                              'donec amet neque. Massa non ac neque habitant '
+                              'pellentesque lorem ullamcorper enim quis',
+                          location: 'Parque Cesamar',
+                          link: 'link',
+                          linkDescription: 'linkDescription',
+                          createAt: DateTime.now()), EventEntity(
+                          id: 0,
+                          title: 'Dia da família',
+                          subtitle: 'Dia da família IPBC Palmas',
+                          image: AppImages.littleGroupMd,
+                          dateHour: DateTime.now(),
+                          description: 'Lorem ipsum dolor sit amet consectetur. '
+                              'Egestas dictum in molestie tempor malesuada '
+                              'donec amet neque. Massa non ac neque habitant '
+                              'pellentesque lorem ullamcorper enim quis',
+                          location: 'Parque Cesamar',
+                          link: 'link',
+                          linkDescription: 'linkDescription',
+                          createAt: DateTime.now()), EventEntity(
+                          id: 0,
+                          title: 'Dia da família',
+                          subtitle: 'Dia da família IPBC Palmas',
+                          image: AppImages.littleGroupMd,
+                          dateHour: DateTime.now(),
+                          description: 'Lorem ipsum dolor sit amet consectetur. '
+                              'Egestas dictum in molestie tempor malesuada '
+                              'donec amet neque. Massa non ac neque habitant '
+                              'pellentesque lorem ullamcorper enim quis',
+                          location: 'Parque Cesamar',
+                          link: 'link',
+                          linkDescription: 'linkDescription',
+                          createAt: DateTime.now())],
                     route: EventModule.detailEventRoute,
                   ),
                 ),
