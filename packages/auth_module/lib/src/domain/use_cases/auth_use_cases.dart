@@ -1,7 +1,7 @@
 
 import 'package:core_module/core_module.dart';
 
-abstract class IOfflineAuthUseCases implements IGetLocalUser {}
+abstract class IOfflineAuthUseCases implements IGetLocalUser, ISaveLocalUser, IGetAccessToken, ISaveAccessToken{}
 
 abstract class IOnlineAuthUseCases implements ISignInEmail, ISignInGoogle, IGetCurrentUser {}
 
@@ -18,5 +18,17 @@ abstract class IGetCurrentUser{
 }
 
 abstract class IGetLocalUser{
-  void get();
+  void getLocalUser();
+}
+
+abstract class IGetAccessToken{
+  void getAccessToken();
+}
+
+abstract class ISaveLocalUser{
+  void saveLocalUser(dynamic user);
+}
+
+abstract class ISaveAccessToken{
+  void saveAccessToken(String token);
 }

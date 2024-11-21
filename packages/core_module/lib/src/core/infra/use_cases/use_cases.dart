@@ -1,14 +1,15 @@
 
 import 'package:core_module/core_module.dart';
 
-class ServicesUseCases<T> implements IUseCases<Stream<List<ServicesEntity>>> {
+class UseCases<T> implements IUseCases<T> {
   final IRepository repository;
-  ServicesUseCases({required this.repository});
+  UseCases({required this.repository});
 
   @override
-  Future<Stream<List<ServicesEntity>>> get({required String path, Function? fromMapList}) async {
+  Future<T?> get({required String path, Function? fromMapList}) async {
     var result = await repository.get(path);
-    return Stream.value(ServicesAdapter.fromMapList(result));
+    if(fromMapList == null) return null;
+    return Stream.value(fromMapList(result)) as T;
   }
 
   @override

@@ -6,23 +6,23 @@ import '../../domain/repositories/auth_repositories.dart';
 
 class OnlineAuthUseCases implements IOnlineAuthUseCases{
 
-  final IOnlineAuthRepository service;
+  final IOnlineAuthRepository repository;
 
-  OnlineAuthUseCases({required this.service});
+  OnlineAuthUseCases({required this.repository});
 
   @override
   Future<String> signInWithEmail(String email, String password) {
-    var entity = service.signInWithEmail(email, password);
+    var entity = repository.signInWithEmail(email, password);
     return Future.value(entity as String);
   }
 
   @override
   UserEntity getCurrentUser() {
-    return service.getCurrentUser();
+    return repository.getCurrentUser();
   }
 
   @override
   Future<String?> signInWithGoogle() async{
-    return await service.signInWithGoogle();
+    return await repository.signInWithGoogle();
   }
 }

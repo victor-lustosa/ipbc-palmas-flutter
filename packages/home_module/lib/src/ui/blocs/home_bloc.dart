@@ -24,7 +24,7 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
 
   Future<void> _getInSupa(GetInSupaEvent event, emit) async {
     await emit.onEach<List<ServicesEntity>>(
-      await supaUseCases.get(path),
+      await supaUseCases.get(path: path),
       onData: (services) {
         emit(DataFetchedState<HomeState, ServicesEntity>(entities: services));
       },

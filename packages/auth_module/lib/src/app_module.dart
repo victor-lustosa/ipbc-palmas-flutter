@@ -1,3 +1,4 @@
+import 'package:auth_module/src/infra/repositories/isar_auth_repository.dart';
 import 'package:auth_module/src/infra/repositories/supa_auth_repository.dart';
 import 'package:auth_module/src/ui/views/registration_completion_view.dart';
 import 'package:home_module/home_module.dart';
@@ -32,14 +33,12 @@ class AuthModule extends Module {
   void binds(i) {
     i.addSingleton<IOfflineAuthUseCases>(
       () => OfflineAuthUseCases(
-        repository: HiveRepository<HiveAuthDTO>(
-          boxLabel: 'auth',
-        ),
+        repository: IsarAuthRepository(),
       ),
     );
     i.addSingleton<IOnlineAuthUseCases>(
       () => OnlineAuthUseCases(
-        service: SupaAuthRepository(supaClient: i.get<SupabaseClient>()),
+        repository: SupaAuthRepository(supaClient: i.get<SupabaseClient>()),
       ),
     );
     i.addLazySingleton(
