@@ -12,12 +12,8 @@ class ServicesUseCases<T> implements IUseCases<Stream<List<ServicesEntity>>> {
   }
 
   @override
-  Future<void> add(path, data) async {
-    repository.add(path, data);
-  }
+  Future<void> add(path, data) async => repository.add(path, data);
 
   @override
-  Future<void> update(String path, data) async {
-    repository.update(path, data);
-  }
+  Future<void> update(String path, data) async => repository.update(path, data);
 }

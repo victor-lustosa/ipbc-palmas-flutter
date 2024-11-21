@@ -17,12 +17,8 @@ class OnlineAuthUseCases implements IOnlineAuthUseCases{
   }
 
   @override
-  UserEntity getCurrentUser() {
-    return repository.getCurrentUser();
-  }
+  UserEntity? getCurrentUser() => repository.getCurrentUser();
 
   @override
-  Future<String?> signInWithGoogle() async{
-    return await repository.signInWithGoogle();
-  }
+  Future<String?> signInWithGoogle() async => await repository.signInWithGoogle();
 }

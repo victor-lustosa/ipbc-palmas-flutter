@@ -12,7 +12,7 @@ class SupaAuthRepository implements IOnlineAuthRepository{
   late final SupabaseClient _supaClient;
 
   @override
-  UserEntity getCurrentUser() {
+  UserEntity? getCurrentUser() {
     User? user = _supaClient.auth.currentUser;
     return UserEntity.create(user);
   }

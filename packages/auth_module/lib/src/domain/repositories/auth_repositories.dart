@@ -5,7 +5,7 @@ abstract class IOnlineAuthRepository implements ISignInEmail, ISignInGoogle, IGe
 abstract class IOfflineAuthRepository implements IGetLocalUser, ISaveLocalUser, IGetAccessToken, ISaveAccessToken{}
 
 abstract class ISignInEmail {
-  Future<String> signInWithEmail(String email, String password);
+  Future<String?> signInWithEmail(String email, String password);
 }
 
 abstract class ISignInGoogle {
@@ -13,19 +13,19 @@ abstract class ISignInGoogle {
 }
 
 abstract class IGetCurrentUser {
-  UserEntity getCurrentUser();
+  UserEntity? getCurrentUser();
 }
 
 abstract class IGetLocalUser{
-  void getLocalUser();
+  UserEntity? getLocalUser();
 }
 
 abstract class IGetAccessToken{
-  void getAccessToken();
+  String? getAccessToken();
 }
 
 abstract class ISaveLocalUser{
-  void saveLocalUser(dynamic user);
+  void saveLocalUser(UserEntity user);
 }
 
 abstract class ISaveAccessToken{

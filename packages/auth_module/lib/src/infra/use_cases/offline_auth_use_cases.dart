@@ -1,5 +1,6 @@
 
 import 'package:auth_module/src/domain/repositories/auth_repositories.dart';
+import 'package:core_module/core_module.dart';
 
 import '../../domain/use_cases/auth_use_cases.dart';
 
@@ -10,22 +11,14 @@ class OfflineAuthUseCases implements IOfflineAuthUseCases{
   OfflineAuthUseCases({required this.repository});
 
   @override
-  void getAccessToken() {
-    return repository.getAccessToken();
-  }
+  String? getAccessToken() => repository.getAccessToken();
 
   @override
-  void getLocalUser() {
-    return repository.getLocalUser();
-  }
+  UserEntity? getLocalUser() => repository.getLocalUser();
 
   @override
-  void saveAccessToken(String token) {
-    repository.saveAccessToken(token);
-  }
+  void saveAccessToken(String token) => repository.saveAccessToken(token);
 
   @override
-  void saveLocalUser(dynamic user) {
-    repository.saveLocalUser(user);
-  }
+  void saveLocalUser(dynamic user) => repository.saveLocalUser(user);
 }
