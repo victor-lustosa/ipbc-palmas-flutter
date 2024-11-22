@@ -18,11 +18,11 @@ abstract class IGetCurrentUser{
 }
 
 abstract class IGetLocalUser{
-  UserEntity? getLocalUser();
+  Future<UserEntity?> getLocalUser();
 }
 
 abstract class IGetAccessToken{
-  String? getAccessToken();
+  Future<String?> getAccessToken();
 }
 
 abstract class ISaveLocalUser{

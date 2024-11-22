@@ -6,5 +6,5 @@ class LyricEntityMock extends Mock implements LyricEntity {}
 class CollectionEntityMock extends Mock implements ServiceEntity {}
 class ServicesEntityMock extends Mock implements ServicesEntity {}
 class AnalyticsMock extends Mock implements AnalyticsUtil {}
-class ILyricsUseCasesMock<R> extends Mock implements ILyricsUseCases<R> {}
+class ILyricsUseCasesMock extends Mock implements ILyricsUseCases {}
 class IUseCasesMock<R> extends Mock implements IUseCases<R> {}

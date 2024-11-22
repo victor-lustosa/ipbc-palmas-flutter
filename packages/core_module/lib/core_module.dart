@@ -23,7 +23,6 @@ export 'src/shared/blocs/generics.dart';
 
 export 'src/shared/view_models/edit_liturgy_view_model.dart';
 
-
 export 'src/configs/app_configs.dart';
 export 'src/configs/app_routes.dart';
 export 'src/configs/api_keys.dart';
@@ -86,10 +85,14 @@ export 'src/core/infra/adapters/verse_adapter.dart';
 export 'src/core/infra/adapters/supa/supa_lyric_adapter.dart';
 export 'src/core/infra/adapters/supa/supa_service_adapter.dart';
 export 'src/core/infra/adapters/hive/hive_auth_adapter.dart';
+export 'src/core/infra/adapters/isar/isar_auth_adapter.dart';
 export 'src/core/infra/models/service_model.dart';
 export 'src/core/infra/models/services_model.dart';
 export 'src/core/infra/models/liturgy_model.dart';
 export 'src/core/infra/models/lyric_model.dart';
+export 'src/core/infra/models/isar_dtos/isar_token_dto.dart';
+export 'src/core/infra/models/isar_dtos/isar_user_dto.dart';
+export 'src/core/infra/use_cases/use_cases.dart';
 
 export 'src/core/external/repositories/supa_repository.dart';
 export 'src/core/external/repositories/hive_repository.dart';

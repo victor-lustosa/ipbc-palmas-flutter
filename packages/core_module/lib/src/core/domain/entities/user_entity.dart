@@ -1,4 +1,5 @@
 import 'package:core_module/core_module.dart';
+import 'package:core_module/src/core/infra/models/isar_dtos/isar_user_dto.dart';
 
 class UserEntity {
 
@@ -48,6 +49,22 @@ class UserEntity {
     required this.isAnonymous,
   });
 
+  factory UserEntity.empty() => UserEntity(
+      id: '',
+      appMetadata: {},
+      userMetadata: {},
+      aud: '',
+      email: '',
+      phone: '',
+      createdAt: '',
+      lastSignInAt: '',
+      role: '',
+      updatedAt: '',
+      identities: [],
+      factors: [],
+      isAnonymous: false
+  );
+
   factory UserEntity.create(User? user) => UserEntity(
       id: user?.id ?? '',
       appMetadata: user?.appMetadata ?? {},
@@ -64,4 +81,19 @@ class UserEntity {
       isAnonymous: user?.isAnonymous ?? false
   );
 
+  factory UserEntity.createFromIsar(IsarUserDTO? dto) => UserEntity(
+      id: dto?.id ?? '',
+      appMetadata:  {},
+      userMetadata: {},
+      aud: dto?.aud ?? '',
+      email: dto?.email ?? '',
+      phone: dto?.phone ?? '',
+      createdAt: dto?.createdAt ?? '',
+      lastSignInAt: dto?.lastSignInAt ?? '',
+      role: dto?.role ?? '',
+      updatedAt: dto?.updatedAt ?? '',
+      identities:[],
+      factors: [],
+      isAnonymous: dto?.isAnonymous ?? false
+  );
 }

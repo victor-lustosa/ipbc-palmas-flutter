@@ -1,14 +1,18 @@
 abstract class IUseCases<R>
-    implements IGetUseCases<R>, IAddUseCases, IUpdateUseCases {}
+    implements IGetUseCases<R>, IAddUseCases, IUpdateUseCases, IDeleteUseCases {}
 
 abstract class IGetUseCases<R> {
-  Future<R?> get({required String path, Function? fromMapList});
+  Future<R?> get({String? path, String? id, Function? fromMapList});
 }
 
 abstract class IAddUseCases {
-  Future<void> add(String path, dynamic data);
+  Future<void> add({required data, String? path});
 }
 
 abstract class IUpdateUseCases {
-  Future<void> update(String path, dynamic data);
+  Future<void> update({required data, String? path, String? id});
+}
+
+abstract class IDeleteUseCases {
+  Future<void> delete({String? path, String? id});
 }

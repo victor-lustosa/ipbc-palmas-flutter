@@ -59,7 +59,7 @@ class HomeModule extends Module {
   void binds(Injector i) {
     i.addLazySingleton<HomeBloc>(
       () => HomeBloc(
-        supaUseCases: i.get<ServicesUseCases>(),
+        supaUseCases: i.get<UseCases>(),
       ),
       config: CoreModule.blocConfig(),
     );

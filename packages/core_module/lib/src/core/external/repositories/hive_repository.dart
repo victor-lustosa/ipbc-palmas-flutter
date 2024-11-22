@@ -12,30 +12,33 @@ class HiveRepository<R> implements IRepository {
     await Hive.initFlutter();
     _allAdapters();
     await Future.wait<void>([
-      Hive.openBox<HiveAuthDTO>('auth'),
+      //    Hive.openBox<HiveAuthDTO>('auth'),
     ]);
   }
 
   static _allAdapters() {
-    Hive.registerAdapter(HiveAuthDTOAdapter());
+    //  Hive.registerAdapter(HiveAuthDTOAdapter());
   }
 
   @override
-  Future<dynamic> get(String path) async {
-        var result = box.get(path);
-        return result != null ? HiveAuthAdapter.fromMap(result as HiveAuthDTO) : HiveAuthDTO.empty();
+  Future<dynamic> get({String? path, String? id}) async {
+    var result = box.get(path);
+//        return result != null ? HiveAuthAdapter.fromMap(result as HiveAuthDTO) : HiveAuthDTO.empty();
   }
 
   @override
-  Future<void> add(String path, data) async {}
-
-  @override
-  Future<void> update(String path, data) async {
-    box.put(path, HiveAuthAdapter.toDTO(data) as R);
+  Future<void> update({required data, String? path, String? id}) async {
+    //   box.put(path, HiveAuthAdapter.toDTO(data) as R);
   }
 
   @override
-  Future<void> delete(String path) async {
+  Future<void> delete({String? path, String? id}) async {
     box.delete(path);
   }
+
+  @override
+  Future<void> add({required data, String? path, String? id}) {
+    throw UnimplementedError();
+  }
+
 }

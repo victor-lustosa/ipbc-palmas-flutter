@@ -25,8 +25,6 @@ class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
     }
   }
 
-
-
   Future<void> _getInSupa(
       GetInSupaEvent<ServicesCollectionEvent> event, emit) async {
     List<ServiceEntity>? servicesCollectionList =

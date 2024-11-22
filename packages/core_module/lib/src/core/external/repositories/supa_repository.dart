@@ -17,8 +17,8 @@ class SupabaseRepository implements IRepository{
   }
 
   @override
-  Future<List<dynamic>> get(String path) async {
-
+  Future<List<dynamic>> get({String? path, String? id}) async {
+    path ??= '';
     params = path.split('/');
     final dynamic data;
     if (params.length > 3) {
@@ -36,20 +36,22 @@ class SupabaseRepository implements IRepository{
     return Future.value(data);
   }
 
-  @override
-  Future<void> add(String path, data) async {
+  Future<void> add({required data, String? path, String? id}) async {
+    path ??= '';
     params = path.split('/');
     await _supaClient.from(params[0]).insert(data);
   }
 
   @override
-  Future<void> update(String path, data) async {
+  Future<void> update({required data, String? path, String? id}) async {
+    path ??= '';
     params = path.split('/');
     await _supaClient.from(params[0]).update(data).eq(params[1], params[2]);
   }
 
   @override
-  Future<void> delete(String path) async {
+  Future<void> delete({String? path, String? id}) async {
+    path ??= '';
     params = path.split('/');
     await _supaClient.from(params[0]).delete().eq(params[1], params[2]);
   }

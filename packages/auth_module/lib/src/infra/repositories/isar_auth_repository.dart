@@ -4,28 +4,34 @@ import 'package:core_module/core_module.dart';
 import '../../domain/repositories/auth_repositories.dart';
 
 class IsarAuthRepository implements IOfflineAuthRepository{
-  IsarAuthRepository();
-
+  IsarAuthRepository({required this.isar});
+  final Isar isar;
 
   @override
-  void saveLocalUser(dynamic user) {
-    // TODO: implement saveLocalUser
+  Future<void> saveLocalUser(UserEntity user) async {
+   await isar.writeTxn(() async {
+      isar.collection<IsarUserDTO>().put(IsarUserDTO.create(user));
+    });
   }
 
   @override
-  void saveAccessToken(String token) {
-    // TODO: implement saveAccessToken
+  Future<void> saveAccessToken(String token) async {
+    await isar.writeTxn(() async {
+      isar.collection<IsarTokenDTO>().put(IsarTokenDTO(accessToken: token));
+    });
   }
 
   @override
-  String? getAccessToken() {
-    // TODO: implement getAccessToken
-    throw UnimplementedError();
+  Future<String?> getAccessToken() async {
+   final token = await isar.collection<IsarTokenDTO>().where().findFirst();
+   if(token?.accessToken == null) return '';
+   return Future.value(token?.accessToken);
   }
 
   @override
-  UserEntity? getLocalUser() {
-    // TODO: implement getLocalUser
-    throw UnimplementedError();
+  Future<UserEntity?> getLocalUser() async {
+    final user = await isar.collection<IsarUserDTO>().where().findFirst();
+    if(user == null) return UserEntity.empty();
+    return Future.value(UserEntity.createFromIsar(user));
   }
 }

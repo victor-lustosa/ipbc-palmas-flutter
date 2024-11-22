@@ -19,14 +19,14 @@ class ServiceModule extends Module {
   @override
   void binds(i) {
     i.addSingleton(
-      () => ServicesUseCases(
+      () => UseCases<SupabaseRepository, List<ServicesEntity>>(
         repository: i.get<SupabaseRepository>(),
       ),
     );
 
     i.addLazySingleton<ServicesCollectionBloc>(
       () => ServicesCollectionBloc(
-        onlineUseCases: i.get<ServicesUseCases<SupabaseRepository>>(),
+        onlineUseCases: i.get<UseCases<SupabaseRepository, List<ServicesEntity>>>(),
       ),
       config: CoreModule.blocConfig(),
     );

@@ -5,18 +5,19 @@ abstract class IRepository<R>
         IDelete,
         IUpdate {}
 
-abstract class IGet <R> {
-  Future<R?> get(String path);
+abstract class IGet<R> {
+  Future<R?> get({String? path, String? id});
 }
 
 abstract class IAdd {
-  Future<void> add(String path, data);
-}
-
-abstract class IDelete {
-  Future<void> delete(String path );
+  Future<void> add({required data, String? path, String? id});
 }
 
 abstract class IUpdate {
-  Future<void> update(String path, data);
+  Future<void> update({required data, String? path, String? id});
 }
+
+abstract class IDelete {
+  Future<void> delete({String? path, String? id});
+}
+

@@ -11,10 +11,10 @@ class OfflineAuthUseCases implements IOfflineAuthUseCases{
   OfflineAuthUseCases({required this.repository});
 
   @override
-  String? getAccessToken() => repository.getAccessToken();
+  Future<String?> getAccessToken() => repository.getAccessToken();
 
   @override
-  UserEntity? getLocalUser() => repository.getLocalUser();
+  Future<UserEntity?> getLocalUser() => repository.getLocalUser();
 
   @override
   void saveAccessToken(String token) => repository.saveAccessToken(token);

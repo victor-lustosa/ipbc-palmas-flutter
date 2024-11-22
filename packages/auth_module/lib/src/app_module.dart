@@ -33,7 +33,7 @@ class AuthModule extends Module {
   void binds(i) {
     i.addSingleton<IOfflineAuthUseCases>(
       () => OfflineAuthUseCases(
-        repository: IsarAuthRepository(),
+        repository: IsarAuthRepository(isar: i.get()),
       ),
     );
     i.addSingleton<IOnlineAuthUseCases>(
