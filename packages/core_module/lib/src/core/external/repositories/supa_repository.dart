@@ -36,6 +36,7 @@ class SupabaseRepository implements IRepository{
     return Future.value(data);
   }
 
+  @override
   Future<void> add({required data, String? path, String? id}) async {
     path ??= '';
     params = path.split('/');
