@@ -1,37 +1,36 @@
 import '../../../../core_module.dart';
 
-class IsarRepository<T> implements IRepository {
+class IsarRepository implements IRepository {
 
-  static late Isar isar;
+  final Isar isar;
 
-  IsarRepository();
+  IsarRepository({required this.isar});
 
   static Future init() async {
     final dir = await getApplicationDocumentsDirectory();
-     isar = await Isar.open(
+    await Isar.open(
       [IsarTokenDTOSchema, IsarUserDTOSchema],
       directory: dir.path,
     );
   }
 
   @override
-  Future<dynamic> get({String? path, String? id}) async {
+  Future<dynamic> get<T>({String? path, String? id}) async {
     final entity = await isar.collection<T>().where().findAll();
     return Future.value(entity);
   }
 
   @override
-  Future<void> update({required data, String? path, String? id}) async {
+  Future<void> update<T>({required data, String? path, String? id}) async {
     await isar.writeTxn(() async {
       isar.collection<T>().put(data);
     });
   }
 
   @override
-  Future<void> delete({String? path, String? id}) async {
-
-  }
+  Future<void> delete<T>({String? path, String? id}) async {}
 
   @override
-  Future<void> add({required data, String? path, String? id}) async => update(data:data, path: path, id: id);
+  Future<void> add<T>({required data, String? path, String? id}) async =>
+      update<T>(data: data, path: path, id: id);
 }

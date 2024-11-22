@@ -77,7 +77,6 @@ export 'src/design_system/components/scroll_transform/scroll_transform_item.dart
 export 'src/design_system/components/scroll_transform/scroll_transform_view.dart';
 export 'src/design_system/components/icons/hide_icon_widget.dart';
 
-export 'src/core/infra/models/hive_dtos/hive_auth_dto.dart';
 export 'src/core/infra/repositories/repositories.dart';
 export 'src/core/infra/adapters/services_adapter.dart';
 export 'src/core/infra/adapters/liturgy_adapter.dart';
@@ -95,7 +94,6 @@ export 'src/core/infra/models/isar_dtos/isar_user_dto.dart';
 export 'src/core/infra/use_cases/use_cases.dart';
 
 export 'src/core/external/repositories/supa_repository.dart';
-export 'src/core/external/repositories/hive_repository.dart';
 export 'src/core/external/repositories/isar_repository.dart';
 
 export 'src/shared/utils/supa_services_util.dart';

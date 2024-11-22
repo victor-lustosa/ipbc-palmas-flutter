@@ -19,7 +19,7 @@ class CoreModule extends Module {
     );
     i.addSingleton<Isar>(() => Isar.getInstance());
     i.addSingleton<IsarRepository>(
-          () => IsarRepository(),
+          () => IsarRepository(isar: i.get<Isar>()),
     );
     i.addSingleton(
           () => UseCases<SupabaseRepository>(

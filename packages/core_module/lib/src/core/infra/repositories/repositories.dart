@@ -1,23 +1,23 @@
-abstract class IRepository<R>
+abstract class IRepository
     implements
         IGet,
         IAdd,
         IDelete,
         IUpdate {}
 
-abstract class IGet<R> {
-  Future<R?> get({String? path, String? id});
+abstract class IGet {
+  Future<dynamic> get<T>({String? path, String? id});
 }
 
 abstract class IAdd {
-  Future<void> add({required data, String? path, String? id});
+  Future<void> add<T>({required data, String? path, String? id});
 }
 
 abstract class IUpdate {
-  Future<void> update({required data, String? path, String? id});
+  Future<void> update<T>({required data, String? path, String? id});
 }
 
 abstract class IDelete {
-  Future<void> delete({String? path, String? id});
+  Future<void> delete<T>({String? path, String? id});
 }
 

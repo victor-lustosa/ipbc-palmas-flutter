@@ -1,4 +1,3 @@
-import 'package:auth_module/src/external/repositories/isar_auth_repository.dart';
 import 'package:auth_module/src/ui/views/registration_completion_view.dart';
 import 'package:home_module/home_module.dart';
 
@@ -33,7 +32,7 @@ class AuthModule extends Module {
   void binds(i) {
     i.addSingleton<IOfflineAuthUseCases>(
       () => OfflineAuthUseCases(
-        repository: IsarAuthRepository(isar: i.get<Isar>()),
+        repository: i.get<IsarRepository>(),
       ),
     );
     i.addSingleton<IOnlineAuthUseCases>(

@@ -1,6 +1,6 @@
 import 'package:core_module/core_module.dart';
 
-class UseCases<R> implements IUseCases {
+class UseCases<T> implements IUseCases {
   final IRepository repository;
 
   UseCases({required this.repository});
