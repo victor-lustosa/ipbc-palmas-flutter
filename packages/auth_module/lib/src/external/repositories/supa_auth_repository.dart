@@ -14,6 +14,7 @@ class SupaAuthRepository implements IOnlineAuthRepository{
   @override
   UserEntity? getCurrentUser() {
     User? user = _supaClient.auth.currentUser;
+    if(user == null) return null;
     return UserEntity.create(user);
   }
 
@@ -44,7 +45,7 @@ class SupaAuthRepository implements IOnlineAuthRepository{
       accessToken: accessToken,
     );
 
-    return accessToken;
+    return idToken;
   }
 
   @override

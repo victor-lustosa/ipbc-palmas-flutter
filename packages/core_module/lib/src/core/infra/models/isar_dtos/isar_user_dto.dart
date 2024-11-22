@@ -5,7 +5,7 @@ class IsarUserDTO {
 
   Id? id;
   // Map<String, dynamic> appMetadata;
-  // Map<String, dynamic> userMetadata;
+  // Map<String, dynamic>? userMetadata;
   String aud;
   String? confirmationSentAt;
   String? recoverySentAt;
@@ -13,14 +13,14 @@ class IsarUserDTO {
   String? newEmail;
   String? invitedAt;
   String? actionLink;
-  String email;
-  String phone;
+  String? email;
+  String? phone;
   String createdAt;
   String? emailConfirmedAt;
   String? phoneConfirmedAt;
-  String lastSignInAt;
-  String role;
-  String updatedAt;
+  String? lastSignInAt;
+  String? role;
+  String? updatedAt;
   // List<dynamic> identities;
   // List<dynamic> factors;
   bool isAnonymous;
@@ -28,7 +28,7 @@ class IsarUserDTO {
   IsarUserDTO({
     required this.id,
     // required this.appMetadata,
-    // required this.userMetadata,
+    // this.userMetadata,
     required this.aud,
     this.confirmationSentAt,
     this.recoverySentAt,
@@ -42,27 +42,27 @@ class IsarUserDTO {
     this.emailConfirmedAt,
     this.phoneConfirmedAt,
     required this.lastSignInAt,
-    required this.role,
-    required this.updatedAt,
+     this.role,
+     this.updatedAt,
     // required this.identities,
     // required this.factors,
     required this.isAnonymous,
   });
 
-  factory IsarUserDTO.create(UserEntity? user) => IsarUserDTO(
+  factory IsarUserDTO.create(UserEntity user) => IsarUserDTO(
       id: Isar.autoIncrement,
-      // appMetadata: user?.appMetadata ?? {},
-      // userMetadata: user?.userMetadata ?? {},
-      aud: user?.aud ?? '',
-      email: user?.email ?? '',
-      phone: user?.phone ?? '',
-      createdAt: user?.createdAt ?? '',
-      lastSignInAt: user?.lastSignInAt ?? '',
-      role: user?.role ?? '',
-      updatedAt: user?.updatedAt ?? '',
-      // identities: user?.identities ?? [],
-      // factors: user?.factors ?? [],
-      isAnonymous: user?.isAnonymous ?? false
+      // appMetadata: user.appMetadata,
+      // userMetadata: user.userMetadata,
+      aud: user.aud,
+      email: user.email,
+      phone: user.phone,
+      createdAt: user.createdAt,
+      lastSignInAt: user.lastSignInAt,
+      role: user.role,
+      updatedAt: user.updatedAt,
+      // identities: user.identities,
+      // factors: user.factors,
+      isAnonymous: user.isAnonymous
   );
 
 }

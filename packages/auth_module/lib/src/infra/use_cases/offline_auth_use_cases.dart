@@ -10,17 +10,17 @@ class OfflineAuthUseCases implements IOfflineAuthUseCases{
   OfflineAuthUseCases({required this.repository});
 
   @override
-  Future<String?> getAccessToken() async {
+  Future<String?> getToken() async {
    final result = await repository.get<IsarTokenDTO>();
-   return result.accessToken;
+   return result.token;
   }
 
   @override
   Future<UserEntity?> getLocalUser() async => UserEntity.createFromIsar(await repository.get<IsarUserDTO>());
 
   @override
-  void saveAccessToken(String token) => repository.add(data: IsarTokenDTO(accessToken: token));
+  void saveToken(String token) => repository.add<IsarTokenDTO>(data: IsarTokenDTO(token: token));
 
   @override
-  void saveLocalUser(dynamic user) => repository.add(data: IsarUserDTO.create(user));
+  void saveLocalUser(UserEntity user) => repository.add<IsarUserDTO>(data: IsarUserDTO.create(user));
 }

@@ -4,10 +4,10 @@ part 'isar_token_dto.g.dart';
 class IsarTokenDTO {
 
   Id id = Isar.autoIncrement;
-  String? accessToken;
+  String? token;
 
   IsarTokenDTO({
-    required this.accessToken,
+    required this.token,
   });
 
 }

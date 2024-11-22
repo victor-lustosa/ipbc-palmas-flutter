@@ -3,12 +3,12 @@ import 'package:home_module/home_module.dart';
 
 class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   LoginStore({required IOfflineAuthUseCases offlineUse, required IOnlineAuthUseCases onlineUse})
-      : _offlineUse = offlineUse,
-        _onlineUse = onlineUse,
+      : _offlineUseCases = offlineUse,
+        _onlineUseCases = onlineUse,
         super(InitialState<LoginState>());
 
-   final IOfflineAuthUseCases _offlineUse;
-   final IOnlineAuthUseCases _onlineUse;
+   final IOfflineAuthUseCases _offlineUseCases;
+   final IOnlineAuthUseCases _onlineUseCases;
 
   final String _email = 'victor.olustosa@outlook.com';
   final String _password = '!Helena2201';
@@ -47,9 +47,20 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
 
   //Login Google
   Future<void> nativeGoogleSignIn() async {
-    final String? accessToken = await _onlineUse.signInWithGoogle();
-    //UserEntity currentUser = _onlineUse.getCurrentUser();
-    accessToken != null && accessToken.isNotEmpty ? toHome() : null;
+    value = LoadingState<LoginState>();
+    final String? token = await _onlineUseCases.signInWithGoogle();
+    final UserEntity? currentUser = _onlineUseCases.getCurrentUser();
+    saveUser(currentUser);
+    saveToken(token);
+    token != null && token.isNotEmpty ? toHome() : null;
+  }
+
+  Future<void> saveUser(currentUser) async{
+    if(currentUser != null) _offlineUseCases.saveLocalUser(currentUser);
+  }
+
+  Future<void> saveToken(token) async{
+    if(token != null) _offlineUseCases.saveToken(token);
   }
 
   // Login Facebook

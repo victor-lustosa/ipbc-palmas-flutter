@@ -132,7 +132,12 @@ int _isarUserDTOEstimateSize(
     }
   }
   bytesCount += 3 + object.createdAt.length * 3;
-  bytesCount += 3 + object.email.length * 3;
+  {
+    final value = object.email;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   {
     final value = object.emailChangeSentAt;
     if (value != null) {
@@ -151,14 +156,24 @@ int _isarUserDTOEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
-  bytesCount += 3 + object.lastSignInAt.length * 3;
+  {
+    final value = object.lastSignInAt;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   {
     final value = object.newEmail;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
   }
-  bytesCount += 3 + object.phone.length * 3;
+  {
+    final value = object.phone;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   {
     final value = object.phoneConfirmedAt;
     if (value != null) {
@@ -171,8 +186,18 @@ int _isarUserDTOEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
-  bytesCount += 3 + object.role.length * 3;
-  bytesCount += 3 + object.updatedAt.length * 3;
+  {
+    final value = object.role;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
+    final value = object.updatedAt;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   return bytesCount;
 }
 
@@ -211,19 +236,19 @@ IsarUserDTO _isarUserDTODeserialize(
     aud: reader.readString(offsets[1]),
     confirmationSentAt: reader.readStringOrNull(offsets[2]),
     createdAt: reader.readString(offsets[3]),
-    email: reader.readString(offsets[4]),
+    email: reader.readStringOrNull(offsets[4]),
     emailChangeSentAt: reader.readStringOrNull(offsets[5]),
     emailConfirmedAt: reader.readStringOrNull(offsets[6]),
     id: id,
     invitedAt: reader.readStringOrNull(offsets[7]),
     isAnonymous: reader.readBool(offsets[8]),
-    lastSignInAt: reader.readString(offsets[9]),
+    lastSignInAt: reader.readStringOrNull(offsets[9]),
     newEmail: reader.readStringOrNull(offsets[10]),
-    phone: reader.readString(offsets[11]),
+    phone: reader.readStringOrNull(offsets[11]),
     phoneConfirmedAt: reader.readStringOrNull(offsets[12]),
     recoverySentAt: reader.readStringOrNull(offsets[13]),
-    role: reader.readString(offsets[14]),
-    updatedAt: reader.readString(offsets[15]),
+    role: reader.readStringOrNull(offsets[14]),
+    updatedAt: reader.readStringOrNull(offsets[15]),
   );
   return object;
 }
@@ -244,7 +269,7 @@ P _isarUserDTODeserializeProp<P>(
     case 3:
       return (reader.readString(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 5:
       return (reader.readStringOrNull(offset)) as P;
     case 6:
@@ -254,19 +279,19 @@ P _isarUserDTODeserializeProp<P>(
     case 8:
       return (reader.readBool(offset)) as P;
     case 9:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 10:
       return (reader.readStringOrNull(offset)) as P;
     case 11:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 12:
       return (reader.readStringOrNull(offset)) as P;
     case 13:
       return (reader.readStringOrNull(offset)) as P;
     case 14:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 15:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -940,8 +965,25 @@ extension IsarUserDTOQueryFilter
     });
   }
 
+  QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition> emailIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'email',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
+      emailIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'email',
+      ));
+    });
+  }
+
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition> emailEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -955,7 +997,7 @@ extension IsarUserDTOQueryFilter
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
       emailGreaterThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -970,7 +1012,7 @@ extension IsarUserDTOQueryFilter
   }
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition> emailLessThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -985,8 +1027,8 @@ extension IsarUserDTOQueryFilter
   }
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition> emailBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -1614,8 +1656,26 @@ extension IsarUserDTOQueryFilter
   }
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
+      lastSignInAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'lastSignInAt',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
+      lastSignInAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'lastSignInAt',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
       lastSignInAtEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1629,7 +1689,7 @@ extension IsarUserDTOQueryFilter
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
       lastSignInAtGreaterThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1645,7 +1705,7 @@ extension IsarUserDTOQueryFilter
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
       lastSignInAtLessThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1661,8 +1721,8 @@ extension IsarUserDTOQueryFilter
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
       lastSignInAtBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -1902,8 +1962,25 @@ extension IsarUserDTOQueryFilter
     });
   }
 
+  QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition> phoneIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'phone',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
+      phoneIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'phone',
+      ));
+    });
+  }
+
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition> phoneEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1917,7 +1994,7 @@ extension IsarUserDTOQueryFilter
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
       phoneGreaterThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1932,7 +2009,7 @@ extension IsarUserDTOQueryFilter
   }
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition> phoneLessThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1947,8 +2024,8 @@ extension IsarUserDTOQueryFilter
   }
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition> phoneBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -2342,8 +2419,25 @@ extension IsarUserDTOQueryFilter
     });
   }
 
+  QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition> roleIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'role',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
+      roleIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'role',
+      ));
+    });
+  }
+
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition> roleEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -2356,7 +2450,7 @@ extension IsarUserDTOQueryFilter
   }
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition> roleGreaterThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -2371,7 +2465,7 @@ extension IsarUserDTOQueryFilter
   }
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition> roleLessThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -2386,8 +2480,8 @@ extension IsarUserDTOQueryFilter
   }
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition> roleBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -2474,8 +2568,26 @@ extension IsarUserDTOQueryFilter
   }
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
+      updatedAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'updatedAt',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
+      updatedAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'updatedAt',
+      ));
+    });
+  }
+
+  QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
       updatedAtEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -2489,7 +2601,7 @@ extension IsarUserDTOQueryFilter
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
       updatedAtGreaterThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -2505,7 +2617,7 @@ extension IsarUserDTOQueryFilter
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
       updatedAtLessThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -2521,8 +2633,8 @@ extension IsarUserDTOQueryFilter
 
   QueryBuilder<IsarUserDTO, IsarUserDTO, QAfterFilterCondition>
       updatedAtBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -3190,7 +3302,7 @@ extension IsarUserDTOQueryProperty
     });
   }
 
-  QueryBuilder<IsarUserDTO, String, QQueryOperations> emailProperty() {
+  QueryBuilder<IsarUserDTO, String?, QQueryOperations> emailProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'email');
     });
@@ -3222,7 +3334,7 @@ extension IsarUserDTOQueryProperty
     });
   }
 
-  QueryBuilder<IsarUserDTO, String, QQueryOperations> lastSignInAtProperty() {
+  QueryBuilder<IsarUserDTO, String?, QQueryOperations> lastSignInAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'lastSignInAt');
     });
@@ -3234,7 +3346,7 @@ extension IsarUserDTOQueryProperty
     });
   }
 
-  QueryBuilder<IsarUserDTO, String, QQueryOperations> phoneProperty() {
+  QueryBuilder<IsarUserDTO, String?, QQueryOperations> phoneProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'phone');
     });
@@ -3254,13 +3366,13 @@ extension IsarUserDTOQueryProperty
     });
   }
 
-  QueryBuilder<IsarUserDTO, String, QQueryOperations> roleProperty() {
+  QueryBuilder<IsarUserDTO, String?, QQueryOperations> roleProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'role');
     });
   }
 
-  QueryBuilder<IsarUserDTO, String, QQueryOperations> updatedAtProperty() {
+  QueryBuilder<IsarUserDTO, String?, QQueryOperations> updatedAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'updatedAt');
     });

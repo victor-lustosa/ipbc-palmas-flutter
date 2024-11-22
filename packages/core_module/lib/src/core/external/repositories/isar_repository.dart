@@ -1,7 +1,6 @@
 import '../../../../core_module.dart';
 
 class IsarRepository implements IRepository {
-
   final Isar isar;
 
   IsarRepository({required this.isar});
@@ -22,9 +21,9 @@ class IsarRepository implements IRepository {
 
   @override
   Future<void> update<T>({required data, String? path, String? id}) async {
-    await isar.writeTxn(() async {
-      isar.collection<T>().put(data);
-    });
+      await isar.writeTxn(() async {
+        isar.collection<T>().put(data);
+      });
   }
 
   @override
