@@ -4,9 +4,6 @@ import 'package:core_module/core_module.dart';
 import '../../../lyric_module.dart';
 
 class LyricsUseCases implements ILyricsUseCases {
-  final IRepository repository;
-
-  LyricsUseCases({required this.repository});
 
   @override
   Future<List<LyricEntity>> lettersFilter(List<LyricEntity> lyrics) {

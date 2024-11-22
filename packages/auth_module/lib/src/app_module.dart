@@ -1,8 +1,8 @@
-import 'package:auth_module/src/infra/repositories/isar_auth_repository.dart';
-import 'package:auth_module/src/infra/repositories/supa_auth_repository.dart';
+import 'package:auth_module/src/external/repositories/isar_auth_repository.dart';
 import 'package:auth_module/src/ui/views/registration_completion_view.dart';
 import 'package:home_module/home_module.dart';
 
+import 'external/repositories/supa_auth_repository.dart';
 import 'ui/stores/create_account_store.dart';
 import 'ui/stores/login_store.dart';
 import 'ui/stores/registration_completion_store.dart';

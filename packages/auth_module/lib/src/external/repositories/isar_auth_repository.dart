@@ -1,7 +1,7 @@
 
 import 'package:core_module/core_module.dart';
 
-import '../../domain/repositories/auth_repositories.dart';
+import '../../infra/repositories/auth_repositories.dart';
 
 class IsarAuthRepository implements IOfflineAuthRepository{
   IsarAuthRepository({required this.isar});

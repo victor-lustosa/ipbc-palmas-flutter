@@ -17,9 +17,8 @@ class LyricModule extends Module {
   void exportedBinds(i) {
     i.addSingleton<LyricBloc>(
       () => LyricBloc(
-        supaUseCase: LyricsUseCases(
-          repository: i.get<SupabaseRepository>(),
-        ),
+        useCases: i.get<UseCases<SupabaseRepository>>(),
+        lyricUseCases: LyricsUseCases(),
       ),
       config: CoreModule.blocConfig(),
     );
@@ -63,7 +62,7 @@ class NativeLyricRoutes extends StatefulWidget {
 
 class _NativeLyricRoutesState extends State<NativeLyricRoutes> {
   final GlobalKey<NavigatorState> _androidNavigatorKey =
-  GlobalKey<NavigatorState>(debugLabel: 'lyric_key');
+      GlobalKey<NavigatorState>(debugLabel: 'lyric_key');
 
   @override
   Widget build(BuildContext context) {

@@ -1,17 +1,19 @@
 import 'dart:async';
 
 import 'package:core_module/core_module.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../../lyric_module.dart';
 
 class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     with ConnectivityMixin {
-  final ILyricsUseCases supaUseCase;
+  final IUseCases useCases;
+  final ILyricsUseCases lyricUseCases;
 
   //final String path = 'lyrics/20';
   LyricBloc({
-    required this.supaUseCase,
+    required this.useCases,
+    required this.lyricUseCases,
   }) : super(LoadingState<LyricState>()) {
     on<GetInSupaEvent<LyricEvent>>(_getInSupa);
     on<FilterEvent<LyricEvent>>(_filter);
@@ -59,8 +61,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   }
 
   Future<void> _filter(FilterEvent<LyricEvent> event, emit) async {
-    List<LyricEntity> lyricsList =
-        await supaUseCase.lettersFilter(event.lyrics);
+    List<LyricEntity> lyricsList = await lyricUseCases.lettersFilter(event.lyrics);
     emit(DataFetchedState<LyricState, LyricEntity>(entities: lyricsList));
   }
 }

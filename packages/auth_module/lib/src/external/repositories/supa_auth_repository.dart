@@ -2,7 +2,7 @@
 import 'package:core_module/core_module.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../domain/repositories/auth_repositories.dart';
+import '../../infra/repositories/auth_repositories.dart';
 
 class SupaAuthRepository implements IOnlineAuthRepository{
 

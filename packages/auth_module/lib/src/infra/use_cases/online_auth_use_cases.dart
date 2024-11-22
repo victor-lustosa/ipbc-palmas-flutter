@@ -2,7 +2,7 @@
 import 'package:auth_module/src/domain/use_cases/auth_use_cases.dart';
 import 'package:core_module/core_module.dart';
 
-import '../../domain/repositories/auth_repositories.dart';
+import '../repositories/auth_repositories.dart';
 
 class OnlineAuthUseCases implements IOnlineAuthUseCases{
 
