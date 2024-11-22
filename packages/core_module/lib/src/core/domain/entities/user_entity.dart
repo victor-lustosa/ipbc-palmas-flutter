@@ -1,5 +1,4 @@
 import 'package:core_module/core_module.dart';
-import 'package:core_module/src/core/infra/models/isar_dtos/isar_user_dto.dart';
 
 class UserEntity {
 
@@ -82,7 +81,7 @@ class UserEntity {
   );
 
   factory UserEntity.createFromIsar(IsarUserDTO? dto) => UserEntity(
-      id: dto?.id ?? '',
+      id: dto?.id.toString() ?? '',
       appMetadata:  {},
       userMetadata: {},
       aud: dto?.aud ?? '',

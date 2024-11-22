@@ -7,4 +7,4 @@ class CollectionEntityMock extends Mock implements ServiceEntity {}
 class ServicesEntityMock extends Mock implements ServicesEntity {}
 class AnalyticsMock extends Mock implements AnalyticsUtil {}
 class ILyricsUseCasesMock extends Mock implements ILyricsUseCases {}
-class IUseCasesMock<R> extends Mock implements IUseCases<R> {}
+class IUseCasesMock extends Mock implements IUseCases {}

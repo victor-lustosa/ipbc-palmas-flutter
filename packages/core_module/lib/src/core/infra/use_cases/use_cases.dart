@@ -1,15 +1,14 @@
 import 'package:core_module/core_module.dart';
 
-class UseCases<T, R> implements IUseCases<R> {
+class UseCases<R> implements IUseCases {
   final IRepository repository;
 
   UseCases({required this.repository});
 
   @override
-  Future<R?> get({ String? path, String? id, Function? fromMapList}) async {
+  Future<dynamic> get({String? path, String? id, required Function converter}) async {
     var result = await repository.get(path: path, id: id);
-    if (fromMapList == null) return null;
-    return fromMapList(result) as R;
+    return converter(result);
   }
 
   @override

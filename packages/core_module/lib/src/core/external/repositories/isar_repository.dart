@@ -9,11 +9,10 @@ class IsarRepository<T> implements IRepository {
   static Future init() async {
     final dir = await getApplicationDocumentsDirectory();
      isar = await Isar.open(
-      [],
+      [IsarTokenDTOSchema, IsarUserDTOSchema],
       directory: dir.path,
     );
   }
-
 
   @override
   Future<dynamic> get({String? path, String? id}) async {
@@ -34,5 +33,5 @@ class IsarRepository<T> implements IRepository {
   }
 
   @override
-  Future<void> add({required data, String? path, String? id}) async {}
+  Future<void> add({required data, String? path, String? id}) async => update(data:data, path: path, id: id);
 }

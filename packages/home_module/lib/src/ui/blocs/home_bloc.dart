@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     with ConnectivityMixin {
-  final IUseCases supaUseCases;
+  final IUseCases useCases;
   final String path = 'services/createAt/false';
 
-  HomeBloc({required this.supaUseCases}) : super(LoadingState()) {
+  HomeBloc({required this.useCases}) : super(LoadingState()) {
     on<GetInSupaEvent<HomeEvent>>(_getInSupa);
     on<CheckConnectivityEvent<HomeEvent>>(_checkConnectivity);
   }
@@ -23,17 +23,8 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
   }
 
   Future<void> _getInSupa(GetInSupaEvent event, emit) async {
-    await emit.onEach<List<ServicesEntity>>(
-      await supaUseCases.get(path: path),
-      onData: (services) {
-        emit(DataFetchedState<HomeState, ServicesEntity>(entities: services));
-      },
-      onError: (error, st) async {
-        AnalyticsUtil.recordError(
-            name: 'supa services bloc', error: error, st: st);
-        emit(ExceptionState<HomeState>(message: error.toString()));
-      },
-    );
+    final services = await useCases.get(path: path, converter: ServicesAdapter.fromMapList);
+    emit(DataFetchedState<HomeState, ServicesEntity>(entities: services));
   }
 }
 

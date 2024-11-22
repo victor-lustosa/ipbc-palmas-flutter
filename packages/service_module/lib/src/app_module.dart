@@ -18,19 +18,12 @@ class ServiceModule extends Module {
 
   @override
   void binds(i) {
-    i.addSingleton(
-      () => UseCases<SupabaseRepository, List<ServicesEntity>>(
-        repository: i.get<SupabaseRepository>(),
-      ),
-    );
-
     i.addLazySingleton<ServicesCollectionBloc>(
       () => ServicesCollectionBloc(
-        onlineUseCases: i.get<UseCases<SupabaseRepository, List<ServicesEntity>>>(),
+        onlineUseCases: i.get<UseCases<SupabaseRepository>>(),
       ),
       config: CoreModule.blocConfig(),
     );
-
     i.addLazySingleton<EditLyricStore>(EditLyricStore.new);
     i.addSingleton<EditLiturgyViewModel>(EditLiturgyViewModel.new);
   }

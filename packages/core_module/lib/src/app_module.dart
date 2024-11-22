@@ -17,6 +17,19 @@ class CoreModule extends Module {
         supabaseClient: i.get<SupabaseClient>(),
       ),
     );
-
+    i.addSingleton<Isar>(() => Isar.getInstance());
+    i.addSingleton<IsarRepository>(
+          () => IsarRepository(),
+    );
+    i.addSingleton(
+          () => UseCases<SupabaseRepository>(
+        repository: i.get<SupabaseRepository>(),
+      ),
+    );
+    i.addSingleton(
+          () => UseCases<IsarRepository>(
+        repository: i.get<IsarRepository>(),
+      ),
+    );
   }
 }

@@ -1,9 +1,9 @@
 import 'package:core_module/core_module.dart';
-
+ part 'isar_user_dto.g.dart';
 @collection
 class IsarUserDTO {
 
-  String id;
+  Id? id;
   // Map<String, dynamic> appMetadata;
   // Map<String, dynamic> userMetadata;
   String aud;
@@ -50,7 +50,7 @@ class IsarUserDTO {
   });
 
   factory IsarUserDTO.create(UserEntity? user) => IsarUserDTO(
-      id: user?.id ?? '',
+      id: Isar.autoIncrement,
       // appMetadata: user?.appMetadata ?? {},
       // userMetadata: user?.userMetadata ?? {},
       aud: user?.aud ?? '',

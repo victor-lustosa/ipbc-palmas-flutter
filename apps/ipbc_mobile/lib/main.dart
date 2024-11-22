@@ -9,7 +9,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([
     SupabaseRepository.init(),
-    HiveRepository.init(),
+    IsarRepository.init(),
+   // HiveRepository.init(),
   ]);
   // Bloc.observer = GenericBlocObserver();
   SystemChrome.setPreferredOrientations([

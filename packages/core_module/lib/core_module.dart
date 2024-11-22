@@ -96,6 +96,7 @@ export 'src/core/infra/use_cases/use_cases.dart';
 
 export 'src/core/external/repositories/supa_repository.dart';
 export 'src/core/external/repositories/hive_repository.dart';
+export 'src/core/external/repositories/isar_repository.dart';
 
 export 'src/shared/utils/supa_services_util.dart';
 export 'src/shared/utils/validation_util.dart';
