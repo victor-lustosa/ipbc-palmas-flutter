@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:core_module/core_module.dart';
+
 //import 'package:flutter/services.dart';
 //import 'package:google_maps_flutter/google_maps_flutter.dart';
 //import '../../app_module.dart';
@@ -21,7 +22,6 @@ class EventsDetailView extends StatefulWidget {
 
 class EventsDetailViewState extends State<EventsDetailView>
     with LaunchUrlMixin {
-
   Future<void>? locationLink;
   final Uri _locationLink = Uri(
     scheme: 'https',
@@ -39,15 +39,11 @@ class EventsDetailViewState extends State<EventsDetailView>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const MainTopBarWidget(
-                  margin: EdgeInsets.zero,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    BackButtonWidget(
-                        action: () => nativePop(context)
-                    ),
+                MainTopBarWidget(
+                  margin: EdgeInsets.only(top: 22, bottom: 24),
+                  topBarList: [
+                    BackButtonWidget(action: () => nativePop(context)),
+                    AuthCircleAvatarWidget()
                   ],
                 ),
                 Container(
@@ -168,16 +164,16 @@ class EventsDetailViewState extends State<EventsDetailView>
                         mapType: MapType.normal,
                         initialCameraPosition: CameraPosition(
                           target:
-                          LatLng(-10.195851391811726, -48.31897737627334),
+                              LatLng(-10.195851391811726, -48.31897737627334),
                           zoom: 15,
                         ),
                         markers: {
                           Marker(
                             markerId: MarkerId('0'),
                             position:
-                            LatLng(-10.195851391811726, -48.31897737627334),
+                                LatLng(-10.195851391811726, -48.31897737627334),
                             onTap: () =>
-                            {locationLink = launchInBrowser(_locationLink)},
+                                {locationLink = launchInBrowser(_locationLink)},
                           )
                         },
                       ),

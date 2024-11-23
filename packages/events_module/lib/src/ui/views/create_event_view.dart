@@ -66,24 +66,26 @@ class _CreateEventViewState extends State<CreateEventView> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const MainTopBarWidget(),
-                Container(
-                  margin: const EdgeInsets.only(top: 24),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 16, right: 17),
-                        child: BackButtonWidget(
-                          action: () => nativePop(context),
-                        ),
+                MainTopBarWidget(
+                  topBarList: [
+                    BackButtonWidget(action: () => nativePop(context)),
+                    AuthCircleAvatarWidget()
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 16, right: 17),
+                      child: BackButtonWidget(
+                        action: () => nativePop(context),
                       ),
-                      Text(
-                        "Novo evento",
-                        style: AppFonts.defaultFont(
-                            fontWeight: FontWeight.w500, fontSize: 20),
-                      ),
-                    ],
-                  ),
+                    ),
+                    Text(
+                      "Novo evento",
+                      style: AppFonts.defaultFont(
+                          fontWeight: FontWeight.w500, fontSize: 20),
+                    ),
+                  ],
                 ),
                 Container(
                   margin: const EdgeInsets.only(
@@ -280,14 +282,13 @@ class _CreateEventViewState extends State<CreateEventView> {
         ),
       ),
       floatingActionButton: FloatingButtonWidget(
-          icon: Icons.check_rounded,
-          backgroundColor: AppColors.confirmation,
-          iconColor: AppColors.grey10,
-          size: 33,
+        icon: Icons.check_rounded,
+        backgroundColor: AppColors.confirmation,
+        iconColor: AppColors.grey10,
+        size: 33,
         action: () => navigate(
           EventModule.eventRoute + EventModule.detailEventRoute,
         ),
-
       ),
     );
   }

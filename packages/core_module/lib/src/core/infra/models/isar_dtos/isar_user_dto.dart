@@ -4,9 +4,9 @@ import 'package:core_module/core_module.dart';
 class IsarUserDTO {
 
   Id? id;
-  // Map<String, dynamic> appMetadata;
-  // Map<String, dynamic>? userMetadata;
   String aud;
+  String picture;
+  String fullName;
   String? confirmationSentAt;
   String? recoverySentAt;
   String? emailChangeSentAt;
@@ -27,9 +27,9 @@ class IsarUserDTO {
 
   IsarUserDTO({
     required this.id,
-    // required this.appMetadata,
-    // this.userMetadata,
     required this.aud,
+    required this.fullName,
+    required this.picture,
     this.confirmationSentAt,
     this.recoverySentAt,
     this.emailChangeSentAt,
@@ -50,9 +50,9 @@ class IsarUserDTO {
   });
 
   factory IsarUserDTO.create(UserEntity user) => IsarUserDTO(
+      picture: user.userMetadata?['picture'] ?? '',
+      fullName: user.userMetadata?['full_name'] ?? '',
       id: Isar.autoIncrement,
-      // appMetadata: user.appMetadata,
-      // userMetadata: user.userMetadata,
       aud: user.aud,
       email: user.email,
       phone: user.phone,
@@ -62,7 +62,7 @@ class IsarUserDTO {
       updatedAt: user.updatedAt,
       // identities: user.identities,
       // factors: user.factors,
-      isAnonymous: user.isAnonymous
+      isAnonymous: user.isAnonymous,
   );
 
 }

@@ -74,27 +74,24 @@ class _HomeViewState extends State<HomeView>
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const MainTopBarWidget(),
-                        Container(
-                          margin: const EdgeInsets.only(top: 24),
-                          child: InkWell(
-                            onTap: () {
-                              nativePushNamed(
-                                ServiceModule.servicesListRoute,
-                                context,
-                                arguments: _servicesList,
-                              );
-                            },
-                            child: Column(
-                              children: [
-                                title(text: "Cultos"),
-                                subtitle(
-                                  right: 17,
-                                  text:
-                                      "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
-                                ),
-                              ],
-                            ),
+                        MainTopBarWidget(),
+                        InkWell(
+                          onTap: () {
+                            nativePushNamed(
+                              ServiceModule.servicesListRoute,
+                              context,
+                              arguments: _servicesList,
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              title(text: "Cultos"),
+                              subtitle(
+                                right: 17,
+                                text:
+                                    "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
+                              ),
+                            ],
                           ),
                         ),
                         Container(
