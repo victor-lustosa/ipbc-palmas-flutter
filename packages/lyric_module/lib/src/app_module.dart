@@ -35,20 +35,7 @@ class LyricModule extends Module {
       child: (_) => LyricView(
         entity: r.args.data as LyricEntity,
       ),
-      customTransition: CustomTransition(
-        transitionDuration: const Duration(milliseconds: 500),
-        reverseTransitionDuration: const Duration(milliseconds: 500),
-        transitionBuilder: (context, anim1, anim2, child) {
-          return SlideTransition(
-            position: anim1.drive(
-              Tween(begin: const Offset(0, 1), end: Offset.zero).chain(
-                CurveTween(curve: Curves.ease),
-              ),
-            ),
-            child: child,
-          );
-        },
-      ),
+      customTransition: ModularSlideTransition()
     );
   }
 }

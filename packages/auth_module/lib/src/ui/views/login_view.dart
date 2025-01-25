@@ -50,8 +50,15 @@ class _LoginViewState extends State<LoginView> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  MainTopBarWidget(margin: EdgeInsets.only(top: 28,left: 16),
+                      topBarList: [
+                        BackButtonWidget(
+                          action: () => pop(context),
+                        ),
+                      ]
+                  ),
                   Container(
-                    margin: const EdgeInsets.only(top: 60, bottom: 32),
+                    margin: const EdgeInsets.only(top: 35, bottom: 32),
                     child: const Image(
                       image: AssetImage(
                         AppImages.logoLoginImage,

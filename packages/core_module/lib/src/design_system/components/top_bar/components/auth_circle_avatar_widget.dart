@@ -1,3 +1,4 @@
+import 'package:auth_module/auth_module.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
@@ -23,9 +24,16 @@ class AuthCircleAvatarWidget extends StatelessWidget {
       child: ButtonWidget(
         backgroundColor: isLogged ? AppColors.darkGreen : null,
         shape: isLogged ? const CircleBorder() : null,
-        padding: isLogged ? const EdgeInsets.all(2): null,
-        action: isLogged ? (logoutAction ?? () {}) : (loginAction ?? () {}),
-        child: isLogged || picture != null
+        padding: isLogged ? const EdgeInsets.all(2) : null,
+        action: isLogged ? (
+            logoutAction ??
+            () {
+
+            }):
+        (loginAction ??
+            () => pushNamed(AuthModule.authRoute + AuthModule.loginRoute)
+          ),
+        child: isLogged || picture == null
             ? Image.asset(AppIcons.noProfile)
             : CircleAvatar(
                 radius: 16,

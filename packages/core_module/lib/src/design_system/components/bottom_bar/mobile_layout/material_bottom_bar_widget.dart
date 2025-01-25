@@ -1,8 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'dart:io';
 
 import 'package:core_module/core_module.dart';
-import 'package:flutter/material.dart' hide BottomNavigationBar;
+import 'package:flutter/material.dart';
 
 class MaterialBottomBarWidget extends StatefulWidget {
   final int selectedIndex;

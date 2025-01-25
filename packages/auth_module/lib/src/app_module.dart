@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:auth_module/src/ui/views/registration_completion_view.dart';
+import 'package:flutter/animation.dart';
 import 'package:home_module/home_module.dart';
 
 import 'external/repositories/supa_auth_repository.dart';
@@ -53,7 +56,17 @@ class AuthModule extends Module {
 
   @override
   void routes(r) {
-    r.child(loginRoute, child: (_) => const LoginView());
+    r.child(
+      loginRoute,
+      transition: TransitionType.custom,
+      customTransition: ModularSlideTransition(
+          transitionDuration: const Duration(milliseconds: 400),
+          reverseTransitionDuration: const Duration(milliseconds: 400),
+          begin: const Offset(1, 0),
+          end: const Offset(0, 0),
+          curve: Curves.easeIn),
+      child: (_) => const LoginView(),
+    );
     r.child(createAccountRoute, child: (_) => const CreateAccountView());
     r.child(resetPasswordRoute, child: (_) => const ResetPasswordView());
     r.child(verificationCodeRoute, child: (_) => const VerificationCodeView());

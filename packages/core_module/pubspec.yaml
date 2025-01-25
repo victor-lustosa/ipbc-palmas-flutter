@@ -13,7 +13,9 @@ dependencies:
   flutter_bloc: ^8.1.2
   supabase_flutter: ^2.6.0
   isar: ^3.1.0+1
-  isar_flutter_libs: ^3.1.0+1
+  isar_flutter_libs:
+    git:
+      url: https://github.com/MrLittleWhite/isar_flutter_libs.git
   hive_flutter: ^1.1.0
   uno: ^1.1.8
   http: ^1.1.0
@@ -29,7 +31,8 @@ dependencies:
   vector_math: ^2.1.4
   flutter_svg: ^2.0.10+1
   google_maps_flutter: ^2.7.0
-
+  auth_module:
+    path: ../auth_module
 dev_dependencies:
   flutter_test:
     sdk: flutter

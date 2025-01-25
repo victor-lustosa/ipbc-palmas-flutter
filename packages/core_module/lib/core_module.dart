@@ -64,7 +64,6 @@ export 'src/design_system/components/exceptions/views/generic_error_view.dart';
 export 'src/design_system/components/exceptions/views/no_connection_view.dart';
 export 'src/design_system/components/exceptions/views/unknown_route_view.dart';
 export 'src/design_system/components/bottom_bar/mobile_layout/buttons_bar_mixin.dart';
-export 'src/design_system/components/bottom_bar/mobile_layout/custom_bottom_navigation_bar.dart';
 export 'src/design_system/components/bottom_bar/mobile_layout/material_bottom_bar_widget.dart';
 export 'src/design_system/components/bottom_bar/mobile_layout/navegation_button_widget.dart';
 export 'src/design_system/components/dialogs/error_dialog_widget.dart';
