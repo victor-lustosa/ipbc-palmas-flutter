@@ -7,7 +7,7 @@ class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
     GenericState<ServicesCollectionState>> with ConnectivityMixin {
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
-  List<String> path = [];
+  String path = '';
 
   ServicesCollectionBloc({ required this.onlineUseCases, this.offlineUseCases, }) : super(LoadingState()) {
     on<GetInSupaEvent<ServicesCollectionEvent>>(_getInSupa);
@@ -16,7 +16,7 @@ class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
   }
 
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
-    path = event.path.split('/');
+    path = event.path;
     final response = await isConnected();
     if (response) {
       add(GetInSupaEvent<ServicesCollectionEvent>());
@@ -25,7 +25,7 @@ class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
     }
   }
 
-  Future<void> _getInSupa(
+  /*Future<void> _getInSupa(
       GetInSupaEvent<ServicesCollectionEvent> event, emit) async {
     List<ServiceEntity>? servicesCollectionList =
         await MockUtil.convertMockJson<List<ServiceEntity>>(
@@ -39,28 +39,12 @@ class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
         ),
       );
     }
-  }
-
-  /*  Future<void> _getInSupa(
-    GetInSupaEvent event,
-    emit,
-  ) async {
-    await emit.onEach<List<ServiceEntity>>(
-      await supaUseCases.get(path),
-      onData: (services) {
-        emit(
-          DataFetchedState<ServicesCollectionState, ServiceEntity>(
-              entities: services),
-        );
-      },
-      onError: (error, st) async {
-        AnalyticsUtil.recordError(
-            name: 'supa collection bloc', error: error, st: st);
-        emit(
-            ExceptionState<ServicesCollectionState>(message: error.toString()));
-      },
-    );
   }*/
+
+    Future<void> _getInSupa(GetInSupaEvent event, emit) async {
+     List<ServiceEntity> services = await onlineUseCases.get(path: path, converter: ServiceAdapter.fromMapList);
+     emit(DataFetchedState<ServicesCollectionState, ServiceEntity>(entities: services));
+  }
 
   Future<void> _loading(_, emit) async {
     emit(LoadingState<ServicesCollectionState>());

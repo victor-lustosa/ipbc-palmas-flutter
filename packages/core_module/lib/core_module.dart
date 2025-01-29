@@ -79,6 +79,7 @@ export 'src/design_system/components/icons/hide_icon_widget.dart';
 
 export 'src/core/infra/repositories/repositories.dart';
 export 'src/core/infra/adapters/services_adapter.dart';
+export 'src/core/infra/adapters/service_adapter.dart';
 export 'src/core/infra/adapters/liturgy_adapter.dart';
 export 'src/core/infra/adapters/verse_adapter.dart';
 export 'src/core/infra/adapters/supa/supa_lyric_adapter.dart';
