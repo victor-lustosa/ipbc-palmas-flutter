@@ -11,7 +11,7 @@ Future<void> showCustomOptionsDialog({
   return showDialog<void>(
     context: context,
     barrierDismissible: false,
-    barrierColor: AppColors.black.withOpacity(0.3),
+    barrierColor: AppColors.black.withValues(alpha: 76),
     builder: (BuildContext context) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -75,7 +75,7 @@ Future<void> showCustomOptionsDialog({
                       filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.8),
+                          color: Colors.white.withValues(alpha: 204),
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Column(
@@ -143,7 +143,7 @@ Future<void> showCustomOptionsDialog({
                             action: () {
                               closeDialog(context: context,callback: callback);
                             },
-                            backgroundColor: Colors.white.withOpacity(0.8),
+                            backgroundColor: Colors.white.withValues(alpha: 204),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),

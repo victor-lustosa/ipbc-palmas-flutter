@@ -43,7 +43,7 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
           borderRadius: border,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.4),
+              color: Colors.grey.withValues(alpha: 102),
               offset: const Offset(1, 2),
               spreadRadius: 3,
               blurRadius: 7,

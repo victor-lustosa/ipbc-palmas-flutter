@@ -84,7 +84,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                               borderRadius: BorderRadius.circular(16),
                               clipBehavior: Clip.hardEdge,
                               color: index == 0
-                                  ? AppColors.highlightGreen.withOpacity(0.1)
+                                  ? AppColors.highlightGreen.withValues(alpha: 26)
                                   : AppColors.grey0,
                               child: InkWell(
                                 onTap: () {

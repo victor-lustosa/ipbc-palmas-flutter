@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:auth_module/src/ui/views/registration_completion_view.dart';
 import 'package:flutter/animation.dart';
