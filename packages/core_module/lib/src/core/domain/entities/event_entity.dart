@@ -13,7 +13,7 @@ class EventEntity {
         required this.linkDescription,
         required this.createAt});
 
-  final int id;
+  final String id;
   final String title;
   final String subtitle;
   final String image;

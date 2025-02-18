@@ -17,7 +17,7 @@ class ServiceEntity {
       required this.lyricsList,
       required this.createAt});
 
-  final int id;
+  final String id;
   final String type;
   final String image;
   final String hour;

@@ -20,7 +20,7 @@ class LyricModel extends LyricEntity {
       );
 
   LyricModel copyWith({
-    int? id,
+    String? id,
     String? title,
     DateTime? createAt,
     String? group,

@@ -17,7 +17,7 @@ class LiturgyModel extends LiturgyEntity {
       );
 
   LiturgyModel copyWith({
-    int? id,
+    String? id,
     bool? isAdditional,
     String? sequence,
     String? additional,

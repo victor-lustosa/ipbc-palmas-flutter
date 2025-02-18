@@ -30,7 +30,7 @@ class EventModel extends EventEntity {
   );
 
   EventModel copyWith({
-    int? id,
+    String? id,
     String? title,
     String? subtitle,
     String? image,

@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     with ConnectivityMixin {
   final IUseCases useCases;
-  final String path = 'services/createAt/false';
+  final String servicesPath = 'services/createAt/false';
+  final String eventPath = 'event/create_at/false';
 
   HomeBloc({required this.useCases}) : super(LoadingState()) {
     on<GetInSupaEvent<HomeEvent>>(_getInSupa);
@@ -23,8 +24,15 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
   }
 
   Future<void> _getInSupa(GetInSupaEvent event, emit) async {
-    final services = await useCases.get(path: path, converter: ServicesAdapter.fromMapList);
-    emit(DataFetchedState<HomeState, ServicesEntity>(entities: services));
+    final results = await Future.wait([
+      useCases.get(path: servicesPath, converter: ServicesAdapter.fromMapList),
+      useCases.get(path: eventPath, converter: EventAdapter.fromMapList)
+    ]);
+    final services = results[0];
+    final events = results[1];
+    emit(DataFetchedState<HomeState, HomeDTO>(
+        entities: HomeDTO(
+            servicesEntitiesList: services, eventEntitiesList: events)));
   }
 }
 
@@ -33,3 +41,11 @@ abstract class HomeEvent {}
 
 @immutable
 abstract class HomeState {}
+
+class HomeDTO {
+  HomeDTO(
+      {required this.servicesEntitiesList, required this.eventEntitiesList});
+
+  final List<ServicesEntity> servicesEntitiesList;
+  final List<EventEntity> eventEntitiesList;
+}

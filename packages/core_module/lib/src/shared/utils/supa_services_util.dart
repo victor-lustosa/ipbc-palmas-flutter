@@ -6,8 +6,8 @@ import 'package:uno/uno.dart';
 
 
 class SupaServicesUtil {
-  static int createId() =>
-      int.parse(DateTime.now().microsecondsSinceEpoch.toString());
+  static String createId() =>
+      DateTime.now().microsecondsSinceEpoch.toString();
 
   static _dateNowDelayed() =>
       Future.delayed(const Duration(seconds: 2), () => DateTime.now());

@@ -51,7 +51,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
               ),
             );
           } else if (state
-              is DataFetchedState<ServicesCollectionState, ServiceEntity>) {
+              is DataFetchedState<ServicesCollectionState, List<ServiceEntity>>) {
             entitiesList = state.entities;
             return AnnotatedRegion<SystemUiOverlayStyle>(
               value: SystemUiOverlayStyle.light,

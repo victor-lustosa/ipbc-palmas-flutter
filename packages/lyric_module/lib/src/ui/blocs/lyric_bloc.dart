@@ -38,7 +38,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
       'lyrics',
     );
     if (lyricsList!.isNotEmpty) {
-      emit(DataFetchedState<LyricState, LyricEntity>(entities: lyricsList));
+      emit(DataFetchedState<LyricState, List<LyricEntity>>(entities: lyricsList));
     }
   }
 
@@ -62,7 +62,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
 
   Future<void> _filter(FilterEvent<LyricEvent> event, emit) async {
     List<LyricEntity> lyricsList = await lyricUseCases.lettersFilter(event.lyrics);
-    emit(DataFetchedState<LyricState, LyricEntity>(entities: lyricsList));
+    emit(DataFetchedState<LyricState, List<LyricEntity>>(entities: lyricsList));
   }
 }
 

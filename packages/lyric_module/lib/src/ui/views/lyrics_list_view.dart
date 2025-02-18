@@ -53,7 +53,7 @@ class _LyricsListViewState extends State<LyricsListView>
                     context,
                   ),
                 );
-              } else if (state is DataFetchedState<LyricState, LyricEntity>) {
+              } else if (state is DataFetchedState<LyricState, List<LyricEntity>>) {
                 _lyricsFetched = state.entities;
                 return RefreshIndicator(
                   color: AppColors.darkGreen,

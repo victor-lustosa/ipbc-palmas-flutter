@@ -18,6 +18,7 @@ class _HomeViewState extends State<HomeView>
     with AutomaticKeepAliveClientMixin {
   late final HomeBloc _bloc;
   List<ServicesEntity> _servicesList = [];
+  List<EventEntity> _eventsList = [];
   int activePage = 0;
 
   //final List<Image> imagesList = [];
@@ -66,8 +67,9 @@ class _HomeViewState extends State<HomeView>
                     context,
                   ),
                 );
-              } else if (state is DataFetchedState<HomeState, ServicesEntity>) {
-                _servicesList = state.entities;
+              } else if (state is DataFetchedState<HomeState, HomeDTO>) {
+                _servicesList = state.entities.servicesEntitiesList;
+                _eventsList = state.entities.eventEntitiesList;
                 return SingleChildScrollView(
                   child: SizedBox(
                     width: context.sizeOf.width,
@@ -145,7 +147,7 @@ class _HomeViewState extends State<HomeView>
                             width: 319,
                             scrollDirection: Axis.horizontal,
                             route: ServiceModule.servicesCollectionRoute,
-                            entities: _servicesList,
+                            entities: _eventsList,
                           ),
                         ),
                       ],

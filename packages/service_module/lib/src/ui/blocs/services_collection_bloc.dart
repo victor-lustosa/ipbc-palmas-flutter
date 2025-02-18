@@ -43,7 +43,7 @@ class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
 
     Future<void> _getInSupa(GetInSupaEvent event, emit) async {
      List<ServiceEntity> services = await onlineUseCases.get(path: path, converter: ServiceAdapter.fromMapList);
-     emit(DataFetchedState<ServicesCollectionState, ServiceEntity>(entities: services));
+     emit(DataFetchedState<ServicesCollectionState, List<ServiceEntity>>(entities: services));
   }
 
   Future<void> _loading(_, emit) async {

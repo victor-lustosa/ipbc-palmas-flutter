@@ -34,7 +34,7 @@ class ServiceModel extends ServiceEntity {
   ServiceModel copyWith({
     DateTime? createAt,
     String? title,
-    int? id,
+    String? id,
     String? theme,
     String? preacher,
     String? type,
