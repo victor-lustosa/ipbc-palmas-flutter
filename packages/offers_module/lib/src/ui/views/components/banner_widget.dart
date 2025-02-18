@@ -1,4 +1,3 @@
-
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
@@ -44,43 +43,43 @@ class _BannerWidgetState extends State<BannerWidget> with ClipboardMixin {
     );
   }
 
-Widget baseBanner() => Column(
-    children: [
-      Container(
-        margin:  EdgeInsets.only(
-          left: isSmallD ? 24 : 35,
-          top: 24,
-          bottom: 16,
-        ),
-        child: Row(
-          children: [
-            Container(
-              margin: EdgeInsets.only(right: isSmallD ? 15 : 24),
-              child: Text(
-                'PARA',
-                style: AppFonts.defaultFont(
-                  color: AppColors.secondaryGreen2,
-                  fontSize: 13,
+  Widget baseBanner() => Column(
+        children: [
+          Container(
+            margin: EdgeInsets.only(
+              left: isSmallD ? 24 : 35,
+              top: 24,
+              bottom: 16,
+            ),
+            child: Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(right: isSmallD ? 15 : 24),
+                  child: Text(
+                    'PARA',
+                    style: AppFonts.defaultFont(
+                      color: AppColors.secondaryGreen2,
+                      fontSize: 13,
+                    ),
+                  ),
                 ),
-              ),
+                Text(
+                  'IGREJA PRESBITERIANA DE PALMAS',
+                  style: AppFonts.defaultFont(
+                    color: AppColors.white,
+                    fontSize: 13,
+                  ),
+                ),
+              ],
             ),
-            Text(
-              'IGREJA PRESBITERIANA DE PALMAS',
-              style: AppFonts.defaultFont(
-                color: AppColors.white,
-                fontSize: 13,
-              ),
-            ),
-          ],
-        ),
-      ),
-      Container(
-        height: 1,
-        width: context.sizeOf.width * .78,
-        color: AppColors.secondaryGreen2,
-      ),
-    ],
-  );
+          ),
+          Container(
+            height: 1,
+            width: context.sizeOf.width * .78,
+            color: AppColors.secondaryGreen2,
+          ),
+        ],
+      );
 
   pixBanner() => Container(
         margin: EdgeInsets.only(

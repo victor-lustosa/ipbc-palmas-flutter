@@ -1,11 +1,13 @@
-
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SearchBarWidget extends StatefulWidget {
-  const SearchBarWidget(
-      {super.key, required this.controller, required this.action});
+  const SearchBarWidget({
+    super.key,
+    required this.controller,
+    required this.action,
+  });
 
   final TextEditingController controller;
   final void Function() action;
@@ -15,25 +17,19 @@ class SearchBarWidget extends StatefulWidget {
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
-
   bool isValid = true;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(
-        left: 16,
-        right: 19,
-      ),
+      margin: const EdgeInsets.only(left: 16, right: 19),
       child: FormFieldWidget(
         fieldHeight: 48,
         fieldWidth: context.sizeOf.width,
         controller: widget.controller,
         fieldDecoration: BoxDecoration(
           color: AppColors.searchBar,
-          border: Border.all(
-            color: AppColors.secondaryGrey,
-          ),
+          border: Border.all(color: AppColors.secondaryGrey),
           borderRadius: BorderRadius.circular(11),
         ),
         isValid: isValid,
@@ -52,16 +48,11 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             ),
           ),
           border: InputBorder.none,
-          hintStyle: AppFonts.defaultFont(
-            fontSize: 12,
-            color: AppColors.grey5,
-          ),
-          contentPadding: const EdgeInsets.only(
-            left: 16,
-            top: 10,
-          ),
+          hintStyle: AppFonts.defaultFont(fontSize: 12, color: AppColors.grey5),
+          contentPadding: const EdgeInsets.only(left: 16, top: 10),
           hintText: 'Digite o termo de pesquisa',
-        ), colorStyle: AppColors.hintInputForm,
+        ),
+        colorStyle: AppColors.hintInputForm,
       ),
     );
   }

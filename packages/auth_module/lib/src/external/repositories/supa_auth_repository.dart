@@ -1,33 +1,31 @@
-
 import 'package:core_module/core_module.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../infra/repositories/auth_repositories.dart';
 
-class SupaAuthRepository implements IOnlineAuthRepository{
-
+class SupaAuthRepository implements IOnlineAuthRepository {
   SupaAuthRepository({required SupabaseClient supaClient})
-      : _supaClient = supaClient;
+    : _supaClient = supaClient;
 
   late final SupabaseClient _supaClient;
 
   @override
   UserEntity? getCurrentUser() {
     User? user = _supaClient.auth.currentUser;
-    if(user == null) return null;
+    if (user == null) return null;
     return UserEntity.create(user);
   }
 
   @override
   Future<String?> signInWithGoogle() async {
-
     final GoogleSignIn googleSignIn = GoogleSignIn(
       clientId: ApiKeys.iosCredencial,
       serverClientId: ApiKeys.webCredencial,
     );
 
     final googleUser = await googleSignIn.signIn();
-    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
     final accessToken = googleAuth?.accessToken;
     final idToken = googleAuth?.idToken;
 
@@ -54,9 +52,6 @@ class SupaAuthRepository implements IOnlineAuthRepository{
       email: email,
       password: password,
     );
-    return res.session?.accessToken != null
-        ? res.session!.accessToken
-        : '';
+    return res.session?.accessToken != null ? res.session!.accessToken : '';
   }
-
 }

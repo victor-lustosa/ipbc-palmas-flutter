@@ -15,7 +15,11 @@ class GenericBlocObserver extends BlocObserver {
   }
 
   @override
-  Future<void> onError(BlocBase bloc, Object error, StackTrace stackTrace) async {
+  Future<void> onError(
+    BlocBase bloc,
+    Object error,
+    StackTrace stackTrace,
+  ) async {
     print('onError -- bloc: ${bloc.runtimeType}, error: $error');
     super.onError(bloc, error, stackTrace);
   }

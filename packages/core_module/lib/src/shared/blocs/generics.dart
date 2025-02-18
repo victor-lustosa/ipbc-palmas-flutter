@@ -12,7 +12,7 @@ class LoadingEvent<R> extends GenericEvent<R> {
 }
 
 @immutable
-class CheckConnectivityEvent<R> extends GenericEvent<R>  {
+class CheckConnectivityEvent<R> extends GenericEvent<R> {
   final String path;
   CheckConnectivityEvent({this.path = ''});
 }

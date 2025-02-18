@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../../../core_module.dart';
 
 class MainTopBarWidget extends StatelessWidget {
-  const MainTopBarWidget(
-      {super.key, this.margin, this.topBarList, this.mainAxisAlignment});
+  const MainTopBarWidget({
+    super.key,
+    this.margin,
+    this.topBarList,
+    this.mainAxisAlignment,
+  });
 
   final EdgeInsetsGeometry? margin;
   final List<Widget>? topBarList;
@@ -15,21 +19,14 @@ class MainTopBarWidget extends StatelessWidget {
     return Builder(
       builder: (context) {
         return Container(
-          margin: margin ??
-              const EdgeInsets.only(
-                top: 28,
-                left: 16,
-                right: 18,
-                bottom: 24,
-              ),
+          margin:
+              margin ??
+              const EdgeInsets.only(top: 28, left: 16, right: 18, bottom: 24),
           child: Row(
             mainAxisAlignment:
                 mainAxisAlignment ?? MainAxisAlignment.spaceBetween,
-            children: topBarList ??
-                [
-                  LogoIconWidget(),
-                  AuthCircleAvatarWidget(),
-                ],
+            children:
+                topBarList ?? [LogoIconWidget(), AuthCircleAvatarWidget()],
           ),
         );
       },

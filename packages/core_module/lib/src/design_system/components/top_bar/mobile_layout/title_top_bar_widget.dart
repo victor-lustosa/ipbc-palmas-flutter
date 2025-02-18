@@ -11,18 +11,15 @@ class TitleTopBarWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 37, right: 16, left: 16),
       child: Row(
-       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           /*const Padding(
             padding: EdgeInsets.only(left: 11.0),
             child: BackButtonWidget(),
           ),*/
-         // const SizedBox(),
-          Text(
-            title,
-            style: AppFonts.title3(),
-          ),
+          // const SizedBox(),
+          Text(title, style: AppFonts.title3()),
           /*const Padding(
             padding: EdgeInsets.only(left: 4.0),
             child: CircleAvatarWidget(),

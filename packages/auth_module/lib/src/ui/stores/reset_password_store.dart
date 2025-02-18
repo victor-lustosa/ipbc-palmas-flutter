@@ -8,8 +8,10 @@ class ResetPasswordStore
   ResetPasswordStore() : super(InitialState<ResetPasswordState>());
 
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
-  final List<TextEditingController> _controllers =
-      List.generate(6, (index) => TextEditingController());
+  final List<TextEditingController> _controllers = List.generate(
+    6,
+    (index) => TextEditingController(),
+  );
   final List<int> code = [1, 2, 3, 4, 5, 8]; // Code Mockado;
 
   List<FocusNode> get focusNodes => _focusNodes;
@@ -31,25 +33,27 @@ class ResetPasswordStore
         inputCode = _controllers.map((controller) => controller.text).toList();
         if (inputCode.every((value) => value.isNotEmpty)) {
           if (inputCode.join() == code.join()) {
-            pushNamed(AuthModule.authRoute + AuthModule.creatingNewPassWordRoute);
+            pushNamed(
+              AuthModule.authRoute + AuthModule.creatingNewPassWordRoute,
+            );
           } else {
             notifyBorderError(value: true);
-           if(context.mounted){
-             showCustomErrorDialog(
-               context: context,
-               title: 'Código Inválido!',
-               message: 'Por favor, verifique o código, e tente novamente.',
-             );
-           }
+            if (context.mounted) {
+              showCustomErrorDialog(
+                context: context,
+                title: 'Código Inválido!',
+                message: 'Por favor, verifique o código, e tente novamente.',
+              );
+            }
           }
         } else {
           notifyBorderError(value: true);
-          if(context.mounted){
+          if (context.mounted) {
             showCustomErrorDialog(
               context: context,
               title: 'Código não Preenchidos!',
               message:
-              'Por favor, preencha o código de verificação e tente novamente.',
+                  'Por favor, preencha o código de verificação e tente novamente.',
             );
           }
         }
@@ -61,9 +65,10 @@ class ResetPasswordStore
   }
 
   colorBorder() {
-    isListFull = _controllers.where((e) => e.text != '').toList().length > 5
-        ? true
-        : false;
+    isListFull =
+        _controllers.where((e) => e.text != '').toList().length > 5
+            ? true
+            : false;
     notifyListeners();
   }
 

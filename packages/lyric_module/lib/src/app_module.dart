@@ -29,14 +29,12 @@ class LyricModule extends Module {
 
   @override
   void routes(r) {
-    r.child(
-      lyricRoute,
-      transition: TransitionType.custom,
-      child: (_) => LyricView(
-        entity: r.args.data as LyricEntity,
-      ),
-      customTransition: ModularSlideTransition()
-    );
+    r.child(lyricRoute,
+        transition: TransitionType.custom,
+        child: (_) => LyricView(
+              entity: r.args.data as LyricEntity,
+            ),
+        customTransition: ModularSlideTransition());
   }
 }
 

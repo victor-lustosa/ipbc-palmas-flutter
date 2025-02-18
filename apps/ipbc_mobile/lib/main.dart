@@ -8,14 +8,9 @@ void main() async {
   //Modular.setInitialRoute(LyricModule.lyricsListRoute);
   //Modular.setInitialRoute(AuthModule.authRoute + AuthModule.loginRoute);
   WidgetsFlutterBinding.ensureInitialized();
-  await Future.wait([
-    SupabaseRepository.init(),
-    IsarRepository.init(),
-  ]);
+  await Future.wait([SupabaseRepository.init(), IsarRepository.init()]);
   // Bloc.observer = GenericBlocObserver();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]).then(
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) => runApp(
       ModularApp(
         module: SplashModule(),

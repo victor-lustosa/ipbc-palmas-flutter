@@ -3,34 +3,35 @@ import 'package:flutter/services.dart';
 import 'package:core_module/core_module.dart';
 
 class FormFieldWidget extends StatefulWidget {
-  const FormFieldWidget(
-      {super.key,
-      required this.validator,
-      required this.isValid,
-      required this.inputDecoration,
-      required this.controller,
-      this.fieldKey,
-      this.isSubmitted,
-      this.maxLength,
-      this.fieldStyle,
-      this.maxLines,
-      this.keyboardType,
-      this.cursorColor,
-      this.inputFormatters,
-      this.autoValidateMode,
-      this.title,
-      this.titleMargin,
-      this.fieldWidth,
-      this.fieldHeight,
-      this.fieldDecoration,
-      this.errorText,
-      this.titleStyle,
-      this.fieldMargin,
-      this.obscureText,
-      this.errorTextMargin,
-      this.horizontalSymmetric,
-      this.inputPadding,
-      required this.colorStyle});
+  const FormFieldWidget({
+    super.key,
+    required this.validator,
+    required this.isValid,
+    required this.inputDecoration,
+    required this.controller,
+    this.fieldKey,
+    this.isSubmitted,
+    this.maxLength,
+    this.fieldStyle,
+    this.maxLines,
+    this.keyboardType,
+    this.cursorColor,
+    this.inputFormatters,
+    this.autoValidateMode,
+    this.title,
+    this.titleMargin,
+    this.fieldWidth,
+    this.fieldHeight,
+    this.fieldDecoration,
+    this.errorText,
+    this.titleStyle,
+    this.fieldMargin,
+    this.obscureText,
+    this.errorTextMargin,
+    this.horizontalSymmetric,
+    this.inputPadding,
+    required this.colorStyle,
+  });
 
   final String? errorText;
   final EdgeInsetsGeometry? errorTextMargin;
@@ -77,11 +78,9 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
               margin: widget.titleMargin,
               child: Text(
                 widget.title ?? '',
-                style: widget.titleStyle ??
-                    AppFonts.defaultFont(
-                      fontSize: 16,
-                      color: AppColors.grey9,
-                    ),
+                style:
+                    widget.titleStyle ??
+                    AppFonts.defaultFont(fontSize: 16, color: AppColors.grey9),
               ),
             ),
           ),
@@ -90,7 +89,8 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
             margin: widget.fieldMargin,
             width: widget.fieldWidth,
             height: widget.fieldHeight ?? 42,
-            decoration: widget.fieldDecoration ??
+            decoration:
+                widget.fieldDecoration ??
                 BoxDecoration(
                   color: AppColors.white,
                   border: Border.all(
@@ -113,27 +113,23 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
               inputFormatters:
                   widget.inputFormatters ?? const <TextInputFormatter>[],
               decoration: widget.inputDecoration,
-              style: widget.fieldStyle ??
+              style:
+                  widget.fieldStyle ??
                   AppFonts.defaultFont(fontSize: 14, color: widget.colorStyle),
             ),
           ),
           Visibility(
             visible: !widget.isValid,
             child: Container(
-              margin: widget.errorTextMargin ??
-                  const EdgeInsets.only(
-                    top: 4,
-                    left: 2,
-                  ),
+              margin:
+                  widget.errorTextMargin ??
+                  const EdgeInsets.only(top: 4, left: 2),
               child: Text(
                 widget.errorText ?? '',
-                style: AppFonts.defaultFont(
-                  fontSize: 14,
-                  color: Colors.red,
-                ),
+                style: AppFonts.defaultFont(fontSize: 14, color: Colors.red),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

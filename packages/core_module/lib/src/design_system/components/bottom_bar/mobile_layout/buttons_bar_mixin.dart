@@ -15,22 +15,26 @@ mixin ButtonsBarMixin {
     const List<MenuItem> menuItemsList = <MenuItem>[
       MenuItem(AppIcons.home, 'Home'),
       MenuItem(AppIcons.lyrics, 'Músicas'),
-      MenuItem(AppIcons.volunteerActivism, 'Ofertas')
+      MenuItem(AppIcons.volunteerActivism, 'Ofertas'),
     ];
 
-    buttons = menuItemsList.map(
-          (MenuItem menuItem) => BottomNavigationBarItem(
-            activeIcon: items(menuItem.iconData, AppColors.darkGreen),
-            icon: items(menuItem.iconData,  AppColors.grey5),
-            label: menuItem.label,
-          ),
-        ).toList();
+    buttons =
+        menuItemsList
+            .map(
+              (MenuItem menuItem) => BottomNavigationBarItem(
+                activeIcon: items(menuItem.iconData, AppColors.darkGreen),
+                icon: items(menuItem.iconData, AppColors.grey5),
+                label: menuItem.label,
+              ),
+            )
+            .toList();
 
     return buttons;
   }
-  Widget items(String iconData, Color color){
+
+  Widget items(String iconData, Color color) {
     return NavigationButtonWidget(
-      size: iconData == AppIcons.home ? 19.5: 19,
+      size: iconData == AppIcons.home ? 19.5 : 19,
       iconName: iconData,
       color: color,
     );

@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 class RegistrationCompletionStore
     extends ValueNotifier<GenericState<RegistrationCompletionState>> {
   RegistrationCompletionStore()
-      : super(InitialState<RegistrationCompletionState>());
+    : super(InitialState<RegistrationCompletionState>());
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();

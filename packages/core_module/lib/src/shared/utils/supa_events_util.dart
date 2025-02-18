@@ -7,12 +7,8 @@ import 'package:flutter/services.dart';
 import '../../core/infra/adapters/supa/supa_event_adapter.dart';
 //import '../../core/infra/models/event_model.dart';
 
-
 class SupaEventsUtil {
-
-  static Future<List<EventEntity>> loadEventsList(
-    String path,
-  ) async {
+  static Future<List<EventEntity>> loadEventsList(String path) async {
     final String json = await rootBundle.loadString(path);
     return SupaEventAdapter.fromJsonList(json);
   }

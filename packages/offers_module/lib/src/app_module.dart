@@ -8,5 +8,4 @@ class OffersModule extends Module {
   void binds(Injector i) {
     i.addLazySingleton<BannerController>(BannerController.new);
   }
-
 }

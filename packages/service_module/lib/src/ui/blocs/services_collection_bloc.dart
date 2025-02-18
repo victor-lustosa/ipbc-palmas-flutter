@@ -3,13 +3,19 @@ import 'dart:async';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
-    GenericState<ServicesCollectionState>> with ConnectivityMixin {
+class ServicesCollectionBloc
+    extends
+        Bloc<
+          GenericEvent<ServicesCollectionEvent>,
+          GenericState<ServicesCollectionState>
+        >
+    with ConnectivityMixin {
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
   String path = '';
 
-  ServicesCollectionBloc({ required this.onlineUseCases, this.offlineUseCases, }) : super(LoadingState()) {
+  ServicesCollectionBloc({required this.onlineUseCases, this.offlineUseCases})
+    : super(LoadingState()) {
     on<GetInSupaEvent<ServicesCollectionEvent>>(_getInSupa);
     on<LoadingEvent<ServicesCollectionEvent>>(_loading);
     on<CheckConnectivityEvent<ServicesCollectionEvent>>(_checkConnectivity);
@@ -41,9 +47,16 @@ class ServicesCollectionBloc extends Bloc<GenericEvent<ServicesCollectionEvent>,
     }
   }*/
 
-    Future<void> _getInSupa(GetInSupaEvent event, emit) async {
-     List<ServiceEntity> services = await onlineUseCases.get(path: path, converter: ServiceAdapter.fromMapList);
-     emit(DataFetchedState<ServicesCollectionState, List<ServiceEntity>>(entities: services));
+  Future<void> _getInSupa(GetInSupaEvent event, emit) async {
+    List<ServiceEntity> services = await onlineUseCases.get(
+      path: path,
+      converter: ServiceAdapter.fromMapList,
+    );
+    emit(
+      DataFetchedState<ServicesCollectionState, List<ServiceEntity>>(
+        entities: services,
+      ),
+    );
   }
 
   Future<void> _loading(_, emit) async {

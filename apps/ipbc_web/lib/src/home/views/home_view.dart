@@ -17,13 +17,12 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-        controller: Modular.get<HomeViewModel>().scrollController,
+          controller: Modular.get<HomeViewModel>().scrollController,
           child: const Column(
             children: [
               TopBarWidget(),

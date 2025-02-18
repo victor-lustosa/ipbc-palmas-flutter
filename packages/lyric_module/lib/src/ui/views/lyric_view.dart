@@ -63,9 +63,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                             SizedBox(
                               width: context.sizeOf.width *
                                   ResponsivityUtil.resolutionDeviceProportion(
-                                      context.sizeOf.width,
-                                      0.573,
-                                      0.5),
+                                      context.sizeOf.width, 0.573, 0.5),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -78,12 +76,11 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                       style: AppFonts.defaultFont(
                                         color: AppColors.grey9,
                                         fontWeight: FontWeight.w500,
-                                        fontSize:
-                                            context.sizeOf.width >
-                                                    ResponsivityUtil
-                                                        .smallDeviceWidth
-                                                ? 20
-                                                : 17,
+                                        fontSize: context.sizeOf.width >
+                                                ResponsivityUtil
+                                                    .smallDeviceWidth
+                                            ? 20
+                                            : 17,
                                       ),
                                     ),
                                   ),

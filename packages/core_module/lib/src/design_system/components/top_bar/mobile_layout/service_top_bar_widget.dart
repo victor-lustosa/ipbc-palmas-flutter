@@ -34,30 +34,24 @@ class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget> {
         ),
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: NetworkImage(
-            widget.image,
-          ),
+          image: NetworkImage(widget.image),
         ),
       ),
       child: Container(
-        margin: const EdgeInsets.only(
-          bottom: 17,
-        ),
+        margin: const EdgeInsets.only(bottom: 17),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Row(
-              mainAxisAlignment: dateIsVisible
-                  ? MainAxisAlignment.spaceBetween
-                  : MainAxisAlignment.start,
+              mainAxisAlignment:
+                  dateIsVisible
+                      ? MainAxisAlignment.spaceBetween
+                      : MainAxisAlignment.start,
               children: [
                 Row(
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(
-                        left: 16.3,
-                        right: 16,
-                      ),
+                      margin: const EdgeInsets.only(left: 16.3, right: 16),
                       child: BackButtonWidget(
                         color: AppColors.white,
                         action: () => nativePop(context),
@@ -69,7 +63,9 @@ class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget> {
                         overflow: TextOverflow.ellipsis,
                         widget.title ?? '',
                         style: AppFonts.defaultFont(
-                            color: AppColors.white, fontWeight: FontWeight.w500),
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ],
@@ -80,14 +76,9 @@ class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget> {
                   child: Container(
                     decoration: const BoxDecoration(
                       color: AppColors.badgeGreen,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(34.7),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(34.7)),
                     ),
-                    margin: const EdgeInsets.only(
-                      right: 15,
-
-                    ),
+                    margin: const EdgeInsets.only(right: 15),
                     child: Container(
                       margin: const EdgeInsets.only(
                         left: 13,

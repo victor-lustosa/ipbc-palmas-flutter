@@ -5,7 +5,8 @@ import 'package:core_module/core_module.dart';
 
 class SupaServiceAdapter {
   static ServiceModel fromJson(String source) => fromMap(json.decode(source));
-  static List<ServiceEntity> fromJsonList(String source) => fromMapList(json.decode(source));
+  static List<ServiceEntity> fromJsonList(String source) =>
+      fromMapList(json.decode(source));
 
   static ServiceModel fromMap(dynamic json) {
     return ServiceModel(
@@ -18,9 +19,10 @@ class SupaServiceAdapter {
       heading: json['heading'],
       title: json['title'],
       guideIsVisible: json['guideIsVisible'],
-      liturgiesList: json.containsKey('liturgiesList')
-          ? LiturgyAdapter.fromMap(json['liturgiesList'])
-          : [],
+      liturgiesList:
+          json.containsKey('liturgiesList')
+              ? LiturgyAdapter.fromMap(json['liturgiesList'])
+              : [],
       lyricsList: SupaLyricAdapter.fromMapList(json['lyricsList']),
       hour: json['hour'],
     );
@@ -37,9 +39,10 @@ class SupaServiceAdapter {
       'type': data.type,
       'theme': data.theme,
       'preacher': data.preacher,
-      'guideIsVisible': data.guideIsVisible
+      'guideIsVisible': data.guideIsVisible,
     };
   }
+
   static List<ServiceEntity> fromMapList(dynamic data) {
     List<ServiceEntity> services = [];
     for (dynamic entity in data) {

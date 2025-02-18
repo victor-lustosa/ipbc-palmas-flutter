@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 extension BuildContextExtensions on BuildContext {
-
   Rect? get globalPaintBounds {
     final renderObject = findRenderObject();
     final translation = renderObject?.getTransformTo(null).getTranslation();
@@ -51,6 +50,7 @@ extension WidgetStateHelpers on Iterable<WidgetState> {
 
   bool get isError => contains(WidgetState.error);
 }
+
 /*
 extension ThemeDataExtensions on ThemeData {
   AppColorsExtension get appColors =>

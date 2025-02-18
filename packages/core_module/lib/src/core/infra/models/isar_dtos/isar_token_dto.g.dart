@@ -17,11 +17,7 @@ const IsarTokenDTOSchema = CollectionSchema(
   name: r'IsarTokenDTO',
   id: 7663332924803667737,
   properties: {
-    r'token': PropertySchema(
-      id: 0,
-      name: r'token',
-      type: IsarType.string,
-    )
+    r'token': PropertySchema(id: 0, name: r'token', type: IsarType.string),
   },
   estimateSize: _isarTokenDTOEstimateSize,
   serialize: _isarTokenDTOSerialize,
@@ -67,9 +63,7 @@ IsarTokenDTO _isarTokenDTODeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = IsarTokenDTO(
-    token: reader.readStringOrNull(offsets[0]),
-  );
+  final object = IsarTokenDTO(token: reader.readStringOrNull(offsets[0]));
   object.id = id;
   return object;
 }
@@ -97,7 +91,10 @@ List<IsarLinkBase<dynamic>> _isarTokenDTOGetLinks(IsarTokenDTO object) {
 }
 
 void _isarTokenDTOAttach(
-    IsarCollection<dynamic> col, Id id, IsarTokenDTO object) {
+  IsarCollection<dynamic> col,
+  Id id,
+  IsarTokenDTO object,
+) {
   object.id = id;
 }
 
@@ -114,15 +111,13 @@ extension IsarTokenDTOQueryWhere
     on QueryBuilder<IsarTokenDTO, IsarTokenDTO, QWhereClause> {
   QueryBuilder<IsarTokenDTO, IsarTokenDTO, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
-      ));
+      return query.addWhereClause(IdWhereClause.between(lower: id, upper: id));
     });
   }
 
   QueryBuilder<IsarTokenDTO, IsarTokenDTO, QAfterWhereClause> idNotEqualTo(
-      Id id) {
+    Id id,
+  ) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -145,8 +140,9 @@ extension IsarTokenDTOQueryWhere
   }
 
   QueryBuilder<IsarTokenDTO, IsarTokenDTO, QAfterWhereClause> idGreaterThan(
-      Id id,
-      {bool include = false}) {
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -154,8 +150,10 @@ extension IsarTokenDTOQueryWhere
     });
   }
 
-  QueryBuilder<IsarTokenDTO, IsarTokenDTO, QAfterWhereClause> idLessThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<IsarTokenDTO, IsarTokenDTO, QAfterWhereClause> idLessThan(
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -170,12 +168,14 @@ extension IsarTokenDTOQueryWhere
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerId,
+          includeLower: includeLower,
+          upper: upperId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }
@@ -183,12 +183,12 @@ extension IsarTokenDTOQueryWhere
 extension IsarTokenDTOQueryFilter
     on QueryBuilder<IsarTokenDTO, IsarTokenDTO, QFilterCondition> {
   QueryBuilder<IsarTokenDTO, IsarTokenDTO, QAfterFilterCondition> idEqualTo(
-      Id value) {
+    Id value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: value),
+      );
     });
   }
 
@@ -197,11 +197,13 @@ extension IsarTokenDTOQueryFilter
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -210,11 +212,13 @@ extension IsarTokenDTOQueryFilter
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -225,31 +229,33 @@ extension IsarTokenDTOQueryFilter
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<IsarTokenDTO, IsarTokenDTO, QAfterFilterCondition>
-      tokenIsNull() {
+  tokenIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'token',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'token'),
+      );
     });
   }
 
   QueryBuilder<IsarTokenDTO, IsarTokenDTO, QAfterFilterCondition>
-      tokenIsNotNull() {
+  tokenIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'token',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'token'),
+      );
     });
   }
 
@@ -258,27 +264,31 @@ extension IsarTokenDTOQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'token',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'token',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<IsarTokenDTO, IsarTokenDTO, QAfterFilterCondition>
-      tokenGreaterThan(
+  tokenGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'token',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'token',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -288,12 +298,14 @@ extension IsarTokenDTOQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'token',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'token',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -305,28 +317,29 @@ extension IsarTokenDTOQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'token',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'token',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<IsarTokenDTO, IsarTokenDTO, QAfterFilterCondition>
-      tokenStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  tokenStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'token',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'token',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -335,55 +348,61 @@ extension IsarTokenDTOQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'token',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'token',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<IsarTokenDTO, IsarTokenDTO, QAfterFilterCondition> tokenContains(
-      String value,
-      {bool caseSensitive = true}) {
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'token',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'token',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<IsarTokenDTO, IsarTokenDTO, QAfterFilterCondition> tokenMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+    String pattern, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'token',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'token',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<IsarTokenDTO, IsarTokenDTO, QAfterFilterCondition>
-      tokenIsEmpty() {
+  tokenIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'token',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'token', value: ''),
+      );
     });
   }
 
   QueryBuilder<IsarTokenDTO, IsarTokenDTO, QAfterFilterCondition>
-      tokenIsNotEmpty() {
+  tokenIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'token',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'token', value: ''),
+      );
     });
   }
 }
@@ -438,8 +457,9 @@ extension IsarTokenDTOQuerySortThenBy
 
 extension IsarTokenDTOQueryWhereDistinct
     on QueryBuilder<IsarTokenDTO, IsarTokenDTO, QDistinct> {
-  QueryBuilder<IsarTokenDTO, IsarTokenDTO, QDistinct> distinctByToken(
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarTokenDTO, IsarTokenDTO, QDistinct> distinctByToken({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'token', caseSensitive: caseSensitive);
     });

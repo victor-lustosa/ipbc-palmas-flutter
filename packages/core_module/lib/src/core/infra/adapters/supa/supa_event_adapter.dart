@@ -7,7 +7,8 @@ import '../../models/event_model.dart';
 
 class SupaEventAdapter {
   static EventModel fromJson(String source) => fromMap(json.decode(source));
-  static List<EventEntity> fromJsonList(String source) => fromMapList(json.decode(source));
+  static List<EventEntity> fromJsonList(String source) =>
+      fromMapList(json.decode(source));
 
   static EventModel fromMap(dynamic json) {
     return EventModel(
@@ -38,6 +39,7 @@ class SupaEventAdapter {
       'create_at': data.createAt.toIso8601String(),
     };
   }
+
   static List<EventEntity> fromMapList(dynamic data) {
     List<EventEntity> events = [];
     for (dynamic entity in data) {

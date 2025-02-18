@@ -59,28 +59,26 @@ class _DropdownWidgetState extends State<DropdownWidget> {
             icon: widget.icon,
             isExpanded: true,
             borderRadius: const BorderRadius.all(Radius.circular(10)),
-            padding: widget.marginContent ??
-                const EdgeInsets.only(
-                  left: 10,
-                  right: 7,
-                ),
-            items: widget.list.map<DropdownMenuItem<String>>(
-              (String val) {
-                return DropdownMenuItem<String>(
-                  value: val,
-                  child: Text(
-                    textAlign: TextAlign.left,
-                    val,
-                    style: widget.textStyle ??
-                        TextStyle(
-                          fontSize: 12,
-                          color: widget.colorSelect ?? Colors.black45,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                  ),
-                );
-              },
-            ).toList(),
+            padding:
+                widget.marginContent ??
+                const EdgeInsets.only(left: 10, right: 7),
+            items:
+                widget.list.map<DropdownMenuItem<String>>((String val) {
+                  return DropdownMenuItem<String>(
+                    value: val,
+                    child: Text(
+                      textAlign: TextAlign.left,
+                      val,
+                      style:
+                          widget.textStyle ??
+                          TextStyle(
+                            fontSize: 12,
+                            color: widget.colorSelect ?? Colors.black45,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                    ),
+                  );
+                }).toList(),
             hint: Text(
               widget.name,
               style: const TextStyle(fontSize: 12, color: Colors.black45),
@@ -88,11 +86,9 @@ class _DropdownWidgetState extends State<DropdownWidget> {
             style: const TextStyle(fontSize: 12),
             onChanged: (newValue) {
               _dropDownItemSelected(newValue!);
-              setState(
-                () {
-                  _listSelected = newValue;
-                },
-              );
+              setState(() {
+                _listSelected = newValue;
+              });
             },
             value: isSelected ? _listSelected : null,
           ),
@@ -102,12 +98,10 @@ class _DropdownWidgetState extends State<DropdownWidget> {
   }
 
   void _dropDownItemSelected(String novoItem) {
-    setState(
-      () {
-        _listSelected = novoItem;
-        isSelected = true;
-        widget.callback(_listSelected);
-      },
-    );
+    setState(() {
+      _listSelected = novoItem;
+      isSelected = true;
+      widget.callback(_listSelected);
+    });
   }
 }

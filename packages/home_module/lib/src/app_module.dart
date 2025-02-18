@@ -30,11 +30,7 @@ class SplashModule extends Module {
 
   @override
   void binds(i) {
-    i.addSingleton(
-      () => DatabaseBloc(
-        useCases: i.get<IOfflineAuthUseCases>(),
-      ),
-    );
+    i.addSingleton(() => DatabaseBloc(useCases: i.get<IOfflineAuthUseCases>()));
   }
 
   @override
@@ -58,9 +54,7 @@ class HomeModule extends Module {
   @override
   void binds(Injector i) {
     i.addLazySingleton<HomeBloc>(
-      () => HomeBloc(
-        useCases: i.get<UseCases<SupabaseRepository>>(),
-      ),
+      () => HomeBloc(useCases: i.get<UseCases<SupabaseRepository>>()),
       config: CoreModule.blocConfig(),
     );
   }
@@ -84,15 +78,11 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
           case HomeModule.homeRoute || HomeModule.initialRoute:
-            return CustomFadeTransition(
-              child: const HomeView(),
-            );
+            return CustomFadeTransition(child: const HomeView());
 
           case ServiceModule.serviceRoute:
             return CustomFadeTransition(
-              child: ServiceView(
-                entity: settings.arguments as ServiceViewDTO,
-              ),
+              child: ServiceView(entity: settings.arguments as ServiceViewDTO),
             );
 
           case ServiceModule.servicesListRoute:
@@ -111,15 +101,11 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
 
           case ServiceModule.editLiturgiesRoute:
             return CustomFadeTransition(
-              child: EditLiturgyView(
-                dto: settings.arguments as EditLiturgyDTO,
-              ),
+              child: EditLiturgyView(dto: settings.arguments as EditLiturgyDTO),
             );
 
           case EventModule.eventsListRoute:
-            return CustomFadeTransition(
-              child: const EventsListView(),
-            );
+            return CustomFadeTransition(child: const EventsListView());
 
           case EventModule.detailEventRoute:
             return CustomFadeTransition(

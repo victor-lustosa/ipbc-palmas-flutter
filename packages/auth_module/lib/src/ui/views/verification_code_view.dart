@@ -45,13 +45,8 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
-                          margin: const EdgeInsets.only(
-                            left: 17,
-                            top: 60,
-                          ),
-                          child: BackButtonWidget(
-                            action: () => pop(context),
-                          ),
+                          margin: const EdgeInsets.only(left: 17, top: 60),
+                          child: BackButtonWidget(action: () => pop(context)),
                         ),
                       ],
                     ),
@@ -64,9 +59,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                         color: AppColors.badgeGreen,
                       ),
                       child: const Image(
-                        image: AssetImage(
-                          AppImages.emailVerification,
-                        ),
+                        image: AssetImage(AppImages.emailVerification),
                         width: 60,
                         height: 52,
                       ),
@@ -98,10 +91,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(
-                        top: 40,
-                        bottom: 26,
-                      ),
+                      margin: const EdgeInsets.only(top: 40, bottom: 26),
                       child: Text(
                         "Código de Verificação",
                         style: AppFonts.defaultFont(
@@ -116,29 +106,32 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                       marginTop: 26,
                       loadingWidth: 80,
                       marginBottom: 22,
-                      action: () => _store.isListFull
-                          ? _store.validateCode(context)
-                          : null,
+                      action:
+                          () =>
+                              _store.isListFull
+                                  ? _store.validateCode(context)
+                                  : null,
                       isValid: _store.isListFull,
                       label: "Verificar",
                     ),
                     TextVerificationWidget(
-                        textOne:
-                            'Não recebeu o e-mail? Verifique na caixa de spam, \n ',
-                        styleOne: AppFonts.defaultFont(
-                          color: AppColors.fullBlack,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        textTwo: 'tente novamente, clicando aqui.',
-                        styleTwo: AppFonts.defaultFont(
-                          color: AppColors.darkGreen,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        onTapTextTwo: () {
-                          log('Tentando Novamente');
-                        }),
+                      textOne:
+                          'Não recebeu o e-mail? Verifique na caixa de spam, \n ',
+                      styleOne: AppFonts.defaultFont(
+                        color: AppColors.fullBlack,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      textTwo: 'tente novamente, clicando aqui.',
+                      styleTwo: AppFonts.defaultFont(
+                        color: AppColors.darkGreen,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      onTapTextTwo: () {
+                        log('Tentando Novamente');
+                      },
+                    ),
                   ],
                 ),
               ),

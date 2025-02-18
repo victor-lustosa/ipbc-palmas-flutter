@@ -1,9 +1,8 @@
-
 import '../../../../core_module.dart';
 
-class SupabaseRepository implements IRepository{
+class SupabaseRepository implements IRepository {
   SupabaseRepository({required SupabaseClient supabaseClient})
-      : _supaClient = supabaseClient;
+    : _supaClient = supabaseClient;
 
   late final SupabaseClient _supaClient;
 

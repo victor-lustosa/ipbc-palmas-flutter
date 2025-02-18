@@ -7,10 +7,10 @@ class IsarRepository implements IRepository {
 
   static Future init() async {
     final dir = await getApplicationDocumentsDirectory();
-    await Isar.open(
-      [IsarTokenDTOSchema, IsarUserDTOSchema],
-      directory: dir.path,
-    );
+    await Isar.open([
+      IsarTokenDTOSchema,
+      IsarUserDTOSchema,
+    ], directory: dir.path);
   }
 
   @override
@@ -21,9 +21,9 @@ class IsarRepository implements IRepository {
 
   @override
   Future<void> update<T>({required data, String? path, String? id}) async {
-      await isar.writeTxn(() async {
-        isar.collection<T>().put(data);
-      });
+    await isar.writeTxn(() async {
+      isar.collection<T>().put(data);
+    });
   }
 
   @override

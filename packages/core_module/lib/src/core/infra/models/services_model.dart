@@ -11,13 +11,13 @@ class ServicesModel extends ServicesEntity {
   });
 
   factory ServicesModel.empty() => ServicesModel(
-        title: '',
-        path: '',
-        hour: '',
-        image: '',
-        heading: '',
-        id: SupaServicesUtil.createId().toString(),
-      );
+    title: '',
+    path: '',
+    hour: '',
+    image: '',
+    heading: '',
+    id: SupaServicesUtil.createId().toString(),
+  );
 
   ServicesModel copyWith({
     String? title,

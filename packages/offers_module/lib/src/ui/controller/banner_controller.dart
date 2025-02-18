@@ -8,7 +8,7 @@ class BannerController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setTed(){
+  void setTed() {
     isPix = false;
     notifyListeners();
   }

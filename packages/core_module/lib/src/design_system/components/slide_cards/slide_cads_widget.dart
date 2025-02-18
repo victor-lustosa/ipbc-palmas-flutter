@@ -32,17 +32,16 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
       itemCount: widget.entities.length,
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
-          onTap: () => nativePushNamed(
-            widget.route,
-            arguments: widget.entities[index],
-            context,
-          ),
+          onTap:
+              () => nativePushNamed(
+                widget.route,
+                arguments: widget.entities[index],
+                context,
+              ),
           child: Container(
-            margin: widget.margin ??
-                EdgeInsets.only(
-                  left: index == 0 ? 16 : 0,
-                  right: 16,
-                ),
+            margin:
+                widget.margin ??
+                EdgeInsets.only(left: index == 0 ? 16 : 0, right: 16),
             child: Column(
               children: [
                 Container(
@@ -55,7 +54,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                         spreadRadius: 1,
                         offset: Offset(1, 2),
                         color: AppColors.grey2,
-                      )
+                      ),
                     ],
                     color: AppColors.grey4,
                     borderRadius: BorderRadius.only(
@@ -93,7 +92,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                         spreadRadius: 1,
                         offset: Offset(4, 4),
                         color: AppColors.grey2,
-                      )
+                      ),
                     ],
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(16),
@@ -158,9 +157,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                                 width: 20,
                                 child: const Image(
                                   fit: BoxFit.fitWidth,
-                                  image: AssetImage(
-                                    AppIcons.iosShare,
-                                  ),
+                                  image: AssetImage(AppIcons.iosShare),
                                 ),
                               ),
                             ],
@@ -175,9 +172,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                                 width: 11,
                                 child: const Image(
                                   fit: BoxFit.fitWidth,
-                                  image: AssetImage(
-                                    AppIcons.locationOn,
-                                  ),
+                                  image: AssetImage(AppIcons.locationOn),
                                 ),
                               ),
                               Text(

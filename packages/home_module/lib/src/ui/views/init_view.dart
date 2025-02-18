@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../home_module.dart';
@@ -11,7 +10,6 @@ class InitView extends StatefulWidget {
 }
 
 class _InitViewState extends State<InitView> {
-
   int selectedIndex = 0;
 
   final _controller = PageController();
@@ -32,17 +30,11 @@ class _InitViewState extends State<InitView> {
       body: PageView(
         controller: _controller,
         onPageChanged: (index) {
-          setState(
-            () {
-              selectedIndex = index;
-            },
-          );
+          setState(() {
+            selectedIndex = index;
+          });
         },
-        children: const [
-          NativeHomeRoutes(),
-          NativeLyricRoutes(),
-          OffersView(),
-        ],
+        children: const [NativeHomeRoutes(), NativeLyricRoutes(), OffersView()],
       ),
       bottomNavigationBar: AnimatedBuilder(
         animation: _controller,
@@ -50,11 +42,9 @@ class _InitViewState extends State<InitView> {
           return MaterialBottomBarWidget(
             selectedIndex: selectedIndex,
             callback: (int index) {
-              setState(
-                () {
-                  _onItemTapped(index);
-                },
-              );
+              setState(() {
+                _onItemTapped(index);
+              });
             },
           );
         },
@@ -62,5 +52,3 @@ class _InitViewState extends State<InitView> {
     );
   }
 }
-
-

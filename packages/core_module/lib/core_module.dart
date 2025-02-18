@@ -112,4 +112,3 @@ export 'src/core/domain/entities/services_entity.dart';
 export 'src/core/domain/entities/user_entity.dart';
 export 'src/core/domain/entities/liturgy_entity.dart';
 export 'src/core/domain/entities/event_entity.dart';
-

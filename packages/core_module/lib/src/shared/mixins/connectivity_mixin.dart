@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../../core_module.dart';
 
-mixin ConnectivityMixin{
+mixin ConnectivityMixin {
   Future<bool> isConnected() async {
     try {
       final connectivityResult = await Connectivity().checkConnectivity();

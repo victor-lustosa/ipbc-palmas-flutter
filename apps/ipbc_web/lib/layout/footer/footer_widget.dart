@@ -24,7 +24,9 @@ class _FooterWidgetState extends State<FooterWidget> {
   }
 
   web() => Container(
-        decoration: const BoxDecoration(color: AppColors.grey12,),
+        decoration: const BoxDecoration(
+          color: AppColors.grey12,
+        ),
         width: vWidth,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -62,7 +64,9 @@ class _FooterWidgetState extends State<FooterWidget> {
       );
 
   tablet() => Container(
-        decoration: const BoxDecoration(color: AppColors.grey12,),
+        decoration: const BoxDecoration(
+          color: AppColors.grey12,
+        ),
         width: vWidth,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -78,7 +82,9 @@ class _FooterWidgetState extends State<FooterWidget> {
               children: [
                 location(width: vWidth * .3),
                 contacts(width: vWidth * .3),
-                services(width: vWidth * .3, margin:  const EdgeInsets.only(bottom: 138)),
+                services(
+                    width: vWidth * .3,
+                    margin: const EdgeInsets.only(bottom: 138)),
               ],
             ),
             footer(margin: const EdgeInsets.only(bottom: 96))
@@ -103,10 +109,13 @@ class _FooterWidgetState extends State<FooterWidget> {
               children: [
                 location(width: 200),
                 contacts(width: 200),
-                services(width: 200, margin:  const EdgeInsets.only(bottom: 120)),
+                services(
+                    width: 200, margin: const EdgeInsets.only(bottom: 120)),
               ],
             ),
-            footer(width: context.sizeOf.width * 0.75, margin: const EdgeInsets.only(bottom: 80))
+            footer(
+                width: context.sizeOf.width * 0.75,
+                margin: const EdgeInsets.only(bottom: 80))
           ],
         ),
       );
@@ -137,8 +146,9 @@ class _FooterWidgetState extends State<FooterWidget> {
         ),
       );
 
-  location({double? width, CrossAxisAlignment? crossAxisAlignment}) => Container(
-    margin: const EdgeInsets.only(bottom: 32),
+  location({double? width, CrossAxisAlignment? crossAxisAlignment}) =>
+      Container(
+        margin: const EdgeInsets.only(bottom: 32),
         width: width,
         child: Column(
           crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
@@ -157,7 +167,10 @@ class _FooterWidgetState extends State<FooterWidget> {
         ),
       );
 
-  services({double? width, CrossAxisAlignment? crossAxisAlignment, EdgeInsetsGeometry? margin}) =>
+  services(
+          {double? width,
+          CrossAxisAlignment? crossAxisAlignment,
+          EdgeInsetsGeometry? margin}) =>
       Container(
         margin: margin,
         //decoration: BoxDecoration(border: Border.all(color: Colors.red)),
@@ -181,7 +194,7 @@ class _FooterWidgetState extends State<FooterWidget> {
   footer({double? width, required EdgeInsetsGeometry margin}) => Center(
         child: Container(
           width: width,
-         // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+          // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
           margin: margin,
           child: subtitleInfo(
             'Copyright © 2023 Igreja Presbiteriana Central em Palmas/TO',

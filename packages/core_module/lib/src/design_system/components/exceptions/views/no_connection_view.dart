@@ -23,9 +23,7 @@ class _NoConnectionViewState extends State<NoConnectionView> {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage(
-                  AppImages.noConnectionImage,
-                ),
+                image: AssetImage(AppImages.noConnectionImage),
               ),
             ),
           ),
@@ -46,9 +44,7 @@ class _NoConnectionViewState extends State<NoConnectionView> {
             child: Container(
               decoration: const BoxDecoration(
                 color: Color(0xFFEDEDED),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(8),
-                ),
+                borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
               width: 74.8,
               height: 32.8,
@@ -63,9 +59,7 @@ class _NoConnectionViewState extends State<NoConnectionView> {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage(
-                          AppImages.wifiIconImage,
-                        ),
+                        image: AssetImage(AppImages.wifiIconImage),
                       ),
                     ),
                   ),
@@ -102,11 +96,12 @@ class _NoConnectionViewState extends State<NoConnectionView> {
               ),
               action: widget.action,
               backgroundColor: AppColors.darkGreen,
-              child: Text("RECARREGAR",style: AppFonts.defaultFont(
-                color: AppColors.white,
-              ),),
+              child: Text(
+                "RECARREGAR",
+                style: AppFonts.defaultFont(color: AppColors.white),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

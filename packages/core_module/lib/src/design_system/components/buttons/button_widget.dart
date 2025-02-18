@@ -1,11 +1,7 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-enum AdaptiveButtonType {
-  outlined,
-  text,
-  elevated,
-}
+enum AdaptiveButtonType { outlined, text, elevated }
 
 class ButtonWidget extends StatefulWidget {
   const ButtonWidget({
@@ -54,46 +50,48 @@ class _ButtonWidgetState extends State<ButtonWidget> {
     required WidgetStateProperty<BorderSide?>? side,
     required WidgetStateProperty<Color?>? foregroundColor,
     required TextStyle? textStyle,
-  }) =>
-      ButtonStyle(
-        side: side,
-        fixedSize: widget.fixedSize == null
+  }) => ButtonStyle(
+    side: side,
+    fixedSize:
+        widget.fixedSize == null
             ? null
             : WidgetStateProperty.all<Size>(widget.fixedSize!),
-        padding: widget.padding == null
+    padding:
+        widget.padding == null
             ? WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero)
             : WidgetStateProperty.all<EdgeInsets>(widget.padding!),
-        elevation: widget.elevation == null
+    elevation:
+        widget.elevation == null
             ? null
             : WidgetStateProperty.all<double>(widget.elevation!),
-        overlayColor: widget.overlayColor == null
+    overlayColor:
+        widget.overlayColor == null
             ? null
             : WidgetStateProperty.all<Color>(widget.overlayColor!),
-        foregroundColor: foregroundColor,
-        shadowColor: widget.shadowColor == null
+    foregroundColor: foregroundColor,
+    shadowColor:
+        widget.shadowColor == null
             ? null
             : WidgetStateProperty.all<Color>(widget.shadowColor!),
-        backgroundColor: widget.backgroundColor == null
+    backgroundColor:
+        widget.backgroundColor == null
             ? null
             : WidgetStateProperty.all<Color>(widget.backgroundColor!),
-        textStyle: WidgetStateProperty.all<TextStyle?>(textStyle),
-        shape: WidgetStateProperty.all<OutlinedBorder>(
-          widget.shape ??
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-        ),
-      );
+    textStyle: WidgetStateProperty.all<TextStyle?>(textStyle),
+    shape: WidgetStateProperty.all<OutlinedBorder>(
+      widget.shape ??
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    ),
+  );
 
-  get sideStyle => widget.sideColor == null && widget.sideHoveredColor == null
-      ? null
-      : WidgetStateProperty.resolveWith(
-          (Set<WidgetState> states) {
+  get sideStyle =>
+      widget.sideColor == null && widget.sideHoveredColor == null
+          ? null
+          : WidgetStateProperty.resolveWith((Set<WidgetState> states) {
             return states.isHovered
                 ? BorderSide(color: widget.sideColor!)
                 : BorderSide(color: widget.sideColor!);
-          },
-        );
+          });
 
   @override
   Widget build(BuildContext context) {
@@ -102,16 +100,17 @@ class _ButtonWidgetState extends State<ButtonWidget> {
         return TextButton(
           style: styleButton(
             side: sideStyle,
-            foregroundColor: widget.foregroundColor == null &&
-                    widget.foregroundHoveredColor == null
-                ? null
-                : WidgetStateProperty.resolveWith(
-                    (Set<WidgetState> states) {
+            foregroundColor:
+                widget.foregroundColor == null &&
+                        widget.foregroundHoveredColor == null
+                    ? null
+                    : WidgetStateProperty.resolveWith((
+                      Set<WidgetState> states,
+                    ) {
                       return states.isHovered
                           ? widget.foregroundHoveredColor!
                           : widget.foregroundColor!;
-                    },
-                  ),
+                    }),
             textStyle: widget.textStyle ?? AppFonts.defaultFont(),
           ),
           onPressed: widget.action,
@@ -122,23 +121,23 @@ class _ButtonWidgetState extends State<ButtonWidget> {
         return OutlinedButton(
           style: styleButton(
             side: sideStyle,
-            foregroundColor: widget.foregroundColor == null &&
-                    widget.foregroundHoveredColor == null
-                ? null
-                : WidgetStateProperty.resolveWith(
-                    (Set<WidgetState> states) {
+            foregroundColor:
+                widget.foregroundColor == null &&
+                        widget.foregroundHoveredColor == null
+                    ? null
+                    : WidgetStateProperty.resolveWith((
+                      Set<WidgetState> states,
+                    ) {
                       if (widget.state != null) {
                         widget.state!(states.isPressed);
                       }
                       return states.isHovered
                           ? widget.foregroundColor!
                           : widget.foregroundColor!;
-                    },
-                  ),
-            textStyle: widget.textStyle ??
-                AppFonts.defaultFont(
-                  fontWeight: FontWeight.w500,
-                ),
+                    }),
+            textStyle:
+                widget.textStyle ??
+                AppFonts.defaultFont(fontWeight: FontWeight.w500),
           ),
           onPressed: widget.action,
           child: widget.child,
@@ -148,16 +147,16 @@ class _ButtonWidgetState extends State<ButtonWidget> {
         return ElevatedButton(
           style: styleButton(
             side: sideStyle,
-            textStyle: widget.textStyle ??
+            textStyle:
+                widget.textStyle ??
                 AppFonts.defaultFont(
                   fontWeight: FontWeight.w500,
                   color: AppColors.darkGreen,
                 ),
-            foregroundColor: widget.foregroundColor == null
-                ? null
-                : WidgetStateProperty.all<Color>(
-                    widget.foregroundColor!,
-                  ),
+            foregroundColor:
+                widget.foregroundColor == null
+                    ? null
+                    : WidgetStateProperty.all<Color>(widget.foregroundColor!),
           ),
           onPressed: widget.action,
           child: widget.child,

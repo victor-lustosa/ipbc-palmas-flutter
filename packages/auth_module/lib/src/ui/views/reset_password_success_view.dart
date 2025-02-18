@@ -16,9 +16,7 @@ class ResetPasswordSuccessView extends StatelessWidget {
             children: [
               Container(
                 margin: const EdgeInsets.only(top: 162, bottom: 25),
-                child: const Image(
-                  image: AssetImage(AppImages.lock),
-                ),
+                child: const Image(image: AssetImage(AppImages.lock)),
               ),
               Text(
                 textAlign: TextAlign.center,
@@ -55,11 +53,7 @@ class ResetPasswordSuccessView extends StatelessWidget {
                   foregroundColor: AppColors.white,
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Continuar para o login",
-                      ),
-                    ],
+                    children: [Text("Continuar para o login")],
                   ),
                 ),
               ),

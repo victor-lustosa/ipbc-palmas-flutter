@@ -168,11 +168,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                         ? 4480
                         : (vWidth < ResponsivityUtil.smallDeviceWidth
                             ? 4272
-                            : 4200
-                    ),
-                    width: vWidth > 580
-                        ? vWidth * 0.5
-                        : 280,
+                            : 4200),
+                    width: vWidth > 580 ? vWidth * 0.5 : 280,
                   ),
                 ],
               ),
@@ -282,12 +279,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
             color: AppColors.white,
           ),
           services: servicesImagesSm,
-          width: vWidth < 602
-              ? vWidth * .91
-              : 550,
-          height: vWidth < 602
-              ? vWidth * .84
-              : 510,
+          width: vWidth < 602 ? vWidth * .91 : 550,
+          height: vWidth < 602 ? vWidth * .84 : 510,
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
         ),
@@ -295,9 +288,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
 
   verticalCards() => SingleChildScrollView(
         child: SizedBox(
-          width: vWidth > 1100
-              ? 618
-              : 457,
+          width: vWidth > 1100 ? 618 : 457,
           height: 1333,
           child: ListView.separated(
             separatorBuilder: (BuildContext context, int index) {

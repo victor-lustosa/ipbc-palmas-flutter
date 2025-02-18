@@ -1,15 +1,15 @@
-
 import 'package:flutter/material.dart';
 
 class FloatingButtonWidget extends StatelessWidget {
-  const FloatingButtonWidget(
-      {super.key,
-      required this.action,
-      this.iconColor,
-      this.icon,
-      required this.backgroundColor,
-      this.size,
-      this.pngIcon});
+  const FloatingButtonWidget({
+    super.key,
+    required this.action,
+    this.iconColor,
+    this.icon,
+    required this.backgroundColor,
+    this.size,
+    this.pngIcon,
+  });
 
   final VoidCallback action;
   final Color? iconColor;
@@ -31,19 +31,14 @@ class FloatingButtonWidget extends StatelessWidget {
         hoverElevation: 1.8,
         onPressed: action,
         backgroundColor: backgroundColor,
-        child: icon != null
-            ? Icon(
-                size: size ?? 45,
-                icon,
-                color: iconColor,
-              )
-            : SizedBox(
-                height: size,
-                width: size,
-                child: Image.asset(
-                  pngIcon ?? '',
+        child:
+            icon != null
+                ? Icon(size: size ?? 45, icon, color: iconColor)
+                : SizedBox(
+                  height: size,
+                  width: size,
+                  child: Image.asset(pngIcon ?? ''),
                 ),
-              ),
       ),
     );
   }

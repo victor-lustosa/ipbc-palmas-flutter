@@ -4,7 +4,9 @@ import 'package:flutter/services.dart';
 class DataInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     var text = newValue.text.replaceAll(RegExp(r'\D'), '');
 
     if (text.length > 8) text = text.substring(0, 8);

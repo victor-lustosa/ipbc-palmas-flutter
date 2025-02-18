@@ -32,8 +32,8 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     suffixAction() => setState(() {
-          _obscure = !_obscure;
-        });
+      _obscure = !_obscure;
+    });
     return ValueListenableBuilder(
       valueListenable: _store,
       builder: (_, state, child) {
@@ -50,19 +50,14 @@ class _LoginViewState extends State<LoginView> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  MainTopBarWidget(margin: EdgeInsets.only(top: 28,left: 16),
-                      topBarList: [
-                        BackButtonWidget(
-                          action: () => pop(context),
-                        ),
-                      ]
+                  MainTopBarWidget(
+                    margin: EdgeInsets.only(top: 28, left: 16),
+                    topBarList: [BackButtonWidget(action: () => pop(context))],
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 35, bottom: 32),
                     child: const Image(
-                      image: AssetImage(
-                        AppImages.logoLoginImage,
-                      ),
+                      image: AssetImage(AppImages.logoLoginImage),
                       fit: BoxFit.cover,
                       width: 166,
                     ),
@@ -91,9 +86,10 @@ class _LoginViewState extends State<LoginView> {
                     validator: (data) {
                       return _emailValidation(data);
                     },
-                    defaultHintColor: _isEmailValid
-                        ? AppColors.hintInputForm
-                        : AppColors.delete,
+                    defaultHintColor:
+                        _isEmailValid
+                            ? AppColors.hintInputForm
+                            : AppColors.delete,
                   ),
                   TemplateFormWidget(
                     controller: _passwordController,
@@ -109,10 +105,7 @@ class _LoginViewState extends State<LoginView> {
                     inputDecoration: fieldInputDecoration(
                       isValid: _isPasswordValid,
                       hintText: 'Senha',
-                      contentPadding: const EdgeInsets.only(
-                        left: 16,
-                        top: 9,
-                      ),
+                      contentPadding: const EdgeInsets.only(left: 16, top: 9),
                       suffixIcon: HideIconWidget(
                         isObscure: _obscure,
                         suffixAction: suffixAction,
@@ -139,13 +132,16 @@ class _LoginViewState extends State<LoginView> {
                                   decorationColor: AppColors.darkGreen,
                                 ),
                                 text: "Esqueceu a senha? ",
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    if (!_isPressed) {
-                                      pushNamed(AuthModule.authRoute +
-                                          AuthModule.resetPasswordRoute);
-                                    }
-                                  },
+                                recognizer:
+                                    TapGestureRecognizer()
+                                      ..onTap = () {
+                                        if (!_isPressed) {
+                                          pushNamed(
+                                            AuthModule.authRoute +
+                                                AuthModule.resetPasswordRoute,
+                                          );
+                                        }
+                                      },
                               ),
                             ],
                           ),
@@ -171,8 +167,11 @@ class _LoginViewState extends State<LoginView> {
                           _isPasswordValid &&
                           !_isPressed) {
                         if (EmailValidator.validate(_emailController.text)) {
-                          await _store.logIn(_emailController.text,
-                              _passwordController.text, context);
+                          await _store.logIn(
+                            _emailController.text,
+                            _passwordController.text,
+                            context,
+                          );
                         } else {
                           _emailBorderValidation(false);
                         }
@@ -186,19 +185,16 @@ class _LoginViewState extends State<LoginView> {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          border:
-                              Border.all(color: AppColors.loginLineDecoration),
+                          border: Border.all(
+                            color: AppColors.loginLineDecoration,
+                          ),
                         ),
                         width: 159,
                       ),
                     ],
                   ),
                   Container(
-                    margin: const EdgeInsets.only(
-                      top: 16,
-                      left: 16,
-                      right: 16,
-                    ),
+                    margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
                     height: 48,
                     width: context.sizeOf.width,
                     child: ButtonWidget(
@@ -226,12 +222,8 @@ class _LoginViewState extends State<LoginView> {
                               height: 30,
                             ),
                           ),
-                          const Text(
-                            "Fazer login com o Google",
-                          ),
-                          const SizedBox(
-                            width: 18,
-                          )
+                          const Text("Fazer login com o Google"),
+                          const SizedBox(width: 18),
                         ],
                       ),
                     ),
@@ -269,9 +261,7 @@ class _LoginViewState extends State<LoginView> {
                               height: 32,
                             ),
                           ),
-                          const Text(
-                            "Fazer login com o Facebook",
-                          ),
+                          const Text("Fazer login com o Facebook"),
                         ],
                       ),
                     ),
@@ -295,15 +285,17 @@ class _LoginViewState extends State<LoginView> {
                             decorationColor: AppColors.darkGreen,
                           ),
                           text: "Criar conta ",
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () => setState(
-                                  () {
-                                    if (!_isPressed) {
-                                      Modular.to.navigate(AuthModule.authRoute +
-                                          AuthModule.createAccountRoute);
-                                    }
-                                  },
-                                ),
+                          recognizer:
+                              TapGestureRecognizer()
+                                ..onTap =
+                                    () => setState(() {
+                                      if (!_isPressed) {
+                                        Modular.to.navigate(
+                                          AuthModule.authRoute +
+                                              AuthModule.createAccountRoute,
+                                        );
+                                      }
+                                    }),
                         ),
                       ],
                     ),

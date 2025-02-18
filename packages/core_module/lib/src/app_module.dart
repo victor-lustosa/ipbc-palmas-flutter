@@ -1,4 +1,3 @@
-
 import '../core_module.dart';
 
 class CoreModule extends Module {
@@ -13,23 +12,16 @@ class CoreModule extends Module {
   void exportedBinds(Injector i) {
     i.addSingleton<SupabaseClient>(() => Supabase.instance.client);
     i.addSingleton<SupabaseRepository>(
-      () => SupabaseRepository(
-        supabaseClient: i.get<SupabaseClient>(),
-      ),
+      () => SupabaseRepository(supabaseClient: i.get<SupabaseClient>()),
     );
     i.addSingleton<Isar>(() => Isar.getInstance());
-    i.addSingleton<IsarRepository>(
-          () => IsarRepository(isar: i.get<Isar>()),
+    i.addSingleton<IsarRepository>(() => IsarRepository(isar: i.get<Isar>()));
+    i.addSingleton(
+      () =>
+          UseCases<SupabaseRepository>(repository: i.get<SupabaseRepository>()),
     );
     i.addSingleton(
-          () => UseCases<SupabaseRepository>(
-        repository: i.get<SupabaseRepository>(),
-      ),
-    );
-    i.addSingleton(
-          () => UseCases<IsarRepository>(
-        repository: i.get<IsarRepository>(),
-      ),
+      () => UseCases<IsarRepository>(repository: i.get<IsarRepository>()),
     );
   }
 }

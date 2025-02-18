@@ -30,8 +30,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   @override
   Widget build(BuildContext context) {
     suffixAction() => setState(() {
-          _obscure = !_obscure;
-        });
+      _obscure = !_obscure;
+    });
 
     return ValueListenableBuilder(
       valueListenable: _store,
@@ -54,9 +54,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         BackButtonWidget(
-                          action: () => Modular.to.navigate(
-                            AuthModule.authRoute + AuthModule.loginRoute,
-                          ),
+                          action:
+                              () => Modular.to.navigate(
+                                AuthModule.authRoute + AuthModule.loginRoute,
+                              ),
                         ),
                       ],
                     ),
@@ -64,9 +65,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                   Container(
                     margin: const EdgeInsets.only(bottom: 32),
                     child: const Image(
-                      image: AssetImage(
-                        AppImages.logoLoginImage,
-                      ),
+                      image: AssetImage(AppImages.logoLoginImage),
                       fit: BoxFit.cover,
                       width: 166,
                     ),
@@ -88,11 +87,12 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     errorText: _emailErrorText,
                     globalKey: _emailKey,
                     isPressed: _isPressed,
-                    color: _store.emptyEmail
-                        ? AppColors.secondaryGrey
-                        : (_isEmailValid
-                            ? AppColors.greenInputAccept
-                            : AppColors.delete),
+                    color:
+                        _store.emptyEmail
+                            ? AppColors.secondaryGrey
+                            : (_isEmailValid
+                                ? AppColors.greenInputAccept
+                                : AppColors.delete),
                     inputDecoration: fieldInputDecoration(
                       isValid: _isEmailValid,
                       hintText: 'Email',
@@ -100,9 +100,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     validator: (data) {
                       return _emailValidation(data);
                     },
-                    defaultHintColor: _isEmailValid
-                        ? AppColors.greenInputAccept
-                        : AppColors.delete,
+                    defaultHintColor:
+                        _isEmailValid
+                            ? AppColors.greenInputAccept
+                            : AppColors.delete,
                   ),
                   TemplateFormWidget(
                     controller: _store.passwordController,
@@ -115,93 +116,87 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     globalKey: _passwordKey,
                     isPressed: _isPressed,
                     obscure: _obscure,
-                    color: _store.emptyPasswords
-                        ? AppColors.secondaryGrey
-                        : (!_store.emptyPasswords && _store.isPasswordEqual
-                            ? AppColors.disableButton
-                            : AppColors.delete),
+                    color:
+                        _store.emptyPasswords
+                            ? AppColors.secondaryGrey
+                            : (!_store.emptyPasswords && _store.isPasswordEqual
+                                ? AppColors.disableButton
+                                : AppColors.delete),
                     inputDecoration: fieldInputDecoration(
                       isValid: _isPasswordValid,
                       hintText: 'Senha',
-                      contentPadding: const EdgeInsets.only(
-                        left: 16,
-                        top: 9,
-                      ),
-                      suffixIcon: _obscure
-                          ? IconButtonWidget(
-                              action: suffixAction,
-                              size: 24,
-                              color: AppColors.grey7,
-                              iOSIcon: CupertinoIcons.eye_slash,
-                              androidIcon: Icons.visibility_off_outlined,
-                            )
-                          : IconButtonWidget(
-                              action: suffixAction,
-                              size: 24,
-                              color: AppColors.grey7,
-                              iOSIcon: CupertinoIcons.eye,
-                              androidIcon: Icons.visibility_outlined,
-                            ),
+                      contentPadding: const EdgeInsets.only(left: 16, top: 9),
+                      suffixIcon:
+                          _obscure
+                              ? IconButtonWidget(
+                                action: suffixAction,
+                                size: 24,
+                                color: AppColors.grey7,
+                                iOSIcon: CupertinoIcons.eye_slash,
+                                androidIcon: Icons.visibility_off_outlined,
+                              )
+                              : IconButtonWidget(
+                                action: suffixAction,
+                                size: 24,
+                                color: AppColors.grey7,
+                                iOSIcon: CupertinoIcons.eye,
+                                androidIcon: Icons.visibility_outlined,
+                              ),
                     ),
                     validator: (data) {
                       return _passwordValidation(data);
                     },
-                    defaultHintColor: _isPasswordValid && _store.isPasswordEqual
-                        ? AppColors.greenInputAccept
-                        : AppColors.delete,
+                    defaultHintColor:
+                        _isPasswordValid && _store.isPasswordEqual
+                            ? AppColors.greenInputAccept
+                            : AppColors.delete,
                   ),
                   TemplateFormWidget(
                     controller: _store.passwordRepeatController,
-                    titleMargin: const EdgeInsets.only(
-                      top: 8,
-                    ),
+                    titleMargin: const EdgeInsets.only(top: 8),
                     isValid: _isPasswordValid,
                     errorText: _passwordErrorConfirmText,
                     globalKey: _repeatPasswordKey,
                     isPressed: _isPressed,
                     obscure: _obscure,
-                    color: _store.emptyPasswords
-                        ? AppColors.secondaryGrey
-                        : (!_store.emptyPasswords && _store.isPasswordEqual
-                            ? AppColors.disableButton
-                            : AppColors.delete),
+                    color:
+                        _store.emptyPasswords
+                            ? AppColors.secondaryGrey
+                            : (!_store.emptyPasswords && _store.isPasswordEqual
+                                ? AppColors.disableButton
+                                : AppColors.delete),
                     inputDecoration: fieldInputDecoration(
                       isValid: _isPasswordValid,
                       hintText: 'Repita a Senha',
-                      contentPadding: const EdgeInsets.only(
-                        left: 16,
-                        top: 9,
-                      ),
-                      suffixIcon: _obscure
-                          ? IconButtonWidget(
-                              action: suffixAction,
-                              size: 24,
-                              color: AppColors.grey7,
-                              iOSIcon: CupertinoIcons.eye_slash,
-                              androidIcon: Icons.visibility_off_outlined,
-                            )
-                          : IconButtonWidget(
-                              action: suffixAction,
-                              size: 24,
-                              color: AppColors.grey7,
-                              iOSIcon: CupertinoIcons.eye,
-                              androidIcon: Icons.visibility_outlined,
-                            ),
+                      contentPadding: const EdgeInsets.only(left: 16, top: 9),
+                      suffixIcon:
+                          _obscure
+                              ? IconButtonWidget(
+                                action: suffixAction,
+                                size: 24,
+                                color: AppColors.grey7,
+                                iOSIcon: CupertinoIcons.eye_slash,
+                                androidIcon: Icons.visibility_off_outlined,
+                              )
+                              : IconButtonWidget(
+                                action: suffixAction,
+                                size: 24,
+                                color: AppColors.grey7,
+                                iOSIcon: CupertinoIcons.eye,
+                                androidIcon: Icons.visibility_outlined,
+                              ),
                     ),
                     validator: (data) {
                       return _passwordValidation(data);
                     },
-                    defaultHintColor: _isPasswordValid && _store.isPasswordEqual
-                        ? AppColors.greenInputAccept
-                        : AppColors.delete,
+                    defaultHintColor:
+                        _isPasswordValid && _store.isPasswordEqual
+                            ? AppColors.greenInputAccept
+                            : AppColors.delete,
                   ),
                   Container(
                     width: context.sizeOf.width,
-                    margin: const EdgeInsets.only(
-                      left: 16,
-                      top: 8,
-                      right: 16,
-                    ),
+                    margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -210,9 +205,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                               ? " * A senha contém 8 dígitos."
                               : " * Deve conter no mínimo 8 dígitos.",
                           style: AppFonts.defaultFont(
-                            color: _store.emptyPasswords
-                                ? AppColors.grey10
-                                : _store.isPasswordLengthValid
+                            color:
+                                _store.emptyPasswords
+                                    ? AppColors.grey10
+                                    : _store.isPasswordLengthValid
                                     ? AppColors.disableButton
                                     : AppColors.delete,
                             fontSize: 13,
@@ -224,15 +220,16 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                               ? " * As senhas correspondem."
                               : " * As senhas devem corresponder.",
                           style: AppFonts.defaultFont(
-                            color: _store.emptyPasswords
-                                ? AppColors.grey10
-                                : _store.isPasswordEqual
+                            color:
+                                _store.emptyPasswords
+                                    ? AppColors.grey10
+                                    : _store.isPasswordEqual
                                     ? AppColors.disableButton
                                     : AppColors.delete,
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -248,7 +245,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           ? _store.validateCode(context)
                           : null;
                     },
-                    isValid: _isEmailValid &&
+                    isValid:
+                        _isEmailValid &&
                         _isPasswordValid &&
                         _store.isPasswordEqual,
                     label: "Criar Conta",
@@ -258,19 +256,16 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          border:
-                              Border.all(color: AppColors.loginLineDecoration),
+                          border: Border.all(
+                            color: AppColors.loginLineDecoration,
+                          ),
                         ),
                         width: 159,
                       ),
                     ],
                   ),
                   Container(
-                    margin: const EdgeInsets.only(
-                      top: 16,
-                      left: 16,
-                      right: 16,
-                    ),
+                    margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
                     height: 48,
                     width: context.sizeOf.width,
                     child: ButtonWidget(
@@ -296,12 +291,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                               height: 30,
                             ),
                           ),
-                          const Text(
-                            "Fazer login com o Google",
-                          ),
-                          const SizedBox(
-                            width: 18,
-                          )
+                          const Text("Fazer login com o Google"),
+                          const SizedBox(width: 18),
                         ],
                       ),
                     ),
@@ -337,9 +328,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                               height: 32,
                             ),
                           ),
-                          const Text(
-                            "Fazer login com o Facebook",
-                          ),
+                          const Text("Fazer login com o Facebook"),
                         ],
                       ),
                     ),

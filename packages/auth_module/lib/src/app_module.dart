@@ -1,4 +1,3 @@
-
 import 'package:auth_module/src/ui/views/registration_completion_view.dart';
 import 'package:flutter/animation.dart';
 import 'package:home_module/home_module.dart';
@@ -26,16 +25,12 @@ class AuthModule extends Module {
   static const String registrationCompletionRoute = '/registration-Completion';
 
   @override
-  List<Module> get imports => [
-        CoreModule(),
-      ];
+  List<Module> get imports => [CoreModule()];
 
   @override
   void binds(i) {
     i.addSingleton<IOfflineAuthUseCases>(
-      () => OfflineAuthUseCases(
-        repository: i.get<IsarRepository>(),
-      ),
+      () => OfflineAuthUseCases(repository: i.get<IsarRepository>()),
     );
     i.addSingleton<IOnlineAuthUseCases>(
       () => OnlineAuthUseCases(
@@ -59,11 +54,12 @@ class AuthModule extends Module {
       loginRoute,
       transition: TransitionType.custom,
       customTransition: ModularSlideTransition(
-          transitionDuration: const Duration(milliseconds: 400),
-          reverseTransitionDuration: const Duration(milliseconds: 400),
-          begin: const Offset(1, 0),
-          end: const Offset(0, 0),
-          curve: Curves.easeIn),
+        transitionDuration: const Duration(milliseconds: 400),
+        reverseTransitionDuration: const Duration(milliseconds: 400),
+        begin: const Offset(1, 0),
+        end: const Offset(0, 0),
+        curve: Curves.easeIn,
+      ),
       child: (_) => const LoginView(),
     );
     r.child(createAccountRoute, child: (_) => const CreateAccountView());

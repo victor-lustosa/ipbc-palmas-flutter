@@ -2,13 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:home_module/home_module.dart';
 
 class LoginStore extends ValueNotifier<GenericState<LoginState>> {
-  LoginStore({required IOfflineAuthUseCases offlineUse, required IOnlineAuthUseCases onlineUse})
-      : _offlineUseCases = offlineUse,
-        _onlineUseCases = onlineUse,
-        super(InitialState<LoginState>());
+  LoginStore({
+    required IOfflineAuthUseCases offlineUse,
+    required IOnlineAuthUseCases onlineUse,
+  }) : _offlineUseCases = offlineUse,
+       _onlineUseCases = onlineUse,
+       super(InitialState<LoginState>());
 
-   final IOfflineAuthUseCases _offlineUseCases;
-   final IOnlineAuthUseCases _onlineUseCases;
+  final IOfflineAuthUseCases _offlineUseCases;
+  final IOnlineAuthUseCases _onlineUseCases;
 
   final String _email = 'victor.olustosa@outlook.com';
   final String _password = '!Helena2201';
@@ -21,7 +23,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
         navigate(InitModule.initialRoute);
       } else {
         value = InitialState<LoginState>();
-        if(context.mounted){
+        if (context.mounted) {
           showCustomErrorDialog(
             title: 'Dados Incorretos',
             message: 'Verifique se a senha e o email estão corretos.',
@@ -55,12 +57,12 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     token != null && token.isNotEmpty ? toHome() : null;
   }
 
-  Future<void> saveUser(currentUser) async{
-    if(currentUser != null) _offlineUseCases.saveLocalUser(currentUser);
+  Future<void> saveUser(currentUser) async {
+    if (currentUser != null) _offlineUseCases.saveLocalUser(currentUser);
   }
 
-  Future<void> saveToken(token) async{
-    if(token != null) _offlineUseCases.saveToken(token);
+  Future<void> saveToken(token) async {
+    if (token != null) _offlineUseCases.saveToken(token);
   }
 
   // Login Facebook

@@ -36,16 +36,13 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         margin: const EdgeInsets.only(
           top: 100,
         ),
-        padding: const EdgeInsets.only(
-          top: 100,
-          bottom: 100,
-          left: 40,
-          right: 40
-        ),
+        padding:
+            const EdgeInsets.only(top: 100, bottom: 100, left: 40, right: 40),
         decoration: const BoxDecoration(color: AppColors.grey0),
         child: Column(
           children: [
-            SizedBox(width: 1200,
+            SizedBox(
+              width: 1200,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,13 +108,13 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
 
   mobile() => Container(
         width: vWidth,
-    margin: const EdgeInsets.only(
-        top: 60,
-    ),
-    padding: const EdgeInsets.only(
-      top: 60,
-      bottom: 60,
-    ),
+        margin: const EdgeInsets.only(
+          top: 60,
+        ),
+        padding: const EdgeInsets.only(
+          top: 60,
+          bottom: 60,
+        ),
         decoration: const BoxDecoration(color: AppColors.grey0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -1,4 +1,3 @@
-
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -53,7 +52,8 @@ class _LyricsListViewState extends State<LyricsListView>
                     context,
                   ),
                 );
-              } else if (state is DataFetchedState<LyricState, List<LyricEntity>>) {
+              } else if (state
+                  is DataFetchedState<LyricState, List<LyricEntity>>) {
                 _lyricsFetched = state.entities;
                 return RefreshIndicator(
                   color: AppColors.darkGreen,

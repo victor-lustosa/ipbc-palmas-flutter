@@ -39,11 +39,13 @@ class _SplashViewState extends State<SplashView> {
         listener: (context, state) async {
           if (state is FetchingDataState<DatabasesState>) {
             if (state.isData) {
-              navigate(InitModule
-                  .initialRoute); // Usuário logado ou com dados válidos
+              navigate(
+                InitModule.initialRoute,
+              ); // Usuário logado ou com dados válidos
             } else {
-              navigate(AuthModule.authRoute +
-                  AuthModule.loginRoute); // Tela de login
+              navigate(
+                AuthModule.authRoute + AuthModule.loginRoute,
+              ); // Tela de login
             }
           }
         },

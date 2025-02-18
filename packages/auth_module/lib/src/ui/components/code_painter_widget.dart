@@ -12,24 +12,27 @@ class CodePainterWidget extends CustomPainter {
     double h = 48;
     double r = 8;
 
-    Paint borderPaint = Paint()
-      ..color = borderColor
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1;
+    Paint borderPaint =
+        Paint()
+          ..color = borderColor
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1;
 
-    Paint gapPaint = Paint()
-      ..color = AppColors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 10;
+    Paint gapPaint =
+        Paint()
+          ..color = AppColors.white
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 10;
 
     RRect fullRect = RRect.fromRectAndRadius(
       Rect.fromCenter(center: Offset(w / 2, h / 2), width: w, height: h),
       Radius.circular(r),
     );
 
-    Path rightGap = Path()
-      ..moveTo(40, 25)
-      ..arcToPoint(Offset(w, 18));
+    Path rightGap =
+        Path()
+          ..moveTo(40, 25)
+          ..arcToPoint(Offset(w, 18));
 
     canvas.drawRRect(fullRect, borderPaint);
     canvas.drawPath(rightGap, gapPaint);

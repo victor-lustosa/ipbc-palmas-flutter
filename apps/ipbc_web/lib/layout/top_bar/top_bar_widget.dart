@@ -51,27 +51,24 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                             TabButtonsWidget(
                               label: 'Localização',
                               action: () {
-                                scrollPage(vWidth > lgSize
-                                    ? 1575
-                                    : 1656,
+                                scrollPage(
+                                  vWidth > lgSize ? 1575 : 1656,
                                 );
                               },
                             ),
                             TabButtonsWidget(
                               label: 'Programação',
                               action: () {
-                                scrollPage(vWidth > lgSize
-                                    ? 2175
-                                    : 2534,
+                                scrollPage(
+                                  vWidth > lgSize ? 2175 : 2534,
                                 );
                               },
                             ),
                             TabButtonsWidget(
                               label: 'Aplicativo',
                               action: () {
-                                scrollPage(vWidth > lgSize
-                                    ? 3232
-                                    : 3560,
+                                scrollPage(
+                                  vWidth > lgSize ? 3232 : 3560,
                                 );
                               },
                             ),
@@ -83,9 +80,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                         height: 49,
                         leftMargin: 16,
                         label: 'Entrar em contato',
-                        position: vWidth > lgSize
-                            ? 3965
-                            : 4230,
+                        position: vWidth > lgSize ? 3965 : 4230,
                       )
                     ],
                   ),
@@ -138,9 +133,8 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                   height: 49,
                   leftMargin: 8,
                   label: 'Contato',
-                  position: vWidth > ResponsivityUtil.smallDeviceWidth
-                      ? 4160
-                      : 4330,
+                  position:
+                      vWidth > ResponsivityUtil.smallDeviceWidth ? 4160 : 4330,
                 )
               ],
             ),
@@ -167,15 +161,10 @@ class _TopBarWidgetState extends State<TopBarWidget> {
         width: width,
         height: height,
         child: ButtonWidget(
-          foregroundColor:
-              isPressed
-                  ? AppColors.grey12
-                  : AppColors.white,
+          foregroundColor: isPressed ? AppColors.grey12 : AppColors.white,
           shadowColor: AppColors.grey6,
           backgroundColor:
-              isPressed
-                  ? AppColors.highlightGreen
-                  : AppColors.darkGreen,
+              isPressed ? AppColors.highlightGreen : AppColors.darkGreen,
           action: () => _onPressed(position: position),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -206,22 +195,21 @@ class _TopBarWidgetState extends State<TopBarWidget> {
   scrollPage(double position) => setState(
         () {
           Modular.get<HomeViewModel>().scrollController.animateTo(
-            position,
-            curve: Curves.easeInOutQuint,
-            duration: const Duration(milliseconds: 1500),
-          );
+                position,
+                curve: Curves.easeInOutQuint,
+                duration: const Duration(milliseconds: 1500),
+              );
         },
       );
 
   _onPressed({required double position}) async {
     Future.delayed(
-      Duration.zero,
-      () async => setState(
-        () {
-          isPressed = true;
-        },
-      )
-    );
+        Duration.zero,
+        () async => setState(
+              () {
+                isPressed = true;
+              },
+            ));
     Future.delayed(
       const Duration(milliseconds: 500),
       () async {

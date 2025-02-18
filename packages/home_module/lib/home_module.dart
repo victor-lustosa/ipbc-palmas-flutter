@@ -8,4 +8,3 @@ export 'package:auth_module/auth_module.dart';
 export 'package:events_module/events_module.dart';
 export 'package:service_module/service_module.dart';
 export 'package:offers_module/offers_module.dart';
-

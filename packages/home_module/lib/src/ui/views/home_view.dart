@@ -62,10 +62,7 @@ class _HomeViewState extends State<HomeView>
                 );
               } else if (state is NoConnectionState<HomeState>) {
                 return NoConnectionView(
-                  action: () => nativeNavigate(
-                    HomeModule.homeRoute,
-                    context,
-                  ),
+                  action: () => nativeNavigate(HomeModule.homeRoute, context),
                 );
               } else if (state is DataFetchedState<HomeState, HomeDTO>) {
                 _servicesList = state.entities.servicesEntitiesList;
@@ -138,10 +135,7 @@ class _HomeViewState extends State<HomeView>
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(
-                            top: 12,
-                            bottom: 20,
-                          ),
+                          margin: const EdgeInsets.only(top: 12, bottom: 20),
                           height: 268,
                           child: SlideCardsWidget(
                             width: 319,
@@ -165,38 +159,35 @@ class _HomeViewState extends State<HomeView>
   }
 
   Widget title({required String text}) => Container(
-        margin: const EdgeInsets.only(left: 17, right: 9),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              text,
-              style: AppFonts.title2,
-            ),
-            IconButtonWidget(
-              size: Platform.isIOS ? 30 : 35,
-              color: AppColors.darkGreen,
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              iOSIcon: CupertinoIcons.chevron_forward,
-              androidIcon: Icons.navigate_next_sharp,
-            ),
-          ],
+    margin: const EdgeInsets.only(left: 17, right: 9),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(text, style: AppFonts.title2),
+        IconButtonWidget(
+          size: Platform.isIOS ? 30 : 35,
+          color: AppColors.darkGreen,
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          iOSIcon: CupertinoIcons.chevron_forward,
+          androidIcon: Icons.navigate_next_sharp,
         ),
-      );
+      ],
+    ),
+  );
 
   Widget subtitle({required double right, required String text}) => Align(
-        alignment: Alignment.centerLeft,
-        child: Container(
-          margin: EdgeInsets.only(left: 18, top: 4, right: right),
-          child: Text(
-            text,
-            style: AppFonts.defaultFont(
-              fontSize: 15,
-              height: 1.2,
-              color: AppColors.grey9,
-            ),
-          ),
+    alignment: Alignment.centerLeft,
+    child: Container(
+      margin: EdgeInsets.only(left: 18, top: 4, right: right),
+      child: Text(
+        text,
+        style: AppFonts.defaultFont(
+          fontSize: 15,
+          height: 1.2,
+          color: AppColors.grey9,
         ),
-      );
+      ),
+    ),
+  );
 }

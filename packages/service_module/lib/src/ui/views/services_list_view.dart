@@ -25,13 +25,8 @@ class _ServicesListViewState extends State<ServicesListView> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(
-                      left: 17,
-                      top: 30,
-                    ),
-                    child: BackButtonWidget(
-                      action: () => nativePop(context),
-                    ),
+                    margin: const EdgeInsets.only(left: 17, top: 30),
+                    child: BackButtonWidget(action: () => nativePop(context)),
                   ),
                 ],
               ),
@@ -39,20 +34,13 @@ class _ServicesListViewState extends State<ServicesListView> {
                 alignment: Alignment.centerLeft,
                 child: Container(
                   margin: const EdgeInsets.only(left: 25, top: 10),
-                  child: Text(
-                    "Cultos",
-                    style: AppFonts.title2,
-                  ),
+                  child: Text("Cultos", style: AppFonts.title2),
                 ),
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  margin: const EdgeInsets.only(
-                    left: 25,
-                    top: 8,
-                    right: 20,
-                  ),
+                  margin: const EdgeInsets.only(left: 25, top: 8, right: 20),
                   child: Text(
                     "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
                     style: AppFonts.defaultFont(
@@ -64,11 +52,7 @@ class _ServicesListViewState extends State<ServicesListView> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(
-                  top: 28,
-                  left: 16,
-                  right: 16,
-                ),
+                margin: const EdgeInsets.only(top: 28, left: 16, right: 16),
                 width: context.sizeOf.width,
                 child: ListView.separated(
                   separatorBuilder: (BuildContext context, int index) {
@@ -82,9 +66,10 @@ class _ServicesListViewState extends State<ServicesListView> {
                     return InkWell(
                       onTap: () {
                         nativeNavigate(
-                            ServiceModule.servicesCollectionRoute,
-                            arguments: widget.entities[index],
-                            context);
+                          ServiceModule.servicesCollectionRoute,
+                          arguments: widget.entities[index],
+                          context,
+                        );
                       },
                       child: Container(
                         height: 110,
@@ -94,9 +79,7 @@ class _ServicesListViewState extends State<ServicesListView> {
                           ),
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: NetworkImage(
-                              widget.entities[index].image,
-                            ),
+                            image: NetworkImage(widget.entities[index].image),
                           ),
                         ),
                         child: Row(
@@ -129,7 +112,7 @@ class _ServicesListViewState extends State<ServicesListView> {
                     );
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),

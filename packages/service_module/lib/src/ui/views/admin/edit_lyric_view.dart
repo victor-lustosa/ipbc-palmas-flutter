@@ -7,10 +7,7 @@ import 'package:service_module/src/ui/stores/edit_lyric_store.dart';
 import '../../../../service_module.dart';
 
 class EditLyricView extends StatefulWidget {
-  const EditLyricView({
-    super.key,
-    this.dto,
-  });
+  const EditLyricView({super.key, this.dto});
 
   final EditLiturgyDTO? dto;
 
@@ -43,7 +40,8 @@ class _EditLyricViewState extends State<EditLyricView> {
                 color: AppColors.darkGreen,
               );
             } else {
-              if (state is DataFetchedState<EditLyricState, List<LyricEntity>>) {
+              if (state
+                  is DataFetchedState<EditLyricState, List<LyricEntity>>) {
                 versesList = state.entities[0].verses;
               }
               return SingleChildScrollView(
@@ -82,12 +80,13 @@ class _EditLyricViewState extends State<EditLyricView> {
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
                               key: Key('${versesList[index].id}'),
-                              onLongPress: () {
-                              },
+                              onLongPress: () {},
                               child: Container(
                                 color: Colors.transparent,
-                                padding:
-                                    const EdgeInsets.only(top: 8, bottom: 8),
+                                padding: const EdgeInsets.only(
+                                  top: 8,
+                                  bottom: 8,
+                                ),
                                 child: Container(
                                   decoration: const BoxDecoration(
                                     color: AppColors.searchBar,
@@ -100,7 +99,9 @@ class _EditLyricViewState extends State<EditLyricView> {
                                       GridBallsTileWidget(index: index),
                                       Expanded(
                                         child: VersesListWidget(
-                                            isEdit: true, entity: versesList),
+                                          isEdit: true,
+                                          entity: versesList,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -113,7 +114,9 @@ class _EditLyricViewState extends State<EditLyricView> {
                               if (oldIndex < newIndex) {
                                 newIndex -= 1;
                               }
-                              final VerseEntity item = versesList.removeAt(oldIndex);
+                              final VerseEntity item = versesList.removeAt(
+                                oldIndex,
+                              );
                               versesList.insert(newIndex, item);
                             });
                           },
@@ -121,8 +124,9 @@ class _EditLyricViewState extends State<EditLyricView> {
                             return AnimatedBuilder(
                               animation: animation,
                               builder: (BuildContext context, Widget? child) {
-                                final animValue =
-                                    Curves.easeInOut.transform(animation.value);
+                                final animValue = Curves.easeInOut.transform(
+                                  animation.value,
+                                );
                                 final scale = lerpDouble(1, 1.05, animValue)!;
                                 return Transform.scale(
                                   scale: scale,
@@ -147,9 +151,10 @@ class _EditLyricViewState extends State<EditLyricView> {
         backgroundColor: AppColors.confirmation,
         iconColor: AppColors.grey10,
         size: 33,
-        action: () => pushNamed(
-          ServiceModule.servicesRoute + ServiceModule.servicesPreviewRoute,
-        ),
+        action:
+            () => pushNamed(
+              ServiceModule.servicesRoute + ServiceModule.servicesPreviewRoute,
+            ),
       ),
     );
   }

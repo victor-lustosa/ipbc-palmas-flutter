@@ -51,6 +51,6 @@ class AppImages {
     'assets/images/default_cover_1.png',
     'assets/images/default_cover_2.png',
     'assets/images/default_cover_3.png',
-    'assets/images/default_cover_4.png'
+    'assets/images/default_cover_4.png',
   ];
 }

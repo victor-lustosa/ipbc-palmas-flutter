@@ -4,17 +4,12 @@ import 'package:flutter/material.dart';
 class SideBarWidget extends StatelessWidget {
   final List<String> drawerNames;
 
-  const SideBarWidget({
-    required this.drawerNames,
-    super.key,
-  });
+  const SideBarWidget({required this.drawerNames, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        bottom: 205.0,
-      ),
+      padding: const EdgeInsets.only(bottom: 205.0),
       child: ClipRRect(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
@@ -36,7 +31,9 @@ class SideBarWidget extends StatelessWidget {
                     child: SvgPicture.asset(
                       AppIcons.accountCircle,
                       colorFilter: const ColorFilter.mode(
-                          AppColors.darkGreen, BlendMode.srcIn),
+                        AppColors.darkGreen,
+                        BlendMode.srcIn,
+                      ),
                       matchTextDirection: true,
                     ),
                   ),
@@ -44,9 +41,7 @@ class SideBarWidget extends StatelessWidget {
                 Align(
                   alignment: const Alignment(-0.54, -0.89),
                   child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 14.0,
-                    ),
+                    padding: const EdgeInsets.only(left: 14.0),
                     child: Text(
                       'Victor',
                       style: AppFonts.defaultFont(
@@ -70,9 +65,7 @@ class SideBarWidget extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                    top: 47.0,
-                  ),
+                  padding: const EdgeInsets.only(top: 47.0),
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
@@ -87,24 +80,22 @@ class SideBarWidget extends StatelessWidget {
                         title: Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(
-                                left: 1,
-                              ),
+                              padding: const EdgeInsets.only(left: 1),
                               child: SizedBox(
                                 height: 25,
                                 width: 25,
                                 child: SvgPicture.asset(
                                   AppIcons.sideBarIconsList[index],
                                   colorFilter: const ColorFilter.mode(
-                                      AppColors.black, BlendMode.srcIn),
+                                    AppColors.black,
+                                    BlendMode.srcIn,
+                                  ),
                                   matchTextDirection: true,
                                 ),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(
-                                left: 18.0,
-                              ),
+                              padding: const EdgeInsets.only(left: 18.0),
                               child: Text(
                                 drawerNames[index],
                                 style: AppFonts.defaultFont(
@@ -112,7 +103,7 @@ class SideBarWidget extends StatelessWidget {
                                   fontSize: 16.7,
                                 ),
                               ),
-                            )
+                            ),
                           ],
                         ),
                         onTap: () {

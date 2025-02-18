@@ -1,8 +1,6 @@
-
 import 'package:core_module/core_module.dart';
 
 class ValidationUtil {
-
   final String firebaseDatabase = 'firebase';
 
   static String validationDatasource() {

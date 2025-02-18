@@ -36,12 +36,16 @@ class ServiceModule extends Module {
     r.child(
       editLyricRoute,
       transition: TransitionType.custom,
-      child: (_) => EditLyricView(
-          dto: r.args.data as EditLiturgyDTO? ??
-              EditLiturgyDTO(
+      child:
+          (_) => EditLyricView(
+            dto:
+                r.args.data as EditLiturgyDTO? ??
+                EditLiturgyDTO(
                   heading: '',
                   image:
-                      'https://firebasestorage.googleapis.com/v0/b/ipbc-palmas-9d93d.appspot.com/o/service-covers%2Fh_saturday_evening.png?alt=media&token=bdfeec22-c201-4032-aa03-00c9d077e348')),
+                      'https://firebasestorage.googleapis.com/v0/b/ipbc-palmas-9d93d.appspot.com/o/service-covers%2Fh_saturday_evening.png?alt=media&token=bdfeec22-c201-4032-aa03-00c9d077e348',
+                ),
+          ),
       customTransition: ModularSlideTransition(),
     );
     r.child(

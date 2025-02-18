@@ -1,7 +1,6 @@
 import 'package:core_module/core_module.dart';
 
 class UserEntity {
-
   final String id;
   final Map<String, dynamic> appMetadata;
   final Map<String, dynamic>? userMetadata;
@@ -42,41 +41,41 @@ class UserEntity {
     this.phoneConfirmedAt,
     required this.lastSignInAt,
     this.role,
-     this.updatedAt,
+    this.updatedAt,
     required this.identities,
     required this.factors,
     required this.isAnonymous,
   });
 
   factory UserEntity.create(User user) => UserEntity(
-      id: user.id,
-      appMetadata: user.appMetadata,
-      userMetadata: user.userMetadata,
-      aud: user.aud,
-      email: user.email,
-      phone: user.phone,
-      createdAt: user.createdAt,
-      lastSignInAt: user.lastSignInAt,
-      role: user.role,
-      updatedAt: user.updatedAt,
-      identities: user.identities,
-      factors: user.factors,
-      isAnonymous: user.isAnonymous
+    id: user.id,
+    appMetadata: user.appMetadata,
+    userMetadata: user.userMetadata,
+    aud: user.aud,
+    email: user.email,
+    phone: user.phone,
+    createdAt: user.createdAt,
+    lastSignInAt: user.lastSignInAt,
+    role: user.role,
+    updatedAt: user.updatedAt,
+    identities: user.identities,
+    factors: user.factors,
+    isAnonymous: user.isAnonymous,
   );
 
   factory UserEntity.createFromIsar(IsarUserDTO dto) => UserEntity(
-      id: dto.id.toString(),
-      appMetadata: {},
-      userMetadata: {},
-      aud: dto.aud,
-      email: dto.email,
-      phone: dto.phone,
-      createdAt: dto.createdAt,
-      lastSignInAt: dto.lastSignInAt,
-      role: dto.role,
-      updatedAt: dto.updatedAt,
-      identities:[],
-      factors: [],
-      isAnonymous: dto.isAnonymous
+    id: dto.id.toString(),
+    appMetadata: {},
+    userMetadata: {},
+    aud: dto.aud,
+    email: dto.email,
+    phone: dto.phone,
+    createdAt: dto.createdAt,
+    lastSignInAt: dto.lastSignInAt,
+    role: dto.role,
+    updatedAt: dto.updatedAt,
+    identities: [],
+    factors: [],
+    isAnonymous: dto.isAnonymous,
   );
 }

@@ -5,9 +5,10 @@ import '../../../../../core_module.dart';
 // ignore: depend_on_referenced_packages
 
 class SupaLyricAdapter {
-
-  static List<LyricModel> fromJson(String source) => fromMapList(json.decode(source));
-  static LyricModel fromUnknownJson(String source) => fromMap(json.decode(source));
+  static List<LyricModel> fromJson(String source) =>
+      fromMapList(json.decode(source));
+  static LyricModel fromUnknownJson(String source) =>
+      fromMap(json.decode(source));
 
   static LyricModel fromMap(dynamic json) {
     return LyricModel(
@@ -18,9 +19,7 @@ class SupaLyricAdapter {
       group: json['group'],
       verses: [
         if (json.containsKey('verses'))
-          ...(json['verses'] as List)
-              .map(VerseAdapter.fromMap)
-              ,
+          ...(json['verses'] as List).map(VerseAdapter.fromMap),
       ],
     );
   }
@@ -58,15 +57,16 @@ class SupaLyricAdapter {
 
   static List<Map<String, dynamic>> toMapList(List<LyricEntity> data) {
     return data
-        .map((entity) => {
-      'id': entity.id,
-      'title': entity.title,
-      'createAt': entity.createAt.toString(),
-      'albumCover': entity.albumCover,
-      'group': entity.group,
-      'verses': VerseAdapter.toMapList(entity.verses),
-    })
+        .map(
+          (entity) => {
+            'id': entity.id,
+            'title': entity.title,
+            'createAt': entity.createAt.toString(),
+            'albumCover': entity.albumCover,
+            'group': entity.group,
+            'verses': VerseAdapter.toMapList(entity.verses),
+          },
+        )
         .toList();
   }
-
 }

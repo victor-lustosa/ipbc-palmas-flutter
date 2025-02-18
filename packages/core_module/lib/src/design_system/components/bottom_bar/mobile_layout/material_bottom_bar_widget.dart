@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:core_module/core_module.dart';
@@ -9,8 +8,11 @@ class MaterialBottomBarWidget extends StatefulWidget {
 
   final Function(int) callback;
 
-  const MaterialBottomBarWidget(
-      {super.key, required this.selectedIndex, required this.callback});
+  const MaterialBottomBarWidget({
+    super.key,
+    required this.selectedIndex,
+    required this.callback,
+  });
 
   @override
   State<MaterialBottomBarWidget> createState() =>
@@ -19,7 +21,6 @@ class MaterialBottomBarWidget extends StatefulWidget {
 
 class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
     with ButtonsBarMixin {
-
   @override
   initState() {
     super.initState();
@@ -31,7 +32,8 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
     topLeft: Radius.circular(22),
   );
 
-  get labelFont => AppFonts.defaultFont(fontSize: 12, fontWeight: FontWeight.w500);
+  get labelFont =>
+      AppFonts.defaultFont(fontSize: 12, fontWeight: FontWeight.w500);
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +64,9 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
             backgroundColor: AppColors.white,
             items: buttons,
             onTap: (newValue) {
-              setState(
-                () {
-                  widget.callback(newValue);
-                },
-              );
+              setState(() {
+                widget.callback(newValue);
+              });
             },
           ),
         ),

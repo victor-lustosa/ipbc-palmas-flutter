@@ -18,18 +18,23 @@ class ModalCloseButtonWidget extends StatelessWidget {
 class CircleWithXPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final Paint circlePaint = Paint()
-      ..color = AppColors.redCircleModal
-      ..style = PaintingStyle.fill;
+    final Paint circlePaint =
+        Paint()
+          ..color = AppColors.redCircleModal
+          ..style = PaintingStyle.fill;
 
-    final Paint xPaint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3.5;
+    final Paint xPaint =
+        Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 3.5;
 
     // Desenha o círculo
     canvas.drawCircle(
-        Offset(size.width / 2, size.height / 2), size.width / 2, circlePaint);
+      Offset(size.width / 2, size.height / 2),
+      size.width / 2,
+      circlePaint,
+    );
 
     // Tamanho do "X" (ajuste conforme necessário)
     double xLength = size.width / 3.5;

@@ -26,13 +26,18 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
   Future<void> _getInSupa(GetInSupaEvent event, emit) async {
     final results = await Future.wait([
       useCases.get(path: servicesPath, converter: ServicesAdapter.fromMapList),
-      useCases.get(path: eventPath, converter: EventAdapter.fromMapList)
+      useCases.get(path: eventPath, converter: EventAdapter.fromMapList),
     ]);
     final services = results[0];
     final events = results[1];
-    emit(DataFetchedState<HomeState, HomeDTO>(
+    emit(
+      DataFetchedState<HomeState, HomeDTO>(
         entities: HomeDTO(
-            servicesEntitiesList: services, eventEntitiesList: events)));
+          servicesEntitiesList: services,
+          eventEntitiesList: events,
+        ),
+      ),
+    );
   }
 }
 
@@ -43,8 +48,10 @@ abstract class HomeEvent {}
 abstract class HomeState {}
 
 class HomeDTO {
-  HomeDTO(
-      {required this.servicesEntitiesList, required this.eventEntitiesList});
+  HomeDTO({
+    required this.servicesEntitiesList,
+    required this.eventEntitiesList,
+  });
 
   final List<ServicesEntity> servicesEntitiesList;
   final List<EventEntity> eventEntitiesList;

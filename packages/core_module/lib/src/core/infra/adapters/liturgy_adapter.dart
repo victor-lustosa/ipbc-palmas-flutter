@@ -1,4 +1,3 @@
-
 import 'package:core_module/core_module.dart';
 
 class LiturgyAdapter {
@@ -18,11 +17,13 @@ class LiturgyAdapter {
 
   static List<Map<String, dynamic>> toMapList(List<LiturgyEntity> data) {
     return data
-        .map((entity) => {
-              'isAdditional': entity.isAdditional,
-              'sequence': entity.sequence,
-              'additional': entity.additional,
-            })
+        .map(
+          (entity) => {
+            'isAdditional': entity.isAdditional,
+            'sequence': entity.sequence,
+            'additional': entity.additional,
+          },
+        )
         .toList();
   }
 }

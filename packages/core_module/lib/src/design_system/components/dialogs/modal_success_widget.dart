@@ -18,14 +18,16 @@ class ModalSuccessIconWidget extends StatelessWidget {
 class SuccessIconPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final Paint circlePaint = Paint()
-      ..color = AppColors.greenInputAccept
-      ..style = PaintingStyle.fill;
+    final Paint circlePaint =
+        Paint()
+          ..color = AppColors.greenInputAccept
+          ..style = PaintingStyle.fill;
 
-    final Paint checkPaint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 5;
+    final Paint checkPaint =
+        Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 5;
 
     // Desenha o círculo
     canvas.drawCircle(
@@ -35,10 +37,11 @@ class SuccessIconPainter extends CustomPainter {
     );
 
     // Desenha a marca de seleção (checkmark)
-    Path path = Path()
-      ..moveTo(size.width / 4, size.height / 2)
-      ..lineTo(size.width * 0.4, size.height * 0.7)
-      ..lineTo(size.width * 0.75, size.height * 0.3);
+    Path path =
+        Path()
+          ..moveTo(size.width / 4, size.height / 2)
+          ..lineTo(size.width * 0.4, size.height * 0.7)
+          ..lineTo(size.width * 0.75, size.height * 0.3);
 
     canvas.drawPath(path, checkPaint);
   }

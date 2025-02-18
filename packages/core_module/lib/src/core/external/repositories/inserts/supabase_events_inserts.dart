@@ -10,12 +10,13 @@ import '../../../infra/adapters/supa/supa_event_adapter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SupabaseRepository.init();
-  SupabaseRepository supa =
-  SupabaseRepository(supabaseClient: Supabase.instance.client);
+  SupabaseRepository supa = SupabaseRepository(
+    supabaseClient: Supabase.instance.client,
+  );
   try {
-    List<EventEntity> eventsInserted =
-    await SupaEventsUtil.loadEventsList(
-        'assets/data/events/events-mock.json');
+    List<EventEntity> eventsInserted = await SupaEventsUtil.loadEventsList(
+      'assets/data/events/events-mock.json',
+    );
     // inserindo lista de todas as letras
     for (EventEntity event in eventsInserted) {
       supa.add(path: 'event', data: SupaEventAdapter.toMap(event));

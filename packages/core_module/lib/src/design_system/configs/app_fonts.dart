@@ -13,12 +13,13 @@ class AppFonts {
     double? height,
   }) {
     return GoogleFonts.inter(
-        height: height,
-        color: color ?? AppColors.black,
-        fontWeight: fontWeight ?? FontWeight.w400,
-        fontSize: fontSize ?? 18,
-        decorationColor: decorationColor,
-        decoration: decoration);
+      height: height,
+      color: color ?? AppColors.black,
+      fontWeight: fontWeight ?? FontWeight.w400,
+      fontSize: fontSize ?? 18,
+      decorationColor: decorationColor,
+      decoration: decoration,
+    );
   }
 
   static TextStyle? searchField = GoogleFonts.inter(
@@ -42,8 +43,11 @@ class AppFonts {
     color: AppColors.black,
   );
 
-  static TextStyle? title3(
-      {Color? color, double? fontSize, FontWeight? fontWeight}) {
+  static TextStyle? title3({
+    Color? color,
+    double? fontSize,
+    FontWeight? fontWeight,
+  }) {
     return GoogleFonts.inter(
       color: color ?? AppColors.black,
       fontWeight: fontWeight ?? FontWeight.w500,
@@ -51,8 +55,11 @@ class AppFonts {
     );
   }
 
-  static TextStyle? headline(
-      {Color? color, double? fontSize, FontWeight? fontWeight}) {
+  static TextStyle? headline({
+    Color? color,
+    double? fontSize,
+    FontWeight? fontWeight,
+  }) {
     return GoogleFonts.inter(
       color: color ?? AppColors.black,
       fontWeight: fontWeight ?? FontWeight.w500,
@@ -60,8 +67,11 @@ class AppFonts {
     );
   }
 
-  static TextStyle? body(
-      {Color? color, double? fontSize, FontWeight? fontWeight}) {
+  static TextStyle? body({
+    Color? color,
+    double? fontSize,
+    FontWeight? fontWeight,
+  }) {
     return GoogleFonts.inter(
       color: color ?? AppColors.black,
       fontWeight: fontWeight,
@@ -75,8 +85,11 @@ class AppFonts {
     fontSize: 29,
   );
 
-  static TextStyle? subhead(
-      {Color? color, required double fontSize, FontWeight? fontWeight}) {
+  static TextStyle? subhead({
+    Color? color,
+    required double fontSize,
+    FontWeight? fontWeight,
+  }) {
     return GoogleFonts.inter(
       color: color ?? AppColors.white,
       fontWeight: fontWeight,
@@ -84,8 +97,11 @@ class AppFonts {
     );
   }
 
-  static TextStyle? description(
-      {Color? color, double? fontSize, FontWeight? fontWeight}) {
+  static TextStyle? description({
+    Color? color,
+    double? fontSize,
+    FontWeight? fontWeight,
+  }) {
     return GoogleFonts.inter(
       color: color ?? AppColors.white,
       fontWeight: fontWeight,
@@ -99,8 +115,11 @@ class AppFonts {
     fontSize: 12.5,
   );
 
-  static TextStyle? copyright(
-      {Color? color, required double fontSize, FontWeight? fontWeight}) {
+  static TextStyle? copyright({
+    Color? color,
+    required double fontSize,
+    FontWeight? fontWeight,
+  }) {
     return GoogleFonts.inter(
       color: color ?? AppColors.grey5,
       fontWeight: fontWeight ?? FontWeight.w300,

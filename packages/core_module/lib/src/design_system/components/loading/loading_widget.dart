@@ -5,8 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 class LoadingWidget extends StatelessWidget {
-  const LoadingWidget(
-      {super.key, this.androidRadius, this.color, this.size, this.iosRadius});
+  const LoadingWidget({
+    super.key,
+    this.androidRadius,
+    this.color,
+    this.size,
+    this.iosRadius,
+  });
   final double? androidRadius;
   final double? iosRadius;
   final double? size;
@@ -18,17 +23,18 @@ class LoadingWidget extends StatelessWidget {
       width: size ?? context.sizeOf.width,
       height: size ?? context.sizeOf.height,
       child: Center(
-        child: Platform.isIOS
-            ? CupertinoActivityIndicator(
-                color: color ?? AppColors.darkGreen,
-                radius: iosRadius ?? 17,
-              )
-            : CircularProgressIndicator(
-                strokeWidth: androidRadius!,
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  color ?? AppColors.darkGreen,
+        child:
+            Platform.isIOS
+                ? CupertinoActivityIndicator(
+                  color: color ?? AppColors.darkGreen,
+                  radius: iosRadius ?? 17,
+                )
+                : CircularProgressIndicator(
+                  strokeWidth: androidRadius!,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    color ?? AppColors.darkGreen,
+                  ),
                 ),
-              ),
       ),
     );
   }

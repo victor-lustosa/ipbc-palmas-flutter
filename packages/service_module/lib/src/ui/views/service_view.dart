@@ -19,7 +19,6 @@ class ServiceView extends StatefulWidget {
 }
 
 class _ServiceViewState extends State<ServiceView> {
-
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -32,8 +31,9 @@ class _ServiceViewState extends State<ServiceView> {
                 image: widget.entity.image,
                 title: widget.entity.service.title,
                 dateIsVisible: widget.entity.service.guideIsVisible,
-                createAt: DateFormat('dd/MM/yyyy')
-                    .format(widget.entity.service.createAt),
+                createAt: DateFormat(
+                  'dd/MM/yyyy',
+                ).format(widget.entity.service.createAt),
               ),
               Visibility(
                 visible: widget.entity.service.guideIsVisible,
@@ -58,10 +58,8 @@ class _ServiceViewState extends State<ServiceView> {
                   ),
                 ),
               ),
-              LyricsListWidget(
-                entitiesList: widget.entity.service.lyricsList,
-              ),
-              const SizedBox(height: 40)
+              LyricsListWidget(entitiesList: widget.entity.service.lyricsList),
+              const SizedBox(height: 40),
             ],
           ),
         ),

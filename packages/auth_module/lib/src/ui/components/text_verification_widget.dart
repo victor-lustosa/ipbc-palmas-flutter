@@ -26,19 +26,18 @@ class TextVerificationWidget extends StatelessWidget {
         children: <TextSpan>[
           TextSpan(
             text: textOne,
-            style: styleOne ??
-                AppFonts.defaultFont(
-                  color: AppColors.grey8,
-                  fontSize: 15,
-                ),
+            style:
+                styleOne ??
+                AppFonts.defaultFont(color: AppColors.grey8, fontSize: 15),
           ),
           if (textTwo != null && styleTwo != null)
             TextSpan(
               text: textTwo,
               style: styleTwo,
-              recognizer: onTapTextTwo != null
-                  ? (TapGestureRecognizer()..onTap = onTapTextTwo)
-                  : null,
+              recognizer:
+                  onTapTextTwo != null
+                      ? (TapGestureRecognizer()..onTap = onTapTextTwo)
+                      : null,
             ),
         ],
       ),

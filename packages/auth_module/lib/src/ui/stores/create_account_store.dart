@@ -50,7 +50,7 @@ class CreateAccountStore
         );
       } else {
         notifyBorderError(value: true);
-        if(context.mounted){
+        if (context.mounted) {
           showCustomErrorDialog(
             context: context,
             title: 'Dados Incorretos',
