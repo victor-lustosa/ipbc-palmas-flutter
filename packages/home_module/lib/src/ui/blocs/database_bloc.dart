@@ -34,3 +34,7 @@ class FetchingDataState<R> extends GenericState<R> {
   FetchingDataState(this.isData);
 }
 
+//fetchingOnlineDataEvent
+//fetchingOfflineDataEvent
+
+//-> checkingData

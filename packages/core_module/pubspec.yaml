@@ -4,13 +4,13 @@ version: 0.0.2
 publish_to: 'none'
 
 environment:
-  sdk: '>=3.5.0 <4.0.0'
+  sdk: '>=3.7.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
-  flutter_bloc: ^8.1.2
+  flutter_bloc: ^9.0.0
   supabase_flutter: ^2.6.0
   isar: ^3.1.0+1
   isar_flutter_libs:
@@ -20,7 +20,7 @@ dependencies:
   uno: ^1.1.8
   http: ^1.1.0
   logger: ^2.4.0
-  intl: ^0.19.0
+  intl: ^0.20.2
   connectivity_plus: ^6.0.5
   url_launcher: ^6.1.10
   email_validator: ^3.0.0
@@ -41,8 +41,7 @@ dev_dependencies:
   isar_generator: ^3.1.0+1
   build_runner: ^2.3.3   # <-- and make sure that is also there
   hive_generator: ^2.0.0 # <-- this line
-  bloc_test: ^9.1.1
-  melos: ^6.1.0
+  melos: ^7.0.0-dev.7
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
