@@ -97,7 +97,7 @@ class CarouselWidgetState extends State<CarouselWidget> {
                             ? []
                             : [
                               BoxShadow(
-                                color: Colors.grey.withValues(alpha: 102),
+                                color: Colors.grey.withValues(alpha: .4),
                                 offset: const Offset(1, 1),
                                 spreadRadius: 3,
                                 blurRadius: 7,

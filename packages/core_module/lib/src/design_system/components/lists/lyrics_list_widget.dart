@@ -42,7 +42,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                   _elevationActive && _itemActive == index
                       ? [
                         BoxShadow(
-                          color: Colors.grey.withValues(alpha: 51),
+                          color: Colors.grey.withValues(alpha: .2),
                           offset: const Offset(1, 2),
                           spreadRadius: 3,
                           blurRadius: 10,

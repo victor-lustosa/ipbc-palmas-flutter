@@ -92,7 +92,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                               color:
                                   index == 0
                                       ? AppColors.highlightGreen.withValues(
-                                        alpha: 26,
+                                        alpha: .1,
                                       )
                                       : AppColors.grey0,
                               child: InkWell(
