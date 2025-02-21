@@ -1,3 +1,4 @@
+import 'package:auth_module/src/ui/stores/auth_circle_avatar_store.dart';
 import 'package:auth_module/src/ui/views/registration_completion_view.dart';
 import 'package:flutter/animation.dart';
 import 'package:home_module/home_module.dart';
@@ -39,6 +40,12 @@ class AuthModule extends Module {
     );
     i.addLazySingleton(
       () => LoginStore(
+        offlineUse: i.get<IOfflineAuthUseCases>(),
+        onlineUse: i.get<IOnlineAuthUseCases>(),
+      ),
+    );
+    i.addLazySingleton(
+          () => AuthCircleAvatarStore(
         offlineUse: i.get<IOfflineAuthUseCases>(),
         onlineUse: i.get<IOnlineAuthUseCases>(),
       ),

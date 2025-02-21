@@ -21,25 +21,12 @@ class _HomeViewState extends State<HomeView>
   List<EventEntity> _eventsList = [];
   int activePage = 0;
 
-  //final List<Image> imagesList = [];
-
   @override
   void initState() {
     super.initState();
-    /*for (int i = 0; i < _servicesList.length; i++) {
-      imagesList.add(Image.network(_servicesList[i].image));
-    }*/
     _bloc = Modular.get<HomeBloc>();
     _bloc.add(CheckConnectivityEvent());
   }
-
-  /* @override
-  void didChangeDependencies() {
-    for (Image image in imagesList) {
-      precacheImage(image.image, context);
-    }
-    super.didChangeDependencies();
-  }*/
 
   @override
   bool get wantKeepAlive => true;
@@ -73,7 +60,7 @@ class _HomeViewState extends State<HomeView>
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        MainTopBarWidget(),
+                        MainTopBarWidget(picture: state.entities.picture),
                         InkWell(
                           onTap: () {
                             nativePushNamed(

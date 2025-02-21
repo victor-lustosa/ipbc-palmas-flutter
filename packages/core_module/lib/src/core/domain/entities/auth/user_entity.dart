@@ -5,6 +5,7 @@ class UserEntity {
   final Map<String, dynamic> appMetadata;
   final Map<String, dynamic>? userMetadata;
   final String aud;
+  final String picture;
   final String? confirmationSentAt;
   final String? recoverySentAt;
   final String? emailChangeSentAt;
@@ -24,6 +25,7 @@ class UserEntity {
   final bool isAnonymous;
 
   UserEntity({
+    required this.picture,
     required this.id,
     required this.appMetadata,
     required this.userMetadata,
@@ -49,6 +51,7 @@ class UserEntity {
 
   factory UserEntity.create(User user) => UserEntity(
     id: user.id,
+    picture: user.userMetadata?['picture'] ?? '',
     appMetadata: user.appMetadata,
     userMetadata: user.userMetadata,
     aud: user.aud,
@@ -65,6 +68,7 @@ class UserEntity {
 
   factory UserEntity.createFromIsar(IsarUserDTO dto) => UserEntity(
     id: dto.id.toString(),
+    picture: dto.picture,
     appMetadata: {},
     userMetadata: {},
     aud: dto.aud,

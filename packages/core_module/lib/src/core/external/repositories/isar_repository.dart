@@ -16,7 +16,11 @@ class IsarRepository implements IRepository {
   @override
   Future<dynamic> get<T>({String? path, String? id}) async {
     final entity = await isar.collection<T>().where().findAll();
-    return Future.value(entity);
+    if(entity.isNotEmpty){
+      return Future.value(entity[0]);
+    } else {
+      return null;
+    }
   }
 
   @override

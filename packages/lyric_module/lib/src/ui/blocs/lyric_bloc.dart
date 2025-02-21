@@ -15,7 +15,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     required this.useCases,
     required this.lyricUseCases,
   }) : super(LoadingState<LyricState>()) {
-    on<GetInSupaEvent<LyricEvent>>(_getInSupa);
+    on<GetDataEvent<LyricEvent>>(_getInSupa);
     on<FilterEvent<LyricEvent>>(_filter);
     on<LoadingEvent<LyricEvent>>(_loading);
     on<CheckConnectivityEvent<LyricEvent>>(_checkConnectivity);
@@ -25,13 +25,13 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
       CheckConnectivityEvent<LyricEvent> event, emit) async {
     final response = await isConnected();
     if (response) {
-      add(GetInSupaEvent<LyricEvent>());
+      add(GetDataEvent<LyricEvent>());
     } else {
       emit(NoConnectionState<LyricState>());
     }
   }
 
-  Future<void> _getInSupa(GetInSupaEvent<LyricEvent> event, emit) async {
+  Future<void> _getInSupa(GetDataEvent<LyricEvent> event, emit) async {
     List<LyricEntity>? lyricsList =
         await MockUtil.convertMockJson<List<LyricModel>>(
       'assets/mocks/lyrics_mock.json',

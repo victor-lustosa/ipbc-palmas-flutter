@@ -1,7 +1,5 @@
 import 'package:core_module/core_module.dart';
 
-import '../../domain/use_cases/auth_use_cases.dart';
-
 class OfflineAuthUseCases implements IOfflineAuthUseCases {
   final IRepository repository;
 
@@ -14,8 +12,14 @@ class OfflineAuthUseCases implements IOfflineAuthUseCases {
   }
 
   @override
-  Future<UserEntity?> getLocalUser() async =>
-      UserEntity.createFromIsar(await repository.get<IsarUserDTO>());
+  Future<UserEntity> getLocalUser() async {
+    final user = await repository.get<IsarUserDTO>();
+    if(user != null){
+      return UserEntity.createFromIsar(user);
+    } else {
+      return UserModel.empty();
+    }
+  }
 
   @override
   void saveToken(String token) =>

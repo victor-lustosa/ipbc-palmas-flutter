@@ -14,7 +14,7 @@ class EventsListBloc
     required this.onlineUseCases,
     this.offlineUseCases,
   }) : super(LoadingState()) {
-    on<GetInSupaEvent<EventsListEvent>>(_getInSupa);
+    on<GetDataEvent<EventsListEvent>>(_getInSupa);
     on<LoadingEvent<EventsListEvent>>(_loading);
     on<CheckConnectivityEvent<EventsListEvent>>(_checkConnectivity);
   }
@@ -23,13 +23,13 @@ class EventsListBloc
     path = event.path;
     final response = await isConnected();
     if (response) {
-      add(GetInSupaEvent<EventsListEvent>());
+      add(GetDataEvent<EventsListEvent>());
     } else {
       emit(NoConnectionState<EventsListState>());
     }
   }
 
-  Future<void> _getInSupa(GetInSupaEvent event, emit) async {
+  Future<void> _getInSupa(GetDataEvent event, emit) async {
     List<EventEntity> events = await onlineUseCases.get(
         path: path, converter: ServiceAdapter.fromMapList);
     emit(

@@ -49,12 +49,15 @@ class HomeModule extends Module {
   static const String initialRoute = '/';
 
   @override
-  List<Module> get imports => [ServiceModule(), OffersModule()];
+  List<Module> get imports => [ServiceModule(), OffersModule(), AuthModule()];
 
   @override
   void binds(Injector i) {
     i.addLazySingleton<HomeBloc>(
-      () => HomeBloc(useCases: i.get<UseCases<SupabaseRepository>>()),
+      () => HomeBloc(
+        useCases: i.get<UseCases<SupabaseRepository>>(),
+        loginStore: i.get<LoginStore>(),
+      ),
       config: CoreModule.blocConfig(),
     );
   }

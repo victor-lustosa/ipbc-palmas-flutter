@@ -16,7 +16,7 @@ class ServicesCollectionBloc
 
   ServicesCollectionBloc({required this.onlineUseCases, this.offlineUseCases})
     : super(LoadingState()) {
-    on<GetInSupaEvent<ServicesCollectionEvent>>(_getInSupa);
+    on<GetDataEvent<ServicesCollectionEvent>>(_getInSupa);
     on<LoadingEvent<ServicesCollectionEvent>>(_loading);
     on<CheckConnectivityEvent<ServicesCollectionEvent>>(_checkConnectivity);
   }
@@ -25,7 +25,7 @@ class ServicesCollectionBloc
     path = event.path;
     final response = await isConnected();
     if (response) {
-      add(GetInSupaEvent<ServicesCollectionEvent>());
+      add(GetDataEvent<ServicesCollectionEvent>());
     } else {
       emit(NoConnectionState<ServicesCollectionState>());
     }
@@ -47,7 +47,7 @@ class ServicesCollectionBloc
     }
   }*/
 
-  Future<void> _getInSupa(GetInSupaEvent event, emit) async {
+  Future<void> _getInSupa(GetDataEvent event, emit) async {
     List<ServiceEntity> services = await onlineUseCases.get(
       path: path,
       converter: ServiceAdapter.fromMapList,

@@ -1,10 +1,10 @@
-/*import 'package:ipbc_palmas/app/shared/blocs/generics.dart';
+/*import 'package:ipbc_palmas/app/shared/generic_states/generics.dart';
 import 'package:ipbc_palmas/app/shared/view-models/services_view_model.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ipbc_palmas/app/lyrics/blocs/lyric_bloc.dart';
+import 'package:ipbc_palmas/app/lyrics/generic_states/lyric_bloc.dart';
 import '../../../mocks/mocks.dart';
 void main() {
   late ILyricsUseCases<Stream<List<LyricEntityMock>>> useCases;

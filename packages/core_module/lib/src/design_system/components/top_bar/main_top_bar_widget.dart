@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core_module.dart';
+import '../../../../core_module.dart';
+import '../auth/logo_icon_widget.dart';
 
 class MainTopBarWidget extends StatelessWidget {
   const MainTopBarWidget({
@@ -8,8 +9,16 @@ class MainTopBarWidget extends StatelessWidget {
     this.margin,
     this.topBarList,
     this.mainAxisAlignment,
+    this.picture,
+    this.isLogged,
+    this.loginAction,
+    this.logoutAction,
   });
 
+  final String? picture;
+  final bool? isLogged;
+  final VoidCallback? loginAction;
+  final VoidCallback? logoutAction;
   final EdgeInsetsGeometry? margin;
   final List<Widget>? topBarList;
   final MainAxisAlignment? mainAxisAlignment;
@@ -26,7 +35,16 @@ class MainTopBarWidget extends StatelessWidget {
             mainAxisAlignment:
                 mainAxisAlignment ?? MainAxisAlignment.spaceBetween,
             children:
-                topBarList ?? [LogoIconWidget(), AuthCircleAvatarWidget()],
+                topBarList ??
+                [
+                  LogoIconWidget(),
+                  AuthCircleAvatarWidget(
+                    picture: picture,
+                    isLogged: isLogged ?? false,
+                    loginAction: loginAction,
+                    logoutAction: logoutAction,
+                  ),
+                ],
           ),
         );
       },

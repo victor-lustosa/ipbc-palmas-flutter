@@ -18,8 +18,8 @@ class CheckConnectivityEvent<R> extends GenericEvent<R> {
 }
 
 @immutable
-class GetInSupaEvent<R> extends GenericEvent<R> {
-  GetInSupaEvent();
+class GetDataEvent<R> extends GenericEvent<R> {
+  GetDataEvent();
 }
 
 @immutable

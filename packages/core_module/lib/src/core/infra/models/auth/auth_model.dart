@@ -1,4 +1,4 @@
-import '../../domain/entities/auth_entity.dart';
+import '../../../domain/entities/auth/auth_entity.dart';
 
 class ServiceModel extends AuthEntity {
   ServiceModel({required super.email, required super.password});

@@ -54,4 +54,11 @@ class SupaAuthRepository implements IOnlineAuthRepository {
     );
     return res.session?.accessToken != null ? res.session!.accessToken : '';
   }
+
+  @override
+  Future<String?> signInFacebook() async{
+   final f = await _supaClient.auth.signInWithOAuth(OAuthProvider.facebook);
+   return '';
+  }
+
 }

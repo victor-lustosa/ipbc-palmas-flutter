@@ -1,6 +1,4 @@
-import 'package:auth_module/src/domain/use_cases/auth_use_cases.dart';
 import 'package:core_module/core_module.dart';
-
 import '../repositories/auth_repositories.dart';
 
 class OnlineAuthUseCases implements IOnlineAuthUseCases {
@@ -20,4 +18,8 @@ class OnlineAuthUseCases implements IOnlineAuthUseCases {
   @override
   Future<String?> signInWithGoogle() async =>
       await repository.signInWithGoogle();
+
+  @override
+  Future<String?> signInWithFacebook() async =>
+      await repository.signInFacebook();
 }

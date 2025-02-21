@@ -14,7 +14,6 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
 
   final String _email = 'victor.olustosa@outlook.com';
   final String _password = '!Helena2201';
-  final SupabaseClient _supaClient = Modular.get<SupabaseClient>();
 
   logIn(String email, String password, BuildContext context) async {
     value = LoadingState<LoginState>();
@@ -52,22 +51,22 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     value = LoadingState<LoginState>();
     final String? token = await _onlineUseCases.signInWithGoogle();
     final UserEntity? currentUser = _onlineUseCases.getCurrentUser();
-    saveUser(currentUser);
-    saveToken(token);
+    saveUserAndToken(currentUser, token);
     token != null && token.isNotEmpty ? toHome() : null;
   }
 
-  Future<void> saveUser(currentUser) async {
+  Future<void> saveUserAndToken(currentUser, token) async {
     if (currentUser != null) _offlineUseCases.saveLocalUser(currentUser);
+    if (token != null) _offlineUseCases.saveToken(token);
   }
 
-  Future<void> saveToken(token) async {
-    if (token != null) _offlineUseCases.saveToken(token);
+  Future<UserEntity> getLocalUser() async {
+    return await _offlineUseCases.getLocalUser();
   }
 
   // Login Facebook
   Future<void> signInWithFacebook() async {
-    await _supaClient.auth.signInWithOAuth(OAuthProvider.facebook);
+    await _onlineUseCases.signInWithFacebook();
   }
 
   validateFields() {

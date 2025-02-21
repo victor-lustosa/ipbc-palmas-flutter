@@ -6,7 +6,6 @@ void main() async {
   //Modular.setInitialRoute(ServiceModule.servicesRoute + ServiceModule.editLyricRoute);
   Modular.setInitialRoute(InitModule.initialRoute);
   //Modular.setInitialRoute(LyricModule.lyricsListRoute);
-  //Modular.setInitialRoute(AuthModule.authRoute + AuthModule.loginRoute);
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([SupabaseRepository.init(), IsarRepository.init()]);
   // Bloc.observer = GenericBlocObserver();
