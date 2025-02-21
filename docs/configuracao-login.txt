@@ -1,0 +1,3 @@
+passo a passo pra configurar o supabase login no projeto
+ Configurando android
+ - ir no firebase authentication e vincular o sha-1 ao sdk do projeto android
