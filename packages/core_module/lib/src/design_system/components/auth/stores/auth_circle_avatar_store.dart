@@ -15,8 +15,8 @@ class AuthCircleAvatarStore
 
   Future<void> validateAuthentication() async {
     value = LoadingState<AuthCircleAvatarState>();
-    final result = await _offlineUseCases.getToken();
-    Future.delayed(const Duration(seconds: 1), () async {
+    Future.delayed(const Duration(milliseconds: 500), () async {
+      final result = await _offlineUseCases.getToken();
       if (result != null) {
         await getLocalUser();
         value = AuthenticatedState();

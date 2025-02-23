@@ -8,11 +8,13 @@ class MainTopBarWidget extends StatefulWidget {
     super.key,
     this.margin,
     this.topBarList,
+    this.authAvatarKey,
     this.mainAxisAlignment,
   });
 
   final EdgeInsetsGeometry? margin;
   final List<Widget>? topBarList;
+  final Key? authAvatarKey;
   final MainAxisAlignment? mainAxisAlignment;
 
   @override
@@ -33,7 +35,7 @@ class _MainTopBarWidgetState extends State<MainTopBarWidget> {
         children: widget.topBarList ??
             [
               LogoIconWidget(),
-              AuthCircleAvatarWidget(),
+              AuthCircleAvatarWidget(key: widget.authAvatarKey,),
             ],
       ),
     );

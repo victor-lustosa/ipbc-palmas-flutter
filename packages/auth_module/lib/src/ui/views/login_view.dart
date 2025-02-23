@@ -51,7 +51,7 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   MainTopBarWidget(
                     margin: EdgeInsets.only(top: 28, left: 16),
-                    topBarList: [BackButtonWidget(action: () =>  pushReplacementNamed(InitModule.initialHomeRoute))],
+                    topBarList: [BackButtonWidget(action: () => pop(context))],
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 35, bottom: 32),
@@ -208,7 +208,7 @@ class _LoginViewState extends State<LoginView> {
                         fontWeight: FontWeight.w500,
                       ),
                       action: () {
-                        _store.nativeGoogleSignIn();
+                        _store.nativeGoogleSignIn(context);
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

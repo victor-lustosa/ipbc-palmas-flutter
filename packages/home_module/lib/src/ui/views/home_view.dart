@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../blocs/home_bloc.dart';
 import '../../../home_module.dart';
 
 class HomeView extends StatefulWidget {
@@ -24,13 +23,10 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     super.initState();
     _bloc = Modular.get<HomeBloc>();
+    _bloc.authAvatarKey = UniqueKey();
     _bloc.add(CheckConnectivityEvent());
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -48,18 +44,25 @@ class _HomeViewState extends State<HomeView> {
                 );
               } else if (state is NoConnectionState<HomeState>) {
                 return NoConnectionView(
-                  action: () => nativePushReplacementNamed(HomeModule.homeRoute, context),
+                  action:
+                      () => nativePushReplacementNamed(
+                        HomeModule.homeRoute,
+                        context,
+                      ),
                 );
-              } else if (state is DataFetchedState<HomeState, HomeDTO>) {
-                _servicesList = state.entities.servicesEntitiesList;
-                _eventsList = state.entities.eventEntitiesList;
+              } else if (state is DataFetchedState<HomeState, HomeDTO> ||
+                  state is UpdateTopBarState) {
+                if (state is DataFetchedState<HomeState, HomeDTO>) {
+                  _servicesList = state.entities.servicesEntitiesList;
+                  _eventsList = state.entities.eventEntitiesList;
+                }
                 return SingleChildScrollView(
                   child: SizedBox(
                     width: context.sizeOf.width,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        MainTopBarWidget(),
+                        MainTopBarWidget(authAvatarKey: _bloc.authAvatarKey),
                         InkWell(
                           onTap: () {
                             nativePushNamed(

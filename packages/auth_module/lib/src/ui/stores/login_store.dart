@@ -48,12 +48,14 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   }
 
   //Login Google
-  Future<void> nativeGoogleSignIn() async {
+  Future<void> nativeGoogleSignIn(BuildContext context) async {
     value = LoadingState<LoginState>();
     final String? token = await _onlineUseCases.signInWithGoogle();
     final UserEntity? currentUser = _onlineUseCases.getCurrentUser();
     saveUserAndToken(currentUser, token);
-    token != null && token.isNotEmpty ? toHome() : null;
+    if(context.mounted){
+      token != null && token.isNotEmpty ? toHome(context) : null;
+    }
   }
 
   Future<void> saveUserAndToken(currentUser, token) async {
@@ -74,10 +76,11 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     pushNamed(AuthModule.authRoute + AuthModule.createAccountRoute);
   }
 
-  toHome() {
-    Future.delayed(Duration(milliseconds: 3),(){
-      pushReplacementNamed(InitModule.initialHomeRoute);
-    });
+  toHome(BuildContext context) {
+    Modular.get<HomeBloc>().add(UpdateTopBarEvent());
+      if(context.mounted){
+        pop(context);
+      }
   }
 
   Future createAccount() async {

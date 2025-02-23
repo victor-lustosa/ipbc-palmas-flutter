@@ -57,8 +57,10 @@ class _AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget> {
               shape: state is AuthenticatedState ? const CircleBorder() : null,
               action:
                   state is AuthenticatedState
-                      ? () {}
-                      : () => navigate(
+                      ? () => pushNamed(
+                        AuthModule.authRoute + AuthModule.loginRoute,
+                      )
+                      : () => pushNamed(
                         AuthModule.authRoute + AuthModule.loginRoute,
                       ),
               child:

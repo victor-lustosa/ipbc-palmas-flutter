@@ -5,14 +5,12 @@ import 'package:flutter/material.dart';
 
 import '../home_module.dart';
 import 'ui/blocs/database_bloc.dart';
-import 'ui/blocs/home_bloc.dart';
 import 'ui/views/home_view.dart';
 import 'ui/views/init_view.dart';
 import 'ui/views/splash_view.dart';
 
 class InitModule extends Module {
   static const String initialRoute = '/init';
-  static const String initialHomeRoute = '/init-home';
 
   @override
   List<Module> get imports => [HomeModule(), CoreModule(), LyricModule()];
@@ -38,18 +36,6 @@ class SplashModule extends Module {
   void routes(r) {
     r.child(splashRoute, child: (_) => const SplashView());
     r.module(InitModule.initialRoute, module: InitModule());
-    r.module(
-      InitModule.initialHomeRoute,
-      module: InitModule(),
-      transition: TransitionType.custom,
-      customTransition: ModularSlideTransition(
-        transitionDuration: Duration(milliseconds: 400),
-        reverseTransitionDuration: Duration(milliseconds: 400),
-        begin: Offset(-1, 0), // Da direita para o centro
-        end: Offset(0, 0),
-        curve: Curves.easeIn,
-      ),
-    );
     r.module(AuthModule.authRoute, module: AuthModule());
     r.module(LyricModule.lyricsRoute, module: LyricModule());
     r.module(ServiceModule.servicesRoute, module: ServiceModule());
@@ -62,7 +48,11 @@ class HomeModule extends Module {
   static const String initialRoute = '/';
 
   @override
-  List<Module> get imports => [ServiceModule(), OffersModule(), CoreModule()];
+  List<Module> get imports => [
+    ServiceModule(),
+    OffersModule(),
+    CoreModule(),
+  ];
 
   @override
   void binds(Injector i) {
