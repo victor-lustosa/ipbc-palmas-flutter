@@ -46,7 +46,7 @@ class _HomeViewState extends State<HomeView> {
                 return NoConnectionView(
                   action:
                       () => nativePushReplacementNamed(
-                        HomeModule.homeRoute,
+                        AppRoutes.homeRoute,
                         context,
                       ),
                 );
@@ -65,17 +65,17 @@ class _HomeViewState extends State<HomeView> {
                         MainTopBarWidget(authAvatarKey: _bloc.authAvatarKey,
                           logoutAction:
                               () => pushNamed(
-                                AuthModule.authRoute + AuthModule.loginRoute,
+                                AppRoutes.authRoute + AppRoutes.loginRoute,
                               ),
                           loginAction:
                               () => pushNamed(
-                                AuthModule.authRoute + AuthModule.loginRoute,
+                                AppRoutes.authRoute + AppRoutes.loginRoute,
                               ),
                         ),
                         InkWell(
                           onTap: () {
                             nativePushNamed(
-                              ServiceModule.servicesListRoute,
+                              AppRoutes.servicesListRoute,
                               context,
                               arguments: _servicesList,
                             );
@@ -104,7 +104,7 @@ class _HomeViewState extends State<HomeView> {
                               right: 6,
                               bottom: 9,
                             ),
-                            route: ServiceModule.servicesCollectionRoute,
+                            route: AppRoutes.servicesCollectionRoute,
                             mainAxisAlignment: MainAxisAlignment.center,
                             width: context.sizeOf.width,
                             services: _servicesList,
@@ -114,7 +114,7 @@ class _HomeViewState extends State<HomeView> {
                         InkWell(
                           onTap: () {
                             nativePushNamed(
-                              EventModule.eventsListRoute,
+                              AppRoutes.eventsListRoute,
                               context,
                             );
                           },
@@ -138,7 +138,7 @@ class _HomeViewState extends State<HomeView> {
                           child: SlideCardsWidget(
                             width: 319,
                             scrollDirection: Axis.horizontal,
-                            route: ServiceModule.servicesCollectionRoute,
+                            route: AppRoutes.servicesCollectionRoute,
                             entities: _eventsList,
                           ),
                         ),

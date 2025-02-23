@@ -49,7 +49,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
             return NoConnectionView(
               action:
                   () => nativePushReplacementNamed(
-                    ServiceModule.servicesCollectionRoute,
+                    AppRoutes.servicesCollectionRoute,
                     context,
                   ),
             );
@@ -98,7 +98,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                               child: InkWell(
                                 onTap: () {
                                   nativePushNamed(
-                                    ServiceModule.serviceRoute,
+                                    AppRoutes.serviceRoute,
                                     arguments: ServiceViewDTO(
                                       service: entitiesList[index],
                                       image: widget.entity.image,
@@ -183,7 +183,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
         icon: Icons.add,
         action:
             () => pushNamed(
-              ServiceModule.servicesRoute + ServiceModule.editLiturgiesRoute,
+              AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute,
               arguments: EditLiturgyDTO(
                 image: widget.entity.image,
                 heading: widget.entity.heading,

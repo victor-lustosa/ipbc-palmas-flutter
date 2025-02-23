@@ -136,8 +136,8 @@ class _LoginViewState extends State<LoginView> {
                                       ..onTap = () {
                                         if (!_isPressed) {
                                           pushNamed(
-                                            AuthModule.authRoute +
-                                                AuthModule.resetPasswordRoute,
+                                            AppRoutes.authRoute +
+                                                AppRoutes.resetPasswordRoute,
                                           );
                                         }
                                       },
@@ -290,8 +290,8 @@ class _LoginViewState extends State<LoginView> {
                                     () => setState(() {
                                       if (!_isPressed) {
                                         Modular.to.navigate(
-                                          AuthModule.authRoute +
-                                              AuthModule.createAccountRoute,
+                                          AppRoutes.authRoute +
+                                              AppRoutes.createAccountRoute,
                                         );
                                       }
                                     }),

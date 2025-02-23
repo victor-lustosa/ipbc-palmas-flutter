@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lyric_module/lyric_module.dart';
+import 'package:offers_module/offers_module.dart';
 
 import '../../../home_module.dart';
 

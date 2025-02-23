@@ -1,8 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../auth_module.dart';
-
 class ResetPasswordStore
     extends ValueNotifier<GenericState<ResetPasswordState>> {
   ResetPasswordStore() : super(InitialState<ResetPasswordState>());
@@ -34,7 +32,7 @@ class ResetPasswordStore
         if (inputCode.every((value) => value.isNotEmpty)) {
           if (inputCode.join() == code.join()) {
             pushNamed(
-              AuthModule.authRoute + AuthModule.creatingNewPassWordRoute,
+              AppRoutes.authRoute + AppRoutes.creatingNewPassWordRoute,
             );
           } else {
             notifyBorderError(value: true);

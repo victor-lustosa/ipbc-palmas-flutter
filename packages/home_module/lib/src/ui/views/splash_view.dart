@@ -27,7 +27,7 @@ class _SplashViewState extends State<SplashView> {
 
     if (user != null) {
       // Usuário já logado, vá para a tela inicial
-      navigate(InitModule.initialRoute);
+      navigate(AppRoutes.initialRoute);
     }
     // Caso contrário, o fluxo normal de navegação acontece no listener abaixo
   }
@@ -40,11 +40,11 @@ class _SplashViewState extends State<SplashView> {
           if (state is FetchingDataState<DatabasesState>) {
             if (state.isData) {
               navigate(
-                InitModule.initialRoute,
+                AppRoutes.initialRoute,
               ); // Usuário logado ou com dados válidos
             } else {
               navigate(
-                AuthModule.authRoute + AuthModule.loginRoute,
+                AppRoutes.authRoute + AppRoutes.loginRoute,
               ); // Tela de login
             }
           }

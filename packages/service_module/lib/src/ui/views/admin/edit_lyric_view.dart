@@ -154,7 +154,7 @@ class _EditLyricViewState extends State<EditLyricView> {
         size: 33,
         action:
             () => pushNamed(
-              ServiceModule.servicesRoute + ServiceModule.servicesPreviewRoute,
+              AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
             ),
       ),
     );

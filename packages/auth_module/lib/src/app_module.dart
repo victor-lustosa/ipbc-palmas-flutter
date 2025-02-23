@@ -14,15 +14,6 @@ import 'ui/views/reset_password_view.dart';
 import 'ui/views/verification_code_view.dart';
 
 class AuthModule extends Module {
-  static const String authRoute = '/auth';
-  static const String loginRoute = '/login';
-  static const String initialRoute = '/init';
-  static const String createAccountRoute = '/create-account';
-  static const String verificationCodeRoute = '/verification-code';
-  static const String creatingNewPassWordRoute = '/creating-new-password';
-  static const String resetPasswordSuccessRoute = '/success-password';
-  static const String resetPasswordRoute = '/reset-password';
-  static const String registrationCompletionRoute = '/registration-Completion';
 
   @override
   List<Module> get imports => [CoreModule()];
@@ -48,7 +39,7 @@ class AuthModule extends Module {
   @override
   void routes(r) {
     r.child(
-      loginRoute,
+      AppRoutes.loginRoute,
       transition: TransitionType.custom,
       customTransition: ModularSlideTransition(
         transitionDuration: const Duration(milliseconds: 400),
@@ -59,19 +50,19 @@ class AuthModule extends Module {
       ),
       child: (_) => const LoginView(),
     );
-    r.child(createAccountRoute, child: (_) => const CreateAccountView());
-    r.child(resetPasswordRoute, child: (_) => const ResetPasswordView());
-    r.child(verificationCodeRoute, child: (_) => const VerificationCodeView());
+    r.child(AppRoutes.createAccountRoute, child: (_) => const CreateAccountView());
+    r.child(AppRoutes.resetPasswordRoute, child: (_) => const ResetPasswordView());
+    r.child(AppRoutes.verificationCodeRoute, child: (_) => const VerificationCodeView());
     r.child(
-      creatingNewPassWordRoute,
+      AppRoutes.creatingNewPassWordRoute,
       child: (_) => const CreatingNewPasswordView(),
     );
     r.child(
-      resetPasswordSuccessRoute,
+      AppRoutes.resetPasswordSuccessRoute,
       child: (_) => const ResetPasswordSuccessView(),
     );
     r.child(
-      registrationCompletionRoute,
+      AppRoutes.registrationCompletionRoute,
       child: (_) => const RegistrationCompletionView(),
     );
   }

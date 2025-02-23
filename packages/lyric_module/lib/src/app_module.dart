@@ -8,10 +8,6 @@ import 'ui/blocs/lyric_bloc.dart';
 import 'ui/views/lyric_view.dart';
 
 class LyricModule extends Module {
-  static const String initialRoute = "/";
-  static const String lyricRoute = "/lyric";
-  static const String lyricsRoute = "/lyrics";
-  static const String lyricsListRoute = "/lyrics-list";
 
   @override
   void exportedBinds(i) {
@@ -29,7 +25,7 @@ class LyricModule extends Module {
 
   @override
   void routes(r) {
-    r.child(lyricRoute,
+    r.child(AppRoutes.lyricRoute,
         transition: TransitionType.custom,
         child: (_) => LyricView(
               entity: r.args.data as LyricEntity,
@@ -55,7 +51,7 @@ class _NativeLyricRoutesState extends State<NativeLyricRoutes> {
       key: Platform.isIOS ? null : _androidNavigatorKey,
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
-          case LyricModule.initialRoute:
+          case AppRoutes.initialRoute:
             return CustomSlideTransition(
               child: const LyricsListView(),
               begin: const Offset(0, 0),

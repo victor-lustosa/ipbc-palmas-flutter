@@ -3,19 +3,15 @@ import '../events_module.dart';
 import 'ui/views/create_event_view.dart';
 
 class EventModule extends Module {
-  static const String eventsListRoute = '/events-list';
-  static const String createEventRoute = '/create-event';
-  static const String detailEventRoute = '/detail-event';
-  static const String eventRoute = '/event';
 
   @override
   void routes(r) {
-    r.child(createEventRoute,
+    r.child(AppRoutes.createEventRoute,
         transition: TransitionType.custom,
         child: (_) => const CreateEventView(),
         customTransition: ModularFadeTransition());
     r.child(
-      detailEventRoute,
+      AppRoutes.detailEventRoute,
       transition: TransitionType.custom,
       child: (_) => EventsDetailView(
         eventEntity: r.args.data as EventEntity,

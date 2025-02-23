@@ -21,7 +21,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> with MainTopBar
     value = LoadingState<LoginState>();
     Future.delayed(const Duration(seconds: 1), () {
       if (_email == email && _password == password) {
-        navigate(AuthModule.initialRoute);
+        navigate(AppRoutes.initialRoute);
       } else {
         value = InitialState<LoginState>();
         if (context.mounted) {
@@ -74,7 +74,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> with MainTopBar
   }
 
   toCreateAccount() {
-    pushNamed(AuthModule.authRoute + AuthModule.createAccountRoute);
+    pushNamed(AppRoutes.authRoute + AppRoutes.createAccountRoute);
   }
 
   toHome(BuildContext context) {

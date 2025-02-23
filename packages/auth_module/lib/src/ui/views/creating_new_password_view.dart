@@ -146,8 +146,8 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                     action: () async {
                       //if (isValid) {
                       pushNamed(
-                        AuthModule.authRoute +
-                            AuthModule.resetPasswordSuccessRoute,
+                        AppRoutes.authRoute +
+                            AppRoutes.resetPasswordSuccessRoute,
                       );
                       //}
                     },

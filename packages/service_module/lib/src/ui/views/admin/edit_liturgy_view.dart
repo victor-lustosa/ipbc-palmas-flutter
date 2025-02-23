@@ -178,8 +178,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
             action:
                 () => Navigator.popAndPushNamed(
                   context,
-                  ServiceModule.servicesRoute +
-                      ServiceModule.servicesPreviewRoute,
+                  AppRoutes.servicesRoute +
+                      AppRoutes.servicesPreviewRoute,
                   arguments: ServicesPreviewDTO(
                     heading: widget.dto.heading,
                     image: widget.dto.image,

@@ -85,8 +85,8 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                   fixedSize: Size(context.sizeOf.width, 48),
                   action:
                       () => pushNamed(
-                        ServiceModule.servicesRoute +
-                            ServiceModule.searchLyricsRoute,
+                        AppRoutes.servicesRoute +
+                            AppRoutes.searchLyricsRoute,
                         arguments: EditLiturgyDTO(
                           heading: widget.dto.heading,
                           image: widget.dto.image,
@@ -124,7 +124,7 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
         action:
             () => Navigator.popAndPushNamed(
               context,
-              ServiceModule.servicesRoute + ServiceModule.editLiturgiesRoute,
+              AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute,
               arguments: EditLiturgyDTO(
                 image: widget.dto.image,
                 heading: widget.dto.heading,

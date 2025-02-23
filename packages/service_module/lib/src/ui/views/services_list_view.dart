@@ -67,7 +67,7 @@ class _ServicesListViewState extends State<ServicesListView> {
                     return InkWell(
                       onTap: () {
                         nativePushReplacementNamed(
-                          ServiceModule.servicesCollectionRoute,
+                          AppRoutes.servicesCollectionRoute,
                           arguments: widget.entities[index],
                           context,
                         );

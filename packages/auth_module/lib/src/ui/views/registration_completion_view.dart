@@ -58,8 +58,8 @@ class _RegistrationCompletionViewState
                     BackButtonWidget(
                       action:
                           () => Modular.to.navigate(
-                            AuthModule.authRoute +
-                                AuthModule.createAccountRoute,
+                            AppRoutes.authRoute +
+                                AppRoutes.createAccountRoute,
                           ),
                     ),
                   ],

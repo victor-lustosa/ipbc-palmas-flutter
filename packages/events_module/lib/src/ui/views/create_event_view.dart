@@ -287,7 +287,7 @@ class _CreateEventViewState extends State<CreateEventView> {
         iconColor: AppColors.grey10,
         size: 33,
         action: () => navigate(
-          EventModule.eventRoute + EventModule.detailEventRoute,
+          AppRoutes.eventRoute + AppRoutes.detailEventRoute,
         ),
       ),
     );

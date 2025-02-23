@@ -46,7 +46,7 @@ class CreateAccountStore
     Future.delayed(const Duration(seconds: 1), () {
       if (isPasswordEqual && emptyData) {
         pushNamed(
-          AuthModule.authRoute + AuthModule.registrationCompletionRoute,
+          AppRoutes.authRoute + AppRoutes.registrationCompletionRoute,
         );
       } else {
         notifyBorderError(value: true);

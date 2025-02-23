@@ -114,6 +114,7 @@ export 'src/shared/utils/validation_util.dart';
 export 'src/shared/utils/responsivity_util.dart';
 export 'src/shared/utils/analytics_util.dart';
 export 'src/shared/utils/mock_util.dart';
+export 'src/shared/routes/app_routes.dart';
 
 export 'src/auth/domain/use_cases/auth_use_cases.dart';
 export 'src/auth/infra/use_cases/online_auth_use_cases.dart';

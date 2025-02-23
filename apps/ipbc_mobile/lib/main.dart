@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:home_module/home_module.dart';
 
 void main() async {
-  //Modular.setInitialRoute(ServiceModule.servicesRoute + ServiceModule.editLyricRoute);
-  Modular.setInitialRoute(InitModule.initialRoute);
-  //Modular.setInitialRoute(LyricModule.lyricsListRoute);
+  //Modular.setInitialRoute(AppRoutes.servicesRoute + AppRoutes.editLyricRoute);
+  Modular.setInitialRoute(AppRoutes.initialRoute);
+  //Modular.setInitialRoute(AppRoutes.lyricsListRoute);
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([SupabaseRepository.init(), IsarRepository.init()]);
   // Bloc.observer = GenericBlocObserver();

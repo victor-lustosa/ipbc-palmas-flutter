@@ -7,14 +7,6 @@ import 'ui/blocs/services_collection_bloc.dart';
 import 'ui/views/admin/edit_lyric_view.dart';
 
 class ServiceModule extends Module {
-  static const String serviceRoute = '/service';
-  static const String editLiturgiesRoute = "/edit-liturgies";
-  static const String editLyricRoute = "/edit-lyric";
-  static const String servicesPreviewRoute = "/services-preview";
-  static const String searchLyricsRoute = "/search-lyrics";
-  static const String servicesCollectionRoute = "/services-collection";
-  static const String servicesListRoute = '/services-list';
-  static const String servicesRoute = '/services';
 
   @override
   void binds(i) {
@@ -34,7 +26,7 @@ class ServiceModule extends Module {
   @override
   void routes(r) {
     r.child(
-      editLyricRoute,
+      AppRoutes.editLyricRoute,
       transition: TransitionType.custom,
       child:
           (_) => EditLyricView(
@@ -49,19 +41,19 @@ class ServiceModule extends Module {
       customTransition: ModularSlideTransition(),
     );
     r.child(
-      editLiturgiesRoute,
+      AppRoutes.editLiturgiesRoute,
       transition: TransitionType.custom,
       child: (_) => EditLiturgyView(dto: r.args.data as EditLiturgyDTO),
       customTransition: ModularFadeTransition(),
     );
     r.child(
-      servicesPreviewRoute,
+      AppRoutes.servicesPreviewRoute,
       transition: TransitionType.custom,
       child: (_) => ServicesPreviewView(dto: r.args.data as ServicesPreviewDTO),
       customTransition: ModularFadeTransition(),
     );
     r.child(
-      searchLyricsRoute,
+      AppRoutes.searchLyricsRoute,
       transition: TransitionType.custom,
       child: (_) => SearchLyricsView(dto: r.args.data as EditLiturgyDTO),
       customTransition: ModularFadeTransition(),

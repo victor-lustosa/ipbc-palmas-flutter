@@ -99,7 +99,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       _emailBorderValidation(false, false);
                     }
                     pushNamed(
-                      AuthModule.authRoute + AuthModule.verificationCodeRoute,
+                      AppRoutes.authRoute + AppRoutes.verificationCodeRoute,
                     );
                   },
                   shape: RoundedRectangleBorder(

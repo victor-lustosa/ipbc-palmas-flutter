@@ -45,7 +45,7 @@ class EventsListViewState extends State<EventsListView> {
                 } else if (state is NoConnectionState<EventsListState>) {
                   return NoConnectionView(
                     action: () => nativePushReplacementNamed(
-                      EventModule.eventsListRoute,
+                      AppRoutes.eventsListRoute,
                       context,
                     ),
                   );
@@ -109,7 +109,7 @@ class EventsListViewState extends State<EventsListView> {
                             width: context.sizeOf.width,
                             scrollDirection: Axis.vertical,
                             entities: _eventsList,
-                            route: EventModule.detailEventRoute,
+                            route: AppRoutes.detailEventRoute,
                           ),
                         ),
                       ],
@@ -123,7 +123,7 @@ class EventsListViewState extends State<EventsListView> {
           ),
           floatingActionButton: FloatingButtonWidget(
             action: () => pushNamed(
-              EventModule.eventRoute + EventModule.createEventRoute,
+              AppRoutes.eventRoute + AppRoutes.createEventRoute,
             ),
             backgroundColor: AppColors.add,
             iconColor: AppColors.white,
