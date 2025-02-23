@@ -22,7 +22,21 @@ class _InitViewState extends State<InitView> {
       curve: Curves.ease,
     );
   }
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+  @override
+  void didUpdateWidget(covariant InitView oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

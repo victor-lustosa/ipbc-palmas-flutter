@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../service_module.dart';
 import 'services_preview_view.dart';
 
 class EditLiturgyDTO {

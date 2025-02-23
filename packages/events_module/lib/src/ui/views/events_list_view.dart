@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/services.dart';
 
-import '../../app_module.dart';
 import '../blocs/events_list_bloc.dart';
 
 class EventsListView extends StatefulWidget {
@@ -44,7 +43,7 @@ class EventsListViewState extends State<EventsListView> {
                   );
                 } else if (state is NoConnectionState<EventsListState>) {
                   return NoConnectionView(
-                    action: () => nativeNavigate(
+                    action: () => nativePushReplacementNamed(
                       EventModule.eventsListRoute,
                       context,
                     ),

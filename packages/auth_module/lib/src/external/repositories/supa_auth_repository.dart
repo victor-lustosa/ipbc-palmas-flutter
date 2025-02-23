@@ -57,7 +57,7 @@ class SupaAuthRepository implements IOnlineAuthRepository {
 
   @override
   Future<String?> signInFacebook() async{
-   final f = await _supaClient.auth.signInWithOAuth(OAuthProvider.facebook);
+   await _supaClient.auth.signInWithOAuth(OAuthProvider.facebook);
    return '';
   }
 

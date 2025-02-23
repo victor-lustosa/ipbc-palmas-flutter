@@ -1,11 +1,9 @@
-import 'package:auth_module/src/ui/stores/auth_circle_avatar_store.dart';
 import 'package:auth_module/src/ui/views/registration_completion_view.dart';
 import 'package:flutter/animation.dart';
 import 'package:home_module/home_module.dart';
 
 import 'external/repositories/supa_auth_repository.dart';
 import 'ui/stores/create_account_store.dart';
-import 'ui/stores/login_store.dart';
 import 'ui/stores/registration_completion_store.dart';
 import 'ui/stores/reset_password_store.dart';
 import 'ui/views/create_account_view.dart';
@@ -30,24 +28,15 @@ class AuthModule extends Module {
 
   @override
   void binds(i) {
-    i.addSingleton<IOfflineAuthUseCases>(
-      () => OfflineAuthUseCases(repository: i.get<IsarRepository>()),
-    );
-    i.addSingleton<IOnlineAuthUseCases>(
-      () => OnlineAuthUseCases(
-        repository: SupaAuthRepository(supaClient: i.get<SupabaseClient>()),
-      ),
-    );
     i.addLazySingleton(
       () => LoginStore(
         offlineUse: i.get<IOfflineAuthUseCases>(),
         onlineUse: i.get<IOnlineAuthUseCases>(),
       ),
     );
-    i.addLazySingleton(
-          () => AuthCircleAvatarStore(
-        offlineUse: i.get<IOfflineAuthUseCases>(),
-        onlineUse: i.get<IOnlineAuthUseCases>(),
+    i.addSingleton<IOnlineAuthUseCases>(
+          () => OnlineAuthUseCases(
+        repository: SupaAuthRepository(supaClient: i.get<SupabaseClient>()),
       ),
     );
     i.addSingleton(ResetPasswordStore.new);

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:home_module/home_module.dart';
+import 'package:core_module/core_module.dart';
 
 class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   LoginStore({
@@ -60,10 +61,6 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     if (token != null) _offlineUseCases.saveToken(token);
   }
 
-  Future<UserEntity> getLocalUser() async {
-    return await _offlineUseCases.getLocalUser();
-  }
-
   // Login Facebook
   Future<void> signInWithFacebook() async {
     await _onlineUseCases.signInWithFacebook();
@@ -78,7 +75,9 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   }
 
   toHome() {
-    navigate(InitModule.initialRoute);
+    Future.delayed(Duration(milliseconds: 3),(){
+      pushReplacementNamed(InitModule.initialHomeRoute);
+    });
   }
 
   Future createAccount() async {

@@ -5,10 +5,13 @@ import 'package:flutter/cupertino.dart';
 
 import '../../core_module.dart';
 
-nativeNavigate(String route, BuildContext context, {Object? arguments}) {
+nativePushReplacementNamed(String route, BuildContext context, {Object? arguments}) {
   Navigator.pushReplacementNamed(context, route, arguments: arguments);
 }
 
+pushReplacementNamed(String route, {Object? arguments}){
+  Modular.to.pushReplacementNamed(route, arguments: arguments);
+}
 navigate(String route, {Object? arguments}) {
   Modular.to.navigate(route, arguments: arguments);
 }

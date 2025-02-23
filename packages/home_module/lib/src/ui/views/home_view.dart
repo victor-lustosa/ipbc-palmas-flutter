@@ -14,8 +14,7 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView>
-    with AutomaticKeepAliveClientMixin {
+class _HomeViewState extends State<HomeView> {
   late final HomeBloc _bloc;
   List<ServicesEntity> _servicesList = [];
   List<EventEntity> _eventsList = [];
@@ -29,11 +28,11 @@ class _HomeViewState extends State<HomeView>
   }
 
   @override
-  bool get wantKeepAlive => true;
-
+  void dispose() {
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -49,7 +48,7 @@ class _HomeViewState extends State<HomeView>
                 );
               } else if (state is NoConnectionState<HomeState>) {
                 return NoConnectionView(
-                  action: () => nativeNavigate(HomeModule.homeRoute, context),
+                  action: () => nativePushReplacementNamed(HomeModule.homeRoute, context),
                 );
               } else if (state is DataFetchedState<HomeState, HomeDTO>) {
                 _servicesList = state.entities.servicesEntitiesList;
@@ -60,7 +59,7 @@ class _HomeViewState extends State<HomeView>
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        MainTopBarWidget(picture: state.entities.picture),
+                        MainTopBarWidget(),
                         InkWell(
                           onTap: () {
                             nativePushNamed(

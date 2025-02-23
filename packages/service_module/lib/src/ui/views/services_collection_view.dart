@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-import '../../../service_module.dart';
 import '../blocs/services_collection_bloc.dart';
 
 class ServicesCollectionView extends StatefulWidget {
@@ -48,7 +47,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
           } else if (state is NoConnectionState<ServicesCollectionState>) {
             return NoConnectionView(
               action:
-                  () => nativeNavigate(
+                  () => nativePushReplacementNamed(
                     ServiceModule.servicesCollectionRoute,
                     context,
                   ),

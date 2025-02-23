@@ -21,7 +21,7 @@ abstract class IGetCurrentUser {
 }
 
 abstract class IGetLocalUser {
-  Future<UserEntity> getLocalUser();
+  Future<UserEntity?> getLocalUser();
 }
 
 abstract class IGetToken {

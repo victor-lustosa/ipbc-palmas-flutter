@@ -51,7 +51,7 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   MainTopBarWidget(
                     margin: EdgeInsets.only(top: 28, left: 16),
-                    topBarList: [BackButtonWidget(action: () => pop(context))],
+                    topBarList: [BackButtonWidget(action: () =>  pushReplacementNamed(InitModule.initialHomeRoute))],
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 35, bottom: 32),
