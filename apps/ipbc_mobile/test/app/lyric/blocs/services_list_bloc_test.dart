@@ -1,5 +1,5 @@
-/*import 'package:ipbc_palmas/app/services/generic_states/home_bloc.dart';
-import 'package:ipbc_palmas/app/shared/generic_states/generics.dart';
+/*import 'package:ipbc_palmas/app/services/overall_states/home_bloc.dart';
+import 'package:ipbc_palmas/app/shared/overall_states/generics.dart';
 import 'package:ipbc_palmas/app/shared/view-models/services_view_model.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:bloc_test/bloc_test.dart';

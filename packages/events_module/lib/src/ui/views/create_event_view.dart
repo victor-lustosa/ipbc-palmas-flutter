@@ -1,6 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import '../../../events_module.dart';
+
 class CreateEventView extends StatefulWidget {
   const CreateEventView({super.key});
 

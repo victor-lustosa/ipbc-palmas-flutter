@@ -1,6 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../service_module.dart';
+
 
 class SearchLyricsView extends StatefulWidget {
   const SearchLyricsView({super.key, required this.dto});

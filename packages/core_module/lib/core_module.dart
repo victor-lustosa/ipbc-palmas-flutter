@@ -13,16 +13,7 @@ export 'package:google_maps_flutter/google_maps_flutter.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:isar_flutter_libs/isar_flutter_libs.dart';
 export 'package:isar/isar.dart';
-export 'package:auth_module/auth_module.dart';
 
-export 'src/shared/mixins/launch_url_mixin.dart';
-export 'src/shared/mixins/clipboard_mixin.dart';
-export 'src/shared/mixins/email_mixin.dart';
-export 'src/shared/mixins/connectivity_mixin.dart';
-
-export 'src/shared/generic_states/generics.dart';
-
-export 'src/shared/view_models/edit_liturgy_view_model.dart';
 
 export 'src/configs/app_configs.dart';
 export 'src/configs/app_routes.dart';
@@ -64,6 +55,7 @@ export 'src/design_system/views/exceptions/no_connection_view.dart';
 export 'src/design_system/views/exceptions/unknown_route_view.dart';
 export 'src/design_system/components/bottom_bar/buttons_bar_mixin.dart';
 export 'src/design_system/components/auth/auth_circle_avatar_widget.dart';
+
 export 'src/design_system/components/auth/stores/auth_circle_avatar_store.dart';
 export 'src/design_system/components/bottom_bar/material_bottom_bar_widget.dart';
 export 'src/design_system/components/bottom_bar/navegation_button_widget.dart';
@@ -77,6 +69,15 @@ export 'src/design_system/components/top_bar/title_top_bar_widget.dart';
 export 'src/design_system/components/scroll_transform/scroll_transform_item.dart';
 export 'src/design_system/components/scroll_transform/scroll_transform_view.dart';
 export 'src/design_system/components/icons/hide_icon_widget.dart';
+
+export 'src/core/domain/use_cases/use_cases.dart';
+export 'src/core/domain/entities/lyric_entity.dart';
+export 'src/core/domain/entities/verse_entity.dart';
+export 'src/core/domain/entities/service_entity.dart';
+export 'src/core/domain/entities/services_entity.dart';
+export 'src/core/domain/entities/auth/user_entity.dart';
+export 'src/core/domain/entities/liturgy_entity.dart';
+export 'src/core/domain/entities/event_entity.dart';
 
 export 'src/core/infra/repositories/repositories.dart';
 export 'src/core/infra/adapters/services_adapter.dart';
@@ -100,17 +101,21 @@ export 'src/core/infra/use_cases/use_cases.dart';
 export 'src/core/external/repositories/supa_repository.dart';
 export 'src/core/external/repositories/isar_repository.dart';
 
+export 'src/shared/mixins/launch_url_mixin.dart';
+export 'src/shared/mixins/clipboard_mixin.dart';
+export 'src/shared/mixins/email_mixin.dart';
+export 'src/shared/mixins/connectivity_mixin.dart';
+export 'src/shared/mixins/main_top_bar_mixin.dart';
+export 'src/shared/overall_states/generics.dart';
+export 'src/shared/overall_states/home_bloc.dart';
+export 'src/shared/view_models/edit_liturgy_view_model.dart';
 export 'src/shared/utils/supa_services_util.dart';
 export 'src/shared/utils/validation_util.dart';
 export 'src/shared/utils/responsivity_util.dart';
 export 'src/shared/utils/analytics_util.dart';
 export 'src/shared/utils/mock_util.dart';
 
-export 'src/core/domain/use_cases/use_cases.dart';
-export 'src/core/domain/entities/lyric_entity.dart';
-export 'src/core/domain/entities/verse_entity.dart';
-export 'src/core/domain/entities/service_entity.dart';
-export 'src/core/domain/entities/services_entity.dart';
-export 'src/core/domain/entities/auth/user_entity.dart';
-export 'src/core/domain/entities/liturgy_entity.dart';
-export 'src/core/domain/entities/event_entity.dart';
+export 'src/auth/domain/use_cases/auth_use_cases.dart';
+export 'src/auth/infra/use_cases/online_auth_use_cases.dart';
+export 'src/auth/infra/use_cases/offline_auth_use_cases.dart';
+export 'src/auth/external/repositories/supa_auth_repository.dart';

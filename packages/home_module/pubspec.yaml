@@ -9,7 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   auth_module:
     path: ../auth_module
   core_module:

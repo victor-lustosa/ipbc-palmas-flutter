@@ -2,7 +2,14 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class AuthCircleAvatarWidget extends StatefulWidget {
-  const AuthCircleAvatarWidget({super.key});
+  const AuthCircleAvatarWidget({
+    super.key,
+    this.loginAction,
+    this.logoutAction,
+  });
+
+  final VoidCallback? loginAction;
+  final VoidCallback? logoutAction;
 
   @override
   State<AuthCircleAvatarWidget> createState() => _AuthCircleAvatarWidgetState();
@@ -57,12 +64,8 @@ class _AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget> {
               shape: state is AuthenticatedState ? const CircleBorder() : null,
               action:
                   state is AuthenticatedState
-                      ? () => pushNamed(
-                        AuthModule.authRoute + AuthModule.loginRoute,
-                      )
-                      : () => pushNamed(
-                        AuthModule.authRoute + AuthModule.loginRoute,
-                      ),
+                      ? () => widget.loginAction != null ? widget.loginAction!() : widget.loginAction
+                      : () => widget.logoutAction != null ? widget.logoutAction!() : widget.logoutAction,
               child:
                   state is AuthenticatedState
                       ? CircleAvatar(

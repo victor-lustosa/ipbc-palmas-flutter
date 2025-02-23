@@ -1,5 +1,7 @@
 import 'package:core_module/core_module.dart';
 
+import '../../../lyric_module.dart';
+
 class LyricsUseCases implements ILyricsUseCases {
   @override
   Future<List<LyricEntity>> lettersFilter(List<LyricEntity> lyrics) {

@@ -10,8 +10,12 @@ class MainTopBarWidget extends StatefulWidget {
     this.topBarList,
     this.authAvatarKey,
     this.mainAxisAlignment,
+    this.loginAction,
+    this.logoutAction,
   });
 
+  final VoidCallback? loginAction;
+  final VoidCallback? logoutAction;
   final EdgeInsetsGeometry? margin;
   final List<Widget>? topBarList;
   final Key? authAvatarKey;
@@ -22,7 +26,6 @@ class MainTopBarWidget extends StatefulWidget {
 }
 
 class _MainTopBarWidgetState extends State<MainTopBarWidget> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,10 +35,15 @@ class _MainTopBarWidgetState extends State<MainTopBarWidget> {
       child: Row(
         mainAxisAlignment:
             widget.mainAxisAlignment ?? MainAxisAlignment.spaceBetween,
-        children: widget.topBarList ??
+        children:
+            widget.topBarList ??
             [
               LogoIconWidget(),
-              AuthCircleAvatarWidget(key: widget.authAvatarKey,),
+              AuthCircleAvatarWidget(
+                key: widget.authAvatarKey,
+                logoutAction: widget.logoutAction,
+                loginAction: widget.loginAction,
+              ),
             ],
       ),
     );

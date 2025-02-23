@@ -1,4 +1,5 @@
 import 'package:core_module/core_module.dart';
+import '../events_module.dart';
 import 'ui/views/create_event_view.dart';
 
 class EventModule extends Module {

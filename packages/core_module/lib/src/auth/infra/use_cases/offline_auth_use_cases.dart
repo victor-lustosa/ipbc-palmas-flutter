@@ -1,4 +1,5 @@
-import 'package:core_module/core_module.dart';
+
+import '../../../../core_module.dart';
 
 class OfflineAuthUseCases implements IOfflineAuthUseCases {
   final IRepository repository;

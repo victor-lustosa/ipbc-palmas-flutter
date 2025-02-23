@@ -62,7 +62,16 @@ class _HomeViewState extends State<HomeView> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        MainTopBarWidget(authAvatarKey: _bloc.authAvatarKey),
+                        MainTopBarWidget(authAvatarKey: _bloc.authAvatarKey,
+                          logoutAction:
+                              () => pushNamed(
+                                AuthModule.authRoute + AuthModule.loginRoute,
+                              ),
+                          loginAction:
+                              () => pushNamed(
+                                AuthModule.authRoute + AuthModule.loginRoute,
+                              ),
+                        ),
                         InkWell(
                           onTap: () {
                             nativePushNamed(

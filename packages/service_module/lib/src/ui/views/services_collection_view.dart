@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
+import '../../../service_module.dart';
 import '../blocs/services_collection_bloc.dart';
 
 class ServicesCollectionView extends StatefulWidget {

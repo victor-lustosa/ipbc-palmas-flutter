@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:home_module/home_module.dart';
 import 'package:core_module/core_module.dart';
 
-class LoginStore extends ValueNotifier<GenericState<LoginState>> {
+import '../../../auth_module.dart';
+
+class LoginStore extends ValueNotifier<GenericState<LoginState>> with MainTopBarMixin{
   LoginStore({
     required IOfflineAuthUseCases offlineUse,
     required IOnlineAuthUseCases onlineUse,
@@ -20,7 +21,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     value = LoadingState<LoginState>();
     Future.delayed(const Duration(seconds: 1), () {
       if (_email == email && _password == password) {
-        navigate(InitModule.initialRoute);
+        navigate(AuthModule.initialRoute);
       } else {
         value = InitialState<LoginState>();
         if (context.mounted) {
@@ -77,7 +78,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   }
 
   toHome(BuildContext context) {
-    Modular.get<HomeBloc>().add(UpdateTopBarEvent());
+      updateAuthAvatarKey();
       if(context.mounted){
         pop(context);
       }

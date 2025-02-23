@@ -3,6 +3,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../infra/repositories/auth_repositories.dart';
 
+
+
 class SupaAuthRepository implements IOnlineAuthRepository {
   SupaAuthRepository({required SupabaseClient supaClient})
     : _supaClient = supaClient;
