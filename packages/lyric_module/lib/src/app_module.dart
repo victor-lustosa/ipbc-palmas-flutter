@@ -51,7 +51,7 @@ class _NativeLyricRoutesState extends State<NativeLyricRoutes> {
       key: Platform.isIOS ? null : _androidNavigatorKey,
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
-          case AppRoutes.initialRoute:
+          case AppRoutes.rootRoute:
             return CustomSlideTransition(
               child: const LyricsListView(),
               begin: const Offset(0, 0),

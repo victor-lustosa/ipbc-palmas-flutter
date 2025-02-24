@@ -14,7 +14,6 @@ import 'ui/views/init_view.dart';
 import 'ui/views/splash_view.dart';
 
 class InitModule extends Module {
-
   @override
   List<Module> get imports => [HomeModule(), CoreModule(), LyricModule()];
 
@@ -25,7 +24,6 @@ class InitModule extends Module {
 }
 
 class SplashModule extends Module {
-
   @override
   List<Module> get imports => [CoreModule(), AuthModule()];
 
@@ -46,13 +44,8 @@ class SplashModule extends Module {
 }
 
 class HomeModule extends Module {
-
   @override
-  List<Module> get imports => [
-    ServiceModule(),
-    OffersModule(),
-    CoreModule(),
-  ];
+  List<Module> get imports => [ServiceModule(), OffersModule(), CoreModule()];
 
   @override
   void binds(Injector i) {
@@ -80,7 +73,7 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
       key: Platform.isIOS ? null : _androidNavigatorKey,
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
-          case AppRoutes.homeRoute || AppRoutes.initialRoute:
+          case AppRoutes.homeRoute || AppRoutes.rootRoute:
             return CustomFadeTransition(child: const HomeView());
 
           case AppRoutes.serviceRoute:

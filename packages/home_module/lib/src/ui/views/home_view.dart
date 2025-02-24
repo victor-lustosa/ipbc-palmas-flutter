@@ -13,22 +13,24 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<HomeView>
+    with AutomaticKeepAliveClientMixin {
   late final HomeBloc _bloc;
   List<ServicesEntity> _servicesList = [];
   List<EventEntity> _eventsList = [];
-  int activePage = 0;
 
   @override
   void initState() {
     super.initState();
     _bloc = Modular.get<HomeBloc>();
-    _bloc.authAvatarKey = UniqueKey();
     _bloc.add(CheckConnectivityEvent());
   }
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -50,8 +52,7 @@ class _HomeViewState extends State<HomeView> {
                         context,
                       ),
                 );
-              } else if (state is DataFetchedState<HomeState, HomeDTO> ||
-                  state is UpdateTopBarState) {
+              } else if (state is DataFetchedState<HomeState, HomeDTO> || state is UpdateTopBarState) {
                 if (state is DataFetchedState<HomeState, HomeDTO>) {
                   _servicesList = state.entities.servicesEntitiesList;
                   _eventsList = state.entities.eventEntitiesList;
@@ -62,16 +63,7 @@ class _HomeViewState extends State<HomeView> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        MainTopBarWidget(authAvatarKey: _bloc.authAvatarKey,
-                          logoutAction:
-                              () => pushNamed(
-                                AppRoutes.authRoute + AppRoutes.loginRoute,
-                              ),
-                          loginAction:
-                              () => pushNamed(
-                                AppRoutes.authRoute + AppRoutes.loginRoute,
-                              ),
-                        ),
+                        MainTopBarWidget(authAvatarKey: _bloc.authAvatarKey),
                         InkWell(
                           onTap: () {
                             nativePushNamed(
@@ -113,10 +105,7 @@ class _HomeViewState extends State<HomeView> {
                         ),
                         InkWell(
                           onTap: () {
-                            nativePushNamed(
-                              AppRoutes.eventsListRoute,
-                              context,
-                            );
+                            nativePushNamed(AppRoutes.eventsListRoute, context);
                           },
                           child: Column(
                             children: [

@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:core_module/core_module.dart';
 
-import '../../../auth_module.dart';
-
 class LoginStore extends ValueNotifier<GenericState<LoginState>> with MainTopBarMixin{
   LoginStore({
     required IOfflineAuthUseCases offlineUse,

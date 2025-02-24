@@ -47,8 +47,8 @@ class CarouselWidgetState extends State<CarouselWidget> {
 
   @override
   void didChangeDependencies() {
-    for (Image image in imagesList) {
-      precacheImage(image.image, context);
+    for (Image entity in imagesList) {
+      precacheImage(entity.image, context);
     }
     super.didChangeDependencies();
   }

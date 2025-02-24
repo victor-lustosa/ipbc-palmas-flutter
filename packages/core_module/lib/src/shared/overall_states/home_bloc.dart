@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     with ConnectivityMixin {
   final IUseCases _useCases;
-  late Key authAvatarKey;
+   Key authAvatarKey = UniqueKey();
   final String servicesPath = 'services/createAt/false';
   final String eventPath = 'event/create_at/false';
 

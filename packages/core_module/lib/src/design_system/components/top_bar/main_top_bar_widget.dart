@@ -10,12 +10,8 @@ class MainTopBarWidget extends StatefulWidget {
     this.topBarList,
     this.authAvatarKey,
     this.mainAxisAlignment,
-    this.loginAction,
-    this.logoutAction,
   });
 
-  final VoidCallback? loginAction;
-  final VoidCallback? logoutAction;
   final EdgeInsetsGeometry? margin;
   final List<Widget>? topBarList;
   final Key? authAvatarKey;
@@ -39,11 +35,7 @@ class _MainTopBarWidgetState extends State<MainTopBarWidget> {
             widget.topBarList ??
             [
               LogoIconWidget(),
-              AuthCircleAvatarWidget(
-                key: widget.authAvatarKey,
-                logoutAction: widget.logoutAction,
-                loginAction: widget.loginAction,
-              ),
+              AuthCircleAvatarWidget(key: widget.authAvatarKey),
             ],
       ),
     );
