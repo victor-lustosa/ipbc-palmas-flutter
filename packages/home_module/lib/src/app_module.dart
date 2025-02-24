@@ -8,34 +8,21 @@ import 'package:offers_module/offers_module.dart';
 import 'package:service_module/service_module.dart';
 
 import '../home_module.dart';
-import 'ui/blocs/database_bloc.dart';
 import 'ui/views/home_view.dart';
 import 'ui/views/init_view.dart';
-import 'ui/views/splash_view.dart';
 
 class InitModule extends Module {
   @override
-  List<Module> get imports => [HomeModule(), CoreModule(), LyricModule()];
+  List<Module> get imports => [
+    HomeModule(),
+    CoreModule(),
+    LyricModule(),
+    AuthModule(),
+  ];
 
   @override
   void routes(r) {
-    r.child('/', child: (_) => const InitView());
-  }
-}
-
-class SplashModule extends Module {
-  @override
-  List<Module> get imports => [CoreModule(), AuthModule()];
-
-  @override
-  void binds(i) {
-    i.addSingleton(() => DatabaseBloc(useCases: i.get<IOfflineAuthUseCases>()));
-  }
-
-  @override
-  void routes(r) {
-    r.child(AppRoutes.splashRoute, child: (_) => const SplashView());
-    r.module(AppRoutes.initialRoute, module: InitModule());
+    r.child(AppRoutes.initialRoute, child: (_) => const InitView());
     r.module(AppRoutes.authRoute, module: AuthModule());
     r.module(AppRoutes.lyricsRoute, module: LyricModule());
     r.module(AppRoutes.servicesRoute, module: ServiceModule());

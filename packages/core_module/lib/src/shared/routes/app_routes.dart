@@ -2,8 +2,6 @@ class AppRoutes {
 
   //Init
   static const String initialRoute = '/init';
-  //Splash
-  static const String splashRoute = '/splash';
 
   //Home
   static const String homeRoute = '/home';

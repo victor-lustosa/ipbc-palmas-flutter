@@ -12,7 +12,7 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) => runApp(
       ModularApp(
-        module: SplashModule(),
+        module: InitModule(),
         child: MaterialApp.router(
           builder: (context, Widget? child) {
             return ScrollConfiguration(
