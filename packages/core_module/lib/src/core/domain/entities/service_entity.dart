@@ -20,7 +20,7 @@ class ServiceEntity {
   final String type;
   final String image;
   final String hour;
-  final DateTime createAt;
+  final String createAt;
   final String theme;
   final String preacher;
   final bool guideIsVisible;
@@ -29,8 +29,4 @@ class ServiceEntity {
   final List<LyricModel> lyricsList;
   final List<LiturgyEntity> liturgiesList;
 
-  @override
-  String toString() {
-    return 'ServiceEntity{id: $id, type: $type, image: $image, hour: $hour, createAt: $createAt, theme: $theme, preacher: $preacher, guideIsVisible: $guideIsVisible, title: $title, heading: $heading, lyricsList: $lyricsList, liturgiesList: $liturgiesList}';
-  }
 }

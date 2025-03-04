@@ -123,7 +123,10 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                                               top: 4,
                                             ),
                                             child: Text(
-                                              _liturgiesList[index].additional,
+                                              _liturgiesList[index].isAdditional
+                                                  ? _liturgiesList[index]
+                                                      .additional!
+                                                  : '',
                                               style: AppFonts.defaultFont(
                                                 color: AppColors.grey8,
                                                 fontSize: 13,

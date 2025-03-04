@@ -14,7 +14,7 @@ class SupaLyricAdapter {
     return LyricModel(
       albumCover: json['albumCover'],
       id: json['id'],
-      createAt: DateTime.now(),
+      createAt: '',
       title: json['title'],
       group: json['group'],
       verses: [
@@ -40,14 +40,14 @@ class SupaLyricAdapter {
     for (dynamic lyric in json) {
       lyricsList.add(
         LyricModel(
-          albumCover: lyric['albumCover'],
-          id: lyric['id'].toString(),
-          createAt: DateFormat("dd/MM/yyyy").parse(lyric['createAt']),
-          title: lyric['title'],
-          group: lyric['group'],
+          albumCover: lyric['lyrics']['albumCover'],
+          id: lyric['lyrics']['id'].toString(),
+          createAt: DateFormat("dd/MM/yyyy").format(DateTime.parse(lyric['lyrics']['createAt'])),
+          title: lyric['lyrics']['title'],
+          group: lyric['lyrics']['group'],
           verses: [
-            if (lyric.containsKey('verses'))
-              ...(lyric['verses'] as List).map(VerseAdapter.fromMap),
+            if (lyric['lyrics'].containsKey('verses'))
+              ...(lyric['lyrics']['verses'] as List).map(VerseAdapter.fromMap),
           ],
         ),
       );

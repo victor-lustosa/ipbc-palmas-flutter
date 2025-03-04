@@ -1,14 +1,14 @@
 import 'package:core_module/core_module.dart';
 
-class LiturgyAdapter {
+class SupaLiturgyAdapter {
   static List<LiturgyEntity> fromMapList(dynamic json) {
     List<LiturgyEntity> liturgiesList = [];
     for (dynamic liturgy in json) {
       liturgiesList.add(
         LiturgyEntity(
-          isAdditional: liturgy['isAdditional'],
-          sequence: liturgy['sequence'],
-          additional: liturgy['additional'],
+          isAdditional: liturgy['liturgies']['isAdditional'],
+          sequence: liturgy['liturgies']['sequence'],
+          additional: liturgy['liturgies']['additional'],
         ),
       );
     }

@@ -21,11 +21,20 @@ class SupabaseRepository implements IRepository {
     params = path.split('/');
     final dynamic data;
     if (params.length > 3) {
-      data = await _supaClient
-          .from(params[0])
-          .select()
-          .eq(params[1], params[2])
-          .order(params[3], ascending: params[4].toLowerCase() == 'true');
+      if(params.length > 5){
+        data = await _supaClient
+            .from(params[0])
+            .select(params[5])
+            .eq(params[1], params[2])
+            .order(params[3], ascending: params[4].toLowerCase() == 'true');
+      } else{
+        data = await _supaClient
+            .from(params[0])
+            .select()
+            .eq(params[1], params[2])
+            .order(params[3], ascending: params[4].toLowerCase() == 'true');
+      }
+
     } else {
       data = await _supaClient
           .from(params[0])

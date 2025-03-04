@@ -31,7 +31,7 @@ class EventsListBloc
 
   Future<void> _getInSupa(GetDataEvent event, emit) async {
     List<EventEntity> events = await onlineUseCases.get(
-        path: path, converter: ServiceAdapter.fromMapList);
+        path: path, converter: SupaServiceAdapter.fromMapList);
     emit(
         DataFetchedState<EventsListState, List<EventEntity>>(entities: events));
   }
