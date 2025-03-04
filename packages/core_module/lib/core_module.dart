@@ -14,7 +14,6 @@ export 'package:flutter_svg/flutter_svg.dart';
 export 'package:isar_flutter_libs/isar_flutter_libs.dart';
 export 'package:isar/isar.dart';
 
-
 export 'src/configs/app_configs.dart';
 export 'src/configs/app_routes.dart';
 export 'src/configs/api_keys.dart';
@@ -81,7 +80,6 @@ export 'src/core/domain/entities/event_entity.dart';
 
 export 'src/core/infra/repositories/repositories.dart';
 export 'src/core/infra/adapters/services_adapter.dart';
-export 'src/core/infra/adapters/service_adapter.dart';
 export 'src/core/infra/adapters/event_adapter.dart';
 export 'src/core/infra/adapters/liturgy_adapter.dart';
 export 'src/core/infra/adapters/verse_adapter.dart';

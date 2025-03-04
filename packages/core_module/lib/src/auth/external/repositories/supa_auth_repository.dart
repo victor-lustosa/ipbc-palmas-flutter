@@ -1,9 +1,7 @@
 import 'package:core_module/core_module.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import '../../infra/repositories/auth_repositories.dart';
-
-
 
 class SupaAuthRepository implements IOnlineAuthRepository {
   SupaAuthRepository({required SupabaseClient supaClient})
@@ -26,8 +24,7 @@ class SupaAuthRepository implements IOnlineAuthRepository {
     );
 
     final googleUser = await googleSignIn.signIn();
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
     final accessToken = googleAuth?.accessToken;
     final idToken = googleAuth?.idToken;
 
@@ -58,9 +55,43 @@ class SupaAuthRepository implements IOnlineAuthRepository {
   }
 
   @override
-  Future<String?> signInFacebook() async{
-   await _supaClient.auth.signInWithOAuth(OAuthProvider.facebook);
-   return '';
-  }
+  Future<String?> signInFacebook() async {
+    final fb = FacebookLogin();
+    final res = await fb.logIn(permissions: [
+      FacebookPermission.publicProfile,
+      FacebookPermission.email,
+    ]);
+    // Check result status
+    switch (res.status) {
+      case FacebookLoginStatus.success:
+      // Logged in
 
+      // Send access token to server for validation and auth
+        final FacebookAccessToken? accessToken = res.accessToken;
+        print('Access token: ${accessToken?.token}');
+
+        // Get profile data
+        final profile = await fb.getUserProfile();
+        print('Hello, ${profile?.name}! You ID: ${profile?.userId}');
+
+        // Get user profile image url
+        final imageUrl = await fb.getProfileImageUrl(width: 100);
+        print('Your profile image: $imageUrl');
+
+        // Get email (since we request email permission)
+        final email = await fb.getUserEmail();
+        // But user can decline permission
+        if (email != null)
+          print('And your email is $email');
+
+        break;
+      case FacebookLoginStatus.cancel:
+      // User cancel log in
+        break;
+      case FacebookLoginStatus.error:
+      // Log in failed
+        print('Error while log in: ${res.error}');
+        break;
+    }
+  }
 }

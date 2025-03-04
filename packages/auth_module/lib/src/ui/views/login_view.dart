@@ -247,7 +247,7 @@ class _LoginViewState extends State<LoginView> {
                         fontWeight: FontWeight.w500,
                       ),
                       action: () {
-                        _store.signInWithFacebook();
+                        _store.signInWithFacebook(context);
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
