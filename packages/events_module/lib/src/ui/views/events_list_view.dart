@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/services.dart';
-
-import '../../../events_module.dart';
 import '../blocs/events_list_bloc.dart';
 
 class EventsListView extends StatefulWidget {
