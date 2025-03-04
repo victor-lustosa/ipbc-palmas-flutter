@@ -1,3 +1,4 @@
+import 'package:auth_module/src/ui/views/facebook_login_view.dart';
 import 'package:auth_module/src/ui/views/registration_completion_view.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/animation.dart';
@@ -51,6 +52,7 @@ class AuthModule extends Module {
       child: (_) => const LoginView(),
     );
     r.child(AppRoutes.createAccountRoute, child: (_) => const CreateAccountView());
+    r.child(AppRoutes.facebookLoginRoute, child: (_) => const FacebookLoginView());
     r.child(AppRoutes.resetPasswordRoute, child: (_) => const ResetPasswordView());
     r.child(AppRoutes.verificationCodeRoute, child: (_) => const VerificationCodeView());
     r.child(

@@ -37,4 +37,6 @@ class AppRoutes {
   static const String lyricRoute = "/lyric";
   static const String lyricsRoute = "/lyrics";
   static const String lyricsListRoute = "/lyrics-list";
+
+  static const String facebookLoginRoute = "/facebook-login";
 }

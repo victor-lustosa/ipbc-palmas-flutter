@@ -13,6 +13,7 @@ export 'package:google_maps_flutter/google_maps_flutter.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:isar_flutter_libs/isar_flutter_libs.dart';
 export 'package:isar/isar.dart';
+export 'package:webview_flutter/webview_flutter.dart';
 
 export 'src/configs/app_configs.dart';
 export 'src/configs/app_routes.dart';

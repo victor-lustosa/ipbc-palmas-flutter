@@ -66,6 +66,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> with MainTopBar
   Future<void> signInWithFacebook(BuildContext context) async {
     value = LoadingState<LoginState>();
     final String? token = await _onlineUseCases.signInWithFacebook();
+    navigate(AppRoutes.authRoute + AppRoutes.facebookLoginRoute);
    // final UserEntity? currentUser = _onlineUseCases.getCurrentUser();
     //saveUserAndToken(currentUser, token);
   //  if(context.mounted){
