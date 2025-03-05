@@ -14,6 +14,7 @@ abstract class ISignInGoogle {
 
 abstract class ISignInFacebook {
   Future<void> signInFacebook();
+  Stream streamFacebook();
 }
 
 abstract class IGetCurrentUser {

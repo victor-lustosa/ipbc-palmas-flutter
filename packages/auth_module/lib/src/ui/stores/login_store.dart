@@ -66,6 +66,21 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> with MainTopBar
   Future<void> signInWithFacebook(BuildContext context) async {
     value = LoadingState<LoginState>();
     await _onlineUseCases.signInWithFacebook();
+    Stream dfas = _onlineUseCases.streamFacebook();
+      dfas.listen((data) {
+          final AuthChangeEvent event = data.event;
+          final Session? session = data.session;
+
+          if (event == AuthChangeEvent.signedIn && session != null) {
+            print("Usuário autenticado: ${session.user.email}");
+            // Feche a tela ou redirecione
+            if (context.mounted) {
+              Navigator.pop(context);
+            }
+          } else if (event == AuthChangeEvent.signedOut) {
+            print("Usuário deslogado");
+          }
+        });
    // final UserEntity? currentUser = _onlineUseCases.getCurrentUser();
     //saveUserAndToken(currentUser, token);
   //  if(context.mounted){

@@ -22,4 +22,9 @@ class OnlineAuthUseCases implements IOnlineAuthUseCases {
   @override
   Future<void> signInWithFacebook() async =>
       await repository.signInFacebook();
+
+  @override
+  Stream streamFacebook() {
+   return repository.streamFacebook();
+  }
 }

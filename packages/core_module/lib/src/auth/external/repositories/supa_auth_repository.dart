@@ -54,6 +54,23 @@ class SupaAuthRepository implements IOnlineAuthRepository {
 
   @override
   Future<void> signInFacebook() async {
-  //  await FacebookAuth.instance.getUserData();
+    try {
+      await _supaClient.auth.signOut();
+      await _supaClient.auth.signInWithOAuth(
+        OAuthProvider.facebook,
+        scopes: 'public_profile,email',
+        queryParams: {'prompt': 'select_account'},
+        redirectTo:
+            'https://xrvmfhpmelyvupfylnfk.supabase.co/auth/v1/callback',
+      );
+
+    } catch (e) {
+      print('Erro inesperado: $e');
+    }
+  }
+
+  @override
+  Stream streamFacebook() {
+    return _supaClient.auth.onAuthStateChange;
   }
 }
