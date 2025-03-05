@@ -5,8 +5,7 @@ import '../../infra/repositories/auth_repositories.dart';
 class SupaAuthRepository implements IOnlineAuthRepository {
   SupaAuthRepository({required SupabaseClient supaClient})
     : _supaClient = supaClient;
-
-  late final SupabaseClient _supaClient;
+  final SupabaseClient _supaClient;
 
   @override
   UserEntity? getCurrentUser() {
@@ -23,8 +22,7 @@ class SupaAuthRepository implements IOnlineAuthRepository {
     );
 
     final googleUser = await googleSignIn.signIn();
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
     final accessToken = googleAuth?.accessToken;
     final idToken = googleAuth?.idToken;
 
@@ -55,19 +53,7 @@ class SupaAuthRepository implements IOnlineAuthRepository {
   }
 
   @override
-  Future<String?> signInFacebook() async {
-    try {
-      await _supaClient.auth.signInWithOAuth(
-        OAuthProvider.facebook,
-        scopes: 'public_profile,email',
-        queryParams: {'prompt': 'select_account'},
-        redirectTo:
-            'https://xrvmfhpmelyvupfylnfk.supabase.co/auth/v1/callback',
-      );
-      return "";
-    } catch (e) {
-      print('Erro inesperado: $e');
-      return null;
-    }
+  Future<void> signInFacebook() async {
+  //  await FacebookAuth.instance.getUserData();
   }
 }

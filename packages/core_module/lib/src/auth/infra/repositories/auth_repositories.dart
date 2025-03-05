@@ -13,7 +13,7 @@ abstract class ISignInGoogle {
 }
 
 abstract class ISignInFacebook {
-  Future<String?> signInFacebook();
+  Future<void> signInFacebook();
 }
 
 abstract class IGetCurrentUser {

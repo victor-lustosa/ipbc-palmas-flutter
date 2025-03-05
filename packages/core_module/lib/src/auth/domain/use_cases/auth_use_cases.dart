@@ -15,7 +15,7 @@ abstract class ISignInGoogle {
   Future<String?> signInWithGoogle();
 }
 abstract class ISignInFacebook {
-  Future<String?> signInWithFacebook();
+  Future<void> signInWithFacebook();
 }
 abstract class IGetCurrentUser {
   UserEntity? getCurrentUser();
