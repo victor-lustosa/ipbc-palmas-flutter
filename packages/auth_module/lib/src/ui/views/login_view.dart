@@ -49,9 +49,14 @@ class _LoginViewState extends State<LoginView> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  MainTopBarWidget(
+                  Container(
                     margin: EdgeInsets.only(top: 28, left: 16),
-                    topBarList: [BackButtonWidget(action: () => pop(context))],
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        BackButtonWidget(action: () => pop(context))
+                      ],
+                    ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 35, bottom: 32),
@@ -213,7 +218,6 @@ class _LoginViewState extends State<LoginView> {
                         fontWeight: FontWeight.w500,
                       ),
                       action: () {
-                        Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
                         _store.nativeGoogleSignIn(context);
                       },
                       child: Row(

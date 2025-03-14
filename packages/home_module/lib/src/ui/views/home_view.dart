@@ -26,6 +26,7 @@ class _HomeViewState extends State<HomeView>
     _bloc = Modular.get<HomeBloc>();
     _bloc.add(CheckConnectivityEvent());
   }
+
   @override
   bool get wantKeepAlive => true;
 
@@ -53,18 +54,22 @@ class _HomeViewState extends State<HomeView>
                         context,
                       ),
                 );
-              } else if (state is DataFetchedState<HomeState, HomeDTO> || state is UpdateTopBarState) {
-                if (state is DataFetchedState<HomeState, HomeDTO>) {
-                  _servicesList = state.entities.servicesEntitiesList;
-                  _eventsList = state.entities.eventEntitiesList;
-                }
+              } else if (state is DataFetchedState<HomeState, HomeDTO>) {
+                _servicesList = state.entities.servicesEntitiesList;
+                _eventsList = state.entities.eventEntitiesList;
+
                 return SingleChildScrollView(
                   child: SizedBox(
                     width: context.sizeOf.width,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        MainTopBarWidget(),
+                        ListenableBuilder(
+                            listenable: Modular.get<MainTopBarManager>(),
+                            builder: (_, __) {
+                              return Modular.get<MainTopBarManager>().mainTopBarWidget;
+                            }
+                        ),
                         InkWell(
                           onTap: () {
                             nativePushNamed(
@@ -106,7 +111,10 @@ class _HomeViewState extends State<HomeView>
                         ),
                         InkWell(
                           onTap: () {
-                            nativePushNamed(AppRoutes.eventRoute + AppRoutes.eventsListRoute, context);
+                            nativePushReplacementNamed(
+                              AppRoutes.eventRoute + AppRoutes.eventsListRoute,
+                              context,
+                            );
                           },
                           child: Column(
                             children: [

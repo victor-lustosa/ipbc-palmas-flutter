@@ -11,6 +11,7 @@ class AuthCircleAvatarWidget extends StatefulWidget {
 class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget> {
   final AuthCircleAvatarStore _store = Modular.get<AuthCircleAvatarStore>();
 
+
   @override
   void initState() {
     super.initState();
@@ -19,6 +20,11 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget> {
     });
   }
 
+  void updateAuthAvatar() {
+    setState(() {
+      _store.validateAuthentication();
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(

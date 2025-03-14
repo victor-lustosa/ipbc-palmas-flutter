@@ -14,12 +14,6 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
       super(LoadingState()) {
     on<GetDataEvent<HomeEvent>>(_getData);
     on<CheckConnectivityEvent<HomeEvent>>(_checkConnectivity);
-    on<UpdateTopBarEvent>(_updateTopBar);
-  }
-
-  Future<void> _updateTopBar(UpdateTopBarEvent event, emit) async {
-    Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
-    emit(UpdateTopBarState());
   }
 
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
@@ -54,10 +48,6 @@ abstract class HomeEvent {}
 
 @immutable
 abstract class HomeState {}
-
-class UpdateTopBarEvent extends GenericEvent<HomeEvent> {}
-
-class UpdateTopBarState extends GenericState<HomeState> {}
 
 class HomeDTO {
   HomeDTO({

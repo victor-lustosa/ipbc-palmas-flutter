@@ -39,12 +39,11 @@ class EventsDetailViewState extends State<EventsDetailView>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                MainTopBarWidget(
-                  margin: EdgeInsets.only(top: 22, bottom: 24),
-                  topBarList: [
-                    BackButtonWidget(action: () => nativePop(context)),
-                    AuthCircleAvatarWidget(key: Modular.get<AppGlobalKeys>().authAvatarKey,)
-                  ],
+                ListenableBuilder(
+                    listenable: Modular.get<MainTopBarManager>(),
+                    builder: (_, __) {
+                      return Modular.get<MainTopBarManager>().mainTopBarWidget;
+                    }
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24, bottom: 16),

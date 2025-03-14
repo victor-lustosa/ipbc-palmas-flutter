@@ -36,7 +36,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
           onTap:
-              () => nativePushNamed(
+              () => nativePushReplacementNamed(
                 widget.route,
                 arguments: widget.entities[index],
                 context,
