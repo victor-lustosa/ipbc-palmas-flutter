@@ -43,7 +43,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                   margin: EdgeInsets.only(top: 22, bottom: 24),
                   topBarList: [
                     BackButtonWidget(action: () => nativePop(context)),
-                    AuthCircleAvatarWidget()
+                    AuthCircleAvatarWidget(key: Modular.get<AppGlobalKeys>().authAvatarKey,)
                   ],
                 ),
                 Container(

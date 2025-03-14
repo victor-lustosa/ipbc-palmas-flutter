@@ -193,7 +193,12 @@ class _LoginViewState extends State<LoginView> {
                     ],
                   ),
                   Container(
-                    margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                    margin: const EdgeInsets.only(
+                      top: 16,
+                      left: 16,
+                      right: 16,
+                      bottom: 25,
+                    ),
                     height: 48,
                     width: context.sizeOf.width,
                     child: ButtonWidget(
@@ -208,6 +213,7 @@ class _LoginViewState extends State<LoginView> {
                         fontWeight: FontWeight.w500,
                       ),
                       action: () {
+                        Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
                         _store.nativeGoogleSignIn(context);
                       },
                       child: Row(
@@ -227,7 +233,7 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                   ),
-                  Container(
+                  /*Container(
                     margin: const EdgeInsets.only(
                       top: 12,
                       left: 16,
@@ -264,7 +270,7 @@ class _LoginViewState extends State<LoginView> {
                         ],
                       ),
                     ),
-                  ),
+                  ),*/
                   RichText(
                     text: TextSpan(
                       children: [

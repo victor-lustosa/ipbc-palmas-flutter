@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:core_module/core_module.dart';
 
-class LoginStore extends ValueNotifier<GenericState<LoginState>> with MainTopBarMixin{
+class LoginStore extends ValueNotifier<GenericState<LoginState>>{
   LoginStore({
     required IOfflineAuthUseCases offlineUse,
     required IOnlineAuthUseCases onlineUse,
@@ -62,10 +62,10 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> with MainTopBar
     if (token != null) _offlineUseCases.saveToken(token);
   }
 
-  // Login Facebook
+ /* // Login Facebook
   Future<void> signInWithFacebook() async {
     await _onlineUseCases.signInWithFacebook();
-  }
+  }*/
 
   validateFields() {
     value = ValidateFieldsState();
@@ -76,7 +76,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> with MainTopBar
   }
 
   toHome(BuildContext context) {
-      updateAuthAvatarKey();
+    Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
       if(context.mounted){
         pop(context);
       }

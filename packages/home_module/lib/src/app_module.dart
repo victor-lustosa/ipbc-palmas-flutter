@@ -4,6 +4,7 @@ import 'package:auth_module/auth_module.dart';
 import 'package:events_module/events_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:home_module/src/ui/blocs/home_bloc.dart';
 import 'package:offers_module/offers_module.dart';
 import 'package:service_module/service_module.dart';
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../home_module.dart';
+import '../blocs/home_bloc.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -63,7 +64,7 @@ class _HomeViewState extends State<HomeView>
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        MainTopBarWidget(authAvatarKey: _bloc.authAvatarKey),
+                        MainTopBarWidget(),
                         InkWell(
                           onTap: () {
                             nativePushNamed(

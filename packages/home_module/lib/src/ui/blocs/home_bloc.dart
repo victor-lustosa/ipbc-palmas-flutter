@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     with ConnectivityMixin {
   final IUseCases _useCases;
-   Key authAvatarKey = UniqueKey();
   final String servicesPath = 'services/createAt/false';
   final String eventPath = 'event/create_at/false';
 
@@ -19,7 +18,7 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
   }
 
   Future<void> _updateTopBar(UpdateTopBarEvent event, emit) async {
-    authAvatarKey = UniqueKey();
+    Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
     emit(UpdateTopBarState());
   }
 
