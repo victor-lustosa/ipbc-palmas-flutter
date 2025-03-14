@@ -8,7 +8,7 @@ class EventsListBloc
     with ConnectivityMixin {
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
-  String path = '';
+  String path = 'event/create_at/false';
 
   EventsListBloc({
     required this.onlineUseCases,
@@ -20,7 +20,7 @@ class EventsListBloc
   }
 
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
-    path = event.path;
+    path = event.path.isNotEmpty ? event.path : path;
     final response = await isConnected();
     if (response) {
       add(GetDataEvent<EventsListEvent>());
@@ -31,7 +31,7 @@ class EventsListBloc
 
   Future<void> _getInSupa(GetDataEvent event, emit) async {
     List<EventEntity> events = await onlineUseCases.get(
-        path: path, converter: ServiceAdapter.fromMapList);
+        path: path, converter: EventAdapter.fromMapList);
     emit(
         DataFetchedState<EventsListState, List<EventEntity>>(entities: events));
   }

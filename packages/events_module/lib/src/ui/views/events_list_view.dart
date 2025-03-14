@@ -54,6 +54,7 @@ class EventsListViewState extends State<EventsListView> {
                   _eventsList = state.entities;
                   return SingleChildScrollView(
                     child: Column(
+                      mainAxisSize:MainAxisSize.min,
                       children: [
                         Row(
                           children: [
@@ -97,8 +98,9 @@ class EventsListViewState extends State<EventsListView> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: context.sizeOf.height,
+                        Container(
+                          margin: const EdgeInsets.only(
+                            bottom: 40),
                           child: SlideCardsWidget(
                             margin: const EdgeInsets.only(
                               top: 16,

@@ -105,7 +105,7 @@ class _HomeViewState extends State<HomeView>
                         ),
                         InkWell(
                           onTap: () {
-                            nativePushNamed(AppRoutes.eventsListRoute, context);
+                            nativePushNamed(AppRoutes.eventRoute + AppRoutes.eventsListRoute, context);
                           },
                           child: Column(
                             children: [

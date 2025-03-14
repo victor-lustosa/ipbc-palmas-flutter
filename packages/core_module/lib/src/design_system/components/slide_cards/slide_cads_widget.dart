@@ -8,6 +8,7 @@ class SlideCardsWidget extends StatefulWidget {
   final EdgeInsetsGeometry? margin;
   final ScrollPhysics? physics;
   final Axis scrollDirection;
+  final bool? shrinkWrap;
 
   const SlideCardsWidget({
     required this.entities,
@@ -17,6 +18,7 @@ class SlideCardsWidget extends StatefulWidget {
     required this.width,
     this.physics,
     this.margin,
+    this.shrinkWrap,
   });
 
   @override
@@ -27,6 +29,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      shrinkWrap: widget.shrinkWrap ?? true,
       scrollDirection: widget.scrollDirection,
       physics: widget.physics,
       itemCount: widget.entities.length,

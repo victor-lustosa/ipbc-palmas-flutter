@@ -18,6 +18,7 @@ class InitModule extends Module {
     CoreModule(),
     LyricModule(),
     AuthModule(),
+    EventModule()
   ];
 
   @override
@@ -87,7 +88,7 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
               child: EditLiturgyView(dto: settings.arguments as EditLiturgyDTO),
             );
 
-          case AppRoutes.eventsListRoute:
+          case AppRoutes.eventRoute + AppRoutes.eventsListRoute:
             return CustomFadeTransition(child: const EventsListView());
 
           case AppRoutes.detailEventRoute:
