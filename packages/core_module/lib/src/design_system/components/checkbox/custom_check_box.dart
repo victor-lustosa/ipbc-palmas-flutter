@@ -57,22 +57,25 @@ class CheckBoxCustomState extends State<CustomCheckBox> {
                   decoration: BoxDecoration(
                     shape: widget.shape ?? BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(
-                        widget.borderRadiusCheckBox ?? 50),
+                      widget.borderRadiusCheckBox ?? 50,
+                    ),
                     border: Border.all(
                       width: 0.8,
                       color: widget.colorBoder ?? AppColors.grey9,
                     ),
-                    color: widget.isChecked
-                        ? widget.activeColor
-                        : widget.fillColor,
+                    color:
+                        widget.isChecked
+                            ? widget.activeColor
+                            : widget.fillColor,
                   ),
-                  child: widget.isChecked
-                      ? Icon(
-                          widget.iconCheckBox ?? Icons.circle,
-                          size: widget.sizeIcon ?? 14,
-                          color: widget.checkColor ?? AppColors.darkGreen,
-                        )
-                      : const SizedBox.shrink(),
+                  child:
+                      widget.isChecked
+                          ? Icon(
+                            widget.iconCheckBox ?? Icons.circle,
+                            size: widget.sizeIcon ?? 14,
+                            color: widget.checkColor ?? AppColors.darkGreen,
+                          )
+                          : const SizedBox.shrink(),
                 ),
               ),
             ),
@@ -80,11 +83,13 @@ class CheckBoxCustomState extends State<CustomCheckBox> {
           const SizedBox(width: 8),
           Text(
             widget.textCheckedBox,
-            style: widget.textStyle ??
+            style:
+                widget.textStyle ??
                 AppFonts.defaultFont(
-                    color: AppColors.grey9,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w400),
+                  color: AppColors.grey9,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w400,
+                ),
           ),
         ],
       ),

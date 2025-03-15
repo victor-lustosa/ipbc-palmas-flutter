@@ -23,16 +23,15 @@ class _TextCodeWidgetState extends State<TextCodeWidget> {
           children: List.generate(
             6,
             (index) => Container(
-              margin: EdgeInsets.only(
-                left: index == 0 ? 0 : 12,
-              ),
+              margin: EdgeInsets.only(left: index == 0 ? 0 : 12),
               width: 44,
               height: 48,
               child: CustomPaint(
                 painter: CodePainterWidget(
-                  borderColor: _store.isError
-                      ? AppColors.codeBorderError
-                      : _store.controllers[index].text.isEmpty
+                  borderColor:
+                      _store.isError
+                          ? AppColors.codeBorderError
+                          : _store.controllers[index].text.isEmpty
                           ? AppColors.grey6
                           : AppColors.darkGreen,
                 ),
@@ -42,33 +41,30 @@ class _TextCodeWidgetState extends State<TextCodeWidget> {
                   focusNode: _store.focusNodes[index],
                   controller: _store.controllers[index],
                   onChanged: (value) {
-                    setState(
-                      () {
-                        _store.focusControl(value: value, index: index);
-                        _store.colorBorder();
-                        _store.emptyBorder();
-                      },
-                    );
+                    setState(() {
+                      _store.focusControl(value: value, index: index);
+                      _store.colorBorder();
+                      _store.emptyBorder();
+                    });
                   },
                   decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.only(
-                      left: 2.5,
-                      bottom: 4,
-                    ),
+                    contentPadding: EdgeInsets.only(left: 2.5, bottom: 4),
                     counterText: '',
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
                   ),
-                  cursorColor: _store.isError
-                      ? AppColors.codeBorderError
-                      : _store.controllers[index].text.isEmpty
+                  cursorColor:
+                      _store.isError
+                          ? AppColors.codeBorderError
+                          : _store.controllers[index].text.isEmpty
                           ? AppColors.hintInputForm
                           : AppColors.darkGreen,
                   cursorWidth: 1.5,
                   style: AppFonts.defaultFont(
-                    color: _store.isError
-                        ? AppColors.codeBorderError
-                        : AppColors.darkGreen,
+                    color:
+                        _store.isError
+                            ? AppColors.codeBorderError
+                            : AppColors.darkGreen,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),

@@ -2,10 +2,9 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class HomeViewModel with EmailMixin {
-
   ScrollController scrollController = ScrollController();
 
-  sendBySendGrid(){
+  sendBySendGrid() {
     /* sendGrid(
           body: '${nameController.text} /n ${messageController.text}',
           subject: 'victor.olustosa@outlook.com',
@@ -13,7 +12,7 @@ class HomeViewModel with EmailMixin {
      );*/
   }
 
-  sendByBrevo(){
+  sendByBrevo() {
     /* brevo(
           body: '${nameController.text} /n ${messageController.text}',
           subject: 'victor.olustosa@outlook.com',

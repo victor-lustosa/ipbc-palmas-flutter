@@ -69,7 +69,7 @@ class SuccessDialogWidget extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -78,8 +78,11 @@ class SuccessDialogWidget extends StatelessWidget {
 }
 
 Future<void> showCustomSuccessDialog(
-    BuildContext context, String title, String message,
-    {Function()? onClose}) async {
+  BuildContext context,
+  String title,
+  String message, {
+  Function()? onClose,
+}) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: true,

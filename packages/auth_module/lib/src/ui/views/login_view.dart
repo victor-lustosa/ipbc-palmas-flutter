@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../../auth_module.dart';
-import '../stores/login_store.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -32,8 +31,8 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     suffixAction() => setState(() {
-          _obscure = !_obscure;
-        });
+      _obscure = !_obscure;
+    });
     return ValueListenableBuilder(
       valueListenable: _store,
       builder: (_, state, child) {
@@ -51,11 +50,18 @@ class _LoginViewState extends State<LoginView> {
               child: Column(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 60, bottom: 32),
+                    margin: EdgeInsets.only(top: 28, left: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        BackButtonWidget(action: () => pop(context))
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 35, bottom: 32),
                     child: const Image(
-                      image: AssetImage(
-                        AppImages.logoLoginImage,
-                      ),
+                      image: AssetImage(AppImages.logoLoginImage),
                       fit: BoxFit.cover,
                       width: 166,
                     ),
@@ -84,9 +90,10 @@ class _LoginViewState extends State<LoginView> {
                     validator: (data) {
                       return _emailValidation(data);
                     },
-                    defaultHintColor: _isEmailValid
-                        ? AppColors.hintInputForm
-                        : AppColors.delete,
+                    defaultHintColor:
+                        _isEmailValid
+                            ? AppColors.hintInputForm
+                            : AppColors.delete,
                   ),
                   TemplateFormWidget(
                     controller: _passwordController,
@@ -102,10 +109,7 @@ class _LoginViewState extends State<LoginView> {
                     inputDecoration: fieldInputDecoration(
                       isValid: _isPasswordValid,
                       hintText: 'Senha',
-                      contentPadding: const EdgeInsets.only(
-                        left: 16,
-                        top: 9,
-                      ),
+                      contentPadding: const EdgeInsets.only(left: 16, top: 9),
                       suffixIcon: HideIconWidget(
                         isObscure: _obscure,
                         suffixAction: suffixAction,
@@ -132,12 +136,16 @@ class _LoginViewState extends State<LoginView> {
                                   decorationColor: AppColors.darkGreen,
                                 ),
                                 text: "Esqueceu a senha? ",
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    if (!_isPressed) {
-                                      pushNamed(AuthModule.authRoute + AuthModule.resetPasswordRoute);
-                                    }
-                                  },
+                                recognizer:
+                                    TapGestureRecognizer()
+                                      ..onTap = () {
+                                        if (!_isPressed) {
+                                          pushNamed(
+                                            AppRoutes.authRoute +
+                                                AppRoutes.resetPasswordRoute,
+                                          );
+                                        }
+                                      },
                               ),
                             ],
                           ),
@@ -163,8 +171,11 @@ class _LoginViewState extends State<LoginView> {
                           _isPasswordValid &&
                           !_isPressed) {
                         if (EmailValidator.validate(_emailController.text)) {
-                          await _store.logIn(_emailController.text,
-                              _passwordController.text, context);
+                          await _store.logIn(
+                            _emailController.text,
+                            _passwordController.text,
+                            context,
+                          );
                         } else {
                           _emailBorderValidation(false);
                         }
@@ -178,8 +189,9 @@ class _LoginViewState extends State<LoginView> {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          border:
-                              Border.all(color: AppColors.loginLineDecoration),
+                          border: Border.all(
+                            color: AppColors.loginLineDecoration,
+                          ),
                         ),
                         width: 159,
                       ),
@@ -190,6 +202,7 @@ class _LoginViewState extends State<LoginView> {
                       top: 16,
                       left: 16,
                       right: 16,
+                      bottom: 25,
                     ),
                     height: 48,
                     width: context.sizeOf.width,
@@ -204,7 +217,9 @@ class _LoginViewState extends State<LoginView> {
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
-                      action: () {},
+                      action: () {
+                        _store.nativeGoogleSignIn(context);
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -216,17 +231,13 @@ class _LoginViewState extends State<LoginView> {
                               height: 30,
                             ),
                           ),
-                          const Text(
-                            "Fazer login com o Google",
-                          ),
-                          const SizedBox(
-                            width: 18,
-                          )
+                          const Text("Fazer login com o Google"),
+                          const SizedBox(width: 18),
                         ],
                       ),
                     ),
                   ),
-                  Container(
+                  /*Container(
                     margin: const EdgeInsets.only(
                       top: 12,
                       left: 16,
@@ -245,7 +256,9 @@ class _LoginViewState extends State<LoginView> {
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
-                      action: () {},
+                      action: () {
+                        _store.signInWithFacebook();
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -257,13 +270,11 @@ class _LoginViewState extends State<LoginView> {
                               height: 32,
                             ),
                           ),
-                          const Text(
-                            "Fazer login com o Facebook",
-                          ),
+                          const Text("Fazer login com o Facebook"),
                         ],
                       ),
                     ),
-                  ),
+                  ),*/
                   RichText(
                     text: TextSpan(
                       children: [
@@ -283,15 +294,17 @@ class _LoginViewState extends State<LoginView> {
                             decorationColor: AppColors.darkGreen,
                           ),
                           text: "Criar conta ",
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () => setState(
-                                  () {
-                                    if (!_isPressed) {
-                                      Modular.to.navigate(AuthModule.authRoute +
-                                          AuthModule.createAccountRoute);
-                                    }
-                                  },
-                                ),
+                          recognizer:
+                              TapGestureRecognizer()
+                                ..onTap =
+                                    () => setState(() {
+                                      if (!_isPressed) {
+                                        Modular.to.navigate(
+                                          AppRoutes.authRoute +
+                                              AppRoutes.createAccountRoute,
+                                        );
+                                      }
+                                    }),
                         ),
                       ],
                     ),

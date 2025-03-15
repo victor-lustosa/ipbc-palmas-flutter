@@ -31,21 +31,13 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            margin: const EdgeInsets.only(
-              left: 16,
-              right: 16,
-              top: 60,
-            ),
+            margin: const EdgeInsets.only(left: 16, right: 16, top: 60),
             width: context.sizeOf.width,
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    BackButtonWidget(
-                      action: () => pop(context),
-                    ),
-                  ],
+                  children: [BackButtonWidget(action: () => pop(context))],
                 ),
                 Text(
                   "Redefinir senha",
@@ -56,10 +48,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(
-                    top: 32,
-                    bottom: 200,
-                  ),
+                  margin: const EdgeInsets.only(top: 32, bottom: 200),
                   child: TemplateFormWidget(
                     defaultHintColor:
                         _isEmailValid ? AppColors.darkGreen : AppColors.delete,
@@ -79,18 +68,21 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       ),
                       suffixIcon: Padding(
                         padding: const EdgeInsets.only(left: 10, right: 16),
-                        child: _isInit
-                            ? null
-                            : Image.asset(
-                                width: 16,
-                                height: 16,
-                                verifiedValidation
-                                    ? AppIcons.emailSuccess
-                                    : AppIcons.emailNotValid,
-                              ),
+                        child:
+                            _isInit
+                                ? null
+                                : Image.asset(
+                                  width: 16,
+                                  height: 16,
+                                  verifiedValidation
+                                      ? AppIcons.emailSuccess
+                                      : AppIcons.emailNotValid,
+                                ),
                       ),
-                      contentPadding:
-                          const EdgeInsets.only(bottom: 5, left: 16),
+                      contentPadding: const EdgeInsets.only(
+                        bottom: 5,
+                        left: 16,
+                      ),
                       hintColor:
                           verifiedValidation ? AppColors.darkGreen : null,
                       isValid: _isEmailValid,
@@ -106,20 +98,21 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     if (_resetPasswordController.text.isEmpty && !_isPressed) {
                       _emailBorderValidation(false, false);
                     }
-                    pushNamed(AuthModule.authRoute + AuthModule.verificationCodeRoute);
+                    pushNamed(
+                      AppRoutes.authRoute + AppRoutes.verificationCodeRoute,
+                    );
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                   fixedSize: Size(context.sizeOf.width, 48),
-                  backgroundColor: verifiedValidation
-                      ? AppColors.darkGreen
-                      : AppColors.disableButton,
+                  backgroundColor:
+                      verifiedValidation
+                          ? AppColors.darkGreen
+                          : AppColors.disableButton,
                   shadowColor: AppColors.grey0,
                   foregroundColor: AppColors.white,
-                  child: const Text(
-                    "Enviar",
-                  ),
+                  child: const Text("Enviar"),
                 ),
               ],
             ),

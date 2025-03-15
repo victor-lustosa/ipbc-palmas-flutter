@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
-import '../../configs/api_keys.dart';
+import '../../core/configs/api_keys.dart';
 import '../models/send_grid_model.dart';
 
 mixin EmailMixin {
@@ -16,16 +16,23 @@ mixin EmailMixin {
   }) async {
     final fromAddress = Address(recipients[0]);
     final content = Content('text/plain', body);
-    const personalization = Personalization([Address('victor.olustosa@outlook.com')]);
+    const personalization = Personalization([
+      Address('victor.olustosa@outlook.com'),
+    ]);
 
-    final email = Email([personalization], fromAddress, subject, content: [content]);
+    final email = Email(
+      [personalization],
+      fromAddress,
+      subject,
+      content: [content],
+    );
     final v = jsonEncode(email.toJson());
     try {
       http.post(
         Uri.parse(_apiSendGridURL),
         headers: {
           HttpHeaders.contentTypeHeader: "application/json",
-          HttpHeaders.authorizationHeader: ApiKeys.sendGridKEY
+          HttpHeaders.authorizationHeader: ApiKeys.sendGridKEY,
         },
         body: v,
       );
@@ -43,16 +50,23 @@ mixin EmailMixin {
   }) async {
     final fromAddress = Address(recipients[0]);
     final content = Content('text/plain', body);
-    const personalization = Personalization([Address('victor.olustosa@outlook.com')]);
+    const personalization = Personalization([
+      Address('victor.olustosa@outlook.com'),
+    ]);
 
-    final email = Email([personalization], fromAddress, subject, content: [content]);
+    final email = Email(
+      [personalization],
+      fromAddress,
+      subject,
+      content: [content],
+    );
     final v = jsonEncode(email.toJson());
     try {
       http.post(
         Uri.parse(_apiBrevoURL),
         headers: {
           HttpHeaders.contentTypeHeader: "application/json",
-          HttpHeaders.authorizationHeader: ApiKeys.brevoKEY
+          HttpHeaders.authorizationHeader: ApiKeys.brevoKEY,
         },
         body: v,
       );

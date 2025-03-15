@@ -123,20 +123,15 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
           Visibility(
             visible: !widget.isValid,
             child: Container(
-              margin: widget.errorTextMargin ??
-                  const EdgeInsets.only(
-                    top: 4,
-                    left: 2,
-                  ),
+              margin:
+                  widget.errorTextMargin ??
+                  const EdgeInsets.only(top: 4, left: 2),
               child: Text(
                 widget.errorText ?? '',
-                style: AppFonts.defaultFont(
-                  fontSize: 14,
-                  color: Colors.red,
-                ),
+                style: AppFonts.defaultFont(fontSize: 14, color: Colors.red),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

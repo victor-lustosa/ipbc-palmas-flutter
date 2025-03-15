@@ -72,7 +72,8 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
   @override
   Widget build(BuildContext context) {
     return FormFieldWidget(
-      horizontalSymmetric: widget.horizontalSymmetric ??
+      horizontalSymmetric:
+          widget.horizontalSymmetric ??
           const EdgeInsets.symmetric(horizontal: 16),
       fieldKey: widget.globalKey,
       isSubmitted: !widget.isPressed,
@@ -85,10 +86,7 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
       title: widget.title,
       isValid: widget.isValid,
       maxLines: widget.maxLines,
-      titleStyle: AppFonts.defaultFont(
-        fontSize: 13,
-        color: AppColors.grey8,
-      ),
+      titleStyle: AppFonts.defaultFont(fontSize: 13, color: AppColors.grey8),
       inputFormatters: widget.inputFormatters,
       keyboardType: widget.textInputType,
       controller: widget.controller,
@@ -102,23 +100,24 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
   }
 
   _fieldDecoration({required isValid, Color? color}) => BoxDecoration(
-        color: AppColors.white,
-        border: Border.all(
-          color: color ?? (isValid ? AppColors.secondaryGrey : Colors.red),
-        ),
-        borderRadius: BorderRadius.circular(16),
-      );
+    color: AppColors.white,
+    border: Border.all(
+      color: color ?? (isValid ? AppColors.secondaryGrey : Colors.red),
+    ),
+    borderRadius: BorderRadius.circular(16),
+  );
 }
 
-fieldInputDecoration(
-    {required isValid,
-    required hintText,
-    Widget? suffixIcon,
-    Widget? prefixIcon,
-    BoxConstraints? prefixIconConstraints,
-    BoxConstraints? suffixIconConstraints,
-    Color? hintColor,
-    EdgeInsetsGeometry? contentPadding}) {
+fieldInputDecoration({
+  required isValid,
+  required hintText,
+  Widget? suffixIcon,
+  Widget? prefixIcon,
+  BoxConstraints? prefixIconConstraints,
+  BoxConstraints? suffixIconConstraints,
+  Color? hintColor,
+  EdgeInsetsGeometry? contentPadding,
+}) {
   return InputDecoration(
     suffixIcon: suffixIcon,
     prefixIcon: prefixIcon,
@@ -130,12 +129,8 @@ fieldInputDecoration(
       color:
           hintColor ?? (isValid ? AppColors.hintInputForm : AppColors.delete),
     ),
-    contentPadding: contentPadding ??
-        const EdgeInsets.only(
-          left: 16,
-          bottom: 5,
-          right: 5,
-        ),
+    contentPadding:
+        contentPadding ?? const EdgeInsets.only(left: 16, bottom: 5, right: 5),
     hintText: hintText,
     counterStyle: AppFonts.defaultFont(
       fontSize: 10,

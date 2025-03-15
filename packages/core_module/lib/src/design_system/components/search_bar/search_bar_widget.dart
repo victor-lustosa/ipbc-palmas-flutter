@@ -23,10 +23,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(
-        left: 16,
-        right: 19,
-      ),
+      margin: const EdgeInsets.only(left: 16, right: 19),
       child: FormFieldWidget(
         onChange: widget.onChange,
         fieldHeight: 48,
@@ -34,9 +31,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         controller: widget.controller,
         fieldDecoration: BoxDecoration(
           color: AppColors.searchBar,
-          border: Border.all(
-            color: AppColors.secondaryGrey,
-          ),
+          border: Border.all(color: AppColors.secondaryGrey),
           borderRadius: BorderRadius.circular(11),
         ),
         isValid: isValid,
@@ -55,14 +50,8 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             ),
           ),
           border: InputBorder.none,
-          hintStyle: AppFonts.defaultFont(
-            fontSize: 12,
-            color: AppColors.grey5,
-          ),
-          contentPadding: const EdgeInsets.only(
-            left: 16,
-            top: 10,
-          ),
+          hintStyle: AppFonts.defaultFont(fontSize: 12, color: AppColors.grey5),
+          contentPadding: const EdgeInsets.only(left: 16, top: 10),
           hintText: 'Digite o termo de pesquisa',
         ),
         colorStyle: AppColors.hintInputForm,

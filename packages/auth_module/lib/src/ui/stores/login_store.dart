@@ -1,13 +1,16 @@
-
 import 'package:flutter/cupertino.dart';
-import 'package:home_module/home_module.dart';
+import 'package:core_module/core_module.dart';
 
-class LoginStore extends ValueNotifier<GenericState<LoginState>> {
-  LoginStore({required IAuthUseCases useCases}):
-      //: _useCases = useCases,
-        super(InitialState<LoginState>());
+class LoginStore extends ValueNotifier<GenericState<LoginState>>{
+  LoginStore({
+    required IOfflineAuthUseCases offlineUse,
+    required IOnlineAuthUseCases onlineUse,
+  }) : _offlineUseCases = offlineUse,
+       _onlineUseCases = onlineUse,
+       super(InitialState<LoginState>());
 
- // final IAuthUseCases _useCases;
+  final IOfflineAuthUseCases _offlineUseCases;
+  final IOnlineAuthUseCases _onlineUseCases;
 
   final String _email = 'victor.olustosa@outlook.com';
   final String _password = '!Helena2201';
@@ -16,14 +19,16 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     value = LoadingState<LoginState>();
     Future.delayed(const Duration(seconds: 1), () {
       if (_email == email && _password == password) {
-        navigate(InitModule.initialRoute);
+        navigate(AppRoutes.initialRoute);
       } else {
         value = InitialState<LoginState>();
-        showCustomErrorDialog(
-          title: 'Dados Incorretos',
-          message: 'Verifique se a senha e o email estão corretos.',
-          context: context,
-        );
+        if (context.mounted) {
+          showCustomErrorDialog(
+            title: 'Dados Incorretos',
+            message: 'Verifique se a senha e o email estão corretos.',
+            context: context,
+          );
+        }
       }
     });
 
@@ -41,12 +46,43 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     //}
   }
 
+  //Login Google
+  Future<void> nativeGoogleSignIn(BuildContext context) async {
+    value = LoadingState<LoginState>();
+    final String? token = await _onlineUseCases.signInWithGoogle();
+    final UserEntity? currentUser = _onlineUseCases.getCurrentUser();
+    saveUserAndToken(currentUser, token);
+    if(context.mounted){
+      token != null && token.isNotEmpty ? toHome(context) : null;
+    }
+  }
+
+  Future<void> saveUserAndToken(currentUser, token) async {
+    if (currentUser != null) _offlineUseCases.saveLocalUser(currentUser);
+    if (token != null) _offlineUseCases.saveToken(token);
+  }
+
+ /* // Login Facebook
+  Future<void> signInWithFacebook() async {
+    await _onlineUseCases.signInWithFacebook();
+  }*/
+
   validateFields() {
     value = ValidateFieldsState();
   }
 
   toCreateAccount() {
-   pushNamed(AuthModule.authRoute + AuthModule.createAccountRoute);
+    pushNamed(AppRoutes.authRoute + AppRoutes.createAccountRoute);
+  }
+
+  toHome(BuildContext context) {
+      if(context.mounted){
+        pop(context);
+      }
+
+    Future.delayed(Duration(milliseconds: 50), () {
+      Modular.get<AppGlobalKeys>().authAvatarKey.currentState?.updateAuthAvatar();
+    });
   }
 
   Future createAccount() async {
@@ -58,6 +94,6 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
 }
 
 @immutable
-abstract class LoginState{}
+abstract class LoginState {}
 
 class ValidateFieldsState extends GenericState<LoginState> {}

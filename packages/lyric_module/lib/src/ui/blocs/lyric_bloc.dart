@@ -1,19 +1,20 @@
 import 'dart:async';
 
 import 'package:core_module/core_module.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:lyric_module/src/ui/blocs/type_filter.dart';
 
 import '../../../lyric_module.dart';
 
 class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     with ConnectivityMixin {
-  final ILyricsUseCases supaUseCase;
+  final IUseCases useCases;
+  final ILyricsUseCases lyricUseCases;
   List<LyricEntity>? lyricsList;
   final String path = 'lyrics/20';
-
   LyricBloc({
-    required this.supaUseCase,
+    required this.useCases,
+    required this.lyricUseCases,
   }) : super(LoadingState<LyricState>()) {
     on<GetInSupaEvent<LyricEvent>>(_getInSupa);
     on<FilterEvent<LyricEvent, LyricEntity>>(_filter);
@@ -38,6 +39,20 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
       emit(DataFetchedState<LyricState, LyricEntity>(entities: lyricsList!));
     }
   }
+
+/*Future<void> _getInSupa(GetInSupaEvent<LyricEvent> event, emit) async {
+    await emit.onEach<List<LyricEntity>>(
+      await supaUseCase.get(path),
+      onData: (lyrics) {
+        emit(DataFetchedState<LyricState, LyricEntity>(entities: lyrics));
+      },
+      onError: (error, st) {
+        AnalyticsUtil.recordError(name: 'lyrics bloc', error: error, st: st);
+        AnalyticsUtil.setCustomKey(name: 'lyrics bloc', key: 'get supa lyrics bloc', value: error.toString());
+        emit(ExceptionState<LyricState>(message: error.toString()));
+      },
+    );
+  }*/
 
   Future<void> _loading(_, emit) async {
     emit(LoadingState<LyricState>());

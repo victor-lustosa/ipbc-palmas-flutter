@@ -5,24 +5,20 @@ import 'configs/app_colors.dart';
 
 final lightTheme = ThemeData(
   splashColor: Colors.transparent,
-  brightness:Brightness.light,
+  brightness: Brightness.light,
   highlightColor: Colors.transparent,
   scaffoldBackgroundColor: AppColors.white,
   primaryColor: AppColors.white,
-  );
+);
 
-setDarkAppBar(){
+setDarkAppBar() {
   SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.dark,
-    ),
+    const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
   );
 }
 
-setLightAppBar(){
+setLightAppBar() {
   SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.light,
-    ),
+    const SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
   );
 }

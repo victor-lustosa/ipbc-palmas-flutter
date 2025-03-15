@@ -15,10 +15,10 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.9
+version: 1.0.11+17
 
 environment:
-  sdk: ">=3.5.0 <4.0.0"
+  sdk: ">=3.7.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -32,15 +32,16 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   flutter_multi_formatter: ^2.12.8
+
   home_module:
     path: ../../packages/home_module
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  bloc_test: ^9.1.1
   mocktail: ^1.0.4
-  melos: ^6.1.0
+  flutter_lints: ^5.0.0
+  melos: ^7.0.0-dev.7
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -64,6 +65,7 @@ flutter:
     - assets/images/
     - assets/mocks/
     - assets/images/auth/
+    - assets/icons/auth/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -27,19 +27,16 @@ class GridBallsTileWidget extends StatelessWidget {
                     mainAxisSpacing: 2,
                     crossAxisSpacing: 2,
                     padding: EdgeInsets.zero,
-                    children: List.generate(
-                      6,
-                          (index) {
-                        return Container(
-                          height: 2.5,
-                          width: 2.5,
-                          decoration: BoxDecoration(
-                            color: AppColors.cardGreen,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        );
-                      },
-                    ),
+                    children: List.generate(6, (index) {
+                      return Container(
+                        height: 2.5,
+                        width: 2.5,
+                        decoration: BoxDecoration(
+                          color: AppColors.cardGreen,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      );
+                    }),
                   ),
                 ),
               ],

@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../service_module.dart';
 
+
 class SearchLyricsView extends StatefulWidget {
-  const SearchLyricsView({
-    super.key,
-    required this.dto,
-  });
+  const SearchLyricsView({super.key, required this.dto});
 
   final EditLiturgyDTO dto;
 
@@ -46,9 +44,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ServiceTopBarWidget(
-                image: widget.dto.image,
-              ),
+              ServiceTopBarWidget(image: widget.dto.image),
               Container(
                 margin: const EdgeInsets.only(
                   left: 16.5,
@@ -66,35 +62,29 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
               ),
               Container(
                 margin: const EdgeInsets.only(bottom: 13),
-                child: SearchBarWidget(
-                  controller: controller,
-                  action: () {},
-                ),
+                child: SearchBarWidget(controller: controller, action: () {}),
               ),
               Container(
                 margin: const EdgeInsets.only(left: 21.5),
                 child: const OwnChoiceChipsWidget(),
               ),
               Container(
-                margin: const EdgeInsets.only(
-                  left: 16,
-                  top: 38,
-                ),
+                margin: const EdgeInsets.only(left: 16, top: 38),
                 child: Row(
                   children: [
                     SizedBox(
                       width: 26,
                       height: 26,
-                      child: Image.asset(
-                        AppIcons.info,
-                      ),
+                      child: Image.asset(AppIcons.info),
                     ),
                     Container(
                       width: context.sizeOf.width * .83,
                       margin: const EdgeInsets.only(left: 12),
                       child: Text(
                         style: AppFonts.defaultFont(
-                            fontSize: 13, color: AppColors.grey9),
+                          fontSize: 13,
+                          color: AppColors.grey9,
+                        ),
                         'Esta música ainda não está salva na biblioteca. Incluir música da internet?',
                       ),
                     ),
@@ -105,10 +95,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(
-                      top: 24,
-                      left: 17,
-                    ),
+                    margin: const EdgeInsets.only(top: 24, left: 17),
                     child: Text(
                       "Pesquisa da internet",
                       style: AppFonts.defaultFont(
@@ -122,9 +109,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
               ),
               Container(
                 margin: const EdgeInsets.only(top: 24),
-                child: LyricsListWidget(
-                  entitiesList: _lyricsFetched,
-                ),
+                child: LyricsListWidget(entitiesList: _lyricsFetched),
               ),
             ],
           ),

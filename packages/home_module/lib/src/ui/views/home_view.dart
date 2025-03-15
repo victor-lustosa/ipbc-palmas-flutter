@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../blocs/home_bloc.dart';
 import '../../../home_module.dart';
+import '../blocs/home_bloc.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -18,27 +18,14 @@ class _HomeViewState extends State<HomeView>
     with AutomaticKeepAliveClientMixin {
   late final HomeBloc _bloc;
   List<ServicesEntity> _servicesList = [];
-  int activePage = 0;
-
-  //final List<Image> imagesList = [];
+  List<EventEntity> _eventsList = [];
 
   @override
   void initState() {
     super.initState();
-    /*for (int i = 0; i < _servicesList.length; i++) {
-      imagesList.add(Image.network(_servicesList[i].image));
-    }*/
     _bloc = Modular.get<HomeBloc>();
     _bloc.add(CheckConnectivityEvent());
   }
-
-  /* @override
-  void didChangeDependencies() {
-    for (Image image in imagesList) {
-      precacheImage(image.image, context);
-    }
-    super.didChangeDependencies();
-  }*/
 
   @override
   bool get wantKeepAlive => true;
@@ -61,40 +48,36 @@ class _HomeViewState extends State<HomeView>
                 );
               } else if (state is NoConnectionState<HomeState>) {
                 return NoConnectionView(
-                  action: () => nativeNavigate(
-                    HomeModule.homeRoute,
-                    context,
-                  ),
+                  action: () => nativePushNamed(AppRoutes.homeRoute, context),
                 );
-              } else if (state is DataFetchedState<HomeState, ServicesEntity>) {
-                _servicesList = state.entities;
+              } else if (state is DataFetchedState<HomeState, HomeDTO>) {
+                _servicesList = state.entities.servicesEntitiesList;
+                _eventsList = state.entities.eventEntitiesList;
+
                 return SingleChildScrollView(
                   child: SizedBox(
                     width: context.sizeOf.width,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const MainTopBarWidget(),
-                        Container(
-                          margin: const EdgeInsets.only(top: 24),
-                          child: InkWell(
-                            onTap: () {
-                              nativePushNamed(
-                                ServiceModule.servicesListRoute,
-                                context,
-                                arguments: _servicesList,
-                              );
-                            },
-                            child: Column(
-                              children: [
-                                title(text: "Cultos"),
-                                subtitle(
-                                  right: 17,
-                                  text:
-                                      "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
-                                ),
-                              ],
-                            ),
+                        MainTopBarWidget(),
+                        InkWell(
+                          onTap: () {
+                            nativePushNamed(
+                              AppRoutes.servicesListRoute,
+                              context,
+                              arguments: _servicesList,
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              title(text: "Cultos"),
+                              subtitle(
+                                right: 17,
+                                text:
+                                    "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
+                              ),
+                            ],
                           ),
                         ),
                         Container(
@@ -110,7 +93,7 @@ class _HomeViewState extends State<HomeView>
                               right: 6,
                               bottom: 9,
                             ),
-                            route: ServiceModule.servicesCollectionRoute,
+                            route: AppRoutes.servicesCollectionRoute,
                             mainAxisAlignment: MainAxisAlignment.center,
                             width: context.sizeOf.width,
                             services: _servicesList,
@@ -119,8 +102,9 @@ class _HomeViewState extends State<HomeView>
                         ),
                         InkWell(
                           onTap: () {
+                            Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
                             nativePushNamed(
-                              EventModule.eventsListRoute,
+                              AppRoutes.eventRoute + AppRoutes.eventsListRoute,
                               context,
                             );
                           },
@@ -139,16 +123,13 @@ class _HomeViewState extends State<HomeView>
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(
-                            top: 12,
-                            bottom: 20,
-                          ),
+                          margin: const EdgeInsets.only(top: 12, bottom: 20),
                           height: 268,
                           child: SlideCardsWidget(
                             width: 319,
                             scrollDirection: Axis.horizontal,
-                            route: ServiceModule.servicesCollectionRoute,
-                            services: _servicesList,
+                            route: AppRoutes.servicesCollectionRoute,
+                            entities: _eventsList,
                           ),
                         ),
                       ],
@@ -166,38 +147,35 @@ class _HomeViewState extends State<HomeView>
   }
 
   Widget title({required String text}) => Container(
-        margin: const EdgeInsets.only(left: 17, right: 9),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              text,
-              style: AppFonts.title2,
-            ),
-            IconButtonWidget(
-              size: Platform.isIOS ? 30 : 35,
-              color: AppColors.darkGreen,
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              iOSIcon: CupertinoIcons.chevron_forward,
-              androidIcon: Icons.navigate_next_sharp,
-            ),
-          ],
+    margin: const EdgeInsets.only(left: 17, right: 9),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(text, style: AppFonts.title2),
+        IconButtonWidget(
+          size: Platform.isIOS ? 30 : 35,
+          color: AppColors.darkGreen,
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          iOSIcon: CupertinoIcons.chevron_forward,
+          androidIcon: Icons.navigate_next_sharp,
         ),
-      );
+      ],
+    ),
+  );
 
   Widget subtitle({required double right, required String text}) => Align(
-        alignment: Alignment.centerLeft,
-        child: Container(
-          margin: EdgeInsets.only(left: 18, top: 4, right: right),
-          child: Text(
-            text,
-            style: AppFonts.defaultFont(
-              fontSize: 15,
-              height: 1.2,
-              color: AppColors.grey9,
-            ),
-          ),
+    alignment: Alignment.centerLeft,
+    child: Container(
+      margin: EdgeInsets.only(left: 18, top: 4, right: right),
+      child: Text(
+        text,
+        style: AppFonts.defaultFont(
+          fontSize: 15,
+          height: 1.2,
+          color: AppColors.grey9,
         ),
-      );
+      ),
+    ),
+  );
 }

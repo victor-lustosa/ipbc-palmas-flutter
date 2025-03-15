@@ -1,19 +1,34 @@
 import 'package:core_module/core_module.dart';
-
+import 'package:events_module/src/ui/blocs/events_list_bloc.dart';
+import '../events_module.dart';
 import 'ui/views/create_event_view.dart';
 
 class EventModule extends Module {
-  static const String eventsListRoute = '/events-list';
-  static const String createEventRoute = '/create-event';
-  static const String eventRoute = '/event';
+  @override
+  List<Module> get imports => [
+    CoreModule()
+  ];
 
   @override
+  void binds(Injector i) {
+    i.addLazySingleton<EventsListBloc>(
+          () => EventsListBloc(onlineUseCases: i.get<UseCases<SupabaseRepository>>()),
+      config: CoreModule.blocConfig(),
+    );
+  }
+  @override
   void routes(r) {
+    r.child(AppRoutes.createEventRoute,
+        transition: TransitionType.custom,
+        child: (_) => const CreateEventView(),
+        customTransition: ModularFadeTransition());
     r.child(
-      createEventRoute,
+      AppRoutes.detailEventRoute,
       transition: TransitionType.custom,
-      child: (_) => const CreateEventView(),
-      customTransition: ModularFadeTransition()
+      child: (_) => EventsDetailView(
+        eventEntity: r.args.data as EventEntity,
+      ),
+      customTransition: ModularFadeTransition(),
     );
   }
 }

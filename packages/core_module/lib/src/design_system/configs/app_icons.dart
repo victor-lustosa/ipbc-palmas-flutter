@@ -3,18 +3,25 @@ class AppIcons {
   static const String announce = 'assets/icons/announce.png';
   static const String appleIcon = 'assets/icons/apple_icon.png';
   static const String playIcon = 'assets/icons/play_icon.png';
-  static const String contactIconDarkGreen = 'assets/icons/contact_icon_dark_green.png';
+  static const String contactIconDarkGreen =
+      'assets/icons/contact_icon_dark_green.png';
   static const String contactIcon = 'assets/icons/contact_icon.png';
   static const String arrowBackDarkGreen = 'assets/icons/arrow_back.png';
   static const String arrowForwardDarkGreen = 'assets/icons/arrow_forward.png';
   static const String greenArrowIcon = 'assets/icons/green_arrow_icon.png';
-  static const String arrowIconDarkGreen = 'assets/icons/arrow_icon_dark_green.png';
-  static const String arrowIconHighlightGreen = 'assets/icons/arrow_icon_highlight_green.png';
+  static const String arrowIconDarkGreen =
+      'assets/icons/arrow_icon_dark_green.png';
+  static const String arrowIconHighlightGreen =
+      'assets/icons/arrow_icon_highlight_green.png';
   static const String book = 'assets/icons/book.png';
-  static const String churchLocationIcon = 'assets/icons/church_location_icon.png';
-  static const String volunteerActivismCube = 'assets/icons/volunteer_activism.png';
+  static const String churchLocationIcon =
+      'assets/icons/church_location_icon.png';
+  static const String volunteerActivismCube =
+      'assets/icons/volunteer_activism.png';
 
   //mobile
+  static const String logout = 'assets/icons/auth/logout.png';
+  static const String noProfile = 'assets/icons/auth/no_profile.png';
   static const String lyrics = 'assets/icons/lyrics.svg';
   static const String iosShare = 'assets/icons/ios_share.png';
   static const String locationOn = 'assets/icons/location_on.png';

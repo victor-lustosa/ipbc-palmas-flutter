@@ -1,20 +1,24 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-class ResponsivityUtil{
+class ResponsivityUtil {
   ResponsivityUtil._();
- static double smallDeviceWidth = 370;
+  static double smallDeviceWidth = 370;
 
- static isSmallDevice(BuildContext context){
-  double vWidth = context.sizeOf.width;
-   return ResponsivityUtil.smallDeviceWidth >= vWidth;
- }
-
-static double resolutionDeviceProportion(double width, maxPercent, minPercent) {
-  if(width > smallDeviceWidth){
-    return maxPercent;
-  } else{
-    return minPercent;
+  static isSmallDevice(BuildContext context) {
+    double vWidth = context.sizeOf.width;
+    return ResponsivityUtil.smallDeviceWidth >= vWidth;
   }
- }
+
+  static double resolutionDeviceProportion(
+    double width,
+    maxPercent,
+    minPercent,
+  ) {
+    if (width > smallDeviceWidth) {
+      return maxPercent;
+    } else {
+      return minPercent;
+    }
+  }
 }

@@ -24,17 +24,11 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(
-        bottom: 25,
-        left: 16,
-        right: 11,
-      ),
+      margin: const EdgeInsets.only(bottom: 25, left: 16, right: 11),
       width: context.sizeOf.width,
       child: ListView.separated(
         separatorBuilder: (__, _) {
-          return const SizedBox(
-            height: 8,
-          );
+          return const SizedBox(height: 8);
         },
         padding: EdgeInsets.zero,
         scrollDirection: Axis.vertical,
@@ -44,16 +38,17 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
         itemBuilder: (__, index) {
           return Container(
             decoration: BoxDecoration(
-              boxShadow: _elevationActive && _itemActive == index
-                  ? [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        offset: const Offset(1, 2),
-                        spreadRadius: 3,
-                        blurRadius: 10,
-                      ),
-                    ]
-                  : [],
+              boxShadow:
+                  _elevationActive && _itemActive == index
+                      ? [
+                        BoxShadow(
+                          color: Colors.grey.withValues(alpha: .2),
+                          offset: const Offset(1, 2),
+                          spreadRadius: 3,
+                          blurRadius: 10,
+                        ),
+                      ]
+                      : [],
             ),
             child: Material(
               borderRadius: BorderRadius.circular(10),
@@ -81,11 +76,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                   );
                 },
                 child: Container(
-                  padding: const EdgeInsets.only(
-                    left: 8,
-                    top: 8,
-                    bottom: 8,
-                  ),
+                  padding: const EdgeInsets.only(left: 8, top: 8, bottom: 8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

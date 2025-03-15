@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:core_module/core_module.dart';
 
 class SlideCardsWidget extends StatefulWidget {
-  final List<ServicesEntity> services;
+  final List entities;
   final String route;
   final double width;
   final EdgeInsetsGeometry? margin;
   final ScrollPhysics? physics;
   final Axis scrollDirection;
+  final bool? shrinkWrap;
 
   const SlideCardsWidget({
-    required this.services,
+    required this.entities,
     required this.scrollDirection,
     super.key,
     required this.route,
     required this.width,
     this.physics,
     this.margin,
+    this.shrinkWrap,
   });
 
   @override
@@ -27,22 +29,24 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      shrinkWrap: widget.shrinkWrap ?? true,
       scrollDirection: widget.scrollDirection,
       physics: widget.physics,
-      itemCount: 3,
+      itemCount: widget.entities.length,
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
-          onTap: () => nativePushNamed(
-            widget.route,
-            arguments: widget.services[index],
-            context,
-          ),
+          onTap: () {
+            Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
+            nativePushNamed(
+              widget.route,
+              arguments: widget.entities[index],
+              context,
+            );
+          },
           child: Container(
-            margin: widget.margin ??
-                EdgeInsets.only(
-                  left: index == 0 ? 16 : 0,
-                  right: 16,
-                ),
+            margin:
+                widget.margin ??
+                EdgeInsets.only(left: index == 0 ? 16 : 0, right: 16),
             child: Column(
               children: [
                 Container(
@@ -55,7 +59,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                         spreadRadius: 1,
                         offset: Offset(1, 2),
                         color: AppColors.grey2,
-                      )
+                      ),
                     ],
                     color: AppColors.grey4,
                     borderRadius: BorderRadius.only(
@@ -93,7 +97,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                         spreadRadius: 1,
                         offset: Offset(4, 4),
                         color: AppColors.grey2,
-                      )
+                      ),
                     ],
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(16),
@@ -158,9 +162,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                                 width: 20,
                                 child: const Image(
                                   fit: BoxFit.fitWidth,
-                                  image: AssetImage(
-                                    AppIcons.iosShare,
-                                  ),
+                                  image: AssetImage(AppIcons.iosShare),
                                 ),
                               ),
                             ],
@@ -175,9 +177,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                                 width: 11,
                                 child: const Image(
                                   fit: BoxFit.fitWidth,
-                                  image: AssetImage(
-                                    AppIcons.locationOn,
-                                  ),
+                                  image: AssetImage(AppIcons.locationOn),
                                 ),
                               ),
                               Text(

@@ -18,7 +18,6 @@ class LyricsUseCases implements ILyricsUseCases<List<LyricEntity>> {
   //   var result = await repository.get(url);
   //   return Stream.value(SupaLyricAdapter.fromMapList(result));
   // }
-
   @override
   Future<void> add(path, data) async {
     repository.add(path, data);

@@ -4,40 +4,43 @@ version: 0.0.2
 publish_to: 'none'
 
 environment:
-  sdk: '>=3.5.0 <4.0.0'
+  sdk: '>=3.7.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
-  flutter_bloc: ^8.1.2
+  flutter_bloc: ^9.0.0
   supabase_flutter: ^2.6.0
+  isar: ^3.1.0+1
+  isar_flutter_libs:
+    git:
+      url: https://github.com/MrLittleWhite/isar_flutter_libs.git
   hive_flutter: ^1.1.0
   uno: ^1.1.8
   http: ^1.1.0
   logger: ^2.4.0
-  intl: ^0.19.0
+  intl: ^0.20.2
   connectivity_plus: ^6.0.5
   url_launcher: ^6.1.10
   email_validator: ^3.0.0
-  build_runner: ^2.3.3   # <-- and make sure that is also there
-  hive_generator: ^2.0.0 # <-- this line
   flutter_modular: ^6.3.2
   path_provider: ^2.0.14
-  upgrader: ^10.3.0
-  flutter_lints: ^4.0.0
   google_fonts: ^6.2.1
   cupertino_icons: ^1.0.5
   vector_math: ^2.1.4
   flutter_svg: ^2.0.10+1
-  equatable: ^2.0.5
-
+  google_maps_flutter: ^2.7.0
+  google_sign_in: ^6.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  bloc_test: ^9.1.1
-  melos: ^6.1.0
+  flutter_lints: ^5.0.0
+  isar_generator: ^3.1.0+1
+  build_runner: ^2.3.3   # <-- and make sure that is also there
+  hive_generator: ^2.0.0 # <-- this line
+  melos: ^7.0.0-dev.7
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -48,6 +51,7 @@ flutter:
     - assets/data/sunday-morning-services/
     - assets/data/sunday-evening-services/
     - assets/data/unknown-lyrics/
+    - assets/data/events/
 # To add assets to your package, add an assets section, like this:
 # assets:
 #   - images/a_dot_burr.jpeg

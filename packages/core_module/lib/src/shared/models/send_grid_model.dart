@@ -1,22 +1,22 @@
 class SendGridModel {
   const SendGridModel(
-      this.personalizations,
-      this.from,
-      this.subject, {
-        this.content,
-        this.replyTo,
-        this.attachments,
-        this.templateId,
-        this.headers,
-        this.categories,
-        this.customArgs,
-        this.sendAt,
-        this.batchId,
-        this.asm,
-        this.ipPoolName,
-        this.mailSettings,
-        this.trackingSettings,
-      });
+    this.personalizations,
+    this.from,
+    this.subject, {
+    this.content,
+    this.replyTo,
+    this.attachments,
+    this.templateId,
+    this.headers,
+    this.categories,
+    this.customArgs,
+    this.sendAt,
+    this.batchId,
+    this.asm,
+    this.ipPoolName,
+    this.mailSettings,
+    this.trackingSettings,
+  });
 
   final List<Personalization> personalizations;
   final Address from;
@@ -57,23 +57,23 @@ class SendGridModel {
 
 class Email {
   const Email(
-      this.personalizations,
-      this.from,
-      this.subject, {
-        this.content,
-        this.replyTo,
-        this.attachments,
-        this.templateId,
-        this.headers,
-        this.categories,
-        this.customArgs,
-        this.sendAt,
-        this.batchId,
-        this.asm,
-        this.ipPoolName,
-        this.mailSettings,
-        this.trackingSettings,
-      });
+    this.personalizations,
+    this.from,
+    this.subject, {
+    this.content,
+    this.replyTo,
+    this.attachments,
+    this.templateId,
+    this.headers,
+    this.categories,
+    this.customArgs,
+    this.sendAt,
+    this.batchId,
+    this.asm,
+    this.ipPoolName,
+    this.mailSettings,
+    this.trackingSettings,
+  });
 
   final List<Personalization> personalizations;
   final Address from;
@@ -111,12 +111,9 @@ class Email {
     'tracking_settings': trackingSettings?.toJson(),
   };
 }
+
 class Footer {
-  const Footer({
-    this.enable,
-    this.text,
-    this.html,
-  });
+  const Footer({this.enable, this.text, this.html});
 
   final bool? enable;
   final String? text;
@@ -128,6 +125,7 @@ class Footer {
     'html': html,
   };
 }
+
 class GoogleAnalytics {
   const GoogleAnalytics({
     this.enable,
@@ -154,12 +152,9 @@ class GoogleAnalytics {
     'utm_campaign': utmCampaign,
   };
 }
+
 class SpamCheck {
-  const SpamCheck({
-    this.enable,
-    this.threshhold,
-    this.postToURL,
-  });
+  const SpamCheck({this.enable, this.threshhold, this.postToURL});
 
   final bool? enable;
   final int? threshhold;
@@ -171,11 +166,9 @@ class SpamCheck {
     'post_to_url': postToURL,
   };
 }
+
 class OpenTracking {
-  const OpenTracking({
-    this.enable,
-    this.substitutionTag,
-  });
+  const OpenTracking({this.enable, this.substitutionTag});
 
   final bool? enable;
   final String? substitutionTag;
@@ -188,16 +181,16 @@ class OpenTracking {
 
 class Personalization {
   const Personalization(
-      this.to, {
-        this.cc,
-        this.bcc,
-        this.subject,
-        this.headers,
-        this.substitutions,
-        this.customArgs,
-        this.sendAt,
-        this.dynamicTemplateData,
-      });
+    this.to, {
+    this.cc,
+    this.bcc,
+    this.subject,
+    this.headers,
+    this.substitutions,
+    this.customArgs,
+    this.sendAt,
+    this.dynamicTemplateData,
+  });
 
   final List<Address> to;
   final List<Address>? cc;
@@ -221,6 +214,7 @@ class Personalization {
     'dynamic_template_data': dynamicTemplateData,
   };
 }
+
 class ResponseStatusCode {
   static const ok = 200;
   static const accepted = 202;
@@ -231,16 +225,17 @@ class ResponseStatusCode {
 
   static const List<int> successCodes = [
     ResponseStatusCode.ok,
-    ResponseStatusCode.accepted
+    ResponseStatusCode.accepted,
   ];
 
   static const List<int> errorCodes = [
     ResponseStatusCode.badRequest,
     ResponseStatusCode.unauthorized,
     ResponseStatusCode.forbidden,
-    ResponseStatusCode.payloadTooLarge
+    ResponseStatusCode.payloadTooLarge,
   ];
 }
+
 class SendGridError {
   const SendGridError({
     this.message,
@@ -251,11 +246,11 @@ class SendGridError {
   });
 
   SendGridError.fromJson(Map<String, dynamic> json)
-      : message = json['message'],
-        field = json['field'],
-        help = json['help'],
-        errorId = json['error_id'],
-        parameter = json['parameter'];
+    : message = json['message'],
+      field = json['field'],
+      help = json['help'],
+      errorId = json['error_id'],
+      parameter = json['parameter'];
 
   final String? message;
   final String? field;
@@ -267,7 +262,9 @@ class SendGridError {
   String toString() {
     return 'SendGridError: $message $field $help';
   }
-}class SubscriptionTracking {
+}
+
+class SubscriptionTracking {
   const SubscriptionTracking({
     this.enable,
     this.text,
@@ -309,7 +306,6 @@ class TrackingSettings {
   };
 }
 
-
 class MailSettings {
   const MailSettings({
     this.bypassManagementList,
@@ -337,17 +333,11 @@ class Address {
   final String email;
   final String? name;
 
-  Map<String, dynamic> toJson() => {
-        'email': email,
-        'name': name,
-      };
+  Map<String, dynamic> toJson() => {'email': email, 'name': name};
 }
 
 class AdvancedSuppressionManager {
-  const AdvancedSuppressionManager(
-      this.groupId, {
-        this.groupsToDisplay,
-      });
+  const AdvancedSuppressionManager(this.groupId, {this.groupsToDisplay});
 
   final int groupId;
   final List<int>? groupsToDisplay;
@@ -360,12 +350,12 @@ class AdvancedSuppressionManager {
 
 class Attachment {
   const Attachment(
-      this.content,
-      this.filename, {
-        this.type,
-        this.disposition,
-        this.contentId,
-      });
+    this.content,
+    this.filename, {
+    this.type,
+    this.disposition,
+    this.contentId,
+  });
 
   final String content;
   final String filename;
@@ -386,16 +376,11 @@ class BooleanSetting {
   const BooleanSetting({this.enable});
   final bool? enable;
 
-  Map<String, dynamic> toJson() => {
-    'enable': enable,
-  };
+  Map<String, dynamic> toJson() => {'enable': enable};
 }
 
 class ClickTracking {
-  const ClickTracking({
-    this.enable,
-    this.enableText,
-  });
+  const ClickTracking({this.enable, this.enableText});
 
   final bool? enable;
   final bool? enableText;
@@ -411,8 +396,5 @@ class Content {
   final String type;
   final String value;
 
-  Map<String, dynamic> toJson() => {
-    'type': type,
-    'value': value,
-  };
+  Map<String, dynamic> toJson() => {'type': type, 'value': value};
 }

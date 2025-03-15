@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 class CepInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     // verifica o tamanho máximo do campo
     if (newValue.text.length > 9) return oldValue;
 

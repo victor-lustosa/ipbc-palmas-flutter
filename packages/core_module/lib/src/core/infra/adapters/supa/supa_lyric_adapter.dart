@@ -55,14 +55,16 @@ class SupaLyricAdapter {
 
   static List<Map<String, dynamic>> toMapList(List<LyricEntity> data) {
     return data
-        .map((entity) => {
-              'id': entity.id,
-              'title': entity.title,
-              'createAt': entity.createAt.toString(),
-              'albumCover': entity.albumCover,
-              'group': entity.group,
-              // 'verses': VerseAdapter.toMapList(entity.verses),
-            })
+        .map(
+          (entity) => {
+            'id': entity.id,
+            'title': entity.title,
+            'createAt': entity.createAt.toString(),
+            'albumCover': entity.albumCover,
+            'group': entity.group,
+            // 'verses': VerseAdapter.toMapList(entity.verses),
+          },
+        )
         .toList();
   }
 }

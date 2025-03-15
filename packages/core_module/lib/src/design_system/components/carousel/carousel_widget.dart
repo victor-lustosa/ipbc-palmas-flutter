@@ -42,15 +42,13 @@ class CarouselWidgetState extends State<CarouselWidget> {
     for (int i = 0; i < widget.services.length; i++) {
       imagesList.add(Image.network(widget.services[i].image));
     }
-    _pageController = PageController(
-      initialPage: 0,
-    );
+    _pageController = PageController(initialPage: 0);
   }
 
   @override
   void didChangeDependencies() {
-    for (Image image in imagesList) {
-      precacheImage(image.image, context);
+    for (Image entity in imagesList) {
+      precacheImage(entity.image, context);
     }
     super.didChangeDependencies();
   }
@@ -68,18 +66,17 @@ class CarouselWidgetState extends State<CarouselWidget> {
             itemCount: widget.services.length,
             controller: _pageController,
             onPageChanged: (page) {
-              setState(
-                () {
-                  activePage = page;
-                },
-              );
+              setState(() {
+                activePage = page;
+              });
             },
             itemBuilder: (context, position) {
               bool active = position == activePage;
               return InkWell(
-                onTap: widget.route == null
-                    ? () {}
-                    : () => nativePushNamed(
+                onTap:
+                    widget.route == null
+                        ? () {}
+                        : () => nativePushNamed(
                           widget.route!,
                           arguments: widget.services[position],
                           context,
@@ -95,16 +92,17 @@ class CarouselWidgetState extends State<CarouselWidget> {
                   duration: const Duration(milliseconds: 250),
                   decoration: BoxDecoration(
                     color: AppColors.grey4,
-                    boxShadow: kIsWeb
-                        ? []
-                        : [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.4),
-                              offset: const Offset(1, 1),
-                              spreadRadius: 3,
-                              blurRadius: 7,
-                            ),
-                          ],
+                    boxShadow:
+                        kIsWeb
+                            ? []
+                            : [
+                              BoxShadow(
+                                color: Colors.grey.withValues(alpha: .4),
+                                offset: const Offset(1, 1),
+                                spreadRadius: 3,
+                                blurRadius: 7,
+                              ),
+                            ],
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                     image: DecorationImage(
                       fit: BoxFit.cover,
@@ -116,7 +114,8 @@ class CarouselWidgetState extends State<CarouselWidget> {
                     child: Column(
                       mainAxisAlignment:
                           widget.mainAxisAlignment ?? MainAxisAlignment.start,
-                      crossAxisAlignment: widget.crossAxisAlignment ??
+                      crossAxisAlignment:
+                          widget.crossAxisAlignment ??
                           CrossAxisAlignment.center,
                       children: [
                         Text(
@@ -133,27 +132,25 @@ class CarouselWidgetState extends State<CarouselWidget> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: List<Widget>.generate(
-            widget.services.length,
-            (index) {
-              return Container(
-                margin: const EdgeInsets.only(
-                  top: 3,
-                  left: 2,
-                  right: 2,
-                  bottom: 3,
-                ),
-                width: activePage == index ? 8 : 4,
-                height: activePage == index ? 8 : 4,
-                decoration: BoxDecoration(
-                  color: activePage == index
-                      ? AppColors.highlightGreen
-                      : const Color(0xFFCCCCCC),
-                  shape: BoxShape.circle,
-                ),
-              );
-            },
-          ),
+          children: List<Widget>.generate(widget.services.length, (index) {
+            return Container(
+              margin: const EdgeInsets.only(
+                top: 3,
+                left: 2,
+                right: 2,
+                bottom: 3,
+              ),
+              width: activePage == index ? 8 : 4,
+              height: activePage == index ? 8 : 4,
+              decoration: BoxDecoration(
+                color:
+                    activePage == index
+                        ? AppColors.highlightGreen
+                        : const Color(0xFFCCCCCC),
+                shape: BoxShape.circle,
+              ),
+            );
+          }),
         ),
         Visibility(
           visible: kIsWeb,
@@ -189,11 +186,8 @@ class CarouselWidgetState extends State<CarouselWidget> {
   }
 
   button({required String image, required VoidCallback onPressed}) => SizedBox(
-        width: 50,
-        height: 50,
-        child: IconButton(
-          onPressed: onPressed,
-          icon: Image.asset(image),
-        ),
-      );
+    width: 50,
+    height: 50,
+    child: IconButton(onPressed: onPressed, icon: Image.asset(image)),
+  );
 }

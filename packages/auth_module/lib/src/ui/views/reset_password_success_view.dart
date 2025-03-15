@@ -16,9 +16,7 @@ class ResetPasswordSuccessView extends StatelessWidget {
             children: [
               Container(
                 margin: const EdgeInsets.only(top: 162, bottom: 25),
-                child: const Image(
-                  image: AssetImage(AppImages.lock),
-                ),
+                child: const Image(image: AssetImage(AppImages.lock)),
               ),
               Text(
                 textAlign: TextAlign.center,
@@ -48,18 +46,14 @@ class ResetPasswordSuccessView extends StatelessWidget {
                   ),
                   fixedSize: Size(context.sizeOf.width, 48),
                   action: () {
-                    navigate(AuthModule.authRoute + AuthModule.loginRoute);
+                    navigate(AppRoutes.authRoute + AppRoutes.loginRoute);
                   },
                   backgroundColor: AppColors.darkGreen,
                   shadowColor: AppColors.grey0,
                   foregroundColor: AppColors.white,
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Continuar para o login",
-                      ),
-                    ],
+                    children: [Text("Continuar para o login")],
                   ),
                 ),
               ),

@@ -1,6 +1,5 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
-import '../../../auth_module.dart';
 
 class CreateAccountStore
     extends ValueNotifier<GenericState<CreateAccountState>> {
@@ -46,15 +45,17 @@ class CreateAccountStore
     Future.delayed(const Duration(seconds: 1), () {
       if (isPasswordEqual && emptyData) {
         pushNamed(
-          AuthModule.authRoute + AuthModule.registrationCompletionRoute,
+          AppRoutes.authRoute + AppRoutes.registrationCompletionRoute,
         );
       } else {
         notifyBorderError(value: true);
-        showCustomErrorDialog(
-          context: context,
-          title: 'Dados Incorretos',
-          message: 'Por favor, Verifique os dados e tente novamente.',
-        );
+        if (context.mounted) {
+          showCustomErrorDialog(
+            context: context,
+            title: 'Dados Incorretos',
+            message: 'Por favor, Verifique os dados e tente novamente.',
+          );
+        }
       }
       value = InitialState<CreateAccountState>();
     });

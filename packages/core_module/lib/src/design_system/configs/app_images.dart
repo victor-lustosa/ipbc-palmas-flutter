@@ -1,5 +1,6 @@
 class AppImages {
   //web
+  static const String logo = 'assets/images/logo.png';
   static const String bannerStore = 'assets/images/banner_store.png';
   static const String churchLocation = 'assets/images/church_location.png';
   static const String hero =
@@ -40,7 +41,6 @@ class AppImages {
   static const String familyDayImage = 'assets/images/family_day.jpeg';
   static const String wifiIconImage = 'assets/images/wifi_icon.png';
   static const String noConnectionImage = 'assets/images/perm_scan_wifi.png';
-  static const String logo = 'assets/images/logo.png';
   static const String lock = 'assets/images/lock.png';
   static const String mailCheck = 'assets/images/mail_check.png';
   static const String logoLoginImage = 'assets/images/auth/logo_ipbc_login.png';
@@ -51,6 +51,6 @@ class AppImages {
     'assets/images/default_cover_1.png',
     'assets/images/default_cover_2.png',
     'assets/images/default_cover_3.png',
-    'assets/images/default_cover_4.png'
+    'assets/images/default_cover_4.png',
   ];
 }

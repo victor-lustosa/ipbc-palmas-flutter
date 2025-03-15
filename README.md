@@ -23,11 +23,21 @@ Projeto de aplicativo Android e iOS Open Source para a Igreja Presbiteriana Cent
 ---
 
 > **Atenção**
-> Verifique a versão do Flutter e do Dart, Flutter ^3.7.x e Dart ^2.19.x, porque algumas classes possuem dependências de novas versões.
+> Verifique a versão do Flutter e do Dart, Flutter ^ 3.24.x e Dart ^ 3.5.x, porque algumas classes possuem dependências de novas versões.
 
 ```bash
 $ flutter pub get
 $ flutter run lib/main.dart
+```
+> Para gerar os models do Isar, rode o comando a baixo.
+
+```bash
+$ dart run build_runner build  
+```
+> Quando tiver que tirar um arquivo do git do projeto, utilize o comando a baixo
+
+```bash
+$ git rm --cached nome_do_arquivo
 ```
 
 ### Google Drive

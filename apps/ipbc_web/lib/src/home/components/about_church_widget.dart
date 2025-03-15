@@ -172,7 +172,9 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                     top: 16,
                     bottom: 64,
                   ),
-                  child: aboutChurchText(textAlign: TextAlign.center,),
+                  child: aboutChurchText(
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 Container(
                   child: churchMissions(
@@ -205,7 +207,10 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    titlePage(fontSize:  width < ResponsivityUtil.smallDeviceWidth ? 34 : 40),
+                    titlePage(
+                        fontSize: width < ResponsivityUtil.smallDeviceWidth
+                            ? 34
+                            : 40),
                     subtitlePage(fontSize: 20, width: 422),
                     mainImage(height: 393),
                   ],
@@ -238,9 +243,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
                   fontSize: 18,
                   insideMargin: const EdgeInsets.only(right: 18),
                   margin: const EdgeInsets.symmetric(horizontal: 28),
-                  width: width > 400
-                      ? width * .93
-                      : 450,
+                  width: width > 400 ? width * .93 : 450,
                   textHeight: 1.4,
                 ),
               ],
@@ -312,7 +315,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
       );
 
   churchMissions(
-          { double? width,
+          {double? width,
           EdgeInsetsGeometry? margin,
           required EdgeInsetsGeometry insideMargin,
           double? fontSize,
@@ -353,7 +356,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
   Widget cardMission(
           {required ImageProvider image,
           required String text,
-           double? width,
+          double? width,
           double? fontSize,
           required EdgeInsetsGeometry insideMargin}) =>
       SizedBox(

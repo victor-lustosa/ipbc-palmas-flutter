@@ -21,9 +21,8 @@ class _OwnChoiceChipsWidgetState extends State<OwnChoiceChipsWidget> {
       width: context.sizeOf.width,
       child: Wrap(
         spacing: 12,
-        children: List<Widget>.generate(
-          _options.length,
-          (int index) {
+        children:
+        List<Widget>.generate(_options.length, (int index) {
             return InkWell(
               onTap: () {
                 setState(() {
@@ -60,7 +59,7 @@ class _OwnChoiceChipsWidgetState extends State<OwnChoiceChipsWidget> {
                 ),
               ),
             );
-          },
+        },
         ).toList(),
       ),
     );

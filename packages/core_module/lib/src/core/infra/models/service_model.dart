@@ -1,40 +1,40 @@
-
 import 'package:core_module/core_module.dart';
 
 class ServiceModel extends ServiceEntity {
-  ServiceModel(
-      {required super.id,
-      required super.image,
-      required super.theme,
-      required super.hour,
-      required super.preacher,
-      required super.type,
-      required super.guideIsVisible,
-      required super.createAt,
-      required super.lyricsList,
-      required super.liturgiesList,
-      required super.title,
-      required super.heading
-      });
+  ServiceModel({
+    required super.id,
+    required super.image,
+    required super.theme,
+    required super.hour,
+    required super.preacher,
+    required super.type,
+    required super.guideIsVisible,
+    required super.createAt,
+    required super.lyricsList,
+    required super.liturgiesList,
+    required super.title,
+    required super.heading,
+  });
 
   factory ServiceModel.empty() => ServiceModel(
-      createAt: DateTime.now(),
-      lyricsList: [],
-      liturgiesList: [],
-      title: '',
-      theme: '',
-      hour: '',
-      image: '',
-      preacher: '',
-      type: '',
-      heading: '',
-      guideIsVisible: false,
-      id: SupaServicesUtil.createId());
+    createAt: DateTime.now(),
+    lyricsList: [],
+    liturgiesList: [],
+    title: '',
+    theme: '',
+    hour: '',
+    image: '',
+    preacher: '',
+    type: '',
+    heading: '',
+    guideIsVisible: false,
+    id: SupaServicesUtil.createId(),
+  );
 
   ServiceModel copyWith({
     DateTime? createAt,
     String? title,
-    int? id,
+    String? id,
     String? theme,
     String? preacher,
     String? type,
@@ -43,7 +43,8 @@ class ServiceModel extends ServiceEntity {
     String? heading,
     bool? guideIsVisible,
     List<LyricModel>? lyricsList,
-    List<LiturgyEntity>? liturgiesList}) {
+    List<LiturgyEntity>? liturgiesList,
+  }) {
     return ServiceModel(
       title: title ?? this.title,
       image: image ?? this.image,

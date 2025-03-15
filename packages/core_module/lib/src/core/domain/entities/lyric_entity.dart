@@ -15,4 +15,5 @@ class LyricEntity {
     required this.group,
     // required this.verses
   });
+  final String id;
 }

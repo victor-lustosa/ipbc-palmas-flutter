@@ -11,7 +11,7 @@ Future<void> showCustomOptionsDialog({
   return showDialog<void>(
     context: context,
     barrierDismissible: false,
-    barrierColor: AppColors.black.withOpacity(0.3),
+    barrierColor: AppColors.black.withValues(alpha: .3),
     builder: (BuildContext context) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -28,8 +28,7 @@ Future<void> showCustomOptionsDialog({
                   Container(
                     decoration: const BoxDecoration(
                       color: AppColors.searchBar,
-                      borderRadius:
-                      BorderRadius.all(Radius.circular(16)),
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
                     ),
                     margin: EdgeInsets.only(bottom: context.sizeOf.height * .3),
                     child: Row(
@@ -41,22 +40,28 @@ Future<void> showCustomOptionsDialog({
                             top: 18,
                           ),
                           child: Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                Modular.get<EditLiturgyViewModel>().entity.sequence,
+                                Modular.get<EditLiturgyViewModel>()
+                                    .entity
+                                    .sequence,
                                 style: AppFonts.defaultFont(
                                   color: AppColors.grey9,
                                   fontSize: 17,
                                 ),
                               ),
                               Visibility(
-                                visible: Modular.get<EditLiturgyViewModel>().entity.isAdditional,
+                                visible:
+                                    Modular.get<EditLiturgyViewModel>()
+                                        .entity
+                                        .isAdditional,
                                 child: Container(
                                   margin: const EdgeInsets.only(top: 4),
                                   child: Text(
-                                    Modular.get<EditLiturgyViewModel>().entity.additional,
+                                    Modular.get<EditLiturgyViewModel>()
+                                        .entity
+                                        .additional,
                                     style: AppFonts.defaultFont(
                                       color: AppColors.grey8,
                                       fontSize: 13,
@@ -75,7 +80,7 @@ Future<void> showCustomOptionsDialog({
                       filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.8),
+                          color: Colors.white.withValues(alpha: .8),
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Column(
@@ -89,7 +94,10 @@ Future<void> showCustomOptionsDialog({
                               label: 'Add Box',
                               action: () {
                                 Modular.get<EditLiturgyViewModel>().addBox();
-                                closeDialog(context: context,callback: callback);
+                                closeDialog(
+                                  context: context,
+                                  callback: callback,
+                                );
                               },
                             ),
                             const Divider(
@@ -104,8 +112,12 @@ Future<void> showCustomOptionsDialog({
                               icon: AppIcons.contentCopy,
                               label: 'Duplicar',
                               action: () {
-                                Modular.get<EditLiturgyViewModel>().copyEntity();
-                                closeDialog(context: context,callback: callback);
+                                Modular.get<EditLiturgyViewModel>()
+                                    .copyEntity();
+                                closeDialog(
+                                  context: context,
+                                  callback: callback,
+                                );
                               },
                             ),
                             const Divider(
@@ -121,7 +133,10 @@ Future<void> showCustomOptionsDialog({
                               label: 'Deletar',
                               action: () {
                                 Modular.get<EditLiturgyViewModel>().delete();
-                                closeDialog(context: context,callback: callback);
+                                closeDialog(
+                                  context: context,
+                                  callback: callback,
+                                );
                               },
                             ),
                           ],
@@ -141,9 +156,11 @@ Future<void> showCustomOptionsDialog({
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             adaptiveButtonType: AdaptiveButtonType.text,
                             action: () {
-                              closeDialog(context: context,callback: callback);
+                              closeDialog(context: context, callback: callback);
                             },
-                            backgroundColor: Colors.white.withOpacity(0.8),
+                            backgroundColor: Colors.white.withValues(
+                              alpha: .8,
+                            ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),
@@ -169,52 +186,41 @@ Future<void> showCustomOptionsDialog({
   );
 }
 
-closeDialog(
-{required BuildContext context,
-final Function(bool?)? callback}){
+closeDialog({required BuildContext context, final Function(bool?)? callback}) {
   if (callback != null) {
     callback(false);
   }
   pop(context);
 }
 
-actionButton(
-    {required BuildContext context,
-    final Function(bool?)? callback,
-    required String icon,
-    required String label,
-    required double top,
-    required double bottom,
-    required VoidCallback? action}) {
+actionButton({
+  required BuildContext context,
+  final Function(bool?)? callback,
+  required String icon,
+  required String label,
+  required double top,
+  required double bottom,
+  required VoidCallback? action,
+}) {
   return ButtonWidget(
     overlayColor: Colors.transparent,
-    padding: EdgeInsets.only(
-      top: top,
-      bottom: bottom,
-    ),
+    padding: EdgeInsets.only(top: top, bottom: bottom),
     adaptiveButtonType: AdaptiveButtonType.text,
     action: action,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(
-            right: 10,
-            left: context.sizeOf.width * .31,
-          ),
+          margin: EdgeInsets.only(right: 10, left: context.sizeOf.width * .31),
           height: 20,
           width: 20,
           child: Image.asset(icon),
         ),
         Text(
           label,
-          style: AppFonts.defaultFont(
-            fontSize: 17,
-            color: AppColors.grey10,
-          ),
+          style: AppFonts.defaultFont(fontSize: 17, color: AppColors.grey10),
         ),
       ],
     ),
   );
-
 }

@@ -24,9 +24,7 @@ class LoadingButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
       margin: EdgeInsets.only(
         top: marginTop ?? 0,
         bottom: marginBottom ?? 0,
@@ -38,27 +36,26 @@ class LoadingButtonWidget extends StatelessWidget {
       duration: const Duration(milliseconds: 750),
       curve: Curves.fastOutSlowIn,
       child: ButtonWidget(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         action: action,
         backgroundColor:
             isValid ? AppColors.darkGreen : AppColors.disableButton,
         shadowColor: AppColors.grey0,
-        child: isPressed
-            ? const LoadingWidget(
-                androidRadius: 2,
-                iosRadius: 11,
-                size: 20,
-                color: AppColors.white,
-              )
-            : Text(
-                label,
-                style: AppFonts.defaultFont(
+        child:
+            isPressed
+                ? const LoadingWidget(
+                  androidRadius: 2,
+                  iosRadius: 11,
+                  size: 20,
                   color: AppColors.white,
-                  fontWeight: FontWeight.w600,
+                )
+                : Text(
+                  label,
+                  style: AppFonts.defaultFont(
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
       ),
     );
   }

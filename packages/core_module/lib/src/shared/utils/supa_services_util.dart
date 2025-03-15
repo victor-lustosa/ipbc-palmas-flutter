@@ -5,8 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:uno/uno.dart';
 
 class SupaServicesUtil {
-  static int createId() =>
-      int.parse(DateTime.now().microsecondsSinceEpoch.toString());
+  static String createId() => DateTime.now().microsecondsSinceEpoch.toString();
 
   static _dateNowDelayed() =>
       Future.delayed(const Duration(seconds: 2), () => DateTime.now());
@@ -17,8 +16,9 @@ class SupaServicesUtil {
   ) async {
     final String json = await rootBundle.loadString(path);
     ServiceModel service = SupaServiceAdapter.fromJson(json);
-    List<LyricEntity> lyricsConverted =
-        await _generateVersesList(service.lyricsList);
+    List<LyricEntity> lyricsConverted = await _generateVersesList(
+      service.lyricsList,
+    );
     List<LyricModel> lyricsAux = [];
     //aqui vai o codigo para alterar a capa do album
     for (int line = 0; service.lyricsList.length > line; line++) {
@@ -36,7 +36,8 @@ class SupaServicesUtil {
   }
 
   static Future<List<LyricEntity>> _generateVersesList(
-      List<LyricEntity> lyricsList) async {
+    List<LyricEntity> lyricsList,
+  ) async {
     List<LyricEntity> results = [];
     for (int i = 0; lyricsList.length > i; i++) {
       Map result = await _getLyric(lyricsList[i].title, lyricsList[i].group);
@@ -56,7 +57,8 @@ class SupaServicesUtil {
     String apikey = 'a34faccfb8ad3edc6ddcc978e34802ef';
     try {
       final response = await Uno().get(
-          'https://api.vagalume.com.br/search.php?art=$groupParam&mus=$titleParam&apikey=$apikey');
+        'https://api.vagalume.com.br/search.php?art=$groupParam&mus=$titleParam&apikey=$apikey',
+      );
       return response.data;
     } on UnoError catch (error, st) {
       AnalyticsUtil.recordError(name: 'service util', error: error, st: st);
@@ -82,7 +84,7 @@ class SupaServicesUtil {
         'image':
             'https://xrvmfhpmelyvupfylnfk.supabase.co/storage/v1/object/public/covers/web_service_covers/sunday_evening_service_sm.png',
         'path': 'sunday-evening-services/20',
-        'hour': '19h'
+        'hour': '19h',
       },
       {
         'id': createId(),
@@ -92,7 +94,7 @@ class SupaServicesUtil {
         'image':
             'https://xrvmfhpmelyvupfylnfk.supabase.co/storage/v1/object/public/covers/web_service_covers/sunday_morning_service_sm.png',
         'path': 'sunday-morning-services/20',
-        'hour': '9h'
+        'hour': '9h',
       },
       {
         'id': createId(),
@@ -102,7 +104,7 @@ class SupaServicesUtil {
         'image':
             'https://xrvmfhpmelyvupfylnfk.supabase.co/storage/v1/object/public/covers/web_service_covers/saturday_service_sm.png',
         'path': 'saturday-services/20',
-        'hour': '19h30'
+        'hour': '19h30',
       },
     ];
     return servicesList;

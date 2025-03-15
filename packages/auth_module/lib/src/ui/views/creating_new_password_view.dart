@@ -25,13 +25,13 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
   bool _isConfirmPasswordValid = true;
   bool _isPasswordValid = true;
   bool _obscure = true;
-  bool _isPressed = false;
+  bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
     suffixAction() => setState(() {
-          _obscure = !_obscure;
-        });
+      _obscure = !_obscure;
+    });
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -40,24 +40,14 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
             child: Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(
-                    left: 16,
-                    top: 60,
-                  ),
+                  margin: const EdgeInsets.only(left: 16, top: 60),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      BackButtonWidget(
-                        action: () => pop(context),
-                      ),
-                    ],
+                    children: [BackButtonWidget(action: () => pop(context))],
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(
-                    top: 10.11,
-                    bottom: 53.89,
-                  ),
+                  margin: const EdgeInsets.only(top: 10.11, bottom: 53.89),
                   child: Column(
                     children: [
                       Text(
@@ -78,15 +68,12 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                   titleMargin: const EdgeInsets.only(bottom: 4),
                   errorText: _passwordErrorText,
                   globalKey: _passwordKey,
-                  isPressed: _isPressed,
+                  isPressed: isPressed,
                   obscure: _obscure,
                   inputDecoration: fieldInputDecoration(
                     isValid: _isPasswordValid,
                     hintText: 'Senha',
-                    contentPadding: const EdgeInsets.only(
-                      left: 16,
-                      top: 9,
-                    ),
+                    contentPadding: const EdgeInsets.only(left: 16, top: 9),
                     suffixIcon: HideIconWidget(
                       isObscure: _obscure,
                       suffixAction: suffixAction,
@@ -104,15 +91,12 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                     isValid: _isConfirmPasswordValid,
                     errorText: _confirmPasswordErrorText,
                     globalKey: _confirmPasswordKey,
-                    isPressed: _isPressed,
+                    isPressed: isPressed,
                     obscure: _obscure,
                     inputDecoration: fieldInputDecoration(
                       isValid: _isConfirmPasswordValid,
                       hintText: 'Repetir senha',
-                      contentPadding: const EdgeInsets.only(
-                        left: 16,
-                        top: 9,
-                      ),
+                      contentPadding: const EdgeInsets.only(left: 16, top: 9),
                       suffixIcon: HideIconWidget(
                         isObscure: _obscure,
                         suffixAction: suffixAction,
@@ -126,20 +110,17 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                 ),
                 Container(
                   width: context.sizeOf.width,
-                  margin: const EdgeInsets.only(
-                    left: 16,
-                    top: 8,
-                    right: 16,
-                  ),
+                  margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         " * Deve conter no mínimo 8 dígitos.",
                         style: AppFonts.defaultFont(
-                          color: isPasswordValid(_passwordController.text)
-                              ? AppColors.darkGreen
-                              : AppColors.grey8,
+                          color:
+                              isPasswordValid(_passwordController.text)
+                                  ? AppColors.darkGreen
+                                  : AppColors.grey8,
                           fontSize: 13,
                           fontWeight: FontWeight.w400,
                         ),
@@ -159,15 +140,15 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(
-                    top: 93,
-                  ),
+                  margin: const EdgeInsets.only(top: 93),
                   child: LoadingButtonWidget(
-                    isPressed: _isPressed,
+                    isPressed: isPressed,
                     action: () async {
                       //if (isValid) {
-                      pushNamed(AuthModule.authRoute +
-                          AuthModule.resetPasswordSuccessRoute);
+                      pushNamed(
+                        AppRoutes.authRoute +
+                            AppRoutes.resetPasswordSuccessRoute,
+                      );
                       //}
                     },
                     isValid: true,

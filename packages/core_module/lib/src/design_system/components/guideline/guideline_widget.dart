@@ -2,11 +2,12 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class GuidelineWidget extends StatelessWidget {
-  const GuidelineWidget(
-      {super.key,
-      required this.liturgiesList,
-      required this.timelineColor,
-      required this.circleColor});
+  const GuidelineWidget({
+    super.key,
+    required this.liturgiesList,
+    required this.timelineColor,
+    required this.circleColor,
+  });
 
   final List<LiturgyEntity> liturgiesList;
   final Color timelineColor;
@@ -42,18 +43,17 @@ class GuidelineWidget extends StatelessWidget {
                 Container(
                   width: 1,
                   height: liturgiesList[index].isAdditional ? 28 : 18,
-                  color: index == liturgiesList.length - 1
-                      ? AppColors.white
-                      : timelineColor,
+                  color:
+                      index == liturgiesList.length - 1
+                          ? AppColors.white
+                          : timelineColor,
                 ),
               ],
             ),
             Expanded(
               child: Container(
                 margin: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
+                decoration: const BoxDecoration(color: Colors.white),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -80,7 +80,7 @@ class GuidelineWidget extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
           ],
         );
       },

@@ -33,8 +33,10 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<ServicesCollectionBloc,
-          GenericState<ServicesCollectionState>>(
+      body: BlocBuilder<
+        ServicesCollectionBloc,
+        GenericState<ServicesCollectionState>
+      >(
         bloc: _bloc,
         builder: (context, state) {
           if (state is LoadingState<ServicesCollectionState>) {
@@ -45,13 +47,17 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
             );
           } else if (state is NoConnectionState<ServicesCollectionState>) {
             return NoConnectionView(
-              action: () => nativeNavigate(
-                ServiceModule.servicesCollectionRoute,
-                context,
-              ),
+              action:
+                  () => nativePushReplacementNamed(
+                    AppRoutes.servicesCollectionRoute,
+                    context,
+                  ),
             );
           } else if (state
-              is DataFetchedState<ServicesCollectionState, ServiceEntity>) {
+              is DataFetchedState<
+                ServicesCollectionState,
+                List<ServiceEntity>
+              >) {
             entitiesList = state.entities;
             return AnnotatedRegion<SystemUiOverlayStyle>(
               value: SystemUiOverlayStyle.light,
@@ -66,7 +72,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                       ),
                       Container(
                         margin: const EdgeInsets.only(
-                          top:24,
+                          top: 24,
                           left: 15.5,
                           right: 15.5,
                         ),
@@ -83,18 +89,22 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                             return Material(
                               borderRadius: BorderRadius.circular(16),
                               clipBehavior: Clip.hardEdge,
-                              color: index == 0
-                                  ? AppColors.highlightGreen.withOpacity(0.1)
-                                  : AppColors.grey0,
+                              color:
+                                  index == 0
+                                      ? AppColors.highlightGreen.withValues(
+                                        alpha: .1,
+                                      )
+                                      : AppColors.grey0,
                               child: InkWell(
                                 onTap: () {
                                   nativePushNamed(
-                                      ServiceModule.serviceRoute,
-                                      arguments: ServiceViewDTO(
-                                        service: entitiesList[index],
-                                        image: widget.entity.image,
-                                      ),
-                                      context);
+                                    AppRoutes.serviceRoute,
+                                    arguments: ServiceViewDTO(
+                                      service: entitiesList[index],
+                                      image: widget.entity.image,
+                                    ),
+                                    context,
+                                  );
                                 },
                                 child: Row(
                                   children: [
@@ -104,8 +114,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                         top: 12,
                                         bottom: 12,
                                       ),
-                                      width:
-                                          context.sizeOf.width * .77,
+                                      width: context.sizeOf.width * .77,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -122,11 +131,13 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                           ),
                                           Container(
                                             margin: const EdgeInsets.only(
-                                                bottom: 4, top: 4),
+                                              bottom: 4,
+                                              top: 4,
+                                            ),
                                             child: Text(
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 2,
-                                              'Messagem: ${entitiesList[index].theme}',
+                                              'Mensagem: ${entitiesList[index].theme}',
                                               style: AppFonts.description(
                                                 color: AppColors.grey8,
                                               ),
@@ -148,7 +159,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                       highlightColor: Colors.transparent,
                                       iOSIcon: CupertinoIcons.chevron_forward,
                                       androidIcon: Icons.navigate_next_sharp,
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -170,13 +181,14 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
         iconColor: AppColors.white,
         backgroundColor: AppColors.add,
         icon: Icons.add,
-        action: () => pushNamed(
-          ServiceModule.servicesRoute + ServiceModule.editLiturgiesRoute,
-          arguments: EditLiturgyDTO(
-            image: widget.entity.image,
-            heading: widget.entity.heading,
-          ),
-        ),
+        action:
+            () => pushNamed(
+              AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute,
+              arguments: EditLiturgyDTO(
+                image: widget.entity.image,
+                heading: widget.entity.heading,
+              ),
+            ),
       ),
     );
   }
