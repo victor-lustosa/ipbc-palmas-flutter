@@ -34,7 +34,6 @@ export 'src/configs/app_routes.dart';
 
 export 'package:path_provider/path_provider.dart';
 export 'package:flutter_modular/flutter_modular.dart';
-export 'package:upgrader/upgrader.dart';
 export 'package:intl/intl.dart';
 export 'package:hive_flutter/hive_flutter.dart';
 export 'package:email_validator/email_validator.dart';
