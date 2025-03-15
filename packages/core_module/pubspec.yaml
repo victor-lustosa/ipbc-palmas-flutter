@@ -31,11 +31,13 @@ dependencies:
   vector_math: ^2.1.4
   flutter_svg: ^2.0.10+1
   google_maps_flutter: ^2.7.0
+  equatable: ^2.0.5
   google_sign_in: ^6.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  bloc_test: ^9.1.1
   flutter_lints: ^5.0.0
   isar_generator: ^3.1.0+1
   build_runner: ^2.3.3   # <-- and make sure that is also there

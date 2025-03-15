@@ -71,6 +71,15 @@ class _LyricsListViewState extends State<LyricsListView>
                     child: Column(
                       children: [
                         const TitleTopBarWidget(title: "Músicas"),
+                        Text(state.entities.length.toString()),
+                        ElevatedButton(
+                            onPressed: () {
+                              _bloc.add(
+                                GetPaginationEvent<LyricEvent, LyricEntity>(
+                                    10),
+                              );
+                            },
+                            child: const Text('Paginação')),
                         Container(
                           margin: const EdgeInsets.only(
                             top: 38,

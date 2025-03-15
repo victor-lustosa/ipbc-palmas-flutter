@@ -11,7 +11,8 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   final IUseCases useCases;
   final ILyricsUseCases lyricUseCases;
   List<LyricEntity>? lyricsList;
-  final String path = 'lyrics/20';
+  final String path = 'lyrics/10';
+
   LyricBloc({
     required this.useCases,
     required this.lyricUseCases,
@@ -19,6 +20,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     on<GetInSupaEvent<LyricEvent>>(_getInSupa);
     on<FilterEvent<LyricEvent, LyricEntity>>(_filter);
     on<LoadingEvent<LyricEvent>>(_loading);
+    on<GetPaginationEvent<LyricEvent, LyricEntity>>(_getPaginationInSupa);
     on<CheckConnectivityEvent<LyricEvent>>(_checkConnectivity);
   }
 
@@ -37,6 +39,23 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     lyricsList = await supaUseCase.get(path);
     if (lyricsList!.isNotEmpty) {
       emit(DataFetchedState<LyricState, LyricEntity>(entities: lyricsList!));
+    }
+  }
+
+  Future<void> _getPaginationInSupa(
+      GetPaginationEvent<LyricEvent, LyricEntity> event, emit) async {
+    List<LyricEntity> lyricsListAux = [];
+    //Caso esteja sem conexão eu salvo essas musicas no hive
+    int offset = lyricsList!.length;
+
+    String pathLimit = 'lyrics/${event.limit}/$offset';
+    lyricsListAux = await supaUseCase.get(pathLimit);
+    //Verificando se tem novos itens retornados se sim eu adiciona lista principal
+    if (lyricsListAux.isNotEmpty) {
+      lyricsList!.addAll(lyricsListAux);
+      emit(DataFetchedState<LyricState, LyricEntity>(entities: lyricsList!));
+    } else {
+      emit(NoMoreDataState<LyricState, LyricEntity>());
     }
   }
 
@@ -75,6 +94,18 @@ abstract class LyricEvent {}
 
 @immutable
 abstract class LyricState {}
+
+@immutable
+class GetPaginationEvent<R, T> extends GenericEvent<R> {
+  final int limit;
+
+  GetPaginationEvent(this.limit);
+}
+
+@immutable
+class NoMoreDataState<R, T> extends GenericEvent<R> {
+  NoMoreDataState();
+}
 
 @immutable
 class FilterEvent<R, T> extends GenericEvent<R> {
