@@ -25,7 +25,6 @@ class _HomeViewState extends State<HomeView>
     super.initState();
     _bloc = Modular.get<HomeBloc>();
     _bloc.add(CheckConnectivityEvent());
-
   }
 
   @override
@@ -64,9 +63,7 @@ class _HomeViewState extends State<HomeView>
                         ListenableBuilder(
                           listenable: Modular.get<MainTopBarManager>(),
                           builder: (_, __) {
-
-                            return Modular.get<MainTopBarManager>()
-                                .mainTopBarWidget;
+                            return Modular.get<MainTopBarManager>().mainTopBarWidget;
                           },
                         ),
                         InkWell(
@@ -110,7 +107,7 @@ class _HomeViewState extends State<HomeView>
                         ),
                         InkWell(
                           onTap: () {
-                            nativePushNamed(
+                            nativePushReplacementNamed(
                               AppRoutes.eventRoute + AppRoutes.eventsListRoute,
                               context,
                             );
