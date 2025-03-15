@@ -60,7 +60,8 @@ class _LyricsListViewState extends State<LyricsListView>
                     context,
                   ),
                 );
-              } else if (state is DataFetchedState<LyricState, LyricEntity>) {
+              } else if (state
+                  is DataFetchedState<LyricState, List<LyricEntity>>) {
                 // print(escrevendo);
                 return RefreshIndicator(
                   color: AppColors.darkGreen,
@@ -75,8 +76,7 @@ class _LyricsListViewState extends State<LyricsListView>
                         ElevatedButton(
                             onPressed: () {
                               _bloc.add(
-                                GetPaginationEvent<LyricEvent, LyricEntity>(
-                                    10),
+                                GetPaginationEvent<LyricEvent, LyricEntity>(10),
                               );
                             },
                             child: const Text('Paginação')),
@@ -96,7 +96,7 @@ class _LyricsListViewState extends State<LyricsListView>
                                     selectedIndex == 0
                                         ? MusicFilter()
                                         : ArtistFilter(),
-                                    // FilterFactory<LyricEvent,LyricEntity>(index: selectedIndex),
+                                    // FilterFactory<LyricEvent,List<LyricEntity>>(index: selectedIndex),
                                     selectedIndex),
                               );
                             },

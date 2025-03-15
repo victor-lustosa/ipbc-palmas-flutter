@@ -8,13 +8,11 @@ import 'ui/blocs/lyric_bloc.dart';
 import 'ui/views/lyric_view.dart';
 
 class LyricModule extends Module {
-
   @override
   void exportedBinds(i) {
     i.addSingleton<LyricBloc>(
       () => LyricBloc(
-        useCases: i.get<UseCases<SupabaseRepository>>(),
-        lyricUseCases: LyricsUseCases(),
+        onlineUseCases: i.get<UseCases<SupabaseRepository>>(),
       ),
       config: CoreModule.blocConfig(),
     );
