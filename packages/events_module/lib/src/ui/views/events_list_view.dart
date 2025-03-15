@@ -56,12 +56,7 @@ class EventsListViewState extends State<EventsListView> {
                     child: Column(
                       mainAxisSize:MainAxisSize.min,
                       children: [
-                        ListenableBuilder(
-                            listenable: Modular.get<MainTopBarManager>(),
-                            builder: (_, __) {
-                              return Modular.get<MainTopBarManager>().mainTopBarWidget;
-                            }
-                        ),
+                        MainTopBarWidget(),
                         Row(
                           children: [
                             Container(

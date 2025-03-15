@@ -60,12 +60,7 @@ class _HomeViewState extends State<HomeView>
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ListenableBuilder(
-                          listenable: Modular.get<MainTopBarManager>(),
-                          builder: (_, __) {
-                            return Modular.get<MainTopBarManager>().mainTopBarWidget;
-                          },
-                        ),
+                        MainTopBarWidget(),
                         InkWell(
                           onTap: () {
                             nativePushNamed(
@@ -107,7 +102,8 @@ class _HomeViewState extends State<HomeView>
                         ),
                         InkWell(
                           onTap: () {
-                            nativePushReplacementNamed(
+                            Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
+                            nativePushNamed(
                               AppRoutes.eventRoute + AppRoutes.eventsListRoute,
                               context,
                             );

@@ -5,7 +5,7 @@ import '../../../core_module.dart';
 class MainTopBarManager extends ChangeNotifier {
 
   MainTopBarManager(){
-    _mainTopBarWidget = MainTopBarWidget(key: Modular.get<AppGlobalKeys>().mainTopBarKey ,authKey: Modular.get<AppGlobalKeys>().authAvatarKey,);
+    _mainTopBarWidget = MainTopBarWidget();
   }
 
   late final MainTopBarWidget _mainTopBarWidget;

@@ -28,11 +28,13 @@ class EventsDetailViewState extends State<EventsDetailView>
     host: 'maps.app.goo.gl',
     path: 'SGwA4JvUZ5SWNS287',
   );
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,19 +45,14 @@ class EventsDetailViewState extends State<EventsDetailView>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ListenableBuilder(
-                    listenable: Modular.get<MainTopBarManager>(),
-                    builder: (_, __) {
-
-                      return Modular.get<MainTopBarManager>().mainTopBarWidget;
-                    }
+                MainTopBarWidget(
+                  margin: EdgeInsets.only(top: 22, bottom: 24,right: 2),
                 ),
                 Row(
                   children: [
                     Container(
                       margin: const EdgeInsets.only(
                         top: 10,
-                        left: 16,
                       ),
                       child: BackButtonWidget(
                         action: () => nativePop(context),

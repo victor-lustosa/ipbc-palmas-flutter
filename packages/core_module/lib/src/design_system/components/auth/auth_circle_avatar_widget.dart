@@ -19,21 +19,7 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget> {
       _store.validateAuthentication();
     });
   }
-@override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-  }
-  @override
-  void didUpdateWidget(covariant AuthCircleAvatarWidget oldWidget) {
-    // TODO: implement didUpdateWidget
-    super.didUpdateWidget(oldWidget);
-  }
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
+
   void updateAuthAvatar() {
     setState(() {
       _store.validateAuthentication();
