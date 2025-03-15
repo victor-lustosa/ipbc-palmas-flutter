@@ -8,6 +8,7 @@ class SlideCardsWidget extends StatefulWidget {
   final EdgeInsetsGeometry? margin;
   final ScrollPhysics? physics;
   final Axis scrollDirection;
+  final bool? shrinkWrap;
 
   const SlideCardsWidget({
     required this.entities,
@@ -17,6 +18,7 @@ class SlideCardsWidget extends StatefulWidget {
     required this.width,
     this.physics,
     this.margin,
+    this.shrinkWrap,
   });
 
   @override
@@ -27,17 +29,20 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      shrinkWrap: widget.shrinkWrap ?? true,
       scrollDirection: widget.scrollDirection,
       physics: widget.physics,
       itemCount: widget.entities.length,
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
-          onTap:
-              () => nativePushNamed(
-                widget.route,
-                arguments: widget.entities[index],
-                context,
-              ),
+          onTap: () {
+            Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
+            nativePushNamed(
+              widget.route,
+              arguments: widget.entities[index],
+              context,
+            );
+          },
           child: Container(
             margin:
                 widget.margin ??

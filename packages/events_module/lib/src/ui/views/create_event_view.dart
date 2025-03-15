@@ -65,10 +65,6 @@ class _CreateEventViewState extends State<CreateEventView> {
             child: Column(
               children: [
                 MainTopBarWidget(
-                  topBarList: [
-                    BackButtonWidget(action: () => nativePop(context)),
-                    AuthCircleAvatarWidget()
-                  ],
                 ),
                 Row(
                   children: [

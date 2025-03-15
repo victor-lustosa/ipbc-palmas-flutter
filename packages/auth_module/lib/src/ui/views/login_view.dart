@@ -49,9 +49,14 @@ class _LoginViewState extends State<LoginView> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  MainTopBarWidget(
+                  Container(
                     margin: EdgeInsets.only(top: 28, left: 16),
-                    topBarList: [BackButtonWidget(action: () => pop(context))],
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        BackButtonWidget(action: () => pop(context))
+                      ],
+                    ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 35, bottom: 32),
@@ -193,7 +198,12 @@ class _LoginViewState extends State<LoginView> {
                     ],
                   ),
                   Container(
-                    margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                    margin: const EdgeInsets.only(
+                      top: 16,
+                      left: 16,
+                      right: 16,
+                      bottom: 25,
+                    ),
                     height: 48,
                     width: context.sizeOf.width,
                     child: ButtonWidget(
@@ -227,7 +237,7 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                   ),
-                  Container(
+                  /*Container(
                     margin: const EdgeInsets.only(
                       top: 12,
                       left: 16,
@@ -264,7 +274,7 @@ class _LoginViewState extends State<LoginView> {
                         ],
                       ),
                     ),
-                  ),
+                  ),*/
                   RichText(
                     text: TextSpan(
                       children: [

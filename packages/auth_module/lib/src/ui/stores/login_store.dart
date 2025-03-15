@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:core_module/core_module.dart';
 
-class LoginStore extends ValueNotifier<GenericState<LoginState>> with MainTopBarMixin{
+class LoginStore extends ValueNotifier<GenericState<LoginState>>{
   LoginStore({
     required IOfflineAuthUseCases offlineUse,
     required IOnlineAuthUseCases onlineUse,
@@ -62,31 +62,10 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> with MainTopBar
     if (token != null) _offlineUseCases.saveToken(token);
   }
 
-  // Login Facebook
-  Future<void> signInWithFacebook(BuildContext context) async {
-    value = LoadingState<LoginState>();
+ /* // Login Facebook
+  Future<void> signInWithFacebook() async {
     await _onlineUseCases.signInWithFacebook();
-    Stream dfas = _onlineUseCases.streamFacebook();
-      dfas.listen((data) {
-          final AuthChangeEvent event = data.event;
-          final Session? session = data.session;
-
-          if (event == AuthChangeEvent.signedIn && session != null) {
-            print("Usuário autenticado: ${session.user.email}");
-            // Feche a tela ou redirecione
-            if (context.mounted) {
-              Navigator.pop(context);
-            }
-          } else if (event == AuthChangeEvent.signedOut) {
-            print("Usuário deslogado");
-          }
-        });
-   // final UserEntity? currentUser = _onlineUseCases.getCurrentUser();
-    //saveUserAndToken(currentUser, token);
-  //  if(context.mounted){
-    //  token != null && token.isNotEmpty ? toHome(context) : null;
-    //}
-  }
+  }*/
 
   validateFields() {
     value = ValidateFieldsState();
@@ -97,10 +76,13 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> with MainTopBar
   }
 
   toHome(BuildContext context) {
-      updateAuthAvatarKey();
       if(context.mounted){
         pop(context);
       }
+
+    Future.delayed(Duration(milliseconds: 50), () {
+      Modular.get<AppGlobalKeys>().authAvatarKey.currentState?.updateAuthAvatar();
+    });
   }
 
   Future createAccount() async {
