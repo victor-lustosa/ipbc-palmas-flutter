@@ -25,6 +25,7 @@ class _HomeViewState extends State<HomeView>
     super.initState();
     _bloc = Modular.get<HomeBloc>();
     _bloc.add(CheckConnectivityEvent());
+
   }
 
   @override
@@ -48,11 +49,7 @@ class _HomeViewState extends State<HomeView>
                 );
               } else if (state is NoConnectionState<HomeState>) {
                 return NoConnectionView(
-                  action:
-                      () => nativePushNamed(
-                        AppRoutes.homeRoute,
-                        context,
-                      ),
+                  action: () => nativePushNamed(AppRoutes.homeRoute, context),
                 );
               } else if (state is DataFetchedState<HomeState, HomeDTO>) {
                 _servicesList = state.entities.servicesEntitiesList;
@@ -65,10 +62,12 @@ class _HomeViewState extends State<HomeView>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ListenableBuilder(
-                            listenable: Modular.get<MainTopBarManager>(),
-                            builder: (_, __) {
-                              return Modular.get<MainTopBarManager>().mainTopBarWidget;
-                            }
+                          listenable: Modular.get<MainTopBarManager>(),
+                          builder: (_, __) {
+
+                            return Modular.get<MainTopBarManager>()
+                                .mainTopBarWidget;
+                          },
                         ),
                         InkWell(
                           onTap: () {

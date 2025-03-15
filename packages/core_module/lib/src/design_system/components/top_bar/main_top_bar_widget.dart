@@ -3,14 +3,29 @@ import '../../../../core_module.dart';
 
 class MainTopBarWidget extends StatefulWidget {
   const MainTopBarWidget({
-    super.key,
+    super.key, this.authKey,
   });
-
+  final Key? authKey;
   @override
   State<MainTopBarWidget> createState() => _MainTopBarWidgetState();
 }
 
 class _MainTopBarWidgetState extends State<MainTopBarWidget> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+  @override
+  void didUpdateWidget(covariant MainTopBarWidget oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,9 +34,14 @@ class _MainTopBarWidgetState extends State<MainTopBarWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
               LogoIconWidget(),
-              AuthCircleAvatarWidget()
+              AuthCircleAvatarWidget(key: widget.authKey,)
             ],
       ),
     );
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 }

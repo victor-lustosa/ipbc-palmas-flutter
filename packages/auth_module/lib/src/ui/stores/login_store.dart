@@ -81,7 +81,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>>{
       }
 
     Future.delayed(Duration(milliseconds: 50), () {
-      Modular.get<AppGlobalKeys>().authAvatarKey.currentState?.updateAuthAvatar();
+      Modular.get<AppGlobalKeys>().homeAuthAvatarKey.currentState?.updateAuthAvatar();
     });
   }
 

@@ -28,7 +28,11 @@ class EventsDetailViewState extends State<EventsDetailView>
     host: 'maps.app.goo.gl',
     path: 'SGwA4JvUZ5SWNS287',
   );
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +46,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                 ListenableBuilder(
                     listenable: Modular.get<MainTopBarManager>(),
                     builder: (_, __) {
+
                       return Modular.get<MainTopBarManager>().mainTopBarWidget;
                     }
                 ),

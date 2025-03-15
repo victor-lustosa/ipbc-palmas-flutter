@@ -8,13 +8,12 @@ class MainTopBarManager extends ChangeNotifier {
     _mainTopBarWidget = MainTopBarWidget();
   }
 
-  late MainTopBarWidget _mainTopBarWidget;
+  late final MainTopBarWidget _mainTopBarWidget;
 
 
   MainTopBarWidget get mainTopBarWidget => _mainTopBarWidget;
 
-  void update() {
-    _mainTopBarWidget = MainTopBarWidget(key: GlobalKey());
+  void notifyChanges() {
     notifyListeners();
   }
 }
