@@ -19,7 +19,7 @@ class _MainTopBarWidgetState extends State<MainTopBarWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
               LogoIconWidget(),
-              AuthCircleAvatarWidget(key: Modular.get<AppGlobalKeys>().authAvatarKey)
+              AuthCircleAvatarWidget()
             ],
       ),
     );

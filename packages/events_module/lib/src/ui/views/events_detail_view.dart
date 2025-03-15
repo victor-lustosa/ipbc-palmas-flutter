@@ -45,6 +45,19 @@ class EventsDetailViewState extends State<EventsDetailView>
                       return Modular.get<MainTopBarManager>().mainTopBarWidget;
                     }
                 ),
+                Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(
+                        top: 10,
+                        left: 16,
+                      ),
+                      child: BackButtonWidget(
+                        action: () => nativePop(context),
+                      ),
+                    ),
+                  ],
+                ),
                 Container(
                   margin: const EdgeInsets.only(top: 24, bottom: 16),
                   width: context.mediaQuery.size.width,

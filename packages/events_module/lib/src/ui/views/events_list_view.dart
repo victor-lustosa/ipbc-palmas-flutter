@@ -56,11 +56,17 @@ class EventsListViewState extends State<EventsListView> {
                     child: Column(
                       mainAxisSize:MainAxisSize.min,
                       children: [
+                        ListenableBuilder(
+                            listenable: Modular.get<MainTopBarManager>(),
+                            builder: (_, __) {
+                              return Modular.get<MainTopBarManager>().mainTopBarWidget;
+                            }
+                        ),
                         Row(
                           children: [
                             Container(
                               margin: const EdgeInsets.only(
-                                top: 24,
+                                top: 10,
                                 left: 16,
                               ),
                               child: BackButtonWidget(

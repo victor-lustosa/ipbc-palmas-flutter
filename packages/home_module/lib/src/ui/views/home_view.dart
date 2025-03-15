@@ -49,7 +49,7 @@ class _HomeViewState extends State<HomeView>
               } else if (state is NoConnectionState<HomeState>) {
                 return NoConnectionView(
                   action:
-                      () => nativePushReplacementNamed(
+                      () => nativePushNamed(
                         AppRoutes.homeRoute,
                         context,
                       ),
@@ -111,7 +111,7 @@ class _HomeViewState extends State<HomeView>
                         ),
                         InkWell(
                           onTap: () {
-                            nativePushReplacementNamed(
+                            nativePushNamed(
                               AppRoutes.eventRoute + AppRoutes.eventsListRoute,
                               context,
                             );
