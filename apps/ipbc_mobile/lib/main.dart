@@ -7,7 +7,7 @@ void main() async {
   Modular.setInitialRoute(AppRoutes.initialRoute);
   //Modular.setInitialRoute(AppRoutes.lyricsListRoute);
   WidgetsFlutterBinding.ensureInitialized();
-  Modular.setInitialRoute(LyricModule.lyricsListRoute);
+  Modular.setInitialRoute(AppRoutes.lyricsListRoute);
   await Future.wait([SupabaseRepository.init(), IsarRepository.init()]);
   // Bloc.observer = GenericBlocObserver();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(

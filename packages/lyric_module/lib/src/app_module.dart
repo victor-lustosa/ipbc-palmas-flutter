@@ -24,12 +24,9 @@ class LyricModule extends Module {
   List<Module> get imports => [CoreModule()];
 
   @override
-  List<Module> get imports => [CoreModule()];
-
-  @override
   void routes(r) {
     r.child(
-      lyricRoute,
+      AppRoutes.lyricRoute,
       transition: TransitionType.custom,
       child: (_) => LyricView(
         entity: r.args.data as LyricEntity,
@@ -50,7 +47,7 @@ class LyricModule extends Module {
       ),
     );
     r.child(
-      lyricsListRoute,
+      AppRoutes.lyricsListRoute,
       transition: TransitionType.custom,
       child: (_) => const LyricsListView(),
       customTransition: CustomTransition(

@@ -1,7 +1,7 @@
 import 'package:core_module/core_module.dart';
 
 class LyricEntity {
-  final int id;
+  final String id;
   final String title;
   final String group;
   final String albumCover;
@@ -15,5 +15,4 @@ class LyricEntity {
     required this.group,
     // required this.verses
   });
-  final String id;
 }

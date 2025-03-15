@@ -1,20 +1,20 @@
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core_module.dart';
 // ignore_for_file: avoid_print
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SupabaseDatasource.init();
-  SupabaseDatasource supa =
-      SupabaseDatasource(supabaseClient: Supabase.instance.client);
+  await SupabaseRepository.init();
+  SupabaseRepository supa =
+      SupabaseRepository(supabaseClient: Supabase.instance.client);
   try {
     List<LyricModel> lyricsInserted =
         await SupaServicesUtil.convertUnknownLyrics(
             'assets/data/unknown-lyrics/lyrics_mock.json');
     // inserindo lista de todas as letras
     for (LyricEntity lyric in lyricsInserted) {
-      supa.add('lyrics', SupaLyricAdapter.toMap(lyric));
+      supa.add(path: 'lyrics', data: SupaLyricAdapter.toMap(lyric));
     }
     print('lyrics list have been successfully added');
   } catch (e) {
