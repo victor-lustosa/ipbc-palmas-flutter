@@ -2,7 +2,7 @@ import '../../../../core_module.dart';
 
 class IsarRepository implements IRepository {
   final Isar isar;
-
+  List<String> params = [];
   IsarRepository({required this.isar});
 
   static Future init() async {
@@ -14,7 +14,7 @@ class IsarRepository implements IRepository {
   }
 
   @override
-  Future<dynamic> get<T>({String? path, String? id}) async {
+  Future<dynamic> get<T>({String? path}) async {
     final entity = await isar.collection<T>().where().findAll();
     if(entity.isNotEmpty){
       return Future.value(entity[0]);
@@ -24,16 +24,29 @@ class IsarRepository implements IRepository {
   }
 
   @override
-  Future<void> update<T>({required data, String? path, String? id}) async {
+  Future<void> update<T>({required data, String? path}) async {
     await isar.writeTxn(() async {
       isar.collection<T>().put(data);
     });
   }
 
   @override
-  Future<void> delete<T>({String? path, String? id}) async {}
+  Future<void> delete<T>({String? path}) async {}
 
   @override
-  Future<void> add<T>({required data, String? path, String? id}) async =>
-      update<T>(data: data, path: path, id: id);
+  Future<void> add<T>({required data, String? path}) async =>
+      update<T>(data: data, path: path);
+
+  @override
+  Future<dynamic> getByPagination<T>({String? path}) async {
+    path ??= '';
+    params = path.split('/');
+    int page = int.parse(params[0]);
+    int pageSize = int.parse(params[1]);
+    return await isar.collection<T>()
+        .where()
+        .offset((page - 1) * pageSize)
+        .limit(pageSize)
+        .findAll();
+  }
 }

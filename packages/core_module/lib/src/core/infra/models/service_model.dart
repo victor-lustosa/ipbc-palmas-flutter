@@ -17,7 +17,7 @@ class ServiceModel extends ServiceEntity {
   });
 
   factory ServiceModel.empty() => ServiceModel(
-    createAt: DateTime.now(),
+    createAt: '',
     lyricsList: [],
     liturgiesList: [],
     title: '',
@@ -32,7 +32,7 @@ class ServiceModel extends ServiceEntity {
   );
 
   ServiceModel copyWith({
-    DateTime? createAt,
+    String? createAt,
     String? title,
     String? id,
     String? theme,

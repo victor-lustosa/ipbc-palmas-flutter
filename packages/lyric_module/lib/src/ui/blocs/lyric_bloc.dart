@@ -11,7 +11,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
   List<LyricEntity>? lyricsList;
-  final String path = 'lyrics/10';
+  final String path = 'lyrics/createAt/false';
 
   LyricBloc({
     required this.onlineUseCases,
@@ -35,7 +35,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   }
 
   Future<void> _getInSupa(GetDataEvent<LyricEvent> event, emit) async {
-    //Caso esteja sem conexão eu salvo essas musicas no hive
+    //Caso esteja sem conexão eu salvo essas musicas no isar
     lyricsList = await onlineUseCases.get(
       path: path,
       converter: SupaLyricAdapter.fromMapList,

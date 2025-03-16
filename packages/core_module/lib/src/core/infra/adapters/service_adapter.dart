@@ -9,20 +9,23 @@ class ServiceAdapter {
       list.add(
         ServiceEntity(
           id:
-              entity['id'].runtimeType == String
-                  ? entity['id']
-                  : entity['id'].toString(),
+          entity['id'].runtimeType == String
+              ? entity['id']
+              : entity['id'].toString(),
           type: '',
           image: entity['image'],
           hour: entity['hour'],
-          createAt: entity['createAt'],
+          createAt: DateFormat('dd/MM/yyyy').format(DateTime.parse(entity['createAt'])),
           theme: entity['theme'],
           preacher: entity['preacher'],
           guideIsVisible: entity['guideIsVisible'],
           title: entity['title'],
           heading: entity['heading'],
-          lyricsList: entity['lyricsList'],
-          liturgiesList: entity['liturgiesList'],
+          liturgiesList:
+          entity.containsKey('liturgiesList')
+              ? LiturgyAdapter.fromMapList(entity['liturgiesList'])
+              : [],
+          lyricsList: entity.containsKey('lyricsList') ? SupaLyricAdapter.fromMapList(entity['lyricsList']) : [],
         ),
       );
     }

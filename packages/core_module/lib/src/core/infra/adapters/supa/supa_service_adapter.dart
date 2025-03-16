@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:core_module/core_module.dart';
+import 'package:core_module/src/core/infra/adapters/supa/supa_liturgy_adapter.dart';
 
 // ignore: depend_on_referenced_packages
 
@@ -12,7 +13,7 @@ class SupaServiceAdapter {
     return ServiceModel(
       id: json['id'],
       image: json['image'],
-      createAt: DateTime.now(),
+      createAt: '',
       type: json['type'],
       theme: json['theme'],
       preacher: json['preacher'],
@@ -21,7 +22,7 @@ class SupaServiceAdapter {
       guideIsVisible: json['guideIsVisible'],
       liturgiesList:
           json.containsKey('liturgiesList')
-              ? LiturgyAdapter.fromMap(json['liturgiesList'])
+              ? LiturgyAdapter.fromMapList(json['liturgiesList'])
               : [],
       lyricsList: SupaLyricAdapter.fromMapList(json['lyricsList']),
       hour: json['hour'],
@@ -46,22 +47,26 @@ class SupaServiceAdapter {
   static List<ServiceEntity> fromMapList(dynamic data) {
     List<ServiceEntity> services = [];
     for (dynamic entity in data) {
-      services.add(
-        ServiceEntity(
-          type: entity['type'],
-          hour: entity['hour'],
-          liturgiesList: LiturgyAdapter.fromMap(entity['liturgiesList']),
-          lyricsList: SupaLyricAdapter.fromMapList(entity['lyricsList']),
-          createAt: DateFormat("dd/MM/yyyy").parse(entity['createAt']),
-          heading: entity['heading'],
-          title: entity['title'],
-          guideIsVisible: entity['guideIsVisible'],
-          theme: entity['theme'],
-          image: entity['image'],
-          id: entity['id'],
-          preacher: entity['preacher'],
-        ),
-      );
+      services.add( ServiceEntity(
+        id:
+        entity['id'].runtimeType == String
+            ? entity['id']
+            : entity['id'].toString(),
+        type: '',
+        image: entity['image'],
+        hour: entity['hour'],
+        createAt: DateFormat('dd/MM/yyyy').format(DateTime.parse(entity['createAt'])),
+        theme: entity['theme'],
+        preacher: entity['preacher'],
+        guideIsVisible: entity['guideIsVisible'],
+        title: entity['title'],
+        heading: entity['heading'],
+        liturgiesList:
+        entity.containsKey('service_liturgies')
+            ? SupaLiturgyAdapter.fromMapList(entity['service_liturgies'])
+            : [],
+        lyricsList: SupaLyricAdapter.fromMapList(entity['service_lyrics']),
+      ));
     }
     return services;
   }

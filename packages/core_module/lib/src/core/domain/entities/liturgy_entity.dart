@@ -1,7 +1,7 @@
 class LiturgyEntity {
   final bool isAdditional;
   final String sequence;
-  final String additional;
+  final String? additional;
   final String? id;
   LiturgyEntity({
     this.id,

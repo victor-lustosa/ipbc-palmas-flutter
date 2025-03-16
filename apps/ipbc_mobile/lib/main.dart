@@ -7,14 +7,14 @@ void main() async {
   Modular.setInitialRoute(AppRoutes.initialRoute);
   //Modular.setInitialRoute(AppRoutes.lyricsListRoute);
   WidgetsFlutterBinding.ensureInitialized();
-  Modular.setInitialRoute(AppRoutes.lyricsListRoute);
+  // Modular.setInitialRoute(AppRoutes.lyricsListRoute);
   await Future.wait([SupabaseRepository.init(), IsarRepository.init()]);
   // Bloc.observer = GenericBlocObserver();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) => runApp(
       ModularApp(
-        module: InitModule(),
-        //module: LyricModule(),
+         module: InitModule(),
+        //   module: LyricModule(),
         child: MaterialApp.router(
           builder: (context, Widget? child) {
             return ScrollConfiguration(

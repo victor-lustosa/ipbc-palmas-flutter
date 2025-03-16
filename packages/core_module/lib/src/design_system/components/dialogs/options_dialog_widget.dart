@@ -61,7 +61,9 @@ Future<void> showCustomOptionsDialog({
                                   child: Text(
                                     Modular.get<EditLiturgyViewModel>()
                                         .entity
-                                        .additional,
+                                        .isAdditional ? Modular.get<EditLiturgyViewModel>()
+                                        .entity
+                                        .additional! : '',
                                     style: AppFonts.defaultFont(
                                       color: AppColors.grey8,
                                       fontSize: 13,

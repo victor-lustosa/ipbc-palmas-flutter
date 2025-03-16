@@ -14,22 +14,24 @@ class SupaLyricAdapter {
     return LyricModel(
       albumCover: json['albumCover'],
       id: json['id'],
-      createAt: DateTime.now(),
+      createAt: '',
       title: json['title'],
       group: json['group'],
-      // verses: [
-      //   if (json.containsKey('verses'))
-      //     ...(json['verses'] as List).map(VerseAdapter.fromMap),
-      // ],
+      verses: [
+        if (json.containsKey('verses'))
+          ...(json['verses'] as List).map(VerseAdapter.fromMap),
+      ],
     );
   }
 
   static Map<String, dynamic> toMap(LyricEntity data) {
     return {
+      'id': data.id,
       'title': data.title,
-      'createAt': data.createAt.toIso8601String(),
+      'createAt': data.createAt,
       'albumCover': data.albumCover,
       'group': data.group,
+      'verses': VerseAdapter.toMapList(data.verses),
     };
   }
 
@@ -38,15 +40,15 @@ class SupaLyricAdapter {
     for (dynamic lyric in json) {
       lyricsList.add(
         LyricModel(
-          albumCover: lyric['albumCover'],
-          id: lyric['id'],
-          createAt: DateTime.parse(lyric['createAt']),
-          title: lyric['title'],
-          group: lyric['group'],
-          // verses: [
-          //   if (lyric.containsKey('verses'))
-          //     ...(lyric['verses'] as List).map(VerseAdapter.fromMap),
-          // ],
+          albumCover: lyric['lyrics']['albumCover'],
+          id: lyric['lyrics']['id'].toString(),
+          createAt: DateFormat("dd/MM/yyyy").format(DateTime.parse(lyric['lyrics']['createAt'])),
+          title: lyric['lyrics']['title'],
+          group: lyric['lyrics']['group'],
+          verses: [
+            if (lyric['lyrics'].containsKey('verses'))
+              ...(lyric['lyrics']['verses'] as List).map(VerseAdapter.fromMap),
+          ],
         ),
       );
     }
@@ -62,7 +64,7 @@ class SupaLyricAdapter {
             'createAt': entity.createAt.toString(),
             'albumCover': entity.albumCover,
             'group': entity.group,
-            // 'verses': VerseAdapter.toMapList(entity.verses),
+            'verses': VerseAdapter.toMapList(entity.verses),
           },
         )
         .toList();
