@@ -33,7 +33,6 @@ class SupabaseRepository implements IRepository {
             .eq(params[1], params[2])
             .order(params[3], ascending: params[4].toLowerCase() == 'true');
       }
-
     } else {
       data = await _supaClient
           .from(params[0])
@@ -71,7 +70,6 @@ class SupabaseRepository implements IRepository {
     final dynamic data;
     int limit = int.parse(params[1]);
     int offset = params.length > 1 ? int.parse(params[2]) : 0;
-    //Entrando aqui
     data = await _supaClient
         .from(params[0])
         .select()

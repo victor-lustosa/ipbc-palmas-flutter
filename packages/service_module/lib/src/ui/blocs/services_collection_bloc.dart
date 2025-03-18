@@ -27,7 +27,10 @@ class ServicesCollectionBloc
     if (response) {
       path = event.path;
       path += customSelect;
-      add(GetDataEvent<ServicesCollectionEvent>());
+      add(LoadingEvent<ServicesCollectionEvent>());
+      Future.delayed(Duration(seconds: 2),(){
+        add(GetDataEvent<ServicesCollectionEvent>());
+      });
     } else {
       emit(NoConnectionState<ServicesCollectionState>());
     }

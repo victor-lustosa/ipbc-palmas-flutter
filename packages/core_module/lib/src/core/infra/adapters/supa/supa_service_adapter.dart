@@ -22,7 +22,7 @@ class SupaServiceAdapter {
       guideIsVisible: json['guideIsVisible'],
       liturgiesList:
           json.containsKey('liturgiesList')
-              ? LiturgyAdapter.fromMapList(json['liturgiesList'])
+              ? SupaLiturgyAdapter.fromMapList(json['liturgiesList'])
               : [],
       lyricsList: SupaLyricAdapter.fromMapList(json['lyricsList']),
       hour: json['hour'],
