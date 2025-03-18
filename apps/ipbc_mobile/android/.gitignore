@@ -12,4 +12,5 @@ local.properties
 **/*.keystore
 **/*.jks
 /app/src/main/AndroidManifest.xml
+/app/src/main/res/values/strings.xml
 /app/.cxx/

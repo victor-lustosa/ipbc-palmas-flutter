@@ -20,6 +20,11 @@ class OnlineAuthUseCases implements IOnlineAuthUseCases {
       await repository.signInWithGoogle();
 
   @override
-  Future<String?> signInWithFacebook() async =>
+  Future<void> signInWithFacebook() async =>
       await repository.signInFacebook();
+
+  @override
+  Stream streamFacebook() {
+   return repository.streamFacebook();
+  }
 }

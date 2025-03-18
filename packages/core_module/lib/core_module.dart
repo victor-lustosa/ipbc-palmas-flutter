@@ -83,7 +83,6 @@ export 'src/core/domain/entities/event_entity.dart';
 
 export 'src/core/infra/repositories/repositories.dart';
 export 'src/core/infra/adapters/services_adapter.dart';
-export 'src/core/infra/adapters/service_adapter.dart';
 export 'src/core/infra/adapters/event_adapter.dart';
 export 'src/core/infra/adapters/liturgy_adapter.dart';
 export 'src/core/infra/adapters/verse_adapter.dart';
