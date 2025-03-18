@@ -15,7 +15,7 @@ class SupaServicesUtil {
     List<LyricModel> unknownLyrics,
   ) async {
     final String json = await rootBundle.loadString(path);
-    ServiceModel service = SupaServiceAdapter.fromJson(json);
+    ServiceModel service = ServiceAdapter.fromJson(json);
     List<LyricEntity> lyricsConverted = await _generateVersesList(
       service.lyricsList,
     );
@@ -67,7 +67,7 @@ class SupaServicesUtil {
 
   static Future<LyricModel> convertUnknownLyric(String path) async {
     final String unknownJson = await rootBundle.loadString(path);
-    LyricModel unknownLyric = SupaLyricAdapter.fromUnknownJson(unknownJson);
+    LyricModel unknownLyric = LyricAdapter.fromUnknownJson(unknownJson);
     return unknownLyric.copyWith(
       id: SupaServicesUtil.createId(),
       albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
@@ -112,7 +112,7 @@ class SupaServicesUtil {
 
   static Future<List<LyricModel>> convertUnknownLyrics(String path) async {
     final String unknownJson = await rootBundle.loadString(path);
-    List<LyricModel> unknownLyric = SupaLyricAdapter.fromJson(unknownJson);
+    List<LyricModel> unknownLyric = LyricAdapter.fromJson(unknownJson);
     return unknownLyric;
   }
 }

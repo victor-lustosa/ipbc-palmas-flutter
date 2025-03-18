@@ -14,7 +14,7 @@ void main() async {
             'assets/data/unknown-lyrics/lyrics_mock.json');
     // inserindo lista de todas as letras
     for (LyricEntity lyric in lyricsInserted) {
-      supa.add(path: 'lyrics', data: SupaLyricAdapter.toMap(lyric));
+      supa.add(path: 'lyrics', data: LyricAdapter.toMap(lyric));
     }
     print('lyrics list have been successfully added');
   } catch (e) {

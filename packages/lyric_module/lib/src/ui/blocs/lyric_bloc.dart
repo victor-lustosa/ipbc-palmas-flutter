@@ -36,7 +36,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     //Caso esteja sem conexão eu salvo essas musicas no isar
     lyricsList = await onlineUseCases.get(
       path: path,
-      converter: SupaLyricAdapter.fromMapList,
+      converter: LyricAdapter.fromMapList,
     );
     if (lyricsList!.isNotEmpty) {
       emit(DataFetchedState<LyricState, List<LyricEntity>>(
@@ -53,7 +53,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     String pathLimit = 'lyrics/${event.limit}/$offset';
     lyricsListAux = await onlineUseCases.get(
       path: pathLimit,
-      converter: SupaLyricAdapter.fromMapList,
+      converter: LyricAdapter.fromMapList,
     );
     //Verificando se tem novos itens retornados se sim eu adiciona lista principal
     if (lyricsListAux.isNotEmpty) {
