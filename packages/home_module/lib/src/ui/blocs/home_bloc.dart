@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     with ConnectivityMixin {
   final IUseCases _useCases;
-   Key authAvatarKey = UniqueKey();
   final String servicesPath = 'services/createAt/false';
   final String eventPath = 'event/create_at/false';
 
@@ -15,12 +14,6 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
       super(LoadingState()) {
     on<GetDataEvent<HomeEvent>>(_getData);
     on<CheckConnectivityEvent<HomeEvent>>(_checkConnectivity);
-    on<UpdateTopBarEvent>(_updateTopBar);
-  }
-
-  Future<void> _updateTopBar(UpdateTopBarEvent event, emit) async {
-    authAvatarKey = UniqueKey();
-    emit(UpdateTopBarState());
   }
 
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
@@ -55,10 +48,6 @@ abstract class HomeEvent {}
 
 @immutable
 abstract class HomeState {}
-
-class UpdateTopBarEvent extends GenericEvent<HomeEvent> {}
-
-class UpdateTopBarState extends GenericState<HomeState> {}
 
 class HomeDTO {
   HomeDTO({

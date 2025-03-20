@@ -5,7 +5,7 @@ class LyricEntity {
   final String title;
   final String group;
   final String albumCover;
-  final DateTime createAt;
+  final String createAt;
   final List<VerseEntity> verses;
   LyricEntity({
     required this.id,

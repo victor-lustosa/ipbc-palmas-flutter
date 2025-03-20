@@ -5,7 +5,6 @@ class SupabaseRepository implements IRepository {
     : _supaClient = supabaseClient;
 
   late final SupabaseClient _supaClient;
-
   List<String> params = [];
 
   static Future init() async {
@@ -16,16 +15,24 @@ class SupabaseRepository implements IRepository {
   }
 
   @override
-  Future<List<dynamic>> get<T>({String? path, String? id}) async {
+  Future<List<dynamic>> get<T>({String? path}) async {
     path ??= '';
     params = path.split('/');
     final dynamic data;
     if (params.length > 3) {
-      data = await _supaClient
-          .from(params[0])
-          .select()
-          .eq(params[1], params[2])
-          .order(params[3], ascending: params[4].toLowerCase() == 'true');
+      if(params.length > 5){
+        data = await _supaClient
+            .from(params[0])
+            .select(params[5])
+            .eq(params[1], params[2])
+            .order(params[3], ascending: params[4].toLowerCase() == 'true');
+      } else{
+        data = await _supaClient
+            .from(params[0])
+            .select()
+            .eq(params[1], params[2])
+            .order(params[3], ascending: params[4].toLowerCase() == 'true');
+      }
     } else {
       data = await _supaClient
           .from(params[0])
@@ -36,23 +43,38 @@ class SupabaseRepository implements IRepository {
   }
 
   @override
-  Future<void> add<T>({required data, String? path, String? id}) async {
+  Future<void> add<T>({required data, String? path}) async {
     path ??= '';
     params = path.split('/');
     await _supaClient.from(params[0]).insert(data);
   }
 
   @override
-  Future<void> update<T>({required data, String? path, String? id}) async {
+  Future<void> update<T>({required data, String? path}) async {
     path ??= '';
     params = path.split('/');
     await _supaClient.from(params[0]).update(data).eq(params[1], params[2]);
   }
 
   @override
-  Future<void> delete<T>({String? path, String? id}) async {
+  Future<void> delete<T>({String? path}) async {
     path ??= '';
     params = path.split('/');
     await _supaClient.from(params[0]).delete().eq(params[1], params[2]);
+  }
+
+  @override
+  Future getByPagination<T>({String? path}) async {
+    path ??= '';
+    params = path.split('/');
+    final dynamic data;
+    int limit = int.parse(params[1]);
+    int offset = params.length > 1 ? int.parse(params[2]) : 0;
+    data = await _supaClient
+        .from(params[0])
+        .select()
+        .range(0, 9)
+        .order(params[1], ascending: true);
+    return Future.value(data);
   }
 }

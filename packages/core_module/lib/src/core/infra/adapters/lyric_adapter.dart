@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import '../../../../../core_module.dart';
+import '../../../../core_module.dart';
 
 // ignore: depend_on_referenced_packages
 
-class SupaLyricAdapter {
+class LyricAdapter {
   static List<LyricModel> fromJson(String source) =>
       fromMapList(json.decode(source));
   static LyricModel fromUnknownJson(String source) =>
@@ -14,7 +14,7 @@ class SupaLyricAdapter {
     return LyricModel(
       albumCover: json['albumCover'],
       id: json['id'],
-      createAt: DateTime.now(),
+      createAt: '',
       title: json['title'],
       group: json['group'],
       verses: [
@@ -34,7 +34,25 @@ class SupaLyricAdapter {
       'verses': VerseAdapter.toMapList(data.verses),
     };
   }
-
+  static List<LyricModel> supaMapList(dynamic json) {
+    List<LyricModel> lyricsList = [];
+    for (dynamic lyric in json) {
+      lyricsList.add(
+        LyricModel(
+          albumCover: lyric['lyrics']['albumCover'],
+          id: lyric['lyrics']['id'].toString(),
+          createAt: DateFormat("dd/MM/yyyy").format(DateTime.parse(lyric['lyrics']['createAt'])),
+          title: lyric['lyrics']['title'],
+          group: lyric['lyrics']['group'],
+          verses: [
+            if (lyric['lyrics'].containsKey('verses'))
+              ...(lyric['lyrics']['verses'] as List).map(VerseAdapter.fromMap),
+          ],
+        ),
+      );
+    }
+    return lyricsList;
+  }
   static List<LyricModel> fromMapList(dynamic json) {
     List<LyricModel> lyricsList = [];
     for (dynamic lyric in json) {
@@ -42,7 +60,7 @@ class SupaLyricAdapter {
         LyricModel(
           albumCover: lyric['albumCover'],
           id: lyric['id'].toString(),
-          createAt: DateFormat("dd/MM/yyyy").parse(lyric['createAt']),
+          createAt: DateFormat("dd/MM/yyyy").format(DateTime.parse(lyric['createAt'])),
           title: lyric['title'],
           group: lyric['group'],
           verses: [

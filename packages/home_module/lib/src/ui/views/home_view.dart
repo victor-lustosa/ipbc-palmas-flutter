@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../home_module.dart';
+import '../blocs/home_bloc.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -25,6 +26,7 @@ class _HomeViewState extends State<HomeView>
     _bloc = Modular.get<HomeBloc>();
     _bloc.add(CheckConnectivityEvent());
   }
+
   @override
   bool get wantKeepAlive => true;
 
@@ -46,24 +48,19 @@ class _HomeViewState extends State<HomeView>
                 );
               } else if (state is NoConnectionState<HomeState>) {
                 return NoConnectionView(
-                  action:
-                      () => nativePushReplacementNamed(
-                        AppRoutes.homeRoute,
-                        context,
-                      ),
+                  action: () => nativePushNamed(AppRoutes.homeRoute, context),
                 );
-              } else if (state is DataFetchedState<HomeState, HomeDTO> || state is UpdateTopBarState) {
-                if (state is DataFetchedState<HomeState, HomeDTO>) {
-                  _servicesList = state.entities.servicesEntitiesList;
-                  _eventsList = state.entities.eventEntitiesList;
-                }
+              } else if (state is DataFetchedState<HomeState, HomeDTO>) {
+                _servicesList = state.entities.servicesEntitiesList;
+                _eventsList = state.entities.eventEntitiesList;
+
                 return SingleChildScrollView(
                   child: SizedBox(
                     width: context.sizeOf.width,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        MainTopBarWidget(authAvatarKey: _bloc.authAvatarKey),
+                        MainTopBarWidget(),
                         InkWell(
                           onTap: () {
                             nativePushNamed(
@@ -105,7 +102,11 @@ class _HomeViewState extends State<HomeView>
                         ),
                         InkWell(
                           onTap: () {
-                            nativePushNamed(AppRoutes.eventRoute + AppRoutes.eventsListRoute, context);
+                            Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
+                            nativePushNamed(
+                              AppRoutes.eventRoute + AppRoutes.eventsListRoute,
+                              context,
+                            );
                           },
                           child: Column(
                             children: [

@@ -2,22 +2,23 @@ import 'dart:async';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-
-import '../../../lyric_module.dart';
+import 'package:lyric_module/src/ui/blocs/type_filter.dart';
 
 class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     with ConnectivityMixin {
-  final IUseCases useCases;
-  final ILyricsUseCases lyricUseCases;
+  final IUseCases onlineUseCases;
+  final IUseCases? offlineUseCases;
+  List<LyricEntity>? lyricsList;
+  final String path = 'lyrics/createAt/false';
 
-  //final String path = 'lyrics/20';
   LyricBloc({
-    required this.useCases,
-    required this.lyricUseCases,
+    required this.onlineUseCases,
+    this.offlineUseCases,
   }) : super(LoadingState<LyricState>()) {
     on<GetDataEvent<LyricEvent>>(_getInSupa);
-    on<FilterEvent<LyricEvent>>(_filter);
+    on<FilterEvent<LyricEvent, LyricEntity>>(_filter);
     on<LoadingEvent<LyricEvent>>(_loading);
+    on<GetPaginationEvent<LyricEvent, LyricEntity>>(_getPaginationInSupa);
     on<CheckConnectivityEvent<LyricEvent>>(_checkConnectivity);
   }
 
@@ -32,18 +33,38 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   }
 
   Future<void> _getInSupa(GetDataEvent<LyricEvent> event, emit) async {
-    List<LyricEntity>? lyricsList =
-        await MockUtil.convertMockJson<List<LyricModel>>(
-      'assets/mocks/lyrics_mock.json',
-      'lyrics',
+    //Caso esteja sem conexão eu salvo essas musicas no isar
+    lyricsList = await onlineUseCases.get(
+      path: path,
+      converter: LyricAdapter.fromMapList,
     );
     if (lyricsList!.isNotEmpty) {
       emit(DataFetchedState<LyricState, List<LyricEntity>>(
-          entities: lyricsList));
+          entities: lyricsList!));
     }
   }
 
-  /*Future<void> _getInSupa(GetInSupaEvent<LyricEvent> event, emit) async {
+  Future<void> _getPaginationInSupa(
+      GetPaginationEvent<LyricEvent, LyricEntity> event, emit) async {
+    List<LyricEntity> lyricsListAux = [];
+    //Caso esteja sem conexão eu salvo essas musicas no hive
+    int offset = lyricsList!.length;
+
+    String pathLimit = 'lyrics/${event.limit}/$offset';
+    lyricsListAux = await onlineUseCases.get(
+      path: pathLimit,
+      converter: LyricAdapter.fromMapList,
+    );
+    //Verificando se tem novos itens retornados se sim eu adiciona lista principal
+    if (lyricsListAux.isNotEmpty) {
+      lyricsList!.addAll(lyricsListAux);
+      emit(DataFetchedState<LyricState, List<LyricEntity>>(entities: lyricsList!));
+    } else {
+      emit(NoMoreDataState<LyricState, List<LyricEntity>>());
+    }
+  }
+
+/*Future<void> _getInSupa(GetInSupaEvent<LyricEvent> event, emit) async {
     await emit.onEach<List<LyricEntity>>(
       await supaUseCase.get(path),
       onData: (lyrics) {
@@ -61,10 +82,14 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     emit(LoadingState<LyricState>());
   }
 
-  Future<void> _filter(FilterEvent<LyricEvent> event, emit) async {
-    List<LyricEntity> lyricsList =
-        await lyricUseCases.lettersFilter(event.lyrics);
-    emit(DataFetchedState<LyricState, List<LyricEntity>>(entities: lyricsList));
+  Future<void> _filter(FilterEvent<LyricEvent, LyricEntity> event, emit) async {
+    if (event.writing && lyricsList != null) {
+      List<LyricEntity> list = event.typeFilter.filterListing(event, lyricsList);
+
+      emit(DataFetchedState<LyricState, List<LyricEntity>>(entities: list));
+    } else {
+      emit(DataFetchedState<LyricState, List<LyricEntity>>(entities: lyricsList!));
+    }
   }
 }
 
@@ -75,7 +100,58 @@ abstract class LyricEvent {}
 abstract class LyricState {}
 
 @immutable
-abstract class FilterEvent<R> extends GenericEvent<R> {
-  final List<LyricEntity> lyrics;
-  FilterEvent({required this.lyrics});
+class GetPaginationEvent<R, T> extends GenericEvent<R> {
+  final int limit;
+
+  GetPaginationEvent(this.limit);
+}
+
+@immutable
+class NoMoreDataState<R, T> extends GenericEvent<R> {
+  NoMoreDataState();
+}
+
+@immutable
+class FilterEvent<R, T> extends GenericEvent<R> {
+  final String searchText;
+  final bool writing;
+  final Filter<T, FilterEvent> typeFilter;
+  final int selectIndex;
+
+  FilterEvent(this.searchText, this.writing, this.typeFilter, this.selectIndex);
+}
+
+class MusicFilter extends Filter<LyricEntity, FilterEvent> {
+  @override
+  List<LyricEntity> filterListing(FilterEvent event, List<LyricEntity>? list) {
+    List<LyricEntity> filterList;
+
+    filterList = list!
+        .where(
+          (element) => element.title
+              .toLowerCase()
+              .contains(event.searchText.toLowerCase()),
+        )
+        .toList();
+
+    return filterList;
+  }
+}
+//My artist filter
+
+class ArtistFilter extends Filter<LyricEntity, FilterEvent> {
+  @override
+  List<LyricEntity> filterListing(FilterEvent event, List<LyricEntity>? list) {
+    late List<LyricEntity> filterList;
+
+    filterList = list!
+        .where(
+          (element) => element.group
+              .toLowerCase()
+              .contains(event.searchText.toLowerCase()),
+        )
+        .toList();
+
+    return filterList;
+  }
 }

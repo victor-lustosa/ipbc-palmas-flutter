@@ -1,5 +1,5 @@
 
-import '../../../../core_module.dart';
+import '../../../../../core_module.dart';
 
 abstract class IOnlineAuthRepository
     implements ISignInEmail, ISignInGoogle, IGetCurrentUser, ISignInFacebook {}
@@ -13,7 +13,8 @@ abstract class ISignInGoogle {
 }
 
 abstract class ISignInFacebook {
-  Future<String?> signInFacebook();
+  Future<void> signInFacebook();
+  Stream streamFacebook();
 }
 
 abstract class IGetCurrentUser {

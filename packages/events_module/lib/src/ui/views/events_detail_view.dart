@@ -30,6 +30,12 @@ class EventsDetailViewState extends State<EventsDetailView>
   );
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -40,10 +46,18 @@ class EventsDetailViewState extends State<EventsDetailView>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MainTopBarWidget(
-                  margin: EdgeInsets.only(top: 22, bottom: 24),
-                  topBarList: [
-                    BackButtonWidget(action: () => nativePop(context)),
-                    AuthCircleAvatarWidget()
+                  margin: EdgeInsets.only(top: 22, bottom: 24,right: 2),
+                ),
+                Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(
+                        top: 10,
+                      ),
+                      child: BackButtonWidget(
+                        action: () => nativePop(context),
+                      ),
+                    ),
                   ],
                 ),
                 Container(

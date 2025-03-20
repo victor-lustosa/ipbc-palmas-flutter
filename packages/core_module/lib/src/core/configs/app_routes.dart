@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../core_module.dart';
+import '../../../core_module.dart';
 
 nativePushReplacementNamed(String route, BuildContext context, {Object? arguments}) {
   Navigator.pushReplacementNamed(context, route, arguments: arguments);
