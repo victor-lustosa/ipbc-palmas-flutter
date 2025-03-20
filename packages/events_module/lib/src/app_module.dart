@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:events_module/src/ui/blocs/events_list_bloc.dart';
+import 'package:events_module/src/ui/stores/create_event_store.dart';
 import '../events_module.dart';
 import 'ui/views/create_event_view.dart';
 
@@ -15,6 +16,7 @@ class EventModule extends Module {
           () => EventsListBloc(onlineUseCases: i.get<UseCases<SupabaseRepository>>()),
       config: CoreModule.blocConfig(),
     );
+    i.addLazySingleton(CreateEventStore.new);
   }
   @override
   void routes(r) {

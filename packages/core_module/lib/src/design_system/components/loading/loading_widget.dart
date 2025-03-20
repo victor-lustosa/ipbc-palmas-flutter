@@ -30,7 +30,7 @@ class LoadingWidget extends StatelessWidget {
                   radius: iosRadius ?? 17,
                 )
                 : CircularProgressIndicator(
-                  strokeWidth: androidRadius!,
+                  strokeWidth: androidRadius??3,
                   valueColor: AlwaysStoppedAnimation<Color>(
                     color ?? AppColors.darkGreen,
                   ),
