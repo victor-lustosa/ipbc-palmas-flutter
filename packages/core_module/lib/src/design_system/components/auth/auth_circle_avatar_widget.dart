@@ -16,13 +16,13 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _store.validateAuthentication();
+      _store.validateAuthentication(context);
     });
   }
 
   void updateAuthAvatar() {
     setState(() {
-      _store.validateAuthentication();
+      _store.validateAuthentication(context);
     });
   }
   @override
