@@ -104,7 +104,6 @@ export 'src/shared/mixins/launch_url_mixin.dart';
 export 'src/shared/mixins/clipboard_mixin.dart';
 export 'src/shared/mixins/email_mixin.dart';
 export 'src/shared/mixins/connectivity_mixin.dart';
-export 'src/shared/mixins/main_top_bar_mixin.dart';
 export 'src/shared/mixins/image_mixin.dart';
 export 'src/shared/overall_states/generics.dart';
 export 'src/shared/view_models/edit_liturgy_view_model.dart';
