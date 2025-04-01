@@ -69,7 +69,7 @@ class GuidelineWidget extends StatelessWidget {
                       child: Container(
                         margin: const EdgeInsets.only(top: 4),
                         child: Text(
-                          liturgiesList[index].additional,
+                          liturgiesList[index].isAdditional ? liturgiesList[index].additional! : '',
                           style: AppFonts.defaultFont(
                             color: AppColors.grey8,
                             fontSize: 13,

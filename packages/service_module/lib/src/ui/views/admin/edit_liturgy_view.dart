@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../service_module.dart';
 import 'services_preview_view.dart';
 
 class EditLiturgyDTO {
@@ -123,7 +122,10 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                                               top: 4,
                                             ),
                                             child: Text(
-                                              _liturgiesList[index].additional,
+                                              _liturgiesList[index].isAdditional
+                                                  ? _liturgiesList[index]
+                                                      .additional!
+                                                  : '',
                                               style: AppFonts.defaultFont(
                                                 color: AppColors.grey8,
                                                 fontSize: 13,

@@ -113,14 +113,14 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                       ],
                     ),
                   ),
-                  Container(
-                    //top: 15, sem a validacao de se é refrao ou nao
-                    margin: const EdgeInsets.only(top: 28),
-                    child: VersesListWidget(
-                      isEdit: false,
-                      entity: widget.entity.verses,
-                    ),
-                  ),
+                  // Container(
+                  //   //top: 15, sem a validacao de se é refrao ou nao
+                  //   margin: const EdgeInsets.only(top: 28),
+                  //   child: VersesListWidget(
+                  //     isEdit: false,
+                  //     entity: widget.entity.verses,
+                  //   ),
+                  // ),
                   Container(
                     margin: const EdgeInsets.only(
                       top: 60,

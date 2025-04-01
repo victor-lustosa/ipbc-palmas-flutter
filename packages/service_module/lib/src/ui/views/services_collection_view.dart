@@ -122,7 +122,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                                           Text(
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1,
-                                            '${entitiesList[index].title} ${DateFormat('dd/MM/yyyy').format(entitiesList[index].createAt)} | ${widget.entity.hour}',
+                                            '${entitiesList[index].title} ${entitiesList[index].createAt} | ${widget.entity.hour}',
                                             style: AppFonts.defaultFont(
                                               fontWeight: FontWeight.w600,
                                               color: AppColors.grey9,

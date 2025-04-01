@@ -5,18 +5,26 @@ class AuthCircleAvatarWidget extends StatefulWidget {
   const AuthCircleAvatarWidget({super.key});
 
   @override
-  State<AuthCircleAvatarWidget> createState() => _AuthCircleAvatarWidgetState();
+  State<AuthCircleAvatarWidget> createState() => AuthCircleAvatarWidgetState();
 }
 
-class _AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget> {
+class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget> {
   final AuthCircleAvatarStore _store = Modular.get<AuthCircleAvatarStore>();
+
 
   @override
   void initState() {
     super.initState();
-    _store.validateAuthentication();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _store.validateAuthentication(context);
+    });
   }
 
+  void updateAuthAvatar() {
+    setState(() {
+      _store.validateAuthentication(context);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
@@ -66,7 +74,7 @@ class _AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget> {
                       ? CircleAvatar(
                         radius: 16,
                         backgroundColor: Colors.transparent,
-                        child: ClipOval(
+                          child: ClipOval(
                           child: Image.network(
                             _store.userEntity.picture,
                             width: 32,

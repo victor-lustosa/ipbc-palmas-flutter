@@ -3,14 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SearchBarWidget extends StatefulWidget {
-  const SearchBarWidget({
-    super.key,
-    required this.controller,
-    required this.action,
-  });
+  const SearchBarWidget(
+      {super.key,
+      required this.controller,
+      required this.action,
+      this.onChange});
 
   final TextEditingController controller;
   final void Function() action;
+  final void Function(String)? onChange;
 
   @override
   State<SearchBarWidget> createState() => _SearchBarWidgetState();
@@ -24,6 +25,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     return Container(
       margin: const EdgeInsets.only(left: 16, right: 19),
       child: FormFieldWidget(
+        onChange: widget.onChange,
         fieldHeight: 48,
         fieldWidth: context.sizeOf.width,
         controller: widget.controller,
@@ -36,7 +38,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         validator: (value) => null,
         inputDecoration: InputDecoration(
           suffixIcon: InkWell(
-            onTap: () {},
+            onTap: widget.action,
             child: IconButtonWidget(
               size: 28,
               color: AppColors.grey7,

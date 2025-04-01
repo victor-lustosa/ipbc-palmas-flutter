@@ -12,7 +12,7 @@ class LyricModel extends LyricEntity {
 
   factory LyricModel.empty() => LyricModel(
     id: SupaServicesUtil.createId(),
-    createAt: DateTime.now(),
+    createAt: '',
     title: '',
     group: '',
     albumCover: '',
@@ -22,7 +22,7 @@ class LyricModel extends LyricEntity {
   LyricModel copyWith({
     String? id,
     String? title,
-    DateTime? createAt,
+    String? createAt,
     String? group,
     String? albumCover,
     List<VerseEntity>? verses,

@@ -2,7 +2,7 @@ abstract class IUseCases
     implements IGetUseCases, IAddUseCases, IUpdateUseCases, IDeleteUseCases {}
 
 abstract class IGetUseCases {
-  Future<dynamic> get({String? path, String? id, required Function converter});
+  Future<dynamic> get({String? path, required Function converter});
 }
 
 abstract class IAddUseCases {
@@ -10,9 +10,9 @@ abstract class IAddUseCases {
 }
 
 abstract class IUpdateUseCases {
-  Future<void> update({required data, String? path, String? id});
+  Future<void> update({required data, String? path});
 }
 
 abstract class IDeleteUseCases {
-  Future<void> delete({String? path, String? id});
+  Future<void> delete({String? path});
 }

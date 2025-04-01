@@ -2,7 +2,6 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../lyric_module.dart';
 import '../blocs/lyric_bloc.dart';
 
 class LyricsListView extends StatefulWidget {
@@ -14,9 +13,9 @@ class LyricsListView extends StatefulWidget {
 
 class _LyricsListViewState extends State<LyricsListView>
     with TickerProviderStateMixin {
-  late List<LyricEntity> _lyricsFetched;
   late final LyricBloc _bloc;
   bool isSelected = false;
+
   String selectedValue = '';
   final TextEditingController controller = TextEditingController();
 
@@ -24,13 +23,20 @@ class _LyricsListViewState extends State<LyricsListView>
   void initState() {
     super.initState();
     setLightAppBar();
-    _lyricsFetched = [];
     _bloc = Modular.get<LyricBloc>();
     _bloc.add(CheckConnectivityEvent<LyricEvent>());
   }
 
+  int selectedIndex = 0;
+
+  int selectOptions(int index) {
+    selectedIndex = index;
+    return selectedIndex;
+  }
+
   @override
   Widget build(BuildContext context) {
+    // int selectedIndex = 0;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -54,7 +60,7 @@ class _LyricsListViewState extends State<LyricsListView>
                 );
               } else if (state
                   is DataFetchedState<LyricState, List<LyricEntity>>) {
-                _lyricsFetched = state.entities;
+                // print(escrevendo);
                 return RefreshIndicator(
                   color: AppColors.darkGreen,
                   onRefresh: () async {
@@ -64,6 +70,14 @@ class _LyricsListViewState extends State<LyricsListView>
                     child: Column(
                       children: [
                         const TitleTopBarWidget(title: "Músicas"),
+                        Text(state.entities.length.toString()),
+                        ElevatedButton(
+                            onPressed: () {
+                              _bloc.add(
+                                GetPaginationEvent<LyricEvent, LyricEntity>(10),
+                              );
+                            },
+                            child: const Text('Paginação')),
                         Container(
                           margin: const EdgeInsets.only(
                             top: 38,
@@ -71,14 +85,30 @@ class _LyricsListViewState extends State<LyricsListView>
                           ),
                           child: SearchBarWidget(
                             controller: controller,
-                            action: () {},
+                            onChange: (value) {
+                              bool writing = value.length > 1;
+                              _bloc.add(
+                                FilterEvent<LyricEvent, LyricEntity>(
+                                    controller.text,
+                                    writing,
+                                    selectedIndex == 0
+                                        ? MusicFilter()
+                                        : ArtistFilter(),
+                                    // FilterFactory<LyricEvent,List<LyricEntity>>(index: selectedIndex),
+                                    selectedIndex),
+                              );
+                            },
+                            action: () {
+                              // _bloc.add(
+                              //     FilterEvent(controller.text, selectedIndex));
+                            },
                           ),
                         ),
                         Container(
                           margin: const EdgeInsets.only(
                             left: 21.5,
                           ),
-                          child: const OwnChoiceChipsWidget(),
+                          child: OwnChoiceChipsWidget(action: selectOptions),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -98,7 +128,7 @@ class _LyricsListViewState extends State<LyricsListView>
                         ),
                         Container(
                           margin: const EdgeInsets.only(top: 14),
-                          child: LyricsListWidget(entitiesList: _lyricsFetched),
+                          child: LyricsListWidget(entitiesList: state.entities),
                         ),
                       ],
                     ),

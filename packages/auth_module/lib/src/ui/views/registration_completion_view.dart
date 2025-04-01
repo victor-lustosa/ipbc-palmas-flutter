@@ -2,7 +2,6 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../auth_module.dart';
 import '../stores/registration_completion_store.dart';
 
 class RegistrationCompletionView extends StatefulWidget {
