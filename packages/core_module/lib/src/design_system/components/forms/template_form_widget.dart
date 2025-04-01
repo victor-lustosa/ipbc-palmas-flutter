@@ -109,7 +109,7 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
 }
 
 fieldInputDecoration({
-  required isValid,
+  required bool isValid,
   required hintText,
   Widget? suffixIcon,
   Widget? prefixIcon,

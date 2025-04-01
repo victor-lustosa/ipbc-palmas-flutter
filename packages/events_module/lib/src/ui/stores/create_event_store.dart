@@ -29,17 +29,33 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   final eventLinkDescriptionKey = GlobalKey<FormState>();
   final eventLocationKey = GlobalKey<FormState>();
   final eventDescriptionKey = GlobalKey<FormState>();
-  bool isEventTitleValid = true;
-  bool isContactLinkValid = true;
-  bool isEventLocationValid = true;
-  bool isEventDescriptionValid = true;
-  bool isEventLinkValid = true;
-  bool isEventLinkDescriptionValid = true;
+  ValueNotifier<bool> isEventTitleValid = ValueNotifier(true);
+  ValueNotifier<bool> isContactLinkValid = ValueNotifier(true);
+  ValueNotifier<bool> isEventLocationValid = ValueNotifier(true);
+  ValueNotifier<bool> isEventDescriptionValid = ValueNotifier(true);
+  ValueNotifier<bool> isEventLinkValid = ValueNotifier(true);
+  ValueNotifier<bool> isEventLinkDescriptionValid = ValueNotifier(true);
+  ValueNotifier<bool> isCoverImageValid = ValueNotifier(true);
   bool isPressed = false;
-  File coverImage=File('');
+  File coverImage = File('');
 
+  titleValidation(String? data) {
+    if (data == null || data.isEmpty) {
+      changeValue(isEventTitleValid, false);
+      return null;
+    } else {
+      changeValue(isEventTitleValid, true);
+      return null;
+    }
+  }
   emailValidation(String? data) {
     return null;
+  }
+
+  changeValue(ValueNotifier<bool> valueNotifier, bool newValue ) {
+    Future.delayed(Duration.zero, () async {
+      valueNotifier.value = newValue;
+    });
   }
 
   getImage() async {
@@ -48,16 +64,20 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     if (result != null) {
       coverImage = result;
       value = FetchedImageState();
+      changeValue(isCoverImageValid, true);
     } else {
       if (coverImage.path.isEmpty) {
         value = InitialState<CreateEventState>();
-      }
-      else{
+        changeValue(isCoverImageValid, false);
+      } else {
         value = FetchedImageState();
+        changeValue(isCoverImageValid, true);
       }
     }
   }
 }
+
+
 
 @immutable
 abstract class CreateEventState {}
