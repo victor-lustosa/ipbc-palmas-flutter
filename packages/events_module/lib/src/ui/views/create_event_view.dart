@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../../../events_module.dart';
 import '../stores/create_event_store.dart';
 
 class CreateEventView extends StatefulWidget {
@@ -21,6 +20,7 @@ class _CreateEventViewState extends State<CreateEventView> {
   void initState() {
     super.initState();
     store = Modular.get<CreateEventStore>();
+    Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
   }
 
   get prefixLocationIcon => Container(

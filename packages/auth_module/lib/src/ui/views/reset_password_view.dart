@@ -1,8 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../../../auth_module.dart';
-
 class ResetPasswordView extends StatefulWidget {
   const ResetPasswordView({super.key});
 

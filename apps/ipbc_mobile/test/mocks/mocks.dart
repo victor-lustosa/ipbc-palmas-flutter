@@ -9,6 +9,6 @@ class ServicesEntityMock extends Mock implements ServicesEntity {}
 
 class AnalyticsMock extends Mock implements AnalyticsUtil {}
 
-class ILyricsUseCasesMock extends Mock implements ILyricsUseCases {}
+class ILyricsUseCasesMock extends Mock implements IUseCases {}
 
 class IUseCasesMock extends Mock implements IUseCases {}

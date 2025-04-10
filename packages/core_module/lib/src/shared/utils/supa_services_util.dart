@@ -15,7 +15,7 @@ class SupaServicesUtil {
     List<LyricModel> unknownLyrics,
   ) async {
     final String json = await rootBundle.loadString(path);
-    ServiceModel service = SupaServiceAdapter.fromJson(json);
+    ServiceModel service = ServiceAdapter.fromJson(json);
     List<LyricEntity> lyricsConverted = await _generateVersesList(
       service.lyricsList,
     );
@@ -25,7 +25,7 @@ class SupaServicesUtil {
       lyricsAux.add(
         service.lyricsList[line].copyWith(
           id: createId(),
-          verses: lyricsConverted[line].verses,
+          // verses: lyricsConverted[line].verses,
           albumCover: lyricsConverted[line].albumCover,
           createAt: await _dateNowDelayed(),
         ),
@@ -43,7 +43,7 @@ class SupaServicesUtil {
       Map result = await _getLyric(lyricsList[i].title, lyricsList[i].group);
       results.add(
         LyricModel.empty().copyWith(
-          verses: VerseAdapter.fromVagalume(result),
+          // verses: VerseAdapter.fromVagalume(result),
           albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
         ),
       );
@@ -67,7 +67,7 @@ class SupaServicesUtil {
 
   static Future<LyricModel> convertUnknownLyric(String path) async {
     final String unknownJson = await rootBundle.loadString(path);
-    LyricModel unknownLyric = SupaLyricAdapter.fromUnknownJson(unknownJson);
+    LyricModel unknownLyric = LyricAdapter.fromUnknownJson(unknownJson);
     return unknownLyric.copyWith(
       id: SupaServicesUtil.createId(),
       albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
@@ -108,5 +108,11 @@ class SupaServicesUtil {
       },
     ];
     return servicesList;
+  }
+
+  static Future<List<LyricModel>> convertUnknownLyrics(String path) async {
+    final String unknownJson = await rootBundle.loadString(path);
+    List<LyricModel> unknownLyric = LyricAdapter.fromJson(unknownJson);
+    return unknownLyric;
   }
 }

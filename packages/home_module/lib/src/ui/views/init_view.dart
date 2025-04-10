@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:offers_module/offers_module.dart';
 
 import '../../../home_module.dart';
+import '../native_home_routes.dart';
 
 class InitView extends StatefulWidget {
   const InitView({super.key});

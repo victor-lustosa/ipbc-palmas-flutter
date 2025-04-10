@@ -41,10 +41,9 @@ class _EditLyricViewState extends State<EditLyricView> {
                 color: AppColors.darkGreen,
               );
             } else {
-              if (state
-                  is DataFetchedState<EditLyricState, List<LyricEntity>>) {
-                versesList = state.entities[0].verses;
-              }
+              // if (state is DataFetchedState<EditLyricState, LyricEntity>) {
+              //   versesList = state.entities[0].verses;
+              // }
               return SingleChildScrollView(
                 child: Container(
                   color: AppColors.white,

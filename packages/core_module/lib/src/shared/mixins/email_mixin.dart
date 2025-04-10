@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
-import '../../configs/api_keys.dart';
+import '../../core/configs/api_keys.dart';
 import '../models/send_grid_model.dart';
 
 mixin EmailMixin {

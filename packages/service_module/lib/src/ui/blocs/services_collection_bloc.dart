@@ -13,6 +13,8 @@ class ServicesCollectionBloc
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
   String path = '';
+  String customSelect =
+      '/id, createAt, image, title, theme, preacher, hour, heading, type, guideIsVisible, service_liturgies (liturgies(isAdditional, sequence, additional)), service_lyrics (lyrics(id, title, group, albumCover, createAt, lirycs_verses(verses(isChorus, versesList))))';
 
   ServicesCollectionBloc({required this.onlineUseCases, this.offlineUseCases})
     : super(LoadingState()) {
@@ -22,9 +24,11 @@ class ServicesCollectionBloc
   }
 
   Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
-    path = event.path;
     final response = await isConnected();
     if (response) {
+      path = event.path;
+      path += customSelect;
+      add(LoadingEvent<ServicesCollectionEvent>());
       add(GetDataEvent<ServicesCollectionEvent>());
     } else {
       emit(NoConnectionState<ServicesCollectionState>());

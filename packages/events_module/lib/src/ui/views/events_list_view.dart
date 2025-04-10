@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/services.dart';
-
-import '../../../events_module.dart';
 import '../blocs/events_list_bloc.dart';
 
 class EventsListView extends StatefulWidget {
@@ -56,11 +54,12 @@ class EventsListViewState extends State<EventsListView> {
                     child: Column(
                       mainAxisSize:MainAxisSize.min,
                       children: [
+                        MainTopBarWidget(),
                         Row(
                           children: [
                             Container(
                               margin: const EdgeInsets.only(
-                                top: 24,
+                                top: 10,
                                 left: 16,
                               ),
                               child: BackButtonWidget(

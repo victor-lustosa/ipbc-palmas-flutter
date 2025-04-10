@@ -35,12 +35,14 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
       itemCount: widget.entities.length,
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
-          onTap:
-              () => nativePushNamed(
-                widget.route,
-                arguments: widget.entities[index],
-                context,
-              ),
+          onTap: () {
+            Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
+            nativePushNamed(
+              widget.route,
+              arguments: widget.entities[index],
+              context,
+            );
+          },
           child: Container(
             margin:
                 widget.margin ??
