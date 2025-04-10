@@ -15,6 +15,7 @@ class CreateEventView extends StatefulWidget {
 
 class _CreateEventViewState extends State<CreateEventView> {
   late final CreateEventStore store;
+  bool _notificacoesAtivadas = false;
 
   @override
   void initState() {
@@ -84,7 +85,10 @@ class _CreateEventViewState extends State<CreateEventView> {
                                 return Container(
                                   decoration: BoxDecoration(
                                     color: AppColors.grey0,
-                                    border: Border.all(color: value ? AppColors.grey0 : Colors.red),
+                                    border: Border.all(
+                                        color: value
+                                            ? AppColors.grey0
+                                            : Colors.red),
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(20.0),
                                     ),
@@ -129,7 +133,10 @@ class _CreateEventViewState extends State<CreateEventView> {
                                                                       ? 10
                                                                       : 22))
                                                       : Image.asset(
-                                                          color: value ? AppColors.darkGreen : Colors.red,
+                                                          color: value
+                                                              ? AppColors
+                                                                  .darkGreen
+                                                              : Colors.red,
                                                           AppIcons.folderUpload,
                                                           width: 26.67,
                                                           height: 21.33,
@@ -151,177 +158,202 @@ class _CreateEventViewState extends State<CreateEventView> {
                               builder: (_, value, ___) {
                                 return Visibility(
                                   visible: !value,
-                                  child: Text("Por favor, insira a imagem", style: TextStyle(color: Colors.red)),
+                                  child: Text("Por favor, insira a imagem",
+                                      style: TextStyle(color: Colors.red)),
                                 );
                               }),
                         ],
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 16),
-                        child: ValueListenableBuilder(
-                            valueListenable: store.isEventTitleValid,
-                            builder: (_, value, ___) {
-                              return TemplateFormWidget(
-                                titleMargin: const EdgeInsets.only(bottom: 4),
-                                controller: store.eventTitleController,
-                                title: 'Título do evento',
-                                isValid: value,
-                                errorText: store.eventTitleErrorText,
-                                globalKey: store.eventTitleKey,
-                                isPressed: store.isPressed,
-                                inputDecoration: fieldInputDecoration(
-                                  isValid: value,
-                                  hintText: 'Título do seu evento',
-                                ),
-                                validator: (data) {
-                                  return store.titleValidation(data);
-                                },
-                                defaultHintColor: AppColors.hintInputForm,
-                              );
-                            }),
+                        child: TemplateFormWidget(
+                          valueListenable: store.isEventTitleValid,
+                          titleMargin: const EdgeInsets.only(bottom: 4),
+                          controller: store.eventTitleController,
+                          title: 'Título do evento',
+                          isValid: store.isEventTitleValid.value,
+                          errorText: store.eventTitleErrorText,
+                          globalKey: store.eventTitleKey,
+                          isPressed: store.isPressed,
+                          inputDecoration: fieldInputDecoration(
+                            isValid: store.isEventTitleValid.value,
+                            hintText: 'Título do seu evento',
+                          ),
+                          validator: (data) {
+                            return store.titleValidation(data);
+                          },
+                          defaultHintColor: AppColors.hintInputForm,
+                        ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 16),
-                        child: ValueListenableBuilder(
-                            valueListenable: store.isEventTitleValid,
-                            builder: (_, value, ___) {
-                              return TemplateFormWidget(
-                                titleMargin: const EdgeInsets.only(bottom: 4),
-                                controller: store.eventDescriptionController,
-                                title: 'Descrição',
-                                maxLines: 4,
-                                fieldHeight: 110,
-                                isValid: value,
-                                errorText: store.eventDescriptionErrorText,
-                                globalKey: store.eventDescriptionKey,
-                                isPressed: store.isPressed,
-                                inputDecoration: fieldInputDecoration(
-                                  hintColor:
-                                      value // store.isEventDescriptionValid
-                                          ? AppColors.grey5
-                                          : Colors.red,
-                                  contentPadding: const EdgeInsets.only(
-                                    left: 16,
-                                    top: 9,
-                                    right: 10,
-                                  ),
-                                  isValid: true,
-                                  // store.isEventDescriptionValid,
-                                  hintText: 'Descrição do evento',
-                                ),
-                                validator: (data) {
-                                  return store.emailValidation(data);
-                                },
-                                defaultHintColor: AppColors.hintInputForm,
-                              );
-                            }),
+                        margin: const EdgeInsets.only(top: 16, bottom: 24),
+                        child: TemplateFormWidget(
+                          valueListenable: store.isEventTitleValid,
+                          titleMargin: const EdgeInsets.only(bottom: 4),
+                          controller: store.eventDescriptionController,
+                          title: 'Descrição',
+                          maxLines: 4,
+                          fieldHeight: 110,
+                          isValid: store.isEventTitleValid.value,
+                          errorText: store.eventDescriptionErrorText,
+                          globalKey: store.eventDescriptionKey,
+                          isPressed: store.isPressed,
+                          inputDecoration: fieldInputDecoration(
+                            hintColor: store.isEventTitleValid
+                                    .value // store.isEventDescriptionValid
+                                ? AppColors.grey5
+                                : Colors.red,
+                            contentPadding: const EdgeInsets.only(
+                              left: 16,
+                              top: 9,
+                              right: 10,
+                            ),
+                            isValid: true,
+                            // store.isEventDescriptionValid,
+                            hintText: 'Descrição do evento',
+                          ),
+                          validator: (data) {
+                            return store.descriptionValidation(data);
+                          },
+                          defaultHintColor: AppColors.hintInputForm,
+                        ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 16),
-                        child: ValueListenableBuilder(
-                            valueListenable: store.isEventTitleValid,
-                            builder: (_, value, ___) {
-                              return TemplateFormWidget(
-                                titleMargin: const EdgeInsets.only(bottom: 4),
-                                controller: store.eventLocationController,
-                                title: 'Localização',
-                                maxLines: 4,
-                                isValid: value,
-                                errorText: store.eventLocationErrorText,
-                                globalKey: store.eventLocationKey,
-                                isPressed: store.isPressed,
-                                inputDecoration: fieldInputDecoration(
-                                  prefixIconConstraints: const BoxConstraints(),
-                                  prefixIcon: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 16, right: 8),
-                                    child: Image.asset(
-                                      AppIcons.eventLocation,
+                        color: Colors.white,
+                        width: context.sizeOf.width,
+                        height: 92,
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      AppIcons.watchIcon,
                                       height: 22,
                                     ),
-                                  ),
-                                  contentPadding: const EdgeInsets.only(
-                                    top: 10,
-                                  ),
-                                  isValid: value,
-                                  hintText: 'Selecione a localização',
+                                    Container(
+                                      margin: EdgeInsets.only(left: 8),
+                                      child: Text(
+                                        "O dia todo",
+                                        style: AppFonts.defaultFont(
+                                          fontSize: 13,
+                                          color: AppColors.grey8,
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                validator: (data) {
-                                  return store.emailValidation(data);
-                                },
-                                defaultHintColor: AppColors.hintInputForm,
-                              );
-                            }),
+                                SwitchButtonWidget(
+                                  value: _notificacoesAtivadas,
+                                  onChanged: (bool novoValor) {
+                                    setState(() {
+                                      _notificacoesAtivadas = novoValor;
+                                    });
+                                  },
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 16),
-                        child: ValueListenableBuilder(
-                            valueListenable: store.isEventTitleValid,
-                            builder: (_, value, ___) {
-                              return TemplateFormWidget(
-                                controller: store.eventLinkController,
-                                title: 'Link',
-                                isValid: value,
-                                errorText: store.eventLinkErrorText,
-                                globalKey: store.eventLinkKey,
-                                isPressed: store.isPressed,
-                                inputDecoration: fieldInputDecoration(
-                                  prefixIconConstraints: const BoxConstraints(),
-                                  prefixIcon: prefixLocationIcon,
-                                  isValid: value,
-                                  hintText: 'Link do evento',
-                                ),
-                                validator: (data) {
-                                  return store.emailValidation(data);
-                                },
-                              );
-                            }),
+                        child: TemplateFormWidget(
+                          valueListenable: store.isEventLocationValid,
+                          titleMargin: const EdgeInsets.only(bottom: 4),
+                          controller: store.eventLocationController,
+                          title: 'Localização',
+                          maxLines: 4,
+                          isValid: store.isEventLocationValid.value,
+                          errorText: store.eventLocationErrorText,
+                          globalKey: store.eventLocationKey,
+                          isPressed: store.isPressed,
+                          inputDecoration: fieldInputDecoration(
+                            prefixIconConstraints: const BoxConstraints(),
+                            prefixIcon: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 16, right: 8),
+                              child: Image.asset(
+                                AppIcons.eventLocation,
+                                height: 22,
+                              ),
+                            ),
+                            contentPadding: const EdgeInsets.only(
+                              top: 10,
+                            ),
+                            isValid: store.isEventLocationValid.value,
+                            hintText: 'Selecione a localização',
+                          ),
+                          validator: (data) {
+                            return store.locationValidation(data);
+                          },
+                          defaultHintColor: AppColors.hintInputForm,
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 16),
+                        child: TemplateFormWidget(
+                          valueListenable: store.isEventLinkValid,
+                          controller: store.eventLinkController,
+                          title: 'Link',
+                          isValid: store.isEventLinkValid.value,
+                          errorText: store.eventLinkErrorText,
+                          globalKey: store.eventLinkKey,
+                          isPressed: store.isPressed,
+                          inputDecoration: fieldInputDecoration(
+                            prefixIconConstraints: const BoxConstraints(),
+                            prefixIcon: prefixLocationIcon,
+                            isValid: store.isEventLinkValid.value,
+                            hintText: 'Link do evento',
+                          ),
+                          validator: (data) {
+                            return store.linkValidation(data);
+                          },
+                        ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 8),
-                        child: ValueListenableBuilder(
-                            valueListenable: store.isEventTitleValid,
-                            builder: (_, value, ___) {
-                              return TemplateFormWidget(
-                                controller:
-                                    store.eventLinkDescriptionController,
-                                isValid: value,
-                                errorText: store.eventLinkDescriptionErrorText,
-                                globalKey: store.eventLinkDescriptionKey,
-                                isPressed: store.isPressed,
-                                inputDecoration: fieldInputDecoration(
-                                  isValid: value,
-                                  hintText: 'Descrição do link',
-                                ),
-                                validator: (data) {
-                                  return store.emailValidation(data);
-                                },
-                              );
-                            }),
+                        child: TemplateFormWidget(
+                          valueListenable: store.isEventLinkDescriptionValid,
+                          controller: store.eventLinkDescriptionController,
+                          isValid: store.isEventLinkDescriptionValid.value,
+                          errorText: store.eventLinkDescriptionErrorText,
+                          globalKey: store.eventLinkDescriptionKey,
+                          isPressed: store.isPressed,
+                          inputDecoration: fieldInputDecoration(
+                            isValid: store.isEventLinkDescriptionValid.value,
+                            hintText: 'Descrição do link',
+                          ),
+                          validator: (data) {
+                            return store.linkDescriptionValidation(data);
+                          },
+                        ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 16, bottom: 60),
-                        child: ValueListenableBuilder(
-                            valueListenable: store.isEventTitleValid,
-                            builder: (_, value, ___) {
-                              return TemplateFormWidget(
-                                controller: store.contactLinkController,
-                                title: 'Link para contato',
-                                isValid: value,
-                                errorText: store.contactLinkErrorText,
-                                globalKey: store.contactLinkKey,
-                                isPressed: store.isPressed,
-                                inputDecoration: fieldInputDecoration(
-                                  prefixIconConstraints: const BoxConstraints(),
-                                  prefixIcon: prefixLocationIcon,
-                                  isValid: value,
-                                  hintText: 'Link do contato',
-                                ),
-                                validator: (data) {
-                                  return store.emailValidation(data);
-                                },
-                              );
-                            }),
+                        child: TemplateFormWidget(
+                          valueListenable: store.isContactLinkValid,
+                          controller: store.contactLinkController,
+                          title: 'Link para contato',
+                          isValid: store.isContactLinkValid.value,
+                          errorText: store.contactLinkErrorText,
+                          globalKey: store.contactLinkKey,
+                          isPressed: store.isPressed,
+                          inputDecoration: fieldInputDecoration(
+                            prefixIconConstraints: const BoxConstraints(),
+                            prefixIcon: prefixLocationIcon,
+                            isValid: store.isContactLinkValid.value,
+                            hintText: 'Link do contato',
+                          ),
+                          validator: (data) {
+                            return store.contactLinkValidation(data);
+                          },
+                        ),
                       ),
                     ],
                   ),

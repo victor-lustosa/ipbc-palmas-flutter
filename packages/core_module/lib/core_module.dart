@@ -34,6 +34,7 @@ export 'src/design_system/components/buttons/icon_button_widget.dart';
 export 'src/design_system/components/buttons/floating_button_widget.dart';
 export 'src/design_system/components/buttons/back_button_widget.dart';
 export 'src/design_system/components/buttons/loading_button_widget.dart';
+export 'src/design_system/components/buttons/switch_button_widget.dart';
 export 'src/design_system/components/buttons/button_widget.dart';
 export 'src/design_system/components/forms/form_field_widget.dart';
 export 'src/design_system/components/chips/choice_chips_widget.dart';

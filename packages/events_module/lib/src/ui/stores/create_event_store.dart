@@ -16,13 +16,13 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   final TextEditingController eventDescriptionController =
       TextEditingController();
   final String eventTitleErrorText = 'por favor, insira o título do evento.';
-  final String contactLinkErrorText = 'por favor, insira o título do evento.';
-  final String eventLocationErrorText = 'por favor, insira o título do evento.';
+  final String contactLinkErrorText = 'por favor, insira o link do contato do evento.';
+  final String eventLocationErrorText = 'por favor, insira o link da localização do evento.';
   final String eventDescriptionErrorText =
-      'por favor, insira o título do evento.';
+      'por favor, insira a descrição do evento.';
   final String eventLinkErrorText = 'por favor, insira o link do evento.';
   final String eventLinkDescriptionErrorText =
-      'por favor, insira o link do evento.';
+      'por favor, insira a descrição do link do evento.';
   final eventTitleKey = GlobalKey<FormState>();
   final contactLinkKey = GlobalKey<FormState>();
   final eventLinkKey = GlobalKey<FormState>();
@@ -48,6 +48,61 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       return null;
     }
   }
+
+  descriptionValidation(String? data) {
+    if (isEmptyData(data)) {
+      changeValue(isEventDescriptionValid, false);
+      return null;
+    } else {
+      changeValue(isEventDescriptionValid, true);
+      return null;
+    }
+  }
+
+  locationValidation(String? data) {
+    if (isEmptyData(data)) {
+      changeValue(isEventLocationValid, false);
+      return null;
+    } else {
+      changeValue(isEventLocationValid, true);
+      return null;
+    }
+  }
+
+  linkValidation(String? data) {
+    if (isEmptyData(data)) {
+      changeValue(isEventLinkValid, false);
+      return null;
+    } else {
+      changeValue(isEventLinkValid, true);
+      return null;
+    }
+  }
+
+  linkDescriptionValidation(String? data) {
+    if (isEmptyData(data)) {
+      changeValue(isEventLinkDescriptionValid, false);
+      return null;
+    } else {
+      changeValue(isEventLinkDescriptionValid, true);
+      return null;
+    }
+  }
+
+  contactLinkValidation(String? data) {
+    if (isEmptyData(data)) {
+      changeValue(isContactLinkValid , false);
+      return null;
+    } else {
+      changeValue(isContactLinkValid, true);
+      return null;
+    }
+  }
+
+  bool isEmptyData(String? data){
+    return (data == null || data.isEmpty);
+  }
+
   emailValidation(String? data) {
     return null;
   }
@@ -55,6 +110,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   changeValue(ValueNotifier<bool> valueNotifier, bool newValue ) {
     Future.delayed(Duration.zero, () async {
       valueNotifier.value = newValue;
+      value = UpdateFormFieldState();
     });
   }
 
@@ -87,3 +143,5 @@ class LoadingImageState extends GenericState<CreateEventState> {}
 class FetchedImageState extends GenericState<CreateEventState> {}
 
 class ExceptionImageState extends GenericState<CreateEventState> {}
+
+class UpdateFormFieldState extends GenericState<CreateEventState> {}
