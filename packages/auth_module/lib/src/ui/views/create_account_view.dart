@@ -11,11 +11,11 @@ class CreateAccountView extends StatefulWidget {
 }
 
 class _CreateAccountViewState extends State<CreateAccountView> {
-  final _store = Modular.get<CreateAccountStore>();
+  final CreateAccountStore _store = Modular.get<CreateAccountStore>();
 
-  final _emailKey = GlobalKey<FormState>();
-  final _passwordKey = GlobalKey<FormState>();
-  final _repeatPasswordKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _emailKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _repeatPasswordKey = GlobalKey<FormState>();
 
   final String _emailErrorText = 'por favor, insira um email válido.';
   final String _passwordErrorText = 'por favor, insira uma senha.';
@@ -28,7 +28,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
   @override
   Widget build(BuildContext context) {
-    suffixAction() => setState(() {
+   void suffixAction() => setState(() {
       _obscure = !_obscure;
     });
 
@@ -97,7 +97,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       hintText: 'Email',
                     ),
                     validator: (data) {
-                      return _emailValidation(data);
+                       _emailValidation(data);
+                       return null;
                     },
                     defaultHintColor:
                         _isEmailValid
@@ -143,7 +144,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                               ),
                     ),
                     validator: (data) {
-                      return _passwordValidation(data);
+                       _passwordValidation(data);
+                       return null;
                     },
                     defaultHintColor:
                         _isPasswordValid && _store.isPasswordEqual
@@ -186,7 +188,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                               ),
                     ),
                     validator: (data) {
-                      return _passwordValidation(data);
+                       _passwordValidation(data);
+                       return null;
                     },
                     defaultHintColor:
                         _isPasswordValid && _store.isPasswordEqual
@@ -341,7 +344,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     );
   }
 
-  _passwordBorderValidation(bool value) {
+ void _passwordBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
       if (mounted) {
         setState(() {
@@ -351,7 +354,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     });
   }
 
-  _emailBorderValidation(bool value) {
+  void _emailBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
       if (mounted) {
         setState(() {
@@ -361,7 +364,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     });
   }
 
-  _emailValidation(String? data) {
+  void _emailValidation(String? data) {
     if (data == null || data.isEmpty) {
       _emailBorderValidation(false);
     } else {
@@ -373,7 +376,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     }
   }
 
-  _passwordValidation(String? data) {
+  void _passwordValidation(String? data) {
     if (data == null || data.isEmpty) {
       _passwordBorderValidation(false);
     } else {

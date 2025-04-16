@@ -12,7 +12,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
   //static const String emailMock = "victor@gmail.com";
 
   final String _emailErrorText = 'por favor, insira um email válido.';
-  final _emailKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _emailKey = GlobalKey<FormState>();
 
   final TextEditingController _resetPasswordController =
       TextEditingController();
@@ -21,7 +21,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
   bool _isVerified = false;
   bool _isInit = true;
 
-  get verifiedValidation => _isVerified && _isEmailValid;
+  bool get verifiedValidation => _isVerified && _isEmailValid;
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,8 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       hintText: 'Email',
                     ),
                     validator: (data) {
-                      return _emailValidation(data);
+                       _emailValidation(data);
+                       return null;
                     },
                   ),
                 ),
@@ -120,7 +121,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
     );
   }
 
-  _emailBorderValidation(bool value, bool valueVerify) {
+  void _emailBorderValidation(bool value, bool valueVerify) {
     Future.delayed(Duration.zero, () async {
       if (mounted) {
         setState(() {
@@ -131,7 +132,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
     });
   }
 
-  _emailValidation(String? data) {
+  void _emailValidation(String? data) {
     _isInit = false;
     if (data == null || data.isEmpty) {
       _emailBorderValidation(false, false);

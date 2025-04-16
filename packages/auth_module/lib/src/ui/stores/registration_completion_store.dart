@@ -11,13 +11,13 @@ class RegistrationCompletionStore
   final TextEditingController _zipCodeController = TextEditingController();
   final TextEditingController _dateOfBirthController = TextEditingController();
 
-  get nameValue => _nameController;
-  get phoneValue => _phoneController;
-  get zipCodeValue => _zipCodeController;
-  get dateOfBirthValue => _dateOfBirthController;
+  TextEditingController get nameValue => _nameController;
+  TextEditingController get phoneValue => _phoneController;
+  TextEditingController get zipCodeValue => _zipCodeController;
+  TextEditingController get dateOfBirthValue => _dateOfBirthController;
 
-  get lengthPhone => _phoneController.text.length == 15;
-  get lengthcep => _zipCodeController.text.length == 9;
+ bool get lengthPhone => _phoneController.text.length == 15;
+  bool get lengthCep => _zipCodeController.text.length == 9;
 }
 
 @immutable

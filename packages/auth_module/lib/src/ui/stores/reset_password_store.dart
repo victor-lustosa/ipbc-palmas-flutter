@@ -20,11 +20,11 @@ class ResetPasswordStore
   bool isError = false;
   bool isListFull = false;
 
-  notifyBorderError({required value}) {
+  void notifyBorderError({required value}) {
     isError = value;
   }
 
-  validateCode(BuildContext context) {
+  void validateCode(BuildContext context) {
     value = LoadingState<ResetPasswordState>();
     try {
       Future.delayed(const Duration(seconds: 1), () {
@@ -62,7 +62,7 @@ class ResetPasswordStore
     }
   }
 
-  colorBorder() {
+  void colorBorder() {
     isListFull =
         _controllers.where((e) => e.text != '').toList().length > 5
             ? true
@@ -70,14 +70,14 @@ class ResetPasswordStore
     notifyListeners();
   }
 
-  emptyBorder() {
+  void emptyBorder() {
     if (_controllers.where((e) => e.text != '').toList().isEmpty) {
       notifyBorderError(value: false);
       notifyListeners();
     }
   }
 
-  focusControl({required String value, required int index}) {
+  void focusControl({required String value, required int index}) {
     if (value.isEmpty) {
       if (index > 0) {
         focusNodes[index - 1].requestFocus();

@@ -15,7 +15,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>>{
   final String _email = 'victor.olustosa@outlook.com';
   final String _password = '!Helena2201';
 
-  logIn(String email, String password, BuildContext context) async {
+  Future<void> logIn(String email, String password, BuildContext context) async {
     value = LoadingState<LoginState>();
     Future.delayed(const Duration(seconds: 1), () {
       if (_email == email && _password == password) {
@@ -67,15 +67,15 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>>{
     await _onlineUseCases.signInWithFacebook();
   }*/
 
-  validateFields() {
+  void validateFields() {
     value = ValidateFieldsState();
   }
 
-  toCreateAccount() {
+  void toCreateAccount() {
     pushNamed(AppRoutes.authRoute + AppRoutes.createAccountRoute);
   }
 
-  toHome(BuildContext context) {
+  void toHome(BuildContext context) {
       if(context.mounted){
         pop(context);
       }

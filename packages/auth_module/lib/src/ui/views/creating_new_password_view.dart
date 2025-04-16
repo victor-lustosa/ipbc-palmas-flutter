@@ -14,8 +14,8 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  final _confirmPasswordKey = GlobalKey<FormState>();
-  final _passwordKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _confirmPasswordKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
 
   final String _confirmPasswordErrorText = 'por favor, insira um email válido.';
   final String _passwordErrorText = 'por favor, insira uma senha.';
@@ -27,7 +27,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
 
   @override
   Widget build(BuildContext context) {
-    suffixAction() => setState(() {
+    void suffixAction() => setState(() {
       _obscure = !_obscure;
     });
     return Scaffold(
@@ -78,7 +78,8 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                     ),
                   ),
                   validator: (data) {
-                    return _passwordValidation(data);
+                     _passwordValidation(data);
+                     return null;
                   },
                   defaultHintColor: AppColors.hintInputForm,
                 ),
@@ -101,7 +102,8 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                       ),
                     ),
                     validator: (data) {
-                      return _confirmPasswordValidation(data);
+                       _confirmPasswordValidation(data);
+                       return null;
                     },
                     defaultHintColor: AppColors.hintInputForm,
                   ),
@@ -176,7 +178,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
     return password == confirmPassword;
   }
 
-  _passwordBorderValidation(bool value) {
+  void _passwordBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
       if (mounted) {
         setState(() {
@@ -186,7 +188,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
     });
   }
 
-  _confirmPasswordBorderValidation(bool value) {
+ void _confirmPasswordBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
       if (mounted) {
         setState(() {
@@ -196,7 +198,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
     });
   }
 
-  _confirmPasswordValidation(String? data) {
+  void _confirmPasswordValidation(String? data) {
     if (data == null || data.isEmpty) {
       _confirmPasswordBorderValidation(false);
     } else {
@@ -204,7 +206,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
     }
   }
 
-  _passwordValidation(String? data) {
+ void _passwordValidation(String? data) {
     if (data == null || data.isEmpty) {
       _passwordBorderValidation(false);
     } else {

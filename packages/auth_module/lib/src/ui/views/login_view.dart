@@ -17,8 +17,8 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  final _emailKey = GlobalKey<FormState>();
-  final _passwordKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _emailKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
 
   final String _emailErrorText = 'por favor, insira um email válido.';
   final String _passwordErrorText = 'por favor, insira uma senha.';
@@ -30,7 +30,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    suffixAction() => setState(() {
+    void suffixAction() => setState(() {
       _obscure = !_obscure;
     });
     return ValueListenableBuilder(
@@ -88,7 +88,8 @@ class _LoginViewState extends State<LoginView> {
                       hintText: 'Email',
                     ),
                     validator: (data) {
-                      return _emailValidation(data);
+                      _emailValidation(data);
+                      return null;
                     },
                     defaultHintColor:
                         _isEmailValid
@@ -116,7 +117,8 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                     validator: (data) {
-                      return _passwordValidation(data);
+                       _passwordValidation(data);
+                       return null;
                     },
                     defaultHintColor: AppColors.hintInputForm,
                   ),
@@ -318,7 +320,7 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  _passwordBorderValidation(bool value) {
+  void _passwordBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
       if (mounted) {
         setState(() {
@@ -328,7 +330,7 @@ class _LoginViewState extends State<LoginView> {
     });
   }
 
-  _emailBorderValidation(bool value) {
+  void _emailBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
       if (mounted) {
         setState(() {
@@ -338,7 +340,7 @@ class _LoginViewState extends State<LoginView> {
     });
   }
 
-  _emailValidation(String? data) {
+  void _emailValidation(String? data) {
     if (data == null || data.isEmpty) {
       _emailBorderValidation(false);
     } else {
@@ -350,7 +352,7 @@ class _LoginViewState extends State<LoginView> {
     }
   }
 
-  _passwordValidation(String? data) {
+  void _passwordValidation(String? data) {
     if (data == null || data.isEmpty) {
       _passwordBorderValidation(false);
     } else {

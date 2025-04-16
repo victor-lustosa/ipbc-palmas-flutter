@@ -10,17 +10,17 @@ class CreateAccountStore
   final TextEditingController _passwordRepeatController =
       TextEditingController();
 
-  get emailController => _emailController;
-  get passwordController => _passwordController;
-  get passwordRepeatController => _passwordRepeatController;
+  TextEditingController get  emailController => _emailController;
+  TextEditingController get passwordController => _passwordController;
+  TextEditingController get passwordRepeatController => _passwordRepeatController;
 
-  get email => _emailController.text;
-  get password => _passwordController.text;
-  get passwordConfirm => _passwordRepeatController.text;
+ String get email => _emailController.text;
+  String get password => _passwordController.text;
+  String get passwordConfirm => _passwordRepeatController.text;
 
   bool isError = false;
 
-  get isPasswordLengthValid => _passwordController.text.length > 7;
+  bool get isPasswordLengthValid => _passwordController.text.length > 7;
 
   bool get emptyEmail => _emailController.text.isEmpty;
 
@@ -36,11 +36,11 @@ class CreateAccountStore
   bool get isPasswordEqual =>
       emptyPasswords ? false : password == passwordConfirm;
 
-  notifyBorderError({required value}) {
+  void notifyBorderError({required value}) {
     isError = value;
   }
 
-  validateCode(BuildContext context) {
+  void validateCode(BuildContext context) {
     value = LoadingState<CreateAccountState>();
     Future.delayed(const Duration(seconds: 1), () {
       if (isPasswordEqual && emptyData) {
