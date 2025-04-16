@@ -128,7 +128,7 @@ class _HomeViewState extends State<HomeView>
                           child: SlideCardsWidget(
                             width: 319,
                             scrollDirection: Axis.horizontal,
-                            route: AppRoutes.servicesCollectionRoute,
+                            route: AppRoutes.detailEventRoute,
                             entities: _eventsList,
                           ),
                         ),

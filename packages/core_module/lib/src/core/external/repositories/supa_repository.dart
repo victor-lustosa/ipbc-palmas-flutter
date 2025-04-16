@@ -68,8 +68,8 @@ class SupabaseRepository implements IRepository {
     path ??= '';
     params = path.split('/');
     final dynamic data;
-    int limit = int.parse(params[1]);
-    int offset = params.length > 1 ? int.parse(params[2]) : 0;
+   // int limit = int.parse(params[1]);
+    //int offset = params.length > 1 ? int.parse(params[2]) : 0;
     data = await _supaClient
         .from(params[0])
         .select()

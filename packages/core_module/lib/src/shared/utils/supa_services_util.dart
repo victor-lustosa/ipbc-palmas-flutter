@@ -40,7 +40,7 @@ class SupaServicesUtil {
   ) async {
     List<LyricEntity> results = [];
     for (int i = 0; lyricsList.length > i; i++) {
-      Map result = await _getLyric(lyricsList[i].title, lyricsList[i].group);
+     // Map result = await _getLyric(lyricsList[i].title, lyricsList[i].group);
       results.add(
         LyricModel.empty().copyWith(
           // verses: VerseAdapter.fromVagalume(result),
