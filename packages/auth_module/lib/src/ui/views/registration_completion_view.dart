@@ -17,13 +17,13 @@ class _RegistrationCompletionViewState
   final RegistrationCompletionStore _store =
       Modular.get<RegistrationCompletionStore>();
 
-  final _nameKey = GlobalKey<FormState>();
-  final _phoneKey = GlobalKey<FormState>();
-  final _zipCodeKey = GlobalKey<FormState>();
-  final _dateOfBirthKey = GlobalKey<FormState>();
-  final _maritalStatusKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _nameKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _phoneKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _zipCodeKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _dateOfBirthKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _maritalStatusKey = GlobalKey<FormState>();
 
-  final _isPressed = false;
+  final bool _isPressed = false;
   bool _isValidName = true;
   bool _isValidPhone = true;
   bool _isValidCep = true;
@@ -57,8 +57,7 @@ class _RegistrationCompletionViewState
                     BackButtonWidget(
                       action:
                           () => Modular.to.navigate(
-                            AppRoutes.authRoute +
-                                AppRoutes.createAccountRoute,
+                            AppRoutes.authRoute + AppRoutes.createAccountRoute,
                           ),
                     ),
                   ],
@@ -87,7 +86,8 @@ class _RegistrationCompletionViewState
                     isValid: _isValidName,
                     isPressed: _isPressed,
                     validator: (data) {
-                      return _nameValidation(data);
+                      _nameValidation(data);
+                      return null;
                     },
                     inputDecoration: fieldInputDecoration(
                       isValid: _isValidName,
@@ -109,7 +109,8 @@ class _RegistrationCompletionViewState
                     isValid: _isValidPhone,
                     isPressed: _isPressed,
                     validator: (data) {
-                      return _phoneValidation(data);
+                      _phoneValidation(data);
+                      return null;
                     },
                     inputDecoration: fieldInputDecoration(
                       isValid: _isValidPhone,
@@ -130,7 +131,8 @@ class _RegistrationCompletionViewState
                     isValid: _isValidCep,
                     isPressed: _isPressed,
                     validator: (data) {
-                      return _cepValidation(data);
+                      _cepValidation(data);
+                      return null;
                     },
                     inputDecoration: fieldInputDecoration(
                       isValid: _isValidCep,
@@ -175,7 +177,8 @@ class _RegistrationCompletionViewState
                     isValid: _isValidDate,
                     isPressed: _isPressed,
                     validator: (data) {
-                      return _dateValidation(data);
+                      _dateValidation(data);
+                      return null;
                     },
                     inputDecoration: fieldInputDecoration(
                       suffixIconConstraints: const BoxConstraints(
@@ -341,7 +344,7 @@ class _RegistrationCompletionViewState
     );
   }
 
-  _nameBorderValidation(bool value) {
+  void _nameBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
       if (mounted) {
         setState(() {
@@ -351,7 +354,7 @@ class _RegistrationCompletionViewState
     });
   }
 
-  _nameValidation(String? data) {
+  void _nameValidation(String? data) {
     if (data == null || data.isEmpty) {
       _nameBorderValidation(false);
     } else {
@@ -361,7 +364,7 @@ class _RegistrationCompletionViewState
     }
   }
 
-  _phoneBorderValidation(bool value) {
+  void _phoneBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
       if (mounted) {
         setState(() {
@@ -371,7 +374,7 @@ class _RegistrationCompletionViewState
     });
   }
 
-  _phoneValidation(String? value) {
+  void _phoneValidation(String? value) {
     if (value == null || value.isEmpty) {
       _phoneBorderValidation(false);
     } else {
@@ -381,7 +384,7 @@ class _RegistrationCompletionViewState
     }
   }
 
-  _cepBorderValidation(bool value) {
+  void _cepBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
       if (mounted) {
         setState(() {
@@ -391,7 +394,7 @@ class _RegistrationCompletionViewState
     });
   }
 
-  _cepValidation(String? value) {
+  void _cepValidation(String? value) {
     if (value == null || value.isEmpty) {
       _cepBorderValidation(false);
     } else {
@@ -425,14 +428,12 @@ class _RegistrationCompletionViewState
     });
   }
 
-  _dateValidation(String? value) {
+  void _dateValidation(String? value) {
     if (value == null || value.isEmpty) {
       _dateBorderValidation(false);
-      return false;
     } else {
       bool isValidDate = _validateDate(value);
       _dateBorderValidation(isValidDate);
-      return isValidDate;
     }
   }
 
