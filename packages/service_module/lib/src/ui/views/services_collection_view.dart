@@ -70,7 +70,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                         image: widget.entity.image,
                         title: "Cultos de ${widget.entity.heading}",
                       ),
-                      Container(
+                      entitiesList.isNotEmpty ?  Container(
                         margin: const EdgeInsets.only(
                           top: 24,
                           left: 15.5,
@@ -166,9 +166,37 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                             );
                           },
                         ),
+                      ): Container(
+                        margin: const EdgeInsets.only( top: 150),
+                        child: SizedBox(
+                          width: context.sizeOf.width,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 26,
+                                height: 26,
+                                child: Image.asset(AppIcons.info,color: Colors.blueAccent,),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 8),
+                                width: context.sizeOf.width * .6,
+                                child: Text(
+                                  textAlign: TextAlign.center,
+                                  style: AppFonts.defaultFont(
+                                    fontSize: 13,
+
+                                    color: AppColors.grey9,
+                                  ),
+                                  'Não há cultos cadastrados.',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
-                  ),
+                  )
                 ),
               ),
             );

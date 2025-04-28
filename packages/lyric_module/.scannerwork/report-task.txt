@@ -2,5 +2,5 @@ projectKey=lyric_module
 serverUrl=http://localhost:9000
 serverVersion=9.9.4.87374
 dashboardUrl=http://localhost:9000/dashboard?id=lyric_module
-ceTaskId=AZY8P4lTMJ2bCKaeI_i2
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AZY8P4lTMJ2bCKaeI_i2
+ceTaskId=AZZ87D7Dn6jJ-j_jq1zE
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AZZ87D7Dn6jJ-j_jq1zE
