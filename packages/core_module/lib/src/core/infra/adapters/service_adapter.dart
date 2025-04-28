@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:core_module/core_module.dart';
 import 'package:core_module/src/core/infra/adapters/liturgy_adapter.dart';
 
+import '../../../shared/mixins/flatten_mixin.dart';
+
 // ignore: depend_on_referenced_packages
 
 class ServiceAdapter {
@@ -70,12 +72,17 @@ class ServiceAdapter {
           liturgiesList:
               entity.containsKey('service_liturgies')
                   ? LiturgyAdapter.supaMapList(
-                    entity['service_liturgies'],
+                    FlattenMixin.flattenByKey(
+                      entity['service_liturgies'],
+                      'liturgies',
+                    ),
                   )
                   : [],
           lyricsList:
               entity['service_lyrics'][0]['lyrics'].isNotEmpty
-                  ? LyricAdapter.fromMapList([entity['service_lyrics'][0]['lyrics']])
+                  ? LyricAdapter.fromMapList([
+                    entity['service_lyrics'][0]['lyrics'],
+                  ])
                   : [],
         ),
       );

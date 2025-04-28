@@ -20,9 +20,10 @@ class LiturgyAdapter {
     for (dynamic liturgy in json) {
       liturgiesList.add(
         LiturgyEntity(
-          isAdditional: liturgy['liturgies']['isAdditional'],
-          sequence: liturgy['liturgies']['sequence'],
-          additional: liturgy['liturgies']['additional'],
+          id: liturgy['id'].toString(),
+          isAdditional: liturgy['isAdditional'],
+          sequence: liturgy['sequence'],
+          additional: liturgy['additional'],
         ),
       );
     }

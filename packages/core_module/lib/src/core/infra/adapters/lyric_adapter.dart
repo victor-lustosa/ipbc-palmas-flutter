@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import '../../../../core_module.dart';
+import '../../../shared/mixins/flatten_mixin.dart';
 
 // ignore: depend_on_referenced_packages
 
-class LyricAdapter {
+class LyricAdapter with FlattenMixin{
   static List<LyricModel> fromJson(String source) =>
       fromMapList(json.decode(source));
 
@@ -50,13 +51,15 @@ class LyricAdapter {
           group: lyric['group'],
           verses:
               (lyric['lyrics_verses'].isNotEmpty)
-                  ? VerseAdapter.fromMapList(lyric['lyrics_verses'])
+                  ? VerseAdapter.fromMapList(FlattenMixin.flattenByKey(lyric['lyrics_verses'],'verses'))
                   : [],
         ),
       );
     }
     return lyricsList;
   }
+
+
 
   static List<Map<String, dynamic>> toMapList(List<LyricEntity> data) {
     return data

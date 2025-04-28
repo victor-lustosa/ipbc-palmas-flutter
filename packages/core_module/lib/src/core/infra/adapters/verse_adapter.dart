@@ -10,12 +10,12 @@ class VerseAdapter {
     for (dynamic verse in json) {
       versesList.add(
           VerseEntity(
-            id: verse['verses']['id'].runtimeType == String ? int.parse(verse['verses']['id']) : verse['verses']['id'],
-            isChorus: verse['verses']['isChorus'],
+            id: verse['id'].runtimeType == String ? int.parse(verse['id']) : verse['id'],
+            isChorus: verse['isChorus'],
             versesList:
-            verse['verses']['versesList'].runtimeType == String
-                ? verseJsonDecode(verse['verses']['versesList'])
-                : verseSupaDecode(verse['verses']['versesList']),
+            verse['versesList'].runtimeType == String
+                ? verseJsonDecode(verse['versesList'])
+                : verseSupaDecode(verse['versesList']),
           )
       );
     }
