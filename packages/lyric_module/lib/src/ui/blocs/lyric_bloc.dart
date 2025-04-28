@@ -9,7 +9,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
   List<LyricEntity>? lyricsList;
-  final String path = 'lyrics/createAt/false';
+  final String path = 'lyrics/createAt/false/id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))';
 
   LyricBloc({
     required this.onlineUseCases,
@@ -121,7 +121,7 @@ class FilterEvent<R, T> extends GenericEvent<R> {
   FilterEvent(this.searchText, this.writing, this.typeFilter, this.selectIndex);
 }
 
-class MusicFilter extends Filter<LyricEntity, FilterEvent> {
+class TitleFilter extends Filter<LyricEntity, FilterEvent> {
   @override
   List<LyricEntity> filterListing(FilterEvent event, List<LyricEntity>? list) {
     List<LyricEntity> filterList;

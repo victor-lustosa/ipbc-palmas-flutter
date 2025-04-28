@@ -1,15 +1,30 @@
+
+import 'dart:convert';
+
 import 'package:core_module/core_module.dart';
 
 class VerseAdapter {
-  static VerseEntity fromMap(dynamic json) {
-    return VerseEntity(
-      id: json['id'].runtimeType == String ? int.parse(json['id']) : json['id'],
-      isChorus: json['isChorus'],
-      versesList:
-          json['versesList'].runtimeType == String
-              ? verseJsonDecode(json['versesList'])
-              : json['versesList'],
-    );
+
+  static List<VerseEntity> fromMapList(dynamic json) {
+    List<VerseEntity> versesList = [];
+    for (dynamic verse in json) {
+      versesList.add(
+          VerseEntity(
+            id: verse['verses']['id'].runtimeType == String ? int.parse(verse['verses']['id']) : verse['verses']['id'],
+            isChorus: verse['verses']['isChorus'],
+            versesList:
+            verse['verses']['versesList'].runtimeType == String
+                ? verseJsonDecode(verse['verses']['versesList'])
+                : verseSupaDecode(verse['verses']['versesList']),
+          )
+      );
+    }
+    return versesList;
+  }
+  static List verseSupaDecode(dynamic json) {
+    final Map<String, dynamic> decoded = jsonDecode(json[0]);
+    final List<String> results = decoded.values.map((e) => e.toString()).toList();
+    return results;
   }
 
   static List verseJsonDecode(dynamic json) {

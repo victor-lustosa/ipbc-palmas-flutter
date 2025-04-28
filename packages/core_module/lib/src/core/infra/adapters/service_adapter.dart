@@ -74,8 +74,8 @@ class ServiceAdapter {
                   )
                   : [],
           lyricsList:
-              entity.containsKey('service_lyrics')
-                  ? LyricAdapter.supaMapList(entity['service_lyrics'])
+              entity['service_lyrics'][0]['lyrics'].isNotEmpty
+                  ? LyricAdapter.fromMapList([entity['service_lyrics'][0]['lyrics']])
                   : [],
         ),
       );

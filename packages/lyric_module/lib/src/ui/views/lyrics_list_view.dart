@@ -92,7 +92,7 @@ class _LyricsListViewState extends State<LyricsListView>
                                     controller.text,
                                     writing,
                                     selectedIndex == 0
-                                        ? MusicFilter()
+                                        ? TitleFilter()
                                         : ArtistFilter(),
                                     // FilterFactory<LyricEvent,List<LyricEntity>>(index: selectedIndex),
                                     selectedIndex),

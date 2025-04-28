@@ -63,7 +63,15 @@ class EditLiturgyViewModel extends ChangeNotifier {
   late LiturgyModel entity;
 
   void addBox() {
-    items.insert(index, LiturgyModel.empty());
+    items.insert(
+      index + 1,
+      LiturgyModel(
+        id: SupaServicesUtil.createId(),
+        isAdditional: true,
+        sequence: 'Título',
+        additional: 'Descrição',
+      ),
+    );
     notifyListeners();
   }
 

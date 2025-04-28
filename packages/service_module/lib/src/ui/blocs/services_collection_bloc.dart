@@ -14,7 +14,7 @@ class ServicesCollectionBloc
   final IUseCases? offlineUseCases;
   String path = '';
   String customSelect =
-      '/id, createAt, image, title, theme, preacher, hour, heading, type, guideIsVisible, service_liturgies (liturgies(isAdditional, sequence, additional)), service_lyrics (lyrics(id, title, group, albumCover, createAt, lirycs_verses(verses(isChorus, versesList))))';
+      '/id, createAt, image, title, theme, preacher, hour, heading, type, guideIsVisible, service_liturgies (liturgies(isAdditional, sequence, additional)), service_lyrics (lyrics(id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))))';
 
   ServicesCollectionBloc({required this.onlineUseCases, this.offlineUseCases})
     : super(LoadingState()) {

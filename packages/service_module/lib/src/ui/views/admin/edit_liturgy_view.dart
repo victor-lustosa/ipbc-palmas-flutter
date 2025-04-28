@@ -24,6 +24,7 @@ class EditLiturgyView extends StatefulWidget {
 class _EditLiturgyViewState extends State<EditLiturgyView> {
   late EditLiturgyViewModel _editLiturgyViewModel;
   late List<LiturgyModel> _liturgiesList;
+
   @override
   void initState() {
     super.initState();
@@ -180,8 +181,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
             action:
                 () => Navigator.popAndPushNamed(
                   context,
-                  AppRoutes.servicesRoute +
-                      AppRoutes.servicesPreviewRoute,
+                  AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
                   arguments: ServicesPreviewDTO(
                     heading: widget.dto.heading,
                     image: widget.dto.image,
