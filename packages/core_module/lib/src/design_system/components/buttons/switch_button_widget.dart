@@ -25,7 +25,7 @@ class _SwitchButtonWidgetState extends State<SwitchButtonWidget> {
         widget.onChanged(!isOn);
       },
       child: SizedBox(
-        width: 32, // reduzido para que a barra termine no meio da bolinha
+        width: 32, 
         height: 20,
         child: Stack(
           alignment: Alignment.center,

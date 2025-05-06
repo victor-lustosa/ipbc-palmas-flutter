@@ -14,13 +14,29 @@ class CreateEventView extends StatefulWidget {
 
 class _CreateEventViewState extends State<CreateEventView> {
   late final CreateEventStore store;
-  bool _notificacoesAtivadas = false;
+  bool _isSwitchOn = false;
+  late DateTime _startDateTime;
+  late DateTime _endDateTime;
 
   @override
   void initState() {
     super.initState();
     store = Modular.get<CreateEventStore>();
     Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
+    final now = DateTime.now();
+    _startDateTime = DateTime(now.year, now.month, now.day, 8, 0);
+    _endDateTime = DateTime(now.year, now.month, now.day, 18, 0);
+  }
+
+  String getFormattedDateTime(DateTime dateTime) {
+    final formatter = DateFormat('EEE, d MMM yyyy', 'pt_BR');
+    String formatted = formatter.format(dateTime);
+    formatted = formatted.replaceAll('.', '');
+    formatted = formatted.split(' ').map((word) {
+      if (word.isEmpty) return word;
+      return word[0].toUpperCase() + word.substring(1);
+    }).join(' ');
+    return formatted;
   }
 
   get prefixLocationIcon => Container(
@@ -31,6 +47,43 @@ class _CreateEventViewState extends State<CreateEventView> {
           height: 13,
         ),
       );
+
+  Future<void> _selectDateTime({required bool isStart}) async {
+    final DateTime initialDateTime = isStart ? _startDateTime : _endDateTime;
+
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: initialDateTime,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      locale: const Locale('pt', 'BR'),
+    );
+
+    if (pickedDate != null) {
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.fromDateTime(initialDateTime),
+      );
+
+      if (pickedTime != null) {
+        final DateTime combined = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+
+        setState(() {
+          if (isStart) {
+            _startDateTime = combined;
+          } else {
+            _endDateTime = combined;
+          }
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -249,13 +302,73 @@ class _CreateEventViewState extends State<CreateEventView> {
                                   ],
                                 ),
                                 SwitchButtonWidget(
-                                  value: _notificacoesAtivadas,
-                                  onChanged: (bool novoValor) {
+                                  value: _isSwitchOn,
+                                  onChanged: (bool newValue) {
                                     setState(() {
-                                      _notificacoesAtivadas = novoValor;
+                                      _isSwitchOn = newValue;
                                     });
                                   },
                                 )
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(left: 8),
+                                      child: Text(
+                                        "De",
+                                        style: AppFonts.defaultFont(
+                                          fontSize: 13,
+                                          color: AppColors.grey8,
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () => _selectDateTime(isStart: true),
+                                      child: Text(
+                                        getFormattedDateTime(_startDateTime),
+                                        style: AppFonts.defaultFont(
+                                          fontSize: 15,
+                                          color: AppColors.darkGreen,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(left: 8),
+                                      child: Text(
+                                        "Até",
+                                        style: AppFonts.defaultFont(
+                                          fontSize: 13,
+                                          color: AppColors.grey8,
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () => _selectDateTime(isStart: false),
+                                      child: Text(
+                                        getFormattedDateTime(_endDateTime),
+                                        style: AppFonts.defaultFont(
+                                          color: AppColors.darkGreen,
+                                          fontSize: 15,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ],

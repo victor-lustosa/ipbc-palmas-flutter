@@ -1,6 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:home_module/home_module.dart';
+
 
 void main() async {
   //Modular.setInitialRoute(AppRoutes.servicesRoute + AppRoutes.editLyricRoute);
@@ -8,7 +10,7 @@ void main() async {
   //Modular.setInitialRoute(AppRoutes.lyricsListRoute);
   WidgetsFlutterBinding.ensureInitialized();
   // Modular.setInitialRoute(AppRoutes.lyricsListRoute);
-  await Future.wait([SupabaseRepository.init(), IsarRepository.init()]);
+  await Future.wait([SupabaseRepository.init(), IsarRepository.init(),  initializeDateFormatting('pt_BR', null)]);
   // Bloc.observer = GenericBlocObserver();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) => runApp(
@@ -23,6 +25,15 @@ void main() async {
             );
           },
           theme: lightTheme,
+          locale: const Locale('pt', 'BR'),
+          supportedLocales: const [
+            Locale('pt', 'BR'),
+          ],
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
           routerConfig: Modular.routerConfig,
           debugShowCheckedModeBanner: false,
         ),

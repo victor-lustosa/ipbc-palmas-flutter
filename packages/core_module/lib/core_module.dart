@@ -5,6 +5,7 @@ export 'src/app_module.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:flutter_modular/flutter_modular.dart';
 export 'package:intl/intl.dart';
+export 'package:intl/date_symbol_data_local.dart';
 export 'package:hive_flutter/hive_flutter.dart';
 export 'package:email_validator/email_validator.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
