@@ -14,12 +14,29 @@ class CreateEventView extends StatefulWidget {
 
 class _CreateEventViewState extends State<CreateEventView> {
   late final CreateEventStore store;
+  bool _isSwitchOn = false;
+  late DateTime _startDateTime;
+  late DateTime _endDateTime;
 
   @override
   void initState() {
     super.initState();
     store = Modular.get<CreateEventStore>();
     Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
+    final now = DateTime.now();
+    _startDateTime = DateTime(now.year, now.month, now.day, 8, 0);
+    _endDateTime = DateTime(now.year, now.month, now.day, 18, 0);
+  }
+
+  String getFormattedDateTime(DateTime dateTime) {
+    final formatter = DateFormat('EEE, d MMM yyyy', 'pt_BR');
+    String formatted = formatter.format(dateTime);
+    formatted = formatted.replaceAll('.', '');
+    formatted = formatted.split(' ').map((word) {
+      if (word.isEmpty) return word;
+      return word[0].toUpperCase() + word.substring(1);
+    }).join(' ');
+    return formatted;
   }
 
   get prefixLocationIcon => Container(
@@ -30,6 +47,43 @@ class _CreateEventViewState extends State<CreateEventView> {
           height: 13,
         ),
       );
+
+  Future<void> _selectDateTime({required bool isStart}) async {
+    final DateTime initialDateTime = isStart ? _startDateTime : _endDateTime;
+
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: initialDateTime,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      locale: const Locale('pt', 'BR'),
+    );
+
+    if (pickedDate != null) {
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.fromDateTime(initialDateTime),
+      );
+
+      if (pickedTime != null) {
+        final DateTime combined = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+
+        setState(() {
+          if (isStart) {
+            _startDateTime = combined;
+          } else {
+            _endDateTime = combined;
+          }
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,97 +130,130 @@ class _CreateEventViewState extends State<CreateEventView> {
                           ),
                         ]),
                       ),
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: AppColors.grey0,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20.0),
-                          ),
-                        ),
-                        width: context.sizeOf.width,
-                        height: 144,
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                        ),
-                        child: InkWell(
-                          onTap: () async => await store.getImage(),
-                          child: state is FetchedImageState
-                              ? Container(
+                      Column(
+                        children: [
+                          ValueListenableBuilder(
+                              valueListenable: store.isCoverImageValid,
+                              builder: (_, value, ___) {
+                                return Container(
                                   decoration: BoxDecoration(
+                                    color: AppColors.grey0,
+                                    border: Border.all(
+                                        color: value
+                                            ? AppColors.grey0
+                                            : Colors.red),
                                     borderRadius: BorderRadius.all(
-                                      Radius.circular(20),
-                                    ),
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: FileImage(
-                                        store.coverImage,
-                                      ),
+                                      Radius.circular(20.0),
                                     ),
                                   ),
-                                )
-                              : Column(
-                                  children: [
-                                    Container(
-                                        margin: const EdgeInsets.only(
-                                            top: 41.33, bottom: 13.33),
-                                        child: state is LoadingImageState
-                                            ? Container(
-                                                margin:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 6),
-                                                child: LoadingWidget(
-                                                    size: Platform.isIOS
-                                                        ? 10
-                                                        : 22))
-                                            : Image.asset(
-                                                AppIcons.folderUpload,
-                                                width: 26.67,
-                                                height: 21.33,
-                                              )),
-                                    Text(
-                                      'Suba um arquivo PNG ou JPG com dimensões de até 343x144 e 4MB',
-                                      textAlign: TextAlign.center,
-                                      style: AppFonts.defaultFont(
-                                          fontSize: 13, color: AppColors.grey6),
-                                    )
-                                  ],
-                                ),
-                        ),
+                                  width: context.sizeOf.width,
+                                  height: 144,
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                  ),
+                                  child: InkWell(
+                                    onTap: () async => await store.getImage(),
+                                    child: state is FetchedImageState
+                                        ? Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(20),
+                                              ),
+                                              image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: FileImage(
+                                                  store.coverImage,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        : Column(
+                                            children: [
+                                              Container(
+                                                  margin: const EdgeInsets.only(
+                                                      top: 41.33,
+                                                      bottom: 13.33),
+                                                  child: state
+                                                          is LoadingImageState
+                                                      ? Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  vertical: 6),
+                                                          child: LoadingWidget(
+                                                              size:
+                                                                  Platform.isIOS
+                                                                      ? 10
+                                                                      : 22))
+                                                      : Image.asset(
+                                                          color: value
+                                                              ? AppColors
+                                                                  .darkGreen
+                                                              : Colors.red,
+                                                          AppIcons.folderUpload,
+                                                          width: 26.67,
+                                                          height: 21.33,
+                                                        )),
+                                              Text(
+                                                'Suba um arquivo PNG ou JPG com dimensões de até 343x144 e 4MB',
+                                                textAlign: TextAlign.center,
+                                                style: AppFonts.defaultFont(
+                                                    fontSize: 13,
+                                                    color: AppColors.grey6),
+                                              )
+                                            ],
+                                          ),
+                                  ),
+                                );
+                              }),
+                          ValueListenableBuilder(
+                              valueListenable: store.isCoverImageValid,
+                              builder: (_, value, ___) {
+                                return Visibility(
+                                  visible: !value,
+                                  child: Text("Por favor, insira a imagem",
+                                      style: TextStyle(color: Colors.red)),
+                                );
+                              }),
+                        ],
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 16),
                         child: TemplateFormWidget(
+                          valueListenable: store.isEventTitleValid,
                           titleMargin: const EdgeInsets.only(bottom: 4),
                           controller: store.eventTitleController,
                           title: 'Título do evento',
-                          isValid: store.isEventTitleValid,
+                          isValid: store.isEventTitleValid.value,
                           errorText: store.eventTitleErrorText,
                           globalKey: store.eventTitleKey,
                           isPressed: store.isPressed,
                           inputDecoration: fieldInputDecoration(
-                            isValid: store.isEventTitleValid,
+                            isValid: store.isEventTitleValid.value,
                             hintText: 'Título do seu evento',
                           ),
                           validator: (data) {
-                            return store.emailValidation(data);
+                            return store.titleValidation(data);
                           },
                           defaultHintColor: AppColors.hintInputForm,
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 16),
+                        margin: const EdgeInsets.only(top: 16, bottom: 24),
                         child: TemplateFormWidget(
+                          valueListenable: store.isEventTitleValid,
                           titleMargin: const EdgeInsets.only(bottom: 4),
                           controller: store.eventDescriptionController,
                           title: 'Descrição',
                           maxLines: 4,
                           fieldHeight: 110,
-                          isValid: store.isEventDescriptionValid,
+                          isValid: store.isEventTitleValid.value,
                           errorText: store.eventDescriptionErrorText,
                           globalKey: store.eventDescriptionKey,
                           isPressed: store.isPressed,
                           inputDecoration: fieldInputDecoration(
-                            hintColor: store.isEventDescriptionValid
+                            hintColor: store.isEventTitleValid
+                                    .value // store.isEventDescriptionValid
                                 ? AppColors.grey5
                                 : Colors.red,
                             contentPadding: const EdgeInsets.only(
@@ -174,23 +261,128 @@ class _CreateEventViewState extends State<CreateEventView> {
                               top: 9,
                               right: 10,
                             ),
-                            isValid: store.isEventDescriptionValid,
+                            isValid: true,
+                            // store.isEventDescriptionValid,
                             hintText: 'Descrição do evento',
                           ),
                           validator: (data) {
-                            return store.emailValidation(data);
+                            return store.descriptionValidation(data);
                           },
                           defaultHintColor: AppColors.hintInputForm,
                         ),
                       ),
                       Container(
+                        color: Colors.white,
+                        width: context.sizeOf.width,
+                        height: 92,
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      AppIcons.watchIcon,
+                                      height: 22,
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(left: 8),
+                                      child: Text(
+                                        "O dia todo",
+                                        style: AppFonts.defaultFont(
+                                          fontSize: 13,
+                                          color: AppColors.grey8,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SwitchButtonWidget(
+                                  value: _isSwitchOn,
+                                  onChanged: (bool newValue) {
+                                    setState(() {
+                                      _isSwitchOn = newValue;
+                                    });
+                                  },
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(left: 8),
+                                      child: Text(
+                                        "De",
+                                        style: AppFonts.defaultFont(
+                                          fontSize: 13,
+                                          color: AppColors.grey8,
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () => _selectDateTime(isStart: true),
+                                      child: Text(
+                                        getFormattedDateTime(_startDateTime),
+                                        style: AppFonts.defaultFont(
+                                          fontSize: 15,
+                                          color: AppColors.darkGreen,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(left: 8),
+                                      child: Text(
+                                        "Até",
+                                        style: AppFonts.defaultFont(
+                                          fontSize: 13,
+                                          color: AppColors.grey8,
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () => _selectDateTime(isStart: false),
+                                      child: Text(
+                                        getFormattedDateTime(_endDateTime),
+                                        style: AppFonts.defaultFont(
+                                          color: AppColors.darkGreen,
+                                          fontSize: 15,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
                         margin: const EdgeInsets.only(top: 16),
                         child: TemplateFormWidget(
+                          valueListenable: store.isEventLocationValid,
                           titleMargin: const EdgeInsets.only(bottom: 4),
                           controller: store.eventLocationController,
                           title: 'Localização',
                           maxLines: 4,
-                          isValid: store.isEventLocationValid,
+                          isValid: store.isEventLocationValid.value,
                           errorText: store.eventLocationErrorText,
                           globalKey: store.eventLocationKey,
                           isPressed: store.isPressed,
@@ -207,11 +399,11 @@ class _CreateEventViewState extends State<CreateEventView> {
                             contentPadding: const EdgeInsets.only(
                               top: 10,
                             ),
-                            isValid: store.isEventLocationValid,
+                            isValid: store.isEventLocationValid.value,
                             hintText: 'Selecione a localização',
                           ),
                           validator: (data) {
-                            return store.emailValidation(data);
+                            return store.locationValidation(data);
                           },
                           defaultHintColor: AppColors.hintInputForm,
                         ),
@@ -219,57 +411,60 @@ class _CreateEventViewState extends State<CreateEventView> {
                       Container(
                         margin: const EdgeInsets.only(top: 16),
                         child: TemplateFormWidget(
+                          valueListenable: store.isEventLinkValid,
                           controller: store.eventLinkController,
                           title: 'Link',
-                          isValid: store.isEventLinkValid,
+                          isValid: store.isEventLinkValid.value,
                           errorText: store.eventLinkErrorText,
                           globalKey: store.eventLinkKey,
                           isPressed: store.isPressed,
                           inputDecoration: fieldInputDecoration(
                             prefixIconConstraints: const BoxConstraints(),
                             prefixIcon: prefixLocationIcon,
-                            isValid: store.isEventLocationValid,
+                            isValid: store.isEventLinkValid.value,
                             hintText: 'Link do evento',
                           ),
                           validator: (data) {
-                            return store.emailValidation(data);
+                            return store.linkValidation(data);
                           },
                         ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 8),
                         child: TemplateFormWidget(
+                          valueListenable: store.isEventLinkDescriptionValid,
                           controller: store.eventLinkDescriptionController,
-                          isValid: store.isEventLinkDescriptionValid,
+                          isValid: store.isEventLinkDescriptionValid.value,
                           errorText: store.eventLinkDescriptionErrorText,
                           globalKey: store.eventLinkDescriptionKey,
                           isPressed: store.isPressed,
                           inputDecoration: fieldInputDecoration(
-                            isValid: store.isEventLinkDescriptionValid,
+                            isValid: store.isEventLinkDescriptionValid.value,
                             hintText: 'Descrição do link',
                           ),
                           validator: (data) {
-                            return store.emailValidation(data);
+                            return store.linkDescriptionValidation(data);
                           },
                         ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 16, bottom: 60),
                         child: TemplateFormWidget(
+                          valueListenable: store.isContactLinkValid,
                           controller: store.contactLinkController,
                           title: 'Link para contato',
-                          isValid: store.isContactLinkValid,
+                          isValid: store.isContactLinkValid.value,
                           errorText: store.contactLinkErrorText,
                           globalKey: store.contactLinkKey,
                           isPressed: store.isPressed,
                           inputDecoration: fieldInputDecoration(
                             prefixIconConstraints: const BoxConstraints(),
                             prefixIcon: prefixLocationIcon,
-                            isValid: store.isContactLinkValid,
+                            isValid: store.isContactLinkValid.value,
                             hintText: 'Link do contato',
                           ),
                           validator: (data) {
-                            return store.emailValidation(data);
+                            return store.contactLinkValidation(data);
                           },
                         ),
                       ),

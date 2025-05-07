@@ -1,4 +1,5 @@
 import 'package:core_module/core_module.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -24,6 +25,7 @@ class TemplateFormWidget extends StatefulWidget {
     this.defaultHintColor,
     this.readOnly,
     this.fieldMargin,
+    this.valueListenable,
   });
 
   final int? maxLines;
@@ -64,6 +66,8 @@ class TemplateFormWidget extends StatefulWidget {
 
   final Color? defaultHintColor;
 
+  final ValueListenable<bool>? valueListenable;
+
   @override
   State<TemplateFormWidget> createState() => _TemplateFormWidgetState();
 }
@@ -71,31 +75,39 @@ class TemplateFormWidget extends StatefulWidget {
 class _TemplateFormWidgetState extends State<TemplateFormWidget> {
   @override
   Widget build(BuildContext context) {
-    return FormFieldWidget(
-      horizontalSymmetric:
-          widget.horizontalSymmetric ??
-          const EdgeInsets.symmetric(horizontal: 16),
-      fieldKey: widget.globalKey,
-      isSubmitted: !widget.isPressed,
-      fieldMargin: widget.fieldMargin ?? const EdgeInsets.only(top: 4),
-      titleMargin: widget.titleMargin,
-      fieldDecoration: _fieldDecoration(
-        isValid: widget.isValid,
-        color: widget.color,
-      ),
-      title: widget.title,
-      isValid: widget.isValid,
-      maxLines: widget.maxLines,
-      titleStyle: AppFonts.defaultFont(fontSize: 13, color: AppColors.grey8),
-      inputFormatters: widget.inputFormatters,
-      keyboardType: widget.textInputType,
-      controller: widget.controller,
-      inputDecoration: widget.inputDecoration,
-      obscureText: widget.obscure,
-      errorText: widget.errorText,
-      fieldHeight: widget.fieldHeight ?? 48,
-      validator: widget.validator,
-      colorStyle: widget.defaultHintColor ?? AppColors.hintInputForm,
+    return ValueListenableBuilder(
+      valueListenable: widget.valueListenable ?? ValueNotifier(true),
+      builder: (_, value, ___) {
+        return FormFieldWidget(
+          horizontalSymmetric:
+              widget.horizontalSymmetric ??
+              const EdgeInsets.symmetric(horizontal: 16),
+          fieldKey: widget.globalKey,
+          isSubmitted: !widget.isPressed,
+          fieldMargin: widget.fieldMargin ?? const EdgeInsets.only(top: 4),
+          titleMargin: widget.titleMargin,
+          fieldDecoration: _fieldDecoration(
+            isValid: widget.isValid,
+            color: widget.color,
+          ),
+          title: widget.title,
+          isValid: widget.isValid,
+          maxLines: widget.maxLines,
+          titleStyle: AppFonts.defaultFont(
+            fontSize: 13,
+            color: AppColors.grey8,
+          ),
+          inputFormatters: widget.inputFormatters,
+          keyboardType: widget.textInputType,
+          controller: widget.controller,
+          inputDecoration: widget.inputDecoration,
+          obscureText: widget.obscure,
+          errorText: widget.errorText,
+          fieldHeight: widget.fieldHeight ?? 48,
+          validator: widget.validator,
+          colorStyle: widget.defaultHintColor ?? AppColors.hintInputForm,
+        );
+      },
     );
   }
 
@@ -109,7 +121,7 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
 }
 
 fieldInputDecoration({
-  required isValid,
+  required bool isValid,
   required hintText,
   Widget? suffixIcon,
   Widget? prefixIcon,
