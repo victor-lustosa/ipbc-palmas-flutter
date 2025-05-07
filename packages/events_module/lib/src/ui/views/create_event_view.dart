@@ -153,7 +153,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                                   ),
                                   child: InkWell(
                                     onTap: () async => await store.getImage(),
-                                    child: state is FetchedImageState
+                                    child: state is FetchedImageState || (state is UpdateFormFieldState && store.coverImage.path.isNotEmpty)
                                         ? Container(
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.all(
