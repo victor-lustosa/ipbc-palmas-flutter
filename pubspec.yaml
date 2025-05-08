@@ -1,0 +1,33 @@
+name: ipbc_monorepo
+environment:
+  sdk: '>=3.7.0 <4.0.0'
+
+workspace:
+  - apps/ipbc_mobile
+  - apps/ipbc_web
+  - packages/auth_module
+  - packages/core_module
+  - packages/events_module
+  - packages/home_module
+  - packages/lyric_module
+  - packages/offers_module
+  - packages/service_module
+
+dev_dependencies:
+  melos: ^7.0.0-dev.8
+
+melos:
+  scripts:
+    setup: install
+    bootstrap: melos exec bootstrap
+    analyze: melos exec --fail-fast -- dart analyze .
+    test: melos exec --fail-fast -- dart test
+    build: melos exec --scope=ipbc_mobile -- flutter build apk --release
+    clean: melos exec -- fvm flutter clean
+    format: melos exec -- dart format .
+  bootstrap:
+    sdk: flutter
+
+  command:
+    version:
+      releaseUrl: true

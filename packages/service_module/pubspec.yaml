@@ -2,6 +2,7 @@ name: service_module
 description: A new Flutter package project.
 version: 0.0.2
 publish_to: none
+resolution: workspace
 
 environment:
   sdk: '>=3.7.0 <4.0.0'
@@ -9,14 +10,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  core_module:
-    path: ../core_module
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
-  melos: ^7.0.0-dev.7
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

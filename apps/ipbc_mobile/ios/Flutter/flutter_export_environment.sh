@@ -1,6 +1,6 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/victor-lustosa/Documents/Programas/flutter"
+export "FLUTTER_ROOT=/Users/victor-lustosa/fvm/versions/3.29.3"
 export "FLUTTER_APPLICATION_PATH=/Users/victor-lustosa/Documents/Projetos/Frontend/flutter_workspace/ipbc_palmas/apps/ipbc_mobile"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib/main.dart"

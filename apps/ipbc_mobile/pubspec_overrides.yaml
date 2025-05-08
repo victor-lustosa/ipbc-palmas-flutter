@@ -1,4 +1,0 @@
-# melos_managed_dependency_overrides: core_module,design_system,auth_module,lyric_module,service_module
-dependency_overrides:
-  home_module:
-    path: ../../packages/home_module
