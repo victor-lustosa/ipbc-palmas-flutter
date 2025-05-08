@@ -7,3 +7,6 @@
 /supabase/.temp/storage-version
 /supabase/.branches/_current_branch
 .idea/
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock
