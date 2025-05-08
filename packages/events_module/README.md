@@ -1,3 +1,3 @@
-## Features
+## Módulo
 
-Modulo de eventos.
+Módulo referente ao cadastro, listagem, pesquisa e edição de eventos.

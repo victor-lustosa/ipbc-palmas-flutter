@@ -1,4 +1,3 @@
+## Authentication Module
 
-## Features
-
-Modulo de autenticação.
+Módulo referente a construção e implementação da autenticação do projeto.

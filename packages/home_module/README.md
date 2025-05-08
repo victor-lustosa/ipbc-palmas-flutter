@@ -1,3 +1,3 @@
-## Features
+## Módulo
 
-Modulo de inicialização do aplicativo.
+Módulo referente a inicialização e funcionalidades da Home do aplicativo.

@@ -1,3 +1,3 @@
-## Features
+## Módulo
 
-Modulo de cultos.
+Módulo referente ao cadastro, listagem, pesquisa e edição de cultos.

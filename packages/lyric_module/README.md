@@ -1,3 +1,3 @@
-## Features
+## Módulo
 
-Modulo de letras e musicas.
+Módulo referente a listagem, eedição de letras e musicas.
