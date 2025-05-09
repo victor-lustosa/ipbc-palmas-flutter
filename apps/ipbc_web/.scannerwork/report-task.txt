@@ -2,5 +2,5 @@ projectKey=ipbc_web
 serverUrl=http://localhost:9000
 serverVersion=9.9.4.87374
 dashboardUrl=http://localhost:9000/dashboard?id=ipbc_web
-ceTaskId=AZZ862pNn6jJ-j_jq1zC
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AZZ862pNn6jJ-j_jq1zC
+ceTaskId=AZaynrsDW1VL-5iMn7vR
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AZaynrsDW1VL-5iMn7vR

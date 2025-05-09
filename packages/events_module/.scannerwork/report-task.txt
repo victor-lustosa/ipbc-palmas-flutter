@@ -2,5 +2,5 @@ projectKey=events_module
 serverUrl=http://localhost:9000
 serverVersion=9.9.4.87374
 dashboardUrl=http://localhost:9000/dashboard?id=events_module
-ceTaskId=AZY8PuolMJ2bCKaeI_iw
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AZY8PuolMJ2bCKaeI_iw
+ceTaskId=AZaynrZIW1VL-5iMn7vN
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AZaynrZIW1VL-5iMn7vN

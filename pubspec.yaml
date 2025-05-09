@@ -18,16 +18,12 @@ dev_dependencies:
 
 melos:
   scripts:
-    setup: install
-    bootstrap: melos exec bootstrap
-    analyze: melos exec --fail-fast -- dart analyze .
-    test: melos exec --fail-fast -- dart test
-    build: melos exec --scope=ipbc_mobile -- flutter build apk --release
-    clean: melos exec -- fvm flutter clean
-    format: melos exec -- dart format .
-  bootstrap:
-    sdk: flutter
-
-  command:
-    version:
-      releaseUrl: true
+    build-apk:
+      run: melos exec --scope=ipbc_mobile -- flutter build apk --release
+      description: Gera o apk android
+    sc-clean:
+      run: melos exec -- bash ../../flutter_clean_all.sh
+      description: Executa o arquivo para limpar e baixar dependencias de todos os modulos
+    sonar-all:
+      run: melos exec --file-exists="sonar-project.properties" -- bash ../../sonar.sh
+      description: Executa o sonar.sh em cada módulo com sonar-project.properties

@@ -2,5 +2,5 @@ projectKey=home_module
 serverUrl=http://localhost:9000
 serverVersion=9.9.4.87374
 dashboardUrl=http://localhost:9000/dashboard?id=home_module
-ceTaskId=AZY8PvwwMJ2bCKaeI_ix
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AZY8PvwwMJ2bCKaeI_ix
+ceTaskId=AZaynrbEW1VL-5iMn7vO
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AZaynrbEW1VL-5iMn7vO
