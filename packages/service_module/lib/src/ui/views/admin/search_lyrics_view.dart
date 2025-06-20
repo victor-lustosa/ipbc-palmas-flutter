@@ -2,6 +2,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../service_module.dart';
+import '../../components/dialogs/admin/add_lyrics_dialog_widget.dart';
 import '../../stores/admin/search_lyrics_store.dart';
 
 class SearchLyricsView extends StatefulWidget {
@@ -183,7 +184,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
         backgroundColor: AppColors.add,
         icon: Icons.add,
         action:
-            () => ModalCloseButtonWidget()
+            () => showAddLyricsDialog(context: context)
       ),
     );
   }

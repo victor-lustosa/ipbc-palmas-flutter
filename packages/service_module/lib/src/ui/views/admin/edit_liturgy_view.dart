@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/dialogs/admin/edit_liturgies_dialog_widget.dart';
+import '../../stores/admin/edit_liturgy_view_model.dart';
 import 'services_preview_view.dart';
 
 class EditLiturgyDTO {

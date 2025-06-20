@@ -1,4 +1,5 @@
 import 'package:core_module/core_module.dart';
+import 'package:service_module/src/ui/stores/admin/edit_liturgy_view_model.dart';
 import 'package:service_module/src/ui/stores/admin/edit_lyric_store.dart';
 import 'package:service_module/src/ui/stores/admin/search_lyrics_store.dart';
 import 'package:service_module/src/ui/views/admin/search_lyrics_view.dart';

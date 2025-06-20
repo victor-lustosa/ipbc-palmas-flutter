@@ -1,5 +1,4 @@
 import 'package:core_module/core_module.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../service_module.dart';

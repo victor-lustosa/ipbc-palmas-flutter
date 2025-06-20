@@ -72,7 +72,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                     context: context,
                     callback: (value) {
                       setState(() {
-                        _elevationActive = value!;
+                        _elevationActive = value;
                       });
                     },
                   );
