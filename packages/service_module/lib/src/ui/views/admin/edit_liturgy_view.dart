@@ -83,7 +83,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                             Modular.get<EditLiturgyViewModel>().entity =
                                 _liturgiesList[index];
                             Modular.get<EditLiturgyViewModel>().index = index;
-                            showCustomOptionsDialog(context: context);
+                            showEditLiturgiesDialog(context: context);
                           },
                           child: Container(
                             color: Colors.transparent,

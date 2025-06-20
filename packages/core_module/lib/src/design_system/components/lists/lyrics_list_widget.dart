@@ -4,6 +4,8 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../dialogs/edit_lyrics/edit_lyrics_dialog_widget.dart';
+
 class LyricsListWidget extends StatefulWidget {
   const LyricsListWidget({super.key, required this.entitiesList});
   final List<LyricEntity> entitiesList;
@@ -66,7 +68,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                     _elevationActive = true;
                     _itemActive = index;
                   });
-                  showCustomOptionsDialog(
+                  showEditLyricsDialog(
                     context: context,
                     callback: (value) {
                       setState(() {

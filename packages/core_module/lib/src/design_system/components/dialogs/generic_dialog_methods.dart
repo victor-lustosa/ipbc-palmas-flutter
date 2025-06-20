@@ -7,3 +7,35 @@ closeDialog({required BuildContext context, final Function(bool?)? callback}) {
     }
     pop(context);
 }
+
+actionButton({
+  required BuildContext context,
+  final Function(bool?)? callback,
+  required String icon,
+  required String label,
+  required double top,
+  required double bottom,
+  required VoidCallback? action,
+}) {
+  return ButtonWidget(
+    overlayColor: Colors.transparent,
+    padding: EdgeInsets.only(top: top, bottom: bottom),
+    adaptiveButtonType: AdaptiveButtonType.text,
+    action: action,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          margin: EdgeInsets.only(right: 10, left: context.sizeOf.width * .31),
+          height: 20,
+          width: 20,
+          child: Image.asset(icon),
+        ),
+        Text(
+          label,
+          style: AppFonts.defaultFont(fontSize: 17, color: AppColors.grey10),
+        ),
+      ],
+    ),
+  );
+}
