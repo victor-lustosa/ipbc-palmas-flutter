@@ -163,8 +163,8 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                     ),
                   ),
                   Container(
-                    height: 77,
-                    width: 145,
+                    height: 90,
+                    width: 160,
                     margin: const EdgeInsets.only(bottom: 50),
                     decoration: const BoxDecoration(
                       color: AppColors.vagalumeBackground,
@@ -176,8 +176,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                         Container(
                           margin: const EdgeInsets.only(bottom: 5),
                           child: const Image(
-                            width: 90,
-                            height: 35,
+                            height: 50,
                             fit: BoxFit.contain,
                             image: AssetImage(
                               AppImages.vagalumeImage,
@@ -185,7 +184,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(bottom: 3),
+                          margin: const EdgeInsets.only(bottom: 7),
                           child: Text(
                             'Lyrics by Vagalume',
                             style: AppFonts.defaultFont(

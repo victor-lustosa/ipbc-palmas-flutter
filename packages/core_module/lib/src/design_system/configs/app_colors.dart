@@ -34,7 +34,7 @@ class AppColors {
   static const Color dividerModal = Color(0xFFA9A9A9);
   static const Color secondaryGreen2 = Color.fromRGBO(144, 194, 180, .5);
   static const Color secondaryGrey = Color(0xFFEBEBEB);
-  static const Color vagalumeBackground = Color.fromRGBO(235, 235, 235, 40);
+  static const Color vagalumeBackground = Color.fromRGBO(235, 235, 235, .4);
   static const Color highlightGreen = Color(0xFF00E8A2);
   static const Color timelineGuideTGreen = Color(0xFFCCDED9);
   static const Color badgeGreen = Color(0xFFE4F5F0);

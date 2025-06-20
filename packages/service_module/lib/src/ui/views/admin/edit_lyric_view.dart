@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:service_module/src/ui/stores/edit_lyric_store.dart';
+import 'package:service_module/src/ui/stores/admin/edit_lyric_store.dart';
 
 import '../../../../service_module.dart';
 

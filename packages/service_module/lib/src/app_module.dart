@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
-import 'package:service_module/src/ui/stores/edit_lyric_store.dart';
+import 'package:service_module/src/ui/stores/admin/edit_lyric_store.dart';
+import 'package:service_module/src/ui/stores/admin/search_lyrics_store.dart';
 import 'package:service_module/src/ui/views/admin/search_lyrics_view.dart';
 import 'package:service_module/src/ui/views/admin/services_preview_view.dart';
 import '../service_module.dart';
@@ -17,6 +18,7 @@ class ServiceModule extends Module {
       config: CoreModule.blocConfig(),
     );
     i.addLazySingleton<EditLyricStore>(EditLyricStore.new);
+    i.addLazySingleton<SearchLyricsStore>(SearchLyricsStore.new);
     i.addSingleton<EditLiturgyViewModel>(EditLiturgyViewModel.new);
   }
 

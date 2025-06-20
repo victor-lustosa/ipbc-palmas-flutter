@@ -1,5 +1,5 @@
 name: ipbc_mobile
-description: A new Flutter project.
+description: Módulo referente ao aplicativo Android e iOS IPBC Open Source.
 resolution: workspace
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
