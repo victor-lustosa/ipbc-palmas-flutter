@@ -2,9 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:core_module/core_module.dart';
 
 class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>>{
-  SearchLyricsStore() : super(SearchSuccessState());
-
-  late SearchType searchType = SearchType.database;
+  SearchLyricsStore() : super(InitialState());
 
   searchLyrics(String query) async {
     value = SearchingState();
@@ -32,7 +30,3 @@ class SearchErrorState extends GenericState<SearchLyricsState> {}
 
 class NotFoundState extends GenericState<SearchLyricsState> {}
 
-enum SearchType {
-  database,
-  internet,
-}

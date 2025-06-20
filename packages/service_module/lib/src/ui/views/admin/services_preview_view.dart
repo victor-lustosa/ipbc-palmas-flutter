@@ -100,14 +100,9 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(right: 16),
-                        child: const Text("Incluir música "),
+                        child: const Text("Adicionar música"),
                       ),
-                      const IconButtonWidget(
-                        size: 28,
-                        iOSIcon: CupertinoIcons.chevron_forward,
-                        androidIcon: Icons.navigate_next_sharp,
-                        color: AppColors.white,
-                      ),
+
                     ],
                   ),
                 ),

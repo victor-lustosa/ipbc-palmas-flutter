@@ -63,6 +63,7 @@ export 'src/design_system/components/auth/stores/auth_circle_avatar_store.dart';
 export 'src/design_system/components/bottom_bar/material_bottom_bar_widget.dart';
 export 'src/design_system/components/bottom_bar/navegation_button_widget.dart';
 export 'src/design_system/components/dialogs/error_dialog_widget.dart';
+export 'src/design_system/components/dialogs/seach_lyrics/add_lyrics_dialog_widget.dart';
 export 'src/design_system/components/dialogs/options_dialog_widget.dart';
 export 'src/design_system/components/dialogs/success_dialog_widget.dart';
 export 'src/design_system/components/side_bar/side_bar_widget.dart';
