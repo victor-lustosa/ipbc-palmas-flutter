@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 Future<void> showEditLyricsDialog({
   required BuildContext context,
+  required LyricEntity entity,
   required final Function(bool) callback,
 }) async {
   return showDialog<void>(
@@ -43,51 +44,66 @@ Future<void> showEditLyricsDialog({
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(
-                                bottom: 10,
-                                top: 21,
-                                left: 13,
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(right: 10),
-                                    child: SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: Image.asset(AppIcons.edit),
-                                    ),
+                        InkWell(
+                          onTap: () {
+                            pushNamed(
+                              AppRoutes.servicesRoute +
+                                  AppRoutes.editLyricRoute,
+                              arguments: entity,
+                            );
+                          },
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.blue,
+                                    width: 1,
                                   ),
-                                  Text(
-                                    'Editar',
-                                    style: AppFonts.defaultFont(
-                                      fontSize: 17,
-                                      color: AppColors.grey10,
+                                ),
+                                margin: const EdgeInsets.only(
+                                  bottom: 10,
+                                  top: 21,
+                                  left: 13,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(right: 10),
+                                      child: SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child: Image.asset(AppIcons.edit),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                    Text(
+                                      'Editar',
+                                      style: AppFonts.defaultFont(
+                                        fontSize: 17,
+                                        color: AppColors.grey10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 40,
-                              width: 40,
-                              child: IconButtonWidget(
-                                size: 20,
-                                action: () {
-                                  callback(false);
-                                  Modular.to.pop(context);
-                                },
-                                color: AppColors.grey10,
-                                iOSIcon: CupertinoIcons.clear,
-                                androidIcon: Icons.clear,
+                              SizedBox(
+                                height: 40,
+                                width: 40,
+                                child: IconButtonWidget(
+                                  size: 20,
+                                  action: () {
+                                    callback(false);
+                                    Modular.to.pop(context);
+                                  },
+                                  color: AppColors.grey10,
+                                  iOSIcon: CupertinoIcons.clear,
+                                  androidIcon: Icons.clear,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         Divider(
                           height: 1,

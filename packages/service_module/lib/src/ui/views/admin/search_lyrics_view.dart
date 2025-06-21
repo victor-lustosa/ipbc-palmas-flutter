@@ -128,6 +128,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                                   ),
                                 ),
                               ),
+
                             ],
                           ),
                         ],

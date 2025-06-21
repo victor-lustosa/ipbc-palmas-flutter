@@ -92,7 +92,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                             padding: const EdgeInsets.only(top: 8, bottom: 8),
                             child: Container(
                               decoration: const BoxDecoration(
-                                color: AppColors.searchBar,
+                                color: AppColors.secondaryGrey2,
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(16),
                                 ),

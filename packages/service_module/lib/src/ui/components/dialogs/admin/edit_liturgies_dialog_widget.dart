@@ -63,7 +63,7 @@ class EditLiturgiesDialogWidget extends StatelessWidget {
               children: [
                 Container(
                   decoration: const BoxDecoration(
-                    color: AppColors.searchBar,
+                    color: AppColors.secondaryGrey2,
                     borderRadius: BorderRadius.all(Radius.circular(16)),
                   ),
                   margin: EdgeInsets.only(bottom: context.sizeOf.height * .3),

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +61,7 @@ class AddLyricsDialogWidget extends StatelessWidget {
               children: [
                 Container(
                   decoration: const BoxDecoration(
-                    color: AppColors.searchBar,
+                    color: AppColors.secondaryGrey2,
                     borderRadius: BorderRadius.all(Radius.circular(16)),
                   ),
                   margin: EdgeInsets.only(top: 20),

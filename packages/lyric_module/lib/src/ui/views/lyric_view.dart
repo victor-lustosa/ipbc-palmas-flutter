@@ -205,3 +205,19 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
     );
   }
 }
+//ideia para tentar resolver o problema do arredondamento do padding
+/* widget.entity.verses.length - 1 != index &&
+index != 0
+? const EdgeInsets.only(
+top: 8,
+bottom: 8,
+)
+    :
+index == 0
+? const EdgeInsets.only(
+top: 0,
+bottom: 8,
+) : const EdgeInsets.only(
+top: 8,
+bottom: 0,
+)*/

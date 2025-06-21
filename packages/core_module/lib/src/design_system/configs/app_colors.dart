@@ -25,7 +25,7 @@ class AppColors {
   //secondary
   static const Color secondaryGreen = Color(0xFF00A876);
   static const Color primaryGreen = Color(0xFF14C5A0);
-  static const Color searchBar = Color(0xFFEFEFEF);
+  static const Color secondaryGrey2 = Color(0xFFEFEFEF);
   static const Color chorusColor = Color(0xFFEDF7F4);
   static const Color backgroundG = Color(0xFFEDF7F4);
   static const Color cardGreen = Color(0xFF006D4E);

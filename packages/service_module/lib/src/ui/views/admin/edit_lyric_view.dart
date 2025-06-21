@@ -4,27 +4,23 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:service_module/src/ui/stores/admin/edit_lyric_store.dart';
 
-import '../../../../service_module.dart';
-
-
 class EditLyricView extends StatefulWidget {
-  const EditLyricView({super.key, this.dto});
+  const EditLyricView({super.key, required this.entity});
 
-  final EditLiturgyDTO? dto;
+  final LyricEntity entity;
 
   @override
   State<EditLyricView> createState() => _EditLyricViewState();
 }
 
 class _EditLyricViewState extends State<EditLyricView> {
-  List<VerseEntity> versesList = [];
   final EditLyricStore _store = Modular.get<EditLyricStore>();
 
   @override
   void initState() {
     super.initState();
-    _store.getLyrics();
     setDarkAppBar();
+    _store.initial();
   }
 
   @override
@@ -41,9 +37,6 @@ class _EditLyricViewState extends State<EditLyricView> {
                 color: AppColors.darkGreen,
               );
             } else {
-              // if (state is DataFetchedState<EditLyricState, LyricEntity>) {
-              //   versesList = state.entities[0].verses;
-              // }
               return SingleChildScrollView(
                 child: Container(
                   color: AppColors.white,
@@ -58,7 +51,7 @@ class _EditLyricViewState extends State<EditLyricView> {
                           bottom: 16,
                         ),
                         child: Text(
-                          'Edite a liturgia do culto:',
+                          'Edite a letra:',
                           style: AppFonts.defaultFont(
                             fontWeight: FontWeight.w500,
                             fontSize: 17,
@@ -67,19 +60,15 @@ class _EditLyricViewState extends State<EditLyricView> {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(
-                          left: 19,
-                          right: 19,
-                          bottom: 24,
-                        ),
+                        margin: const EdgeInsets.only(left: 19, right: 19),
                         child: ReorderableListView.builder(
                           shrinkWrap: true,
-                          itemCount: versesList.length,
+                          itemCount: widget.entity.verses.length,
                           buildDefaultDragHandles: false,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
-                              key: Key('${versesList[index].id}'),
+                              key: Key('${widget.entity.verses[index].id}'),
                               onLongPress: () {},
                               child: Container(
                                 color: Colors.transparent,
@@ -87,23 +76,58 @@ class _EditLyricViewState extends State<EditLyricView> {
                                   top: 8,
                                   bottom: 8,
                                 ),
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    color: AppColors.searchBar,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(16),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      GridBallsTileWidget(index: index),
-                                      Expanded(
-                                        child: VersesListWidget(
-                                          isEdit: true,
-                                          entity: versesList,
-                                        ),
+                                child: ClipRRect(
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                      color: AppColors.secondaryGrey2,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(16),
                                       ),
-                                    ],
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        GridBallsTileWidget(index: index),
+                                        Expanded(
+                                          child: Container(
+                                            margin: const EdgeInsets.all(16),
+                                            child: ListView.separated(
+                                              separatorBuilder: (__, _) {
+                                                return const SizedBox(
+                                                  height: 6,
+                                                );
+                                              },
+                                              itemCount:
+                                                  widget
+                                                      .entity
+                                                      .verses[index]
+                                                      .versesList
+                                                      .length,
+                                              scrollDirection: Axis.vertical,
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemBuilder: ((__, position) {
+                                                return Text(
+                                                  widget
+                                                      .entity
+                                                      .verses[index]
+                                                      .versesList[position],
+                                                  style: AppFonts.defaultFont(
+                                                    color: AppColors.grey10,
+                                                    fontSize:
+                                                        context.sizeOf.width >
+                                                                ResponsivityUtil
+                                                                    .smallDeviceWidth
+                                                            ? 16
+                                                            : 14,
+                                                  ),
+                                                );
+                                              }),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -114,10 +138,9 @@ class _EditLyricViewState extends State<EditLyricView> {
                               if (oldIndex < newIndex) {
                                 newIndex -= 1;
                               }
-                              final VerseEntity item = versesList.removeAt(
-                                oldIndex,
-                              );
-                              versesList.insert(newIndex, item);
+                              final VerseEntity item = widget.entity.verses
+                                  .removeAt(oldIndex);
+                              widget.entity.verses.insert(newIndex, item);
                             });
                           },
                           proxyDecorator: (Widget child, _, animation) {
