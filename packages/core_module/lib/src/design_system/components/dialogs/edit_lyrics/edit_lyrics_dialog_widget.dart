@@ -57,12 +57,6 @@ Future<void> showEditLyricsDialog({
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.blue,
-                                    width: 1,
-                                  ),
-                                ),
                                 margin: const EdgeInsets.only(
                                   bottom: 10,
                                   top: 21,
