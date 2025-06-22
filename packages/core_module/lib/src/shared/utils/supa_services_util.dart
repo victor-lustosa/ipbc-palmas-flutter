@@ -2,7 +2,7 @@ import 'dart:math' show Random;
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/services.dart';
-import 'package:uno/uno.dart';
+
 
 class SupaServicesUtil {
   static String createId() => DateTime.now().microsecondsSinceEpoch.toString();
@@ -40,10 +40,12 @@ class SupaServicesUtil {
   ) async {
     List<LyricEntity> results = [];
     for (int i = 0; lyricsList.length > i; i++) {
+      // aqui vai o codigo para pegar a letra da musica
      // Map result = await _getLyric(lyricsList[i].title, lyricsList[i].group);
       results.add(
         LyricModel.empty().copyWith(
-          // verses: VerseAdapter.fromVagalume(result),
+          // aqui vai o codigo que converte a letra da musica
+          //verses: VerseAdapter.fromVagalume(result),
           albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
         ),
       );
@@ -51,6 +53,7 @@ class SupaServicesUtil {
     return results;
   }
 
+  /*
   static Future<dynamic> _getLyric(String title, String group) async {
     String titleParam = title.replaceAll(' ', '%20');
     String groupParam = group.replaceAll(' ', '%20');
@@ -63,7 +66,7 @@ class SupaServicesUtil {
     } on UnoError catch (error, st) {
       AnalyticsUtil.recordError(name: 'service util', error: error, st: st);
     }
-  }
+  }*/
 
   static Future<LyricModel> convertUnknownLyric(String path) async {
     final String unknownJson = await rootBundle.loadString(path);

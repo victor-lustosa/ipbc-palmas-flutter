@@ -185,7 +185,12 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
         backgroundColor: AppColors.add,
         icon: Icons.add,
         action:
-            () => showAddLyricsDialog(context: context)
+            () => showAddLyricsDialog(
+                context: context, callback: (text) {
+                  if (text != null && text.isNotEmpty) {
+                    _store.convertTextInLyric(text);
+                  }
+            })
       ),
     );
   }

@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:service_module/src/ui/stores/admin/edit_lyric_store.dart';
-import 'package:flutter/services.dart'; // Import necessário para HapticFeedback
+import 'package:flutter/services.dart';
 
 class EditLyricView extends StatefulWidget {
   const EditLyricView({super.key, required this.entity});
@@ -18,10 +18,13 @@ class _EditLyricViewState extends State<EditLyricView> {
   final EditLyricStore _store = Modular.get<EditLyricStore>();
 
   final Map<String, TextEditingController> _controllers = {};
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _groupController = TextEditingController();
   final Map<String, FocusNode> _focusNodes = {};
-// Variável de estado para saber se algum TextFormField está focado
+  final FocusNode _titleFocusNode = FocusNode();
+  final FocusNode _groupFocusNode = FocusNode();
+
   bool _isAnyTextFieldFocused = false;
-  // FocusNode raiz para monitorar o FocusScope global
   late FocusScopeNode _rootFocusNode;
 
   @override
@@ -30,15 +33,13 @@ class _EditLyricViewState extends State<EditLyricView> {
     setDarkAppBar();
     _store.initial();
     _initializeControllersAndFocusNodes();
-
-    // Inicializa o FocusNode raiz e adiciona um listener para mudanças de foco
-    _rootFocusNode = FocusScopeNode(); // Instancia um FocusScopeNode
+    _titleController.text = widget.entity.title;
+    _groupController.text = widget.entity.group;
+    _rootFocusNode = FocusScopeNode();
     _rootFocusNode.addListener(_handleRootFocusChange);
   }
 
-  // Listener para o FocusNode raiz que atualiza _isAnyTextFieldFocused
   void _handleRootFocusChange() {
-    // Verifica se o status de foco global mudou
     if (_isAnyTextFieldFocused != _rootFocusNode.hasFocus) {
       setState(() {
         _isAnyTextFieldFocused = _rootFocusNode.hasFocus;
@@ -65,17 +66,14 @@ class _EditLyricViewState extends State<EditLyricView> {
         final key = '${verse.id}_$j';
         currentKeys.add(key);
 
-        // Controller
         if (!_controllers.containsKey(key)) {
           _controllers[key] = TextEditingController(text: verse.versesList[j]);
         } else {
-          if (_controllers[key]!.text != verse.versesList[j]) {
-            final TextSelection previousSelection =
-                _controllers[key]!.selection;
+          if (_controllers[key]?.text != verse.versesList[j]) {
+            final TextSelection previousSelection = _controllers[key]!.selection;
             _controllers[key]!.text = verse.versesList[j];
             _controllers[key]!.selection = previousSelection.copyWith(
-              baseOffset: previousSelection.baseOffset.clamp(
-                0,
+              baseOffset: previousSelection.baseOffset.clamp(0,
                 _controllers[key]!.text.length,
               ),
               extentOffset: previousSelection.extentOffset.clamp(
@@ -86,7 +84,6 @@ class _EditLyricViewState extends State<EditLyricView> {
           }
         }
 
-        // FocusNode
         if (!_focusNodes.containsKey(key)) {
           _focusNodes[key] = FocusNode();
         }
@@ -110,9 +107,44 @@ class _EditLyricViewState extends State<EditLyricView> {
     super.dispose();
   }
 
+  formField({required TextEditingController controller, required FocusNode focusNode}) =>
+      Align(
+        alignment: Alignment.center,
+        child: Container(
+          width:context.sizeOf.width,
+            margin: const EdgeInsets.only(
+              bottom: 16,
+            ),
+            child: TextFormField(
+              buildCounter: (
+                  BuildContext context, {
+                    required int currentLength,
+                    required int? maxLength,
+                    required bool isFocused,
+                  }) =>
+              null,
+              controller: controller,
+              focusNode: focusNode,
+              maxLength: 40,
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                isDense: true,
+                contentPadding: EdgeInsets.zero,
+              ),
+              style: AppFonts.defaultFont(
+                fontWeight: FontWeight.w500,
+                color: AppColors.grey9,
+                fontSize: 17,
+              ),
+              keyboardType: TextInputType.multiline,
+            )
+         ),
+      );
+
   @override
   Widget build(BuildContext context) {
-    return FocusScope( // Envolve o Scaffold com um FocusScope para usar _rootFocusNode
+    return FocusScope(
       node: _rootFocusNode,
       child: Scaffold(
         backgroundColor: AppColors.white,
@@ -137,20 +169,31 @@ class _EditLyricViewState extends State<EditLyricView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          margin: const EdgeInsets.only(
-                            left: 16.5,
-                            top: 24.7,
-                            bottom: 16,
+                          margin: const EdgeInsets.only(left: 16.3, right: 16, top: 5),
+                          child: BackButtonWidget(
+                            color: AppColors.darkGreen,
+                            action: () => nativePop(context),
                           ),
-                          child: Text(
-                            'Edite a letra:',
-                            style: AppFonts.defaultFont(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17,
-                              color: AppColors.grey10,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                              top: 16,
+                              bottom: 30,
+                            ),
+                            child: Text(
+                              'Confira a letra e a ordem das estrofes:',
+                              style: AppFonts.defaultFont(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                                color: AppColors.grey8,
+                              ),
                             ),
                           ),
                         ),
+                        formField(controller: _titleController, focusNode: _titleFocusNode),
+                        formField(controller: _groupController, focusNode: _groupFocusNode),
                         Container(
                           margin: const EdgeInsets.only(left: 19, right: 19),
                           child: ReorderableListView.builder(
@@ -162,7 +205,9 @@ class _EditLyricViewState extends State<EditLyricView> {
                               final verse = widget.entity.verses[index];
                               return Container(
                                 key: Key('${verse.id}'),
-                                margin: const EdgeInsets.symmetric(vertical: 8.0),
+                                margin: const EdgeInsets.symmetric(
+                                  vertical: 8.0,
+                                ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(16),
@@ -175,18 +220,21 @@ class _EditLyricViewState extends State<EditLyricView> {
                                       children: [
                                         IgnorePointer(
                                           ignoring: _isAnyTextFieldFocused,
-                                          child: ReorderableDelayedDragStartListener(
-                                            index: index,
-                                            child: GestureDetector(
-                                              onLongPressStart: (_) {
-                                                FocusScope.of(context).unfocus();
-                                                HapticFeedback.lightImpact();
-                                              },
-                                              child: GridBallsTileWidget(
+                                          child:
+                                              ReorderableDelayedDragStartListener(
                                                 index: index,
+                                                child: GestureDetector(
+                                                  onLongPressStart: (_) {
+                                                    FocusScope.of(
+                                                      context,
+                                                    ).unfocus();
+                                                    HapticFeedback.lightImpact();
+                                                  },
+                                                  child: GridBallsTileWidget(
+                                                    index: index,
+                                                  ),
+                                                ),
                                               ),
-                                            ),
-                                          ),
                                         ),
                                         Expanded(
                                           child: Container(
@@ -199,79 +247,50 @@ class _EditLyricViewState extends State<EditLyricView> {
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
-                                              children: List.generate(verse.versesList.length, (
-                                                position,
-                                              ) {
-                                                final lineKey =
-                                                    '${verse.id}_$position';
-                                                if (!_controllers.containsKey(
-                                                  lineKey,
-                                                )) {
+                                              children: List.generate(
+                                                  verse.versesList.length,
+                                                      (position) {
+                                                final lineKey = '${verse.id}_$position';
+                                                if (!_controllers.containsKey(lineKey)) {
                                                   _controllers[lineKey] =
                                                       TextEditingController(
-                                                        text:
-                                                            verse
-                                                                .versesList[position],
+                                                        text: verse.versesList[position],
                                                       );
                                                 }
-                                                if (!_focusNodes.containsKey(
-                                                  lineKey,
-                                                )) {
-                                                  _focusNodes[lineKey] =
-                                                      FocusNode();
+                                                if (!_focusNodes.containsKey(lineKey)) {
+                                                  _focusNodes[lineKey] = FocusNode();
                                                 }
-                                                if (_controllers[lineKey]!.text !=
-                                                    verse.versesList[position]) {
-                                                  final TextSelection
-                                                  previousSelection =
-                                                      _controllers[lineKey]!
-                                                          .selection;
-                                                  _controllers[lineKey]!.text =
-                                                      verse.versesList[position];
-                                                  _controllers[lineKey]!
-                                                          .selection =
+                                                if (_controllers[lineKey]!.text
+                                                    != verse.versesList[position]) {
+                                                  final TextSelection previousSelection = _controllers[lineKey]!.selection;
+                                                  _controllers[lineKey]!.text = verse.versesList[position];
+                                                  _controllers[lineKey]!.selection =
                                                       previousSelection.copyWith(
-                                                        baseOffset: previousSelection
-                                                            .baseOffset
-                                                            .clamp(
-                                                              0,
-                                                              _controllers[lineKey]!
-                                                                  .text
-                                                                  .length,
+                                                        baseOffset:
+                                                            previousSelection.baseOffset
+                                                                .clamp(0, _controllers[lineKey]!.text.length,
                                                             ),
                                                         extentOffset:
-                                                            previousSelection
-                                                                .extentOffset
-                                                                .clamp(
-                                                                  0,
-                                                                  _controllers[lineKey]!
-                                                                      .text
-                                                                      .length,
-                                                                ),
+                                                            previousSelection.extentOffset
+                                                                .clamp(0, _controllers[lineKey]!.text.length,
+                                                            ),
                                                       );
                                                 }
-      
+
                                                 return Padding(
                                                   padding: EdgeInsets.only(
                                                     bottom:
-                                                        position ==
-                                                                verse
-                                                                        .versesList
-                                                                        .length -
-                                                                    1
+                                                        position == verse.versesList.length - 1
                                                             ? 0
                                                             : 6,
                                                   ),
                                                   child: TextFormField(
-                                                    controller:
-                                                        _controllers[lineKey],
-                                                    focusNode:
-                                                        _focusNodes[lineKey],
+                                                    controller: _controllers[lineKey],
+                                                    focusNode: _focusNodes[lineKey],
                                                     decoration: InputDecoration(
                                                       border: InputBorder.none,
                                                       isDense: true,
-                                                      contentPadding:
-                                                          EdgeInsets.zero,
+                                                      contentPadding: EdgeInsets.zero,
                                                     ),
                                                     style: AppFonts.defaultFont(
                                                       color: AppColors.grey10,
@@ -283,8 +302,7 @@ class _EditLyricViewState extends State<EditLyricView> {
                                                               : 14,
                                                     ),
                                                     maxLines: null,
-                                                    keyboardType:
-                                                        TextInputType.multiline,
+                                                    keyboardType: TextInputType.multiline,
                                                     onChanged: (newValue) {
                                                       verse.versesList[position] =
                                                           newValue;
@@ -306,23 +324,24 @@ class _EditLyricViewState extends State<EditLyricView> {
                                 if (oldIndex < newIndex) {
                                   newIndex -= 1;
                                 }
-                                final VerseEntity item = widget.entity.verses
-                                    .removeAt(oldIndex);
+                                final VerseEntity item = widget.entity.verses.removeAt(oldIndex);
                                 widget.entity.verses.insert(newIndex, item);
                                 _updateControllersAndFocusNodes();
                               });
                             },
-                            proxyDecorator: (Widget child, int index, animation) {
+                            proxyDecorator: (
+                              Widget child,
+                              int index,
+                              animation,
+                            ) {
                               return Material(
                                 color: Colors.transparent,
                                 child: AnimatedBuilder(
                                   animation: animation,
                                   builder: (BuildContext context, Widget? _) {
-                                    final animValue = Curves.easeInOut.transform(
-                                      animation.value,
-                                    );
+                                    final animValue = Curves.easeInOut.transform(animation.value);
                                     final scale = lerpDouble(1, 1.05, animValue)!;
-      
+
                                     return LayoutBuilder(
                                       builder: (innerContext, constraints) {
                                         final double childHeight =
@@ -330,17 +349,14 @@ class _EditLyricViewState extends State<EditLyricView> {
                                                     constraints.maxHeight > 0
                                                 ? constraints.maxHeight
                                                 : 100.0;
-      
-                                        final double scaleCompensationOffset =
-                                            childHeight * (scale - 1) / 2;
-                                        final double gapCompensationOffset =
-                                            childHeight * 0.2;
-      
+
+                                        final double scaleCompensationOffset = childHeight * (scale - 1) / 2;
+                                        final double gapCompensationOffset = childHeight * 0.2;
+
                                         return Transform.translate(
                                           offset: Offset(
                                             0,
-                                            -scaleCompensationOffset +
-                                                gapCompensationOffset,
+                                            -scaleCompensationOffset + gapCompensationOffset,
                                           ),
                                           child: Transform.scale(
                                             scale: scale,

@@ -47,6 +47,7 @@ class VerseAdapter {
         .toList();
   }
 
+/*
   static List<VerseEntity> fromVagalume(dynamic json) {
     List<VerseEntity> verseEntityList = [];
     if (json.length > 2) {
@@ -66,5 +67,5 @@ class VerseAdapter {
     } else {
       return [];
     }
-  }
+  }*/
 }
