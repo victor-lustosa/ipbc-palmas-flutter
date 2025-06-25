@@ -30,7 +30,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         fieldWidth: context.sizeOf.width,
         controller: widget.controller,
         fieldDecoration: BoxDecoration(
-          color: AppColors.searchBar,
+          color: AppColors.secondaryGrey2,
           border: Border.all(color: AppColors.secondaryGrey),
           borderRadius: BorderRadius.circular(11),
         ),

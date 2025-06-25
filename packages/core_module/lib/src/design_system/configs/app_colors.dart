@@ -25,7 +25,7 @@ class AppColors {
   //secondary
   static const Color secondaryGreen = Color(0xFF00A876);
   static const Color primaryGreen = Color(0xFF14C5A0);
-  static const Color searchBar = Color(0xFFEFEFEF);
+  static const Color secondaryGrey2 = Color(0xFFEFEFEF);
   static const Color chorusColor = Color(0xFFEDF7F4);
   static const Color backgroundG = Color(0xFFEDF7F4);
   static const Color cardGreen = Color(0xFF006D4E);
@@ -34,7 +34,7 @@ class AppColors {
   static const Color dividerModal = Color(0xFFA9A9A9);
   static const Color secondaryGreen2 = Color.fromRGBO(144, 194, 180, .5);
   static const Color secondaryGrey = Color(0xFFEBEBEB);
-  static const Color vagalumeBackground = Color.fromRGBO(235, 235, 235, 40);
+  static const Color vagalumeBackground = Color.fromRGBO(235, 235, 235, .4);
   static const Color highlightGreen = Color(0xFF00E8A2);
   static const Color timelineGuideTGreen = Color(0xFFCCDED9);
   static const Color badgeGreen = Color(0xFFE4F5F0);

@@ -66,11 +66,12 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                     _elevationActive = true;
                     _itemActive = index;
                   });
-                  showCustomOptionsDialog(
+                  showEditLyricsDialog(
                     context: context,
+                    entity: widget.entitiesList[index],
                     callback: (value) {
                       setState(() {
-                        _elevationActive = value!;
+                        _elevationActive = value;
                       });
                     },
                   );

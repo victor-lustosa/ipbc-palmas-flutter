@@ -32,7 +32,7 @@ class VersesListWidget extends StatelessWidget {
                 color:
                     entity[index].isChorus
                         ? AppColors.chorusColor
-                        : (isEdit ? AppColors.searchBar : AppColors.white),
+                        : (isEdit ? AppColors.secondaryGrey2 : AppColors.white),
               ),
               child: Container(
                 margin: const EdgeInsets.all(16),

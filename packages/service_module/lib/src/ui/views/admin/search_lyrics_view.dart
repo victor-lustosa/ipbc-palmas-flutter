@@ -2,6 +2,8 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../service_module.dart';
+import '../../components/dialogs/admin/add_lyrics_dialog_widget.dart';
+import '../../stores/admin/search_lyrics_store.dart';
 
 class SearchLyricsView extends StatefulWidget {
   const SearchLyricsView({super.key, required this.dto});
@@ -18,6 +20,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
   int selectedIndex = 0;
   final TextEditingController controller = TextEditingController();
   late final List<LyricEntity> _lyricsFetched = [LyricModel.empty()];
+  final SearchLyricsStore _store = Modular.get<SearchLyricsStore>();
 
   @override
   void initState() {
@@ -48,7 +51,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                   bottom: 16,
                 ),
                 child: Text(
-                  'Selecione as músicas do culto:',
+                  'Selecione a música do culto:',
                   style: AppFonts.defaultFont(
                     fontWeight: FontWeight.w500,
                     fontSize: 17,
@@ -67,87 +70,127 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                   action: selectOptions,
                 ),
               ),
-              Visibility(
-                visible: false,
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(left: 16, top: 38),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 26,
-                            height: 26,
-                            child: Image.asset(AppIcons.info),
-                          ),
-                          Container(
-                            width: context.sizeOf.width * .83,
-                            margin: const EdgeInsets.only(left: 12),
-                            child: Text(
-                              style: AppFonts.defaultFont(
-                                fontSize: 13,
-                                color: AppColors.grey9,
+              ValueListenableBuilder(
+                valueListenable: _store,
+                builder: (_, state, child) {
+                  if (state is InitialState) {
+                    return Container(
+                      margin: const EdgeInsets.only(top: 150),
+                      child: SizedBox(
+                        width: context.sizeOf.width,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 26,
+                              height: 26,
+                              child: Image.asset(
+                                AppIcons.info,
+                                color: Colors.blueAccent,
                               ),
-                              'Esta música ainda não está salva na biblioteca. Incluir música da internet?',
                             ),
+                            Container(
+                              margin: EdgeInsets.only(top: 8),
+                              width: context.sizeOf.width * .6,
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                style: AppFonts.defaultFont(
+                                  fontSize: 13,
+                                  color: AppColors.grey9,
+                                ),
+                                'As músicas que você pesquisar aparecerão aqui',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  } else if (state is SearchSuccessState || state is NotFoundState) {
+                    if (state is SearchSuccessState) {
+                      return Column(
+                        children: [
+                          Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  margin: const EdgeInsets.only(
+                                    top: 24,
+                                    left: 17,
+                                  ),
+                                  child: Text(
+                                    "Resultados Encontrados",
+                                    style: AppFonts.defaultFont(
+                                      color: AppColors.grey12,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                            ],
                           ),
                         ],
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(top: 24, left: 17),
-                          child: Text(
-                            "Pesquisa da internet",
-                            style: AppFonts.defaultFont(
-                              color: AppColors.grey12,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17,
-                            ),
+                      );
+                    }
+                    else {
+                      return Container(
+                        margin: const EdgeInsets.only(top: 150),
+                        child: SizedBox(
+                          width: context.sizeOf.width,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 26,
+                                height: 26,
+                                child: Image.asset(
+                                  AppIcons.info,
+                                  color: Colors.blueAccent,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 8),
+                                width: context.sizeOf.width * .6,
+                                child: Text(
+                                  textAlign: TextAlign.center,
+                                  style: AppFonts.defaultFont(
+                                    fontSize: 13,
+                                    color: AppColors.grey9,
+                                  ),
+                                  'Nenhuma música encontrada.',
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Visibility(
-                visible: true,
-                child: Container(
-                  margin: const EdgeInsets.only( top: 150),
-                  child: SizedBox(
-                    width: context.sizeOf.width,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 26,
-                          height: 26,
-                          child: Image.asset(AppIcons.info,color: Colors.blueAccent,),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 8),
-                          width: context.sizeOf.width * .6,
-                          child: Text(
-                            textAlign: TextAlign.center,
-                            style: AppFonts.defaultFont(
-                              fontSize: 13,
-
-                              color: AppColors.grey9,
-                            ),
-                            'As músicas que você pesquisar aparecerão aqui',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                      );
+                    }
+                  } else {
+                    return const LoadingWidget(
+                      androidRadius: 3,
+                      iosRadius: 14,
+                      color: AppColors.darkGreen,
+                    );
+                  }
+                },
               ),
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingButtonWidget(
+        iconColor: AppColors.white,
+        backgroundColor: AppColors.add,
+        icon: Icons.add,
+        action:
+            () => showAddLyricsDialog(
+                context: context, callback: (text) {
+                  if (text != null && text.isNotEmpty) {
+                    _store.convertTextInLyric(text);
+                  }
+            })
       ),
     );
   }

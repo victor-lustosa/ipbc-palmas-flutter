@@ -1,5 +1,4 @@
 import 'package:core_module/core_module.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../service_module.dart';
@@ -100,14 +99,9 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(right: 16),
-                        child: const Text("Incluir música "),
+                        child: const Text("Adicionar música"),
                       ),
-                      const IconButtonWidget(
-                        size: 28,
-                        iOSIcon: CupertinoIcons.chevron_forward,
-                        androidIcon: Icons.navigate_next_sharp,
-                        color: AppColors.white,
-                      ),
+
                     ],
                   ),
                 ),

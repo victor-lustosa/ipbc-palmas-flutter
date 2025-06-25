@@ -44,7 +44,7 @@ class LyricAdapter with FlattenMixin{
         LyricModel(
           albumCover: lyric['albumCover'],
           id: lyric['id'].toString(),
-          createAt: DateFormat(
+          createAt: lyric['createAt'].runtimeType == String ? lyric['createAt'] : DateFormat(
             "dd/MM/yyyy",
           ).format(DateTime.parse(lyric['createAt'])),
           title: lyric['title'],

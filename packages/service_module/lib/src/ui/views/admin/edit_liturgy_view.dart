@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/dialogs/admin/edit_liturgies_dialog_widget.dart';
+import '../../stores/admin/edit_liturgy_view_model.dart';
 import 'services_preview_view.dart';
 
 class EditLiturgyDTO {
@@ -83,14 +85,14 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                             Modular.get<EditLiturgyViewModel>().entity =
                                 _liturgiesList[index];
                             Modular.get<EditLiturgyViewModel>().index = index;
-                            showCustomOptionsDialog(context: context);
+                            showEditLiturgiesDialog(context: context);
                           },
                           child: Container(
                             color: Colors.transparent,
                             padding: const EdgeInsets.only(top: 8, bottom: 8),
                             child: Container(
                               decoration: const BoxDecoration(
-                                color: AppColors.searchBar,
+                                color: AppColors.secondaryGrey2,
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(16),
                                 ),
