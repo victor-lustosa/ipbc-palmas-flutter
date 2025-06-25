@@ -48,40 +48,44 @@ class _CreateEventViewState extends State<CreateEventView> {
         ),
       );
 
-  Future<void> _selectDateTime({required bool isStart}) async {
-    final DateTime initialDateTime = isStart ? _startDateTime : _endDateTime;
-
+  Future<void> _selectDateTime({required DateTime selectedDate,required Function(DateTime) onDatePicked }) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: initialDateTime,
+      initialDate: selectedDate,
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
       locale: const Locale('pt', 'BR'),
     );
 
     if (pickedDate != null) {
-      final TimeOfDay? pickedTime = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.fromDateTime(initialDateTime),
-      );
-
-      if (pickedTime != null) {
-        final DateTime combined = DateTime(
-          pickedDate.year,
-          pickedDate.month,
-          pickedDate.day,
-          pickedTime.hour,
-          pickedTime.minute,
-        );
 
         setState(() {
-          if (isStart) {
-            _startDateTime = combined;
-          } else {
-            _endDateTime = combined;
-          }
+          onDatePicked(pickedDate);
         });
-      }
+
+    }
+  }
+
+  TimeOfDay _startTime = TimeOfDay(hour: 08, minute: 00);
+  TimeOfDay _endTime = TimeOfDay(hour: 18, minute: 30);
+
+  // Função para formatar como "19h30"
+  String formatTime(TimeOfDay time) {
+    final hour = time.hour.toString().padLeft(2, '0');
+    final minute = time.minute.toString().padLeft(2, '0');
+    return '${hour}h$minute';
+  }
+
+  // Função para abrir o relógio
+  Future<void> _pickTime(
+      {required TimeOfDay selectedTime,
+      required Function(TimeOfDay) onTimePicked}) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: selectedTime,
+    );
+    if (picked != null) {
+      onTimePicked(picked);
     }
   }
 
@@ -153,7 +157,10 @@ class _CreateEventViewState extends State<CreateEventView> {
                                   ),
                                   child: InkWell(
                                     onTap: () async => await store.getImage(),
-                                    child: state is FetchedImageState || (state is UpdateFormFieldState && store.coverImage.path.isNotEmpty)
+                                    child: state is FetchedImageState ||
+                                            (state is UpdateFormFieldState &&
+                                                store
+                                                    .coverImage.path.isNotEmpty)
                                         ? Container(
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.all(
@@ -274,7 +281,6 @@ class _CreateEventViewState extends State<CreateEventView> {
                       Container(
                         color: Colors.white,
                         width: context.sizeOf.width,
-                        height: 92,
                         margin: const EdgeInsets.symmetric(
                           horizontal: 16,
                         ),
@@ -317,7 +323,8 @@ class _CreateEventViewState extends State<CreateEventView> {
                                 Row(
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.only(left: 8),
+                                      margin: EdgeInsets.only(
+                                          right: 8, bottom: 18, top: 16),
                                       child: Text(
                                         "De",
                                         style: AppFonts.defaultFont(
@@ -327,7 +334,8 @@ class _CreateEventViewState extends State<CreateEventView> {
                                       ),
                                     ),
                                     InkWell(
-                                      onTap: () => _selectDateTime(isStart: true),
+                                      onTap: () =>
+                                          _selectDateTime(selectedDate: _startDateTime, onDatePicked: (newDate) => _startDateTime = newDate),
                                       child: Text(
                                         getFormattedDateTime(_startDateTime),
                                         style: AppFonts.defaultFont(
@@ -339,6 +347,27 @@ class _CreateEventViewState extends State<CreateEventView> {
                                     )
                                   ],
                                 ),
+                                Visibility(
+                                  visible: !_isSwitchOn,
+                                  child: InkWell(
+                                    onTap: () => _pickTime(
+                                      selectedTime: _startTime,
+                                      onTimePicked: (newTime) {
+                                        setState(() {
+                                          _startTime = newTime;
+                                        });
+                                      },
+                                    ),
+                                    child: Text(
+                                      formatTime(_startTime),
+                                      style: AppFonts.defaultFont(
+                                        fontSize: 15,
+                                        color: AppColors.darkGreen,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                             Row(
@@ -347,7 +376,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                                 Row(
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.only(left: 8),
+                                      margin: EdgeInsets.only(right: 8),
                                       child: Text(
                                         "Até",
                                         style: AppFonts.defaultFont(
@@ -357,7 +386,8 @@ class _CreateEventViewState extends State<CreateEventView> {
                                       ),
                                     ),
                                     InkWell(
-                                      onTap: () => _selectDateTime(isStart: false),
+                                      onTap: () =>
+                                          _selectDateTime(selectedDate: _endDateTime, onDatePicked: (newDate) => _endDateTime = newDate),
                                       child: Text(
                                         getFormattedDateTime(_endDateTime),
                                         style: AppFonts.defaultFont(
@@ -369,18 +399,39 @@ class _CreateEventViewState extends State<CreateEventView> {
                                     ),
                                   ],
                                 ),
+                                Visibility(
+                                  visible: !_isSwitchOn,
+                                  child: InkWell(
+                                    onTap: () => _pickTime(
+                                      selectedTime: _endTime,
+                                      onTimePicked: (newTime) {
+                                        setState(() {
+                                          _endTime = newTime;
+                                        });
+                                      },
+                                    ),
+                                    child: Text(
+                                      formatTime(_endTime),
+                                      style: AppFonts.defaultFont(
+                                        fontSize: 15,
+                                        color: AppColors.darkGreen,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ],
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 16),
+                        margin: const EdgeInsets.only(top: 24),
                         child: TemplateFormWidget(
                           valueListenable: store.isEventLocationValid,
                           titleMargin: const EdgeInsets.only(bottom: 4),
                           controller: store.eventLocationController,
-                          title: 'Localização',
+                          title: 'Localização do google maps',
                           maxLines: 4,
                           isValid: store.isEventLocationValid.value,
                           errorText: store.eventLocationErrorText,
