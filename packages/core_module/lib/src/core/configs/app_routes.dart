@@ -5,13 +5,26 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../core_module.dart';
 
-nativePushReplacementNamed(String route, BuildContext context, {Object? arguments}) {
+nativePushReplacementNamed(
+  String route,
+  BuildContext context, {
+  Object? arguments,
+}) {
   Navigator.pushReplacementNamed(context, route, arguments: arguments);
 }
 
-pushReplacementNamed(String route, {Object? arguments}){
+pushReplacementNamed(String route, {Object? arguments}) {
   Modular.to.pushReplacementNamed(route, arguments: arguments);
 }
+
+pushNamedAndRemoveUntil(
+  String route,
+  bool Function(Route<dynamic>) predicate, {
+  Object? arguments,
+}) {
+  Modular.to.pushNamedAndRemoveUntil(route, predicate, arguments: arguments);
+}
+
 navigate(String route, {Object? arguments}) {
   Modular.to.navigate(route, arguments: arguments);
 }
@@ -24,8 +37,39 @@ pushNamed(String route, {Object? arguments}) {
   Modular.to.pushNamed(route, arguments: arguments);
 }
 
+popUntil(bool Function(Route<dynamic>) predicate) {
+  Modular.to.popUntil(predicate);
+}
+
 nativePop(BuildContext context) {
   Navigator.pop(context);
+}
+
+nativePopAndPushNamed(
+  BuildContext context,
+  String routeName, {
+  dynamic result,
+  Object? arguments,
+}) {
+
+  Navigator.popAndPushNamed(
+    context,
+    routeName,
+    result: result,
+    arguments: arguments,
+  );
+}
+
+popAndPushNamed(
+    String routeName, {
+      dynamic result,
+      Object? arguments,
+    }) {
+  Modular.to.popAndPushNamed(
+    routeName,
+    result: result,
+    arguments: arguments,
+  );
 }
 
 pop(BuildContext context) {

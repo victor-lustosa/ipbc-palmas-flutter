@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../components/dialogs/admin/edit_liturgies_dialog_widget.dart';
 import '../../stores/admin/edit_liturgy_view_model.dart';
-import 'services_preview_view.dart';
+import '../../stores/admin/services_preview_store.dart';
 
 class EditLiturgyDTO {
   EditLiturgyDTO({required this.heading, required this.image});
@@ -181,8 +181,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
             iconColor: AppColors.grey10,
             size: 33,
             action:
-                () => Navigator.popAndPushNamed(
-                  context,
+                () => popAndPushNamed(
                   AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
                   arguments: ServicesPreviewDTO(
                     heading: widget.dto.heading,

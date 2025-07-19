@@ -25,6 +25,18 @@ class _LyricsListViewState extends State<LyricsListView>
     setLightAppBar();
     _bloc = Modular.get<LyricBloc>();
     _bloc.add(CheckConnectivityEvent<LyricEvent>());
+    WidgetsBinding.instance.addPostFrameCallback((frameCallback) {
+      initializeEditLyricStore();
+    });
+  }
+
+  initializeEditLyricStore() async {
+    EditLyricStore editLyricStore = Modular.get<EditLyricStore>();
+    editLyricStore.isEditing = true;
+    editLyricStore.buttonCallback = () {
+      _bloc.add(CheckConnectivityEvent<LyricEvent>());
+      pop(context);
+    };
   }
 
   int selectedIndex = 0;
@@ -59,7 +71,7 @@ class _LyricsListViewState extends State<LyricsListView>
                   ),
                 );
               } else if (state
-                  is DataFetchedState<LyricState, List<LyricEntity>>) {
+                  is DataFetchedState<LyricState, List<LyricModel>>) {
                 // print(escrevendo);
                 return RefreshIndicator(
                   color: AppColors.darkGreen,
@@ -128,7 +140,15 @@ class _LyricsListViewState extends State<LyricsListView>
                         ),
                         Container(
                           margin: const EdgeInsets.only(top: 14),
-                          child: LyricsListWidget(entitiesList: state.entities),
+                          child: LyricsListWidget(
+                            entitiesList: state.entities,
+                            editAction: () {
+
+                            },
+                            deleteAction: () {
+
+                            },
+                          ),
                         ),
                       ],
                     ),

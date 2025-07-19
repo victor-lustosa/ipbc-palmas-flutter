@@ -8,7 +8,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     with ConnectivityMixin {
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
-  List<LyricEntity>? lyricsList;
+  List<LyricModel>? lyricsList;
   final String path = 'lyrics/createAt/false/id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))';
 
   LyricBloc({
@@ -16,9 +16,9 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     this.offlineUseCases,
   }) : super(LoadingState<LyricState>()) {
     on<GetDataEvent<LyricEvent>>(_getInSupa);
-    on<FilterEvent<LyricEvent, LyricEntity>>(_filter);
+    on<FilterEvent<LyricEvent, LyricModel>>(_filter);
     on<LoadingEvent<LyricEvent>>(_loading);
-    on<GetPaginationEvent<LyricEvent, LyricEntity>>(_getPaginationInSupa);
+    on<GetPaginationEvent<LyricEvent, LyricModel>>(_getPaginationInSupa);
     on<CheckConnectivityEvent<LyricEvent>>(_checkConnectivity);
   }
 
@@ -39,14 +39,14 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
       converter: LyricAdapter.fromMapList,
     );
     if (lyricsList!.isNotEmpty) {
-      emit(DataFetchedState<LyricState, List<LyricEntity>>(
+      emit(DataFetchedState<LyricState, List<LyricModel>>(
           entities: lyricsList!));
     }
   }
 
   Future<void> _getPaginationInSupa(
-      GetPaginationEvent<LyricEvent, LyricEntity> event, emit) async {
-    List<LyricEntity> lyricsListAux = [];
+      GetPaginationEvent<LyricEvent, LyricModel> event, emit) async {
+    List<LyricModel> lyricsListAux = [];
     //Caso esteja sem conexão eu salvo essas musicas no hive
     int offset = lyricsList!.length;
 
@@ -58,9 +58,9 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     //Verificando se tem novos itens retornados se sim eu adiciona lista principal
     if (lyricsListAux.isNotEmpty) {
       lyricsList!.addAll(lyricsListAux);
-      emit(DataFetchedState<LyricState, List<LyricEntity>>(entities: lyricsList!));
+      emit(DataFetchedState<LyricState, List<LyricModel>>(entities: lyricsList!));
     } else {
-      emit(NoMoreDataState<LyricState, List<LyricEntity>>());
+      emit(NoMoreDataState<LyricState, List<LyricModel>>());
     }
   }
 
@@ -82,13 +82,13 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     emit(LoadingState<LyricState>());
   }
 
-  Future<void> _filter(FilterEvent<LyricEvent, LyricEntity> event, emit) async {
+  Future<void> _filter(FilterEvent<LyricEvent, LyricModel> event, emit) async {
     if (event.writing && lyricsList != null) {
-      List<LyricEntity> list = event.typeFilter.filterListing(event, lyricsList);
+      List<LyricModel> list = event.typeFilter.filterListing(event, lyricsList);
 
-      emit(DataFetchedState<LyricState, List<LyricEntity>>(entities: list));
+      emit(DataFetchedState<LyricState, List<LyricModel>>(entities: list));
     } else {
-      emit(DataFetchedState<LyricState, List<LyricEntity>>(entities: lyricsList!));
+      emit(DataFetchedState<LyricState, List<LyricModel>>(entities: lyricsList!));
     }
   }
 }
@@ -121,10 +121,10 @@ class FilterEvent<R, T> extends GenericEvent<R> {
   FilterEvent(this.searchText, this.writing, this.typeFilter, this.selectIndex);
 }
 
-class TitleFilter extends Filter<LyricEntity, FilterEvent> {
+class TitleFilter extends Filter<LyricModel, FilterEvent> {
   @override
-  List<LyricEntity> filterListing(FilterEvent event, List<LyricEntity>? list) {
-    List<LyricEntity> filterList;
+  List<LyricModel> filterListing(FilterEvent event, List<LyricModel>? list) {
+    List<LyricModel> filterList;
 
     filterList = list!
         .where(
@@ -139,10 +139,10 @@ class TitleFilter extends Filter<LyricEntity, FilterEvent> {
 }
 //My artist filter
 
-class ArtistFilter extends Filter<LyricEntity, FilterEvent> {
+class ArtistFilter extends Filter<LyricModel, FilterEvent> {
   @override
-  List<LyricEntity> filterListing(FilterEvent event, List<LyricEntity>? list) {
-    late List<LyricEntity> filterList;
+  List<LyricModel> filterListing(FilterEvent event, List<LyricModel>? list) {
+    late List<LyricModel> filterList;
 
     filterList = list!
         .where(

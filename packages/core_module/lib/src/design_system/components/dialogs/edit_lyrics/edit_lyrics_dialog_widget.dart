@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 
 Future<void> showEditLyricsDialog({
   required BuildContext context,
-  required LyricEntity entity,
+  required dynamic entity,
   required final Function(bool) callback,
+  required final void Function() editAction,
+  required final void Function() deleteAction,
 }) async {
   return showDialog<void>(
     context: context,
@@ -46,6 +48,11 @@ Future<void> showEditLyricsDialog({
                       children: [
                         InkWell(
                           onTap: () {
+                            callback(false);
+                            pop(context);
+                            EditLyricStore editLyricStore = Modular.get<EditLyricStore>();
+                            editLyricStore.isEditing = true;
+                            editLyricStore.buttonCallback = editAction;
                             pushNamed(
                               AppRoutes.servicesRoute +
                                   AppRoutes.editLyricRoute,
@@ -89,7 +96,7 @@ Future<void> showEditLyricsDialog({
                                   size: 20,
                                   action: () {
                                     callback(false);
-                                    Modular.to.pop(context);
+                                    pop(context);
                                   },
                                   color: AppColors.grey10,
                                   iOSIcon: CupertinoIcons.clear,

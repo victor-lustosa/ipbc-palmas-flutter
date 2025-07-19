@@ -10,6 +10,7 @@ class CoreModule extends Module {
 
   @override
   void exportedBinds(Injector i) {
+    i.addLazySingleton<EditLyricStore>(EditLyricStore.new);
     i.addSingleton<SupabaseClient>(() => Supabase.instance.client);
     i.addSingleton<SupabaseRepository>(
       () => SupabaseRepository(supabaseClient: i.get<SupabaseClient>()),

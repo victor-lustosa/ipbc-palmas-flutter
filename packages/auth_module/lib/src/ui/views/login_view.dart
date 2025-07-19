@@ -301,7 +301,7 @@ class _LoginViewState extends State<LoginView> {
                                 ..onTap =
                                     () => setState(() {
                                       if (!_isPressed) {
-                                        Modular.to.navigate(
+                                        navigate(
                                           AppRoutes.authRoute +
                                               AppRoutes.createAccountRoute,
                                         );

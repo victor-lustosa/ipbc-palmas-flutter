@@ -1,7 +1,7 @@
 import 'package:core_module/core_module.dart';
 import 'package:service_module/src/ui/stores/admin/edit_liturgy_view_model.dart';
-import 'package:service_module/src/ui/stores/admin/edit_lyric_store.dart';
 import 'package:service_module/src/ui/stores/admin/search_lyrics_store.dart';
+import 'package:service_module/src/ui/stores/admin/services_preview_store.dart';
 import 'package:service_module/src/ui/views/admin/search_lyrics_view.dart';
 import 'package:service_module/src/ui/views/admin/services_preview_view.dart';
 import '../service_module.dart';
@@ -9,7 +9,6 @@ import 'ui/blocs/services_collection_bloc.dart';
 import 'ui/views/admin/edit_lyric_view.dart';
 
 class ServiceModule extends Module {
-
   @override
   void binds(i) {
     i.addLazySingleton<ServicesCollectionBloc>(
@@ -18,8 +17,9 @@ class ServiceModule extends Module {
       ),
       config: CoreModule.blocConfig(),
     );
-    i.addLazySingleton<EditLyricStore>(EditLyricStore.new);
+
     i.addLazySingleton<SearchLyricsStore>(SearchLyricsStore.new);
+    i.addLazySingleton<ServicesPreviewStore>(ServicesPreviewStore.new);
     i.addSingleton<EditLiturgyViewModel>(EditLiturgyViewModel.new);
   }
 
@@ -31,8 +31,7 @@ class ServiceModule extends Module {
     r.child(
       AppRoutes.editLyricRoute,
       transition: TransitionType.custom,
-      child:
-          (_) => EditLyricView(entity: r.args.data as LyricEntity),
+      child: (_) => EditLyricView(modelArgument: r.args.data as LyricModel),
       customTransition: ModularSlideTransition(),
     );
     r.child(
@@ -44,7 +43,10 @@ class ServiceModule extends Module {
     r.child(
       AppRoutes.servicesPreviewRoute,
       transition: TransitionType.custom,
-      child: (_) => ServicesPreviewView(dto: r.args.data as ServicesPreviewDTO),
+      child:
+          (_) => ServicesPreviewView(
+            dto: r.args.data != null ? r.args.data as ServicesPreviewDTO : null,
+          ),
       customTransition: ModularFadeTransition(),
     );
     r.child(

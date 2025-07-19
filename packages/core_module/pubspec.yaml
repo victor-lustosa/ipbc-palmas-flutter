@@ -5,7 +5,7 @@ publish_to: 'none'
 resolution: workspace
 
 environment:
-  sdk: '>=3.7.0 <4.0.0'
+  sdk: '>=3.8.1 <4.0.0'
 
 dependencies:
   flutter:
@@ -20,7 +20,7 @@ dependencies:
   hive_flutter: ^1.1.0
   http: ^1.1.0
   logger: ^2.4.0
-  intl: ^0.19.0
+  intl: ^0.20.2
   connectivity_plus: ^6.0.5
   url_launcher: ^6.1.10
   email_validator: ^3.0.0

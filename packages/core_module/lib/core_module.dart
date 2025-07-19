@@ -108,6 +108,7 @@ export 'src/shared/mixins/clipboard_mixin.dart';
 export 'src/shared/mixins/email_mixin.dart';
 export 'src/shared/mixins/connectivity_mixin.dart';
 export 'src/shared/mixins/image_mixin.dart';
+export 'src/shared/view_models/edit_lyric_store.dart';
 export 'src/shared/overall_states/generics.dart';
 export 'src/shared/utils/supa_services_util.dart';
 export 'src/shared/utils/validation_util.dart';

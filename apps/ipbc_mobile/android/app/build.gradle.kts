@@ -27,7 +27,7 @@ val keystoreProperties = Properties().apply {
 
 android {
     namespace = "com.ipbc.ipbc_mobile"
-    compileSdk = 34
+    compileSdk = 36
     ndkVersion = "27.0.12077973"
 
     compileOptions {
@@ -46,7 +46,7 @@ android {
     defaultConfig {
         applicationId = "com.ipbc.ipbc_palmas"
         minSdk = 21
-        targetSdk = 34
+        targetSdk = 36
         versionCode = flutterVersionCode
         versionName = flutterVersionName
     }

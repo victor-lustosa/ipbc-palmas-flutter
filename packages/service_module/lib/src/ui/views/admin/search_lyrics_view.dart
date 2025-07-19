@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'package:service_module/src/ui/stores/admin/services_preview_store.dart';
 
 import '../../../../service_module.dart';
 import '../../components/dialogs/admin/add_lyrics_dialog_widget.dart';
@@ -19,8 +20,9 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
   String selectedValue = '';
   int selectedIndex = 0;
   final TextEditingController controller = TextEditingController();
-  late final List<LyricEntity> _lyricsFetched = [LyricModel.empty()];
-  final SearchLyricsStore _store = Modular.get<SearchLyricsStore>();
+
+  final ServicesPreviewStore _servicesPreviewStore = Modular.get<ServicesPreviewStore>();
+  final SearchLyricsStore _searchLyricsStore = Modular.get<SearchLyricsStore>();
 
   @override
   void initState() {
@@ -71,7 +73,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                 ),
               ),
               ValueListenableBuilder(
-                valueListenable: _store,
+                valueListenable: _searchLyricsStore,
                 builder: (_, state, child) {
                   if (state is InitialState) {
                     return Container(
@@ -105,7 +107,8 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                         ),
                       ),
                     );
-                  } else if (state is SearchSuccessState || state is NotFoundState) {
+                  } else if (state is SearchSuccessState ||
+                      state is NotFoundState) {
                     if (state is SearchSuccessState) {
                       return Column(
                         children: [
@@ -128,13 +131,11 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                                   ),
                                 ),
                               ),
-
                             ],
                           ),
                         ],
                       );
-                    }
-                    else {
+                    } else {
                       return Container(
                         margin: const EdgeInsets.only(top: 150),
                         child: SizedBox(
@@ -184,13 +185,26 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
         iconColor: AppColors.white,
         backgroundColor: AppColors.add,
         icon: Icons.add,
-        action:
-            () => showAddLyricsDialog(
-                context: context, callback: (text) {
-                  if (text != null && text.isNotEmpty) {
-                    _store.convertTextInLyric(text);
-                  }
-            })
+        action: () {
+          showAddLyricsDialog(
+            context: context,
+            callback: (text) async {
+              if (text != null && text.isNotEmpty) {
+                LyricModel newLyric = _servicesPreviewStore.convertTextInLyric(text);
+                EditLyricStore editLyricStore = Modular.get<EditLyricStore>();
+                editLyricStore.isEditing = false;
+                editLyricStore.buttonCallback = () {
+                  editLyricStore.addLyric();
+                  popUntil((route) => route.settings.name == AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute);
+                };
+                pushNamed(
+                  AppRoutes.servicesRoute + AppRoutes.editLyricRoute,
+                  arguments: newLyric,
+                );
+              }
+            },
+          );
+        },
       ),
     );
   }

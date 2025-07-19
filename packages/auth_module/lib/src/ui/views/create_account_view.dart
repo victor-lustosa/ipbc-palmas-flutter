@@ -54,7 +54,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       children: [
                         BackButtonWidget(
                           action:
-                              () => Modular.to.navigate(
+                              () => navigate(
                                 AppRoutes.authRoute + AppRoutes.loginRoute,
                               ),
                         ),

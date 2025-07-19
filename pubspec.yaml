@@ -1,6 +1,6 @@
 name: ipbc_monorepo
 environment:
-  sdk: '>=3.7.0 <4.0.0'
+  sdk: '>=3.8.1 <4.0.0'
 
 workspace:
   - apps/ipbc_mobile
@@ -18,6 +18,9 @@ dev_dependencies:
 
 melos:
   scripts:
+    build-appbundle:
+      run: melos exec --scope=ipbc_mobile -- flutter build appbundle --release
+      description: Gera o bundle android para colocar na loja
     build-apk:
       run: melos exec --scope=ipbc_mobile -- flutter build apk --release
       description: Gera o apk android

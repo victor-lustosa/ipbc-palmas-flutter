@@ -10,6 +10,7 @@ class IsarRepository implements IRepository {
     await Isar.open([
       IsarTokenDTOSchema,
       IsarUserDTOSchema,
+
     ], directory: dir.path);
   }
 

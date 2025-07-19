@@ -137,9 +137,6 @@ class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
                               ),
                               const SizedBox(width: 8),
                               ElevatedButton(
-                                onPressed: () {
-                                  if(widget.callback!= null) widget.callback!(_lyricsController.text);
-                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.add,
                                   shape: RoundedRectangleBorder(
@@ -157,6 +154,9 @@ class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
                                     fontSize: 16,
                                   ),
                                 ),
+                                onPressed: () {
+                                  if(widget.callback!= null) widget.callback!(_lyricsController.text);
+                                },
                               ),
                             ],
                           ),

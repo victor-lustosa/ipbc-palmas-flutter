@@ -54,7 +54,15 @@ class _ServiceViewState extends State<ServiceView> {
                   ),
                 ),
               ),
-              LyricsListWidget(entitiesList: widget.entity.service.lyricsList),
+              LyricsListWidget(
+                entitiesList: widget.entity.service.lyricsList,
+                editAction: () {
+
+                },
+                deleteAction: () {
+
+                },
+              ),
               const SizedBox(height: 40),
             ],
           ),

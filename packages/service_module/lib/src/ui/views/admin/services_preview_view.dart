@@ -1,35 +1,32 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'package:service_module/src/ui/stores/admin/services_preview_store.dart';
 
 import '../../../../service_module.dart';
-
-class ServicesPreviewDTO {
-  ServicesPreviewDTO({
-    required this.heading,
-    required this.liturgiesList,
-    required this.image,
-  });
-
-  final String heading;
-  final List<LiturgyModel> liturgiesList;
-  final String image;
-}
 
 class ServicesPreviewView extends StatefulWidget {
   const ServicesPreviewView({super.key, required this.dto});
 
-  final ServicesPreviewDTO dto;
+  final ServicesPreviewDTO? dto;
 
   @override
   State<ServicesPreviewView> createState() => _ServicesPreviewViewState();
 }
 
 class _ServicesPreviewViewState extends State<ServicesPreviewView> {
+  final ServicesPreviewStore _servicesPreviewStore =
+      Modular.get<ServicesPreviewStore>();
+  final EditLyricStore _editLyricStore = Modular.get<EditLyricStore>();
+
   @override
   void initState() {
     super.initState();
     setDarkAppBar();
+    if (widget.dto != null) {
+      _servicesPreviewStore.servicesPreviewDTO = widget.dto!;
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,19 +38,22 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ServiceTopBarWidget(image: widget.dto.image),
+              ServiceTopBarWidget(
+                image: _servicesPreviewStore.servicesPreviewDTO.image,
+              ),
               Container(
                 margin: const EdgeInsets.only(top: 24.7, left: 16),
                 child: GuidelineWidget(
                   circleColor: AppColors.cardBallsGrey,
                   timelineColor: AppColors.timelineGuideTGreen,
-                  liturgiesList: widget.dto.liturgiesList,
+                  liturgiesList:
+                      _servicesPreviewStore.servicesPreviewDTO.liturgiesList,
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(top: 24.7, left: 16),
                 child: Text(
-                  'Músicas de sábado à noite',
+                  'Músicas de ${_servicesPreviewStore.servicesPreviewDTO.heading}',
                   style: AppFonts.defaultFont(
                     fontWeight: FontWeight.w500,
                     fontSize: 17,
@@ -61,15 +61,33 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 4, left: 16, bottom: 47),
-                child: Text(
-                  'As músicas adicionadas aparecerão aqui. Adicione músicas para este culto:',
-                  style: AppFonts.defaultFont(
-                    fontSize: 13,
-                    color: AppColors.grey8,
+              Visibility(
+                visible: _editLyricStore.lyricsFetched.isEmpty,
+                child: Container(
+                  margin: const EdgeInsets.only(top: 4, left: 16, bottom: 24),
+                  width: context.sizeOf.width * 0.9,
+                  child: Text(
+                    'As músicas adicionadas aparecerão aqui. Adicione músicas para este culto:',
+                    style: AppFonts.defaultFont(
+                      fontSize: 13,
+                      color: AppColors.grey8,
+                    ),
                   ),
                 ),
+              ),
+              ValueListenableBuilder(
+                valueListenable: _editLyricStore,
+                builder: (context, state, child) {
+                  return LyricsListWidget(
+                    entitiesList: _editLyricStore.lyricsFetched,
+                    editAction: (){
+
+                    },
+                    deleteAction: () {
+
+                    },
+                  );
+                },
               ),
               Container(
                 margin: const EdgeInsets.only(
@@ -84,11 +102,11 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                   fixedSize: Size(context.sizeOf.width, 48),
                   action:
                       () => pushNamed(
-                        AppRoutes.servicesRoute +
-                            AppRoutes.searchLyricsRoute,
+                        AppRoutes.servicesRoute + AppRoutes.searchLyricsRoute,
                         arguments: EditLiturgyDTO(
-                          heading: widget.dto.heading,
-                          image: widget.dto.image,
+                          heading:
+                              _servicesPreviewStore.servicesPreviewDTO.heading,
+                          image: _servicesPreviewStore.servicesPreviewDTO.image,
                         ),
                       ),
                   backgroundColor: AppColors.darkGreen,
@@ -101,7 +119,6 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                         margin: const EdgeInsets.only(right: 16),
                         child: const Text("Adicionar música"),
                       ),
-
                     ],
                   ),
                 ),
@@ -116,12 +133,11 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
         pngIcon: AppIcons.editIcon,
         size: 37,
         action:
-            () => Navigator.popAndPushNamed(
-              context,
+            () => popAndPushNamed(
               AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute,
               arguments: EditLiturgyDTO(
-                image: widget.dto.image,
-                heading: widget.dto.heading,
+                image: _servicesPreviewStore.servicesPreviewDTO.image,
+                heading: _servicesPreviewStore.servicesPreviewDTO.heading,
               ),
             ),
       ),

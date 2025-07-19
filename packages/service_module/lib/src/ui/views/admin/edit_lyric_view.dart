@@ -2,13 +2,12 @@ import 'dart:ui';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:service_module/src/ui/stores/admin/edit_lyric_store.dart';
 import 'package:flutter/services.dart';
 
 class EditLyricView extends StatefulWidget {
-  const EditLyricView({super.key, required this.entity});
+  const EditLyricView({super.key, required this.modelArgument});
 
-  final LyricEntity entity;
+  final LyricModel modelArgument;
 
   @override
   State<EditLyricView> createState() => _EditLyricViewState();
@@ -16,7 +15,7 @@ class EditLyricView extends StatefulWidget {
 
 class _EditLyricViewState extends State<EditLyricView> {
   final EditLyricStore _store = Modular.get<EditLyricStore>();
-
+  late LyricModel model;
   final Map<String, TextEditingController> _controllers = {};
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _groupController = TextEditingController();
@@ -31,10 +30,10 @@ class _EditLyricViewState extends State<EditLyricView> {
   void initState() {
     super.initState();
     setDarkAppBar();
-    _store.initial();
+    model = widget.modelArgument;
     _initializeControllersAndFocusNodes();
-    _titleController.text = widget.entity.title;
-    _groupController.text = widget.entity.group;
+    _titleController.text = model.title;
+    _groupController.text = model.group;
     _rootFocusNode = FocusScopeNode();
     _rootFocusNode.addListener(_handleRootFocusChange);
   }
@@ -48,8 +47,8 @@ class _EditLyricViewState extends State<EditLyricView> {
   }
 
   void _initializeControllersAndFocusNodes() {
-    for (int i = 0; i < widget.entity.verses.length; i++) {
-      final verse = widget.entity.verses[i];
+    for (int i = 0; i < model.verses.length; i++) {
+      final verse = model.verses[i];
       for (int j = 0; j < verse.versesList.length; j++) {
         final key = '${verse.id}_$j';
         _controllers[key] = TextEditingController(text: verse.versesList[j]);
@@ -60,8 +59,8 @@ class _EditLyricViewState extends State<EditLyricView> {
 
   void _updateControllersAndFocusNodes() {
     final Set<String> currentKeys = {};
-    for (int i = 0; i < widget.entity.verses.length; i++) {
-      final verse = widget.entity.verses[i];
+    for (int i = 0; i < model.verses.length; i++) {
+      final verse = model.verses[i];
       for (int j = 0; j < verse.versesList.length; j++) {
         final key = '${verse.id}_$j';
         currentKeys.add(key);
@@ -138,6 +137,13 @@ class _EditLyricViewState extends State<EditLyricView> {
                 fontSize: 17,
               ),
               keyboardType: TextInputType.multiline,
+              onChanged: (newValue){
+                if (focusNode == _titleFocusNode) {
+                  model = model.copyWith(title: newValue);
+                } else if (focusNode == _groupFocusNode) {
+                  model = model.copyWith(group: newValue);
+                }
+              },
             )
          ),
       );
@@ -198,11 +204,11 @@ class _EditLyricViewState extends State<EditLyricView> {
                           margin: const EdgeInsets.only(left: 19, right: 19),
                           child: ReorderableListView.builder(
                             shrinkWrap: true,
-                            itemCount: widget.entity.verses.length,
+                            itemCount: model.verses.length,
                             buildDefaultDragHandles: false,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (BuildContext context, int index) {
-                              final verse = widget.entity.verses[index];
+                              final verse = model.verses[index];
                               return Container(
                                 key: Key('${verse.id}'),
                                 margin: const EdgeInsets.symmetric(
@@ -304,8 +310,7 @@ class _EditLyricViewState extends State<EditLyricView> {
                                                     maxLines: null,
                                                     keyboardType: TextInputType.multiline,
                                                     onChanged: (newValue) {
-                                                      verse.versesList[position] =
-                                                          newValue;
+                                                      verse.versesList[position] = newValue;
                                                     },
                                                   ),
                                                 );
@@ -324,8 +329,8 @@ class _EditLyricViewState extends State<EditLyricView> {
                                 if (oldIndex < newIndex) {
                                   newIndex -= 1;
                                 }
-                                final VerseEntity item = widget.entity.verses.removeAt(oldIndex);
-                                widget.entity.verses.insert(newIndex, item);
+                                final VerseEntity item = model.verses.removeAt(oldIndex);
+                                model.verses.insert(newIndex, item);
                                 _updateControllersAndFocusNodes();
                               });
                             },
@@ -386,11 +391,8 @@ class _EditLyricViewState extends State<EditLyricView> {
           iconColor: AppColors.grey10,
           size: 33,
           action: () {
-            FocusScope.of(context).unfocus();
-            pushNamed(
-              AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
-              arguments: widget.entity,
-            );
+            _store.lyric = model;
+            _store.buttonCallback();
           },
         ),
       ),

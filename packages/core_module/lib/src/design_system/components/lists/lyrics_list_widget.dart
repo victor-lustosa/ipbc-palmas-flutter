@@ -5,9 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 class LyricsListWidget extends StatefulWidget {
-  const LyricsListWidget({super.key, required this.entitiesList});
-  final List<LyricEntity> entitiesList;
+  const LyricsListWidget({
+    super.key,
+    required this.entitiesList, required this.editAction, required this.deleteAction,
+  });
 
+  final List<LyricModel> entitiesList;
+  final void Function() editAction;
+  final void Function() deleteAction;
   @override
   State<LyricsListWidget> createState() => _LyricsListWidgetState();
 }
@@ -57,7 +62,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
               child: InkWell(
                 onTap: () {
                   pushNamed(
-                    '/lyrics/lyric',
+                    AppRoutes.lyricsRoute + AppRoutes.lyricRoute,
                     arguments: widget.entitiesList[index],
                   );
                 },
@@ -68,12 +73,14 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                   });
                   showEditLyricsDialog(
                     context: context,
-                    entity: widget.entitiesList[index],
+                    entity:  widget.entitiesList[index],
                     callback: (value) {
                       setState(() {
                         _elevationActive = value;
                       });
                     },
+                    editAction: widget.editAction,
+                    deleteAction: widget.deleteAction,
                   );
                 },
                 child: Container(
