@@ -54,7 +54,7 @@ class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget> {
                       margin: const EdgeInsets.only(left: 16.3, right: 16),
                       child: BackButtonWidget(
                         color: AppColors.white,
-                        action: () => pop(context),
+                        action: () => nativePop(context),
                       ),
                     ),
                     SizedBox(

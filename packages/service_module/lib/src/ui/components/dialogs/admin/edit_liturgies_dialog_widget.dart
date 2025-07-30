@@ -13,6 +13,7 @@ Future<void> showEditLiturgiesDialog({
   return showGeneralDialog(
     context: context,
     barrierDismissible: true,
+    barrierLabel: 'Edit Liturgies Dialog',
     barrierColor: Colors.black.withAlpha(100),
     transitionDuration: const Duration(milliseconds: 300),
     pageBuilder: (context, animation, secondaryAnimation) {
