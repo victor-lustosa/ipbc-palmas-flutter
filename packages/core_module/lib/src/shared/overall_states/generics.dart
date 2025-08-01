@@ -12,14 +12,16 @@ class LoadingEvent<R> extends GenericEvent<R> {
 }
 
 @immutable
-class CheckConnectivityEvent<R> extends GenericEvent<R> {
-  final String path;
-  CheckConnectivityEvent({this.path = ''});
+class AddDataEvent<R> extends GenericState<R> {
+  final dynamic entity;
+  AddDataEvent({ this.entity});
 }
+
 
 @immutable
 class GetDataEvent<R> extends GenericEvent<R> {
-  GetDataEvent();
+  final String path;
+  GetDataEvent({this.path = ''});
 }
 
 @immutable
@@ -58,5 +60,12 @@ class ExceptionState<R> extends GenericState<R> {
 @immutable
 class DataFetchedState<R, T> extends GenericState<R> {
   final T entities;
-  DataFetchedState({required this.entities});
+  DataFetchedState({ required this.entities});
 }
+
+@immutable
+class DataAddedState<R> extends GenericState<R> {
+  DataAddedState();
+}
+
+

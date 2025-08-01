@@ -24,7 +24,7 @@ class _HomeViewState extends State<HomeView>
   void initState() {
     super.initState();
     _bloc = Modular.get<HomeBloc>();
-    _bloc.add(CheckConnectivityEvent());
+    _bloc.add(GetDataEvent());
   }
 
   @override

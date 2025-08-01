@@ -20,20 +20,9 @@ class ServicesCollectionBloc
     : super(LoadingState()) {
     on<GetDataEvent<ServicesCollectionEvent>>(_getInSupa);
     on<LoadingEvent<ServicesCollectionEvent>>(_loading);
-    on<CheckConnectivityEvent<ServicesCollectionEvent>>(_checkConnectivity);
   }
 
-  Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
-    final response = await isConnected();
-    if (response) {
-      path = event.path;
-      path += customSelect;
-      add(LoadingEvent<ServicesCollectionEvent>());
-      add(GetDataEvent<ServicesCollectionEvent>());
-    } else {
-      emit(NoConnectionState<ServicesCollectionState>());
-    }
-  }
+
 
   /*Future<void> _getInSupa(
       GetInSupaEvent<ServicesCollectionEvent> event, emit) async {
@@ -52,15 +41,23 @@ class ServicesCollectionBloc
   }*/
 
   Future<void> _getInSupa(GetDataEvent event, emit) async {
-    List<ServiceEntity> services = await onlineUseCases.get(
-      path: path,
-      converter: ServiceAdapter.fromMapList,
-    );
-    emit(
-      DataFetchedState<ServicesCollectionState, List<ServiceEntity>>(
-        entities: services,
-      ),
-    );
+    final response = await isConnected();
+    if (response) {
+      path = event.path;
+      path += customSelect;
+      add(LoadingEvent<ServicesCollectionEvent>());
+      List<ServiceEntity> services = await onlineUseCases.get(
+        path: path,
+        converter: ServiceAdapter.fromMapList,
+      );
+      emit(
+        DataFetchedState<ServicesCollectionState, List<ServiceEntity>>(
+          entities: services,
+        ),
+      );
+    } else {
+      emit(NoConnectionState<ServicesCollectionState>());
+    }
   }
 
   Future<void> _loading(_, emit) async {

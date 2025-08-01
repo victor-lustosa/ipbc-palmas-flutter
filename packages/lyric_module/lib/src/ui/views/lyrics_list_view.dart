@@ -24,7 +24,7 @@ class _LyricsListViewState extends State<LyricsListView>
     super.initState();
     setLightAppBar();
     _bloc = Modular.get<LyricBloc>();
-    _bloc.add(CheckConnectivityEvent<LyricEvent>());
+    _bloc.add(GetDataEvent<LyricEvent>());
     WidgetsBinding.instance.addPostFrameCallback((frameCallback) {
       initializeEditLyricStore();
     });
@@ -34,7 +34,7 @@ class _LyricsListViewState extends State<LyricsListView>
     EditLyricStore editLyricStore = Modular.get<EditLyricStore>();
     editLyricStore.isEditing = true;
     editLyricStore.buttonCallback = () {
-      _bloc.add(CheckConnectivityEvent<LyricEvent>());
+      _bloc.add(GetDataEvent<LyricEvent>());
       pop(context);
     };
   }
@@ -76,7 +76,7 @@ class _LyricsListViewState extends State<LyricsListView>
                 return RefreshIndicator(
                   color: AppColors.darkGreen,
                   onRefresh: () async {
-                    _bloc.add(CheckConnectivityEvent());
+                    _bloc.add(GetDataEvent());
                   },
                   child: SingleChildScrollView(
                     child: Column(

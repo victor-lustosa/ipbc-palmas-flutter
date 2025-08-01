@@ -22,7 +22,7 @@ class EventsListViewState extends State<EventsListView> {
   void initState() {
     super.initState();
     _bloc = Modular.get<EventsListBloc>();
-    _bloc.add(CheckConnectivityEvent());
+    _bloc.add(GetDataEvent());
   }
 
   @override

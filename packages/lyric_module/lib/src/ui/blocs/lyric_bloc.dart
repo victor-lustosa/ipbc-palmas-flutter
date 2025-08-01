@@ -19,28 +19,22 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     on<FilterEvent<LyricEvent, LyricModel>>(_filter);
     on<LoadingEvent<LyricEvent>>(_loading);
     on<GetPaginationEvent<LyricEvent, LyricModel>>(_getPaginationInSupa);
-    on<CheckConnectivityEvent<LyricEvent>>(_checkConnectivity);
-  }
-
-  Future<void> _checkConnectivity(
-      CheckConnectivityEvent<LyricEvent> event, emit) async {
-    final response = await isConnected();
-    if (response) {
-      add(GetDataEvent<LyricEvent>());
-    } else {
-      emit(NoConnectionState<LyricState>());
-    }
   }
 
   Future<void> _getInSupa(GetDataEvent<LyricEvent> event, emit) async {
     //Caso esteja sem conexão eu salvo essas musicas no isar
-    lyricsList = await onlineUseCases.get(
-      path: path,
-      converter: LyricAdapter.fromMapList,
-    );
-    if (lyricsList!.isNotEmpty) {
-      emit(DataFetchedState<LyricState, List<LyricModel>>(
-          entities: lyricsList!));
+    final response = await isConnected();
+    if (response) {
+      lyricsList = await onlineUseCases.get(
+        path: path,
+        converter: LyricAdapter.fromMapList,
+      );
+      if (lyricsList!.isNotEmpty) {
+        emit(DataFetchedState<LyricState, List<LyricModel>>(
+            entities: lyricsList!));
+      }
+    } else {
+      emit(NoConnectionState<LyricState>());
     }
   }
 

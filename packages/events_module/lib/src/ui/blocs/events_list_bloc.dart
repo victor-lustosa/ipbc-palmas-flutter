@@ -16,24 +16,19 @@ class EventsListBloc
   }) : super(LoadingState()) {
     on<GetDataEvent<EventsListEvent>>(_getInSupa);
     on<LoadingEvent<EventsListEvent>>(_loading);
-    on<CheckConnectivityEvent<EventsListEvent>>(_checkConnectivity);
-  }
-
-  Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
-    path = event.path.isNotEmpty ? event.path : path;
-    final response = await isConnected();
-    if (response) {
-      add(GetDataEvent<EventsListEvent>());
-    } else {
-      emit(NoConnectionState<EventsListState>());
-    }
   }
 
   Future<void> _getInSupa(GetDataEvent event, emit) async {
-    List<EventEntity> events = await onlineUseCases.get(
-        path: path, converter: EventAdapter.fromMapList);
-    emit(
-        DataFetchedState<EventsListState, List<EventEntity>>(entities: events));
+    path = event.path.isNotEmpty ? event.path : path;
+    final response = await isConnected();
+    if (response) {
+      List<EventEntity> events = await onlineUseCases.get(
+          path: path, converter: EventAdapter.fromMapList);
+      emit(DataFetchedState<EventsListState, List<EventEntity>>(
+          entities: events));
+    } else {
+      emit(NoConnectionState<EventsListState>());
+    }
   }
 
   Future<void> _loading(_, emit) async {
