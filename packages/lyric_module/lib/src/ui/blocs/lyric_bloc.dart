@@ -9,7 +9,8 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
   List<LyricEntity>? lyricsList;
-  final String path = 'lyrics/createAt/false/id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))';
+  final String path =
+      'lyrics/createAt/false/id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))';
 
   LyricBloc({
     required this.onlineUseCases,
@@ -19,28 +20,22 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     on<FilterEvent<LyricEvent, LyricEntity>>(_filter);
     on<LoadingEvent<LyricEvent>>(_loading);
     on<GetPaginationEvent<LyricEvent, LyricEntity>>(_getPaginationInSupa);
-    on<CheckConnectivityEvent<LyricEvent>>(_checkConnectivity);
-  }
-
-  Future<void> _checkConnectivity(
-      CheckConnectivityEvent<LyricEvent> event, emit) async {
-    final response = await isConnected();
-    if (response) {
-      add(GetDataEvent<LyricEvent>());
-    } else {
-      emit(NoConnectionState<LyricState>());
-    }
   }
 
   Future<void> _getInSupa(GetDataEvent<LyricEvent> event, emit) async {
     //Caso esteja sem conexão eu salvo essas musicas no isar
-    lyricsList = await onlineUseCases.get(
-      path: path,
-      converter: LyricAdapter.fromMapList,
-    );
-    if (lyricsList!.isNotEmpty) {
-      emit(DataFetchedState<LyricState, List<LyricEntity>>(
-          entities: lyricsList!));
+    final response = await isConnected();
+    if (response) {
+      lyricsList = await onlineUseCases.get(
+        path: path,
+        converter: LyricAdapter.fromMapList,
+      );
+      if (lyricsList!.isNotEmpty) {
+        emit(DataFetchedState<LyricState, List<LyricEntity>>(
+            entities: lyricsList!));
+      }
+    } else {
+      emit(NoConnectionState<LyricState>());
     }
   }
 
@@ -58,7 +53,8 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     //Verificando se tem novos itens retornados se sim eu adiciona lista principal
     if (lyricsListAux.isNotEmpty) {
       lyricsList!.addAll(lyricsListAux);
-      emit(DataFetchedState<LyricState, List<LyricEntity>>(entities: lyricsList!));
+      emit(DataFetchedState<LyricState, List<LyricEntity>>(
+          entities: lyricsList!));
     } else {
       emit(NoMoreDataState<LyricState, List<LyricEntity>>());
     }
@@ -84,11 +80,13 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
 
   Future<void> _filter(FilterEvent<LyricEvent, LyricEntity> event, emit) async {
     if (event.writing && lyricsList != null) {
-      List<LyricEntity> list = event.typeFilter.filterListing(event, lyricsList);
+      List<LyricEntity> list =
+          event.typeFilter.filterListing(event, lyricsList);
 
       emit(DataFetchedState<LyricState, List<LyricEntity>>(entities: list));
     } else {
-      emit(DataFetchedState<LyricState, List<LyricEntity>>(entities: lyricsList!));
+      emit(DataFetchedState<LyricState, List<LyricEntity>>(
+          entities: lyricsList!));
     }
   }
 }

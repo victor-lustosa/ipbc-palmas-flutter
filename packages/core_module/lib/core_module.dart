@@ -68,6 +68,7 @@ export 'src/design_system/components/dialogs/error_dialog_widget.dart';
 export 'src/design_system/components/dialogs/success_dialog_widget.dart';
 export 'src/design_system/components/side_bar/side_bar_widget.dart';
 export 'src/design_system/components/top_bar/main_top_bar_widget.dart';
+export 'src/design_system/components/top_bar/back_auth_top_bar_widget.dart';
 export 'src/design_system/components/top_bar/service_top_bar_widget.dart';
 export 'src/design_system/components/top_bar/logo_icon_widget.dart';
 export 'src/design_system/components/top_bar/title_top_bar_widget.dart';

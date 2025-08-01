@@ -95,7 +95,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                                   color: AppColors.darkGreen,
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500),
-                              widget.eventEntity.dateHour.toString()),
+                              widget.eventEntity.startDateTime.toString()),
                           Container(
                             margin: const EdgeInsets.only(
                               left: 4,
@@ -113,7 +113,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                                   color: AppColors.darkGreen,
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500),
-                              widget.eventEntity.dateHour.hour.toString()),
+                              widget.eventEntity.startDateTime.hour.toString()),
                         ],
                       ),
                       Container(

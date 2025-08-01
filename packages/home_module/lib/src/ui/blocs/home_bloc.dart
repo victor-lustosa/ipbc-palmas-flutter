@@ -13,33 +13,32 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     : _useCases = useCases,
       super(LoadingState()) {
     on<GetDataEvent<HomeEvent>>(_getData);
-    on<CheckConnectivityEvent<HomeEvent>>(_checkConnectivity);
   }
 
-  Future<void> _checkConnectivity(CheckConnectivityEvent event, emit) async {
+
+  Future<void> _getData(GetDataEvent event, emit) async {
     final response = await isConnected();
     if (response) {
-      add(GetDataEvent<HomeEvent>());
+      final results = await Future.wait([
+        _useCases.get(
+          path: servicesPath,
+          converter: ServicesAdapter.fromMapList,
+        ),
+        _useCases.get(path: eventPath, converter: EventAdapter.fromMapList),
+      ]);
+      final services = results[0];
+      final events = results[1];
+      emit(
+        DataFetchedState<HomeState, HomeDTO>(
+          entities: HomeDTO(
+            servicesEntitiesList: services,
+            eventEntitiesList: events,
+          ),
+        ),
+      );
     } else {
       emit(NoConnectionState<HomeState>());
     }
-  }
-
-  Future<void> _getData(GetDataEvent event, emit) async {
-    final results = await Future.wait([
-      _useCases.get(path: servicesPath, converter: ServicesAdapter.fromMapList),
-      _useCases.get(path: eventPath, converter: EventAdapter.fromMapList),
-    ]);
-    final services = results[0];
-    final events = results[1];
-    emit(
-      DataFetchedState<HomeState, HomeDTO>(
-        entities: HomeDTO(
-          servicesEntitiesList: services,
-          eventEntitiesList: events,
-        ),
-      ),
-    );
   }
 }
 

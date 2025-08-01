@@ -16,7 +16,9 @@ class EventModule extends Module {
           () => EventsListBloc(onlineUseCases: i.get<UseCases<SupabaseRepository>>()),
       config: CoreModule.blocConfig(),
     );
-    i.addLazySingleton(CreateEventStore.new);
+    i.addLazySingleton(
+            () => CreateEventStore(useCases: i.get<UseCases<SupabaseRepository>>()),
+        );
   }
   @override
   void routes(r) {

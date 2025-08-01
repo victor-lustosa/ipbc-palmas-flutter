@@ -24,7 +24,7 @@ class _LyricsListViewState extends State<LyricsListView>
     super.initState();
     setLightAppBar();
     _bloc = Modular.get<LyricBloc>();
-    _bloc.add(CheckConnectivityEvent<LyricEvent>());
+    _bloc.add(GetDataEvent<LyricEvent>());
   }
 
   int selectedIndex = 0;
@@ -64,7 +64,7 @@ class _LyricsListViewState extends State<LyricsListView>
                 return RefreshIndicator(
                   color: AppColors.darkGreen,
                   onRefresh: () async {
-                    _bloc.add(CheckConnectivityEvent());
+                    _bloc.add(GetDataEvent());
                   },
                   child: SingleChildScrollView(
                     child: Column(

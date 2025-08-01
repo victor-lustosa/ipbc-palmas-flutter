@@ -1,4 +1,4 @@
-//import 'package:core_module/core_module.dart';
+import 'package:core_module/core_module.dart';
 
 class EventEntity {
   EventEntity({
@@ -6,11 +6,13 @@ class EventEntity {
     required this.title,
     required this.subtitle,
     required this.image,
-    required this.dateHour,
+    required this.startDateTime,
+    required this.endDateTime,
     required this.description,
     required this.location,
-    required this.link,
-    required this.linkDescription,
+    required this.localName,
+    required this.signUpLink,
+    required this.contactLink,
     required this.createAt,
   });
 
@@ -18,11 +20,12 @@ class EventEntity {
   final String title;
   final String subtitle;
   final String image;
-  final DateTime dateHour;
+  final DateTime startDateTime;
+  final DateTime endDateTime;
   final String description;
   final String location;
-  //TODO: TIRAR DUVIDA SOBRE LOCALIZAÇÃO DO EVENTO E SOBRE O QUE É A DESCRIÇÃO DO LINK E (ONDE FICARIA), E DUVIDA DOS CONTATOS, SERIA UM NUMERO DE WHATSAPP?
-  final String link;
-  final String linkDescription;
+  final String localName;
+  final String signUpLink;
+  final String contactLink;
   final DateTime createAt;
 }

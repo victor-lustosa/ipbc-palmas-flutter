@@ -27,7 +27,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
     entitiesList = [];
     path = widget.entity.path;
     _bloc = Modular.get<ServicesCollectionBloc>();
-    _bloc.add(CheckConnectivityEvent(path: path));
+    _bloc.add(GetDataEvent(path: path));
   }
 
   @override
