@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
@@ -37,38 +35,34 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
-      child: Container(
-        height: Platform.isIOS ? 90 : 56,
-        decoration: BoxDecoration(
-          borderRadius: border,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withValues(alpha: .4),
-              offset: const Offset(1, 2),
-              spreadRadius: 3,
-              blurRadius: 7,
-              blurStyle: BlurStyle.outer,
-            ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: border,
-          child: BottomNavigationBar(
-            currentIndex: widget.selectedIndex,
-            unselectedLabelStyle: labelFont,
-            selectedLabelStyle: labelFont,
-            selectedItemColor: AppColors.darkGreen,
-            unselectedItemColor: AppColors.grey5,
-            backgroundColor: AppColors.white,
-            items: buttons,
-            onTap: (newValue) {
-              setState(() {
-                widget.callback(newValue);
-              });
-            },
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: border,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: .4),
+            offset: const Offset(1, 2),
+            spreadRadius: 3,
+            blurRadius: 7,
+            blurStyle: BlurStyle.outer,
           ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: border,
+        child: BottomNavigationBar(
+          currentIndex: widget.selectedIndex,
+          unselectedLabelStyle: labelFont,
+          selectedLabelStyle: labelFont,
+          selectedItemColor: AppColors.darkGreen,
+          unselectedItemColor: AppColors.grey5,
+          backgroundColor: AppColors.white,
+          items: buttons,
+          onTap: (newValue) {
+            setState(() {
+              widget.callback(newValue);
+            });
+          },
         ),
       ),
     );
