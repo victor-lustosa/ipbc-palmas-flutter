@@ -79,13 +79,8 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                 valueListenable: _editLyricStore,
                 builder: (context, state, child) {
                   return LyricsListWidget(
-                    entitiesList: _editLyricStore.lyricsFetched,
-                    editAction: (){
-
-                    },
-                    deleteAction: () {
-
-                    },
+                    onTap: (){},
+                    onLongPressStart: (s) {},
                   );
                 },
               ),

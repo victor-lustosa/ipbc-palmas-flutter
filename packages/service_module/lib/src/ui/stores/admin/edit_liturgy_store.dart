@@ -1,7 +1,7 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-class EditLiturgyViewModel extends ChangeNotifier {
+class EditLiturgyStore extends ChangeNotifier {
   List<LiturgyModel> items = [
     LiturgyModel(
       id: '0',

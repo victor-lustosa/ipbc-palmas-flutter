@@ -15,9 +15,10 @@ class _LyricsListViewState extends State<LyricsListView>
     with TickerProviderStateMixin {
   late final LyricBloc _bloc;
   bool isSelected = false;
-
   String selectedValue = '';
   final TextEditingController controller = TextEditingController();
+  late final LyricsListStore _lyricsListStore;
+  late final EditLyricStore _editLyricStore;
 
   @override
   void initState() {
@@ -28,6 +29,8 @@ class _LyricsListViewState extends State<LyricsListView>
     WidgetsBinding.instance.addPostFrameCallback((frameCallback) {
       initializeEditLyricStore();
     });
+    _lyricsListStore = Modular.get<LyricsListStore>();
+    _editLyricStore = Modular.get<EditLyricStore>();
   }
 
   initializeEditLyricStore() async {
@@ -65,14 +68,12 @@ class _LyricsListViewState extends State<LyricsListView>
                 );
               } else if (state is NoConnectionState<LyricState>) {
                 return NoConnectionView(
-                  action: () => nativePushReplacementNamed(
-                    AppRoutes.rootRoute,
-                    context,
-                  ),
+                  action: () =>
+                      nativePushReplacementNamed(AppRoutes.rootRoute, context),
                 );
               } else if (state
                   is DataFetchedState<LyricState, List<LyricModel>>) {
-                // print(escrevendo);
+                _lyricsListStore.entitiesList = state.entities;
                 return RefreshIndicator(
                   color: AppColors.darkGreen,
                   onRefresh: () async {
@@ -91,23 +92,21 @@ class _LyricsListViewState extends State<LyricsListView>
                             },
                             child: const Text('Paginação')),*/
                         Container(
-                          margin: const EdgeInsets.only(
-                            top: 30,
-                            bottom: 13,
-                          ),
+                          margin: const EdgeInsets.only(top: 30, bottom: 13),
                           child: SearchBarWidget(
                             controller: controller,
                             onChange: (value) {
                               bool writing = value.length > 1;
                               _bloc.add(
                                 FilterEvent<LyricEvent, LyricEntity>(
-                                    controller.text,
-                                    writing,
-                                    selectedIndex == 0
-                                        ? TitleFilter()
-                                        : ArtistFilter(),
-                                    // FilterFactory<LyricEvent,List<LyricEntity>>(index: selectedIndex),
-                                    selectedIndex),
+                                  controller.text,
+                                  writing,
+                                  selectedIndex == 0
+                                      ? TitleFilter()
+                                      : ArtistFilter(),
+                                  // FilterFactory<LyricEvent,List<LyricEntity>>(index: selectedIndex),
+                                  selectedIndex,
+                                ),
                               );
                             },
                             action: () {
@@ -117,9 +116,7 @@ class _LyricsListViewState extends State<LyricsListView>
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(
-                            left: 21.5,
-                          ),
+                          margin: const EdgeInsets.only(left: 21.5),
                           child: OwnChoiceChipsWidget(action: selectOptions),
                         ),
                         Row(
@@ -141,12 +138,54 @@ class _LyricsListViewState extends State<LyricsListView>
                         Container(
                           margin: const EdgeInsets.only(top: 14),
                           child: LyricsListWidget(
-                            entitiesList: state.entities,
-                            editAction: () {
-
+                            onLongPressStart: (details) async {
+                              await showEditDialog(
+                                context: context,
+                                itemKey: _lyricsListStore.itemKey,
+                                popupHeightParam: 110,
+                                verticalMarginParam: 3,
+                                buttons: Column(
+                                  children: [
+                                    actionButton(
+                                      context: context,
+                                      top: 20,
+                                      bottom: 12,
+                                      icon: AppIcons.edit,
+                                      label: 'Editar',
+                                      action: () {
+                                        _editLyricStore.isEditing = true;
+                                        pushNamed(
+                                          AppRoutes.servicesRoute +
+                                              AppRoutes.editLyricRoute,
+                                          arguments:
+                                              _lyricsListStore.lyricModel,
+                                        );
+                                        pop(context);
+                                      },
+                                    ),
+                                    Divider(
+                                      height: 1,
+                                      color: AppColors.dividerModal.withValues(
+                                        alpha: 25,
+                                      ),
+                                    ),
+                                    actionButton(
+                                      context: context,
+                                      top: 12,
+                                      bottom: 20,
+                                      icon: AppIcons.trash,
+                                      label: 'Deletar',
+                                      action: () {},
+                                    ),
+                                  ],
+                                ),
+                              );
                             },
-                            deleteAction: () {
-
+                            onTap: () {
+                              pushNamed(
+                                AppRoutes.lyricsRoute + AppRoutes.lyricRoute,
+                                arguments: _lyricsListStore.lyricModel,
+                              );
                             },
                           ),
                         ),

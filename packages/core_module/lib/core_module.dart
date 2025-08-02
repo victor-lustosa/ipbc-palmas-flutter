@@ -65,6 +65,7 @@ export 'src/design_system/components/bottom_bar/navegation_button_widget.dart';
 export 'src/design_system/components/dialogs/edit_lyrics/edit_lyrics_dialog_widget.dart';
 export 'src/design_system/components/dialogs/generic_dialog_methods.dart';
 export 'src/design_system/components/dialogs/error_dialog_widget.dart';
+export 'src/design_system/components/dialogs/edit_dialog_widget.dart';
 export 'src/design_system/components/dialogs/success_dialog_widget.dart';
 export 'src/design_system/components/side_bar/side_bar_widget.dart';
 export 'src/design_system/components/top_bar/main_top_bar_widget.dart';

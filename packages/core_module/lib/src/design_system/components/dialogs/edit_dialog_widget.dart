@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 Future<void> showEditDialog({
   required BuildContext context,
   required GlobalKey itemKey,
-  required Widget itemContent,
-  required Widget buttons
+  Widget? itemContent,
+  required Widget buttons,
+  double? popupHeightParam,
+  double? verticalMarginParam,
 }) async {
   final RenderBox renderBox =
       itemKey.currentContext!.findRenderObject() as RenderBox;
@@ -18,13 +20,14 @@ Future<void> showEditDialog({
   final screenWidth = MediaQuery.of(context).size.width;
   final screenHeight = MediaQuery.of(context).size.height;
 
-  const popupWidth = 180.0;
-  const popupHeight = 160.0;
+  const double popupWidth = 180.0;
+  double popupHeight = popupHeightParam ?? 160.0;
   const screenEdgeMargin = 16.0;
 
   final double popupLeft = screenWidth - popupWidth - screenEdgeMargin;
 
-  const double verticalMargin = 8.0;
+  double verticalMargin = verticalMarginParam ?? 8.0;
+
   double popupTop;
 
   final desiredTop = itemOffset.dy + itemSize.height + verticalMargin;
@@ -73,7 +76,7 @@ class EditDialogWidget extends StatefulWidget {
   const EditDialogWidget({
     super.key,
     required this.itemSize,
-    required this.itemContent,
+    this.itemContent,
     required this.buttons,
     required this.popupLeft,
     required this.itemOffset,
@@ -82,7 +85,7 @@ class EditDialogWidget extends StatefulWidget {
 
   final Offset itemOffset;
   final Size itemSize;
-  final Widget itemContent;
+  final Widget? itemContent;
   final Widget buttons;
   final double popupLeft;
   final double popupTop;
@@ -100,19 +103,22 @@ class _EditDialogWidgetState extends State<EditDialogWidget> {
           ignoring: true,
           child: Stack(
             children: [
-              Positioned(
-                top: widget.itemOffset.dy,
-                left: widget.itemOffset.dx,
-                child: SizedBox(
-                  width: widget.itemSize.width,
-                  height: widget.itemSize.height,
-                  child: Transform.scale(
-                    scale: 1.1,
-                    child: Material(
-                      color: Colors.transparent,
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 12),
-                        child: widget.itemContent,
+              Visibility(
+                visible: widget.itemContent != null,
+                child: Positioned(
+                  top: widget.itemOffset.dy,
+                  left: widget.itemOffset.dx,
+                  child: SizedBox(
+                    width: widget.itemSize.width,
+                    height: widget.itemSize.height,
+                    child: Transform.scale(
+                      scale: 1.1,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 12),
+                          child: widget.itemContent,
+                        ),
                       ),
                     ),
                   ),

@@ -2,8 +2,7 @@ import 'dart:ui';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../../components/dialogs/admin/edit_dialog_widget.dart';
-import '../../stores/admin/edit_liturgy_view_model.dart';
+import '../../stores/admin/edit_liturgy_store.dart';
 import '../../stores/admin/services_preview_store.dart';
 
 class EditLiturgyDTO {
@@ -23,15 +22,13 @@ class EditLiturgyView extends StatefulWidget {
 }
 
 class _EditLiturgyViewState extends State<EditLiturgyView> {
-  late EditLiturgyViewModel _editLiturgyViewModel;
+  late EditLiturgyStore _editLiturgyViewModel;
   late List<LiturgyModel> _liturgiesList;
-
-  int? _longPressedIndex;
 
   @override
   void initState() {
     super.initState();
-    _editLiturgyViewModel = Modular.get<EditLiturgyViewModel>();
+    _editLiturgyViewModel = Modular.get<EditLiturgyStore>();
     setLightAppBar();
   }
 
@@ -80,6 +77,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                       buildDefaultDragHandles: false,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
+
                         final currentLiturgy = _liturgiesList[index];
                         final GlobalKey itemKey = GlobalKey();
 
@@ -136,76 +134,65 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                         return Container(
                           key: ValueKey(currentLiturgy),
                           padding: const EdgeInsets.only(top: 8, bottom: 8),
-                          child: Opacity(
-                            opacity: _longPressedIndex == index ? 0.0 : 1.0,
-                            child: GestureDetector(
-                              key: itemKey,
-                              onLongPressStart: (details) async {
-                                setState(() {
-                                  _longPressedIndex = index;
-                                });
-                                Modular.get<EditLiturgyViewModel>().entity =
-                                    currentLiturgy;
-                                Modular.get<EditLiturgyViewModel>().index =
-                                    index;
-                                await showEditDialog(
-                                  context: context,
-                                  itemKey: itemKey,
-                                  itemContent: itemContent,
-                                  buttons: Column(
-                                    children: [
-                                      actionButton(
-                                        context: context,
-                                        top: 20,
-                                        bottom: 12,
-                                        icon: AppIcons.addNotes,
-                                        label: 'Add Box',
-                                        action: () {
-                                          Modular.get<EditLiturgyViewModel>().addBox();
-                                          pop(context);
-                                        },
-                                      ),
-                                      Divider(
-                                        height: 1,
-                                        color: AppColors.dividerModal
-                                            .withValues(alpha: 25),
-                                      ),
-                                      actionButton(
-                                        context: context,
-                                        top: 12,
-                                        bottom: 12,
-                                        icon: AppIcons.contentCopy,
-                                        label: 'Duplicar',
-                                        action: () {
-                                          Modular.get<EditLiturgyViewModel>().copyEntity();
-                                          pop(context);
-                                        },
-                                      ),
-                                      Divider(
-                                        height: 1,
-                                        color: AppColors.dividerModal
-                                            .withValues(alpha: 25),
-                                      ),
-                                      actionButton(
-                                        context: context,
-                                        top: 12,
-                                        bottom: 20,
-                                        icon: AppIcons.trash,
-                                        label: 'Deletar',
-                                        action: () {
-                                          Modular.get<EditLiturgyViewModel>().delete();
-                                          pop(context);
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                );
-                                setState(() {
-                                  _longPressedIndex = null;
-                                });
-                              },
-                              child: itemContent,
-                            ),
+                          child: GestureDetector(
+                            key: itemKey,
+                            onLongPressStart: (details) async {
+                              Modular.get<EditLiturgyStore>().entity = currentLiturgy;
+                              Modular.get<EditLiturgyStore>().index = index;
+                              await showEditDialog(
+                                context: context,
+                                itemKey: itemKey,
+                                itemContent: itemContent,
+                                buttons: Column(
+                                  children: [
+                                    actionButton(
+                                      context: context,
+                                      top: 20,
+                                      bottom: 12,
+                                      icon: AppIcons.addNotes,
+                                      label: 'Add Box',
+                                      action: () {
+                                        Modular.get<EditLiturgyStore>().addBox();
+                                        pop(context);
+                                      },
+                                    ),
+                                    Divider(
+                                      height: 1,
+                                      color: AppColors.dividerModal
+                                          .withValues(alpha: 25),
+                                    ),
+                                    actionButton(
+                                      context: context,
+                                      top: 12,
+                                      bottom: 12,
+                                      icon: AppIcons.contentCopy,
+                                      label: 'Duplicar',
+                                      action: () {
+                                        Modular.get<EditLiturgyStore>().copyEntity();
+                                        pop(context);
+                                      },
+                                    ),
+                                    Divider(
+                                      height: 1,
+                                      color: AppColors.dividerModal
+                                          .withValues(alpha: 25),
+                                    ),
+                                    actionButton(
+                                      context: context,
+                                      top: 12,
+                                      bottom: 20,
+                                      icon: AppIcons.trash,
+                                      label: 'Deletar',
+                                      action: () {
+                                        Modular.get<EditLiturgyStore>().delete();
+                                        pop(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            child: itemContent,
                           ),
                         );
                       },
