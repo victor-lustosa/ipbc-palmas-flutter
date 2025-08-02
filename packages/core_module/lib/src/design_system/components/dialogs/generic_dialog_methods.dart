@@ -1,13 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-closeDialog({required BuildContext context, final Function(bool?)? callback}) {
-    if (callback != null) {
-      callback(false);
-    }
-    pop(context);
-}
-
 actionButton({
   required BuildContext context,
   final Function(bool?)? callback,
@@ -26,9 +19,8 @@ actionButton({
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(right: 10, left: context.sizeOf.width * .31),
+          margin: EdgeInsets.only(right: 10, left: 10),
           height: 20,
-          width: 20,
           child: Image.asset(icon),
         ),
         Text(

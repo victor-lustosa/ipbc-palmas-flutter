@@ -144,10 +144,61 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                                 setState(() {
                                   _longPressedIndex = index;
                                 });
+                                Modular.get<EditLiturgyViewModel>().entity =
+                                    currentLiturgy;
+                                Modular.get<EditLiturgyViewModel>().index =
+                                    index;
                                 await showEditDialog(
-                                  context,
-                                  itemKey,
-                                  itemContent,
+                                  context: context,
+                                  itemKey: itemKey,
+                                  itemContent: itemContent,
+                                  buttons: Column(
+                                    children: [
+                                      actionButton(
+                                        context: context,
+                                        top: 20,
+                                        bottom: 12,
+                                        icon: AppIcons.addNotes,
+                                        label: 'Add Box',
+                                        action: () {
+                                          Modular.get<EditLiturgyViewModel>().addBox();
+                                          pop(context);
+                                        },
+                                      ),
+                                      Divider(
+                                        height: 1,
+                                        color: AppColors.dividerModal
+                                            .withValues(alpha: 25),
+                                      ),
+                                      actionButton(
+                                        context: context,
+                                        top: 12,
+                                        bottom: 12,
+                                        icon: AppIcons.contentCopy,
+                                        label: 'Duplicar',
+                                        action: () {
+                                          Modular.get<EditLiturgyViewModel>().copyEntity();
+                                          pop(context);
+                                        },
+                                      ),
+                                      Divider(
+                                        height: 1,
+                                        color: AppColors.dividerModal
+                                            .withValues(alpha: 25),
+                                      ),
+                                      actionButton(
+                                        context: context,
+                                        top: 12,
+                                        bottom: 20,
+                                        icon: AppIcons.trash,
+                                        label: 'Deletar',
+                                        action: () {
+                                          Modular.get<EditLiturgyViewModel>().delete();
+                                          pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 );
                                 setState(() {
                                   _longPressedIndex = null;
@@ -206,6 +257,4 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
       },
     );
   }
-
-
 }
