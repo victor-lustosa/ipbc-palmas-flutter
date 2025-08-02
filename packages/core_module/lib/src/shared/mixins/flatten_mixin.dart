@@ -1,4 +1,4 @@
-mixin FlattenMixin{
+mixin FlattenMixin {
   static List<Map<String, dynamic>> flattenByKey(dynamic data, String key) {
     if (data == null) return [];
 

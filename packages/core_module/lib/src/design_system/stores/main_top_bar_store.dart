@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../core_module.dart';
 
-class MainTopBarManager extends ChangeNotifier {
+class MainTopBarStore extends ChangeNotifier {
 
-  MainTopBarManager(){
+  MainTopBarStore(){
     _mainTopBarWidget = MainTopBarWidget();
   }
 

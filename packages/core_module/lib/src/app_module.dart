@@ -25,7 +25,7 @@ class CoreModule extends Module {
       () =>
           UseCases<SupabaseRepository>(repository: i.get<SupabaseRepository>()),
     );
-    i.addSingleton(() => MainTopBarManager());
+    i.addSingleton(() => MainTopBarStore());
     i.addSingleton(() => AppGlobalKeys());
     i.addSingleton<IOfflineAuthUseCases>(
       () => OfflineAuthUseCases(repository: i.get<IsarRepository>()),
