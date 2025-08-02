@@ -5,7 +5,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 import '../../../stores/admin/edit_liturgy_view_model.dart';
-
+/*
 Future<void> showEditLiturgiesDialog({
   required BuildContext context,
   Function(bool?)? callback,
@@ -220,6 +220,196 @@ class EditLiturgiesDialogWidget extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}*/
+
+Future<void> showEditDialog(
+  BuildContext context,
+  GlobalKey itemKey,
+  Widget itemContent,
+) async {
+  final RenderBox renderBox =
+      itemKey.currentContext!.findRenderObject() as RenderBox;
+  final itemOffset = renderBox.localToGlobal(Offset.zero);
+  final itemSize = renderBox.size;
+
+  final screenWidth = MediaQuery.of(context).size.width;
+  final screenHeight = MediaQuery.of(context).size.height;
+
+  const popupWidth = 180.0;
+  const popupHeight = 220.0;
+  const screenEdgeMargin = 16.0;
+
+  final double popupLeft = screenWidth - popupWidth - screenEdgeMargin;
+
+  const double verticalMargin = 3.0;
+  double popupTop;
+
+  final desiredTop = itemOffset.dy + itemSize.height + verticalMargin;
+
+  if (desiredTop + popupHeight > screenHeight - screenEdgeMargin) {
+    popupTop = itemOffset.dy - popupHeight - verticalMargin;
+  } else {
+    popupTop = desiredTop;
+  }
+
+  if (popupTop < screenEdgeMargin) {
+    popupTop = screenEdgeMargin;
+  }
+
+  await showGeneralDialog(
+    context: context,
+    barrierDismissible: true,
+    barrierLabel: 'Opções',
+    barrierColor: Colors.transparent,
+    transitionDuration: const Duration(milliseconds: 200),
+    pageBuilder: (buildContext, animation, secondaryAnimation) {
+      return Stack(
+        children: [
+          IgnorePointer(
+            ignoring: true,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: itemOffset.dy,
+                  left: itemOffset.dx,
+                  child: SizedBox(
+                    width: itemSize.width,
+                    height: itemSize.height,
+                    child: Transform.scale(
+                      scale: 1.1,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 16),
+                          child: itemContent,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            top: popupTop,
+            left: popupLeft,
+            child: OptionsDialog(
+              width: popupWidth,
+              onAddBox: () {
+                Navigator.of(context).pop();
+              },
+              onDuplicate: () {
+                Navigator.of(context).pop();
+              },
+              onDelete: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+        ],
+      );
+    },
+    transitionBuilder: (context, animation, secondaryAnimation, child) {
+      final curved = CurvedAnimation(
+        parent: animation,
+        curve: Curves.easeOutCubic,
+        reverseCurve: Curves.easeInCubic,
+      );
+      return FadeTransition(
+        opacity: curved,
+        child: SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 0.1),
+            end: Offset.zero,
+          ).animate(curved),
+          child: child,
+        ),
+      );
+    },
+  );
+}
+
+class OptionsDialog extends StatelessWidget {
+  const OptionsDialog({
+    super.key,
+    required this.onAddBox,
+    required this.onDuplicate,
+    required this.onDelete,
+    required this.width,
+  });
+
+  final VoidCallback onAddBox;
+  final VoidCallback onDuplicate;
+  final VoidCallback onDelete;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 8,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: SizedBox(
+        width: width,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildOption(
+                context: context,
+                icon: Icons.add_box,
+                label: 'Add Box',
+                onTap: onAddBox,
+              ),
+              _buildOption(
+                context: context,
+                icon: Icons.copy,
+                label: 'Duplicar',
+                onTap: onDuplicate,
+              ),
+              _buildOption(
+                context: context,
+                icon: Icons.delete,
+                label: 'Deletar',
+                onTap: onDelete,
+              ),
+              const Divider(),
+              _buildOption(
+                context: context,
+                icon: Icons.cancel,
+                label: 'Cancelar',
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOption({
+    required BuildContext context,
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+        child: Row(
+          children: [
+            Icon(icon, size: 24),
+            const SizedBox(width: 16),
+            Expanded(child: Text(label, style: const TextStyle(fontSize: 16))),
+          ],
+        ),
+      ),
     );
   }
 }
