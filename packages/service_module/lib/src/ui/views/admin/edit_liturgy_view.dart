@@ -2,42 +2,31 @@ import 'dart:ui';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../../stores/admin/edit_liturgy_store.dart';
-import '../../stores/admin/services_preview_store.dart';
-
-class EditLiturgyDTO {
-  EditLiturgyDTO({required this.heading, required this.image});
-
-  final String heading;
-  final String image;
-}
-
 class EditLiturgyView extends StatefulWidget {
-  const EditLiturgyView({super.key, required this.dto});
-
-  final EditLiturgyDTO dto;
+  const EditLiturgyView({super.key});
 
   @override
   State<EditLiturgyView> createState() => _EditLiturgyViewState();
 }
 
 class _EditLiturgyViewState extends State<EditLiturgyView> {
-  late EditLiturgyStore _editLiturgyViewModel;
+
+  late EditLiturgyStore _editStore;
   late List<LiturgyModel> _liturgiesList;
 
   @override
   void initState() {
     super.initState();
-    _editLiturgyViewModel = Modular.get<EditLiturgyStore>();
     setLightAppBar();
+    _editStore = Modular.get<EditLiturgyStore>();
   }
 
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-      listenable: _editLiturgyViewModel,
+      listenable: _editStore,
       builder: (context, child) {
-        _liturgiesList = _editLiturgyViewModel.items;
+        _liturgiesList = _editStore.items;
         return Scaffold(
           body: SingleChildScrollView(
             child: Container(
@@ -47,8 +36,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ServiceTopBarWidget(
-                    image: widget.dto.image,
-                    title: "Cultos de ${widget.dto.heading}",
+                    image: _editStore.dto.image,
+                    title: "Cultos de ${_editStore.dto.heading}",
                   ),
                   Container(
                     margin: const EdgeInsets.only(
@@ -147,7 +136,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                                   children: [
                                     actionButton(
                                       context: context,
-                                      top: 20,
+                                      top: 12,
                                       bottom: 12,
                                       icon: AppIcons.addNotes,
                                       label: 'Add Box',
@@ -180,7 +169,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                                     actionButton(
                                       context: context,
                                       top: 12,
-                                      bottom: 20,
+                                      bottom: 12,
                                       icon: AppIcons.trash,
                                       label: 'Deletar',
                                       action: () {
@@ -231,14 +220,16 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
             backgroundColor: AppColors.confirmation,
             iconColor: AppColors.grey10,
             size: 33,
-            action: () => popAndPushNamed(
-              AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
-              arguments: ServicesPreviewDTO(
-                heading: widget.dto.heading,
-                image: widget.dto.image,
+            action: () {
+              Modular.get<ServicesPreviewStore>().dto = ServicesPreviewDTO(
+                heading: _editStore.dto.heading,
+                image: _editStore.dto.image,
                 liturgiesList: _liturgiesList,
-              ),
-            ),
+              );
+              popAndPushNamed(
+                AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
+              );
+            },
           ),
         );
       },

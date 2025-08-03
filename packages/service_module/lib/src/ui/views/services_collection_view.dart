@@ -10,6 +10,7 @@ import '../blocs/services_collection_bloc.dart';
 
 class ServicesCollectionView extends StatefulWidget {
   const ServicesCollectionView({super.key, required this.entity});
+
   final ServicesEntity entity;
 
   @override
@@ -20,6 +21,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
   late final ServicesCollectionBloc _bloc;
   late List<ServiceEntity> entitiesList;
   late String path;
+  late final EditLiturgyStore _editStore;
 
   @override
   void initState() {
@@ -28,15 +30,13 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
     path = widget.entity.path;
     _bloc = Modular.get<ServicesCollectionBloc>();
     _bloc.add(GetDataEvent(path: path));
+    _editStore = Modular.get<EditLiturgyStore>();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<
-        ServicesCollectionBloc,
-        GenericState<ServicesCollectionState>
-      >(
+      body: BlocBuilder<ServicesCollectionBloc, GenericState<ServicesCollectionState>>(
         bloc: _bloc,
         builder: (context, state) {
           if (state is LoadingState<ServicesCollectionState>) {
@@ -47,11 +47,10 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
             );
           } else if (state is NoConnectionState<ServicesCollectionState>) {
             return NoConnectionView(
-              action:
-                  () => nativePushReplacementNamed(
-                    AppRoutes.servicesCollectionRoute,
-                    context,
-                  ),
+              action: () => nativePushReplacementNamed(
+                AppRoutes.servicesCollectionRoute,
+                context,
+              ),
             );
           } else if (state
               is DataFetchedState<
@@ -70,133 +69,142 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
                         image: widget.entity.image,
                         title: "Cultos de ${widget.entity.heading}",
                       ),
-                      entitiesList.isNotEmpty ?  Container(
-                        margin: const EdgeInsets.only(
-                          top: 24,
-                          left: 15.5,
-                          right: 15.5,
-                        ),
-                        child: ListView.separated(
-                          separatorBuilder: (BuildContext context, int index) {
-                            return const SizedBox(height: 16);
-                          },
-                          padding: EdgeInsets.zero,
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: entitiesList.length,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return Material(
-                              borderRadius: BorderRadius.circular(16),
-                              clipBehavior: Clip.hardEdge,
-                              color:
-                                  index == 0
-                                      ? AppColors.highlightGreen.withValues(
-                                        alpha: .1,
-                                      )
-                                      : AppColors.grey0,
-                              child: InkWell(
-                                onTap: () {
-                                  nativePushNamed(
-                                    AppRoutes.serviceRoute,
-                                    arguments: ServiceViewDTO(
-                                      service: entitiesList[index],
-                                      image: widget.entity.image,
-                                    ),
-                                    context,
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                        left: 16,
-                                        top: 12,
-                                        bottom: 12,
-                                      ),
-                                      width: context.sizeOf.width * .77,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-                                            '${entitiesList[index].title} ${entitiesList[index].createAt} | ${widget.entity.hour}',
-                                            style: AppFonts.defaultFont(
-                                              fontWeight: FontWeight.w600,
-                                              color: AppColors.grey9,
-                                              fontSize: 15,
-                                            ),
+                      entitiesList.isNotEmpty
+                          ? Container(
+                              margin: const EdgeInsets.only(
+                                top: 24,
+                                left: 15.5,
+                                right: 15.5,
+                              ),
+                              child: ListView.separated(
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                      return const SizedBox(height: 16);
+                                    },
+                                padding: EdgeInsets.zero,
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: entitiesList.length,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return Material(
+                                    borderRadius: BorderRadius.circular(16),
+                                    clipBehavior: Clip.hardEdge,
+                                    color: index == 0
+                                        ? AppColors.highlightGreen.withValues(
+                                            alpha: .1,
+                                          )
+                                        : AppColors.grey0,
+                                    child: InkWell(
+                                      onTap: () {
+                                        nativePushNamed(
+                                          AppRoutes.serviceRoute,
+                                          arguments: ServiceViewDTO(
+                                            service: entitiesList[index],
+                                            image: widget.entity.image,
                                           ),
+                                          context,
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
                                           Container(
                                             margin: const EdgeInsets.only(
-                                              bottom: 4,
-                                              top: 4,
+                                              left: 16,
+                                              top: 12,
+                                              bottom: 12,
                                             ),
-                                            child: Text(
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 2,
-                                              'Mensagem: ${entitiesList[index].theme}',
-                                              style: AppFonts.description(
-                                                color: AppColors.grey8,
-                                              ),
+                                            width: context.sizeOf.width * .77,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  '${entitiesList[index].title} ${entitiesList[index].createAt} | ${widget.entity.hour}',
+                                                  style: AppFonts.defaultFont(
+                                                    fontWeight: FontWeight.w600,
+                                                    color: AppColors.grey9,
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  margin: const EdgeInsets.only(
+                                                    bottom: 4,
+                                                    top: 4,
+                                                  ),
+                                                  child: Text(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 2,
+                                                    'Mensagem: ${entitiesList[index].theme}',
+                                                    style: AppFonts.description(
+                                                      color: AppColors.grey8,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  entitiesList[index].preacher,
+                                                  style: AppFonts.description(
+                                                    color: AppColors.grey8,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                          Text(
-                                            entitiesList[index].preacher,
-                                            style: AppFonts.description(
-                                              color: AppColors.grey8,
-                                            ),
+                                          IconButtonWidget(
+                                            size: Platform.isIOS ? 28 : 32,
+                                            color: AppColors.darkGreen,
+                                            splashColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            iOSIcon:
+                                                CupertinoIcons.chevron_forward,
+                                            androidIcon:
+                                                Icons.navigate_next_sharp,
                                           ),
                                         ],
                                       ),
                                     ),
-                                    IconButtonWidget(
-                                      size: Platform.isIOS ? 28 : 32,
-                                      color: AppColors.darkGreen,
-                                      splashColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      iOSIcon: CupertinoIcons.chevron_forward,
-                                      androidIcon: Icons.navigate_next_sharp,
+                                  );
+                                },
+                              ),
+                            )
+                          : Container(
+                              margin: const EdgeInsets.only(top: 150),
+                              child: SizedBox(
+                                width: context.sizeOf.width,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: 26,
+                                      height: 26,
+                                      child: Image.asset(
+                                        AppIcons.info,
+                                        color: Colors.blueAccent,
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(top: 8),
+                                      width: context.sizeOf.width * .6,
+                                      child: Text(
+                                        textAlign: TextAlign.center,
+                                        style: AppFonts.defaultFont(
+                                          fontSize: 13,
+
+                                          color: AppColors.grey9,
+                                        ),
+                                        'Não há cultos cadastrados.',
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                            );
-                          },
-                        ),
-                      ): Container(
-                        margin: const EdgeInsets.only( top: 150),
-                        child: SizedBox(
-                          width: context.sizeOf.width,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 26,
-                                height: 26,
-                                child: Image.asset(AppIcons.info,color: Colors.blueAccent,),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 8),
-                                width: context.sizeOf.width * .6,
-                                child: Text(
-                                  textAlign: TextAlign.center,
-                                  style: AppFonts.defaultFont(
-                                    fontSize: 13,
-
-                                    color: AppColors.grey9,
-                                  ),
-                                  'Não há cultos cadastrados.',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                            ),
                     ],
-                  )
+                  ),
                 ),
               ),
             );
@@ -209,14 +217,15 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
         iconColor: AppColors.white,
         backgroundColor: AppColors.add,
         icon: Icons.add,
-        action:
-            () => pushNamed(
-              AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute,
-              arguments: EditLiturgyDTO(
-                image: widget.entity.image,
-                heading: widget.entity.heading,
-              ),
-            ),
+        action: () {
+          _editStore.setEditLiturgyDTO(EditLiturgyDTO(
+            image: widget.entity.image,
+            heading: widget.entity.heading,
+          ));
+          Future.delayed(Duration(milliseconds: 200), () {
+            pushNamed(AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute);
+          });
+        },
       ),
     );
   }

@@ -11,6 +11,8 @@ Future<void> showEditDialog({
   required Widget buttons,
   double? popupHeightParam,
   double? verticalMarginParam,
+  double? popupWidthParam,
+  double? popupWidthPositionParam,
 }) async {
   final RenderBox renderBox =
       itemKey.currentContext!.findRenderObject() as RenderBox;
@@ -20,11 +22,11 @@ Future<void> showEditDialog({
   final screenWidth = MediaQuery.of(context).size.width;
   final screenHeight = MediaQuery.of(context).size.height;
 
-  const double popupWidth = 180.0;
+  double popupWidthPosition = popupWidthPositionParam ?? 170.0;
   double popupHeight = popupHeightParam ?? 160.0;
   const screenEdgeMargin = 16.0;
 
-  final double popupLeft = screenWidth - popupWidth - screenEdgeMargin;
+  final double popupLeft = screenWidth - popupWidthPosition - screenEdgeMargin;
 
   double verticalMargin = verticalMarginParam ?? 8.0;
 
@@ -56,6 +58,7 @@ Future<void> showEditDialog({
         popupLeft: popupLeft,
         itemOffset: itemOffset,
         itemSize: itemSize,
+        popupWidth: popupWidthParam,
       );
     },
     transitionBuilder: (context, animation, secondaryAnimation, child) {
@@ -81,6 +84,7 @@ class EditDialogWidget extends StatefulWidget {
     required this.popupLeft,
     required this.itemOffset,
     required this.popupTop,
+    this.popupWidth,
   });
 
   final Offset itemOffset;
@@ -88,6 +92,7 @@ class EditDialogWidget extends StatefulWidget {
   final Widget? itemContent;
   final Widget buttons;
   final double popupLeft;
+  final double? popupWidth;
   final double popupTop;
 
   @override
@@ -134,7 +139,7 @@ class _EditDialogWidgetState extends State<EditDialogWidget> {
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
               child: Container(
-                  width: 180,
+                  width: widget.popupWidth ?? 170,
                   decoration: BoxDecoration(
                     color: AppColors.dividerModal.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(16),
@@ -147,4 +152,35 @@ class _EditDialogWidgetState extends State<EditDialogWidget> {
       ],
     );
   }
+}
+
+actionButton({
+  required BuildContext context,
+  final Function(bool?)? callback,
+  required String icon,
+  required String label,
+  required double top,
+  required double bottom,
+  required VoidCallback? action,
+}) {
+  return ButtonWidget(
+    overlayColor: Colors.transparent,
+    padding: EdgeInsets.only(top: top, bottom: bottom),
+    adaptiveButtonType: AdaptiveButtonType.text,
+    action: action,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          margin: EdgeInsets.only(right: 10, left: 13),
+          height: 20,
+          child: Image.asset(icon),
+        ),
+        Text(
+          label,
+          style: AppFonts.defaultFont(fontSize: 17, color: AppColors.grey10),
+        ),
+      ],
+    ),
+  );
 }

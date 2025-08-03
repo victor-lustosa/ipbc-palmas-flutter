@@ -27,11 +27,10 @@ class ServicesPreviewDTO {
   final String image;
 }
 
-class ServicesPreviewStore
-    extends ValueNotifier<GenericState<ServicesPreviewState>> {
+class ServicesPreviewStore extends ValueNotifier<GenericState<ServicesPreviewState>> {
   ServicesPreviewStore() : super(InitialState());
 
-  late ServicesPreviewDTO servicesPreviewDTO;
+  late ServicesPreviewDTO dto;
 
   String createId() => DateTime.now().microsecondsSinceEpoch.toString();
 

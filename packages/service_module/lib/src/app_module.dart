@@ -1,7 +1,4 @@
 import 'package:core_module/core_module.dart';
-import 'package:service_module/src/ui/stores/admin/edit_liturgy_store.dart';
-import 'package:service_module/src/ui/stores/admin/search_lyrics_store.dart';
-import 'package:service_module/src/ui/stores/admin/services_preview_store.dart';
 import 'package:service_module/src/ui/views/admin/search_lyrics_view.dart';
 import 'package:service_module/src/ui/views/admin/services_preview_view.dart';
 import '../service_module.dart';
@@ -18,9 +15,6 @@ class ServiceModule extends Module {
       config: CoreModule.blocConfig(),
     );
 
-    i.addLazySingleton<SearchLyricsStore>(SearchLyricsStore.new);
-    i.addLazySingleton<ServicesPreviewStore>(ServicesPreviewStore.new);
-    i.addSingleton<EditLiturgyStore>(EditLiturgyStore.new);
   }
 
   @override
@@ -31,28 +25,25 @@ class ServiceModule extends Module {
     r.child(
       AppRoutes.editLyricRoute,
       transition: TransitionType.custom,
-      child: (_) => EditLyricView(modelArgument: r.args.data as LyricModel),
+      child: (_) => EditLyricView(),
       customTransition: ModularSlideTransition(),
     );
     r.child(
       AppRoutes.editLiturgiesRoute,
       transition: TransitionType.custom,
-      child: (_) => EditLiturgyView(dto: r.args.data as EditLiturgyDTO),
+      child: (_) => EditLiturgyView(),
       customTransition: ModularFadeTransition(),
     );
     r.child(
       AppRoutes.servicesPreviewRoute,
       transition: TransitionType.custom,
-      child:
-          (_) => ServicesPreviewView(
-            dto: r.args.data != null ? r.args.data as ServicesPreviewDTO : null,
-          ),
+      child: (_) => ServicesPreviewView(),
       customTransition: ModularFadeTransition(),
     );
     r.child(
       AppRoutes.searchLyricsRoute,
       transition: TransitionType.custom,
-      child: (_) => SearchLyricsView(dto: r.args.data as EditLiturgyDTO),
+      child: (_) => SearchLyricsView(),
       customTransition: ModularFadeTransition(),
     );
   }

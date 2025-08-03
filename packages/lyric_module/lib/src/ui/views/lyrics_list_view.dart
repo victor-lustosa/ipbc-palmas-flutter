@@ -19,7 +19,7 @@ class _LyricsListViewState extends State<LyricsListView>
   final TextEditingController controller = TextEditingController();
   late final LyricsListStore _lyricsListStore;
   late final EditLyricStore _editLyricStore;
-
+  List<LyricModel> entitiesList = [];
   @override
   void initState() {
     super.initState();
@@ -73,7 +73,6 @@ class _LyricsListViewState extends State<LyricsListView>
                 );
               } else if (state
                   is DataFetchedState<LyricState, List<LyricModel>>) {
-                _lyricsListStore.entitiesList = state.entities;
                 return RefreshIndicator(
                   color: AppColors.darkGreen,
                   onRefresh: () async {
@@ -138,17 +137,20 @@ class _LyricsListViewState extends State<LyricsListView>
                         Container(
                           margin: const EdgeInsets.only(top: 14),
                           child: LyricsListWidget(
+                            entitiesList: state.entities,
                             onLongPressStart: (details) async {
                               await showEditDialog(
                                 context: context,
                                 itemKey: _lyricsListStore.itemKey,
                                 popupHeightParam: 110,
+                                popupWidthParam: 160,
+                                popupWidthPositionParam: 160,
                                 verticalMarginParam: 3,
                                 buttons: Column(
                                   children: [
                                     actionButton(
                                       context: context,
-                                      top: 20,
+                                      top: 12,
                                       bottom: 12,
                                       icon: AppIcons.edit,
                                       label: 'Editar',
@@ -172,7 +174,7 @@ class _LyricsListViewState extends State<LyricsListView>
                                     actionButton(
                                       context: context,
                                       top: 12,
-                                      bottom: 20,
+                                      bottom: 12,
                                       icon: AppIcons.trash,
                                       label: 'Deletar',
                                       action: () {},

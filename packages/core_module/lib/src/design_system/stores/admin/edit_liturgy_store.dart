@@ -1,7 +1,18 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
+class EditLiturgyDTO {
+  EditLiturgyDTO({required this.heading, required this.image});
+  final String heading;
+  final String image;
+}
+
 class EditLiturgyStore extends ChangeNotifier {
+
+  int index = 0;
+  late LiturgyModel entity;
+  late EditLiturgyDTO dto;
+
   List<LiturgyModel> items = [
     LiturgyModel(
       id: '0',
@@ -59,12 +70,14 @@ class EditLiturgyStore extends ChangeNotifier {
     ),
   ];
 
-  int index = 0;
-  late LiturgyModel entity;
+  void setEditLiturgyDTO(EditLiturgyDTO dto) {
+    this.dto = dto;
+    notifyListeners();
+  }
 
   void addBox() {
     items.insert(
-      index + 1,
+      index,
       LiturgyModel(
         id: SupaServicesUtil.createId(),
         isAdditional: true,

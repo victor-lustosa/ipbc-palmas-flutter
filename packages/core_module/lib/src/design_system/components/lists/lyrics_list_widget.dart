@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 class LyricsListWidget extends StatefulWidget {
-  const LyricsListWidget({this.onLongPressStart, super.key, this.onTap});
+  const LyricsListWidget({this.onLongPressStart, super.key, this.onTap, required this.entitiesList});
 
   final void Function(LongPressStartDetails)? onLongPressStart;
   final void Function()? onTap;
+  final List<LyricModel> entitiesList;
 
   @override
   State<LyricsListWidget> createState() => _LyricsListWidgetState();
@@ -35,7 +36,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
         padding: EdgeInsets.zero,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: _store.entitiesList.length,
+        itemCount: widget.entitiesList.length,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (__, index) {
           final GlobalKey itemKey = GlobalKey();
@@ -47,7 +48,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                 Row(
                   children: [
                     AlbumCoverWidget(
-                      albumCover: _store.entitiesList[index].albumCover,
+                      albumCover: widget.entitiesList[index].albumCover,
                       height: 48,
                       width: 48,
                     ),
@@ -60,7 +61,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                           child: Text(
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            _store.entitiesList[index].title,
+                            widget.entitiesList[index].title,
                             style: AppFonts.subhead(
                               fontWeight: FontWeight.w500,
                               color: AppColors.grey9,
@@ -71,7 +72,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                         Container(
                           margin: const EdgeInsets.only(left: 8),
                           child: Text(
-                            _store.entitiesList[index].group,
+                            widget.entitiesList[index].group,
                             style: AppFonts.description(
                               color: AppColors.grey9,
                               fontSize: 13,
@@ -100,12 +101,12 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
             onLongPressStart: (details) async {
               _store.index = index;
               _store.itemKey = itemKey;
-              _store.lyricModel = _store.entitiesList[index];
+              _store.lyricModel = widget.entitiesList[index];
               widget.onLongPressStart?.call(details);
             },
             child: InkWell(
               onTap: () {
-                _store.lyricModel = _store.entitiesList[index];
+                _store.lyricModel = widget.entitiesList[index];
                 widget.onTap?.call();
               },
               child: itemContent,

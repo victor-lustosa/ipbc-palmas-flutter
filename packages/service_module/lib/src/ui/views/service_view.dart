@@ -55,6 +55,7 @@ class _ServiceViewState extends State<ServiceView> {
                 ),
               ),
               LyricsListWidget(
+                entitiesList: widget.entity.service.lyricsList,
                 onTap: (){},
                 onLongPressStart: (s) {},
               ),

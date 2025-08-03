@@ -1,13 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:service_module/src/ui/stores/admin/services_preview_store.dart';
-
-import '../../../../service_module.dart';
 
 class ServicesPreviewView extends StatefulWidget {
-  const ServicesPreviewView({super.key, required this.dto});
-
-  final ServicesPreviewDTO? dto;
+  const ServicesPreviewView({super.key});
 
   @override
   State<ServicesPreviewView> createState() => _ServicesPreviewViewState();
@@ -22,11 +17,7 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
   void initState() {
     super.initState();
     setDarkAppBar();
-    if (widget.dto != null) {
-      _servicesPreviewStore.servicesPreviewDTO = widget.dto!;
-    }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -38,22 +29,19 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ServiceTopBarWidget(
-                image: _servicesPreviewStore.servicesPreviewDTO.image,
-              ),
+              ServiceTopBarWidget(image: _servicesPreviewStore.dto.image),
               Container(
                 margin: const EdgeInsets.only(top: 24.7, left: 16),
                 child: GuidelineWidget(
                   circleColor: AppColors.cardBallsGrey,
                   timelineColor: AppColors.timelineGuideTGreen,
-                  liturgiesList:
-                      _servicesPreviewStore.servicesPreviewDTO.liturgiesList,
+                  liturgiesList: _servicesPreviewStore.dto.liturgiesList,
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(top: 24.7, left: 16),
                 child: Text(
-                  'Músicas de ${_servicesPreviewStore.servicesPreviewDTO.heading}',
+                  'Músicas de ${_servicesPreviewStore.dto.heading}',
                   style: AppFonts.defaultFont(
                     fontWeight: FontWeight.w500,
                     fontSize: 17,
@@ -79,7 +67,8 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                 valueListenable: _editLyricStore,
                 builder: (context, state, child) {
                   return LyricsListWidget(
-                    onTap: (){},
+                    entitiesList: _editLyricStore.lyricsFetched,
+                    onTap: () {},
                     onLongPressStart: (s) {},
                   );
                 },
@@ -95,15 +84,13 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   fixedSize: Size(context.sizeOf.width, 48),
-                  action:
-                      () => pushNamed(
-                        AppRoutes.servicesRoute + AppRoutes.searchLyricsRoute,
-                        arguments: EditLiturgyDTO(
-                          heading:
-                              _servicesPreviewStore.servicesPreviewDTO.heading,
-                          image: _servicesPreviewStore.servicesPreviewDTO.image,
-                        ),
-                      ),
+                  action: () => pushNamed(
+                    AppRoutes.servicesRoute + AppRoutes.searchLyricsRoute,
+                    arguments: EditLiturgyDTO(
+                      heading: _servicesPreviewStore.dto.heading,
+                      image: _servicesPreviewStore.dto.image,
+                    ),
+                  ),
                   backgroundColor: AppColors.darkGreen,
                   shadowColor: AppColors.grey0,
                   foregroundColor: AppColors.white,
@@ -127,14 +114,15 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
         backgroundColor: AppColors.warning,
         pngIcon: AppIcons.editIcon,
         size: 37,
-        action:
-            () => popAndPushNamed(
-              AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute,
-              arguments: EditLiturgyDTO(
-                image: _servicesPreviewStore.servicesPreviewDTO.image,
-                heading: _servicesPreviewStore.servicesPreviewDTO.heading,
-              ),
-            ),
+        action: () {
+          Modular.get<EditLiturgyStore>().dto = EditLiturgyDTO(
+            image: _servicesPreviewStore.dto.image,
+            heading: _servicesPreviewStore.dto.heading,
+          );
+          popAndPushNamed(
+            AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute,
+          );
+        },
       ),
     );
   }

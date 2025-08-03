@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class EditLyricView extends StatefulWidget {
-  const EditLyricView({super.key, required this.modelArgument});
-
-  final LyricModel modelArgument;
+  const EditLyricView({super.key});
 
   @override
   State<EditLyricView> createState() => _EditLyricViewState();
@@ -30,7 +28,7 @@ class _EditLyricViewState extends State<EditLyricView> {
   void initState() {
     super.initState();
     setDarkAppBar();
-    model = widget.modelArgument;
+    model = _store.lyric;
     _initializeControllersAndFocusNodes();
     _titleController.text = model.title;
     _groupController.text = model.group;

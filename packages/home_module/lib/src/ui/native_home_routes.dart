@@ -48,7 +48,7 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
 
           case AppRoutes.editLiturgiesRoute:
             return CustomFadeTransition(
-              child: EditLiturgyView(dto: settings.arguments as EditLiturgyDTO),
+              child: EditLiturgyView(),
             );
 
           case AppRoutes.eventRoute + AppRoutes.eventsListRoute:
