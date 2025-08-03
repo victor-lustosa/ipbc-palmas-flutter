@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:core_module/core_module.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -163,67 +164,6 @@ class _EditLyricViewState extends State<EditLyricView> {
                                 margin: const EdgeInsets.symmetric(vertical: 8),
                                 child: GestureDetector(
                                   key: gestureKey,
-                                  onLongPressStart: (_) async {
-                                    await showEditDialog(
-                                      context: context,
-                                      itemKey: gestureKey,
-                                      popupHeightParam: 110,
-                                      popupWidthParam: 160,
-                                      popupWidthPositionParam: 160,
-                                      verticalMarginParam: 3,
-                                      buttons: Column(
-                                        children: [
-                                          actionButton(
-                                            context: context,
-                                            top: 12,
-                                            bottom: 12,
-                                            icon: AppIcons.addNotes,
-                                            label: 'Refrão',
-                                            action: () {},
-                                          ),
-                                          Divider(
-                                            height: 1,
-                                            color: AppColors.dividerModal
-                                                .withValues(alpha: 25),
-                                          ),
-                                          actionButton(
-                                            context: context,
-                                            top: 12,
-                                            bottom: 12,
-                                            icon: AppIcons.addNotes,
-                                            label: 'Add Box',
-                                            action: () {},
-                                          ),
-                                          Divider(
-                                            height: 1,
-                                            color: AppColors.dividerModal
-                                                .withValues(alpha: 25),
-                                          ),
-                                          actionButton(
-                                            context: context,
-                                            top: 12,
-                                            bottom: 12,
-                                            icon: AppIcons.contentCopy,
-                                            label: 'Duplicar',
-                                            action: () {},
-                                          ),
-                                          Divider(
-                                            height: 1,
-                                            color: AppColors.dividerModal
-                                                .withValues(alpha: 25),
-                                          ),
-                                          actionButton(
-                                            context: context,
-                                            top: 12,
-                                            bottom: 12,
-                                            icon: AppIcons.trash,
-                                            label: 'Deletar',
-                                            action: () {},
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
                                   child: IntrinsicHeight(
                                     child: Row(
                                       children: [
@@ -236,13 +176,71 @@ class _EditLyricViewState extends State<EditLyricView> {
                                                   mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,
                                                   children: [
-                                                    Container(
-                                                      width: 10,
-                                                      height: 10,
-                                                      decoration:
-                                                      BoxDecoration(
-                                                        color: Colors.red,
-                                                      ),
+                                                    IconButtonWidget(
+                                                      action: () async {
+                                                        await showEditDialog(
+                                                        context: context,
+                                                        itemKey: gestureKey,
+                                                        popupHeightParam: 110,
+                                                        popupWidthParam: 160,
+                                                        popupWidthPositionParam: 160,
+                                                        verticalMarginParam: 3,
+                                                        buttons: Column(
+                                                          children: [
+                                                            actionButton(
+                                                              context: context,
+                                                              top: 12,
+                                                              bottom: 12,
+                                                              icon: AppIcons.addNotes,
+                                                              label: 'Refrão',
+                                                              action: () {},
+                                                            ),
+                                                            Divider(
+                                                              height: 1,
+                                                              color: AppColors.dividerModal
+                                                                  .withValues(alpha: 25),
+                                                            ),
+                                                            actionButton(
+                                                              context: context,
+                                                              top: 12,
+                                                              bottom: 12,
+                                                              icon: AppIcons.addNotes,
+                                                              label: 'Add Box',
+                                                              action: () {},
+                                                            ),
+                                                            Divider(
+                                                              height: 1,
+                                                              color: AppColors.dividerModal
+                                                                  .withValues(alpha: 25),
+                                                            ),
+                                                            actionButton(
+                                                              context: context,
+                                                              top: 12,
+                                                              bottom: 12,
+                                                              icon: AppIcons.contentCopy,
+                                                              label: 'Duplicar',
+                                                              action: () {},
+                                                            ),
+                                                            Divider(
+                                                              height: 1,
+                                                              color: AppColors.dividerModal
+                                                                  .withValues(alpha: 25),
+                                                            ),
+                                                            actionButton(
+                                                              context: context,
+                                                              top: 12,
+                                                              bottom: 12,
+                                                              icon: AppIcons.trash,
+                                                              label: 'Deletar',
+                                                              action: () {},
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        );
+                                                      },
+                                                      size: 20,
+                                                      color: AppColors.grey7,
+                                                      androidIcon: Icons.menu,
                                                     ),
                                                     ReorderableDelayedDragStartListener(
                                                       index: index,
@@ -284,7 +282,7 @@ class _EditLyricViewState extends State<EditLyricView> {
                                                     position: position,
                                                     lineKey: lineKey,
                                                   );
-                                    
+
                                                   return Padding(
                                                     padding: EdgeInsets.only(
                                                       bottom:

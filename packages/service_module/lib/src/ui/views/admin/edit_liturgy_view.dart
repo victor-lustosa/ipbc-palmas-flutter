@@ -10,7 +10,6 @@ class EditLiturgyView extends StatefulWidget {
 }
 
 class _EditLiturgyViewState extends State<EditLiturgyView> {
-
   late EditLiturgyStore _editStore;
   late List<LiturgyModel> _liturgiesList;
   final Map<String, TextEditingController> _controllers = {};
@@ -68,7 +67,6 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                       buildDefaultDragHandles: false,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
-
                         final currentLiturgy = _liturgiesList[index];
                         final GlobalKey itemKey = GlobalKey();
 
@@ -77,48 +75,62 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                             color: AppColors.secondaryGrey2,
                             borderRadius: BorderRadius.all(Radius.circular(16)),
                           ),
-                          child: Row(
-                            children: [
-                              GridBallsTileWidget(index: index),
-                              Expanded(
-                                child: Container(
-                                  margin: const EdgeInsets.only(
-                                    bottom: 8,
-                                    top: 8,
+                          child: IntrinsicHeight(
+                            child: Row(
+                              children: [
+                                ReorderableDragStartListener(
+                                  index: index,
+                                  child: Container(
+                                    color: Colors.transparent,
+                                    width: 36,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        GridBallsTileWidget(index: index),
+                                      ],
+                                    ),
                                   ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        _liturgiesList[index].sequence,
-                                        style: AppFonts.defaultFont(
-                                          color: AppColors.grey9,
-                                          fontSize: 17,
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    margin: const EdgeInsets.only(
+                                      bottom: 8,
+                                      top: 8,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          _liturgiesList[index].sequence,
+                                          style: AppFonts.defaultFont(
+                                            color: AppColors.grey9,
+                                            fontSize: 17,
+                                          ),
                                         ),
-                                      ),
-                                      Visibility(
-                                        visible:
-                                            _liturgiesList[index].isAdditional,
-                                        child: Container(
-                                          margin: const EdgeInsets.only(top: 4),
-                                          child: Text(
-                                            _liturgiesList[index].isAdditional
-                                                ? _liturgiesList[index]
-                                                      .additional!
-                                                : '',
-                                            style: AppFonts.defaultFont(
-                                              color: AppColors.grey8,
-                                              fontSize: 13,
+                                        Visibility(
+                                          visible:
+                                              _liturgiesList[index].isAdditional,
+                                          child: Container(
+                                            margin: const EdgeInsets.only(top: 4),
+                                            child: Text(
+                                              _liturgiesList[index].isAdditional
+                                                  ? _liturgiesList[index]
+                                                        .additional!
+                                                  : '',
+                                              style: AppFonts.defaultFont(
+                                                color: AppColors.grey8,
+                                                fontSize: 13,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         );
 
@@ -128,7 +140,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                           child: GestureDetector(
                             key: itemKey,
                             onLongPressStart: (details) async {
-                              Modular.get<EditLiturgyStore>().entity = currentLiturgy;
+                              Modular.get<EditLiturgyStore>().entity =
+                                  currentLiturgy;
                               Modular.get<EditLiturgyStore>().index = index;
                               await showEditDialog(
                                 context: context,
@@ -143,14 +156,16 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                                       icon: AppIcons.addNotes,
                                       label: 'Add Box',
                                       action: () {
-                                        Modular.get<EditLiturgyStore>().addBox();
+                                        Modular.get<EditLiturgyStore>()
+                                            .addBox();
                                         pop(context);
                                       },
                                     ),
                                     Divider(
                                       height: 1,
-                                      color: AppColors.dividerModal
-                                          .withValues(alpha: 25),
+                                      color: AppColors.dividerModal.withValues(
+                                        alpha: 25,
+                                      ),
                                     ),
                                     actionButton(
                                       context: context,
@@ -159,14 +174,16 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                                       icon: AppIcons.contentCopy,
                                       label: 'Duplicar',
                                       action: () {
-                                        Modular.get<EditLiturgyStore>().copyEntity();
+                                        Modular.get<EditLiturgyStore>()
+                                            .copyEntity();
                                         pop(context);
                                       },
                                     ),
                                     Divider(
                                       height: 1,
-                                      color: AppColors.dividerModal
-                                          .withValues(alpha: 25),
+                                      color: AppColors.dividerModal.withValues(
+                                        alpha: 25,
+                                      ),
                                     ),
                                     actionButton(
                                       context: context,
@@ -175,7 +192,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                                       icon: AppIcons.trash,
                                       label: 'Deletar',
                                       action: () {
-                                        Modular.get<EditLiturgyStore>().delete();
+                                        Modular.get<EditLiturgyStore>()
+                                            .delete();
                                         pop(context);
                                       },
                                     ),
