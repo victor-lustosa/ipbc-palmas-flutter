@@ -14,8 +14,7 @@ Future<void> showEditDialog({
   double? popupWidthParam,
   double? popupWidthPositionParam,
 }) async {
-  final RenderBox renderBox =
-      itemKey.currentContext!.findRenderObject() as RenderBox;
+  final RenderBox renderBox = itemKey.currentContext!.findRenderObject() as RenderBox;
   final itemOffset = renderBox.localToGlobal(Offset.zero);
   final itemSize = renderBox.size;
 

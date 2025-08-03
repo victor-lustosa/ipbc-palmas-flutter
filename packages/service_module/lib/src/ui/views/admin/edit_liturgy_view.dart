@@ -13,6 +13,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
 
   late EditLiturgyStore _editStore;
   late List<LiturgyModel> _liturgiesList;
+  final Map<String, TextEditingController> _controllers = {};
+  final Map<String, FocusNode> _focusNodes = {};
 
   @override
   void initState() {

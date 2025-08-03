@@ -13,143 +13,78 @@ class EditLyricView extends StatefulWidget {
 
 class _EditLyricViewState extends State<EditLyricView> {
   final EditLyricStore _store = Modular.get<EditLyricStore>();
-  late LyricModel model;
-  final Map<String, TextEditingController> _controllers = {};
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _groupController = TextEditingController();
-  final Map<String, FocusNode> _focusNodes = {};
-  final FocusNode _titleFocusNode = FocusNode();
-  final FocusNode _groupFocusNode = FocusNode();
-
-  bool _isAnyTextFieldFocused = false;
-  late FocusScopeNode _rootFocusNode;
 
   @override
   void initState() {
     super.initState();
     setDarkAppBar();
-    model = _store.lyric;
-    _initializeControllersAndFocusNodes();
-    _titleController.text = model.title;
-    _groupController.text = model.group;
-    _rootFocusNode = FocusScopeNode();
-    _rootFocusNode.addListener(_handleRootFocusChange);
+    _store.init();
+    _store.rootFocusNode.addListener(_handleRootFocusChange);
   }
 
   void _handleRootFocusChange() {
-    if (_isAnyTextFieldFocused != _rootFocusNode.hasFocus) {
+    if (_store.isAnyTextFieldFocused != _store.rootFocusNode.hasFocus) {
       setState(() {
-        _isAnyTextFieldFocused = _rootFocusNode.hasFocus;
+        _store.isAnyTextFieldFocused = _store.rootFocusNode.hasFocus;
       });
     }
   }
 
-  void _initializeControllersAndFocusNodes() {
-    for (int i = 0; i < model.verses.length; i++) {
-      final verse = model.verses[i];
-      for (int j = 0; j < verse.versesList.length; j++) {
-        final key = '${verse.id}_$j';
-        _controllers[key] = TextEditingController(text: verse.versesList[j]);
-        _focusNodes[key] = FocusNode();
-      }
-    }
-  }
-
-  void _updateControllersAndFocusNodes() {
-    final Set<String> currentKeys = {};
-    for (int i = 0; i < model.verses.length; i++) {
-      final verse = model.verses[i];
-      for (int j = 0; j < verse.versesList.length; j++) {
-        final key = '${verse.id}_$j';
-        currentKeys.add(key);
-
-        if (!_controllers.containsKey(key)) {
-          _controllers[key] = TextEditingController(text: verse.versesList[j]);
-        } else {
-          if (_controllers[key]?.text != verse.versesList[j]) {
-            final TextSelection previousSelection = _controllers[key]!.selection;
-            _controllers[key]!.text = verse.versesList[j];
-            _controllers[key]!.selection = previousSelection.copyWith(
-              baseOffset: previousSelection.baseOffset.clamp(0,
-                _controllers[key]!.text.length,
-              ),
-              extentOffset: previousSelection.extentOffset.clamp(
-                0,
-                _controllers[key]!.text.length,
-              ),
-            );
-          }
-        }
-
-        if (!_focusNodes.containsKey(key)) {
-          _focusNodes[key] = FocusNode();
-        }
-      }
-    }
-
-    _controllers.keys.toList().forEach((key) {
-      if (!currentKeys.contains(key)) {
-        _controllers.remove(key)?.dispose();
-        _focusNodes.remove(key)?.dispose();
-      }
-    });
-  }
-
   @override
   void dispose() {
-    _controllers.forEach((key, controller) => controller.dispose());
-    _focusNodes.forEach((key, focusNode) => focusNode.dispose());
-    _rootFocusNode.removeListener(_handleRootFocusChange);
-    _rootFocusNode.dispose();
+    _store.controllers.forEach((key, controller) => controller.dispose());
+    _store.focusNodes.forEach((key, focusNode) => focusNode.dispose());
+    _store.rootFocusNode.removeListener(_handleRootFocusChange);
+    _store.rootFocusNode.dispose();
     super.dispose();
   }
 
-  formField({required TextEditingController controller, required FocusNode focusNode}) =>
-      Align(
-        alignment: Alignment.center,
-        child: Container(
-          width:context.sizeOf.width,
-            margin: const EdgeInsets.only(
-              bottom: 16,
-            ),
-            child: TextFormField(
-              buildCounter: (
-                  BuildContext context, {
-                    required int currentLength,
-                    required int? maxLength,
-                    required bool isFocused,
-                  }) =>
-              null,
-              controller: controller,
-              focusNode: focusNode,
-              maxLength: 40,
-              textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                isDense: true,
-                contentPadding: EdgeInsets.zero,
-              ),
-              style: AppFonts.defaultFont(
-                fontWeight: FontWeight.w500,
-                color: AppColors.grey9,
-                fontSize: 17,
-              ),
-              keyboardType: TextInputType.multiline,
-              onChanged: (newValue){
-                if (focusNode == _titleFocusNode) {
-                  model = model.copyWith(title: newValue);
-                } else if (focusNode == _groupFocusNode) {
-                  model = model.copyWith(group: newValue);
-                }
-              },
-            )
-         ),
-      );
+  formField({
+    required TextEditingController controller,
+    required FocusNode focusNode,
+  }) => Align(
+    alignment: Alignment.center,
+    child: Container(
+      width: context.sizeOf.width,
+      margin: const EdgeInsets.only(bottom: 16),
+      child: TextFormField(
+        buildCounter:
+            (
+              BuildContext context, {
+              required int currentLength,
+              required int? maxLength,
+              required bool isFocused,
+            }) => null,
+        controller: controller,
+        focusNode: focusNode,
+        maxLength: 40,
+        textAlign: TextAlign.center,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          isDense: true,
+          contentPadding: EdgeInsets.zero,
+        ),
+        style: AppFonts.defaultFont(
+          fontWeight: FontWeight.w500,
+          color: AppColors.grey9,
+          fontSize: 17,
+        ),
+        keyboardType: TextInputType.multiline,
+        onChanged: (newValue) {
+          _store.attributeNewFocus(
+            focusNode: focusNode,
+            controller: controller,
+            newValue: newValue,
+          );
+        },
+      ),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
     return FocusScope(
-      node: _rootFocusNode,
+      node: _store.rootFocusNode,
       child: Scaffold(
         backgroundColor: AppColors.white,
         body: SafeArea(
@@ -173,7 +108,10 @@ class _EditLyricViewState extends State<EditLyricView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          margin: const EdgeInsets.only(left: 16.3, right: 16, top: 5),
+                          margin: const EdgeInsets.only(
+                            left: 16,
+                            top: 10,
+                          ),
                           child: BackButtonWidget(
                             color: AppColors.darkGreen,
                             action: () => nativePop(context),
@@ -182,10 +120,7 @@ class _EditLyricViewState extends State<EditLyricView> {
                         Align(
                           alignment: Alignment.center,
                           child: Container(
-                            margin: const EdgeInsets.only(
-                              top: 16,
-                              bottom: 30,
-                            ),
+                            margin: const EdgeInsets.only(top: 16, bottom: 30),
                             child: Text(
                               'Confira a letra e a ordem das estrofes:',
                               style: AppFonts.defaultFont(
@@ -196,47 +131,135 @@ class _EditLyricViewState extends State<EditLyricView> {
                             ),
                           ),
                         ),
-                        formField(controller: _titleController, focusNode: _titleFocusNode),
-                        formField(controller: _groupController, focusNode: _groupFocusNode),
+                        formField(
+                          controller: _store.titleController,
+                          focusNode: _store.titleFocusNode,
+                        ),
+                        formField(
+                          controller: _store.groupController,
+                          focusNode: _store.groupFocusNode,
+                        ),
                         Container(
-                          margin: const EdgeInsets.only(left: 19, right: 19),
+                          margin: const EdgeInsets.symmetric(horizontal: 16),
                           child: ReorderableListView.builder(
                             shrinkWrap: true,
-                            itemCount: model.verses.length,
+                            itemCount: _store.lyric.verses.length,
                             buildDefaultDragHandles: false,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (BuildContext context, int index) {
-                              final verse = model.verses[index];
+
+                              final verse = _store.lyric.verses[index];
+                              final Key itemKey = Key('${verse.id}');
+                              final GlobalKey gestureKey = GlobalKey();
+
                               return Container(
-                                key: Key('${verse.id}'),
-                                margin: const EdgeInsets.symmetric(
-                                  vertical: 8.0,
-                                ),
-                                child: ClipRRect(
+                                key: itemKey,
+                                decoration: BoxDecoration(
+                                  color: AppColors.secondaryGrey2,
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(16),
                                   ),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: AppColors.secondaryGrey2,
-                                    ),
+                                ),
+                                margin: const EdgeInsets.symmetric(vertical: 8),
+                                child: GestureDetector(
+                                  key: gestureKey,
+                                  onLongPressStart: (_) async {
+                                    await showEditDialog(
+                                      context: context,
+                                      itemKey: gestureKey,
+                                      popupHeightParam: 110,
+                                      popupWidthParam: 160,
+                                      popupWidthPositionParam: 160,
+                                      verticalMarginParam: 3,
+                                      buttons: Column(
+                                        children: [
+                                          actionButton(
+                                            context: context,
+                                            top: 12,
+                                            bottom: 12,
+                                            icon: AppIcons.addNotes,
+                                            label: 'Refrão',
+                                            action: () {},
+                                          ),
+                                          Divider(
+                                            height: 1,
+                                            color: AppColors.dividerModal
+                                                .withValues(alpha: 25),
+                                          ),
+                                          actionButton(
+                                            context: context,
+                                            top: 12,
+                                            bottom: 12,
+                                            icon: AppIcons.addNotes,
+                                            label: 'Add Box',
+                                            action: () {},
+                                          ),
+                                          Divider(
+                                            height: 1,
+                                            color: AppColors.dividerModal
+                                                .withValues(alpha: 25),
+                                          ),
+                                          actionButton(
+                                            context: context,
+                                            top: 12,
+                                            bottom: 12,
+                                            icon: AppIcons.contentCopy,
+                                            label: 'Duplicar',
+                                            action: () {},
+                                          ),
+                                          Divider(
+                                            height: 1,
+                                            color: AppColors.dividerModal
+                                                .withValues(alpha: 25),
+                                          ),
+                                          actionButton(
+                                            context: context,
+                                            top: 12,
+                                            bottom: 12,
+                                            icon: AppIcons.trash,
+                                            label: 'Deletar',
+                                            action: () {},
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  child: IntrinsicHeight(
                                     child: Row(
                                       children: [
                                         IgnorePointer(
-                                          ignoring: _isAnyTextFieldFocused,
+                                          ignoring: _store.isAnyTextFieldFocused,
                                           child:
-                                              ReorderableDelayedDragStartListener(
-                                                index: index,
-                                                child: GestureDetector(
-                                                  onLongPressStart: (_) {
-                                                    FocusScope.of(
-                                                      context,
-                                                    ).unfocus();
-                                                    HapticFeedback.lightImpact();
-                                                  },
-                                                  child: GridBallsTileWidget(
-                                                    index: index,
-                                                  ),
+                                              SizedBox(
+                                                width: 36,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                                  children: [
+                                                    Container(
+                                                      width: 10,
+                                                      height: 10,
+                                                      decoration:
+                                                      BoxDecoration(
+                                                        color: Colors.red,
+                                                      ),
+                                                    ),
+                                                    ReorderableDelayedDragStartListener(
+                                                      index: index,
+                                                      child: GestureDetector(
+                                                        onLongPressStart: (_) async {
+                                                          FocusScope.of(
+                                                            context,
+                                                          ).unfocus();
+                                                          HapticFeedback.lightImpact();
+                                                        },
+                                                        child: GridBallsTileWidget(
+                                                          index: index,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(),
+                                                  ],
                                                 ),
                                               ),
                                         ),
@@ -252,67 +275,58 @@ class _EditLyricViewState extends State<EditLyricView> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: List.generate(
-                                                  verse.versesList.length,
-                                                      (position) {
-                                                final lineKey = '${verse.id}_$position';
-                                                if (!_controllers.containsKey(lineKey)) {
-                                                  _controllers[lineKey] =
-                                                      TextEditingController(
-                                                        text: verse.versesList[position],
-                                                      );
-                                                }
-                                                if (!_focusNodes.containsKey(lineKey)) {
-                                                  _focusNodes[lineKey] = FocusNode();
-                                                }
-                                                if (_controllers[lineKey]!.text
-                                                    != verse.versesList[position]) {
-                                                  final TextSelection previousSelection = _controllers[lineKey]!.selection;
-                                                  _controllers[lineKey]!.text = verse.versesList[position];
-                                                  _controllers[lineKey]!.selection =
-                                                      previousSelection.copyWith(
-                                                        baseOffset:
-                                                            previousSelection.baseOffset
-                                                                .clamp(0, _controllers[lineKey]!.text.length,
-                                                            ),
-                                                        extentOffset:
-                                                            previousSelection.extentOffset
-                                                                .clamp(0, _controllers[lineKey]!.text.length,
-                                                            ),
-                                                      );
-                                                }
-
-                                                return Padding(
-                                                  padding: EdgeInsets.only(
-                                                    bottom:
-                                                        position == verse.versesList.length - 1
-                                                            ? 0
-                                                            : 6,
-                                                  ),
-                                                  child: TextFormField(
-                                                    controller: _controllers[lineKey],
-                                                    focusNode: _focusNodes[lineKey],
-                                                    decoration: InputDecoration(
-                                                      border: InputBorder.none,
-                                                      isDense: true,
-                                                      contentPadding: EdgeInsets.zero,
+                                                verse.versesList.length,
+                                                (position) {
+                                                  final lineKey =
+                                                      '${verse.id}_$position';
+                                                  _store.updateTiles(
+                                                    verse: verse,
+                                                    position: position,
+                                                    lineKey: lineKey,
+                                                  );
+                                    
+                                                  return Padding(
+                                                    padding: EdgeInsets.only(
+                                                      bottom:
+                                                          position ==
+                                                              verse
+                                                                      .versesList
+                                                                      .length -
+                                                                  1
+                                                          ? 0
+                                                          : 6,
                                                     ),
-                                                    style: AppFonts.defaultFont(
-                                                      color: AppColors.grey10,
-                                                      fontSize:
-                                                          context.sizeOf.width >
-                                                                  ResponsivityUtil
-                                                                      .smallDeviceWidth
-                                                              ? 16
-                                                              : 14,
+                                                    child: TextFormField(
+                                                      controller: _store
+                                                          .controllers[lineKey],
+                                                      focusNode: _store
+                                                          .focusNodes[lineKey],
+                                                      decoration: InputDecoration(
+                                                        border: InputBorder.none,
+                                                        isDense: true,
+                                                        contentPadding:
+                                                            EdgeInsets.zero,
+                                                      ),
+                                                      style: AppFonts.defaultFont(
+                                                        color: AppColors.grey10,
+                                                        fontSize:
+                                                            context.sizeOf.width >
+                                                                ResponsivityUtil
+                                                                    .smallDeviceWidth
+                                                            ? 16
+                                                            : 14,
+                                                      ),
+                                                      maxLines: null,
+                                                      keyboardType:
+                                                          TextInputType.multiline,
+                                                      onChanged: (newValue) {
+                                                        verse.versesList[position] =
+                                                            newValue;
+                                                      },
                                                     ),
-                                                    maxLines: null,
-                                                    keyboardType: TextInputType.multiline,
-                                                    onChanged: (newValue) {
-                                                      verse.versesList[position] = newValue;
-                                                    },
-                                                  ),
-                                                );
-                                              }),
+                                                  );
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -324,42 +338,44 @@ class _EditLyricViewState extends State<EditLyricView> {
                             },
                             onReorder: (int oldIndex, int newIndex) {
                               setState(() {
-                                if (oldIndex < newIndex) {
-                                  newIndex -= 1;
-                                }
-                                final VerseEntity item = model.verses.removeAt(oldIndex);
-                                model.verses.insert(newIndex, item);
-                                _updateControllersAndFocusNodes();
+                                _store.newOrder(
+                                  oldIndex: oldIndex,
+                                  newIndex: newIndex,
+                                );
                               });
                             },
-                            proxyDecorator: (
-                              Widget child,
-                              int index,
-                              animation,
-                            ) {
+                            proxyDecorator: (Widget child, int index, animation) {
                               return Material(
                                 color: Colors.transparent,
                                 child: AnimatedBuilder(
                                   animation: animation,
                                   builder: (BuildContext context, Widget? _) {
-                                    final animValue = Curves.easeInOut.transform(animation.value);
-                                    final scale = lerpDouble(1, 1.05, animValue)!;
+                                    final animValue = Curves.easeInOut
+                                        .transform(animation.value);
+                                    final scale = lerpDouble(
+                                      1,
+                                      1.05,
+                                      animValue,
+                                    )!;
 
                                     return LayoutBuilder(
                                       builder: (innerContext, constraints) {
                                         final double childHeight =
                                             constraints.maxHeight.isFinite &&
-                                                    constraints.maxHeight > 0
-                                                ? constraints.maxHeight
-                                                : 100.0;
+                                                constraints.maxHeight > 0
+                                            ? constraints.maxHeight
+                                            : 100.0;
 
-                                        final double scaleCompensationOffset = childHeight * (scale - 1) / 2;
-                                        final double gapCompensationOffset = childHeight * 0.2;
+                                        final double scaleCompensationOffset =
+                                            childHeight * (scale - 1) / 2;
+                                        final double gapCompensationOffset =
+                                            childHeight * 0.2;
 
                                         return Transform.translate(
                                           offset: Offset(
                                             0,
-                                            -scaleCompensationOffset + gapCompensationOffset,
+                                            -scaleCompensationOffset +
+                                                gapCompensationOffset,
                                           ),
                                           child: Transform.scale(
                                             scale: scale,
@@ -389,7 +405,6 @@ class _EditLyricViewState extends State<EditLyricView> {
           iconColor: AppColors.grey10,
           size: 33,
           action: () {
-            _store.lyric = model;
             _store.buttonCallback();
           },
         ),

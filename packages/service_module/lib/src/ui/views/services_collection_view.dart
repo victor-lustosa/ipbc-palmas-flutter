@@ -218,13 +218,12 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
         backgroundColor: AppColors.add,
         icon: Icons.add,
         action: () {
+          _editStore.fillItems();
           _editStore.setEditLiturgyDTO(EditLiturgyDTO(
             image: widget.entity.image,
             heading: widget.entity.heading,
           ));
-          Future.delayed(Duration(milliseconds: 200), () {
             pushNamed(AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute);
-          });
         },
       ),
     );

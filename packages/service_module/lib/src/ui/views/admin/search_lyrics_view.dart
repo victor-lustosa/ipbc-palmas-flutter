@@ -188,10 +188,9 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
             context: context,
             callback: (text) async {
               if (text != null && text.isNotEmpty) {
-                LyricModel newLyric = _servicesPreviewStore.convertTextInLyric(text);
                 EditLyricStore editLyricStore = Modular.get<EditLyricStore>();
                 editLyricStore.isEditing = false;
-                editLyricStore.lyric = newLyric;
+                editLyricStore.lyric = _servicesPreviewStore.convertTextInLyric(text);
                 editLyricStore.buttonCallback = () {
                   editLyricStore.addLyric();
                   popUntil((route) => route.settings.name == AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute);

@@ -16,7 +16,7 @@ class NativeHomeRoutes extends StatefulWidget {
 
 class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
   final GlobalKey<NavigatorState> _androidNavigatorKey =
-  GlobalKey<NavigatorState>(debugLabel: 'home_key');
+      GlobalKey<NavigatorState>(debugLabel: 'home_key');
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +47,7 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
             );
 
           case AppRoutes.editLiturgiesRoute:
-            return CustomFadeTransition(
-              child: EditLiturgyView(),
-            );
+            return CustomFadeTransition(child: const EditLiturgyView());
 
           case AppRoutes.eventRoute + AppRoutes.eventsListRoute:
             return CustomFadeTransition(child: const EventsListView());
