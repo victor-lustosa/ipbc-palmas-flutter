@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:core_module/core_module.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -109,10 +108,7 @@ class _EditLyricViewState extends State<EditLyricView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          margin: const EdgeInsets.only(
-                            left: 16,
-                            top: 10,
-                          ),
+                          margin: const EdgeInsets.only(left: 16, top: 10),
                           child: BackButtonWidget(
                             color: AppColors.darkGreen,
                             action: () => nativePop(context),
@@ -148,7 +144,6 @@ class _EditLyricViewState extends State<EditLyricView> {
                             buildDefaultDragHandles: false,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (BuildContext context, int index) {
-
                               final verse = _store.lyric.verses[index];
                               final Key itemKey = Key('${verse.id}');
                               final GlobalKey gestureKey = GlobalKey();
@@ -167,99 +162,27 @@ class _EditLyricViewState extends State<EditLyricView> {
                                   child: IntrinsicHeight(
                                     child: Row(
                                       children: [
-                                        IgnorePointer(
-                                          ignoring: _store.isAnyTextFieldFocused,
-                                          child:
-                                              SizedBox(
-                                                width: 36,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                                  children: [
-                                                    IconButtonWidget(
-                                                      action: () async {
-                                                        await showEditDialog(
-                                                        context: context,
-                                                        itemKey: gestureKey,
-                                                        popupHeightParam: 110,
-                                                        popupWidthParam: 160,
-                                                        popupWidthPositionParam: 160,
-                                                        verticalMarginParam: 3,
-                                                        buttons: Column(
-                                                          children: [
-                                                            actionButton(
-                                                              context: context,
-                                                              top: 12,
-                                                              bottom: 12,
-                                                              icon: AppIcons.addNotes,
-                                                              label: 'Refrão',
-                                                              action: () {},
-                                                            ),
-                                                            Divider(
-                                                              height: 1,
-                                                              color: AppColors.dividerModal
-                                                                  .withValues(alpha: 25),
-                                                            ),
-                                                            actionButton(
-                                                              context: context,
-                                                              top: 12,
-                                                              bottom: 12,
-                                                              icon: AppIcons.addNotes,
-                                                              label: 'Add Box',
-                                                              action: () {},
-                                                            ),
-                                                            Divider(
-                                                              height: 1,
-                                                              color: AppColors.dividerModal
-                                                                  .withValues(alpha: 25),
-                                                            ),
-                                                            actionButton(
-                                                              context: context,
-                                                              top: 12,
-                                                              bottom: 12,
-                                                              icon: AppIcons.contentCopy,
-                                                              label: 'Duplicar',
-                                                              action: () {},
-                                                            ),
-                                                            Divider(
-                                                              height: 1,
-                                                              color: AppColors.dividerModal
-                                                                  .withValues(alpha: 25),
-                                                            ),
-                                                            actionButton(
-                                                              context: context,
-                                                              top: 12,
-                                                              bottom: 12,
-                                                              icon: AppIcons.trash,
-                                                              label: 'Deletar',
-                                                              action: () {},
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        );
-                                                      },
-                                                      size: 20,
-                                                      color: AppColors.grey7,
-                                                      androidIcon: Icons.menu,
-                                                    ),
-                                                    ReorderableDelayedDragStartListener(
-                                                      index: index,
-                                                      child: GestureDetector(
-                                                        onLongPressStart: (_) async {
-                                                          FocusScope.of(
-                                                            context,
-                                                          ).unfocus();
-                                                          HapticFeedback.lightImpact();
-                                                        },
-                                                        child: GridBallsTileWidget(
-                                                          index: index,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(),
-                                                  ],
+                                          IgnorePointer(
+                                            ignoring:
+                                                _store.isAnyTextFieldFocused,
+                                            child: GestureDetector(
+                                              onLongPressStart: (_) async {
+                                                FocusScope.of(
+                                                  context,
+                                                ).unfocus();
+                                                HapticFeedback.lightImpact();
+                                              },
+                                              child: ReorderableDelayedDragStartListener(
+                                                index: index,
+                                                child: SizedBox(
+                                                  width: 32,
+                                                  height: 50,
+                                                  child: GridBallsTileWidget(
+                                                    index: index,
+                                                  ),
                                                 ),
                                               ),
+                                            ),
                                         ),
                                         Expanded(
                                           child: Container(
@@ -267,7 +190,7 @@ class _EditLyricViewState extends State<EditLyricView> {
                                               left: 3,
                                               top: 14,
                                               bottom: 14,
-                                              right: 14,
+                                              right: 8,
                                             ),
                                             child: Column(
                                               crossAxisAlignment:
@@ -299,16 +222,20 @@ class _EditLyricViewState extends State<EditLyricView> {
                                                           .controllers[lineKey],
                                                       focusNode: _store
                                                           .focusNodes[lineKey],
-                                                      decoration: InputDecoration(
-                                                        border: InputBorder.none,
-                                                        isDense: true,
-                                                        contentPadding:
-                                                            EdgeInsets.zero,
-                                                      ),
+                                                      decoration:
+                                                          InputDecoration(
+                                                            border: InputBorder
+                                                                .none,
+                                                            isDense: true,
+                                                            contentPadding:
+                                                                EdgeInsets.zero,
+                                                          ),
                                                       style: AppFonts.defaultFont(
                                                         color: AppColors.grey10,
                                                         fontSize:
-                                                            context.sizeOf.width >
+                                                            context
+                                                                    .sizeOf
+                                                                    .width >
                                                                 ResponsivityUtil
                                                                     .smallDeviceWidth
                                                             ? 16
@@ -316,7 +243,8 @@ class _EditLyricViewState extends State<EditLyricView> {
                                                       ),
                                                       maxLines: null,
                                                       keyboardType:
-                                                          TextInputType.multiline,
+                                                          TextInputType
+                                                              .multiline,
                                                       onChanged: (newValue) {
                                                         verse.versesList[position] =
                                                             newValue;
@@ -326,6 +254,92 @@ class _EditLyricViewState extends State<EditLyricView> {
                                                 },
                                               ),
                                             ),
+                                          ),
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.only(top: 10),
+                                          width: 30,
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              IconButtonWidget(
+                                                action: () async {
+                                                  await showEditDialog(
+                                                    context: context,
+                                                    itemKey: gestureKey,
+                                                    popupHeightParam: 110,
+                                                    popupWidthParam: 160,
+                                                    popupWidthPositionParam: 160,
+                                                    verticalMarginParam: 3,
+                                                    buttons: Column(
+                                                      children: [
+                                                        actionButton(
+                                                          context: context,
+                                                          top: 12,
+                                                          bottom: 12,
+                                                          icon: AppIcons.addNotes,
+                                                          label: 'Refrão',
+                                                          action: () {},
+                                                        ),
+                                                        Divider(
+                                                          height: 1,
+                                                          color: AppColors
+                                                              .dividerModal
+                                                              .withValues(
+                                                                alpha: 25,
+                                                              ),
+                                                        ),
+                                                        actionButton(
+                                                          context: context,
+                                                          top: 12,
+                                                          bottom: 12,
+                                                          icon: AppIcons.addNotes,
+                                                          label: 'Add Box',
+                                                          action: () {},
+                                                        ),
+                                                        Divider(
+                                                          height: 1,
+                                                          color: AppColors
+                                                              .dividerModal
+                                                              .withValues(
+                                                                alpha: 25,
+                                                              ),
+                                                        ),
+                                                        actionButton(
+                                                          context: context,
+                                                          top: 12,
+                                                          bottom: 12,
+                                                          icon:
+                                                              AppIcons.contentCopy,
+                                                          label: 'Duplicar',
+                                                          action: () {},
+                                                        ),
+                                                        Divider(
+                                                          height: 1,
+                                                          color: AppColors
+                                                              .dividerModal
+                                                              .withValues(
+                                                                alpha: 25,
+                                                              ),
+                                                        ),
+                                                        actionButton(
+                                                          context: context,
+                                                          top: 12,
+                                                          bottom: 12,
+                                                          icon: AppIcons.trash,
+                                                          label: 'Deletar',
+                                                          action: () {},
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                },
+                                                size: 20,
+                                                color: AppColors.grey7,
+                                                androidIcon: Icons.menu,
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],

@@ -140,7 +140,7 @@ class _EditDialogWidgetState extends State<EditDialogWidget> {
               child: Container(
                   width: widget.popupWidth ?? 170,
                   decoration: BoxDecoration(
-                    color: AppColors.dividerModal.withOpacity(0.1),
+                    color: AppColors.dividerModal.withValues(alpha: 25.5),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: widget.buttons

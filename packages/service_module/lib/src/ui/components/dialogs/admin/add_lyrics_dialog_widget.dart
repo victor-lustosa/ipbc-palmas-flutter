@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 Future<void> showAddLyricsDialog({
   required BuildContext context,
@@ -9,16 +10,15 @@ Future<void> showAddLyricsDialog({
 }) {
   return showGeneralDialog(
     context: context,
-    barrierDismissible: true,
+    barrierDismissible: false,
     barrierLabel: "Adicionar letra",
-    barrierColor: Colors.transparent,
+    barrierColor: AppColors.grey6.withValues(alpha: 76.5),
     transitionDuration: const Duration(milliseconds: 300),
     pageBuilder: (context, animation, secondaryAnimation) {
       return SafeArea(
         child: Builder(
-          builder:
-              (context) =>
-                  Center(child: AddLyricsDialogWidget(callback: callback)),
+          builder: (context) =>
+              Center(child: AddLyricsDialogWidget(callback: callback)),
         ),
       );
     },
@@ -28,15 +28,12 @@ Future<void> showAddLyricsDialog({
         curve: Curves.easeOutCubic,
         reverseCurve: Curves.easeInCubic,
       );
-      return FadeTransition(
-        opacity: curved,
-        child: SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(0, 0.1),
-            end: Offset.zero,
-          ).animate(curved),
-          child: child,
-        ),
+      return SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(0, 0.1),
+          end: Offset.zero,
+        ).animate(curved),
+        child: child,
       );
     },
   );
@@ -62,114 +59,136 @@ class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          width: context.sizeOf.width,
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-            child: ClipRRect(
-              child: Dialog(
-                insetPadding: EdgeInsets.zero,
-                surfaceTintColor: Colors.transparent,
-                backgroundColor: Colors.transparent,
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: AppColors.secondaryGrey2,
-                        borderRadius: BorderRadius.all(Radius.circular(16)),
-                      ),
-                      padding: const EdgeInsets.all(15),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Insira a letra:',
-                            style: AppFonts.defaultFont(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17,
-                              color: AppColors.grey10,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          TextFormField(
-                            controller: _lyricsController,
-                            minLines: 10,
-                            maxLines: 30,
-                            keyboardType: TextInputType.multiline,
-                            decoration: InputDecoration(
-                              hintText: 'Cole ou digite a letra aqui...',
-                              hintStyle: AppFonts.defaultFont(
-                                color: AppColors.grey5,
-                                fontSize: 14,
+    return GestureDetector(
+      onTap: () {
+        if (View.of(context).viewInsets.bottom > 0.0) {
+          SystemChannels.textInput.invokeMethod('TextInput.hide');
+        }
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16),
+              width: context.sizeOf.width,
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                child: Dialog(
+                  insetPadding: EdgeInsets.zero,
+                  surfaceTintColor: AppColors.grey9,
+                  backgroundColor: AppColors.grey9,
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                        ),
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Insira a letra:',
+                              style: AppFonts.defaultFont(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 22,
+                                color: AppColors.grey10,
                               ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide.none,
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 16),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: AppColors.grey3),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
-                              fillColor: AppColors.white,
-                              filled: true,
-                              contentPadding: const EdgeInsets.all(12),
-                            ),
-                            style: AppFonts.defaultFont(
-                              color: AppColors.grey10,
-                              fontSize: 14,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text(
-                                  'Cancelar',
-                                  style: AppFonts.defaultFont(
-                                    color: AppColors.redModal,
-                                    fontSize: 16,
+                              child: Material(
+                                color: Colors.transparent,
+                                child: Theme(
+                                  data: Theme.of(context).copyWith(
+                                    textSelectionTheme: TextSelectionThemeData(
+                                      cursorColor: AppColors.grey8,
+                                      selectionColor: AppColors.grey8.
+                                        withValues(alpha: 76.5),
+                                      selectionHandleColor: AppColors.grey8,
+                                    ),
+                                    colorScheme: Theme.of(context).colorScheme
+                                        .copyWith(primary: AppColors.grey8),
+                                  ),
+                                  child: TextFormField(
+                                    selectionControls:
+                                        MaterialTextSelectionControls(),
+                                    controller: _lyricsController,
+                                    minLines: 10,
+                                    maxLines: 40,
+                                    keyboardType: TextInputType.multiline,
+                                    decoration: InputDecoration(
+                                      hintText:
+                                          'Cole ou digite a letra aqui...',
+                                      hintStyle: AppFonts.defaultFont(
+                                        color: AppColors.grey5,
+                                        fontSize: 16,
+                                      ),
+                                      fillColor: AppColors.white,
+                                      border: InputBorder.none,
+                                      contentPadding: const EdgeInsets.all(12),
+                                    ),
+                                    style: AppFonts.defaultFont(
+                                      color: AppColors.grey10,
+                                      fontSize: 17,
+                                    ),
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 8),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.add,
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                ButtonWidget(
+                                  adaptiveButtonType: AdaptiveButtonType.text,
+                                  action: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  fixedSize: const Size(132, 28),
+                                  overlayColor: Colors.white,
+                                  backgroundColor: AppColors.white,
+                                  foregroundColor: AppColors.darkGreen,
+                                  foregroundHoveredColor: AppColors.darkGreen,
+                                  child: Text("Cancelar"),
+                                ),
+                                const SizedBox(width: 8),
+                                ButtonWidget(
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: BorderRadius.circular(16),
                                   ),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                    vertical: 12,
-                                  ),
+                                  fixedSize: const Size(132, 28),
+                                  action: () {
+                                    if (widget.callback != null) {
+                                      widget.callback!(_lyricsController.text);
+                                    }
+                                  },
+                                  backgroundColor: AppColors.darkGreen,
+                                  shadowColor: AppColors.grey0,
+                                  foregroundColor: AppColors.white,
+                                  child: Text("Adicionar"),
                                 ),
-                                child: Text(
-                                  'Adicionar',
-                                  style: AppFonts.defaultFont(
-                                    color: AppColors.white,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                onPressed: () {
-                                  if(widget.callback!= null) widget.callback!(_lyricsController.text);
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
