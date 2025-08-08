@@ -168,7 +168,7 @@ class _LyricsListViewState extends State<LyricsListView>
                                     Divider(
                                       height: 1,
                                       color: AppColors.dividerModal.withValues(
-                                        alpha: 25,
+                                        alpha: .3,
                                       ),
                                     ),
                                     actionButton(

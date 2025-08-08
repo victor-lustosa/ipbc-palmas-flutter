@@ -9,13 +9,13 @@ class ServicesPreviewView extends StatefulWidget {
 }
 
 class _ServicesPreviewViewState extends State<ServicesPreviewView> {
-  final ServicesPreviewStore _servicesPreviewStore =
-      Modular.get<ServicesPreviewStore>();
+  final ServicesPreviewStore _servicesPreviewStore = Modular.get<ServicesPreviewStore>();
   final EditLyricStore _editLyricStore = Modular.get<EditLyricStore>();
-
+  late final LyricsListStore _lyricsListStore;
   @override
   void initState() {
     super.initState();
+    _lyricsListStore = Modular.get<LyricsListStore>();
     setDarkAppBar();
   }
 
@@ -68,7 +68,12 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                 builder: (context, state, child) {
                   return LyricsListWidget(
                     entitiesList: _editLyricStore.lyricsFetched,
-                    onTap: () {},
+                    onTap: () {
+                      pushNamed(
+                        AppRoutes.lyricsRoute + AppRoutes.lyricRoute,
+                        arguments: _lyricsListStore.lyricModel,
+                      );
+                    },
                     onLongPressStart: (s) {},
                   );
                 },

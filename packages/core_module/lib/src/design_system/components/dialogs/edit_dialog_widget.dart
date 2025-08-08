@@ -66,8 +66,11 @@ Future<void> showEditDialog({
         curve: Curves.easeOutCubic,
         reverseCurve: Curves.easeOutCubic,
       );
-      return FadeTransition(
-        opacity: curved,
+      return SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(0.5, .1),
+          end: Offset.zero,
+        ).animate(curved),
         child: child,
       );
     },
@@ -140,7 +143,8 @@ class _EditDialogWidgetState extends State<EditDialogWidget> {
               child: Container(
                   width: widget.popupWidth ?? 170,
                   decoration: BoxDecoration(
-                    color: AppColors.dividerModal.withValues(alpha: 25.5),
+                    border: Border.all(color: AppColors.dividerModal.withValues(alpha: .1)),
+                    color: AppColors.dividerModal.withValues(alpha: .1),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: widget.buttons

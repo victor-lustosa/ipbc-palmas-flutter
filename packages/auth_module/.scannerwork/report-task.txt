@@ -2,5 +2,5 @@ projectKey=auth_module
 serverUrl=http://localhost:9000
 serverVersion=9.9.4.87374
 dashboardUrl=http://localhost:9000/dashboard?id=auth_module
-ceTaskId=AZaynr8mW1VL-5iMn7vS
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AZaynr8mW1VL-5iMn7vS
+ceTaskId=AZh_h2A8_dNAOnW7yJdO
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AZh_h2A8_dNAOnW7yJdO

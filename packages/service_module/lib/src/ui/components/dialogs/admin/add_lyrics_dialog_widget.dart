@@ -12,7 +12,7 @@ Future<void> showAddLyricsDialog({
     context: context,
     barrierDismissible: false,
     barrierLabel: "Adicionar letra",
-    barrierColor: AppColors.grey6.withValues(alpha: 76.5),
+    barrierColor: AppColors.grey6.withValues(alpha: .3),
     transitionDuration: const Duration(milliseconds: 300),
     pageBuilder: (context, animation, secondaryAnimation) {
       return SafeArea(
@@ -110,13 +110,13 @@ class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
                                 child: Theme(
                                   data: Theme.of(context).copyWith(
                                     textSelectionTheme: TextSelectionThemeData(
-                                      cursorColor: AppColors.grey8,
-                                      selectionColor: AppColors.grey8.
-                                        withValues(alpha: 76.5),
-                                      selectionHandleColor: AppColors.grey8,
+                                      cursorColor: AppColors.grey7,
+                                      selectionColor: AppColors.grey7.
+                                        withValues(alpha: .30),
+                                      selectionHandleColor: AppColors.grey7,
                                     ),
                                     colorScheme: Theme.of(context).colorScheme
-                                        .copyWith(primary: AppColors.grey8),
+                                        .copyWith(primary: AppColors.grey7),
                                   ),
                                   child: TextFormField(
                                     selectionControls:

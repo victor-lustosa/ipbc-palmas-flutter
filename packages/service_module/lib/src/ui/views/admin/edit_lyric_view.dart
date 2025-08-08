@@ -287,7 +287,7 @@ class _EditLyricViewState extends State<EditLyricView> {
                                                           color: AppColors
                                                               .dividerModal
                                                               .withValues(
-                                                                alpha: 25,
+                                                                alpha: .3,
                                                               ),
                                                         ),
                                                         actionButton(
@@ -303,7 +303,7 @@ class _EditLyricViewState extends State<EditLyricView> {
                                                           color: AppColors
                                                               .dividerModal
                                                               .withValues(
-                                                                alpha: 25,
+                                                                alpha: .3,
                                                               ),
                                                         ),
                                                         actionButton(
@@ -320,7 +320,7 @@ class _EditLyricViewState extends State<EditLyricView> {
                                                           color: AppColors
                                                               .dividerModal
                                                               .withValues(
-                                                                alpha: 25,
+                                                                alpha: .3,
                                                               ),
                                                         ),
                                                         actionButton(
