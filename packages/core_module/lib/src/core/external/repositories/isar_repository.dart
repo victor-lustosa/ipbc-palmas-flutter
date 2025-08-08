@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import '../../../../core_module.dart';
 
 class IsarRepository implements IRepository {
@@ -49,5 +51,11 @@ class IsarRepository implements IRepository {
         .offset((page - 1) * pageSize)
         .limit(pageSize)
         .findAll();
+  }
+
+  @override
+  Future<String?> saveImage({required File coverImage, required String eventTitle}) {
+    // TODO: implement saveImage
+    throw UnimplementedError();
   }
 }

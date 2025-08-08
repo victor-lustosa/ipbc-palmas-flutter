@@ -1,4 +1,6 @@
-abstract class IRepository implements IGet, IGetByPagination, IAdd, IDelete, IUpdate {}
+import 'dart:io';
+
+abstract class IRepository implements IGet, IGetByPagination, IAdd, IDelete, IUpdate, ISaveImage {}
 
 abstract class IGet {
   Future<dynamic> get<T>({String? path});
@@ -18,4 +20,8 @@ abstract class IUpdate {
 
 abstract class IDelete {
   Future<void> delete<T>({String? path});
+}
+
+abstract class ISaveImage {
+  Future<String?> saveImage({required File coverImage, required String eventTitle});
 }

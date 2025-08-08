@@ -1,5 +1,7 @@
+import 'dart:io';
+
 abstract class IUseCases
-    implements IGetUseCases, IAddUseCases, IUpdateUseCases, IDeleteUseCases {}
+    implements IGetUseCases, IAddUseCases, IUpdateUseCases, IDeleteUseCases, ISaveImageUseCases {}
 
 abstract class IGetUseCases {
   Future<dynamic> get({String? path, required Function converter});
@@ -15,4 +17,8 @@ abstract class IUpdateUseCases {
 
 abstract class IDeleteUseCases {
   Future<void> delete({String? path});
+}
+
+abstract class ISaveImageUseCases {
+  Future<String?>saveImage({required File coverImage, required String eventTitle});
 }
