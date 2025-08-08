@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:core_module/core_module.dart';
 
 class UseCases<T> implements IUseCases {
@@ -6,10 +8,7 @@ class UseCases<T> implements IUseCases {
   UseCases({required this.repository});
 
   @override
-  Future<dynamic> get({
-    String? path,
-    required Function converter,
-  }) async {
+  Future<dynamic> get({String? path, required Function converter}) async {
     var result = await repository.get(path: path);
     return converter(result);
   }
@@ -23,6 +22,10 @@ class UseCases<T> implements IUseCases {
       repository.update(data: data, path: path);
 
   @override
-  Future<void> delete({String? path}) async =>
-      repository.delete(path: path);
+  Future<void> delete({String? path}) async => repository.delete(path: path);
+
+  @override
+  Future<String?> saveImage({required File coverImage, required String eventTitle}) {
+    return repository.saveImage(coverImage: coverImage, eventTitle: eventTitle );
+  }
 }

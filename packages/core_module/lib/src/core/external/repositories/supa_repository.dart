@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:diacritic/diacritic.dart';
+
 import '../../../../core_module.dart';
 
 class SupabaseRepository implements IRepository {
@@ -81,5 +85,32 @@ class SupabaseRepository implements IRepository {
         .range(0, 9)
         .order(params[1], ascending: true);
     return Future.value(data);
+  }
+
+  @override
+  Future<String?> saveImage({required File coverImage, required String eventTitle}) async{
+    try {
+      final fileName = 'mobile_event_covers/${formatText(eventTitle)}_${DateTime.now().toIso8601String()}.jpg';
+
+       await Supabase.instance.client.storage
+          .from('covers')
+          .upload(fileName, coverImage);
+
+      final publicUrl = Supabase.instance.client.storage
+          .from('covers')
+          .getPublicUrl(fileName);
+
+      return publicUrl;
+    } catch (e) {
+      print('Erro ao fazer upload: $e');
+      return null;
+    }
+  }
+
+  String formatText(String text) {
+    return removeDiacritics(text)
+        .toLowerCase()
+        .replaceAll(RegExp(r'\s+'), '_')
+        .replaceAll(RegExp(r'[^a-z0-9_]+'), '');
   }
 }

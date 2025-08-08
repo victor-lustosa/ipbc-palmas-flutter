@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 
 class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     with ImageMixin, ConnectivityMixin {
-
   bool isSwitchOn = false;
 
   final IUseCases _useCases;
   final String eventPath = 'event';
+
   CreateEventStore({required IUseCases useCases})
-      : _useCases = useCases,
-        super(InitialState<CreateEventState>());
+    : _useCases = useCases,
+      super(InitialState<CreateEventState>());
 
   final TextEditingController eventTitleController = TextEditingController();
   final TextEditingController eventSubtitleController = TextEditingController();
@@ -58,7 +58,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   bool isPressed = false;
   File coverImage = File('');
 
-
   late DateTime startDate;
   late DateTime endDate;
   TimeOfDay startTime = TimeOfDay(hour: 08, minute: 00);
@@ -72,9 +71,11 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   }
 
   // Função para abrir o relógio
-  Future<void> pickTime(
-      {required TimeOfDay selectedTime,
-        required Function(TimeOfDay) onTimePicked, required BuildContext context}) async {
+  Future<void> pickTime({
+    required TimeOfDay selectedTime,
+    required Function(TimeOfDay) onTimePicked,
+    required BuildContext context,
+  }) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: selectedTime,
@@ -83,8 +84,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       onTimePicked(picked);
     }
   }
-
-
 
   titleValidation(String? data) {
     if (data == null || data.isEmpty) {
@@ -189,12 +188,12 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     }
   }
 
-  EventEntity fillEventEntity(){
+  EventEntity fillEventEntity(String resultUrl) {
     EventEntity entity = EventEntity(
       id: createId(),
       title: eventTitleController.text,
       subtitle: eventSubtitleController.text,
-      image: coverImage.path,
+      image: resultUrl,
       startDateTime: combineDateAndTime(startDate, startTime),
       endDateTime: combineDateAndTime(endDate, endTime),
       description: eventDescriptionController.text,
@@ -202,35 +201,33 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       localName: eventLocationNameController.text,
       signUpLink: eventLinkController.text,
       contactLink: contactLinkController.text,
-      createAt: DateTime.now()
+      createAt: DateTime.now(),
     );
     return entity;
   }
+
   static String createId() => DateTime.now().microsecondsSinceEpoch.toString();
 
   Future<void> addData() async {
     final response = await isConnected();
     if (response) {
       value = AddDataEvent<CreateEventState>();
-      _useCases.add(path: 'event', data: EventAdapter.toMap(fillEventEntity()));
+      final resultUrl = await _useCases.saveImage(coverImage: coverImage, eventTitle: eventTitleController.text);
+      // if (resultUrl != null) {
+      //   _useCases.add(
+      //     path: 'event',
+      //     data: EventAdapter.toMap(fillEventEntity(resultUrl)),
+      //   );
+      // }
       value = DataAddedState<CreateEventState>();
-    } else{
+    } else {
       value = NoConnectionState<CreateEventState>();
     }
   }
 
   DateTime combineDateAndTime(DateTime date, TimeOfDay time) {
-    return DateTime(
-      date.year,
-      date.month,
-      date.day,
-      time.hour,
-      time.minute,
-    );
+    return DateTime(date.year, date.month, date.day, time.hour, time.minute);
   }
-
-
-
 }
 
 @immutable
