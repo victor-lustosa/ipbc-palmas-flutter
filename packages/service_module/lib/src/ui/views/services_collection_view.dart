@@ -17,7 +17,7 @@ class ServicesCollectionView extends StatefulWidget {
   State<ServicesCollectionView> createState() => _ServicesCollectionViewState();
 }
 
-class _ServicesCollectionViewState extends State<ServicesCollectionView> {
+class _ServicesCollectionViewState extends State<ServicesCollectionView> with DateMixin{
   late final ServicesCollectionBloc _bloc;
   late List<ServiceEntity> entitiesList;
   late String path;
@@ -219,6 +219,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView> {
         icon: Icons.add,
         action: () {
           _editStore.fillItems();
+          _editStore.dayOfWeek = widget.entity.dayOfWeek;
+          _editStore.serviceHour = parseTimeOfDayFromH(widget.entity.hour);
           _editStore.setEditLiturgyDTO(EditLiturgyDTO(
             image: widget.entity.image,
             heading: widget.entity.heading,

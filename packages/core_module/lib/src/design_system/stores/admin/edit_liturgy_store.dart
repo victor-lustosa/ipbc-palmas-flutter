@@ -1,21 +1,75 @@
 import 'package:core_module/core_module.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class EditLiturgyDTO {
   EditLiturgyDTO({required this.heading, required this.image});
+
   final String heading;
   final String image;
 }
 
-class EditLiturgyStore extends ChangeNotifier {
-
+class EditLiturgyStore extends ChangeNotifier with DateMixin {
   int index = 0;
   late LiturgyModel entity;
   late EditLiturgyDTO dto;
 
   late List<LiturgyModel> items;
+  TimeOfDay? serviceHour;
+  late int? dayOfWeek;
 
-  fillItems(){
+  final TextEditingController preacherController = TextEditingController();
+  final TextEditingController themeController = TextEditingController();
+  final String preacherErrorText = 'por favor, insira o preletor do culto.';
+  final String themeErrorText = 'por favor, insira a mensagem do culto.';
+  final preacherKey = GlobalKey<FormState>();
+  final themeKey = GlobalKey<FormState>();
+  ValueNotifier<bool> isPreacherValid = ValueNotifier(true);
+  ValueNotifier<bool> isThemeValid = ValueNotifier(true);
+  bool isPressed = false;
+
+  preacherValidation(String? data) {
+    if (data == null || data.isEmpty) {
+      changeValue(isPreacherValid, false);
+      return null;
+    } else {
+      changeValue(isPreacherValid, true);
+      return null;
+    }
+  }
+
+  setDayInTheWeek() {
+    initDate(
+      startDateParam: nextWeekdayWithTime(
+        DateTime.now(),
+        dayOfWeek,
+        serviceHour,
+      ),
+    );
+    notifyListeners();
+  }
+
+  themeValidation(String? data) {
+    if (data == null || data.isEmpty) {
+      changeValue(isThemeValid, false);
+      return null;
+    } else {
+      changeValue(isThemeValid, true);
+      return null;
+    }
+  }
+
+  bool isEmptyData(String? data) {
+    return (data == null || data.isEmpty);
+  }
+
+  changeValue(ValueNotifier<bool> valueNotifier, bool newValue) {
+    Future.delayed(Duration.zero, () async {
+      valueNotifier.value = newValue;
+      notifyListeners();
+    });
+  }
+
+  fillItems() {
     items = [
       LiturgyModel(
         id: '0',
@@ -74,6 +128,7 @@ class EditLiturgyStore extends ChangeNotifier {
     ];
     notifyListeners();
   }
+
   void setEditLiturgyDTO(EditLiturgyDTO dto) {
     this.dto = dto;
     notifyListeners();

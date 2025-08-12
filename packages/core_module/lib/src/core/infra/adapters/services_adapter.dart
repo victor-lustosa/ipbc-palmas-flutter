@@ -5,18 +5,9 @@ import 'package:core_module/core_module.dart';
 class ServicesAdapter {
   static String toJson(List<ServicesEntity> source) =>
       json.encode(toMapList(source));
+
   static List<ServicesEntity> fromJson(String source) =>
       fromMapList(json.decode(source));
-  static ServicesEntity fromMap(dynamic json) {
-    return ServicesEntity(
-      heading: json['heading'],
-      path: json['path'],
-      title: json['title'],
-      hour: json['hour'],
-      image: json['image'],
-      id: json['id'],
-    );
-  }
 
   static List<Map<String, dynamic>> toMapList(List<ServicesEntity> data) {
     return data
@@ -24,6 +15,7 @@ class ServicesAdapter {
           (e) => {
             'heading': e.heading,
             'path': e.path,
+            'day_of_week': e.dayOfWeek,
             'id': e.id,
             'hour': e.hour,
             'title': e.title,
@@ -33,17 +25,6 @@ class ServicesAdapter {
         .toList();
   }
 
-  static Map<String, dynamic> toMap(ServicesEntity data) {
-    return {
-      'heading': data.heading,
-      'path': data.path,
-      'id': data.id,
-      'hour': data.hour,
-      'title': data.title,
-      'image': data.image,
-    };
-  }
-
   static List<ServicesEntity> fromMapList(dynamic data) {
     List<ServicesEntity> list = [];
     for (dynamic entity in data) {
@@ -51,13 +32,15 @@ class ServicesAdapter {
         ServicesEntity(
           heading: entity['heading'],
           title: entity['title'],
+          dayOfWeek: entity.containsKey('day_of_week')
+              ? entity['day_of_week']
+              : null,
           path: entity['path'],
           image: entity['image'],
           hour: entity['hour'],
-          id:
-              entity['id'].runtimeType == String
-                  ? entity['id']
-                  : entity['id'].toString(),
+          id: entity['id'].runtimeType == String
+              ? entity['id']
+              : entity['id'].toString(),
         ),
       );
     }

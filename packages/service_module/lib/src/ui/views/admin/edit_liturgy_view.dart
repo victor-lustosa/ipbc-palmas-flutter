@@ -9,17 +9,36 @@ class EditLiturgyView extends StatefulWidget {
   State<EditLiturgyView> createState() => _EditLiturgyViewState();
 }
 
-class _EditLiturgyViewState extends State<EditLiturgyView> {
+class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
   late EditLiturgyStore _editStore;
   late List<LiturgyModel> _liturgiesList;
   final Map<String, TextEditingController> _controllers = {};
   final Map<String, FocusNode> _focusNodes = {};
+  ValueNotifier<bool> isEventTitleValid = ValueNotifier(true);
+  ValueNotifier<bool> isEventSubtitleValid = ValueNotifier(true);
 
   @override
   void initState() {
     super.initState();
     setLightAppBar();
     _editStore = Modular.get<EditLiturgyStore>();
+    _editStore.setDayInTheWeek();
+  }
+
+  Future<void> setDateTime({
+    required DateTime selectedDate,
+    required Function(DateTime) onDatePicked,
+    required BuildContext context,
+  }) async {
+    DateTime? pickedDate = await selectDateTime(
+      selectedDate: selectedDate,
+      context: context,
+    );
+    if (pickedDate != null) {
+      setState(() {
+        onDatePicked(pickedDate);
+      });
+    }
   }
 
   @override
@@ -39,6 +58,99 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                   ServiceTopBarWidget(
                     image: _editStore.dto.image,
                     title: "Cultos de ${_editStore.dto.heading}",
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                    child: TemplateFormWidget(
+                      horizontalSymmetric: EdgeInsets.zero,
+                      valueListenable: _editStore.isPreacherValid,
+                      titleMargin: const EdgeInsets.only(bottom: 4),
+                      controller: _editStore.preacherController,
+                      title: 'Preletor',
+                      isValid: _editStore.isPreacherValid.value,
+                      errorText: _editStore.preacherErrorText,
+                      globalKey: _editStore.preacherKey,
+                      isPressed: _editStore.isPressed,
+                      inputDecoration: fieldInputDecoration(
+                        isValid: _editStore.isPreacherValid.value,
+                        hintText: 'Preletor do culto',
+                      ),
+                      validator: (data) {
+                        return _editStore.preacherValidation(data);
+                      },
+                      defaultHintColor: AppColors.hintInputForm,
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                    child: TemplateFormWidget(
+                      horizontalSymmetric: EdgeInsets.zero,
+                      valueListenable: _editStore.isThemeValid,
+                      titleMargin: const EdgeInsets.only(bottom: 4),
+                      controller: _editStore.themeController,
+                      title: 'Mensagem',
+                      isValid: _editStore.isThemeValid.value,
+                      errorText: _editStore.themeErrorText,
+                      globalKey: _editStore.themeKey,
+                      isPressed: _editStore.isPressed,
+                      inputDecoration: fieldInputDecoration(
+                        isValid: _editStore.isThemeValid.value,
+                        hintText: 'Mensagem do culto',
+                      ),
+                      validator: (data) {
+                        return _editStore.themeValidation(data);
+                      },
+                      defaultHintColor: AppColors.hintInputForm,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 16, right: 16, top: 24),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.calendar_month_outlined,
+                              color: AppColors.grey8,
+                              size: 20,
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 8),
+                              child: Text(
+                                "Selecione o dia do culto",
+                                style: AppFonts.defaultFont(
+                                  fontSize: 13,
+                                  color: AppColors.grey8,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 8),
+                          child: Row(
+                            children: [
+                              InkWell(
+                                onTap: () => setDateTime(
+                                  selectedDate: _editStore.startDate,
+                                  onDatePicked: (newDate) =>
+                                      _editStore.startDate = newDate,
+                                  context: context,
+                                ),
+                                child: Text(
+                                  getFormattedDateTime(_editStore.startDate),
+                                  style: AppFonts.defaultFont(
+                                    fontSize: 15,
+                                    color: AppColors.darkGreen,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(
@@ -84,7 +196,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                                     color: Colors.transparent,
                                     width: 36,
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         GridBallsTileWidget(index: index),
                                       ],
@@ -109,10 +222,12 @@ class _EditLiturgyViewState extends State<EditLiturgyView> {
                                           ),
                                         ),
                                         Visibility(
-                                          visible:
-                                              _liturgiesList[index].isAdditional,
+                                          visible: _liturgiesList[index]
+                                              .isAdditional,
                                           child: Container(
-                                            margin: const EdgeInsets.only(top: 4),
+                                            margin: const EdgeInsets.only(
+                                              top: 4,
+                                            ),
                                             child: Text(
                                               _liturgiesList[index].isAdditional
                                                   ? _liturgiesList[index]

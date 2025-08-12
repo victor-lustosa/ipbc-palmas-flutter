@@ -4,7 +4,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
-    with ImageMixin, ConnectivityMixin {
+    with ImageMixin, ConnectivityMixin, DateMixin {
   bool isSwitchOn = false;
 
   final IUseCases _useCases;
@@ -12,7 +12,9 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
 
   CreateEventStore({required IUseCases useCases})
     : _useCases = useCases,
-      super(InitialState<CreateEventState>());
+      super(InitialState<CreateEventState>()){
+    initDate();
+  }
 
   final TextEditingController eventTitleController = TextEditingController();
   final TextEditingController eventSubtitleController = TextEditingController();
@@ -58,32 +60,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   bool isPressed = false;
   File coverImage = File('');
 
-  late DateTime startDate;
-  late DateTime endDate;
-  TimeOfDay startTime = TimeOfDay(hour: 08, minute: 00);
-  TimeOfDay endTime = TimeOfDay(hour: 18, minute: 30);
-
-  // Função para formatar como "19h30"
-  String formatTime(TimeOfDay time) {
-    final hour = time.hour.toString().padLeft(2, '0');
-    final minute = time.minute.toString().padLeft(2, '0');
-    return '${hour}h$minute';
-  }
-
-  // Função para abrir o relógio
-  Future<void> pickTime({
-    required TimeOfDay selectedTime,
-    required Function(TimeOfDay) onTimePicked,
-    required BuildContext context,
-  }) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: selectedTime,
-    );
-    if (picked != null) {
-      onTimePicked(picked);
-    }
-  }
 
   titleValidation(String? data) {
     if (data == null || data.isEmpty) {
@@ -212,7 +188,10 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     final response = await isConnected();
     if (response) {
       value = AddDataEvent<CreateEventState>();
-      final resultUrl = await _useCases.saveImage(coverImage: coverImage, eventTitle: eventTitleController.text);
+      final resultUrl = await _useCases.saveImage(
+        coverImage: coverImage,
+        eventTitle: eventTitleController.text,
+      );
       // if (resultUrl != null) {
       //   _useCases.add(
       //     path: 'event',
@@ -223,10 +202,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     } else {
       value = NoConnectionState<CreateEventState>();
     }
-  }
-
-  DateTime combineDateAndTime(DateTime date, TimeOfDay time) {
-    return DateTime(date.year, date.month, date.day, time.hour, time.minute);
   }
 }
 
