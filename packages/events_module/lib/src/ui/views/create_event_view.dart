@@ -212,7 +212,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                               hintText: 'Título do seu evento',
                             ),
                             validator: (data) {
-                              return store.titleValidation(data);
+                              return store.formValidation(data, store.isEventTitleValid);
                             },
                             defaultHintColor: AppColors.hintInputForm,
                           ),
@@ -234,7 +234,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                               hintText: 'Subtítulo do seu evento',
                             ),
                             validator: (data) {
-                              return store.subtitleValidation(data);
+                              return store.formValidation(data, store.isEventSubtitleValid);
                             },
                             defaultHintColor: AppColors.hintInputForm,
                           ),
@@ -243,18 +243,18 @@ class _CreateEventViewState extends State<CreateEventView> {
                           margin: const EdgeInsets.only(top: 16, bottom: 24),
                           child: TemplateFormWidget(
                             horizontalSymmetric: EdgeInsets.zero,
-                            valueListenable: store.isEventTitleValid,
+                            valueListenable: store.isEventDescriptionValid,
                             titleMargin: const EdgeInsets.only(bottom: 4),
                             controller: store.eventDescriptionController,
                             title: 'Descrição',
                             maxLines: 4,
                             fieldHeight: 110,
-                            isValid: store.isEventTitleValid.value,
+                            isValid: store.isEventDescriptionValid.value,
                             errorText: store.eventDescriptionErrorText,
                             globalKey: store.eventDescriptionKey,
                             isPressed: store.isPressed,
                             inputDecoration: fieldInputDecoration(
-                              hintColor: store.isEventTitleValid
+                              hintColor: store.isEventDescriptionValid
                                       .value // store.isEventDescriptionValid
                                   ? AppColors.grey5
                                   : Colors.red,
@@ -268,7 +268,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                               hintText: 'Descrição do evento',
                             ),
                             validator: (data) {
-                              return store.descriptionValidation(data);
+                              return store.formValidation(data, store.isEventDescriptionValid);
                             },
                             defaultHintColor: AppColors.hintInputForm,
                           ),
@@ -458,7 +458,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                               hintText: 'Selecione a localização',
                             ),
                             validator: (data) {
-                              return store.locationValidation(data);
+                              return store.formValidation(data, store.isEventLocationValid);
                             },
                             defaultHintColor: AppColors.hintInputForm,
                           ),
@@ -492,7 +492,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                               hintText: 'Nome do local',
                             ),
                             validator: (data) {
-                              return store.locationValidation(data);
+                              return store.formValidation(data, store.isEventLocationNameValid);
                             },
                             defaultHintColor: AppColors.hintInputForm,
                           ),
@@ -515,7 +515,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                               hintText: 'Link do evento',
                             ),
                             validator: (data) {
-                              return store.linkValidation(data);
+                              return store.formValidation(data, store.isEventLinkValid);
                             },
                           ),
                         ),
@@ -537,14 +537,14 @@ class _CreateEventViewState extends State<CreateEventView> {
                               hintText: 'Link do contato',
                             ),
                             validator: (data) {
-                              return store.contactLinkValidation(data);
+                              return store.formValidation(data, store.isContactLinkValid);
                             },
                           ),
                         ),
                         ButtonWidget(
                           action: () {
 
-                            store.addData();
+                            store.addData(context);
                           },
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),

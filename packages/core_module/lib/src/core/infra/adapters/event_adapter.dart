@@ -49,18 +49,17 @@ class EventAdapter {
 
   static Map<String, dynamic> toMap(EventEntity data) {
     return {
-      'id': data.id,
       'title': data.title,
       'subtitle': data.subtitle,
       'image': data.image,
-      'start_date_time': data.startDateTime,
-      'end_date_time': data.endDateTime,
+      'start_date_time': data.startDateTime.toIso8601String(),
+      'end_date_time': data.endDateTime.toIso8601String(),
       'description': data.description,
       'location': data.location,
       'local_name': data.localName,
       'sign_up_link': data.signUpLink,
       'contact_link': data.contactLink,
-      'create_at': data.createAt,
+      'create_at': data.createAt.toIso8601String(),
     };
   }
 

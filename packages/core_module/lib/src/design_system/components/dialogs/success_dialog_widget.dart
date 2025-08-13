@@ -75,10 +75,10 @@ class SuccessDialogWidget extends StatelessWidget {
   }
 }
 
-Future<void> showCustomSuccessDialog(
-  BuildContext context,
-  String title,
-  String message, {
+Future<void> showCustomSuccessDialog({
+  required BuildContext context,
+  required String title,
+  required String message,
   Function()? onClose,
 }) async {
   return showDialog<void>(
@@ -86,6 +86,13 @@ Future<void> showCustomSuccessDialog(
     barrierDismissible: true,
     barrierColor: Colors.transparent,
     builder: (BuildContext context) {
+      if(onClose == null){
+        Future.delayed(Duration(seconds: 1), (){
+          nativePop(context);
+
+        });
+        nativePop(context);
+      }
       return Stack(
         children: [
           Positioned(

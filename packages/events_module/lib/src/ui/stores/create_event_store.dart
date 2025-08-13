@@ -12,8 +12,20 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
 
   CreateEventStore({required IUseCases useCases})
     : _useCases = useCases,
-      super(InitialState<CreateEventState>());
+      super(InitialState<CreateEventState>()) {
+    controllerValidators = {
+      eventTitleController: isEventTitleValid,
+      eventSubtitleController: isEventSubtitleValid,
+      contactLinkController: isContactLinkValid,
+      eventLocationController: isEventLocationValid,
+      eventLocationNameController: isEventLocationNameValid,
+      eventLinkController: isEventLinkValid,
+      eventDescriptionController: isEventDescriptionValid,
+    };
+  }
 
+  late final Map<TextEditingController, ValueNotifier<bool>>
+  controllerValidators;
   final TextEditingController eventTitleController = TextEditingController();
   final TextEditingController eventSubtitleController = TextEditingController();
   final TextEditingController eventLocationController = TextEditingController();
@@ -26,7 +38,8 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   final TextEditingController eventDescriptionController =
       TextEditingController();
   final String eventTitleErrorText = 'por favor, insira o título do evento.';
-  final String eventSubtitleErrorText = 'por favor, insira o título do evento.';
+  final String eventSubtitleErrorText =
+      'por favor, insira o subtítulo do evento.';
   final String contactLinkErrorText =
       'por favor, insira o link do contato do evento.';
   final String eventLocationErrorText =
@@ -85,74 +98,28 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     }
   }
 
-  titleValidation(String? data) {
-    if (data == null || data.isEmpty) {
-      changeValue(isEventTitleValid, false);
-      return null;
-    } else {
-      changeValue(isEventTitleValid, true);
-      return null;
-    }
-  }
-
-  subtitleValidation(String? data) {
-    if (data == null || data.isEmpty) {
-      changeValue(isEventSubtitleValid, false);
-      return null;
-    } else {
-      changeValue(isEventSubtitleValid, true);
-      return null;
-    }
-  }
-
-  descriptionValidation(String? data) {
+  formValidation(String? data, ValueNotifier<bool> isValid) {
     if (isEmptyData(data)) {
-      changeValue(isEventDescriptionValid, false);
+      changeValue(isValid, false);
       return null;
     } else {
-      changeValue(isEventDescriptionValid, true);
+      changeValue(isValid, true);
       return null;
     }
   }
 
-  locationValidation(String? data) {
-    if (isEmptyData(data)) {
-      changeValue(isEventLocationValid, false);
-      return null;
-    } else {
-      changeValue(isEventLocationValid, true);
-      return null;
-    }
-  }
+  bool validateAllFields() {
+    bool allTextValid = true;
+    controllerValidators.forEach((controller, isValid) {
+      if (controller.text.trim().isEmpty) {
+        formValidation(controller.text, isValid);
+        allTextValid = false;
+      }
+    });
+    final imageValid = coverImage.path.trim().isNotEmpty;
+    changeValue(isCoverImageValid, imageValid);
 
-  linkValidation(String? data) {
-    if (isEmptyData(data)) {
-      changeValue(isEventLinkValid, false);
-      return null;
-    } else {
-      changeValue(isEventLinkValid, true);
-      return null;
-    }
-  }
-
-  linkDescriptionValidation(String? data) {
-    if (isEmptyData(data)) {
-      changeValue(isEventLinkDescriptionValid, false);
-      return null;
-    } else {
-      changeValue(isEventLinkDescriptionValid, true);
-      return null;
-    }
-  }
-
-  contactLinkValidation(String? data) {
-    if (isEmptyData(data)) {
-      changeValue(isContactLinkValid, false);
-      return null;
-    } else {
-      changeValue(isContactLinkValid, true);
-      return null;
-    }
+    return allTextValid && imageValid;
   }
 
   bool isEmptyData(String? data) {
@@ -208,20 +175,30 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
 
   static String createId() => DateTime.now().microsecondsSinceEpoch.toString();
 
-  Future<void> addData() async {
-    final response = await isConnected();
-    if (response) {
-      value = AddDataEvent<CreateEventState>();
-      final resultUrl = await _useCases.saveImage(coverImage: coverImage, eventTitle: eventTitleController.text);
-      // if (resultUrl != null) {
-      //   _useCases.add(
-      //     path: 'event',
-      //     data: EventAdapter.toMap(fillEventEntity(resultUrl)),
-      //   );
-      // }
-      value = DataAddedState<CreateEventState>();
-    } else {
-      value = NoConnectionState<CreateEventState>();
+  Future<void> addData(BuildContext context) async {
+    if (validateAllFields()) {
+      final response = await isConnected();
+      if (response) {
+        value = AddDataEvent<CreateEventState>();
+        final resultUrl = await _useCases.saveImage(
+          coverImage: coverImage,
+          eventTitle: eventTitleController.text,
+        );
+        if (resultUrl != null) {
+          _useCases.add(
+            path: 'event',
+            data: EventAdapter.toMap(fillEventEntity(resultUrl)),
+          );
+          showCustomSuccessDialog(
+            context: context,
+            title: 'Sucesso!',
+            message: 'Evento salvo',
+          );
+        }
+        value = DataAddedState<CreateEventState>();
+      } else {
+        value = NoConnectionState<CreateEventState>();
+      }
     }
   }
 
