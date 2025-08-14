@@ -12,17 +12,13 @@ class ServicesCollectionBloc
     with ConnectivityMixin {
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
-  String path = '';
-  String customSelect =
-      '/id, createAt, image, title, theme, preacher, hour, heading, type, guideIsVisible, service_liturgies (liturgies(id, isAdditional, sequence, additional)), service_lyrics (lyrics(id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))))';
+  late Map<String, Object> servicesCollectionQueryParams;
 
   ServicesCollectionBloc({required this.onlineUseCases, this.offlineUseCases})
     : super(LoadingState()) {
     on<GetDataEvent<ServicesCollectionEvent>>(_getInSupa);
     on<LoadingEvent<ServicesCollectionEvent>>(_loading);
   }
-
-
 
   /*Future<void> _getInSupa(
       GetInSupaEvent<ServicesCollectionEvent> event, emit) async {
@@ -43,11 +39,19 @@ class ServicesCollectionBloc
   Future<void> _getInSupa(GetDataEvent event, emit) async {
     final response = await isConnected();
     if (response) {
-      path = event.path;
-      path += customSelect;
+      List<String> pathList = event.path.split('/');
+      servicesCollectionQueryParams = {
+        'table': 'service',
+        'orderBy': 'createAt',
+        'filterColumn': pathList[1],
+        'filterValue':  pathList[2],
+        'ascending':  bool.parse(pathList[4]),
+        'selectFields':
+            'id, createAt, image, title, theme, preacher, hour, heading, type, guideIsVisible, service_liturgies (liturgies(id, isAdditional, sequence, additional)), service_lyrics (lyrics(id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))))',
+      };
       add(LoadingEvent<ServicesCollectionEvent>());
       List<ServiceEntity> services = await onlineUseCases.get(
-        path: path,
+        query: servicesCollectionQueryParams,
         converter: ServiceAdapter.fromMapList,
       );
       emit(

@@ -8,7 +8,11 @@ mixin DateMixin {
   late TimeOfDay startTime;
   late TimeOfDay endTime;
 
-  DateTime nextWeekdayWithTime(DateTime from, int? targetWeekday, TimeOfDay? time) {
+  DateTime nextWeekdayWithTime(
+    DateTime from,
+    int? targetWeekday,
+    TimeOfDay? time,
+  ) {
     int daysToAdd = ((targetWeekday ?? 6) - from.weekday) % 7;
     if (daysToAdd == 0) {
       daysToAdd = 7;
@@ -27,7 +31,9 @@ mixin DateMixin {
   TimeOfDay parseTimeOfDayFromH(String timeString) {
     final parts = timeString.split('h');
     final hour = int.parse(parts[0]);
-    final minute = (parts.length > 1 && parts[1].isNotEmpty) ? int.parse(parts[1]) : 0;
+    final minute = (parts.length > 1 && parts[1].isNotEmpty)
+        ? int.parse(parts[1])
+        : 0;
     return TimeOfDay(hour: hour, minute: minute);
   }
 

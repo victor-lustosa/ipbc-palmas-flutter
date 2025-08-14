@@ -4,7 +4,7 @@ abstract class IUseCases
     implements IGetUseCases, IAddUseCases, IUpdateUseCases, IDeleteUseCases, ISaveImageUseCases {}
 
 abstract class IGetUseCases {
-  Future<dynamic> get({String? path, required Function converter});
+  Future<dynamic> get({Map<String, dynamic>? query, required Function converter});
 }
 
 abstract class IAddUseCases {

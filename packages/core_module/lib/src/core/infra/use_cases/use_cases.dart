@@ -8,8 +8,8 @@ class UseCases<T> implements IUseCases {
   UseCases({required this.repository});
 
   @override
-  Future<dynamic> get({String? path, required Function converter}) async {
-    var result = await repository.get(path: path);
+  Future<dynamic> get({Map<String, dynamic>? query, required Function converter}) async {
+    var result = await repository.get(query: query);
     return converter(result);
   }
 

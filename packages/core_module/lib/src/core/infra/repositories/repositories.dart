@@ -3,7 +3,7 @@ import 'dart:io';
 abstract class IRepository implements IGet, IGetByPagination, IAdd, IDelete, IUpdate, ISaveImage {}
 
 abstract class IGet {
-  Future<dynamic> get<T>({String? path});
+  Future<dynamic> get<T>({Map<String, dynamic>? query});
 }
 
 abstract class IGetByPagination {

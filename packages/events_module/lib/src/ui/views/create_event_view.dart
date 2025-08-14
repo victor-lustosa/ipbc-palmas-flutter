@@ -13,12 +13,12 @@ class CreateEventView extends StatefulWidget {
 }
 
 class _CreateEventViewState extends State<CreateEventView> with DateMixin {
-  late final CreateEventStore store;
+  late final CreateEventStore _store;
 
   @override
   void initState() {
     super.initState();
-    store = Modular.get<CreateEventStore>();
+    _store = Modular.get<CreateEventStore>();
     Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
   }
   
@@ -46,7 +46,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: store,
+      valueListenable: _store,
       builder: (_, state, child) {
         return Scaffold(
           body: SafeArea(
@@ -96,7 +96,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                       Column(
                         children: [
                           ValueListenableBuilder(
-                            valueListenable: store.isCoverImageValid,
+                            valueListenable: _store.isCoverImageValid,
                             builder: (_, value, ___) {
                               return Container(
                                 decoration: BoxDecoration(
@@ -111,11 +111,11 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                 width: context.sizeOf.width,
                                 height: 144,
                                 child: InkWell(
-                                  onTap: () async => await store.getImage(),
+                                  onTap: () async => await _store.getImage(),
                                   child:
                                       state is FetchedImageState ||
                                           (state is UpdateFormFieldState &&
-                                              store.coverImage.path.isNotEmpty)
+                                              _store.coverImage.path.isNotEmpty)
                                       ? Container(
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.all(
@@ -124,7 +124,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                             image: DecorationImage(
                                               fit: BoxFit.cover,
                                               image: FileImage(
-                                                store.coverImage,
+                                                _store.coverImage,
                                               ),
                                             ),
                                           ),
@@ -172,7 +172,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                             },
                           ),
                           ValueListenableBuilder(
-                            valueListenable: store.isCoverImageValid,
+                            valueListenable: _store.isCoverImageValid,
                             builder: (_, value, ___) {
                               return Visibility(
                                 visible: !value,
@@ -189,20 +189,20 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                         margin: const EdgeInsets.only(top: 16),
                         child: TemplateFormWidget(
                           horizontalSymmetric: EdgeInsets.zero,
-                          valueListenable: store.isEventTitleValid,
+                          valueListenable: _store.isEventTitleValid,
                           titleMargin: const EdgeInsets.only(bottom: 4),
-                          controller: store.eventTitleController,
+                          controller: _store.eventTitleController,
                           title: 'Título do evento',
-                          isValid: store.isEventTitleValid.value,
-                          errorText: store.eventTitleErrorText,
-                          globalKey: store.eventTitleKey,
-                          isPressed: store.isPressed,
+                          isValid: _store.isEventTitleValid.value,
+                          errorText: _store.eventTitleErrorText,
+                          globalKey: _store.eventTitleKey,
+                          isPressed: _store.isPressed,
                           inputDecoration: fieldInputDecoration(
-                            isValid: store.isEventTitleValid.value,
+                            isValid: _store.isEventTitleValid.value,
                             hintText: 'Título do seu evento',
                           ),
                           validator: (data) {
-                            return store.titleValidation(data);
+                            return _store.titleValidation(data);
                           },
                           defaultHintColor: AppColors.hintInputForm,
                         ),
@@ -211,20 +211,20 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                         margin: const EdgeInsets.only(top: 16),
                         child: TemplateFormWidget(
                           horizontalSymmetric: EdgeInsets.zero,
-                          valueListenable: store.isEventSubtitleValid,
+                          valueListenable: _store.isEventSubtitleValid,
                           titleMargin: const EdgeInsets.only(bottom: 4),
-                          controller: store.eventSubtitleController,
+                          controller: _store.eventSubtitleController,
                           title: 'Subtítulo do evento',
-                          isValid: store.isEventSubtitleValid.value,
-                          errorText: store.eventSubtitleErrorText,
-                          globalKey: store.eventSubtitleKey,
-                          isPressed: store.isPressed,
+                          isValid: _store.isEventSubtitleValid.value,
+                          errorText: _store.eventSubtitleErrorText,
+                          globalKey: _store.eventSubtitleKey,
+                          isPressed: _store.isPressed,
                           inputDecoration: fieldInputDecoration(
-                            isValid: store.isEventSubtitleValid.value,
+                            isValid: _store.isEventSubtitleValid.value,
                             hintText: 'Subtítulo do seu evento',
                           ),
                           validator: (data) {
-                            return store.subtitleValidation(data);
+                            return _store.subtitleValidation(data);
                           },
                           defaultHintColor: AppColors.hintInputForm,
                         ),
@@ -233,21 +233,21 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                         margin: const EdgeInsets.only(top: 16, bottom: 24),
                         child: TemplateFormWidget(
                           horizontalSymmetric: EdgeInsets.zero,
-                          valueListenable: store.isEventTitleValid,
+                          valueListenable: _store.isEventTitleValid,
                           titleMargin: const EdgeInsets.only(bottom: 4),
-                          controller: store.eventDescriptionController,
+                          controller: _store.eventDescriptionController,
                           title: 'Descrição',
                           maxLines: 4,
                           fieldHeight: 110,
-                          isValid: store.isEventTitleValid.value,
-                          errorText: store.eventDescriptionErrorText,
-                          globalKey: store.eventDescriptionKey,
-                          isPressed: store.isPressed,
+                          isValid: _store.isEventTitleValid.value,
+                          errorText: _store.eventDescriptionErrorText,
+                          globalKey: _store.eventDescriptionKey,
+                          isPressed: _store.isPressed,
                           inputDecoration: fieldInputDecoration(
                             hintColor:
-                                store
+                                _store
                                     .isEventTitleValid
-                                    .value // store.isEventDescriptionValid
+                                    .value // _store.isEventDescriptionValid
                                 ? AppColors.grey5
                                 : Colors.red,
                             contentPadding: const EdgeInsets.only(
@@ -256,11 +256,11 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                               right: 10,
                             ),
                             isValid: true,
-                            // store.isEventDescriptionValid,
+                            // _store.isEventDescriptionValid,
                             hintText: 'Descrição do evento',
                           ),
                           validator: (data) {
-                            return store.descriptionValidation(data);
+                            return _store.descriptionValidation(data);
                           },
                           defaultHintColor: AppColors.hintInputForm,
                         ),
@@ -289,10 +289,10 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                   ],
                                 ),
                                 SwitchButtonWidget(
-                                  value: store.isSwitchOn,
+                                  value: _store.isSwitchOn,
                                   onChanged: (bool newValue) {
                                     setState(() {
-                                      store.isSwitchOn = newValue;
+                                      _store.isSwitchOn = newValue;
                                     });
                                   },
                                 ),
@@ -319,13 +319,13 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                     ),
                                     InkWell(
                                       onTap: () => setDateTime(
-                                        selectedDate: store.startDate,
+                                        selectedDate: _store.startDate,
                                         onDatePicked: (newDate) =>
-                                            store.startDate = newDate,
+                                            _store.startDate = newDate,
                                         context: context,
                                       ),
                                       child: Text(
-                                        getFormattedDateTime(store.startDate),
+                                        getFormattedDateTime(_store.startDate),
                                         style: AppFonts.defaultFont(
                                           fontSize: 15,
                                           color: AppColors.darkGreen,
@@ -336,19 +336,19 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                   ],
                                 ),
                                 Visibility(
-                                  visible: !store.isSwitchOn,
+                                  visible: !_store.isSwitchOn,
                                   child: InkWell(
-                                    onTap: () => store.pickTime(
-                                      selectedTime: store.startTime,
+                                    onTap: () => _store.pickTime(
+                                      selectedTime: _store.startTime,
                                       context: context,
                                       onTimePicked: (newTime) {
                                         setState(() {
-                                          store.startTime = newTime;
+                                          _store.startTime = newTime;
                                         });
                                       },
                                     ),
                                     child: Text(
-                                      store.formatTime(store.startTime),
+                                      _store.formatTime(_store.startTime),
                                       style: AppFonts.defaultFont(
                                         fontSize: 15,
                                         color: AppColors.darkGreen,
@@ -376,12 +376,12 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                     ),
                                     InkWell(
                                       onTap: () => setDateTime(
-                                        selectedDate: store.endDate,
+                                        selectedDate: _store.endDate,
                                         onDatePicked: (newDate) =>
-                                            store.endDate = newDate, context: context,
+                                            _store.endDate = newDate, context: context,
                                       ),
                                       child: Text(
-                                        getFormattedDateTime(store.endDate),
+                                        getFormattedDateTime(_store.endDate),
                                         style: AppFonts.defaultFont(
                                           color: AppColors.darkGreen,
                                           fontSize: 15,
@@ -392,19 +392,19 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                   ],
                                 ),
                                 Visibility(
-                                  visible: !store.isSwitchOn,
+                                  visible: !_store.isSwitchOn,
                                   child: InkWell(
-                                    onTap: () => store.pickTime(
-                                      selectedTime: store.endTime,
+                                    onTap: () => _store.pickTime(
+                                      selectedTime: _store.endTime,
                                       context: context,
                                       onTimePicked: (newTime) {
                                         setState(() {
-                                          store.endTime = newTime;
+                                          _store.endTime = newTime;
                                         });
                                       },
                                     ),
                                     child: Text(
-                                      store.formatTime(store.endTime),
+                                      _store.formatTime(_store.endTime),
                                       style: AppFonts.defaultFont(
                                         fontSize: 15,
                                         color: AppColors.darkGreen,
@@ -422,15 +422,15 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                         margin: const EdgeInsets.only(top: 24),
                         child: TemplateFormWidget(
                           horizontalSymmetric: EdgeInsets.zero,
-                          valueListenable: store.isEventLocationValid,
+                          valueListenable: _store.isEventLocationValid,
                           titleMargin: const EdgeInsets.only(bottom: 4),
-                          controller: store.eventLocationController,
+                          controller: _store.eventLocationController,
                           title: 'Localização do google maps',
                           maxLines: 4,
-                          isValid: store.isEventLocationValid.value,
-                          errorText: store.eventLocationErrorText,
-                          globalKey: store.eventLocationKey,
-                          isPressed: store.isPressed,
+                          isValid: _store.isEventLocationValid.value,
+                          errorText: _store.eventLocationErrorText,
+                          globalKey: _store.eventLocationKey,
+                          isPressed: _store.isPressed,
                           inputDecoration: fieldInputDecoration(
                             prefixIconConstraints: const BoxConstraints(),
                             prefixIcon: Padding(
@@ -444,11 +444,11 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                               ),
                             ),
                             contentPadding: const EdgeInsets.only(top: 10),
-                            isValid: store.isEventLocationValid.value,
+                            isValid: _store.isEventLocationValid.value,
                             hintText: 'Selecione a localização',
                           ),
                           validator: (data) {
-                            return store.locationValidation(data);
+                            return _store.locationValidation(data);
                           },
                           defaultHintColor: AppColors.hintInputForm,
                         ),
@@ -457,14 +457,14 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                         margin: const EdgeInsets.only(top: 8),
                         child: TemplateFormWidget(
                           horizontalSymmetric: EdgeInsets.zero,
-                          valueListenable: store.isEventLocationNameValid,
+                          valueListenable: _store.isEventLocationNameValid,
                           titleMargin: const EdgeInsets.only(bottom: 4),
-                          controller: store.eventLocationNameController,
+                          controller: _store.eventLocationNameController,
                           maxLines: 4,
-                          isValid: store.isEventLocationNameValid.value,
-                          errorText: store.eventLocationNameErrorText,
-                          globalKey: store.eventLocationNameKey,
-                          isPressed: store.isPressed,
+                          isValid: _store.isEventLocationNameValid.value,
+                          errorText: _store.eventLocationNameErrorText,
+                          globalKey: _store.eventLocationNameKey,
+                          isPressed: _store.isPressed,
                           inputDecoration: fieldInputDecoration(
                             prefixIconConstraints: const BoxConstraints(),
                             prefixIcon: Padding(
@@ -478,11 +478,11 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                               ),
                             ),
                             contentPadding: const EdgeInsets.only(top: 10),
-                            isValid: store.isEventLocationNameValid.value,
+                            isValid: _store.isEventLocationNameValid.value,
                             hintText: 'Nome do local',
                           ),
                           validator: (data) {
-                            return store.locationValidation(data);
+                            return _store.locationValidation(data);
                           },
                           defaultHintColor: AppColors.hintInputForm,
                         ),
@@ -491,21 +491,21 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                         margin: const EdgeInsets.only(top: 16),
                         child: TemplateFormWidget(
                           horizontalSymmetric: EdgeInsets.zero,
-                          valueListenable: store.isEventLinkValid,
-                          controller: store.eventLinkController,
+                          valueListenable: _store.isEventLinkValid,
+                          controller: _store.eventLinkController,
                           title: 'Link para inscrição',
-                          isValid: store.isEventLinkValid.value,
-                          errorText: store.eventLinkErrorText,
-                          globalKey: store.eventLinkKey,
-                          isPressed: store.isPressed,
+                          isValid: _store.isEventLinkValid.value,
+                          errorText: _store.eventLinkErrorText,
+                          globalKey: _store.eventLinkKey,
+                          isPressed: _store.isPressed,
                           inputDecoration: fieldInputDecoration(
                             prefixIconConstraints: const BoxConstraints(),
                             prefixIcon: prefixLocationIcon,
-                            isValid: store.isEventLinkValid.value,
+                            isValid: _store.isEventLinkValid.value,
                             hintText: 'Link do evento',
                           ),
                           validator: (data) {
-                            return store.linkValidation(data);
+                            return _store.linkValidation(data);
                           },
                         ),
                       ),
@@ -513,27 +513,27 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                         margin: const EdgeInsets.only(top: 16, bottom: 32),
                         child: TemplateFormWidget(
                           horizontalSymmetric: EdgeInsets.zero,
-                          valueListenable: store.isContactLinkValid,
-                          controller: store.contactLinkController,
+                          valueListenable: _store.isContactLinkValid,
+                          controller: _store.contactLinkController,
                           title: 'Link para contato',
-                          isValid: store.isContactLinkValid.value,
-                          errorText: store.contactLinkErrorText,
-                          globalKey: store.contactLinkKey,
-                          isPressed: store.isPressed,
+                          isValid: _store.isContactLinkValid.value,
+                          errorText: _store.contactLinkErrorText,
+                          globalKey: _store.contactLinkKey,
+                          isPressed: _store.isPressed,
                           inputDecoration: fieldInputDecoration(
                             prefixIconConstraints: const BoxConstraints(),
                             prefixIcon: prefixLocationIcon,
-                            isValid: store.isContactLinkValid.value,
+                            isValid: _store.isContactLinkValid.value,
                             hintText: 'Link do contato',
                           ),
                           validator: (data) {
-                            return store.contactLinkValidation(data);
+                            return _store.contactLinkValidation(data);
                           },
                         ),
                       ),
                       ButtonWidget(
                         action: () {
-                          store.addData();
+                          _store.addData();
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),

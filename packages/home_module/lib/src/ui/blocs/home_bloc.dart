@@ -5,9 +5,20 @@ import 'package:flutter/material.dart';
 
 class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     with ConnectivityMixin {
+
   final IUseCases _useCases;
-  final String servicesPath = 'services/createAt/false';
-  final String eventPath = 'event/create_at/false';
+
+  final Map<String, Object> eventQueryParams = {
+    'table': 'event',
+    'orderBy': 'create_at',
+    'ascending': false,
+  };
+
+  final Map<String, Object> servicesQueryParams = {
+    'table': 'services',
+    'orderBy': 'createAt',
+    'ascending': false,
+  };
 
   HomeBloc({required IUseCases useCases})
     : _useCases = useCases,
@@ -15,16 +26,18 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     on<GetDataEvent<HomeEvent>>(_getData);
   }
 
-
   Future<void> _getData(GetDataEvent event, emit) async {
     final response = await isConnected();
     if (response) {
       final results = await Future.wait([
         _useCases.get(
-          path: servicesPath,
+          query: servicesQueryParams,
           converter: ServicesAdapter.fromMapList,
         ),
-        _useCases.get(path: eventPath, converter: EventAdapter.fromMapList),
+        _useCases.get(
+          query: eventQueryParams,
+          converter: EventAdapter.fromMapList,
+        ),
       ]);
       final services = results[0];
       final events = results[1];

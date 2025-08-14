@@ -52,8 +52,8 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                 Container(
                   width: widget.width,
                   height: 144,
-                  decoration: const BoxDecoration(
-                    boxShadow: [
+                  decoration: BoxDecoration(
+                    boxShadow: const [
                       BoxShadow(
                         blurRadius: 10,
                         spreadRadius: 1,
@@ -62,22 +62,22 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                       ),
                     ],
                     color: AppColors.grey4,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(16),
                       topRight: Radius.circular(16),
                     ),
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      colorFilter: ColorFilter.mode(
+                      colorFilter: const ColorFilter.mode(
                         Color.fromRGBO(0, 66, 46, 0.40),
                         BlendMode.color,
                       ),
-                      image: AssetImage(AppImages.familyDayImage),
+                      image: NetworkImage(widget.entities[index].image),
                     ),
                   ),
                   child: Center(
                     child: Text(
-                      'Dia da Família',
+                      widget.entities[index].title,
                       style: AppFonts.defaultFont(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
@@ -150,7 +150,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Dia da família IPBC Palmas',
+                                widget.entities[index].subtitle,
                                 style: AppFonts.defaultFont(
                                   color: AppColors.grey12,
                                   fontSize: 17,
@@ -181,7 +181,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                                 ),
                               ),
                               Text(
-                                'Parque Casamar',
+                                widget.entities[index].localName,
                                 style: AppFonts.defaultFont(
                                   color: AppColors.grey8,
                                   fontSize: 12,

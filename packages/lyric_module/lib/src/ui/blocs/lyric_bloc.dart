@@ -9,7 +9,13 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
   List<LyricModel>? lyricsList;
-  final String path = 'lyrics/createAt/false/id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))';
+
+  final Map <String, Object> lyricQueryParams = {
+    'table': 'lyrics',
+    'orderBy': 'createAt',
+    'ascending': false,
+    'selectFields': 'id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))',
+  };
 
   LyricBloc({
     required this.onlineUseCases,
@@ -26,7 +32,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     final response = await isConnected();
     if (response) {
       lyricsList = await onlineUseCases.get(
-        path: path,
+        query: lyricQueryParams,
         converter: LyricAdapter.fromMapList,
       );
       if (lyricsList!.isNotEmpty) {
@@ -44,9 +50,13 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     //Caso esteja sem conexão eu salvo essas musicas no hive
     int offset = lyricsList!.length;
 
-    String pathLimit = 'lyrics/${event.limit}/$offset';
+    final Map <String, Object> pathLimit = {
+      'table': 'lyrics',
+      'limit': event.limit,
+      'offset': offset,
+    };
     lyricsListAux = await onlineUseCases.get(
-      path: pathLimit,
+      query: pathLimit,
       converter: LyricAdapter.fromMapList,
     );
     //Verificando se tem novos itens retornados se sim eu adiciona lista principal

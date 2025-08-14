@@ -8,7 +8,12 @@ class EventsListBloc
     with ConnectivityMixin {
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
-  String path = 'event/create_at/false';
+
+  final Map<String, Object> eventQueryParams = {
+    'table': 'event',
+    'orderBy': 'create_at',
+    'ascending': false,
+  };
 
   EventsListBloc({
     required this.onlineUseCases,
@@ -19,11 +24,10 @@ class EventsListBloc
   }
 
   Future<void> _getInSupa(GetDataEvent event, emit) async {
-    path = event.path.isNotEmpty ? event.path : path;
     final response = await isConnected();
     if (response) {
       List<EventEntity> events = await onlineUseCases.get(
-          path: path, converter: EventAdapter.fromMapList);
+          query: eventQueryParams, converter: EventAdapter.fromMapList);
       emit(DataFetchedState<EventsListState, List<EventEntity>>(
           entities: events));
     } else {
