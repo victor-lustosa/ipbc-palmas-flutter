@@ -1,9 +1,9 @@
 import 'package:core_module/core_module.dart';
 
-class ValidationUtil {
+mixin ValidationMixin {
   final String firebaseDatabase = 'firebase';
 
-  static String validationDatasource() {
+  String validationDatasource() {
     switch (DateFormat('EEEE').format(DateTime.now())) {
       case 'Friday':
         return 'firebase';
@@ -14,5 +14,12 @@ class ValidationUtil {
       default:
         return 'hive';
     }
+  }
+
+  String formatText(String text) {
+    return removeDiacritics(text)
+        .toLowerCase()
+        .replaceAll(RegExp(r'\s+'), '_')
+        .replaceAll(RegExp(r'[^a-z0-9_]+'), '');
   }
 }

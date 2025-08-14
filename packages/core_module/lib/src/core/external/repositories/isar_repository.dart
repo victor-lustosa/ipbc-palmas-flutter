@@ -5,6 +5,7 @@ import '../../../../core_module.dart';
 class IsarRepository implements IRepository {
   final Isar isar;
   List<String> params = [];
+
   IsarRepository({required this.isar});
 
   static Future init() async {
@@ -12,14 +13,13 @@ class IsarRepository implements IRepository {
     await Isar.open([
       IsarTokenDTOSchema,
       IsarUserDTOSchema,
-
     ], directory: dir.path);
   }
 
   @override
   Future<dynamic> get<T>({Map<String, dynamic>? query}) async {
     final entity = await isar.collection<T>().where().findAll();
-    if(entity.isNotEmpty){
+    if (entity.isNotEmpty) {
       return Future.value(entity[0]);
     } else {
       return null;
@@ -46,7 +46,8 @@ class IsarRepository implements IRepository {
     params = path.split('/');
     int page = int.parse(params[0]);
     int pageSize = int.parse(params[1]);
-    return await isar.collection<T>()
+    return await isar
+        .collection<T>()
         .where()
         .offset((page - 1) * pageSize)
         .limit(pageSize)
@@ -54,8 +55,11 @@ class IsarRepository implements IRepository {
   }
 
   @override
-  Future<String?> saveImage({required File coverImage, required String eventTitle}) {
-    // TODO: implement saveImage
+  Future<String?> saveImage({
+    required File coverImage,
+    required String fileName,
+    required String bucketName,
+  }) {
     throw UnimplementedError();
   }
 }

@@ -1,10 +1,18 @@
 import 'dart:io';
 
 abstract class IUseCases
-    implements IGetUseCases, IAddUseCases, IUpdateUseCases, IDeleteUseCases, ISaveImageUseCases {}
+    implements
+        IGetUseCases,
+        IAddUseCases,
+        IUpdateUseCases,
+        IDeleteUseCases,
+        ISaveImageUseCases {}
 
 abstract class IGetUseCases {
-  Future<dynamic> get({Map<String, dynamic>? query, required Function converter});
+  Future<dynamic> get({
+    Map<String, dynamic>? query,
+    required Function converter,
+  });
 }
 
 abstract class IAddUseCases {
@@ -20,5 +28,9 @@ abstract class IDeleteUseCases {
 }
 
 abstract class ISaveImageUseCases {
-  Future<String?>saveImage({required File coverImage, required String eventTitle});
+  Future<String?> saveImage({
+    required File coverImage,
+    required String fileName,
+    required String bucketName,
+  });
 }

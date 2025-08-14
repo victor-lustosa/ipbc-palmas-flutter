@@ -8,7 +8,10 @@ class UseCases<T> implements IUseCases {
   UseCases({required this.repository});
 
   @override
-  Future<dynamic> get({Map<String, dynamic>? query, required Function converter}) async {
+  Future<dynamic> get({
+    Map<String, dynamic>? query,
+    required Function converter,
+  }) async {
     var result = await repository.get(query: query);
     return converter(result);
   }
@@ -25,7 +28,15 @@ class UseCases<T> implements IUseCases {
   Future<void> delete({String? path}) async => repository.delete(path: path);
 
   @override
-  Future<String?> saveImage({required File coverImage, required String eventTitle}) {
-    return repository.saveImage(coverImage: coverImage, eventTitle: eventTitle );
+  Future<String?> saveImage({
+    required File coverImage,
+    required String fileName,
+    required String bucketName,
+  }) {
+    return repository.saveImage(
+      coverImage: coverImage,
+      fileName: fileName,
+      bucketName: bucketName,
+    );
   }
 }

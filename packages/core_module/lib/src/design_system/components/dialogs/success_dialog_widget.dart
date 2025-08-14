@@ -88,8 +88,9 @@ Future<void> showCustomSuccessDialog({
     builder: (BuildContext context) {
       if(onClose == null){
         Future.delayed(Duration(seconds: 1), (){
-          nativePop(context);
-
+          if(context.mounted){
+            nativePop(context);
+          }
         });
         nativePop(context);
       }

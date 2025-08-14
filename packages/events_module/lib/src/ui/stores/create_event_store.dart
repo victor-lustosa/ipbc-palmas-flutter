@@ -4,7 +4,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
-    with ImageMixin, ConnectivityMixin, DateMixin {
+    with ImageMixin, ConnectivityMixin, DateMixin, ValidationMixin {
   bool isSwitchOn = false;
 
   final IUseCases _useCases;
@@ -72,7 +72,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   bool isPressed = false;
   File coverImage = File('');
 
-
   formValidation(String? data, ValueNotifier<bool> isValid) {
     if (isEmptyData(data)) {
       changeValue(isValid, false);
@@ -99,10 +98,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
 
   bool isEmptyData(String? data) {
     return (data == null || data.isEmpty);
-  }
-
-  emailValidation(String? data) {
-    return null;
   }
 
   changeValue(ValueNotifier<bool> valueNotifier, bool newValue) {
@@ -157,18 +152,22 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
         value = AddDataEvent<CreateEventState>();
         final resultUrl = await _useCases.saveImage(
           coverImage: coverImage,
-          eventTitle: eventTitleController.text,
+          bucketName: 'covers',
+          fileName:
+              'mobile_event_covers/${formatText(eventTitleController.text)}_${DateTime.now().toIso8601String()}.jpg',
         );
         if (resultUrl != null) {
           _useCases.add(
             path: 'event',
             data: EventAdapter.toMap(fillEventEntity(resultUrl)),
           );
-          showCustomSuccessDialog(
-            context: context,
-            title: 'Sucesso!',
-            message: 'Evento salvo',
-          );
+          if (context.mounted) {
+            showCustomSuccessDialog(
+              context: context,
+              title: 'Sucesso!',
+              message: 'Evento salvo',
+            );
+          }
         }
         value = DataAddedState<CreateEventState>();
       } else {

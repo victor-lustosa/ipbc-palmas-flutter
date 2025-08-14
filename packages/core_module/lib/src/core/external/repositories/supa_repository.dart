@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:diacritic/diacritic.dart';
-
 import '../../../../core_module.dart';
 
 class SupabaseRepository implements IRepository {
@@ -27,12 +25,17 @@ class SupabaseRepository implements IRepository {
   }
 
   Future<List<dynamic>> _fetchFromSupabase(Map<String, dynamic> params) async {
-    dynamic query = _supaClient.from(params['table']).select(params['selectFields'] ?? '*');
+    dynamic query = _supaClient
+        .from(params['table'])
+        .select(params['selectFields'] ?? '*');
     if (params['filterColumn'] != null && params['filterValue'] != null) {
       query = query.eq(params['filterColumn'], params['filterValue']);
     }
     if (params['orderBy'] != null) {
-      query = query.order(params['orderBy'], ascending: params['ascending'] ?? true);
+      query = query.order(
+        params['orderBy'],
+        ascending: params['ascending'] ?? true,
+      );
     }
     if (params['limit'] != null) {
       query = query.limit(params['limit']);
@@ -76,22 +79,19 @@ class SupabaseRepository implements IRepository {
     return Future.value(data);
   }
 
-
   @override
   Future<String?> saveImage({
     required File coverImage,
-    required String eventTitle,
+    required String fileName,
+    required String bucketName,
   }) async {
     try {
-      final fileName =
-          'mobile_event_covers/${formatText(eventTitle)}_${DateTime.now().toIso8601String()}.jpg';
-
       await Supabase.instance.client.storage
-          .from('covers')
+          .from(bucketName)
           .upload(fileName, coverImage);
 
       final publicUrl = Supabase.instance.client.storage
-          .from('covers')
+          .from(bucketName)
           .getPublicUrl(fileName);
 
       return publicUrl;
@@ -99,12 +99,5 @@ class SupabaseRepository implements IRepository {
       print('Erro ao fazer upload: $e');
       return null;
     }
-  }
-
-  String formatText(String text) {
-    return removeDiacritics(text)
-        .toLowerCase()
-        .replaceAll(RegExp(r'\s+'), '_')
-        .replaceAll(RegExp(r'[^a-z0-9_]+'), '');
   }
 }
