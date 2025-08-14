@@ -4,7 +4,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
-    with ImageMixin, ConnectivityMixin {
+    with ImageMixin, ConnectivityMixin, DateMixin {
   bool isSwitchOn = false;
 
   final IUseCases _useCases;
@@ -22,6 +22,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       eventLinkController: isEventLinkValid,
       eventDescriptionController: isEventDescriptionValid,
     };
+    initDate();
   }
 
   late final Map<TextEditingController, ValueNotifier<bool>>
@@ -71,32 +72,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   bool isPressed = false;
   File coverImage = File('');
 
-  late DateTime startDate;
-  late DateTime endDate;
-  TimeOfDay startTime = TimeOfDay(hour: 08, minute: 00);
-  TimeOfDay endTime = TimeOfDay(hour: 18, minute: 30);
-
-  // Função para formatar como "19h30"
-  String formatTime(TimeOfDay time) {
-    final hour = time.hour.toString().padLeft(2, '0');
-    final minute = time.minute.toString().padLeft(2, '0');
-    return '${hour}h$minute';
-  }
-
-  // Função para abrir o relógio
-  Future<void> pickTime({
-    required TimeOfDay selectedTime,
-    required Function(TimeOfDay) onTimePicked,
-    required BuildContext context,
-  }) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: selectedTime,
-    );
-    if (picked != null) {
-      onTimePicked(picked);
-    }
-  }
 
   formValidation(String? data, ValueNotifier<bool> isValid) {
     if (isEmptyData(data)) {
@@ -200,10 +175,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
         value = NoConnectionState<CreateEventState>();
       }
     }
-  }
-
-  DateTime combineDateAndTime(DateTime date, TimeOfDay time) {
-    return DateTime(date.year, date.month, date.day, time.hour, time.minute);
   }
 }
 

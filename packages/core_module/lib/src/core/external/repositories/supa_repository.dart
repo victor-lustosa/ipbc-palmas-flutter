@@ -19,36 +19,25 @@ class SupabaseRepository implements IRepository {
   }
 
   @override
-  Future<List<dynamic>> get<T>({String? path}) async {
-    path ??= '';
-    params = path.split('/');
-    final dynamic data;
-    if (params.length > 3) {
-       if(params[0] == 'service') {
-         data = await _supaClient
-             .from(params[0])
-             .select(params[5])
-             .eq(params[1], params[2])
-             .order(params[3], ascending: params[4].toLowerCase() == 'true');
-       } else if(params[0] == 'lyrics') {
-         data = await _supaClient
-             .from(params[0])
-             .select(params[3])
-             .order(params[1], ascending: params[2].toLowerCase() == 'true');
-      } else {
-        data = await _supaClient
-            .from(params[0])
-            .select()
-            .eq(params[1], params[2])
-            .order(params[3], ascending: params[4].toLowerCase() == 'true');
-      }
-    } else {
-      data = await _supaClient
-          .from(params[0])
-          .select()
-          .order(params[1], ascending: params[2].toLowerCase() == 'true');
+  Future<dynamic> get<T>({Map<String, dynamic>? query}) async {
+    if (query == null || query['table'] == null) {
+      throw ArgumentError('O parâmetro "table" é obrigatório.');
     }
-    return Future.value(data);
+    return _fetchFromSupabase(query);
+  }
+
+  Future<List<dynamic>> _fetchFromSupabase(Map<String, dynamic> params) async {
+    dynamic query = _supaClient.from(params['table']).select(params['selectFields'] ?? '*');
+    if (params['filterColumn'] != null && params['filterValue'] != null) {
+      query = query.eq(params['filterColumn'], params['filterValue']);
+    }
+    if (params['orderBy'] != null) {
+      query = query.order(params['orderBy'], ascending: params['ascending'] ?? true);
+    }
+    if (params['limit'] != null) {
+      query = query.limit(params['limit']);
+    }
+    return await query;
   }
 
   @override
@@ -77,7 +66,7 @@ class SupabaseRepository implements IRepository {
     path ??= '';
     params = path.split('/');
     final dynamic data;
-   // int limit = int.parse(params[1]);
+    // int limit = int.parse(params[1]);
     //int offset = params.length > 1 ? int.parse(params[2]) : 0;
     data = await _supaClient
         .from(params[0])
@@ -87,12 +76,17 @@ class SupabaseRepository implements IRepository {
     return Future.value(data);
   }
 
-  @override
-  Future<String?> saveImage({required File coverImage, required String eventTitle}) async{
-    try {
-      final fileName = 'mobile_event_covers/${formatText(eventTitle)}_${DateTime.now().toIso8601String()}.jpg';
 
-       await Supabase.instance.client.storage
+  @override
+  Future<String?> saveImage({
+    required File coverImage,
+    required String eventTitle,
+  }) async {
+    try {
+      final fileName =
+          'mobile_event_covers/${formatText(eventTitle)}_${DateTime.now().toIso8601String()}.jpg';
+
+      await Supabase.instance.client.storage
           .from('covers')
           .upload(fileName, coverImage);
 

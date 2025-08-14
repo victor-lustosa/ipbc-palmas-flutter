@@ -111,6 +111,7 @@ export 'src/core/external/repositories/supa_repository.dart';
 export 'src/core/external/repositories/isar_repository.dart';
 
 export 'src/shared/mixins/launch_url_mixin.dart';
+export 'src/shared/mixins/date_mixin.dart';
 export 'src/shared/mixins/clipboard_mixin.dart';
 export 'src/shared/mixins/email_mixin.dart';
 export 'src/shared/mixins/connectivity_mixin.dart';

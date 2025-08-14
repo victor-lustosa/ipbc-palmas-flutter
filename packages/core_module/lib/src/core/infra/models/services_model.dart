@@ -2,6 +2,7 @@ import 'package:core_module/core_module.dart';
 
 class ServicesModel extends ServicesEntity {
   ServicesModel({
+    required super.dayOfWeek,
     required super.id,
     required super.image,
     required super.hour,
@@ -17,11 +18,13 @@ class ServicesModel extends ServicesEntity {
     image: '',
     heading: '',
     id: SupaServicesUtil.createId().toString(),
+    dayOfWeek: null,
   );
 
   ServicesModel copyWith({
     String? title,
     String? id,
+    int? dayOfWeek,
     String? path,
     String? hour,
     String? image,
@@ -34,6 +37,7 @@ class ServicesModel extends ServicesEntity {
       heading: heading ?? this.heading,
       id: id ?? this.id,
       path: path ?? this.path,
+      dayOfWeek: dayOfWeek ?? this.dayOfWeek,
     );
   }
 }
