@@ -7,7 +7,6 @@ class SupabaseRepository implements IRepository {
     : _supaClient = supabaseClient;
 
   late final SupabaseClient _supaClient;
-  List<String> params = [];
 
   static Future init() async {
     await Supabase.initialize(
@@ -21,18 +20,22 @@ class SupabaseRepository implements IRepository {
     dynamic query = _supaClient
         .from(params?['table'])
         .select(params?['selectFields'] ?? '*');
+
     if (params?['filterColumn'] != null && params?['filterValue'] != null) {
       query = query.eq(params?['filterColumn'], params?['filterValue']);
     }
+
     if (params?['orderBy'] != null) {
       query = query.order(
         params?['orderBy'],
         ascending: params?['ascending'] ?? true,
       );
     }
+
     if (params?['limit'] != null) {
       query = query.limit(params?['limit']);
     }
+
     return await query;
   }
 
