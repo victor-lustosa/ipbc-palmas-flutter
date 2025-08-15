@@ -8,13 +8,13 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
 
   final IUseCases _useCases;
 
-  final Map<String, Object> eventQueryParams = {
+  final Map<String, Object> eventParams = {
     'table': 'event',
     'orderBy': 'create_at',
     'ascending': false,
   };
 
-  final Map<String, Object> servicesQueryParams = {
+  final Map<String, Object> servicesParams = {
     'table': 'services',
     'orderBy': 'createAt',
     'ascending': false,
@@ -31,11 +31,11 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     if (response) {
       final results = await Future.wait([
         _useCases.get(
-          query: servicesQueryParams,
+          params: servicesParams,
           converter: ServicesAdapter.fromMapList,
         ),
         _useCases.get(
-          query: eventQueryParams,
+          params: eventParams,
           converter: EventAdapter.fromMapList,
         ),
       ]);

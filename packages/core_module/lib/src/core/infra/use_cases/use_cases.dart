@@ -9,10 +9,10 @@ class UseCases<T> implements IUseCases {
 
   @override
   Future<dynamic> get({
-    Map<String, dynamic>? query,
+    Map<String, dynamic>? params,
     required Function converter,
   }) async {
-    var result = await repository.get(query: query);
+    var result = await repository.get(params: params);
     return converter(result);
   }
 

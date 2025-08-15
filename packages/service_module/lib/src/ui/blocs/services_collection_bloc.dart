@@ -12,7 +12,7 @@ class ServicesCollectionBloc
     with ConnectivityMixin {
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
-  late Map<String, Object> servicesCollectionQueryParams;
+  late Map<String, Object> servicesCollectionParams;
 
   ServicesCollectionBloc({required this.onlineUseCases, this.offlineUseCases})
     : super(LoadingState()) {
@@ -40,7 +40,7 @@ class ServicesCollectionBloc
     final response = await isConnected();
     if (response) {
       List<String> pathList = event.path.split('/');
-      servicesCollectionQueryParams = {
+      servicesCollectionParams = {
         'table': 'service',
         'orderBy': 'createAt',
         'filterColumn': pathList[1],
@@ -51,7 +51,7 @@ class ServicesCollectionBloc
       };
       add(LoadingEvent<ServicesCollectionEvent>());
       List<ServiceEntity> services = await onlineUseCases.get(
-        query: servicesCollectionQueryParams,
+        params: servicesCollectionParams,
         converter: ServiceAdapter.fromMapList,
       );
       emit(

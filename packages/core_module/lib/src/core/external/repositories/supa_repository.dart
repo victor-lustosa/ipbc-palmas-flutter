@@ -17,11 +17,11 @@ class SupabaseRepository implements IRepository {
   }
 
   @override
-  Future<dynamic> get<T>({Map<String, dynamic>? query}) async {
-    if (query == null || query['table'] == null) {
+  Future<dynamic> get<T>({Map<String, dynamic>? params}) async {
+    if (params == null || params['table'] == null) {
       throw ArgumentError('O parâmetro "table" é obrigatório.');
     }
-    return _fetchFromSupabase(query);
+    return _fetchFromSupabase(params);
   }
 
   Future<List<dynamic>> _fetchFromSupabase(Map<String, dynamic> params) async {

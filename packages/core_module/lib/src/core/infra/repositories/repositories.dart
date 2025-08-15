@@ -4,7 +4,7 @@ abstract class IRepository
     implements IGet, IGetByPagination, IAdd, IDelete, IUpdate, ISaveImage {}
 
 abstract class IGet {
-  Future<dynamic> get<T>({Map<String, dynamic>? query});
+  Future<dynamic> get<T>({Map<String, dynamic>? params});
 }
 
 abstract class IGetByPagination {

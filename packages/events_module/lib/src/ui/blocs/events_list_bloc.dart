@@ -9,7 +9,7 @@ class EventsListBloc
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
 
-  final Map<String, Object> eventQueryParams = {
+  final Map<String, Object> eventParams = {
     'table': 'event',
     'orderBy': 'create_at',
     'ascending': false,
@@ -27,7 +27,7 @@ class EventsListBloc
     final response = await isConnected();
     if (response) {
       List<EventEntity> events = await onlineUseCases.get(
-          query: eventQueryParams, converter: EventAdapter.fromMapList);
+          params: eventParams, converter: EventAdapter.fromMapList);
       emit(DataFetchedState<EventsListState, List<EventEntity>>(
           entities: events));
     } else {

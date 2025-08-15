@@ -17,7 +17,7 @@ class IsarRepository implements IRepository {
   }
 
   @override
-  Future<dynamic> get<T>({Map<String, dynamic>? query}) async {
+  Future<dynamic> get<T>({Map<String, dynamic>? params}) async {
     final entity = await isar.collection<T>().where().findAll();
     if (entity.isNotEmpty) {
       return Future.value(entity[0]);

@@ -10,7 +10,7 @@ abstract class IUseCases
 
 abstract class IGetUseCases {
   Future<dynamic> get({
-    Map<String, dynamic>? query,
+    Map<String, dynamic>? params,
     required Function converter,
   });
 }

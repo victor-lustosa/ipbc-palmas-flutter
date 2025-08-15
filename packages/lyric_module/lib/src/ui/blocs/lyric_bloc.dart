@@ -10,7 +10,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   final IUseCases? offlineUseCases;
   List<LyricModel>? lyricsList;
 
-  final Map <String, Object> lyricQueryParams = {
+  final Map <String, Object> lyricParams = {
     'table': 'lyrics',
     'orderBy': 'createAt',
     'ascending': false,
@@ -32,7 +32,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     final response = await isConnected();
     if (response) {
       lyricsList = await onlineUseCases.get(
-        query: lyricQueryParams,
+        params: lyricParams,
         converter: LyricAdapter.fromMapList,
       );
       if (lyricsList!.isNotEmpty) {
@@ -50,13 +50,13 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     //Caso esteja sem conexão eu salvo essas musicas no hive
     int offset = lyricsList!.length;
 
-    final Map <String, Object> pathLimit = {
+    final Map <String, Object> paginationParams = {
       'table': 'lyrics',
       'limit': event.limit,
       'offset': offset,
     };
     lyricsListAux = await onlineUseCases.get(
-      query: pathLimit,
+      params: paginationParams,
       converter: LyricAdapter.fromMapList,
     );
     //Verificando se tem novos itens retornados se sim eu adiciona lista principal
