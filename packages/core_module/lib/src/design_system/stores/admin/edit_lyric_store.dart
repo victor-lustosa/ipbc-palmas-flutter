@@ -20,8 +20,11 @@ class EditLyricStore extends ValueNotifier<GenericState<EditLyricState>> {
   late FocusScopeNode _rootFocusNode;
 
   get lyricsFetched => _lyricsFetched;
+
   get controllers => _controllers;
+
   get focusNodes => _focusNodes;
+
   get rootFocusNode => _rootFocusNode;
 
   addLyric() {
@@ -62,7 +65,8 @@ class EditLyricStore extends ValueNotifier<GenericState<EditLyricState>> {
             final TextSelection previousSelection = _controllers[key]!.selection;
             _controllers[key]!.text = verse.versesList[j];
             _controllers[key]!.selection = previousSelection.copyWith(
-              baseOffset: previousSelection.baseOffset.clamp(0,
+              baseOffset: previousSelection.baseOffset.clamp(
+                0,
                 _controllers[key]!.text.length,
               ),
               extentOffset: previousSelection.extentOffset.clamp(
@@ -87,7 +91,11 @@ class EditLyricStore extends ValueNotifier<GenericState<EditLyricState>> {
     });
   }
 
-  void attributeNewFocus({required TextEditingController controller, required FocusNode focusNode, required String newValue}) {
+  void attributeNewFocus({
+    required TextEditingController controller,
+    required FocusNode focusNode,
+    required String newValue,
+  }) {
     if (focusNode == titleFocusNode) {
       lyric = lyric.copyWith(title: newValue);
     } else if (focusNode == groupFocusNode) {
@@ -104,11 +112,15 @@ class EditLyricStore extends ValueNotifier<GenericState<EditLyricState>> {
     updateControllersAndFocusNodes();
   }
 
-  void updateTiles({required VerseEntity verse, required int position, required String lineKey}) {
+  void updateTiles({
+    required VerseEntity verse,
+    required int position,
+    required String lineKey,
+  }) {
     if (!_controllers.containsKey(lineKey)) {
       _controllers[lineKey] = TextEditingController(
-            text: verse.versesList[position],
-          );
+        text: verse.versesList[position],
+      );
     }
     if (!_focusNodes.containsKey(lineKey)) {
       _focusNodes[lineKey] = FocusNode();
@@ -116,20 +128,18 @@ class EditLyricStore extends ValueNotifier<GenericState<EditLyricState>> {
     if (_controllers[lineKey]!.text != verse.versesList[position]) {
       final TextSelection previousSelection = _controllers[lineKey]!.selection;
       _controllers[lineKey]!.text = verse.versesList[position];
-      _controllers[lineKey]!.selection =
-          previousSelection.copyWith(
-            baseOffset:
-            previousSelection.baseOffset
-                .clamp(0, _controllers[lineKey]!.text.length,
-            ),
-            extentOffset:
-            previousSelection.extentOffset
-                .clamp(0, _controllers[lineKey]!.text.length,
-            ),
-          );
+      _controllers[lineKey]!.selection = previousSelection.copyWith(
+        baseOffset: previousSelection.baseOffset.clamp(
+          0,
+          _controllers[lineKey]!.text.length,
+        ),
+        extentOffset: previousSelection.extentOffset.clamp(
+          0,
+          _controllers[lineKey]!.text.length,
+        ),
+      );
     }
   }
-
 }
 
 @immutable

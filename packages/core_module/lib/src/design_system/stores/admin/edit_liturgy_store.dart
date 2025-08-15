@@ -9,20 +9,56 @@ class EditLiturgyDTO {
 }
 
 class EditLiturgyStore extends ChangeNotifier with DateMixin {
+
+  EditLiturgyStore(){
+    init();
+  }
+
   int index = 0;
   late LiturgyModel entity;
   late EditLiturgyDTO dto;
-
-  late List<LiturgyModel> items;
+  late List<LiturgyModel> liturgiesList;
   TimeOfDay? serviceHour;
   late int? dayOfWeek;
+
+  final Map<String, TextEditingController> _controllers = {};
+  final Map<String, FocusNode> _focusNodes = {};
+
+  late FocusScopeNode _rootFocusNode;
+  get rootFocusNode => _rootFocusNode;
+  get controllers => _controllers;
+
+  get focusNodes => _focusNodes;
+
+  bool isAnyTextFieldFocused = false;
+
+  init(){
+    fillItems();
+    initializeControllersAndFocusNodes();
+    _rootFocusNode = FocusScopeNode();
+  }
+  void initializeControllersAndFocusNodes() {
+    for (int i = 0; i < liturgiesList.length; i++) {
+      final liturgy = liturgiesList[i];
+        final sequenceKey = '${liturgy.id}_0';
+        final additionalKey = '${liturgy.id}_1';
+        _controllers[sequenceKey] = TextEditingController(text: liturgiesList[i].sequence);
+        _focusNodes[sequenceKey] = FocusNode();
+        if(liturgy.isAdditional){
+          _controllers[additionalKey] = TextEditingController(text: liturgiesList[i].additional);
+          _focusNodes[additionalKey] = FocusNode();
+        }
+      }
+    }
 
   final TextEditingController preacherController = TextEditingController();
   final TextEditingController themeController = TextEditingController();
   final String preacherErrorText = 'por favor, insira o preletor do culto.';
   final String themeErrorText = 'por favor, insira a mensagem do culto.';
+
   final preacherKey = GlobalKey<FormState>();
   final themeKey = GlobalKey<FormState>();
+
   ValueNotifier<bool> isPreacherValid = ValueNotifier(true);
   ValueNotifier<bool> isThemeValid = ValueNotifier(true);
   bool isPressed = false;
@@ -70,7 +106,7 @@ class EditLiturgyStore extends ChangeNotifier with DateMixin {
   }
 
   fillItems() {
-    items = [
+    liturgiesList = [
       LiturgyModel(
         id: '0',
         isAdditional: false,
@@ -135,7 +171,7 @@ class EditLiturgyStore extends ChangeNotifier with DateMixin {
   }
 
   void addBox() {
-    items.insert(
+    liturgiesList.insert(
       index,
       LiturgyModel(
         id: SupaServicesUtil.createId(),
@@ -148,12 +184,12 @@ class EditLiturgyStore extends ChangeNotifier with DateMixin {
   }
 
   void copyEntity() {
-    items.insert(index, entity.copyWith(id: SupaServicesUtil.createId()));
+    liturgiesList.insert(index, entity.copyWith(id: SupaServicesUtil.createId()));
     notifyListeners();
   }
 
   void delete() {
-    items.remove(entity);
+    liturgiesList.remove(entity);
     notifyListeners();
   }
 }

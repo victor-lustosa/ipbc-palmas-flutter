@@ -198,8 +198,8 @@ class _EditLyricViewState extends State<EditLyricView> {
                                               children: List.generate(
                                                 verse.versesList.length,
                                                 (position) {
-                                                  final lineKey =
-                                                      '${verse.id}_$position';
+                                                  final lineKey = '${verse.id}_$position';
+
                                                   _store.updateTiles(
                                                     verse: verse,
                                                     position: position,
