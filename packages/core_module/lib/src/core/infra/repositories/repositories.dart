@@ -8,19 +8,19 @@ abstract class IGet {
 }
 
 abstract class IGetByPagination {
-  Future<dynamic> getByPagination<T>({String? path});
+  Future<dynamic> getByPagination<T>({Map<String, dynamic>? params});
 }
 
 abstract class IAdd {
-  Future<void> add<T>({required data, String? path});
+  Future<void> add<T>({required data, Map<String, dynamic>? params});
 }
 
 abstract class IUpdate {
-  Future<void> update<T>({required data, String? path});
+  Future<void> update<T>({required data, Map<String, dynamic>? params});
 }
 
 abstract class IDelete {
-  Future<void> delete<T>({String? path});
+  Future<void> delete<T>({Map<String, dynamic>? params});
 }
 
 abstract class ISaveImage {

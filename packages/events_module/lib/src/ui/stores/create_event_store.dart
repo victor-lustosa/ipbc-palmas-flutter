@@ -158,8 +158,8 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
         );
         if (resultUrl != null) {
           _useCases.add(
-            path: 'event',
             data: EventAdapter.toMap(fillEventEntity(resultUrl)),
+            params: {'table': 'event'},
           );
           if (context.mounted) {
             showCustomSuccessDialog(

@@ -27,25 +27,23 @@ class IsarRepository implements IRepository {
   }
 
   @override
-  Future<void> update<T>({required data, String? path}) async {
+  Future<void> update<T>({required data, Map<String, dynamic>? params}) async {
     await isar.writeTxn(() async {
       isar.collection<T>().put(data);
     });
   }
 
   @override
-  Future<void> delete<T>({String? path}) async {}
+  Future<void> delete<T>({Map<String, dynamic>? params}) async {}
 
   @override
-  Future<void> add<T>({required data, String? path}) async =>
-      update<T>(data: data, path: path);
+  Future<void> add<T>({required data, Map<String, dynamic>? params}) async =>
+      update<T>(data: data, params: params);
 
   @override
-  Future<dynamic> getByPagination<T>({String? path}) async {
-    path ??= '';
-    params = path.split('/');
-    int page = int.parse(params[0]);
-    int pageSize = int.parse(params[1]);
+  Future<dynamic> getByPagination<T>({Map<String, dynamic>? params}) async {
+    int page = int.parse(params?["page"] ?? "1");
+    int pageSize = int.parse(params?["pageSize"]);
     return await isar
         .collection<T>()
         .where()

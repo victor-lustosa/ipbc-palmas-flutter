@@ -18,64 +18,48 @@ class SupabaseRepository implements IRepository {
 
   @override
   Future<dynamic> get<T>({Map<String, dynamic>? params}) async {
-    if (params == null || params['table'] == null) {
-      throw ArgumentError('O parâmetro "table" é obrigatório.');
-    }
-    return _fetchFromSupabase(params);
-  }
-
-  Future<List<dynamic>> _fetchFromSupabase(Map<String, dynamic> params) async {
     dynamic query = _supaClient
-        .from(params['table'])
-        .select(params['selectFields'] ?? '*');
-    if (params['filterColumn'] != null && params['filterValue'] != null) {
-      query = query.eq(params['filterColumn'], params['filterValue']);
+        .from(params?['table'])
+        .select(params?['selectFields'] ?? '*');
+    if (params?['filterColumn'] != null && params?['filterValue'] != null) {
+      query = query.eq(params?['filterColumn'], params?['filterValue']);
     }
-    if (params['orderBy'] != null) {
+    if (params?['orderBy'] != null) {
       query = query.order(
-        params['orderBy'],
-        ascending: params['ascending'] ?? true,
+        params?['orderBy'],
+        ascending: params?['ascending'] ?? true,
       );
     }
-    if (params['limit'] != null) {
-      query = query.limit(params['limit']);
+    if (params?['limit'] != null) {
+      query = query.limit(params?['limit']);
     }
     return await query;
   }
 
   @override
-  Future<void> add<T>({required data, String? path}) async {
-    path ??= '';
-    params = path.split('/');
-    await _supaClient.from(params[0]).insert(data);
+  Future<void> add<T>({required data, Map<String, dynamic>? params}) async {
+    await _supaClient.from(params?['table']).insert(data);
   }
 
   @override
-  Future<void> update<T>({required data, String? path}) async {
-    path ??= '';
-    params = path.split('/');
-    await _supaClient.from(params[0]).update(data).eq(params[1], params[2]);
+  Future<void> update<T>({required data, Map<String, dynamic>? params}) async {
+    await _supaClient.from(params?['table']).update(data).eq(params?['filterColumn'], params?['filterValue']);
   }
 
   @override
-  Future<void> delete<T>({String? path}) async {
-    path ??= '';
-    params = path.split('/');
-    await _supaClient.from(params[0]).delete().eq(params[1], params[2]);
+  Future<void> delete<T>({Map<String, dynamic>? params}) async {
+    await _supaClient.from(params?['table']).delete().eq(params?['filterColumn'], params?['filterValue']);
   }
 
   @override
-  Future getByPagination<T>({String? path}) async {
-    path ??= '';
-    params = path.split('/');
-    final dynamic data;
+  Future getByPagination<T>({Map<String, dynamic>? params}) async {
     // int limit = int.parse(params[1]);
     //int offset = params.length > 1 ? int.parse(params[2]) : 0;
-    data = await _supaClient
-        .from(params[0])
+     final dynamic data = await _supaClient
+        .from(params?['table'])
         .select()
         .range(0, 9)
-        .order(params[1], ascending: true);
+        .order(params?['orderBy'], ascending: params?['ascending'] ?? true);
     return Future.value(data);
   }
 
@@ -90,11 +74,9 @@ class SupabaseRepository implements IRepository {
           .from(bucketName)
           .upload(fileName, coverImage);
 
-      final publicUrl = Supabase.instance.client.storage
+      return Supabase.instance.client.storage
           .from(bucketName)
           .getPublicUrl(fileName);
-
-      return publicUrl;
     } catch (e) {
       print('Erro ao fazer upload: $e');
       return null;
