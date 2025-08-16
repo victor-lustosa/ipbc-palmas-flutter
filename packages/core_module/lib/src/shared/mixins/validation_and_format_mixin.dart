@@ -1,6 +1,6 @@
 import 'package:core_module/core_module.dart';
 
-mixin ValidationMixin {
+mixin ValidationAndFormatMixin {
   final String firebaseDatabase = 'firebase';
 
   String validationDatasource() {
@@ -21,5 +21,9 @@ mixin ValidationMixin {
         .toLowerCase()
         .replaceAll(RegExp(r'\s+'), '_')
         .replaceAll(RegExp(r'[^a-z0-9_]+'), '');
+  }
+
+  String formatDateToString(DateTime date) {
+    return DateFormat('dd/MM/yyyy').format(date);
   }
 }

@@ -8,6 +8,7 @@ import '../../../shared/mixins/flatten_mixin.dart';
 
 class ServiceAdapter {
   ServiceAdapter._();
+
   static ServiceModel fromJson(String source) => fromMap(json.decode(source));
 
   static List<ServiceEntity> fromJsonList(String source) =>
@@ -24,12 +25,9 @@ class ServiceAdapter {
       heading: json['heading'],
       title: json['title'],
       guideIsVisible: json['guideIsVisible'],
-      liturgiesList:
-          json.containsKey('liturgiesList')
-              ? LiturgyAdapter.fromMapList(
-                json['service_liturgies']['liturgies'],
-              )
-              : [],
+      liturgiesList: json.containsKey('liturgiesList')
+          ? LiturgyAdapter.fromMapList(json['service_liturgies']['liturgies'])
+          : [],
       lyricsList: LyricAdapter.fromMapList(json['service_lyrics']['lyrics']),
       hour: json['hour'],
     );
@@ -55,10 +53,9 @@ class ServiceAdapter {
     for (dynamic entity in data) {
       services.add(
         ServiceEntity(
-          id:
-              entity['id'].runtimeType == String
-                  ? entity['id']
-                  : entity['id'].toString(),
+          id: entity['id'].runtimeType == String
+              ? entity['id']
+              : entity['id'].toString(),
           type: '',
           image: entity['image'],
           hour: entity['hour'],
@@ -68,22 +65,21 @@ class ServiceAdapter {
           guideIsVisible: entity['guideIsVisible'],
           title: entity['title'],
           heading: entity['heading'],
-          liturgiesList:
-              entity.containsKey('service_liturgies')
-                  ? LiturgyAdapter.supaMapList(
-                    FlattenMixin.flattenByKey(
-                      entity['service_liturgies'],
-                      'liturgies',
-                    ),
-                  )
-                  : [],
+          liturgiesList: entity.containsKey('service_liturgies')
+              ? LiturgyAdapter.supaMapList(
+                  FlattenMixin.flattenByKey(
+                    entity['service_liturgies'],
+                    'liturgies',
+                  ),
+                )
+              : [],
           lyricsList:
-          entity.containsKey('service_lyrics')
-               && entity['service_lyrics'].isNotEmpty
-                  ? LyricAdapter.fromMapList([
-                    entity['service_lyrics'][0]['lyrics'],
-                  ])
-                  : [],
+              entity.containsKey('service_lyrics') &&
+                  entity['service_lyrics'].isNotEmpty
+              ? LyricAdapter.fromMapList(
+                  FlattenMixin.flattenByKey(entity['service_lyrics'], 'lyrics'),
+                )
+              : [],
         ),
       );
     }

@@ -18,7 +18,7 @@ class ServicesCollectionView extends StatefulWidget {
 }
 
 class _ServicesCollectionViewState extends State<ServicesCollectionView>
-    with DateMixin {
+    with DateMixin, ValidationAndFormatMixin {
   late final ServicesCollectionBloc _bloc;
   late List<ServiceEntity> entitiesList;
   late String path;
@@ -88,25 +88,65 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                 itemCount: entitiesList.length,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
-                                  return Material(
-                                    borderRadius: BorderRadius.circular(16),
-                                    clipBehavior: Clip.hardEdge,
-                                    color: index == 0
-                                        ? AppColors.highlightGreen.withValues(
-                                            alpha: .1,
-                                          )
-                                        : AppColors.grey0,
-                                    child: InkWell(
-                                      onTap: () {
-                                        nativePushNamed(
-                                          AppRoutes.serviceRoute,
-                                          arguments: ServiceViewDTO(
-                                            service: entitiesList[index],
-                                            image: widget.entity.image,
-                                          ),
-                                          context,
-                                        );
-                                      },
+                                  final service = entitiesList[index];
+                                  final Key itemKey = Key('${service.id}');
+                                  final GlobalKey gestureKey = GlobalKey();
+                                  return GestureDetector(
+                                    key: gestureKey,
+                                    onTap: () {
+                                      nativePushNamed(
+                                        AppRoutes.serviceRoute,
+                                        arguments: ServiceViewDTO(
+                                          service: entitiesList[index],
+                                          image: widget.entity.image,
+                                        ),
+                                        context,
+                                      );
+                                    },
+                                    onLongPressStart: (_) async {
+                                      await showEditDialog(
+                                        context: context,
+                                        itemKey: gestureKey,
+                                        popupHeightParam: 110,
+                                        popupWidthParam: 160,
+                                        popupWidthPositionParam: 160,
+                                        verticalMarginParam: 3,
+                                        buttons: Column(
+                                          children: [
+                                            actionButton(
+                                              context: context,
+                                              top: 12,
+                                              bottom: 12,
+                                              icon: AppIcons.edit,
+                                              label: 'Editar',
+                                              action: () {},
+                                            ),
+                                            Divider(
+                                              height: 1,
+                                              color: AppColors.dividerModal
+                                                  .withValues(alpha: .3),
+                                            ),
+                                            actionButton(
+                                              context: context,
+                                              top: 12,
+                                              bottom: 12,
+                                              icon: AppIcons.trash,
+                                              label: 'Deletar',
+                                              action: () {},
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      key: itemKey,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(16),
+                                        color: index == 0
+                                            ? AppColors.highlightGreen
+                                                  .withValues(alpha: .1)
+                                            : AppColors.grey0,
+                                      ),
                                       child: Row(
                                         children: [
                                           Container(
@@ -124,9 +164,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   maxLines: 1,
-                                                  '${entitiesList[index].title} ${DateFormat(
-                                                    'dd/MM/yyyy',
-                                                  ).format(entitiesList[index].createAt)} | ${widget.entity.hour}',
+                                                  '${entitiesList[index].title} ${formatDateToString(entitiesList[index].createAt)} | ${widget.entity.hour}',
                                                   style: AppFonts.defaultFont(
                                                     fontWeight: FontWeight.w600,
                                                     color: AppColors.grey9,

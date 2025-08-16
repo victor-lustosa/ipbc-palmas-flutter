@@ -18,7 +18,7 @@ class ServiceView extends StatefulWidget {
   State<ServiceView> createState() => _ServiceViewState();
 }
 
-class _ServiceViewState extends State<ServiceView> {
+class _ServiceViewState extends State<ServiceView> with ValidationAndFormatMixin{
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -31,9 +31,7 @@ class _ServiceViewState extends State<ServiceView> {
                 image: widget.entity.image,
                 title: widget.entity.service.title,
                 dateIsVisible: widget.entity.service.guideIsVisible,
-                createAt: DateFormat(
-                  'dd/MM/yyyy',
-                ).format(widget.entity.service.createAt),
+                createAt: formatDateToString(widget.entity.service.createAt),
               ),
               Visibility(
                 visible: widget.entity.service.guideIsVisible,

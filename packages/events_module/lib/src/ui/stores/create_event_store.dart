@@ -4,7 +4,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
-    with ImageMixin, ConnectivityMixin, DateMixin, ValidationMixin {
+    with ImageMixin, ConnectivityMixin, DateMixin, ValidationAndFormatMixin {
   bool isSwitchOn = false;
 
   final IUseCases _useCases;
