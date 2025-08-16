@@ -25,31 +25,38 @@ class EditLiturgyStore extends ChangeNotifier with DateMixin {
   final Map<String, FocusNode> _focusNodes = {};
 
   late FocusScopeNode _rootFocusNode;
+
   get rootFocusNode => _rootFocusNode;
+
   get controllers => _controllers;
 
   get focusNodes => _focusNodes;
 
   bool isAnyTextFieldFocused = false;
 
-  init(){
+  init() {
     fillItems();
     initializeControllersAndFocusNodes();
     _rootFocusNode = FocusScopeNode();
   }
+
   void initializeControllersAndFocusNodes() {
     for (int i = 0; i < liturgiesList.length; i++) {
       final liturgy = liturgiesList[i];
-        final sequenceKey = '${liturgy.id}_0';
-        final additionalKey = '${liturgy.id}_1';
-        _controllers[sequenceKey] = TextEditingController(text: liturgiesList[i].sequence);
-        _focusNodes[sequenceKey] = FocusNode();
-        if(liturgy.isAdditional){
-          _controllers[additionalKey] = TextEditingController(text: liturgiesList[i].additional);
-          _focusNodes[additionalKey] = FocusNode();
-        }
+      final sequenceKey = '${liturgy.id}_0';
+      final additionalKey = '${liturgy.id}_1';
+      _controllers[sequenceKey] = TextEditingController(
+        text: liturgiesList[i].sequence,
+      );
+      _focusNodes[sequenceKey] = FocusNode();
+      if (liturgy.isAdditional) {
+        _controllers[additionalKey] = TextEditingController(
+          text: liturgiesList[i].additional,
+        );
+        _focusNodes[additionalKey] = FocusNode();
       }
     }
+  }
 
   final TextEditingController preacherController = TextEditingController();
   final TextEditingController themeController = TextEditingController();
@@ -63,18 +70,19 @@ class EditLiturgyStore extends ChangeNotifier with DateMixin {
   ValueNotifier<bool> isThemeValid = ValueNotifier(true);
   bool isPressed = false;
 
-  preacherValidation(String? data) {
-    if (data == null || data.isEmpty) {
-      changeValue(isPreacherValid, false);
+  formValidation(String? data, ValueNotifier<bool> isValid) {
+    if (isEmptyData(data)) {
+      changeValue(isValid, false);
       return null;
     } else {
-      changeValue(isPreacherValid, true);
+      changeValue(isValid, true);
       return null;
     }
   }
 
   setDayInTheWeek() {
     initDate(
+      startTimeParam: serviceHour,
       startDateParam: nextWeekdayWithTime(
         DateTime.now(),
         dayOfWeek,
@@ -84,14 +92,9 @@ class EditLiturgyStore extends ChangeNotifier with DateMixin {
     notifyListeners();
   }
 
-  themeValidation(String? data) {
-    if (data == null || data.isEmpty) {
-      changeValue(isThemeValid, false);
-      return null;
-    } else {
-      changeValue(isThemeValid, true);
-      return null;
-    }
+  resetValidationFields(){
+    changeValue(isThemeValid, true);
+    changeValue(isPreacherValid, true);
   }
 
   bool isEmptyData(String? data) {
@@ -184,7 +187,10 @@ class EditLiturgyStore extends ChangeNotifier with DateMixin {
   }
 
   void copyEntity() {
-    liturgiesList.insert(index, entity.copyWith(id: SupaServicesUtil.createId()));
+    liturgiesList.insert(
+      index,
+      entity.copyWith(id: SupaServicesUtil.createId()),
+    );
     notifyListeners();
   }
 

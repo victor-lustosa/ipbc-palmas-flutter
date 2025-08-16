@@ -13,7 +13,6 @@ class EditLiturgyView extends StatefulWidget {
 class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
   late EditLiturgyStore _editStore;
 
-
   ValueNotifier<bool> isEventTitleValid = ValueNotifier(true);
   ValueNotifier<bool> isEventSubtitleValid = ValueNotifier(true);
 
@@ -24,7 +23,6 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
     _editStore = Modular.get<EditLiturgyStore>();
     _editStore.setDayInTheWeek();
     _editStore.rootFocusNode.addListener(_handleRootFocusChange);
-
   }
 
   void _handleRootFocusChange() {
@@ -38,24 +36,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
   @override
   dispose() {
     _editStore.rootFocusNode.removeListener(_handleRootFocusChange);
-    _editStore.rootFocusNode.dispose();
+    _editStore.resetValidationFields();
     super.dispose();
-  }
-
-  Future<void> setDateTime({
-    required DateTime selectedDate,
-    required Function(DateTime) onDatePicked,
-    required BuildContext context,
-  }) async {
-    DateTime? pickedDate = await selectDateTime(
-      selectedDate: selectedDate,
-      context: context,
-    );
-    if (pickedDate != null) {
-      setState(() {
-        onDatePicked(pickedDate);
-      });
-    }
   }
 
   @override
@@ -78,7 +60,11 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                       title: "Cultos de ${_editStore.dto.heading}",
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                      margin: const EdgeInsets.only(
+                        top: 16,
+                        left: 16,
+                        right: 16,
+                      ),
                       child: TemplateFormWidget(
                         horizontalSymmetric: EdgeInsets.zero,
                         valueListenable: _editStore.isPreacherValid,
@@ -94,13 +80,17 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                           hintText: 'Preletor do culto',
                         ),
                         validator: (data) {
-                          return _editStore.preacherValidation(data);
+                          return _editStore.formValidation(data, _editStore.isPreacherValid);
                         },
                         defaultHintColor: AppColors.hintInputForm,
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                      margin: const EdgeInsets.only(
+                        top: 16,
+                        left: 16,
+                        right: 16,
+                      ),
                       child: TemplateFormWidget(
                         horizontalSymmetric: EdgeInsets.zero,
                         valueListenable: _editStore.isThemeValid,
@@ -116,7 +106,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                           hintText: 'Mensagem do culto',
                         ),
                         validator: (data) {
-                          return _editStore.themeValidation(data);
+                          return _editStore.formValidation(data, _editStore.isThemeValid);
                         },
                         defaultHintColor: AppColors.hintInputForm,
                       ),
@@ -145,18 +135,50 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                             ],
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 8),
+                            margin: EdgeInsets.only(top: 10),
                             child: Row(
                               children: [
+                                Container(
+                                  margin: EdgeInsets.only(right: 10),
+                                  child: InkWell(
+                                    onTap: () => setDateAndTime(
+                                      selectedDate: _editStore.startDate,
+                                      onDatePicked: (newDate) {
+                                        setState(() {
+                                          _editStore.startDate = newDate;
+                                          _editStore.startTime = TimeOfDay(
+                                            hour: newDate.hour,
+                                            minute: newDate.minute,
+                                          );
+                                        });
+                                      },
+                                      context: context,
+                                      selectedTime: _editStore.serviceHour!,
+                                    ),
+                                    child: Text(
+                                      getFormattedDateTime(
+                                        _editStore.startDate,
+                                      ),
+                                      style: AppFonts.defaultFont(
+                                        fontSize: 15,
+                                        color: AppColors.darkGreen,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                                 InkWell(
-                                  onTap: () => setDateTime(
-                                    selectedDate: _editStore.startDate,
-                                    onDatePicked: (newDate) =>
-                                        _editStore.startDate = newDate,
+                                  onTap: () => pickTime(
+                                    selectedTime: _editStore.startTime,
                                     context: context,
+                                    onTimePicked: (newTime) {
+                                      setState(() {
+                                        _editStore.startTime = newTime;
+                                      });
+                                    },
                                   ),
                                   child: Text(
-                                    getFormattedDateTime(_editStore.startDate),
+                                    formatTime(_editStore.startTime),
                                     style: AppFonts.defaultFont(
                                       fontSize: 15,
                                       color: AppColors.darkGreen,
@@ -204,111 +226,100 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                           final Widget itemContent = Container(
                             decoration: const BoxDecoration(
                               color: AppColors.secondaryGrey2,
-                              borderRadius: BorderRadius.all(Radius.circular(16)),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(16),
+                              ),
                             ),
-                            child: GestureDetector
-                              (
+                            child: GestureDetector(
                               onLongPressStart: (_) async {
-                                FocusScope.of(
-                                  context,
-                                ).unfocus();
+                                FocusScope.of(context).unfocus();
                                 HapticFeedback.lightImpact();
                               },
-                              child:  Row(
-                                  children: [
-                                    ReorderableDragStartListener(
-                                      index: index,
-                                      child: Container(
-                                        color: Colors.transparent,
-                                        width: 36,
+                              child: Row(
+                                children: [
+                                  ReorderableDragStartListener(
+                                    index: index,
+                                    child: Container(
+                                      color: Colors.transparent,
+                                      width: 36,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          GridBallsTileWidget(index: index),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      margin: const EdgeInsets.only(
+                                        bottom: 8,
+                                        top: 8,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(2.0),
                                         child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            GridBallsTileWidget(index: index),
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            TextFormField(
+                                              controller: _editStore
+                                                  .controllers["${liturgy.id}_0"],
+                                              focusNode: _editStore
+                                                  .focusNodes["${liturgy.id}_0"],
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                isDense: true,
+                                                contentPadding: EdgeInsets.zero,
+                                              ),
+                                              style: AppFonts.defaultFont(
+                                                color: AppColors.grey9,
+                                                fontSize: 17,
+                                              ),
+                                              maxLines: null,
+                                              keyboardType:
+                                                  TextInputType.multiline,
+                                              onChanged: (newValue) {},
+                                            ),
+                                            Visibility(
+                                              visible: _editStore
+                                                  .liturgiesList[index]
+                                                  .isAdditional,
+                                              child: Container(
+                                                margin: const EdgeInsets.only(
+                                                  top: 4,
+                                                ),
+                                                child: TextFormField(
+                                                  controller: _editStore
+                                                      .controllers["${liturgy.id}_1"],
+                                                  focusNode: _editStore
+                                                      .focusNodes["${liturgy.id}_1"],
+                                                  decoration: InputDecoration(
+                                                    border: InputBorder.none,
+                                                    isDense: true,
+                                                    contentPadding:
+                                                        EdgeInsets.zero,
+                                                  ),
+                                                  style: AppFonts.defaultFont(
+                                                    color: AppColors.grey10,
+                                                    fontSize: 13,
+                                                  ),
+                                                  maxLines: null,
+                                                  keyboardType:
+                                                      TextInputType.multiline,
+                                                  onChanged: (newValue) {},
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
                                     ),
-                                    Expanded(
-                                      child: Container(
-                                        margin: const EdgeInsets.only(
-                                          bottom: 8,
-                                          top: 8,
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(2.0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              TextFormField(
-                                                controller: _editStore
-                                                    .controllers["${liturgy.id}_0"],
-                                                focusNode: _editStore
-                                                    .focusNodes["${liturgy.id}_0"],
-                                                decoration:
-                                                InputDecoration(
-                                                  border: InputBorder
-                                                      .none,
-                                                  isDense: true,
-                                                  contentPadding:
-                                                  EdgeInsets.zero,
-                                                ),
-                                                style: AppFonts.defaultFont(
-                                                  color: AppColors.grey9,
-                                                  fontSize: 17,
-                                                ),
-                                                maxLines: null,
-                                                keyboardType:
-                                                TextInputType
-                                                    .multiline,
-                                                onChanged: (newValue) {
-
-                                                },
-                                              ),
-                                              Visibility(
-                                                visible: _editStore.liturgiesList[index]
-                                                    .isAdditional,
-                                                child: Container(
-                                                  margin: const EdgeInsets.only(
-                                                    top: 4,
-                                                  ),
-                                                  child: TextFormField(
-                                                    controller: _editStore
-                                                        .controllers["${liturgy.id}_1"],
-                                                    focusNode: _editStore
-                                                        .focusNodes["${liturgy.id}_1"],
-                                                    decoration:
-                                                    InputDecoration(
-                                                      border: InputBorder
-                                                          .none,
-                                                      isDense: true,
-                                                      contentPadding:
-                                                      EdgeInsets.zero,
-                                                    ),
-                                                    style: AppFonts.defaultFont(
-                                                      color: AppColors.grey10,
-                                                        fontSize: 13,
-                                                    ),
-                                                    maxLines: null,
-                                                    keyboardType:
-                                                    TextInputType
-                                                        .multiline,
-                                                    onChanged: (newValue) {
-
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
+                            ),
                           );
 
                           return Container(
@@ -317,7 +328,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                             child: GestureDetector(
                               key: gestureKey,
                               onLongPressStart: (details) async {
-                                Modular.get<EditLiturgyStore>().entity = liturgy;
+                                Modular.get<EditLiturgyStore>().entity =
+                                    liturgy;
                                 Modular.get<EditLiturgyStore>().index = index;
                                 await showEditDialog(
                                   context: context,
@@ -339,9 +351,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                                       ),
                                       Divider(
                                         height: 1,
-                                        color: AppColors.dividerModal.withValues(
-                                          alpha: 25,
-                                        ),
+                                        color: AppColors.dividerModal
+                                            .withValues(alpha: 25),
                                       ),
                                       actionButton(
                                         context: context,
@@ -357,9 +368,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                                       ),
                                       Divider(
                                         height: 1,
-                                        color: AppColors.dividerModal.withValues(
-                                          alpha: 25,
-                                        ),
+                                        color: AppColors.dividerModal
+                                            .withValues(alpha: 25),
                                       ),
                                       actionButton(
                                         context: context,
@@ -386,9 +396,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                             if (oldIndex < newIndex) {
                               newIndex -= 1;
                             }
-                            final LiturgyModel item = _editStore.liturgiesList.removeAt(
-                              oldIndex,
-                            );
+                            final LiturgyModel item = _editStore.liturgiesList
+                                .removeAt(oldIndex);
                             _editStore.liturgiesList.insert(newIndex, item);
                           });
                         },
@@ -402,7 +411,10 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                                   animation.value,
                                 );
                                 final scale = lerpDouble(1, 1.1, animValue)!;
-                                return Transform.scale(scale: scale, child: child);
+                                return Transform.scale(
+                                  scale: scale,
+                                  child: child,
+                                );
                               },
                               child: child,
                             ),

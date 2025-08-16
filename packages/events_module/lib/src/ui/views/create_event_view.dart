@@ -27,21 +27,6 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
     child: Image.asset(AppIcons.linkIcon, width: 20, height: 13),
   );
 
-  Future<void> setDateTime({
-    required DateTime selectedDate,
-    required Function(DateTime) onDatePicked,
-    required BuildContext context,
-  }) async {
-    DateTime? pickedDate = await selectDateTime(
-      selectedDate: selectedDate,
-      context: context,
-    );
-    if (pickedDate != null) {
-      setState(() {
-        onDatePicked(pickedDate);
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
