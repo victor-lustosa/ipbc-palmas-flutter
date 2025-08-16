@@ -34,7 +34,9 @@ class CoreModule extends Module {
     i.addSingleton(
       () => UseCases<IsarRepository>(repository: i.get<IsarRepository>()),
     );
-    i.addLazySingleton<EditLiturgyStore>(EditLiturgyStore.new);
+    i.addLazySingleton<EditLiturgyStore>(
+      () => EditLiturgyStore(useCases: i.get<UseCases<SupabaseRepository>>()),
+    );
     i.addLazySingleton<SearchLyricsStore>(SearchLyricsStore.new);
     i.addLazySingleton<ServicesPreviewStore>(ServicesPreviewStore.new);
   }

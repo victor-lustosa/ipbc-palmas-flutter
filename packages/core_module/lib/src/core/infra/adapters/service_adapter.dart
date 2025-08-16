@@ -7,6 +7,7 @@ import '../../../shared/mixins/flatten_mixin.dart';
 // ignore: depend_on_referenced_packages
 
 class ServiceAdapter {
+  ServiceAdapter._();
   static ServiceModel fromJson(String source) => fromMap(json.decode(source));
 
   static List<ServiceEntity> fromJsonList(String source) =>
@@ -16,7 +17,7 @@ class ServiceAdapter {
     return ServiceModel(
       id: json['id'],
       image: json['image'],
-      createAt: '',
+      createAt: DateTime.parse(json['createAt']),
       type: json['type'],
       theme: json['theme'],
       preacher: json['preacher'],
@@ -39,7 +40,7 @@ class ServiceAdapter {
       'id': data.id,
       'hour': data.hour,
       'image': data.image,
-      'createAt': data.createAt.toString(),
+      'createAt': data.createAt.toIso8601String(),
       'heading': data.heading,
       'title': data.title,
       'type': data.type,
@@ -61,9 +62,7 @@ class ServiceAdapter {
           type: '',
           image: entity['image'],
           hour: entity['hour'],
-          createAt: DateFormat(
-            'dd/MM/yyyy',
-          ).format(DateTime.parse(entity['createAt'])),
+          createAt: DateTime.parse(entity['createAt']),
           theme: entity['theme'],
           preacher: entity['preacher'],
           guideIsVisible: entity['guideIsVisible'],
@@ -79,7 +78,8 @@ class ServiceAdapter {
                   )
                   : [],
           lyricsList:
-              entity['service_lyrics'][0]['lyrics'].isNotEmpty
+          entity.containsKey('service_lyrics')
+               && entity['service_lyrics'].isNotEmpty
                   ? LyricAdapter.fromMapList([
                     entity['service_lyrics'][0]['lyrics'],
                   ])

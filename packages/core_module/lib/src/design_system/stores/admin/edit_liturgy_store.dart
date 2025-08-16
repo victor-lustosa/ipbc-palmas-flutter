@@ -8,18 +8,21 @@ class EditLiturgyDTO {
   final String image;
 }
 
-class EditLiturgyStore extends ChangeNotifier with DateMixin {
-
-  EditLiturgyStore(){
+class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> with DateMixin, ConnectivityMixin {
+  EditLiturgyStore({required IUseCases useCases})
+    : _useCases = useCases,
+      super(InitialState<EditLiturgyState>()) {
     init();
   }
 
+  final IUseCases _useCases;
+
   int index = 0;
-  late LiturgyModel entity;
+  late LiturgyModel liturgyModel;
   late EditLiturgyDTO dto;
   late List<LiturgyModel> liturgiesList;
+  late ServicesEntity servicesEntity;
   TimeOfDay? serviceHour;
-  late int? dayOfWeek;
 
   final Map<String, TextEditingController> _controllers = {};
   final Map<String, FocusNode> _focusNodes = {};
@@ -85,14 +88,14 @@ class EditLiturgyStore extends ChangeNotifier with DateMixin {
       startTimeParam: serviceHour,
       startDateParam: nextWeekdayWithTime(
         DateTime.now(),
-        dayOfWeek,
+        servicesEntity.dayOfWeek,
         serviceHour,
       ),
     );
     notifyListeners();
   }
 
-  resetValidationFields(){
+  resetValidationFields() {
     changeValue(isThemeValid, true);
     changeValue(isPreacherValid, true);
   }
@@ -106,6 +109,45 @@ class EditLiturgyStore extends ChangeNotifier with DateMixin {
       valueNotifier.value = newValue;
       notifyListeners();
     });
+  }
+  static String createId() => DateTime.now().microsecondsSinceEpoch.toString();
+  Future<void> addData(BuildContext context) async {
+    if (validateAllFields()) {
+      final response = await isConnected();
+      if (response) {
+        final typeList = servicesEntity.path.split('/');
+        value = AddDataEvent<EditLiturgyState>();
+        _useCases.add(
+          data: ServiceAdapter.toMap(
+            ServiceEntity(
+              id: createId(),
+              image: servicesEntity.image,
+              theme: themeController.text,
+              hour: servicesEntity.hour,
+              preacher: preacherController.text,
+              type: typeList[2],
+              guideIsVisible: false,
+              createAt: DateTime.now(),
+              lyricsList: [],
+              liturgiesList: liturgiesList,
+              title: servicesEntity.title,
+              heading: servicesEntity.heading,
+            ),
+          ),
+          params: {'table': 'service'},
+        );
+        if (context.mounted) {
+          showCustomSuccessDialog(
+            context: context,
+            title: 'Sucesso!',
+            message: 'Evento salvo',
+          );
+        }
+      }
+      value = DataAddedState<EditLiturgyState>();
+    } else {
+      value = NoConnectionState<EditLiturgyState>();
+    }
   }
 
   fillItems() {
@@ -189,13 +231,27 @@ class EditLiturgyStore extends ChangeNotifier with DateMixin {
   void copyEntity() {
     liturgiesList.insert(
       index,
-      entity.copyWith(id: SupaServicesUtil.createId()),
+      liturgyModel.copyWith(id: SupaServicesUtil.createId()),
     );
     notifyListeners();
   }
 
   void delete() {
-    liturgiesList.remove(entity);
+    liturgiesList.remove(liturgyModel);
     notifyListeners();
   }
+
+  bool validateAllFields() {
+    bool allTextValid = true;
+    if (preacherController.text.trim().isEmpty ||
+        themeController.text.trim().isEmpty) {
+      formValidation(preacherController.text, isPreacherValid);
+      formValidation(themeController.text, isThemeValid);
+      allTextValid = false;
+    }
+    return allTextValid;
+  }
 }
+
+@immutable
+abstract class EditLiturgyState {}

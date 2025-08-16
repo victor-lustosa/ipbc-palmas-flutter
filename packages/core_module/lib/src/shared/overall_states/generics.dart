@@ -47,6 +47,11 @@ class LoadingState<R> extends GenericState<R> {
 }
 
 @immutable
+class UpdateFormFieldState<R> extends GenericState<R> {
+  UpdateFormFieldState();
+}
+
+@immutable
 class NoConnectionState<R> extends GenericState<R> {
   NoConnectionState();
 }

@@ -31,7 +31,9 @@ class _ServiceViewState extends State<ServiceView> {
                 image: widget.entity.image,
                 title: widget.entity.service.title,
                 dateIsVisible: widget.entity.service.guideIsVisible,
-                createAt: widget.entity.service.createAt,
+                createAt: DateFormat(
+                  'dd/MM/yyyy',
+                ).format(widget.entity.service.createAt),
               ),
               Visibility(
                 visible: widget.entity.service.guideIsVisible,
@@ -56,7 +58,7 @@ class _ServiceViewState extends State<ServiceView> {
               ),
               LyricsListWidget(
                 entitiesList: widget.entity.service.lyricsList,
-                onTap: (){},
+                onTap: () {},
                 onLongPressStart: (s) {},
               ),
               const SizedBox(height: 40),

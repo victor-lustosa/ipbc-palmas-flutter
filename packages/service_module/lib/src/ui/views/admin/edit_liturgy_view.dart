@@ -192,6 +192,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                         ],
                       ),
                     ),
+                    Container(height: 40, width: context.sizeOf.width,decoration: BoxDecoration(color: AppColors.grey9),),
                     Container(
                       margin: const EdgeInsets.only(
                         left: 16.5,
@@ -328,7 +329,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                             child: GestureDetector(
                               key: gestureKey,
                               onLongPressStart: (details) async {
-                                Modular.get<EditLiturgyStore>().entity =
+                                Modular.get<EditLiturgyStore>().liturgyModel =
                                     liturgy;
                                 Modular.get<EditLiturgyStore>().index = index;
                                 await showEditDialog(
@@ -431,7 +432,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
               backgroundColor: AppColors.confirmation,
               iconColor: AppColors.grey10,
               size: 33,
-              action: () {
+              action: () async {
+               await _editStore.addData(context);
                 Modular.get<ServicesPreviewStore>().dto = ServicesPreviewDTO(
                   heading: _editStore.dto.heading,
                   image: _editStore.dto.image,

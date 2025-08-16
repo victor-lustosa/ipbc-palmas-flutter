@@ -2,11 +2,11 @@ import 'package:core_module/core_module.dart';
 
 class ServiceEntity {
   ServiceEntity({
-    required this.id,
+    this.id,
     required this.type,
     required this.hour,
     required this.theme,
-    required this.image,
+    this.image,
     required this.preacher,
     required this.title,
     required this.guideIsVisible,
@@ -16,11 +16,11 @@ class ServiceEntity {
     required this.createAt,
   });
 
-  final String id;
+  final String? id;
   final String type;
-  final String image;
+  final String? image;
   final String hour;
-  final String createAt;
+  final DateTime createAt;
   final String theme;
   final String preacher;
   final bool guideIsVisible;

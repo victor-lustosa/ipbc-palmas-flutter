@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:core_module/core_module.dart';
 
 class VerseAdapter {
-
+  VerseAdapter._();
   static List<VerseEntity> fromMapList(dynamic json) {
     List<VerseEntity> versesList = [];
     for (dynamic verse in json) {

@@ -124,7 +124,9 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   maxLines: 1,
-                                                  '${entitiesList[index].title} ${entitiesList[index].createAt} | ${widget.entity.hour}',
+                                                  '${entitiesList[index].title} ${DateFormat(
+                                                    'dd/MM/yyyy',
+                                                  ).format(entitiesList[index].createAt)} | ${widget.entity.hour}',
                                                   style: AppFonts.defaultFont(
                                                     fontWeight: FontWeight.w600,
                                                     color: AppColors.grey9,
@@ -220,7 +222,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
         icon: Icons.add,
         action: () {
           _editStore.fillItems();
-          _editStore.dayOfWeek = widget.entity.dayOfWeek;
+          _editStore.servicesEntity = widget.entity;
           _editStore.serviceHour = parseTimeOfDayFromH(widget.entity.hour);
           _editStore.setEditLiturgyDTO(
             EditLiturgyDTO(

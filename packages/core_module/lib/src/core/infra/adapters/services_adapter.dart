@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:core_module/core_module.dart';
 
 class ServicesAdapter {
+  ServicesAdapter._();
   static String toJson(List<ServicesEntity> source) =>
       json.encode(toMapList(source));
 

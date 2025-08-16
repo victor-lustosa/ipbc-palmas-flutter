@@ -185,5 +185,3 @@ class LoadingImageState extends GenericState<CreateEventState> {}
 class FetchedImageState extends GenericState<CreateEventState> {}
 
 class ExceptionImageState extends GenericState<CreateEventState> {}
-
-class UpdateFormFieldState extends GenericState<CreateEventState> {}
