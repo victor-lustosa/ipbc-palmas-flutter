@@ -40,7 +40,7 @@ class _ServiceViewState extends State<ServiceView> with ValidationAndFormatMixin
                   child: GuidelineWidget(
                     circleColor: AppColors.cardBallsGrey,
                     timelineColor: AppColors.timelineGuideTGreen,
-                    liturgiesList: widget.entity.service.liturgiesList,
+                    liturgiesList: widget.entity.service.liturgiesList ?? [],
                   ),
                 ),
               ),
@@ -55,7 +55,7 @@ class _ServiceViewState extends State<ServiceView> with ValidationAndFormatMixin
                 ),
               ),
               LyricsListWidget(
-                entitiesList: widget.entity.service.lyricsList,
+                entitiesList: widget.entity.service.lyricsList ?? [],
                 onTap: () {},
                 onLongPressStart: (s) {},
               ),

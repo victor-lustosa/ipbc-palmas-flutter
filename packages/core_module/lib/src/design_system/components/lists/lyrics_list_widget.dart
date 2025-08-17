@@ -9,7 +9,7 @@ class LyricsListWidget extends StatefulWidget {
 
   final void Function(LongPressStartDetails)? onLongPressStart;
   final void Function()? onTap;
-  final List<LyricModel> entitiesList;
+  final List<LyricEntity> entitiesList;
 
   @override
   State<LyricsListWidget> createState() => _LyricsListWidgetState();

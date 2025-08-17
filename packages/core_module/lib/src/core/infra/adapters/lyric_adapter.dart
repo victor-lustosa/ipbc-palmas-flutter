@@ -60,7 +60,31 @@ class LyricAdapter with FlattenMixin{
     return lyricsList;
   }
 
+  static LyricModel toModel(LyricEntity data) {
+    return LyricModel(
+      albumCover: data.albumCover,
+      id: data.id,
+      createAt: data.createAt.toString(),
+      title: data.title,
+      group: data.group,
+      verses: data.verses,
+    );
+  }
 
+  static List<LyricModel> toModelList(List<LyricEntity> data) {
+    List<LyricModel> lyricsList = [];
+    for (dynamic lyric in data) {
+      lyricsList.add(LyricModel(
+        albumCover: lyric.albumCover,
+        id: lyric.id,
+        createAt: lyric.createAt.toString(),
+        title: lyric.title,
+        group: lyric.group,
+        verses: lyric.verses,
+      ));
+    }
+    return lyricsList;
+  }
 
   static List<Map<String, dynamic>> toMapList(List<LyricEntity> data) {
     return data

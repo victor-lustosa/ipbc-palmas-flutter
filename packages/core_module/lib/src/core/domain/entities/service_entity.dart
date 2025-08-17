@@ -11,8 +11,8 @@ class ServiceEntity {
     required this.title,
     required this.guideIsVisible,
     required this.heading,
-    required this.liturgiesList,
-    required this.lyricsList,
+    this.liturgiesList,
+    this.lyricsList,
     required this.createAt,
   });
 
@@ -26,7 +26,16 @@ class ServiceEntity {
   final bool guideIsVisible;
   final String title;
   final String heading;
-  final List<LyricModel> lyricsList;
-  final List<LiturgyEntity> liturgiesList;
+  final List<LyricEntity>? lyricsList;
+  final List<LiturgyEntity>? liturgiesList;
+
+}
+
+class ServiceLiturgiesSupabase {
+  final String? id;
+  final int liturgyId;
+  final int serviceId;
+
+  ServiceLiturgiesSupabase({required this.id, required this.liturgyId, required this.serviceId});
 
 }

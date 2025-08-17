@@ -17,7 +17,7 @@ class UseCases<T> implements IUseCases {
   }
 
   @override
-  Future<void> add({required data, Map<String, dynamic>? params}) async =>
+  Future<dynamic> add({required data, Map<String, dynamic>? params}) async =>
       repository.add(data: data, params: params);
 
   @override

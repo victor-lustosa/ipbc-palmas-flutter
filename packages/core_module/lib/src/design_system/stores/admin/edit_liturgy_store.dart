@@ -1,10 +1,22 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> with DateMixin, ConnectivityMixin {
+import '../../../core/infra/adapters/liturgy_adapter.dart';
+
+class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
+    with DateMixin, ConnectivityMixin {
   EditLiturgyStore({required IUseCases useCases})
     : _useCases = useCases,
       super(InitialState<EditLiturgyState>()) {
+    servicesEntity = ServicesEntity(
+      image:
+          "https://xrvmfhpmelyvupfylnfk.supabase.co/storage/v1/object/public/covers/mobile_service_covers/saturday_evening.png",
+      id: "0",
+      hour: "19h30",
+      title: "Sábado à noite",
+      heading: "sábado à noite (UMP)",
+      path: "service/type/saturday-services/createAt/true",
+    );
     init();
   }
 
@@ -103,39 +115,57 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> wit
       notifyListeners();
     });
   }
+
   Future<void> addData(BuildContext context) async {
     if (validateAllFields()) {
       final response = await isConnected();
       if (response) {
         final typeList = servicesEntity.path.split('/');
         value = AddDataEvent<EditLiturgyState>();
-        _useCases.add(
-          data: ServiceAdapter.toMap(
-            ServiceEntity(
+        final liturgyResponse = await _useCases.add(
+          params: {'table': 'liturgies', 'selectFields': 'id'},
+          data: LiturgyAdapter.supabaseToMap(
+            LiturgySupabase(
               id: MockUtil.createId(),
-              image: servicesEntity.image,
-              theme: themeController.text,
-              hour: servicesEntity.hour,
-              preacher: preacherController.text,
-              type: typeList[2],
-              guideIsVisible: false,
-              createAt: DateTime.now(),
-              lyricsList: [],
-              liturgiesList: liturgiesList,
-              title: servicesEntity.title,
-              heading: servicesEntity.heading,
+              liturgy: LiturgyAdapter.toMapList(liturgiesList),
             ),
           ),
-          params: {'table': 'service'},
         );
-        if (context.mounted) {
-          showCustomSuccessDialog(
-            context: context,
-            title: 'Sucesso!',
-            message: 'Evento salvo',
-          );
-        }
+        final serviceResponse = await _useCases.add(
+        data: ServiceAdapter.toMap(
+          ServiceEntity(
+            id: MockUtil.createId(),
+            image: servicesEntity.image,
+            theme: themeController.text,
+            hour: servicesEntity.hour,
+            preacher: preacherController.text,
+            type: typeList[2],
+            guideIsVisible: false,
+            createAt: DateTime.now(),
+            title: servicesEntity.title,
+            heading: servicesEntity.heading,
+          ),
+        ),
+        params: {'table': 'service', 'selectFields': 'id'},
+      );
+        await _useCases.add(
+          params: {'table': 'service_liturgies'},
+          data: ServiceAdapter.serviceLiturgiesToMap(
+            ServiceLiturgiesSupabase(
+              id: MockUtil.createId(),
+              liturgyId: liturgyResponse[0]['id'],
+              serviceId: serviceResponse[0]['id'],
+            ),
+          ),
+        );
+      if (context.mounted) {
+        showCustomSuccessDialog(
+          context: context,
+          title: 'Sucesso!',
+          message: 'Evento salvo',
+        );
       }
+    }
       value = DataAddedState<EditLiturgyState>();
     } else {
       value = NoConnectionState<EditLiturgyState>();
@@ -217,10 +247,7 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> wit
   }
 
   void copyEntity() {
-    liturgiesList.insert(
-      index,
-      liturgyModel.copyWith(id: MockUtil.createId()),
-    );
+    liturgiesList.insert(index, liturgyModel.copyWith(id: MockUtil.createId()));
     controllersAndFocusNodes();
     notifyListeners();
   }

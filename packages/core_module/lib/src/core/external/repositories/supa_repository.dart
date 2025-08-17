@@ -40,8 +40,12 @@ class SupabaseRepository implements IRepository {
   }
 
   @override
-  Future<void> add<T>({required data, Map<String, dynamic>? params}) async {
-    await _supaClient.from(params?['table']).insert(data);
+  Future<dynamic> add<T>({required data, Map<String, dynamic>? params}) async {
+    dynamic query = _supaClient.from(params?['table']).insert(data);
+    if(params?['selectFields'] != null) {
+      query = query.select(params?['selectFields'] ?? '*');
+    }
+    return await query;
   }
 
   @override

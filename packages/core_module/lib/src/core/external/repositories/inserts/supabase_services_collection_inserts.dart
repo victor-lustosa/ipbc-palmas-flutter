@@ -38,7 +38,10 @@ void main() async {
     );
     //supa.add('saturday-services', SupaServiceAdapter.toMap(saturdayService));
     print('Saturday lyrics have been successfully added');
-    lyricsInserted.addAll(saturdayService.lyricsList);
+    if (saturdayService.lyricsList != null) {
+      lyricsInserted.addAll(
+          LyricAdapter.toModelList(saturdayService.lyricsList!));
+    }
 
     ServiceModel sundayEveningService = await SupaServicesUtil.insertService(
       sundayEveningPath,
@@ -46,7 +49,9 @@ void main() async {
     );
     //supa.add('sunday-evening-services', SupaServiceAdapter.toMap(sundayEveningService));
     print('Sunday Evening lyrics have been successfully added');
-    lyricsInserted.addAll(sundayEveningService.lyricsList);
+    if (sundayEveningService.lyricsList != null) {
+      lyricsInserted.addAll(LyricAdapter.toModelList(sundayEveningService.lyricsList!));
+    }
 
     ServiceModel sundayMorningService = await SupaServicesUtil.insertService(
       sundayMorningPath,
@@ -54,7 +59,9 @@ void main() async {
     );
     //supa.add('service', SupaServiceAdapter.toMap(sundayMorningService));
     print('Sunday Morning lyrics have been successfully added');
-    lyricsInserted.addAll(sundayMorningService.lyricsList);
+    if (sundayMorningService.lyricsList != null){
+      lyricsInserted.addAll(LyricAdapter.toModelList(sundayMorningService.lyricsList!));
+    }
 
     // inserindo lista de letras desconhecidas
     /* if (unknownLyrics.isNotEmpty) {

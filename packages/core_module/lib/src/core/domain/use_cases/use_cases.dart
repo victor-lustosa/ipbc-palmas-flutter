@@ -16,7 +16,7 @@ abstract class IGetUseCases {
 }
 
 abstract class IAddUseCases {
-  Future<void> add({required data, Map<String, dynamic>? params});
+  Future<dynamic> add({required data, Map<String, dynamic>? params});
 }
 
 abstract class IUpdateUseCases {

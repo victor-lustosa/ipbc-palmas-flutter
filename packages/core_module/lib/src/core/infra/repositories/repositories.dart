@@ -12,7 +12,7 @@ abstract class IGetByPagination {
 }
 
 abstract class IAdd {
-  Future<void> add<T>({required data, Map<String, dynamic>? params});
+  Future<dynamic> add<T>({required data, Map<String, dynamic>? params});
 }
 
 abstract class IUpdate {

@@ -27,8 +27,8 @@ class IsarRepository implements IRepository {
   }
 
   @override
-  Future<void> update<T>({required data, Map<String, dynamic>? params}) async {
-    await isar.writeTxn(() async {
+  Future<String?> update<T>({required data, Map<String, dynamic>? params}) async {
+   return await isar.writeTxn(() async {
       isar.collection<T>().put(data);
     });
   }
@@ -37,7 +37,7 @@ class IsarRepository implements IRepository {
   Future<void> delete<T>({Map<String, dynamic>? params}) async {}
 
   @override
-  Future<void> add<T>({required data, Map<String, dynamic>? params}) async =>
+  Future<dynamic> add<T>({required data, Map<String, dynamic>? params}) async =>
       update<T>(data: data, params: params);
 
   @override

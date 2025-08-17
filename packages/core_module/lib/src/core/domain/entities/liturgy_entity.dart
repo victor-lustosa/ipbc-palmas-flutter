@@ -10,3 +10,10 @@ class LiturgyEntity {
     required this.additional,
   });
 }
+
+class LiturgySupabase {
+  final String? id;
+  final List<Map<String, dynamic>> liturgy;
+
+  LiturgySupabase({this.id, required this.liturgy});
+}

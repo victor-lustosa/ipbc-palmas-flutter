@@ -47,6 +47,13 @@ class ServiceAdapter {
       'guideIsVisible': data.guideIsVisible,
     };
   }
+  static Map<String, dynamic> serviceLiturgiesToMap(ServiceLiturgiesSupabase data) {
+    return {
+      'id': data.id,
+      'service_id': data.serviceId,
+      'liturgy_id': data.liturgyId,
+    };
+  }
 
   static List<ServiceEntity> fromMapList(dynamic data) {
     List<ServiceEntity> services = [];

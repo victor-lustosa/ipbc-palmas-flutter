@@ -15,21 +15,28 @@ class SupaServicesUtil {
   ) async {
     final String json = await rootBundle.loadString(path);
     ServiceModel service = ServiceAdapter.fromJson(json);
-    List<LyricEntity> lyricsConverted = await _generateVersesList(
-      service.lyricsList,
-    );
+    List<LyricEntity> lyricsConverted;
     List<LyricModel> lyricsAux = [];
-    //aqui vai o codigo para alterar a capa do album
-    for (int line = 0; service.lyricsList.length > line; line++) {
-      lyricsAux.add(
-        service.lyricsList[line].copyWith(
-          id: MockUtil.createId(),
-          // verses: lyricsConverted[line].verses,
-          albumCover: lyricsConverted[line].albumCover,
-          createAt: await _dateNowDelayed(),
-        ),
+
+    if(service.lyricsList != null){
+      lyricsConverted = await _generateVersesList(
+        service.lyricsList!,
       );
+      //aqui vai o codigo para alterar a capa do album
+      for (int line = 0; service.lyricsList!.length > line; line++) {
+        LyricModel model = LyricAdapter.toModel(service.lyricsList![line]);
+        lyricsAux.add(
+          model.copyWith(
+            id: MockUtil.createId(),
+            // verses: lyricsConverted[line].verses,
+            albumCover: lyricsConverted[line].albumCover,
+            createAt: await _dateNowDelayed(),
+          ),
+        );
+      }
     }
+
+
     lyricsAux.addAll(unknownLyrics);
     return service.copyWith(id: MockUtil.createId(), lyricsList: lyricsAux);
   }
