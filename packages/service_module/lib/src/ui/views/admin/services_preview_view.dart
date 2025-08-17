@@ -9,9 +9,11 @@ class ServicesPreviewView extends StatefulWidget {
 }
 
 class _ServicesPreviewViewState extends State<ServicesPreviewView> {
-  final ServicesPreviewStore _servicesPreviewStore = Modular.get<ServicesPreviewStore>();
+  final ServicesPreviewStore _servicesPreviewStore =
+      Modular.get<ServicesPreviewStore>();
   final EditLyricStore _editLyricStore = Modular.get<EditLyricStore>();
   late final LyricsListStore _lyricsListStore;
+
   @override
   void initState() {
     super.initState();
@@ -29,19 +31,22 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ServiceTopBarWidget(image: _servicesPreviewStore.dto.image),
+              ServiceTopBarWidget(
+                image: _servicesPreviewStore.servicesEntity.image,
+                title: "Cultos de ${_servicesPreviewStore.servicesEntity.heading}",
+              ),
               Container(
                 margin: const EdgeInsets.only(top: 24.7, left: 16),
                 child: GuidelineWidget(
                   circleColor: AppColors.cardBallsGrey,
                   timelineColor: AppColors.timelineGuideTGreen,
-                  liturgiesList: _servicesPreviewStore.dto.liturgiesList,
+                  liturgiesList: _servicesPreviewStore.liturgiesList,
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(top: 24.7, left: 16),
                 child: Text(
-                  'Músicas de ${_servicesPreviewStore.dto.heading}',
+                  'Músicas de ${_servicesPreviewStore.servicesEntity.heading}',
                   style: AppFonts.defaultFont(
                     fontWeight: FontWeight.w500,
                     fontSize: 17,
@@ -91,10 +96,6 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                   fixedSize: Size(context.sizeOf.width, 48),
                   action: () => pushNamed(
                     AppRoutes.servicesRoute + AppRoutes.searchLyricsRoute,
-                    arguments: EditLiturgyDTO(
-                      heading: _servicesPreviewStore.dto.heading,
-                      image: _servicesPreviewStore.dto.image,
-                    ),
                   ),
                   backgroundColor: AppColors.darkGreen,
                   shadowColor: AppColors.grey0,
@@ -120,10 +121,6 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
         pngIcon: AppIcons.editIcon,
         size: 37,
         action: () {
-          Modular.get<EditLiturgyStore>().dto = EditLiturgyDTO(
-            image: _servicesPreviewStore.dto.image,
-            heading: _servicesPreviewStore.dto.heading,
-          );
           popAndPushNamed(
             AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute,
           );

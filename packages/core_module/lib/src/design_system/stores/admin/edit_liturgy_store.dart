@@ -1,61 +1,99 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class EditLiturgyDTO {
-  EditLiturgyDTO({required this.heading, required this.image});
+class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> with DateMixin, ConnectivityMixin {
+  EditLiturgyStore({required IUseCases useCases})
+    : _useCases = useCases,
+      super(InitialState<EditLiturgyState>()) {
+    init();
+  }
 
-  final String heading;
-  final String image;
-}
-
-class EditLiturgyStore extends ChangeNotifier with DateMixin {
+  final IUseCases _useCases;
+  bool isEditing = false;
   int index = 0;
-  late LiturgyModel entity;
-  late EditLiturgyDTO dto;
-
-  late List<LiturgyModel> items;
+  late LiturgyModel liturgyModel;
+  late List<LiturgyModel> liturgiesList;
+  late ServicesEntity servicesEntity;
+  late ServiceEntity serviceEntity;
   TimeOfDay? serviceHour;
-  late int? dayOfWeek;
 
   final TextEditingController preacherController = TextEditingController();
   final TextEditingController themeController = TextEditingController();
   final String preacherErrorText = 'por favor, insira o preletor do culto.';
   final String themeErrorText = 'por favor, insira a mensagem do culto.';
+
   final preacherKey = GlobalKey<FormState>();
   final themeKey = GlobalKey<FormState>();
+
   ValueNotifier<bool> isPreacherValid = ValueNotifier(true);
   ValueNotifier<bool> isThemeValid = ValueNotifier(true);
   bool isPressed = false;
 
-  preacherValidation(String? data) {
-    if (data == null || data.isEmpty) {
-      changeValue(isPreacherValid, false);
+  final Map<String, TextEditingController> _controllers = {};
+  final Map<String, FocusNode> _focusNodes = {};
+
+  late FocusScopeNode _rootFocusNode;
+
+  get rootFocusNode => _rootFocusNode;
+
+  get controllers => _controllers;
+
+  get focusNodes => _focusNodes;
+
+  bool isAnyTextFieldFocused = false;
+
+  init() {
+    fillItems();
+    controllersAndFocusNodes();
+    _rootFocusNode = FocusScopeNode();
+  }
+
+  formValidation(String? data, ValueNotifier<bool> isValid) {
+    if (isEmptyData(data)) {
+      changeValue(isValid, false);
       return null;
     } else {
-      changeValue(isPreacherValid, true);
+      changeValue(isValid, true);
       return null;
+    }
+  }
+
+  void controllersAndFocusNodes({bool isRemove = false}) {
+    for (int i = 0; i < liturgiesList.length; i++) {
+      final liturgy = liturgiesList[i];
+      final sequenceKey = '${liturgy.id}_0';
+      final additionalKey = '${liturgy.id}_1';
+      if(!isRemove){
+
+      }
+      _controllers[sequenceKey] = TextEditingController(
+        text: liturgiesList[i].sequence,
+      );
+      _focusNodes[sequenceKey] = FocusNode();
+      if (liturgy.isAdditional) {
+        _controllers[additionalKey] = TextEditingController(
+          text: liturgiesList[i].additional,
+        );
+        _focusNodes[additionalKey] = FocusNode();
+      }
     }
   }
 
   setDayInTheWeek() {
     initDate(
+      startTimeParam: serviceHour,
       startDateParam: nextWeekdayWithTime(
         DateTime.now(),
-        dayOfWeek,
+        servicesEntity.dayOfWeek,
         serviceHour,
       ),
     );
     notifyListeners();
   }
 
-  themeValidation(String? data) {
-    if (data == null || data.isEmpty) {
-      changeValue(isThemeValid, false);
-      return null;
-    } else {
-      changeValue(isThemeValid, true);
-      return null;
-    }
+  resetValidationFields() {
+    changeValue(isThemeValid, true);
+    changeValue(isPreacherValid, true);
   }
 
   bool isEmptyData(String? data) {
@@ -68,9 +106,48 @@ class EditLiturgyStore extends ChangeNotifier with DateMixin {
       notifyListeners();
     });
   }
+  static String createId() => DateTime.now().microsecondsSinceEpoch.toString();
+  Future<void> addData(BuildContext context) async {
+    if (validateAllFields()) {
+      final response = await isConnected();
+      if (response) {
+        final typeList = servicesEntity.path.split('/');
+        value = AddDataEvent<EditLiturgyState>();
+        _useCases.add(
+          data: ServiceAdapter.toMap(
+            ServiceEntity(
+              id: createId(),
+              image: servicesEntity.image,
+              theme: themeController.text,
+              hour: servicesEntity.hour,
+              preacher: preacherController.text,
+              type: typeList[2],
+              guideIsVisible: false,
+              createAt: DateTime.now(),
+              lyricsList: [],
+              liturgiesList: liturgiesList,
+              title: servicesEntity.title,
+              heading: servicesEntity.heading,
+            ),
+          ),
+          params: {'table': 'service'},
+        );
+        if (context.mounted) {
+          showCustomSuccessDialog(
+            context: context,
+            title: 'Sucesso!',
+            message: 'Evento salvo',
+          );
+        }
+      }
+      value = DataAddedState<EditLiturgyState>();
+    } else {
+      value = NoConnectionState<EditLiturgyState>();
+    }
+  }
 
   fillItems() {
-    items = [
+    liturgiesList = [
       LiturgyModel(
         id: '0',
         isAdditional: false,
@@ -129,13 +206,8 @@ class EditLiturgyStore extends ChangeNotifier with DateMixin {
     notifyListeners();
   }
 
-  void setEditLiturgyDTO(EditLiturgyDTO dto) {
-    this.dto = dto;
-    notifyListeners();
-  }
-
   void addBox() {
-    items.insert(
+    liturgiesList.insert(
       index,
       LiturgyModel(
         id: SupaServicesUtil.createId(),
@@ -144,16 +216,35 @@ class EditLiturgyStore extends ChangeNotifier with DateMixin {
         additional: 'Descrição',
       ),
     );
+    controllersAndFocusNodes();
     notifyListeners();
   }
 
   void copyEntity() {
-    items.insert(index, entity.copyWith(id: SupaServicesUtil.createId()));
+    liturgiesList.insert(
+      index,
+      liturgyModel.copyWith(id: SupaServicesUtil.createId()),
+    );
+    controllersAndFocusNodes();
     notifyListeners();
   }
 
   void delete() {
-    items.remove(entity);
+    liturgiesList.remove(liturgyModel);
     notifyListeners();
   }
+
+  bool validateAllFields() {
+    bool allTextValid = true;
+    if (preacherController.text.trim().isEmpty ||
+        themeController.text.trim().isEmpty) {
+      formValidation(preacherController.text, isPreacherValid);
+      formValidation(themeController.text, isThemeValid);
+      allTextValid = false;
+    }
+    return allTextValid;
+  }
 }
+
+@immutable
+abstract class EditLiturgyState {}

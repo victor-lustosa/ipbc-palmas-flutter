@@ -4,7 +4,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
-    with ImageMixin, ConnectivityMixin, DateMixin, ValidationMixin {
+    with ImageMixin, ConnectivityMixin, DateMixin, ValidationAndFormatMixin {
   bool isSwitchOn = false;
   bool isEditing = false;
 
@@ -174,8 +174,8 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
         );
         if (resultUrl != null) {
           _useCases.add(
-            path: 'event',
             data: EventAdapter.toMap(fillEventEntity(resultUrl)),
+            params: {'table': 'event'},
           );
           if (context.mounted) {
             showCustomSuccessDialog(
@@ -201,5 +201,3 @@ class LoadingImageState extends GenericState<CreateEventState> {}
 class FetchedImageState extends GenericState<CreateEventState> {}
 
 class ExceptionImageState extends GenericState<CreateEventState> {}
-
-class UpdateFormFieldState extends GenericState<CreateEventState> {}

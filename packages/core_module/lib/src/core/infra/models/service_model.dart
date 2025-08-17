@@ -2,8 +2,8 @@ import 'package:core_module/core_module.dart';
 
 class ServiceModel extends ServiceEntity {
   ServiceModel({
-    required super.id,
-    required super.image,
+    super.id,
+    super.image,
     required super.theme,
     required super.hour,
     required super.preacher,
@@ -17,7 +17,7 @@ class ServiceModel extends ServiceEntity {
   });
 
   factory ServiceModel.empty() => ServiceModel(
-    createAt: '',
+    createAt: DateTime.now(),
     lyricsList: [],
     liturgiesList: [],
     title: '',
@@ -28,11 +28,10 @@ class ServiceModel extends ServiceEntity {
     type: '',
     heading: '',
     guideIsVisible: false,
-    id: SupaServicesUtil.createId(),
   );
 
   ServiceModel copyWith({
-    String? createAt,
+    DateTime? createAt,
     String? title,
     String? id,
     String? theme,

@@ -18,7 +18,10 @@ void main() async {
     );
     // inserindo lista de todas as letras
     for (EventEntity event in eventsInserted) {
-      supa.add(path: 'event', data: EventAdapter.toMap(event));
+      supa.add(
+        params: {'table': 'event'},
+        data: EventAdapter.toMap(event),
+      );
     }
     print('events list have been successfully added');
   } catch (e) {

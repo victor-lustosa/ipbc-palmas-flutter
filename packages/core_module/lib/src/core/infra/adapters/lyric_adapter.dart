@@ -6,6 +6,7 @@ import '../../../shared/mixins/flatten_mixin.dart';
 // ignore: depend_on_referenced_packages
 
 class LyricAdapter with FlattenMixin{
+  LyricAdapter._();
   static List<LyricModel> fromJson(String source) =>
       fromMapList(json.decode(source));
 

@@ -16,15 +16,15 @@ abstract class IGetUseCases {
 }
 
 abstract class IAddUseCases {
-  Future<void> add({required data, String? path});
+  Future<void> add({required data, Map<String, dynamic>? params});
 }
 
 abstract class IUpdateUseCases {
-  Future<void> update({required data, String? path});
+  Future<void> update({required data, Map<String, dynamic>? params});
 }
 
 abstract class IDeleteUseCases {
-  Future<void> delete({String? path});
+  Future<void> delete({Map<String, dynamic>? params});
 }
 
 abstract class ISaveImageUseCases {

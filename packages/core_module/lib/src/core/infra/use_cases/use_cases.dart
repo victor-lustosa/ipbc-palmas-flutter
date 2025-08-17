@@ -17,15 +17,16 @@ class UseCases<T> implements IUseCases {
   }
 
   @override
-  Future<void> add({required data, String? path}) async =>
-      repository.add(data: data, path: path);
+  Future<void> add({required data, Map<String, dynamic>? params}) async =>
+      repository.add(data: data, params: params);
 
   @override
-  Future<void> update({required data, String? path}) async =>
-      repository.update(data: data, path: path);
+  Future<void> update({required data, Map<String, dynamic>? params}) async =>
+      repository.update(data: data, params: params);
 
   @override
-  Future<void> delete({String? path}) async => repository.delete(path: path);
+  Future<void> delete({Map<String, dynamic>? params}) async =>
+      repository.delete(params: params);
 
   @override
   Future<String?> saveImage({

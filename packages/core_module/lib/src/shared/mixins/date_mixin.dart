@@ -8,6 +8,34 @@ mixin DateMixin {
   late TimeOfDay startTime;
   late TimeOfDay endTime;
 
+  Future<void> setDateAndTime({
+    required DateTime selectedDate,
+    required TimeOfDay selectedTime,
+    required Function(DateTime) onDatePicked,
+    required BuildContext context,
+  }) async {
+    DateTime? pickedDate = await selectDateTime(
+      selectedDate: selectedDate,
+      context: context,
+    );
+    TimeOfDay? pickedTime;
+    if (context.mounted) {
+      pickedTime = await showTimePicker(
+        context: context,
+        initialTime: selectedTime,
+      );
+      if (pickedDate != null && pickedTime != null) {
+        onDatePicked(DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        ));
+      }
+    }
+  }
+
   DateTime nextWeekdayWithTime(
     DateTime from,
     int? targetWeekday,
@@ -28,6 +56,20 @@ mixin DateMixin {
     );
   }
 
+  Future<void> setDateTime({
+    required DateTime selectedDate,
+    required Function(DateTime) onDatePicked,
+    required BuildContext context,
+  }) async {
+    DateTime? pickedDate = await selectDateTime(
+      selectedDate: selectedDate,
+      context: context,
+    );
+    if (pickedDate != null) {
+      onDatePicked(pickedDate);
+    }
+  }
+
   TimeOfDay parseTimeOfDayFromH(String timeString) {
     final parts = timeString.split('h');
     final hour = int.parse(parts[0]);
@@ -38,21 +80,24 @@ mixin DateMixin {
   }
 
   initDate({
-    TimeOfDay? start,
-    TimeOfDay? end,
+    TimeOfDay? startTimeParam,
+    TimeOfDay? endTimeParam,
     DateTime? startDateParam,
     DateTime? endDateParam,
   }) {
     final now = DateTime.now();
     startDate = startDateParam ?? DateTime(now.year, now.month, now.day, 8, 0);
     endDate = endDateParam ?? DateTime(now.year, now.month, now.day, 18, 0);
-    startTime = start ?? TimeOfDay(hour: 08, minute: 00);
-    endTime = end ?? TimeOfDay(hour: 18, minute: 30);
+    startTime = startTimeParam ?? TimeOfDay(hour: 08, minute: 00);
+    endTime = endTimeParam ?? TimeOfDay(hour: 18, minute: 30);
   }
 
   String formatTime(TimeOfDay time) {
     final hour = time.hour.toString().padLeft(2, '0');
     final minute = time.minute.toString().padLeft(2, '0');
+    if (time.minute == 0) {
+      return '${hour}h';
+    }
     return '${hour}h$minute';
   }
 

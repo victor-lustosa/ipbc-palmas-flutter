@@ -71,7 +71,7 @@ class _EditLyricViewState extends State<EditLyricView> {
         ),
         keyboardType: TextInputType.multiline,
         onChanged: (newValue) {
-          _store.attributeNewFocus(
+          _store.attributeFocusToFormField(
             focusNode: focusNode,
             controller: controller,
             newValue: newValue,
@@ -198,8 +198,8 @@ class _EditLyricViewState extends State<EditLyricView> {
                                               children: List.generate(
                                                 verse.versesList.length,
                                                 (position) {
-                                                  final lineKey =
-                                                      '${verse.id}_$position';
+                                                  final lineKey = '${verse.id}_$position';
+
                                                   _store.updateTiles(
                                                     verse: verse,
                                                     position: position,
@@ -362,6 +362,7 @@ class _EditLyricViewState extends State<EditLyricView> {
                                 child: AnimatedBuilder(
                                   animation: animation,
                                   builder: (BuildContext context, Widget? _) {
+
                                     final animValue = Curves.easeInOut
                                         .transform(animation.value);
                                     final scale = lerpDouble(

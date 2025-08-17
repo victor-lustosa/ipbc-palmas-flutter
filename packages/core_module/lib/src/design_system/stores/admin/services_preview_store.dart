@@ -3,34 +3,11 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:core_module/core_module.dart';
 
-class ServicesPreviewDTO {
-  ServicesPreviewDTO({
-    required this.heading,
-    required this.liturgiesList,
-    required this.image,
-  });
-
-  ServicesPreviewDTO copyWith({
-    String? heading,
-    List<LiturgyModel>? liturgiesList,
-    String? image,
-  }) {
-    return ServicesPreviewDTO(
-      heading: heading ?? this.heading,
-      liturgiesList: liturgiesList ?? this.liturgiesList,
-      image: image ?? this.image,
-    );
-  }
-
-  final String heading;
-  final List<LiturgyModel> liturgiesList;
-  final String image;
-}
-
 class ServicesPreviewStore extends ValueNotifier<GenericState<ServicesPreviewState>> {
   ServicesPreviewStore() : super(InitialState());
 
-  late ServicesPreviewDTO dto;
+  late List<LiturgyModel> liturgiesList;
+  late ServicesEntity servicesEntity;
 
   String createId() => DateTime.now().microsecondsSinceEpoch.toString();
 

@@ -18,7 +18,7 @@ class ServiceView extends StatefulWidget {
   State<ServiceView> createState() => _ServiceViewState();
 }
 
-class _ServiceViewState extends State<ServiceView> {
+class _ServiceViewState extends State<ServiceView> with ValidationAndFormatMixin{
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -29,9 +29,9 @@ class _ServiceViewState extends State<ServiceView> {
             children: [
               ServiceTopBarWidget(
                 image: widget.entity.image,
-                title: widget.entity.service.title,
+                title: "Cultos de ${widget.entity.service.title}",
                 dateIsVisible: widget.entity.service.guideIsVisible,
-                createAt: widget.entity.service.createAt,
+                createAt: formatDateToString(widget.entity.service.createAt),
               ),
               Visibility(
                 visible: widget.entity.service.guideIsVisible,
@@ -56,7 +56,7 @@ class _ServiceViewState extends State<ServiceView> {
               ),
               LyricsListWidget(
                 entitiesList: widget.entity.service.lyricsList,
-                onTap: (){},
+                onTap: () {},
                 onLongPressStart: (s) {},
               ),
               const SizedBox(height: 40),

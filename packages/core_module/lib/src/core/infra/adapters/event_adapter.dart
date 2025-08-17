@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:core_module/core_module.dart';
 
 class EventAdapter {
+  EventAdapter._();
   static String toJson(List<EventEntity> source) =>
       json.encode(toMapList(source));
 

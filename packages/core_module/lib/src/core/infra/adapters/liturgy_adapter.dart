@@ -1,6 +1,7 @@
 import 'package:core_module/core_module.dart';
 
 class LiturgyAdapter {
+  LiturgyAdapter._();
   static List<LiturgyEntity> fromMapList(dynamic json) {
     List<LiturgyEntity> liturgiesList = [];
     for (dynamic liturgy in json) {
