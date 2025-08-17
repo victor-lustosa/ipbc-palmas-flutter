@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-Future<void> showEditDialog({
+Future<void> showOptionsDialog({
   required BuildContext context,
   required GlobalKey itemKey,
   Widget? itemContent,
@@ -50,7 +50,7 @@ Future<void> showEditDialog({
     barrierColor: Colors.transparent,
     transitionDuration: const Duration(milliseconds: 200),
     pageBuilder: (buildContext, animation, secondaryAnimation) {
-      return EditDialogWidget(
+      return OptionsDialogWidget(
         popupTop: popupTop,
         itemContent: itemContent,
         buttons: buttons,
@@ -77,8 +77,8 @@ Future<void> showEditDialog({
   );
 }
 
-class EditDialogWidget extends StatefulWidget {
-  const EditDialogWidget({
+class OptionsDialogWidget extends StatefulWidget {
+  const OptionsDialogWidget({
     super.key,
     required this.itemSize,
     this.itemContent,
@@ -98,10 +98,10 @@ class EditDialogWidget extends StatefulWidget {
   final double popupTop;
 
   @override
-  State<EditDialogWidget> createState() => _EditDialogWidgetState();
+  State<OptionsDialogWidget> createState() => _OptionsDialogWidgetState();
 }
 
-class _EditDialogWidgetState extends State<EditDialogWidget> {
+class _OptionsDialogWidgetState extends State<OptionsDialogWidget> {
   @override
   Widget build(BuildContext context) {
     return Stack(

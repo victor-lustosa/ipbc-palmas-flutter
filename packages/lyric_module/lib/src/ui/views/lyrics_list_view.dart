@@ -139,7 +139,7 @@ class _LyricsListViewState extends State<LyricsListView>
                           child: LyricsListWidget(
                             entitiesList: state.entities,
                             onLongPressStart: (details) async {
-                              await showEditDialog(
+                              await showOptionsDialog(
                                 context: context,
                                 itemKey: _lyricsListStore.itemKey,
                                 popupHeightParam: 110,

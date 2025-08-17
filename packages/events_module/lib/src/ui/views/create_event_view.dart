@@ -14,11 +14,16 @@ class CreateEventView extends StatefulWidget {
 
 class _CreateEventViewState extends State<CreateEventView> with DateMixin {
   late final CreateEventStore _store;
+  late final SlideCardsStore _slideCardsStore;
 
   @override
   void initState() {
     super.initState();
     _store = Modular.get<CreateEventStore>();
+    _slideCardsStore = Modular.get<SlideCardsStore>();
+    if (_store.isEditing) {
+      _store.fillFormWithEvent(_slideCardsStore.eventEntity);
+    }
     Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
   }
 
@@ -129,6 +134,22 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                             ),
                                           ),
                                         )
+                                      : _store.isEditing
+                                      ? Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(20),
+                                            ),
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                _slideCardsStore
+                                                    .eventEntity
+                                                    .image,
+                                              ),
+                                            ),
+                                          ),
+                                        )
                                       : Column(
                                           children: [
                                             Container(
@@ -202,7 +223,10 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                             hintText: 'Título do seu evento',
                           ),
                           validator: (data) {
-                            return _store.formValidation(data, _store.isEventTitleValid);
+                            return _store.formValidation(
+                              data,
+                              _store.isEventTitleValid,
+                            );
                           },
                           defaultHintColor: AppColors.hintInputForm,
                         ),
@@ -224,7 +248,10 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                             hintText: 'Subtítulo do seu evento',
                           ),
                           validator: (data) {
-                            return _store.formValidation(data, _store.isEventSubtitleValid);
+                            return _store.formValidation(
+                              data,
+                              _store.isEventSubtitleValid,
+                            );
                           },
                           defaultHintColor: AppColors.hintInputForm,
                         ),
@@ -244,10 +271,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                           globalKey: _store.eventDescriptionKey,
                           isPressed: _store.isPressed,
                           inputDecoration: fieldInputDecoration(
-                            hintColor:
-                                _store
-                                    .isEventDescriptionValid
-                                    .value
+                            hintColor: _store.isEventDescriptionValid.value
                                 ? AppColors.grey5
                                 : Colors.red,
                             contentPadding: const EdgeInsets.only(
@@ -260,7 +284,10 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                             hintText: 'Descrição do evento',
                           ),
                           validator: (data) {
-                            return _store.formValidation(data, _store.isEventDescriptionValid);
+                            return _store.formValidation(
+                              data,
+                              _store.isEventDescriptionValid,
+                            );
                           },
                           defaultHintColor: AppColors.hintInputForm,
                         ),
@@ -378,7 +405,8 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                       onTap: () => setDateTime(
                                         selectedDate: _store.endDate,
                                         onDatePicked: (newDate) =>
-                                            _store.endDate = newDate, context: context,
+                                            _store.endDate = newDate,
+                                        context: context,
                                       ),
                                       child: Text(
                                         getFormattedDateTime(_store.endDate),
@@ -448,7 +476,10 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                             hintText: 'Selecione a localização',
                           ),
                           validator: (data) {
-                            return _store.formValidation(data, _store.isEventLocationValid);
+                            return _store.formValidation(
+                              data,
+                              _store.isEventLocationValid,
+                            );
                           },
                           defaultHintColor: AppColors.hintInputForm,
                         ),
@@ -482,7 +513,10 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                             hintText: 'Nome do local',
                           ),
                           validator: (data) {
-                            return _store.formValidation(data, _store.isEventLocationNameValid);
+                            return _store.formValidation(
+                              data,
+                              _store.isEventLocationNameValid,
+                            );
                           },
                           defaultHintColor: AppColors.hintInputForm,
                         ),
@@ -505,7 +539,10 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                             hintText: 'Link do evento',
                           ),
                           validator: (data) {
-                            return _store.formValidation(data, _store.isEventLinkValid);
+                            return _store.formValidation(
+                              data,
+                              _store.isEventLinkValid,
+                            );
                           },
                         ),
                       ),
@@ -527,7 +564,10 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                             hintText: 'Link do contato',
                           ),
                           validator: (data) {
-                            return _store.formValidation(data, _store.isContactLinkValid);
+                            return _store.formValidation(
+                              data,
+                              _store.isContactLinkValid,
+                            );
                           },
                         ),
                       ),

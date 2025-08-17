@@ -265,7 +265,7 @@ class _EditLyricViewState extends State<EditLyricView> {
                                             children: [
                                               IconButtonWidget(
                                                 action: () async {
-                                                  await showEditDialog(
+                                                  await showOptionsDialog(
                                                     context: context,
                                                     itemKey: gestureKey,
                                                     popupHeightParam: 110,

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     with ImageMixin, ConnectivityMixin, DateMixin, ValidationMixin {
   bool isSwitchOn = false;
+  bool isEditing = false;
 
   final IUseCases _useCases;
   final String eventPath = 'event';
@@ -80,6 +81,21 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       changeValue(isValid, true);
       return null;
     }
+  }
+
+  fillFormWithEvent(EventEntity event){
+    eventTitleController.text = event.title;
+    eventSubtitleController.text = event.subtitle;
+    // resultUrl = event.image;
+    startDate = event.startDateTime; // ou separa data e hora se precisar
+    // startTime = event.startDateTime;
+    endDate = event.endDateTime;
+    // endTime = event.endDateTime;
+    eventDescriptionController.text = event.description;
+    eventLocationController.text = event.location;
+    eventLocationNameController.text = event.localName;
+    eventLinkController.text = event.signUpLink;
+    contactLinkController.text = event.contactLink;
   }
 
   bool validateAllFields() {

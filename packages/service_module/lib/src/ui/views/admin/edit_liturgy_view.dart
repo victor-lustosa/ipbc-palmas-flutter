@@ -258,7 +258,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                               Modular.get<EditLiturgyStore>().entity =
                                   currentLiturgy;
                               Modular.get<EditLiturgyStore>().index = index;
-                              await showEditDialog(
+                              await showOptionsDialog(
                                 context: context,
                                 itemKey: itemKey,
                                 itemContent: itemContent,

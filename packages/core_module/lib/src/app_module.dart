@@ -37,5 +37,6 @@ class CoreModule extends Module {
     i.addLazySingleton<EditLiturgyStore>(EditLiturgyStore.new);
     i.addLazySingleton<SearchLyricsStore>(SearchLyricsStore.new);
     i.addLazySingleton<ServicesPreviewStore>(ServicesPreviewStore.new);
+    i.addLazySingleton<SlideCardsStore>(SlideCardsStore.new);
   }
 }

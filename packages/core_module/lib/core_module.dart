@@ -64,7 +64,7 @@ export 'src/design_system/components/auth/stores/auth_circle_avatar_store.dart';
 export 'src/design_system/components/bottom_bar/material_bottom_bar_widget.dart';
 export 'src/design_system/components/bottom_bar/navegation_button_widget.dart';
 export 'src/design_system/components/dialogs/error_dialog_widget.dart';
-export 'src/design_system/components/dialogs/edit_dialog_widget.dart';
+export 'src/design_system/components/dialogs/options_dialog_widget.dart';
 export 'src/design_system/components/dialogs/success_dialog_widget.dart';
 export 'src/design_system/components/side_bar/side_bar_widget.dart';
 export 'src/design_system/components/top_bar/main_top_bar_widget.dart';
@@ -81,6 +81,7 @@ export 'src/design_system/stores/admin/edit_liturgy_store.dart';
 export 'src/design_system/stores/admin/services_preview_store.dart';
 export 'src/design_system/stores/admin/search_lyrics_store.dart';
 export 'src/design_system/stores/lyrics_list_store.dart';
+export 'src/design_system/stores/slide_cards_store.dart';
 export 'src/design_system/stores/main_top_bar_store.dart';
 
 export 'src/core/domain/use_cases/use_cases.dart';
