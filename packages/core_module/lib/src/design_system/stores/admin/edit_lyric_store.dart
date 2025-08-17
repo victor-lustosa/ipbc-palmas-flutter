@@ -91,7 +91,7 @@ class EditLyricStore extends ValueNotifier<GenericState<EditLyricState>> {
     });
   }
 
-  void attributeNewFocus({
+  void attributeFocusToFormField({
     required TextEditingController controller,
     required FocusNode focusNode,
     required String newValue,

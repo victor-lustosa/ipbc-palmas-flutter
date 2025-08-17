@@ -199,7 +199,6 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                       ),
                     ),
                     InkWell(
-
                       child: Container(
                         height: 40,
                         decoration: const BoxDecoration(
@@ -264,6 +263,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                         buildDefaultDragHandles: false,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (BuildContext context, int index) {
+
                           final liturgy = _editStore.liturgiesList[index];
                           final itemKey = Key('${liturgy.id}');
                           final GlobalKey gestureKey = GlobalKey();
@@ -389,8 +389,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                                         icon: AppIcons.contentCopy,
                                         label: 'Duplicar',
                                         action: () {
-                                          Modular.get<EditLiturgyStore>()
-                                              .copyEntity();
+                                          Modular.get<EditLiturgyStore>().copyEntity();
                                           pop(context);
                                         },
                                       ),
@@ -420,6 +419,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                           );
                         },
                         onReorder: (int oldIndex, int newIndex) {
+
                           setState(() {
                             if (oldIndex < newIndex) {
                               newIndex -= 1;
@@ -428,6 +428,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                                 .removeAt(oldIndex);
                             _editStore.liturgiesList.insert(newIndex, item);
                           });
+
                         },
                         proxyDecorator: (Widget child, _, animation) {
                           return Material(
@@ -435,10 +436,12 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                             child: AnimatedBuilder(
                               animation: animation,
                               builder: (BuildContext context, Widget? child) {
+
                                 final animValue = Curves.easeInOut.transform(
                                   animation.value,
                                 );
                                 final scale = lerpDouble(1, 1.1, animValue)!;
+
                                 return Transform.scale(
                                   scale: scale,
                                   child: child,
@@ -460,6 +463,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
               iconColor: AppColors.grey10,
               size: 33,
               action: () async {
+
                 //  await _editStore.addData(context);
                 Modular.get<ServicesPreviewStore>().servicesEntity =
                     _editStore.servicesEntity;
@@ -468,6 +472,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                 popAndPushNamed(
                   AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
                 );
+
               },
             ),
           );

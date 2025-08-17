@@ -17,6 +17,18 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> wit
   late ServiceEntity serviceEntity;
   TimeOfDay? serviceHour;
 
+  final TextEditingController preacherController = TextEditingController();
+  final TextEditingController themeController = TextEditingController();
+  final String preacherErrorText = 'por favor, insira o preletor do culto.';
+  final String themeErrorText = 'por favor, insira a mensagem do culto.';
+
+  final preacherKey = GlobalKey<FormState>();
+  final themeKey = GlobalKey<FormState>();
+
+  ValueNotifier<bool> isPreacherValid = ValueNotifier(true);
+  ValueNotifier<bool> isThemeValid = ValueNotifier(true);
+  bool isPressed = false;
+
   final Map<String, TextEditingController> _controllers = {};
   final Map<String, FocusNode> _focusNodes = {};
 
@@ -32,15 +44,28 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> wit
 
   init() {
     fillItems();
-    initializeControllersAndFocusNodes();
+    controllersAndFocusNodes();
     _rootFocusNode = FocusScopeNode();
   }
 
-  void initializeControllersAndFocusNodes() {
+  formValidation(String? data, ValueNotifier<bool> isValid) {
+    if (isEmptyData(data)) {
+      changeValue(isValid, false);
+      return null;
+    } else {
+      changeValue(isValid, true);
+      return null;
+    }
+  }
+
+  void controllersAndFocusNodes({bool isRemove = false}) {
     for (int i = 0; i < liturgiesList.length; i++) {
       final liturgy = liturgiesList[i];
       final sequenceKey = '${liturgy.id}_0';
       final additionalKey = '${liturgy.id}_1';
+      if(!isRemove){
+
+      }
       _controllers[sequenceKey] = TextEditingController(
         text: liturgiesList[i].sequence,
       );
@@ -51,28 +76,6 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> wit
         );
         _focusNodes[additionalKey] = FocusNode();
       }
-    }
-  }
-
-  final TextEditingController preacherController = TextEditingController();
-  final TextEditingController themeController = TextEditingController();
-  final String preacherErrorText = 'por favor, insira o preletor do culto.';
-  final String themeErrorText = 'por favor, insira a mensagem do culto.';
-
-  final preacherKey = GlobalKey<FormState>();
-  final themeKey = GlobalKey<FormState>();
-
-  ValueNotifier<bool> isPreacherValid = ValueNotifier(true);
-  ValueNotifier<bool> isThemeValid = ValueNotifier(true);
-  bool isPressed = false;
-
-  formValidation(String? data, ValueNotifier<bool> isValid) {
-    if (isEmptyData(data)) {
-      changeValue(isValid, false);
-      return null;
-    } else {
-      changeValue(isValid, true);
-      return null;
     }
   }
 
@@ -213,6 +216,7 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> wit
         additional: 'Descrição',
       ),
     );
+    controllersAndFocusNodes();
     notifyListeners();
   }
 
@@ -221,6 +225,7 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> wit
       index,
       liturgyModel.copyWith(id: SupaServicesUtil.createId()),
     );
+    controllersAndFocusNodes();
     notifyListeners();
   }
 
