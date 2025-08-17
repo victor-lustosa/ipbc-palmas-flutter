@@ -11,7 +11,7 @@ class LyricModel extends LyricEntity {
   });
 
   factory LyricModel.empty() => LyricModel(
-    id: SupaServicesUtil.createId(),
+    id: MockUtil.createId(),
     createAt: '',
     title: '',
     group: '',

@@ -143,7 +143,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
 
   EventEntity fillEventEntity(String resultUrl) {
     EventEntity entity = EventEntity(
-      id: createId(),
+      id: MockUtil.createId(),
       title: eventTitleController.text,
       subtitle: eventSubtitleController.text,
       image: resultUrl,
@@ -158,8 +158,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     );
     return entity;
   }
-
-  static String createId() => DateTime.now().microsecondsSinceEpoch.toString();
 
   Future<void> addData(BuildContext context) async {
     if (validateAllFields()) {

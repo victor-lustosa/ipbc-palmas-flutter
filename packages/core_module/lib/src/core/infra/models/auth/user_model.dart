@@ -23,7 +23,7 @@ class UserModel extends UserEntity {
     identities: [],
     factors: [],
     isAnonymous: false,
-    id: SupaServicesUtil.createId().toString(),
+    id: MockUtil.createId(),
   );
 
   UserModel copyWith({

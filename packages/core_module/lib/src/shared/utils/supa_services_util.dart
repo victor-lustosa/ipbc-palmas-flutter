@@ -5,8 +5,7 @@ import 'package:flutter/services.dart';
 
 
 class SupaServicesUtil {
-  static String createId() => DateTime.now().microsecondsSinceEpoch.toString();
-
+  SupaServicesUtil._();
   static _dateNowDelayed() =>
       Future.delayed(const Duration(seconds: 2), () => DateTime.now());
 
@@ -24,7 +23,7 @@ class SupaServicesUtil {
     for (int line = 0; service.lyricsList.length > line; line++) {
       lyricsAux.add(
         service.lyricsList[line].copyWith(
-          id: createId(),
+          id: MockUtil.createId(),
           // verses: lyricsConverted[line].verses,
           albumCover: lyricsConverted[line].albumCover,
           createAt: await _dateNowDelayed(),
@@ -32,7 +31,7 @@ class SupaServicesUtil {
       );
     }
     lyricsAux.addAll(unknownLyrics);
-    return service.copyWith(id: createId(), lyricsList: lyricsAux);
+    return service.copyWith(id: MockUtil.createId(), lyricsList: lyricsAux);
   }
 
   static Future<List<LyricEntity>> _generateVersesList(
@@ -72,7 +71,7 @@ class SupaServicesUtil {
     final String unknownJson = await rootBundle.loadString(path);
     LyricModel unknownLyric = LyricAdapter.fromUnknownJson(unknownJson);
     return unknownLyric.copyWith(
-      id: SupaServicesUtil.createId(),
+      id: MockUtil.createId(),
       albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
     );
   }
@@ -80,7 +79,7 @@ class SupaServicesUtil {
   static Future<List<Map<String, dynamic>>> servicesListFilled() async {
     List<Map<String, dynamic>> servicesList = [
       {
-        'id': createId(),
+        'id': MockUtil.createId(),
         'title': 'Domingo à noite',
         'heading': 'domingo à noite',
         'createAt': await _dateNowDelayed(),
@@ -90,7 +89,7 @@ class SupaServicesUtil {
         'hour': '19h',
       },
       {
-        'id': createId(),
+        'id': MockUtil.createId(),
         'title': 'Domingo pela manhã',
         'heading': 'domingo pela manhã',
         'createAt': await _dateNowDelayed(),
@@ -100,7 +99,7 @@ class SupaServicesUtil {
         'hour': '9h',
       },
       {
-        'id': createId(),
+        'id': MockUtil.createId(),
         'title': 'Sábado à noite',
         'createAt': await _dateNowDelayed(),
         'heading': 'sábado à noite (UMP)',

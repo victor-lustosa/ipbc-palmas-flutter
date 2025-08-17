@@ -104,7 +104,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                       );
                                     },
                                     onLongPressStart: (_) async {
-                                      await showEditDialog(
+                                      await showOptionsDialog(
                                         context: context,
                                         itemKey: gestureKey,
                                         popupHeightParam: 110,
@@ -141,7 +141,9 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                               bottom: 12,
                                               icon: AppIcons.trash,
                                               label: 'Deletar',
-                                              action: () {},
+                                              action: () {
+
+                                              },
                                             ),
                                           ],
                                         ),

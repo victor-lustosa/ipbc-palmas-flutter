@@ -17,7 +17,7 @@ class ServicesModel extends ServicesEntity {
     hour: '',
     image: '',
     heading: '',
-    id: SupaServicesUtil.createId().toString(),
+    id: MockUtil.createId(),
     dayOfWeek: null,
   );
 

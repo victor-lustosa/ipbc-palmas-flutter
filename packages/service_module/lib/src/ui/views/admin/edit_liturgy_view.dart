@@ -373,10 +373,9 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                             child: GestureDetector(
                               key: gestureKey,
                               onLongPressStart: (details) async {
-                                Modular.get<EditLiturgyStore>().liturgyModel =
-                                    liturgy;
+                                Modular.get<EditLiturgyStore>().liturgyModel = liturgy;
                                 Modular.get<EditLiturgyStore>().index = index;
-                                await showEditDialog(
+                                await showOptionsDialog(
                                   context: context,
                                   itemKey: gestureKey,
                                   itemContent: itemContent,
@@ -405,8 +404,9 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                                         icon: AppIcons.trash,
                                         label: 'Deletar',
                                         action: () {
-                                          Modular.get<EditLiturgyStore>()
-                                              .delete();
+                                          Modular.get<EditLiturgyStore>().delete(
+                                            key: liturgy.id,
+                                          );
                                           pop(context);
                                         },
                                       ),
@@ -464,7 +464,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
               size: 33,
               action: () async {
 
-                //  await _editStore.addData(context);
+                await _editStore.addData(context);
                 Modular.get<ServicesPreviewStore>().servicesEntity =
                     _editStore.servicesEntity;
                 Modular.get<ServicesPreviewStore>().liturgiesList =

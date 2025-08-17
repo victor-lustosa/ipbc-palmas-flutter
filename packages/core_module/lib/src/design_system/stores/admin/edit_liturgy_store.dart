@@ -63,9 +63,6 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> wit
       final liturgy = liturgiesList[i];
       final sequenceKey = '${liturgy.id}_0';
       final additionalKey = '${liturgy.id}_1';
-      if(!isRemove){
-
-      }
       _controllers[sequenceKey] = TextEditingController(
         text: liturgiesList[i].sequence,
       );
@@ -106,7 +103,6 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> wit
       notifyListeners();
     });
   }
-  static String createId() => DateTime.now().microsecondsSinceEpoch.toString();
   Future<void> addData(BuildContext context) async {
     if (validateAllFields()) {
       final response = await isConnected();
@@ -116,7 +112,7 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> wit
         _useCases.add(
           data: ServiceAdapter.toMap(
             ServiceEntity(
-              id: createId(),
+              id: MockUtil.createId(),
               image: servicesEntity.image,
               theme: themeController.text,
               hour: servicesEntity.hour,
@@ -208,9 +204,9 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> wit
 
   void addBox() {
     liturgiesList.insert(
-      index,
+      0,
       LiturgyModel(
-        id: SupaServicesUtil.createId(),
+        id: MockUtil.createId(),
         isAdditional: true,
         sequence: 'Título',
         additional: 'Descrição',
@@ -223,14 +219,21 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> wit
   void copyEntity() {
     liturgiesList.insert(
       index,
-      liturgyModel.copyWith(id: SupaServicesUtil.createId()),
+      liturgyModel.copyWith(id: MockUtil.createId()),
     );
     controllersAndFocusNodes();
     notifyListeners();
   }
 
-  void delete() {
+  void delete({required String? key}) {
     liturgiesList.remove(liturgyModel);
+    _controllers.remove("${key}_0");
+    _focusNodes.remove("${key}_0");
+    if (liturgyModel.isAdditional) {
+      _controllers.remove("${key}_1");
+      _focusNodes.remove("${key}_1");
+    }
+    controllersAndFocusNodes();
     notifyListeners();
   }
 

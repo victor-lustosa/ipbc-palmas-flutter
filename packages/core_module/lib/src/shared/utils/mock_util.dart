@@ -21,4 +21,7 @@ class MockUtil {
     }
     return null;
   }
+
+  static String createId() => DateTime.now().microsecondsSinceEpoch.toString();
+
 }

@@ -17,7 +17,7 @@ class EventModel extends EventEntity {
   });
 
   factory EventModel.empty() => EventModel(
-    id: SupaServicesUtil.createId(),
+    id: MockUtil.createId(),
     title: '',
     subtitle: '',
     image: '',

@@ -9,7 +9,6 @@ class ServicesPreviewStore extends ValueNotifier<GenericState<ServicesPreviewSta
   late List<LiturgyModel> liturgiesList;
   late ServicesEntity servicesEntity;
 
-  String createId() => DateTime.now().microsecondsSinceEpoch.toString();
 
   convertTextInLyric(String text) {
     final List<String> rawVerseBlocks = text.split(RegExp(r'\n\s*\n+'));
@@ -34,7 +33,7 @@ class ServicesPreviewStore extends ValueNotifier<GenericState<ServicesPreviewSta
       }
     }
     return LyricModel(
-      id: DateTime.now().microsecondsSinceEpoch.toString(),
+      id: MockUtil.createId(),
       title: 'Título Padrão',
       group: 'Grupo Padrão',
       albumCover: AppImages.defaultCoversList[Random().nextInt(4)],

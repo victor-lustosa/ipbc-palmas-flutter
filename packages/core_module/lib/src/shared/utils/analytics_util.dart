@@ -1,6 +1,7 @@
 import 'package:logger/logger.dart';
 
 class AnalyticsUtil {
+  AnalyticsUtil._();
   static final _logger = Logger();
 
   static void recordError({

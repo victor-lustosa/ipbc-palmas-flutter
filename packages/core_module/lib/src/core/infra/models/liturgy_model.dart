@@ -9,7 +9,7 @@ class LiturgyModel extends LiturgyEntity {
   });
 
   factory LiturgyModel.empty() => LiturgyModel(
-    id: SupaServicesUtil.createId(),
+    id: MockUtil.createId(),
     isAdditional: false,
     sequence: '',
     additional: '',
