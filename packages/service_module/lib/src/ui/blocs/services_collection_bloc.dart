@@ -47,7 +47,7 @@ class ServicesCollectionBloc
         'filterValue':  pathList[2],
         'ascending':  bool.parse(pathList[4]),
         'selectFields':
-            'id, createAt, image, title, theme, preacher, hour, heading, type, guideIsVisible, service_liturgies (liturgies(id, isAdditional, sequence, additional)), service_lyrics (lyrics(id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))))',
+            'id, createAt, image, title, theme, preacher, hour, heading, type, guideIsVisible, service_liturgies (liturgies(id, liturgy)), service_lyrics (lyrics(id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))))',
       };
       add(LoadingEvent<ServicesCollectionEvent>());
       List<ServiceEntity> services = await onlineUseCases.get(

@@ -1,24 +1,20 @@
+import 'dart:convert';
+
 import 'package:core_module/core_module.dart';
 
 class LiturgyAdapter {
   LiturgyAdapter._();
+  static List<LiturgyEntity> listFromJson(String source) => fromMapList(json.decode(source));
 
-  static List<LiturgyEntity> fromMapList(dynamic json) {
+  static List<LiturgyEntity> fromSupabase(dynamic json) {
     List<LiturgyEntity> liturgiesList = [];
-    for (dynamic liturgy in json) {
-      liturgiesList.add(
-        LiturgyEntity(
-          id: liturgy['id'],
-          isAdditional: liturgy['isAdditional'],
-          sequence: liturgy['sequence'],
-          additional: liturgy['additional'],
-        ),
-      );
+    if(json.length > 0) {
+      liturgiesList = fromMapList(json[0]['liturgy']);
     }
     return liturgiesList;
   }
 
-  static List<LiturgyEntity> supaMapList(dynamic json) {
+  static List<LiturgyEntity> fromMapList(dynamic json) {
     List<LiturgyEntity> liturgiesList = [];
     for (dynamic liturgy in json) {
       liturgiesList.add(

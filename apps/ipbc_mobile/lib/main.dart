@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:home_module/home_module.dart';
 
 void main() async {
-  Modular.setInitialRoute(AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute);
+  Modular.setInitialRoute(AppRoutes.initialRoute);
  //Modular.setInitialRoute(AppRoutes.servicesRoute + AppRoutes.editLyricRoute);
  //Modular.setInitialRoute(AppRoutes.lyricsListRoute);
  //Modular.setInitialRoute(AppRoutes.authRoute + AppRoutes.loginRoute);

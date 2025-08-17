@@ -73,7 +73,7 @@ class ServiceAdapter {
           title: entity['title'],
           heading: entity['heading'],
           liturgiesList: entity.containsKey('service_liturgies')
-              ? LiturgyAdapter.supaMapList(
+              ? LiturgyAdapter.fromSupabase(
                   FlattenMixin.flattenByKey(
                     entity['service_liturgies'],
                     'liturgies',
