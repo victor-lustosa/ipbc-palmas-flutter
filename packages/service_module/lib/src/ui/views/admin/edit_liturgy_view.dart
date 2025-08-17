@@ -21,7 +21,6 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
     super.initState();
     setLightAppBar();
     _editStore = Modular.get<EditLiturgyStore>();
-    _editStore.setDayInTheWeek();
     _editStore.rootFocusNode.addListener(_handleRootFocusChange);
   }
 
@@ -373,7 +372,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                             child: GestureDetector(
                               key: gestureKey,
                               onLongPressStart: (details) async {
-                                Modular.get<EditLiturgyStore>().liturgyModel = liturgy;
+                                Modular.get<EditLiturgyStore>().liturgyModel = LiturgyAdapter.toModel(liturgy);
                                 Modular.get<EditLiturgyStore>().index = index;
                                 await showOptionsDialog(
                                   context: context,
@@ -424,7 +423,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                             if (oldIndex < newIndex) {
                               newIndex -= 1;
                             }
-                            final LiturgyModel item = _editStore.liturgiesList
+                            final LiturgyEntity item = _editStore.liturgiesList
                                 .removeAt(oldIndex);
                             _editStore.liturgiesList.insert(newIndex, item);
                           });

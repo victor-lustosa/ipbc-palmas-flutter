@@ -13,6 +13,14 @@ class LiturgyAdapter {
     }
     return liturgiesList;
   }
+  static LiturgyModel toModel(LiturgyEntity data) {
+    return LiturgyModel(
+      id: data.id,
+      isAdditional: data.isAdditional,
+      sequence: data.sequence,
+      additional: data.additional,
+    );
+  }
 
   static List<LiturgyEntity> fromMapList(dynamic json) {
     List<LiturgyEntity> liturgiesList = [];

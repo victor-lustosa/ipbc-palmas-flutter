@@ -24,7 +24,7 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
   bool isEditing = false;
   int index = 0;
   late LiturgyModel liturgyModel;
-  late List<LiturgyModel> liturgiesList;
+  late List<LiturgyEntity> liturgiesList;
   late ServicesEntity servicesEntity;
   late ServiceEntity serviceEntity;
   TimeOfDay? serviceHour;
@@ -56,6 +56,7 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
 
   init() {
     fillItems();
+    setDayInTheWeek();
     controllersAndFocusNodes();
     _rootFocusNode = FocusScopeNode();
   }
@@ -68,6 +69,18 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
       changeValue(isValid, true);
       return null;
     }
+  }
+
+  edit({required ServicesEntity servicesEntityParam, required ServiceEntity serviceEntityParam}) {
+    isEditing = true;
+    servicesEntity = servicesEntityParam;
+    serviceEntity = serviceEntityParam;
+    liturgiesList = serviceEntityParam.liturgiesList ?? [];
+    themeController.text = serviceEntity.title;
+    preacherController.text = serviceEntity.preacher;
+    startDate = DateTime.parse(int.parse(serviceEntity.hour.split('h').first));
+    startTime = parseTimeOfDayFromH(serviceEntity.hour);
+    controllersAndFocusNodes();
   }
 
   void controllersAndFocusNodes({bool isRemove = false}) {

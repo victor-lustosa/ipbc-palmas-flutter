@@ -120,12 +120,10 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                               icon: AppIcons.edit,
                                               label: 'Editar',
                                               action: () {
-                                                _editStore.isEditing = true;
-                                                _editStore.servicesEntity = widget.entity;
-                                                _editStore.serviceEntity = entitiesList[index];
+                                                _editStore.edit(serviceEntityParam: entitiesList[index],servicesEntityParam: widget.entity);
                                                 pushNamed(
                                                   AppRoutes.servicesRoute +
-                                                      AppRoutes.editLyricRoute,
+                                                      AppRoutes.editLiturgiesRoute,
                                                 );
                                                 pop(context);
                                               },

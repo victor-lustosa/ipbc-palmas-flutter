@@ -6,7 +6,7 @@ import 'package:core_module/core_module.dart';
 class ServicesPreviewStore extends ValueNotifier<GenericState<ServicesPreviewState>> {
   ServicesPreviewStore() : super(InitialState());
 
-  late List<LiturgyModel> liturgiesList;
+  late List<LiturgyEntity> liturgiesList;
   late ServicesEntity servicesEntity;
 
 
