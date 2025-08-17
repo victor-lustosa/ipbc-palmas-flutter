@@ -119,7 +119,16 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                               bottom: 12,
                                               icon: AppIcons.edit,
                                               label: 'Editar',
-                                              action: () {},
+                                              action: () {
+                                                _editStore.isEditing = true;
+                                                _editStore.servicesEntity = widget.entity;
+                                                _editStore.serviceEntity = entitiesList[index];
+                                                pushNamed(
+                                                  AppRoutes.servicesRoute +
+                                                      AppRoutes.editLyricRoute,
+                                                );
+                                                pop(context);
+                                              },
                                             ),
                                             Divider(
                                               height: 1,
@@ -259,15 +268,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
         backgroundColor: AppColors.add,
         icon: Icons.add,
         action: () {
-          _editStore.fillItems();
           _editStore.servicesEntity = widget.entity;
           _editStore.serviceHour = parseTimeOfDayFromH(widget.entity.hour);
-          _editStore.setEditLiturgyDTO(
-            EditLiturgyDTO(
-              image: widget.entity.image,
-              heading: widget.entity.heading,
-            ),
-          );
           pushNamed(AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute);
         },
       ),

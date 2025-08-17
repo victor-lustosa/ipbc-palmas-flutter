@@ -43,7 +43,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ServiceTopBarWidget(image: _editLiturgyStore.dto.image),
+              ServiceTopBarWidget(image: _editLiturgyStore.servicesEntity.image),
               Container(
                 margin: const EdgeInsets.only(
                   left: 16.5,
@@ -189,7 +189,6 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
             callback: (text) async {
               if (text != null && text.isNotEmpty) {
                 EditLyricStore editLyricStore = Modular.get<EditLyricStore>();
-                editLyricStore.isEditing = false;
                 editLyricStore.lyric = _servicesPreviewStore.convertTextInLyric(text);
                 editLyricStore.buttonCallback = () {
                   editLyricStore.addLyric();

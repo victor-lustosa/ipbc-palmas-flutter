@@ -33,8 +33,9 @@ mixin ButtonsBarMixin {
   }
 
   Widget items(String iconData, Color color) {
-    return NavigationButtonWidget(
-      size: iconData == AppIcons.home ? 19.5 : 19,
+    return IconWidget(
+      iconFormat: IconFormat.svg,
+      size: iconData == AppIcons.home ?const Size(19.5, 19.5) : const Size(19, 19),
       iconName: iconData,
       color: color,
     );

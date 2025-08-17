@@ -1,13 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class EditLiturgyDTO {
-  EditLiturgyDTO({required this.heading, required this.image});
-
-  final String heading;
-  final String image;
-}
-
 class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> with DateMixin, ConnectivityMixin {
   EditLiturgyStore({required IUseCases useCases})
     : _useCases = useCases,
@@ -16,12 +9,12 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> wit
   }
 
   final IUseCases _useCases;
-
+  bool isEditing = false;
   int index = 0;
   late LiturgyModel liturgyModel;
-  late EditLiturgyDTO dto;
   late List<LiturgyModel> liturgiesList;
   late ServicesEntity servicesEntity;
+  late ServiceEntity serviceEntity;
   TimeOfDay? serviceHour;
 
   final Map<String, TextEditingController> _controllers = {};
@@ -207,11 +200,6 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>> wit
         additional: '',
       ),
     ];
-    notifyListeners();
-  }
-
-  void setEditLiturgyDTO(EditLiturgyDTO dto) {
-    this.dto = dto;
     notifyListeners();
   }
 

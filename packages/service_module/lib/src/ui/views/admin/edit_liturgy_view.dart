@@ -56,8 +56,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ServiceTopBarWidget(
-                      image: _editStore.dto.image,
-                      title: "Cultos de ${_editStore.dto.heading}",
+                      image: _editStore.servicesEntity.image,
+                      title: "Cultos de ${_editStore.servicesEntity.heading}",
                     ),
                     Container(
                       margin: const EdgeInsets.only(
@@ -80,7 +80,10 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                           hintText: 'Preletor do culto',
                         ),
                         validator: (data) {
-                          return _editStore.formValidation(data, _editStore.isPreacherValid);
+                          return _editStore.formValidation(
+                            data,
+                            _editStore.isPreacherValid,
+                          );
                         },
                         defaultHintColor: AppColors.hintInputForm,
                       ),
@@ -106,7 +109,10 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                           hintText: 'Mensagem do culto',
                         ),
                         validator: (data) {
-                          return _editStore.formValidation(data, _editStore.isThemeValid);
+                          return _editStore.formValidation(
+                            data,
+                            _editStore.isThemeValid,
+                          );
                         },
                         defaultHintColor: AppColors.hintInputForm,
                       ),
@@ -192,11 +198,49 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                         ],
                       ),
                     ),
-                    Container(height: 40, width: context.sizeOf.width,decoration: BoxDecoration(color: AppColors.grey9),),
+                    InkWell(
+
+                      child: Container(
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          color: AppColors.secondaryGrey2,
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                        ),
+                        margin: EdgeInsets.only(left: 16, right: 16, top: 20),
+                        width: context.sizeOf.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                right: 10,
+                                left: 12,
+                              ),
+                              child: IconWidget(
+                                iconFormat: IconFormat.svg,
+                                size: Size(24, 24),
+                                iconName: AppIcons.addNotesSvg,
+                                color: AppColors.grey9,
+                              ),
+                            ),
+                            Text(
+                              'Adicionar Box',
+                              style: AppFonts.defaultFont(
+                                fontSize: 17,
+                                color: AppColors.grey9,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      onTap: () {
+                        Modular.get<EditLiturgyStore>().addBox();
+                      },
+                    ),
                     Container(
                       margin: const EdgeInsets.only(
                         left: 16.5,
-                        top: 24.7,
+                        top: 20,
                         bottom: 8,
                       ),
                       child: Text(
@@ -342,23 +386,6 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                                         context: context,
                                         top: 12,
                                         bottom: 12,
-                                        icon: AppIcons.addNotes,
-                                        label: 'Add Box',
-                                        action: () {
-                                          Modular.get<EditLiturgyStore>()
-                                              .addBox();
-                                          pop(context);
-                                        },
-                                      ),
-                                      Divider(
-                                        height: 1,
-                                        color: AppColors.dividerModal
-                                            .withValues(alpha: 25),
-                                      ),
-                                      actionButton(
-                                        context: context,
-                                        top: 12,
-                                        bottom: 12,
                                         icon: AppIcons.contentCopy,
                                         label: 'Duplicar',
                                         action: () {
@@ -433,12 +460,11 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
               iconColor: AppColors.grey10,
               size: 33,
               action: () async {
-               await _editStore.addData(context);
-                Modular.get<ServicesPreviewStore>().dto = ServicesPreviewDTO(
-                  heading: _editStore.dto.heading,
-                  image: _editStore.dto.image,
-                  liturgiesList: _editStore.liturgiesList,
-                );
+                //  await _editStore.addData(context);
+                Modular.get<ServicesPreviewStore>().servicesEntity =
+                    _editStore.servicesEntity;
+                Modular.get<ServicesPreviewStore>().liturgiesList =
+                    _editStore.liturgiesList;
                 popAndPushNamed(
                   AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
                 );

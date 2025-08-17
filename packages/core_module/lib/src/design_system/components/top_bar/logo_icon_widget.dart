@@ -6,17 +6,10 @@ class LogoIconWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 78,
-      height: 32,
-      child: SvgPicture.asset(
-        AppIcons.logo,
-        colorFilter: const ColorFilter.mode(
-          AppColors.darkGreen,
-          BlendMode.srcIn,
-        ),
-        //  height: 75,width: 75,
-      ),
+    return IconWidget(
+      size:Size(78, 32),
+      iconFormat: IconFormat.svg,
+      iconName:  AppIcons.logo,
     );
   }
 }

@@ -29,7 +29,7 @@ class _ServiceViewState extends State<ServiceView> with ValidationAndFormatMixin
             children: [
               ServiceTopBarWidget(
                 image: widget.entity.image,
-                title: widget.entity.service.title,
+                title: "Cultos de ${widget.entity.service.title}",
                 dateIsVisible: widget.entity.service.guideIsVisible,
                 createAt: formatDateToString(widget.entity.service.createAt),
               ),

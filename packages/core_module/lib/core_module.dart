@@ -34,6 +34,7 @@ export 'src/design_system/components/loading/loading_widget.dart';
 export 'src/design_system/components/guideline/guideline_widget.dart';
 export 'src/design_system/components/slide_cards/slide_cads_widget.dart';
 export 'src/design_system/components/buttons/icon_button_widget.dart';
+export 'src/design_system/components/buttons/icon_widget.dart';
 export 'src/design_system/components/buttons/floating_button_widget.dart';
 export 'src/design_system/components/buttons/back_button_widget.dart';
 export 'src/design_system/components/buttons/loading_button_widget.dart';
@@ -57,12 +58,10 @@ export 'src/design_system/components/dropdowns/dropdown_widget.dart';
 export 'src/design_system/components/exceptions/generic_error_view.dart';
 export 'src/design_system/components/exceptions/no_connection_view.dart';
 export 'src/design_system/components/exceptions/unknown_route_view.dart';
-export 'src/design_system/components/bottom_bar/buttons_bar_mixin.dart';
 export 'src/design_system/components/auth/auth_circle_avatar_widget.dart';
 
 export 'src/design_system/components/auth/stores/auth_circle_avatar_store.dart';
 export 'src/design_system/components/bottom_bar/material_bottom_bar_widget.dart';
-export 'src/design_system/components/bottom_bar/navegation_button_widget.dart';
 export 'src/design_system/components/dialogs/error_dialog_widget.dart';
 export 'src/design_system/components/dialogs/edit_dialog_widget.dart';
 export 'src/design_system/components/dialogs/success_dialog_widget.dart';
@@ -113,6 +112,7 @@ export 'src/core/external/repositories/isar_repository.dart';
 
 export 'src/shared/mixins/launch_url_mixin.dart';
 export 'src/shared/mixins/date_mixin.dart';
+export 'src/shared/mixins/buttons_bar_mixin.dart';
 export 'src/shared/mixins/clipboard_mixin.dart';
 export 'src/shared/mixins/email_mixin.dart';
 export 'src/shared/mixins/validation_and_format_mixin.dart';
