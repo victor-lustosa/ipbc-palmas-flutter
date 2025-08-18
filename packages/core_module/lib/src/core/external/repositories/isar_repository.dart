@@ -30,6 +30,7 @@ class IsarRepository implements IRepository {
   Future<String?> update<T>({required data, Map<String, dynamic>? params}) async {
    return await isar.writeTxn(() async {
       isar.collection<T>().put(data);
+      return null;
     });
   }
 
@@ -58,6 +59,11 @@ class IsarRepository implements IRepository {
     required String fileName,
     required String bucketName,
   }) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future upsert<T>({required data, Map<String, dynamic>? params}) {
     throw UnimplementedError();
   }
 }

@@ -18,7 +18,7 @@ class ServiceView extends StatefulWidget {
   State<ServiceView> createState() => _ServiceViewState();
 }
 
-class _ServiceViewState extends State<ServiceView> with ValidationAndFormatMixin{
+class _ServiceViewState extends State<ServiceView> with DateMixin{
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(

@@ -92,7 +92,6 @@ Future<void> showCustomSuccessDialog({
             nativePop(context);
           }
         });
-        nativePop(context);
       }
       return Stack(
         children: [

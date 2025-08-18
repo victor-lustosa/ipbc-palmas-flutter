@@ -11,7 +11,7 @@ class ServicesListView extends StatefulWidget {
   State<ServicesListView> createState() => _ServicesListViewState();
 }
 
-class _ServicesListViewState extends State<ServicesListView> {
+class _ServicesListViewState extends State<ServicesListView> with DateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +86,7 @@ class _ServicesListViewState extends State<ServicesListView> {
                             Container(
                               margin: const EdgeInsets.only(left: 16),
                               child: Text(
-                                '${widget.entities[index].title} | ${widget.entities[index].hour}',
+                                '${widget.entities[index].title} | ${formatHourToString(date: widget.entities[index].serviceDate)}',
                                 style: AppFonts.headline(
                                   color: AppColors.white,
                                   fontWeight: FontWeight.w500,

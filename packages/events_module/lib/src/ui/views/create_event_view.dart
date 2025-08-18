@@ -331,13 +331,13 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                     ),
                                     InkWell(
                                       onTap: () => setDateTime(
-                                        selectedDate: _store.startDate,
+                                        selectedDate: _store.startDate!,
                                         onDatePicked: (newDate) =>
                                             _store.startDate = newDate,
                                         context: context,
                                       ),
                                       child: Text(
-                                        getFormattedDateTime(_store.startDate),
+                                        getFormattedDateTime(_store.startDate!),
                                         style: AppFonts.defaultFont(
                                           fontSize: 15,
                                           color: AppColors.darkGreen,
@@ -351,7 +351,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                   visible: !_store.isSwitchOn,
                                   child: InkWell(
                                     onTap: () => _store.pickTime(
-                                      selectedTime: _store.startTime,
+                                      selectedTime: _store.startTime!,
                                       context: context,
                                       onTimePicked: (newTime) {
                                         setState(() {
@@ -360,7 +360,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                       },
                                     ),
                                     child: Text(
-                                      _store.formatTime(_store.startTime),
+                                      _store.formatHourToString(time: _store.startTime),
                                       style: AppFonts.defaultFont(
                                         fontSize: 15,
                                         color: AppColors.darkGreen,
@@ -388,13 +388,13 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                     ),
                                     InkWell(
                                       onTap: () => setDateTime(
-                                        selectedDate: _store.endDate,
+                                        selectedDate: _store.endDate!,
                                         onDatePicked: (newDate) =>
                                             _store.endDate = newDate,
                                         context: context,
                                       ),
                                       child: Text(
-                                        getFormattedDateTime(_store.endDate),
+                                        getFormattedDateTime(_store.endDate!),
                                         style: AppFonts.defaultFont(
                                           color: AppColors.darkGreen,
                                           fontSize: 15,
@@ -408,7 +408,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                   visible: !_store.isSwitchOn,
                                   child: InkWell(
                                     onTap: () => _store.pickTime(
-                                      selectedTime: _store.endTime,
+                                      selectedTime: _store.endTime!,
                                       context: context,
                                       onTimePicked: (newTime) {
                                         setState(() {
@@ -417,7 +417,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                       },
                                     ),
                                     child: Text(
-                                      _store.formatTime(_store.endTime),
+                                      _store.formatHourToString(time: _store.endTime),
                                       style: AppFonts.defaultFont(
                                         fontSize: 15,
                                         color: AppColors.darkGreen,

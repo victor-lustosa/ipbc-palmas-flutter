@@ -4,7 +4,9 @@ class ServiceEntity {
   ServiceEntity({
     this.id,
     required this.type,
-    required this.hour,
+    this.liturgiesTableId,
+    required this.serviceDate,
+    this.serviceLiturgiesTableId,
     required this.theme,
     this.image,
     required this.preacher,
@@ -19,9 +21,11 @@ class ServiceEntity {
   final String? id;
   final String type;
   final String? image;
-  final String hour;
   final DateTime createAt;
+  final DateTime serviceDate;
   final String theme;
+  final String? serviceLiturgiesTableId;
+  final String? liturgiesTableId;
   final String preacher;
   final bool guideIsVisible;
   final String title;

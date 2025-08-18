@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:core_module/core_module.dart';
-import 'package:core_module/src/core/infra/adapters/liturgy_adapter.dart';
 
 import '../../../shared/mixins/flatten_mixin.dart';
 
@@ -18,38 +17,60 @@ class ServiceAdapter {
     return ServiceModel(
       id: json['id'],
       image: json['image'],
-      createAt: DateTime.parse(json['createAt']),
+      serviceLiturgiesTableId: json['service_liturgies_table_id'],
+      liturgiesTableId: json['liturgies_table_id'],
+      serviceDate: DateTime.parse(json['service_date']),
+      createAt: DateTime.parse(json['create_at']),
       type: json['type'],
       theme: json['theme'],
       preacher: json['preacher'],
       heading: json['heading'],
       title: json['title'],
-      guideIsVisible: json['guideIsVisible'],
-      liturgiesList: json.containsKey('liturgiesList')
+      guideIsVisible: json['guide_is_visible'],
+      liturgiesList: json.containsKey('liturgies_list')
           ? LiturgyAdapter.fromMapList(json['service_liturgies']['liturgies'])
           : [],
       lyricsList: LyricAdapter.fromMapList(json['service_lyrics']['lyrics']),
-      hour: json['hour'],
+    );
+  }
+  static ServiceModel toModel(ServiceEntity data) {
+    return ServiceModel(
+      id: data.id,
+      image: data.image,
+      serviceLiturgiesTableId: data.serviceLiturgiesTableId,
+      serviceDate: data.serviceDate,
+      createAt: data.createAt,
+      type: data.type,
+      theme: data.theme,
+      preacher: data.preacher,
+      heading: data.heading,
+      title: data.title,
+      guideIsVisible: data.guideIsVisible,
+      liturgiesList: data.liturgiesList ?? [],
+      lyricsList: data.lyricsList ?? [],
+      liturgiesTableId: data.liturgiesTableId,
     );
   }
 
   static Map<String, dynamic> toMap(ServiceEntity data) {
     return {
-      'id': data.id,
-      'hour': data.hour,
+      if (data.id != null) 'id': data.id,
       'image': data.image,
-      'createAt': data.createAt.toIso8601String(),
+      'create_at': data.createAt.toIso8601String(),
       'heading': data.heading,
       'title': data.title,
       'type': data.type,
       'theme': data.theme,
+      'service_date': data.serviceDate.toIso8601String(),
       'preacher': data.preacher,
-      'guideIsVisible': data.guideIsVisible,
+      'service_liturgies_table_id': data.serviceLiturgiesTableId,
+      'liturgies_table_id': data.liturgiesTableId,
+      'guide_is_visible': data.guideIsVisible,
     };
   }
   static Map<String, dynamic> serviceLiturgiesToMap(ServiceLiturgiesSupabase data) {
     return {
-      'id': data.id,
+      if (data.id != null) 'id': data.id,
       'service_id': data.serviceId,
       'liturgy_id': data.liturgyId,
     };
@@ -65,11 +86,13 @@ class ServiceAdapter {
               : entity['id'].toString(),
           type: '',
           image: entity['image'],
-          hour: entity['hour'],
-          createAt: DateTime.parse(entity['createAt']),
+          serviceLiturgiesTableId: entity['service_liturgies_table_id'],
+          liturgiesTableId: entity['liturgies_table_id'],
+          createAt: DateTime.parse(entity['create_at']),
+          serviceDate: DateTime.parse(entity['service_date']),
           theme: entity['theme'],
           preacher: entity['preacher'],
-          guideIsVisible: entity['guideIsVisible'],
+          guideIsVisible: entity['guide_is_visible'],
           title: entity['title'],
           heading: entity['heading'],
           liturgiesList: entity.containsKey('service_liturgies')

@@ -33,14 +33,14 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
             children: [
               ServiceTopBarWidget(
                 image: _servicesPreviewStore.servicesEntity.image,
-                title: "Cultos de ${_servicesPreviewStore.servicesEntity.heading}",
+                title: "Cultos de ${_servicesPreviewStore.servicesEntity.title}",
               ),
               Container(
                 margin: const EdgeInsets.only(top: 24.7, left: 16),
                 child: GuidelineWidget(
                   circleColor: AppColors.cardBallsGrey,
                   timelineColor: AppColors.timelineGuideTGreen,
-                  liturgiesList: _servicesPreviewStore.liturgiesList,
+                  liturgiesList: _servicesPreviewStore.serviceEntity.liturgiesList ?? [],
                 ),
               ),
               Container(

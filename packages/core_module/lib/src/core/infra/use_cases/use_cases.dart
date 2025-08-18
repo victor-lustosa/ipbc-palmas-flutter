@@ -40,4 +40,8 @@ class UseCases<T> implements IUseCases {
       bucketName: bucketName,
     );
   }
+
+  @override
+  Future<dynamic> upsert({required data, Map<String, dynamic>? params}) =>
+      repository.add(data: data, params: params);
 }

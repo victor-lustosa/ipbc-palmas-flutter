@@ -1,24 +1,11 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/infra/adapters/liturgy_adapter.dart';
-
 class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
     with DateMixin, ConnectivityMixin {
   EditLiturgyStore({required IUseCases useCases})
     : _useCases = useCases,
-      super(InitialState<EditLiturgyState>()) {
-    servicesEntity = ServicesEntity(
-      image:
-          "https://xrvmfhpmelyvupfylnfk.supabase.co/storage/v1/object/public/covers/mobile_service_covers/saturday_evening.png",
-      id: "0",
-      hour: "19h30",
-      title: "Sábado à noite",
-      heading: "sábado à noite (UMP)",
-      path: "service/type/saturday-services/createAt/true",
-    );
-    init();
-  }
+      super(InitialState<EditLiturgyState>());
 
   final IUseCases _useCases;
   bool isEditing = false;
@@ -26,8 +13,7 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
   late LiturgyModel liturgyModel;
   late List<LiturgyEntity> liturgiesList;
   late ServicesEntity servicesEntity;
-  late ServiceEntity serviceEntity;
-  TimeOfDay? serviceHour;
+  ServiceEntity? serviceEntity;
 
   final TextEditingController preacherController = TextEditingController();
   final TextEditingController themeController = TextEditingController();
@@ -71,15 +57,21 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
     }
   }
 
-  edit({required ServicesEntity servicesEntityParam, required ServiceEntity serviceEntityParam}) {
+  edit({
+    required ServicesEntity servicesEntityParam,
+    required ServiceEntity serviceEntityParam,
+  }) {
     isEditing = true;
     servicesEntity = servicesEntityParam;
     serviceEntity = serviceEntityParam;
     liturgiesList = serviceEntityParam.liturgiesList ?? [];
-    themeController.text = serviceEntity.title;
-    preacherController.text = serviceEntity.preacher;
-    startDate = DateTime.parse(int.parse(serviceEntity.hour.split('h').first));
-    startTime = parseTimeOfDayFromH(serviceEntity.hour);
+    themeController.text = serviceEntity!.theme;
+    preacherController.text = serviceEntity!.preacher;
+    startDate = serviceEntity?.serviceDate;
+    startTime = TimeOfDay(
+      hour: serviceEntity!.serviceDate.hour,
+      minute: serviceEntity!.serviceDate.minute,
+    );
     controllersAndFocusNodes();
   }
 
@@ -102,12 +94,15 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
   }
 
   setDayInTheWeek() {
+    startTime = TimeOfDay(
+      hour: servicesEntity.serviceDate.hour,
+      minute: servicesEntity.serviceDate.minute,
+    );
     initDate(
-      startTimeParam: serviceHour,
       startDateParam: nextWeekdayWithTime(
         DateTime.now(),
         servicesEntity.dayOfWeek,
-        serviceHour,
+        startTime,
       ),
     );
     notifyListeners();
@@ -129,60 +124,116 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
     });
   }
 
-  Future<void> addData(BuildContext context) async {
+  Future<void> submit(BuildContext context) async {
     if (validateAllFields()) {
       final response = await isConnected();
       if (response) {
         final typeList = servicesEntity.path.split('/');
         value = AddDataEvent<EditLiturgyState>();
-        final liturgyResponse = await _useCases.add(
-          params: {'table': 'liturgies', 'selectFields': 'id'},
-          data: LiturgyAdapter.supabaseToMap(
-            LiturgySupabase(
-              id: MockUtil.createId(),
-              liturgy: LiturgyAdapter.toMapList(liturgiesList),
-            ),
+        bool isServiceNotNull = serviceEntity != null;
+        serviceEntity = ServiceEntity(
+          id: (isEditing && isServiceNotNull) ? serviceEntity!.id : null,
+          image: servicesEntity.image,
+          theme: themeController.text,
+          serviceDate: DateTime(
+            startDate!.year,
+            startDate!.month,
+            startDate!.day,
+            startTime!.hour,
+            startTime!.minute,
           ),
+          liturgiesList: liturgiesList,
+          serviceLiturgiesTableId: isServiceNotNull ? serviceEntity!.serviceLiturgiesTableId : '',
+          liturgiesTableId: isServiceNotNull ? serviceEntity!.liturgiesTableId : '',
+          preacher: preacherController.text,
+          type: typeList[2],
+          guideIsVisible: liturgiesList.isNotEmpty,
+          createAt: (isEditing && isServiceNotNull) ? serviceEntity!.createAt : DateTime.now(),
+          title: servicesEntity.title,
+          heading: servicesEntity.heading,
         );
-        final serviceResponse = await _useCases.add(
-        data: ServiceAdapter.toMap(
-          ServiceEntity(
-            id: MockUtil.createId(),
-            image: servicesEntity.image,
-            theme: themeController.text,
-            hour: servicesEntity.hour,
-            preacher: preacherController.text,
-            type: typeList[2],
-            guideIsVisible: false,
-            createAt: DateTime.now(),
-            title: servicesEntity.title,
-            heading: servicesEntity.heading,
-          ),
-        ),
-        params: {'table': 'service', 'selectFields': 'id'},
-      );
-        await _useCases.add(
-          params: {'table': 'service_liturgies'},
-          data: ServiceAdapter.serviceLiturgiesToMap(
-            ServiceLiturgiesSupabase(
-              id: MockUtil.createId(),
-              liturgyId: liturgyResponse[0]['id'],
-              serviceId: serviceResponse[0]['id'],
-            ),
-          ),
-        );
-      if (context.mounted) {
-        showCustomSuccessDialog(
-          context: context,
-          title: 'Sucesso!',
-          message: 'Evento salvo',
-        );
+
+        await upsert();
+
+        if (context.mounted) {
+          await showCustomSuccessDialog(
+            context: context,
+            title: 'Sucesso!',
+            message: 'Culto salvo',
+          );
+
+          Future.delayed(Duration(milliseconds: 2), () {
+            themeController.clear();
+            preacherController.clear();
+            Modular.get<ServicesPreviewStore>().servicesEntity = servicesEntity;
+            Modular.get<ServicesPreviewStore>().serviceEntity = serviceEntity!;
+            popAndPushNamed(
+              AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
+            );
+          });
+        }
       }
-    }
       value = DataAddedState<EditLiturgyState>();
     } else {
       value = NoConnectionState<EditLiturgyState>();
     }
+  }
+
+  upsert() async {
+    final liturgyResponse = await _useCases.upsert(
+      params: {'table': 'liturgies', 'selectFields': 'id'},
+      data: LiturgyAdapter.supabaseToMap(
+        LiturgySupabase(
+          id: isEditing ? serviceEntity!.liturgiesTableId : null,
+          liturgy: LiturgyAdapter.toMapList(liturgiesList),
+        ),
+      ),
+    );
+
+    final serviceResponse = await _useCases.upsert(
+      params: {'table': 'service', 'selectFields': 'id'},
+      data: ServiceAdapter.toMap(serviceEntity!),
+    );
+
+    final auxResponse = await _useCases.upsert(
+      params: {'table': 'service_liturgies', 'selectFields': 'id'},
+      data: ServiceAdapter.serviceLiturgiesToMap(
+        ServiceLiturgiesSupabase(
+          id: isEditing
+              ? serviceEntity?.serviceLiturgiesTableId
+              : null,
+          liturgyId: liturgyResponse[0]['id'],
+          serviceId: serviceResponse[0]['id'],
+        ),
+      ),
+    );
+
+    if(!isEditing){
+      await _useCases.update(
+        data: {
+          'service_liturgies_table_id': auxResponse[0]['id'],
+          'liturgies_table_id': liturgyResponse[0]['id'],
+        },
+        params: {
+          'table': 'service',
+          'referenceField': 'id',
+          'referenceValue': serviceResponse[0]['id'],
+          'selectFields': 'id',
+        },
+      );
+    }
+  }
+
+  delete() async {
+    final liturgyResponse = await _useCases.delete(
+      params: {'table': 'liturgies', 'selectFields': 'id'},
+    );
+
+    final serviceResponse = await _useCases.delete(
+      params: {'table': 'service', 'selectFields': 'id'},
+    );
+
+    await _useCases.delete(params: {'table': 'service_liturgies'});
   }
 
   fillItems() {
@@ -259,13 +310,13 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
     notifyListeners();
   }
 
-  void copyEntity() {
+  void copyBox() {
     liturgiesList.insert(index, liturgyModel.copyWith(id: MockUtil.createId()));
     controllersAndFocusNodes();
     notifyListeners();
   }
 
-  void delete({required String? key}) {
+  void deleteBox({required String? key}) {
     liturgiesList.remove(liturgyModel);
     _controllers.remove("${key}_0");
     _focusNodes.remove("${key}_0");

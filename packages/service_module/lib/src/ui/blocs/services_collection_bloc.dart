@@ -42,12 +42,12 @@ class ServicesCollectionBloc
       List<String> pathList = event.path.split('/');
       servicesCollectionParams = {
         'table': 'service',
-        'orderBy': 'createAt',
+        'orderBy': 'create_at',
         'filterColumn': pathList[1],
         'filterValue':  pathList[2],
         'ascending':  bool.parse(pathList[4]),
         'selectFields':
-            'id, createAt, image, title, theme, preacher, hour, heading, type, guideIsVisible, service_liturgies (liturgies(id, liturgy)), service_lyrics (lyrics(id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))))',
+            'id, create_at, image, title, theme, preacher, service_date, service_liturgies_table_id, liturgies_table_id, heading, type, guide_is_visible, service_liturgies (liturgies(id, liturgy)), service_lyrics (lyrics(id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))))',
       };
       add(LoadingEvent<ServicesCollectionEvent>());
       List<ServiceEntity> services = await onlineUseCases.get(

@@ -28,10 +28,9 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
   void initState() {
     super.initState();
     entitiesList = [];
-    path = widget.entity.path;
     _bloc = Modular.get<ServicesCollectionBloc>();
     _editStore = Modular.get<EditLiturgyStore>();
-    _bloc.add(GetDataEvent(path: path));
+    _bloc.add(GetDataEvent(path: widget.entity.path));
   }
 
   @override
@@ -173,7 +172,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   maxLines: 1,
-                                                  '${entitiesList[index].title} ${formatDateToString(entitiesList[index].createAt)} | ${widget.entity.hour}',
+                                                  '${entitiesList[index].title} ${formatDateToString(entitiesList[index].serviceDate)} | ${formatHourToString(date: entitiesList[index].serviceDate)}',
                                                   style: AppFonts.defaultFont(
                                                     fontWeight: FontWeight.w600,
                                                     color: AppColors.grey9,
@@ -269,7 +268,6 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
         icon: Icons.add,
         action: () {
           _editStore.servicesEntity = widget.entity;
-          _editStore.serviceHour = parseTimeOfDayFromH(widget.entity.hour);
           pushNamed(AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute);
         },
       ),

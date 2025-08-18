@@ -6,9 +6,8 @@ import 'package:core_module/core_module.dart';
 class ServicesPreviewStore extends ValueNotifier<GenericState<ServicesPreviewState>> {
   ServicesPreviewStore() : super(InitialState());
 
-  late List<LiturgyEntity> liturgiesList;
+  late ServiceEntity serviceEntity;
   late ServicesEntity servicesEntity;
-
 
   convertTextInLyric(String text) {
     final List<String> rawVerseBlocks = text.split(RegExp(r'\n\s*\n+'));

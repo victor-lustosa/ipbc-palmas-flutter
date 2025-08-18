@@ -1,7 +1,7 @@
 import 'dart:io';
 
 abstract class IRepository
-    implements IGet, IGetByPagination, IAdd, IDelete, IUpdate, ISaveImage {}
+    implements IGet, IGetByPagination, IUpsert, IAdd, IDelete, IUpdate, ISaveImage {}
 
 abstract class IGet {
   Future<dynamic> get<T>({Map<String, dynamic>? params});
@@ -9,6 +9,10 @@ abstract class IGet {
 
 abstract class IGetByPagination {
   Future<dynamic> getByPagination<T>({Map<String, dynamic>? params});
+}
+
+abstract class IUpsert {
+  Future<dynamic> upsert<T>({required data, Map<String, dynamic>? params});
 }
 
 abstract class IAdd {

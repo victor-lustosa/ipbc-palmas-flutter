@@ -38,7 +38,7 @@ class LiturgyAdapter {
   }
 
   static Map<String, dynamic> supabaseToMap(LiturgySupabase data) {
-    return {'id': data.id, 'liturgy': data.liturgy};
+    return {if (data.id != null) 'id': data.id, 'liturgy': data.liturgy};
   }
 
   static List<Map<String, dynamic>> toMapList(List<LiturgyEntity> data) {

@@ -1,4 +1,5 @@
 import 'package:core_module/core_module.dart';
+import 'package:flutter/material.dart';
 
 mixin ValidationAndFormatMixin {
   final String firebaseDatabase = 'firebase';
@@ -21,9 +22,5 @@ mixin ValidationAndFormatMixin {
         .toLowerCase()
         .replaceAll(RegExp(r'\s+'), '_')
         .replaceAll(RegExp(r'[^a-z0-9_]+'), '');
-  }
-
-  String formatDateToString(DateTime date) {
-    return DateFormat('dd/MM/yyyy').format(date);
   }
 }

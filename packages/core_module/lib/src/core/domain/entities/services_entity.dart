@@ -3,7 +3,7 @@ class ServicesEntity {
     this.dayOfWeek,
     required this.image,
     required this.id,
-    required this.hour,
+    required this.serviceDate,
     required this.title,
     required this.heading,
     required this.path,
@@ -15,5 +15,5 @@ class ServicesEntity {
   final String title;
   final String id;
   final String image;
-  final String hour;
+  final DateTime serviceDate;
 }

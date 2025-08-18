@@ -10,7 +10,8 @@ class EditLiturgyView extends StatefulWidget {
   State<EditLiturgyView> createState() => _EditLiturgyViewState();
 }
 
-class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
+class _EditLiturgyViewState extends State<EditLiturgyView>
+    with DateMixin, ValidationAndFormatMixin {
   late EditLiturgyStore _editStore;
 
   ValueNotifier<bool> isEventTitleValid = ValueNotifier(true);
@@ -21,6 +22,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
     super.initState();
     setLightAppBar();
     _editStore = Modular.get<EditLiturgyStore>();
+    _editStore.init();
     _editStore.rootFocusNode.addListener(_handleRootFocusChange);
   }
 
@@ -147,7 +149,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                                   margin: EdgeInsets.only(right: 10),
                                   child: InkWell(
                                     onTap: () => setDateAndTime(
-                                      selectedDate: _editStore.startDate,
+                                      selectedDate: _editStore.startDate!,
                                       onDatePicked: (newDate) {
                                         setState(() {
                                           _editStore.startDate = newDate;
@@ -158,11 +160,11 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                                         });
                                       },
                                       context: context,
-                                      selectedTime: _editStore.serviceHour!,
+                                      selectedTime: _editStore.startTime!,
                                     ),
                                     child: Text(
                                       getFormattedDateTime(
-                                        _editStore.startDate,
+                                        _editStore.startDate!,
                                       ),
                                       style: AppFonts.defaultFont(
                                         fontSize: 15,
@@ -174,7 +176,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                                 ),
                                 InkWell(
                                   onTap: () => pickTime(
-                                    selectedTime: _editStore.startTime,
+                                    selectedTime: _editStore.startTime!,
                                     context: context,
                                     onTimePicked: (newTime) {
                                       setState(() {
@@ -183,7 +185,9 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                                     },
                                   ),
                                   child: Text(
-                                    formatTime(_editStore.startTime),
+                                    formatHourToString(
+                                      time: _editStore.startTime,
+                                    ),
                                     style: AppFonts.defaultFont(
                                       fontSize: 15,
                                       color: AppColors.darkGreen,
@@ -204,7 +208,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                           color: AppColors.secondaryGrey2,
                           borderRadius: BorderRadius.all(Radius.circular(16)),
                         ),
-                        margin: EdgeInsets.only(left: 16, right: 16, top: 20),
+                        margin: EdgeInsets.only(left: 16, right: 16, top: 25),
                         width: context.sizeOf.width,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -262,7 +266,6 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                         buildDefaultDragHandles: false,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (BuildContext context, int index) {
-
                           final liturgy = _editStore.liturgiesList[index];
                           final itemKey = Key('${liturgy.id}');
                           final GlobalKey gestureKey = GlobalKey();
@@ -372,7 +375,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                             child: GestureDetector(
                               key: gestureKey,
                               onLongPressStart: (details) async {
-                                Modular.get<EditLiturgyStore>().liturgyModel = LiturgyAdapter.toModel(liturgy);
+                                Modular.get<EditLiturgyStore>().liturgyModel =
+                                    LiturgyAdapter.toModel(liturgy);
                                 Modular.get<EditLiturgyStore>().index = index;
                                 await showOptionsDialog(
                                   context: context,
@@ -387,7 +391,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                                         icon: AppIcons.contentCopy,
                                         label: 'Duplicar',
                                         action: () {
-                                          Modular.get<EditLiturgyStore>().copyEntity();
+                                          Modular.get<EditLiturgyStore>()
+                                              .copyBox();
                                           pop(context);
                                         },
                                       ),
@@ -403,9 +408,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                                         icon: AppIcons.trash,
                                         label: 'Deletar',
                                         action: () {
-                                          Modular.get<EditLiturgyStore>().delete(
-                                            key: liturgy.id,
-                                          );
+                                          Modular.get<EditLiturgyStore>()
+                                              .deleteBox(key: liturgy.id);
                                           pop(context);
                                         },
                                       ),
@@ -418,7 +422,6 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                           );
                         },
                         onReorder: (int oldIndex, int newIndex) {
-
                           setState(() {
                             if (oldIndex < newIndex) {
                               newIndex -= 1;
@@ -427,7 +430,6 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                                 .removeAt(oldIndex);
                             _editStore.liturgiesList.insert(newIndex, item);
                           });
-
                         },
                         proxyDecorator: (Widget child, _, animation) {
                           return Material(
@@ -435,7 +437,6 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
                             child: AnimatedBuilder(
                               animation: animation,
                               builder: (BuildContext context, Widget? child) {
-
                                 final animValue = Curves.easeInOut.transform(
                                   animation.value,
                                 );
@@ -462,16 +463,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView> with DateMixin {
               iconColor: AppColors.grey10,
               size: 33,
               action: () async {
-
-                await _editStore.addData(context);
-                Modular.get<ServicesPreviewStore>().servicesEntity =
-                    _editStore.servicesEntity;
-                Modular.get<ServicesPreviewStore>().liturgiesList =
-                    _editStore.liturgiesList;
-                popAndPushNamed(
-                  AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
-                );
-
+                _editStore.submit(context);
               },
             ),
           );

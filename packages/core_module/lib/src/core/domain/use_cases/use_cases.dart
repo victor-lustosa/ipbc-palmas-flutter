@@ -4,6 +4,7 @@ abstract class IUseCases
     implements
         IGetUseCases,
         IAddUseCases,
+        IUpsertUseCases,
         IUpdateUseCases,
         IDeleteUseCases,
         ISaveImageUseCases {}
@@ -13,6 +14,10 @@ abstract class IGetUseCases {
     Map<String, dynamic>? params,
     required Function converter,
   });
+}
+
+abstract class IUpsertUseCases {
+  Future<dynamic> upsert({required data, Map<String, dynamic>? params});
 }
 
 abstract class IAddUseCases {

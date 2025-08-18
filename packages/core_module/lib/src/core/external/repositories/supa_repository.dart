@@ -20,22 +20,27 @@ class SupabaseRepository implements IRepository {
     dynamic query = _supaClient
         .from(params?['table'])
         .select(params?['selectFields'] ?? '*');
-
     if (params?['filterColumn'] != null && params?['filterValue'] != null) {
       query = query.eq(params?['filterColumn'], params?['filterValue']);
     }
-
     if (params?['orderBy'] != null) {
       query = query.order(
         params?['orderBy'],
         ascending: params?['ascending'] ?? true,
       );
     }
-
     if (params?['limit'] != null) {
       query = query.limit(params?['limit']);
     }
+    return await query;
+  }
 
+  @override
+  Future<dynamic> upsert<T>({required data, Map<String, dynamic>? params}) async {
+    dynamic query = _supaClient.from(params?['table']).upsert(data);
+    if(params?['selectFields'] != null) {
+      query = query.select(params?['selectFields'] ?? '*');
+    }
     return await query;
   }
 
@@ -50,12 +55,20 @@ class SupabaseRepository implements IRepository {
 
   @override
   Future<void> update<T>({required data, Map<String, dynamic>? params}) async {
-    await _supaClient.from(params?['table']).update(data).eq(params?['filterColumn'], params?['filterValue']);
+    dynamic query = _supaClient.from(params?['table']).update(data).eq(params?['referenceField'], params?['referenceValue']);
+    if(params?['selectFields'] != null) {
+      query = query.select(params?['selectFields'] ?? '*');
+    }
+    return await query;
   }
 
   @override
   Future<void> delete<T>({Map<String, dynamic>? params}) async {
-    await _supaClient.from(params?['table']).delete().eq(params?['filterColumn'], params?['filterValue']);
+    dynamic query = _supaClient.from(params?['table']).delete().eq(params?['deleteField'], params?['id']);
+    if(params?['selectFields'] != null) {
+      query = query.select(params?['selectFields'] ?? '*');
+    }
+    return await query;
   }
 
   @override

@@ -18,7 +18,7 @@ class ServicesAdapter {
             'path': e.path,
             'day_of_week': e.dayOfWeek,
             'id': e.id,
-            'hour': e.hour,
+            'service_date': e.serviceDate,
             'title': e.title,
             'image': e.image,
           },
@@ -38,7 +38,7 @@ class ServicesAdapter {
               : null,
           path: entity['path'],
           image: entity['image'],
-          hour: entity['hour'],
+          serviceDate: DateTime.parse(entity['service_date']),
           id: entity['id'].runtimeType == String
               ? entity['id']
               : entity['id'].toString(),

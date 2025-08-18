@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../core_module.dart';
 
 mixin DateMixin {
-  late DateTime startDate;
-  late DateTime endDate;
-  late TimeOfDay startTime;
-  late TimeOfDay endTime;
+   DateTime? startDate;
+   DateTime? endDate;
+   TimeOfDay? startTime;
+   TimeOfDay? endTime;
 
   Future<void> setDateAndTime({
     required DateTime selectedDate,
@@ -25,13 +25,15 @@ mixin DateMixin {
         initialTime: selectedTime,
       );
       if (pickedDate != null && pickedTime != null) {
-        onDatePicked(DateTime(
-          pickedDate.year,
-          pickedDate.month,
-          pickedDate.day,
-          pickedTime.hour,
-          pickedTime.minute,
-        ));
+        onDatePicked(
+          DateTime(
+            pickedDate.year,
+            pickedDate.month,
+            pickedDate.day,
+            pickedTime.hour,
+            pickedTime.minute,
+          ),
+        );
       }
     }
   }
@@ -86,19 +88,10 @@ mixin DateMixin {
     DateTime? endDateParam,
   }) {
     final now = DateTime.now();
-    startDate = startDateParam ?? DateTime(now.year, now.month, now.day, 8, 0);
-    endDate = endDateParam ?? DateTime(now.year, now.month, now.day, 18, 0);
-    startTime = startTimeParam ?? TimeOfDay(hour: 08, minute: 00);
-    endTime = endTimeParam ?? TimeOfDay(hour: 18, minute: 30);
-  }
-
-  String formatTime(TimeOfDay time) {
-    final hour = time.hour.toString().padLeft(2, '0');
-    final minute = time.minute.toString().padLeft(2, '0');
-    if (time.minute == 0) {
-      return '${hour}h';
-    }
-    return '${hour}h$minute';
+    startDate = startDateParam ?? (startDate ?? DateTime(now.year, now.month, now.day, 08, 0));
+    endDate = endDateParam ?? (endDate ?? DateTime(now.year, now.month, now.day, 18, 0));
+    startTime = startTimeParam ?? (startTime ?? TimeOfDay(hour: 08, minute: 00));
+    endTime = endTimeParam ?? (endTime ?? TimeOfDay(hour: 18, minute: 30));
   }
 
   Future<void> pickTime({
@@ -145,5 +138,21 @@ mixin DateMixin {
         })
         .join(' ');
     return formatted;
+  }
+
+  String formatDateToString(DateTime date) {
+    return DateFormat('dd/MM/yyyy').format(date);
+  }
+
+  String formatHourToString({TimeOfDay? time, DateTime? date}) {
+    if (date != null && time == null) {
+      time = TimeOfDay(hour: date.hour, minute: date.minute);
+    }
+    final hour = time!.hour.toString().padLeft(2, '0');
+    final minute = time.minute.toString().padLeft(2, '0');
+    if (time.minute == 0) {
+      return '${hour}h';
+    }
+    return '${hour}h$minute';
   }
 }
