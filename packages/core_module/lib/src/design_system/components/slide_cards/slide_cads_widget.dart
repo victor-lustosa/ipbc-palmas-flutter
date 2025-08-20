@@ -1,4 +1,3 @@
-import 'package:core_module/src/design_system/stores/slide_cards_store.dart';
 import 'package:flutter/material.dart';
 import 'package:core_module/core_module.dart';
 
