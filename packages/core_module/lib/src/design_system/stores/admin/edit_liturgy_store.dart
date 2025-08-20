@@ -153,7 +153,7 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
           heading: servicesEntity.heading,
         );
 
-        await upsert();
+        upsert();
 
         if (context.mounted) {
           await showCustomSuccessDialog(
@@ -180,6 +180,7 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
   }
 
   upsert() async {
+
     final liturgyResponse = await _useCases.upsert(
       params: {'table': 'liturgies', 'selectFields': 'id'},
       data: LiturgyAdapter.supabaseToMap(

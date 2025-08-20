@@ -29,6 +29,10 @@ class UseCases<T> implements IUseCases {
       repository.delete(params: params);
 
   @override
+  Future<dynamic> upsert({required data, Map<String, dynamic>? params}) =>
+      repository.upsert(data: data, params: params);
+
+  @override
   Future<String?> saveImage({
     required File coverImage,
     required String fileName,
@@ -41,7 +45,5 @@ class UseCases<T> implements IUseCases {
     );
   }
 
-  @override
-  Future<dynamic> upsert({required data, Map<String, dynamic>? params}) =>
-      repository.add(data: data, params: params);
+
 }
