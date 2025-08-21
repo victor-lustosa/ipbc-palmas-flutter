@@ -50,6 +50,7 @@ class EventAdapter {
 
   static Map<String, dynamic> toMap(EventEntity data) {
     return {
+      if (data.id != null) 'id': data.id,
       'title': data.title,
       'subtitle': data.subtitle,
       'image': data.image,

@@ -30,7 +30,9 @@ class CoreModule extends Module {
     i.addSingleton<IOfflineAuthUseCases>(
       () => OfflineAuthUseCases(repository: i.get<IsarRepository>()),
     );
-
+    i.addLazySingleton(
+          () => CreateEventStore(useCases: i.get<UseCases<SupabaseRepository>>()),
+    );
     i.addSingleton(
       () => UseCases<IsarRepository>(repository: i.get<IsarRepository>()),
     );
