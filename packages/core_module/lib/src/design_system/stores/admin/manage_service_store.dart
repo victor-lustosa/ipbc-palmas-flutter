@@ -29,8 +29,8 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
   ServiceEntity? serviceEntity;
   late Function? updateCallback;
 
-  final TextEditingController preacherController = TextEditingController();
-  final TextEditingController themeController = TextEditingController();
+  TextEditingController preacherController = TextEditingController();
+  TextEditingController themeController = TextEditingController();
   final String preacherErrorText = 'por favor, insira o preletor do culto.';
   final String themeErrorText = 'por favor, insira a mensagem do culto.';
 
@@ -58,6 +58,10 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     fillItems();
     setDayInTheWeek();
     controllersAndFocusNodes();
+    if(!isEditing){
+      preacherController = TextEditingController();
+      themeController = TextEditingController();
+    }
     _rootFocusNode = FocusScopeNode();
     _rootFocusNode.addListener(_handleRootFocusChange);
   }

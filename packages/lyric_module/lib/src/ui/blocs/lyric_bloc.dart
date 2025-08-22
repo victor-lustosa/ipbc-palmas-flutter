@@ -6,9 +6,37 @@ import 'package:lyric_module/src/ui/blocs/type_filter.dart';
 
 class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     with ConnectivityMixin {
+
+  LyricBloc({
+    required this.onlineUseCases,
+    this.offlineUseCases,
+    required LyricsListStore lyricsListStore,
+    required ManageLyricStore manageLyricStore,
+  }) : _lyricsListStore = lyricsListStore,
+       _manageLyricStore = manageLyricStore,
+       super(LoadingState<LyricState>()) {
+    on<GetDataEvent<LyricEvent>>(_getInSupa);
+    on<FilterEvent<LyricEvent, LyricModel>>(_filter);
+    on<LoadingEvent<LyricEvent>>(_loading);
+    on<GetPaginationEvent<LyricEvent, LyricModel>>(_getPaginationInSupa);
+  }
+
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
   List<LyricModel> entitiesList = [];
+
+  bool isSelected = false;
+
+  String selectedValue = '';
+
+  final TextEditingController _controller = TextEditingController();
+
+  final LyricsListStore _lyricsListStore;
+  final ManageLyricStore _manageLyricStore;
+
+  get lyricsListStore => _lyricsListStore;
+  get manageLyricStore => _manageLyricStore;
+  get controller => _controller;
 
   final Map<String, Object> lyricParams = {
     'table': 'lyrics',
@@ -18,12 +46,20 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
         'id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))',
   };
 
-  LyricBloc({required this.onlineUseCases, this.offlineUseCases})
-    : super(LoadingState<LyricState>()) {
-    on<GetDataEvent<LyricEvent>>(_getInSupa);
-    on<FilterEvent<LyricEvent, LyricModel>>(_filter);
-    on<LoadingEvent<LyricEvent>>(_loading);
-    on<GetPaginationEvent<LyricEvent, LyricModel>>(_getPaginationInSupa);
+  init({required BuildContext context}) async {
+    add(GetDataEvent<LyricEvent>());
+    _manageLyricStore.isEditing = true;
+    _manageLyricStore.buttonCallback = () {
+      add(GetDataEvent<LyricEvent>());
+      pop(context);
+    };
+  }
+
+  int selectedIndex = 0;
+
+  int selectOptions(int index) {
+    selectedIndex = index;
+    return selectedIndex;
   }
 
   Future<void> _getInSupa(GetDataEvent<LyricEvent> event, emit) async {

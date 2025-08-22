@@ -73,6 +73,7 @@ class ServicesCollectionBloc
 
   Future<void> addItem({required ServicesEntity servicesEntity}) async {
     editStore.servicesEntity = servicesEntity;
+    editStore.isEditing = false;
     editStore.updateCallback = (){
       add(GetDataEvent());
     };

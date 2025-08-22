@@ -13,45 +13,21 @@ class LyricsListView extends StatefulWidget {
 
 class _LyricsListViewState extends State<LyricsListView>
     with TickerProviderStateMixin {
+
   late final LyricBloc _bloc;
-  bool isSelected = false;
-  String selectedValue = '';
-  final TextEditingController controller = TextEditingController();
-  late final LyricsListStore _lyricsListStore;
-  late final ManageLyricStore _manageLyricStore;
 
   @override
   void initState() {
     super.initState();
-    setLightAppBar();
     _bloc = Modular.get<LyricBloc>();
-    _bloc.add(GetDataEvent<LyricEvent>());
+    setLightAppBar();
     WidgetsBinding.instance.addPostFrameCallback((frameCallback) {
-      initializeStore();
+      _bloc.init(context: context);
     });
-    _lyricsListStore = Modular.get<LyricsListStore>();
-    _manageLyricStore = Modular.get<ManageLyricStore>();
-  }
-
-  initializeStore() async {
-    ManageLyricStore manageLyricStore = Modular.get<ManageLyricStore>();
-    manageLyricStore.isEditing = true;
-    manageLyricStore.buttonCallback = () {
-      _bloc.add(GetDataEvent<LyricEvent>());
-      pop(context);
-    };
-  }
-
-  int selectedIndex = 0;
-
-  int selectOptions(int index) {
-    selectedIndex = index;
-    return selectedIndex;
   }
 
   @override
   Widget build(BuildContext context) {
-    // int selectedIndex = 0;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -92,18 +68,18 @@ class _LyricsListViewState extends State<LyricsListView>
                         Container(
                           margin: const EdgeInsets.only(top: 30, bottom: 13),
                           child: SearchBarWidget(
-                            controller: controller,
+                            controller: _bloc.controller,
                             onChange: (value) {
                               bool writing = value.length > 1;
                               _bloc.add(
                                 FilterEvent<LyricEvent, LyricEntity>(
-                                  controller.text,
+                                  _bloc.controller.text,
                                   writing,
-                                  selectedIndex == 0
+                                  _bloc.selectedIndex == 0
                                       ? TitleFilter()
                                       : ArtistFilter(),
                                   // FilterFactory<LyricEvent,List<LyricEntity>>(index: selectedIndex),
-                                  selectedIndex,
+                                  _bloc.selectedIndex,
                                 ),
                               );
                             },
@@ -115,7 +91,9 @@ class _LyricsListViewState extends State<LyricsListView>
                         ),
                         Container(
                           margin: const EdgeInsets.only(left: 21.5),
-                          child: OwnChoiceChipsWidget(action: selectOptions),
+                          child: OwnChoiceChipsWidget(
+                            action: _bloc.selectOptions,
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -140,7 +118,7 @@ class _LyricsListViewState extends State<LyricsListView>
                             onLongPressStart: (details) async {
                               await showOptionsDialog(
                                 context: context,
-                                itemKey: _lyricsListStore.itemKey,
+                                itemKey: _bloc.lyricsListStore.itemKey,
                                 popupHeightParam: 110,
                                 popupWidthParam: 160,
                                 popupWidthPositionParam: 160,
@@ -154,12 +132,12 @@ class _LyricsListViewState extends State<LyricsListView>
                                       icon: AppIcons.edit,
                                       label: 'Editar',
                                       action: () {
-                                        _manageLyricStore.isEditing = true;
+                                        _bloc.manageLyricStore.isEditing = true;
                                         pushNamed(
                                           AppRoutes.servicesRoute +
                                               AppRoutes.manageLyricsRoute,
                                           arguments:
-                                              _lyricsListStore.lyricModel,
+                                              _bloc.lyricsListStore.lyricModel,
                                         );
                                         pop(context);
                                       },
@@ -185,7 +163,7 @@ class _LyricsListViewState extends State<LyricsListView>
                             onTap: () {
                               pushNamed(
                                 AppRoutes.lyricsRoute + AppRoutes.lyricRoute,
-                                arguments: _lyricsListStore.lyricModel,
+                                arguments: _bloc.lyricsListStore.lyricModel,
                               );
                             },
                           ),

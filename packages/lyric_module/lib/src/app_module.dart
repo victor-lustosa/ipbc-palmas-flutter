@@ -1,4 +1,3 @@
-
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:lyric_module/src/ui/blocs/lyric_bloc.dart';
@@ -11,6 +10,8 @@ class LyricModule extends Module {
   void exportedBinds(i) {
     i.addSingleton<LyricBloc>(
       () => LyricBloc(
+        lyricsListStore: Modular.get<LyricsListStore>(),
+        manageLyricStore: Modular.get<ManageLyricStore>(),
         onlineUseCases: i.get<UseCases<SupabaseRepository>>(),
       ),
       config: CoreModule.blocConfig(),
@@ -25,18 +26,17 @@ class LyricModule extends Module {
     r.child(
       AppRoutes.lyricRoute,
       transition: TransitionType.custom,
-      child: (_) => LyricView(
-        entity: r.args.data as LyricEntity,
-      ),
+      child: (_) => LyricView(entity: r.args.data as LyricEntity),
       customTransition: CustomTransition(
         transitionDuration: const Duration(milliseconds: 500),
         reverseTransitionDuration: const Duration(milliseconds: 500),
         transitionBuilder: (context, anim1, anim2, child) {
           return SlideTransition(
             position: anim1.drive(
-              Tween(begin: const Offset(0, 1), end: Offset.zero).chain(
-                CurveTween(curve: Curves.ease),
-              ),
+              Tween(
+                begin: const Offset(0, 1),
+                end: Offset.zero,
+              ).chain(CurveTween(curve: Curves.ease)),
             ),
             child: child,
           );
@@ -53,9 +53,10 @@ class LyricModule extends Module {
         transitionBuilder: (context, anim1, anim2, child) {
           return SlideTransition(
             position: anim1.drive(
-              Tween(begin: const Offset(0, 1), end: Offset.zero).chain(
-                CurveTween(curve: Curves.ease),
-              ),
+              Tween(
+                begin: const Offset(0, 1),
+                end: Offset.zero,
+              ).chain(CurveTween(curve: Curves.ease)),
             ),
             child: child,
           );
