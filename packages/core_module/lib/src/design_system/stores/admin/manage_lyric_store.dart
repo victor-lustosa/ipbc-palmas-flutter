@@ -1,8 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-class EditLyricStore extends ValueNotifier<GenericState<EditLyricState>> {
-  EditLyricStore() : super(InitialState());
+class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
+  ManageLyricStore() : super(InitialState());
 
   final List<LyricModel> _lyricsFetched = [];
   late void Function() buttonCallback;
@@ -32,11 +32,26 @@ class EditLyricStore extends ValueNotifier<GenericState<EditLyricState>> {
     value = UpdateLyricsListState();
   }
 
+  clear(){
+    controllers.forEach((key, controller) => controller.dispose());
+    focusNodes.forEach((key, focusNode) => focusNode.dispose());
+    rootFocusNode.removeListener(_handleRootFocusChange);
+    rootFocusNode.dispose();
+  }
+
   init() {
     initializeControllersAndFocusNodes();
     titleController.text = lyric.title;
     groupController.text = lyric.group;
     _rootFocusNode = FocusScopeNode();
+    rootFocusNode.addListener(_handleRootFocusChange);
+  }
+
+  void _handleRootFocusChange() {
+    if (isAnyTextFieldFocused != rootFocusNode.hasFocus) {
+      isAnyTextFieldFocused = rootFocusNode.hasFocus;
+      notifyListeners();
+    }
   }
 
   void initializeControllersAndFocusNodes() {
@@ -143,6 +158,6 @@ class EditLyricStore extends ValueNotifier<GenericState<EditLyricState>> {
 }
 
 @immutable
-abstract class EditLyricState {}
+abstract class ManageLyricState {}
 
-class UpdateLyricsListState extends GenericState<EditLyricState> {}
+class UpdateLyricsListState extends GenericState<ManageLyricState> {}

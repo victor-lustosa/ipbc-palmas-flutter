@@ -4,38 +4,26 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class EditLyricView extends StatefulWidget {
-  const EditLyricView({super.key});
+class ManageLyricView extends StatefulWidget {
+  const ManageLyricView({super.key});
 
   @override
-  State<EditLyricView> createState() => _EditLyricViewState();
+  State<ManageLyricView> createState() => _ManageLyricViewState();
 }
 
-class _EditLyricViewState extends State<EditLyricView> {
-  final EditLyricStore _store = Modular.get<EditLyricStore>();
+class _ManageLyricViewState extends State<ManageLyricView> {
+  final ManageLyricStore _store = Modular.get<ManageLyricStore>();
 
   @override
   void initState() {
     super.initState();
     setDarkAppBar();
     _store.init();
-    _store.rootFocusNode.addListener(_handleRootFocusChange);
-  }
-
-  void _handleRootFocusChange() {
-    if (_store.isAnyTextFieldFocused != _store.rootFocusNode.hasFocus) {
-      setState(() {
-        _store.isAnyTextFieldFocused = _store.rootFocusNode.hasFocus;
-      });
-    }
   }
 
   @override
   void dispose() {
-    _store.controllers.forEach((key, controller) => controller.dispose());
-    _store.focusNodes.forEach((key, focusNode) => focusNode.dispose());
-    _store.rootFocusNode.removeListener(_handleRootFocusChange);
-    _store.rootFocusNode.dispose();
+    _store.clear();
     super.dispose();
   }
 
@@ -96,7 +84,7 @@ class _EditLyricViewState extends State<EditLyricView> {
             child: ValueListenableBuilder(
               valueListenable: _store,
               builder: (_, state, child) {
-                if (state is LoadingState<EditLyricState>) {
+                if (state is LoadingState<ManageLyricState>) {
                   return const LoadingWidget(
                     androidRadius: 3,
                     iosRadius: 14,
@@ -162,27 +150,26 @@ class _EditLyricViewState extends State<EditLyricView> {
                                   child: IntrinsicHeight(
                                     child: Row(
                                       children: [
-                                          IgnorePointer(
-                                            ignoring:
-                                                _store.isAnyTextFieldFocused,
-                                            child: GestureDetector(
-                                              onLongPressStart: (_) async {
-                                                FocusScope.of(
-                                                  context,
-                                                ).unfocus();
-                                                HapticFeedback.lightImpact();
-                                              },
-                                              child: ReorderableDelayedDragStartListener(
-                                                index: index,
-                                                child: SizedBox(
-                                                  width: 32,
-                                                  height: 50,
-                                                  child: GridBallsTileWidget(
-                                                    index: index,
+                                        IgnorePointer(
+                                          ignoring:
+                                              _store.isAnyTextFieldFocused,
+                                          child: GestureDetector(
+                                            onLongPressStart: (_) async {
+                                              FocusScope.of(context).unfocus();
+                                              HapticFeedback.lightImpact();
+                                            },
+                                            child:
+                                                ReorderableDelayedDragStartListener(
+                                                  index: index,
+                                                  child: SizedBox(
+                                                    width: 32,
+                                                    height: 50,
+                                                    child: GridBallsTileWidget(
+                                                      index: index,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
+                                          ),
                                         ),
                                         Expanded(
                                           child: Container(
@@ -198,7 +185,8 @@ class _EditLyricViewState extends State<EditLyricView> {
                                               children: List.generate(
                                                 verse.versesList.length,
                                                 (position) {
-                                                  final lineKey = '${verse.id}_$position';
+                                                  final lineKey =
+                                                      '${verse.id}_$position';
 
                                                   _store.updateTiles(
                                                     verse: verse,
@@ -260,8 +248,10 @@ class _EditLyricViewState extends State<EditLyricView> {
                                           margin: EdgeInsets.only(top: 10),
                                           width: 30,
                                           child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               IconButtonWidget(
                                                 action: () async {
@@ -270,7 +260,8 @@ class _EditLyricViewState extends State<EditLyricView> {
                                                     itemKey: gestureKey,
                                                     popupHeightParam: 110,
                                                     popupWidthParam: 160,
-                                                    popupWidthPositionParam: 160,
+                                                    popupWidthPositionParam:
+                                                        160,
                                                     verticalMarginParam: 3,
                                                     buttons: Column(
                                                       children: [
@@ -278,7 +269,8 @@ class _EditLyricViewState extends State<EditLyricView> {
                                                           context: context,
                                                           top: 12,
                                                           bottom: 12,
-                                                          icon: AppIcons.addNotes,
+                                                          icon:
+                                                              AppIcons.addNotes,
                                                           label: 'Refrão',
                                                           action: () {},
                                                         ),
@@ -294,7 +286,8 @@ class _EditLyricViewState extends State<EditLyricView> {
                                                           context: context,
                                                           top: 12,
                                                           bottom: 12,
-                                                          icon: AppIcons.addNotes,
+                                                          icon:
+                                                              AppIcons.addNotes,
                                                           label: 'Add Box',
                                                           action: () {},
                                                         ),
@@ -310,8 +303,8 @@ class _EditLyricViewState extends State<EditLyricView> {
                                                           context: context,
                                                           top: 12,
                                                           bottom: 12,
-                                                          icon:
-                                                              AppIcons.contentCopy,
+                                                          icon: AppIcons
+                                                              .contentCopy,
                                                           label: 'Duplicar',
                                                           action: () {},
                                                         ),
@@ -362,7 +355,6 @@ class _EditLyricViewState extends State<EditLyricView> {
                                 child: AnimatedBuilder(
                                   animation: animation,
                                   builder: (BuildContext context, Widget? _) {
-
                                     final animValue = Curves.easeInOut
                                         .transform(animation.value);
                                     final scale = lerpDouble(

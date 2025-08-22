@@ -19,8 +19,8 @@ class AppRoutes {
 
   //Services
   static const String serviceRoute = '/service';
-  static const String editLiturgiesRoute = "/edit-liturgies";
-  static const String editLyricRoute = "/edit-lyric";
+  static const String manageServicesRoute = "/manage-services";
+  static const String manageLyricsRoute = "/manage-lyrics";
   static const String servicesPreviewRoute = "/services-preview";
   static const String searchLyricsRoute = "/search-lyrics";
   static const String servicesCollectionRoute = "/services-collection";

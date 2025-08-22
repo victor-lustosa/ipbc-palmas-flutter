@@ -1,12 +1,25 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
+class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     with DateMixin, ConnectivityMixin {
-  EditLiturgyStore({required IUseCases useCases})
-    : _useCases = useCases,
-      super(InitialState<EditLiturgyState>());
+  ManageServiceStore({
+    required IUseCases useCases,
+    required ServicesPreviewStore servicesPreviewStore,
+    required SearchLyricsStore searchLyricsStore,
+    required ManageLyricStore manageLyricStore,
+  }) : _useCases = useCases,
+       _servicesPreviewStore = servicesPreviewStore,
+       _searchLyricsStore = searchLyricsStore,
+       _manageLyricStore = manageLyricStore,
+       super(InitialState<ManageServiceState>());
+  final ServicesPreviewStore _servicesPreviewStore;
+  final SearchLyricsStore _searchLyricsStore;
+  final ManageLyricStore _manageLyricStore;
 
+  get servicesPreviewStore => _servicesPreviewStore;
+
+  get searchLyricsStore => _searchLyricsStore;
   final IUseCases _useCases;
   bool isEditing = false;
   int index = 0;
@@ -46,6 +59,19 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
     setDayInTheWeek();
     controllersAndFocusNodes();
     _rootFocusNode = FocusScopeNode();
+    _rootFocusNode.addListener(_handleRootFocusChange);
+  }
+
+  clear() {
+    _rootFocusNode.removeListener(_handleRootFocusChange);
+    resetValidationFields();
+  }
+
+  void _handleRootFocusChange() {
+    if (isAnyTextFieldFocused != _rootFocusNode.hasFocus) {
+      isAnyTextFieldFocused = _rootFocusNode.hasFocus;
+      notifyListeners();
+    }
   }
 
   formValidation(String? data, ValueNotifier<bool> isValid) {
@@ -130,7 +156,7 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
       final response = await isConnected();
       if (response) {
         final typeList = servicesEntity.path.split('/');
-        value = AddDataEvent<EditLiturgyState>();
+        value = AddDataEvent<ManageServiceState>();
         bool isServiceNotNull = serviceEntity != null;
         serviceEntity = ServiceEntity(
           id: (isEditing && isServiceNotNull) ? serviceEntity!.id : null,
@@ -186,9 +212,9 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
           });
         }
       }
-      value = DataAddedState<EditLiturgyState>();
+      value = DataAddedState<ManageServiceState>();
     } else {
-      value = NoConnectionState<EditLiturgyState>();
+      value = NoConnectionState<ManageServiceState>();
     }
   }
 
@@ -307,7 +333,20 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
     }
     return allTextValid;
   }
+
+  void addLyric({required String? text}) {
+    if (text != null && text.isNotEmpty) {
+      _manageLyricStore.lyric = servicesPreviewStore.convertTextInLyric(text);
+      _manageLyricStore.buttonCallback = () {
+        _manageLyricStore.addLyric();
+        popUntil(
+          (route) => route.settings.name == AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
+        );
+      };
+      pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);
+    }
+  }
 }
 
 @immutable
-abstract class EditLiturgyState {}
+abstract class ManageServiceState {}

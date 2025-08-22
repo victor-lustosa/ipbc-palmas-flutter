@@ -14,6 +14,7 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     'table': 'event',
     'orderBy': 'create_at',
     'ascending': false,
+    'limit': 5,
   };
 
   final Map<String, Object> servicesParams = {

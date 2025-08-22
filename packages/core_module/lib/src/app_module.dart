@@ -10,7 +10,7 @@ class CoreModule extends Module {
 
   @override
   void exportedBinds(Injector i) {
-    i.addLazySingleton<EditLyricStore>(EditLyricStore.new);
+    i.addLazySingleton<ManageLyricStore>(ManageLyricStore.new);
     i.addLazySingleton<LyricsListStore>(LyricsListStore.new);
     i.addSingleton<SupabaseClient>(() => Supabase.instance.client);
     i.addSingleton<SupabaseRepository>(
@@ -34,8 +34,13 @@ class CoreModule extends Module {
     i.addSingleton(
       () => UseCases<IsarRepository>(repository: i.get<IsarRepository>()),
     );
-    i.addLazySingleton<EditLiturgyStore>(
-      () => EditLiturgyStore(useCases: i.get<UseCases<SupabaseRepository>>()),
+    i.addLazySingleton<ManageServiceStore>(
+      () => ManageServiceStore(
+        useCases: i.get<UseCases<SupabaseRepository>>(),
+        servicesPreviewStore: Modular.get<ServicesPreviewStore>(),
+        searchLyricsStore: Modular.get<SearchLyricsStore>(),
+        manageLyricStore: Modular.get<ManageLyricStore>()
+      ),
     );
     i.addLazySingleton<SearchLyricsStore>(SearchLyricsStore.new);
     i.addLazySingleton<ServicesPreviewStore>(ServicesPreviewStore.new);

@@ -9,15 +9,13 @@ class ServicesPreviewView extends StatefulWidget {
 }
 
 class _ServicesPreviewViewState extends State<ServicesPreviewView> {
-  final ServicesPreviewStore _servicesPreviewStore =
-      Modular.get<ServicesPreviewStore>();
-  final EditLyricStore _editLyricStore = Modular.get<EditLyricStore>();
-  late final LyricsListStore _lyricsListStore;
+
+  late final ServicesPreviewStore _store;
 
   @override
   void initState() {
     super.initState();
-    _lyricsListStore = Modular.get<LyricsListStore>();
+    _store = Modular.get<ServicesPreviewStore>();
     setDarkAppBar();
   }
 
@@ -32,21 +30,21 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ServiceTopBarWidget(
-                image: _servicesPreviewStore.servicesEntity.image,
-                title: "Cultos de ${_servicesPreviewStore.servicesEntity.title}",
+                image: _store.servicesEntity.image,
+                title: "Cultos de ${_store.servicesEntity.title}",
               ),
               Container(
                 margin: const EdgeInsets.only(top: 24.7, left: 16),
                 child: GuidelineWidget(
                   circleColor: AppColors.cardBallsGrey,
                   timelineColor: AppColors.timelineGuideTGreen,
-                  liturgiesList: _servicesPreviewStore.serviceEntity.liturgiesList ?? [],
+                  liturgiesList: _store.serviceEntity.liturgiesList ?? [],
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(top: 24.7, left: 16),
                 child: Text(
-                  'Músicas de ${_servicesPreviewStore.servicesEntity.heading}',
+                  'Músicas de ${_store.servicesEntity.heading}',
                   style: AppFonts.defaultFont(
                     fontWeight: FontWeight.w500,
                     fontSize: 17,
@@ -55,7 +53,7 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                 ),
               ),
               Visibility(
-                visible: _editLyricStore.lyricsFetched.isEmpty,
+                visible: _store.manageLyricStore.lyricsFetched.isEmpty,
                 child: Container(
                   margin: const EdgeInsets.only(top: 4, left: 16, bottom: 24),
                   width: context.sizeOf.width * 0.9,
@@ -69,14 +67,14 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
                 ),
               ),
               ValueListenableBuilder(
-                valueListenable: _editLyricStore,
+                valueListenable: _store.manageLyricStore,
                 builder: (context, state, child) {
                   return LyricsListWidget(
-                    entitiesList: _editLyricStore.lyricsFetched,
+                    entitiesList: _store.manageLyricStore.lyricsFetched,
                     onTap: () {
                       pushNamed(
                         AppRoutes.lyricsRoute + AppRoutes.lyricRoute,
-                        arguments: _lyricsListStore.lyricModel,
+                        arguments:  _store.lyricsListStore.lyricModel,
                       );
                     },
                     onLongPressStart: (s) {},
@@ -122,7 +120,7 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
         size: 37,
         action: () {
           popAndPushNamed(
-            AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute,
+            AppRoutes.servicesRoute + AppRoutes.manageServicesRoute,
           );
         },
       ),

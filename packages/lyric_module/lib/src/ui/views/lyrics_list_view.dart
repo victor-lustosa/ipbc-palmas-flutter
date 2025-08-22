@@ -18,7 +18,7 @@ class _LyricsListViewState extends State<LyricsListView>
   String selectedValue = '';
   final TextEditingController controller = TextEditingController();
   late final LyricsListStore _lyricsListStore;
-  late final EditLyricStore _editLyricStore;
+  late final ManageLyricStore _manageLyricStore;
 
   @override
   void initState() {
@@ -27,16 +27,16 @@ class _LyricsListViewState extends State<LyricsListView>
     _bloc = Modular.get<LyricBloc>();
     _bloc.add(GetDataEvent<LyricEvent>());
     WidgetsBinding.instance.addPostFrameCallback((frameCallback) {
-      initializeEditLyricStore();
+      initializeStore();
     });
     _lyricsListStore = Modular.get<LyricsListStore>();
-    _editLyricStore = Modular.get<EditLyricStore>();
+    _manageLyricStore = Modular.get<ManageLyricStore>();
   }
 
-  initializeEditLyricStore() async {
-    EditLyricStore editLyricStore = Modular.get<EditLyricStore>();
-    editLyricStore.isEditing = true;
-    editLyricStore.buttonCallback = () {
+  initializeStore() async {
+    ManageLyricStore manageLyricStore = Modular.get<ManageLyricStore>();
+    manageLyricStore.isEditing = true;
+    manageLyricStore.buttonCallback = () {
       _bloc.add(GetDataEvent<LyricEvent>());
       pop(context);
     };
@@ -154,10 +154,10 @@ class _LyricsListViewState extends State<LyricsListView>
                                       icon: AppIcons.edit,
                                       label: 'Editar',
                                       action: () {
-                                        _editLyricStore.isEditing = true;
+                                        _manageLyricStore.isEditing = true;
                                         pushNamed(
                                           AppRoutes.servicesRoute +
-                                              AppRoutes.editLyricRoute,
+                                              AppRoutes.manageLyricsRoute,
                                           arguments:
                                               _lyricsListStore.lyricModel,
                                         );

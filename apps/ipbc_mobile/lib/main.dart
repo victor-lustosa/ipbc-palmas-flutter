@@ -5,7 +5,7 @@ import 'package:home_module/home_module.dart';
 
 void main() async {
   Modular.setInitialRoute(AppRoutes.initialRoute);
- //Modular.setInitialRoute(AppRoutes.servicesRoute + AppRoutes.editLyricRoute);
+ //Modular.setInitialRoute(AppRoutes.servicesRoute + AppRoutes.manageLyricRoute);
  //Modular.setInitialRoute(AppRoutes.lyricsListRoute);
  //Modular.setInitialRoute(AppRoutes.authRoute + AppRoutes.loginRoute);
 

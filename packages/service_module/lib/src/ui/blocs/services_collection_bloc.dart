@@ -13,7 +13,7 @@ class ServicesCollectionBloc
 
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
-  final EditLiturgyStore editStore;
+  final ManageServiceStore editStore;
   Map<String, Object> servicesCollectionParams = {};
   List<ServiceEntity> entitiesList = [];
 
@@ -68,7 +68,7 @@ class ServicesCollectionBloc
       serviceEntityParam: entitiesList[index],
       servicesEntityParam: servicesEntity,
     );
-    pushNamed(AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute);
+    pushNamed(AppRoutes.servicesRoute + AppRoutes.manageServicesRoute);
   }
 
   Future<void> addItem({required ServicesEntity servicesEntity}) async {
@@ -76,7 +76,7 @@ class ServicesCollectionBloc
     editStore.updateCallback = (){
       add(GetDataEvent());
     };
-    pushNamed(AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute);
+    pushNamed(AppRoutes.servicesRoute + AppRoutes.manageServicesRoute);
 
   }
 

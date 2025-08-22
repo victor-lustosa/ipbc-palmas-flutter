@@ -11,21 +11,20 @@ class SearchLyricsView extends StatefulWidget {
 }
 
 class _SearchLyricsViewState extends State<SearchLyricsView> {
-  late final EditLiturgyStore _editLiturgyStore;
+
+  late final ManageServiceStore _store;
+
   bool isSelected = false;
   String selectedValue = '';
   int selectedIndex = 0;
 
   final TextEditingController controller = TextEditingController();
 
-  final ServicesPreviewStore _servicesPreviewStore = Modular.get<ServicesPreviewStore>();
-  final SearchLyricsStore _searchLyricsStore = Modular.get<SearchLyricsStore>();
-
   @override
   void initState() {
     super.initState();
     setDarkAppBar();
-    _editLiturgyStore = Modular.get<EditLiturgyStore>();
+    _store = Modular.get<ManageServiceStore>();
   }
 
   int selectOptions(int index) {
@@ -43,7 +42,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ServiceTopBarWidget(image: _editLiturgyStore.servicesEntity.image),
+              ServiceTopBarWidget(image: _store.servicesEntity.image),
               Container(
                 margin: const EdgeInsets.only(
                   left: 16.5,
@@ -71,7 +70,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                 ),
               ),
               ValueListenableBuilder(
-                valueListenable: _searchLyricsStore,
+                valueListenable: _store.searchLyricsStore,
                 builder: (_, state, child) {
                   if (state is InitialState) {
                     return Container(
@@ -186,18 +185,8 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
         action: () {
           showAddLyricsDialog(
             context: context,
-            callback: (text) async {
-              if (text != null && text.isNotEmpty) {
-                EditLyricStore editLyricStore = Modular.get<EditLyricStore>();
-                editLyricStore.lyric = _servicesPreviewStore.convertTextInLyric(text);
-                editLyricStore.buttonCallback = () {
-                  editLyricStore.addLyric();
-                  popUntil((route) => route.settings.name == AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute);
-                };
-                pushNamed(
-                  AppRoutes.servicesRoute + AppRoutes.editLyricRoute,
-                );
-              }
+            callback: (text) {
+              _store.addLyric(text: text);
             },
           );
         },

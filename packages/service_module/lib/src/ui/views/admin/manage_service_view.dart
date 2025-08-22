@@ -3,50 +3,37 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class EditLiturgyView extends StatefulWidget {
-  const EditLiturgyView({super.key});
+class ManageServiceView extends StatefulWidget {
+  const ManageServiceView({super.key});
 
   @override
-  State<EditLiturgyView> createState() => _EditLiturgyViewState();
+  State<ManageServiceView> createState() => _ManageServiceViewState();
 }
 
-class _EditLiturgyViewState extends State<EditLiturgyView>
+class _ManageServiceViewState extends State<ManageServiceView>
     with DateMixin, ValidationAndFormatMixin {
-  late EditLiturgyStore _editStore;
-
-  ValueNotifier<bool> isEventTitleValid = ValueNotifier(true);
-  ValueNotifier<bool> isEventSubtitleValid = ValueNotifier(true);
+  late ManageServiceStore _store;
 
   @override
   void initState() {
     super.initState();
     setLightAppBar();
-    _editStore = Modular.get<EditLiturgyStore>();
-    _editStore.init();
-    _editStore.rootFocusNode.addListener(_handleRootFocusChange);
-  }
-
-  void _handleRootFocusChange() {
-    if (_editStore.isAnyTextFieldFocused != _editStore.rootFocusNode.hasFocus) {
-      setState(() {
-        _editStore.isAnyTextFieldFocused = _editStore.rootFocusNode.hasFocus;
-      });
-    }
+    _store = Modular.get<ManageServiceStore>();
+    _store.init();
   }
 
   @override
   dispose() {
-    _editStore.rootFocusNode.removeListener(_handleRootFocusChange);
-    _editStore.resetValidationFields();
+    _store.clear();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return FocusScope(
-      node: _editStore.rootFocusNode,
+      node: _store.rootFocusNode,
       child: ValueListenableBuilder(
-        valueListenable: _editStore,
+        valueListenable: _store,
         builder: (_, state, child) {
           return Scaffold(
             body: SingleChildScrollView(
@@ -57,8 +44,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ServiceTopBarWidget(
-                      image: _editStore.servicesEntity.image,
-                      title: "Cultos de ${_editStore.servicesEntity.heading}",
+                      image: _store.servicesEntity.image,
+                      title: "Cultos de ${_store.servicesEntity.heading}",
                     ),
                     Container(
                       margin: const EdgeInsets.only(
@@ -68,22 +55,22 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
                       ),
                       child: TemplateFormWidget(
                         horizontalSymmetric: EdgeInsets.zero,
-                        valueListenable: _editStore.isPreacherValid,
+                        valueListenable: _store.isPreacherValid,
                         titleMargin: const EdgeInsets.only(bottom: 4),
-                        controller: _editStore.preacherController,
+                        controller: _store.preacherController,
                         title: 'Preletor',
-                        isValid: _editStore.isPreacherValid.value,
-                        errorText: _editStore.preacherErrorText,
-                        globalKey: _editStore.preacherKey,
-                        isPressed: _editStore.isPressed,
+                        isValid: _store.isPreacherValid.value,
+                        errorText: _store.preacherErrorText,
+                        globalKey: _store.preacherKey,
+                        isPressed: _store.isPressed,
                         inputDecoration: fieldInputDecoration(
-                          isValid: _editStore.isPreacherValid.value,
+                          isValid: _store.isPreacherValid.value,
                           hintText: 'Preletor do culto',
                         ),
                         validator: (data) {
-                          return _editStore.formValidation(
+                          return _store.formValidation(
                             data,
-                            _editStore.isPreacherValid,
+                            _store.isPreacherValid,
                           );
                         },
                         defaultHintColor: AppColors.hintInputForm,
@@ -97,22 +84,22 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
                       ),
                       child: TemplateFormWidget(
                         horizontalSymmetric: EdgeInsets.zero,
-                        valueListenable: _editStore.isThemeValid,
+                        valueListenable: _store.isThemeValid,
                         titleMargin: const EdgeInsets.only(bottom: 4),
-                        controller: _editStore.themeController,
+                        controller: _store.themeController,
                         title: 'Mensagem',
-                        isValid: _editStore.isThemeValid.value,
-                        errorText: _editStore.themeErrorText,
-                        globalKey: _editStore.themeKey,
-                        isPressed: _editStore.isPressed,
+                        isValid: _store.isThemeValid.value,
+                        errorText: _store.themeErrorText,
+                        globalKey: _store.themeKey,
+                        isPressed: _store.isPressed,
                         inputDecoration: fieldInputDecoration(
-                          isValid: _editStore.isThemeValid.value,
+                          isValid: _store.isThemeValid.value,
                           hintText: 'Mensagem do culto',
                         ),
                         validator: (data) {
-                          return _editStore.formValidation(
+                          return _store.formValidation(
                             data,
-                            _editStore.isThemeValid,
+                            _store.isThemeValid,
                           );
                         },
                         defaultHintColor: AppColors.hintInputForm,
@@ -149,23 +136,21 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
                                   margin: EdgeInsets.only(right: 10),
                                   child: InkWell(
                                     onTap: () => setDateAndTime(
-                                      selectedDate: _editStore.startDate!,
+                                      selectedDate: _store.startDate!,
                                       onDatePicked: (newDate) {
                                         setState(() {
-                                          _editStore.startDate = newDate;
-                                          _editStore.startTime = TimeOfDay(
+                                          _store.startDate = newDate;
+                                          _store.startTime = TimeOfDay(
                                             hour: newDate.hour,
                                             minute: newDate.minute,
                                           );
                                         });
                                       },
                                       context: context,
-                                      selectedTime: _editStore.startTime!,
+                                      selectedTime: _store.startTime!,
                                     ),
                                     child: Text(
-                                      getFormattedDateTime(
-                                        _editStore.startDate!,
-                                      ),
+                                      getFormattedDateTime(_store.startDate!),
                                       style: AppFonts.defaultFont(
                                         fontSize: 15,
                                         color: AppColors.darkGreen,
@@ -176,18 +161,16 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
                                 ),
                                 InkWell(
                                   onTap: () => pickTime(
-                                    selectedTime: _editStore.startTime!,
+                                    selectedTime: _store.startTime!,
                                     context: context,
                                     onTimePicked: (newTime) {
                                       setState(() {
-                                        _editStore.startTime = newTime;
+                                        _store.startTime = newTime;
                                       });
                                     },
                                   ),
                                   child: Text(
-                                    formatHourToString(
-                                      time: _editStore.startTime,
-                                    ),
+                                    formatHourToString(time: _store.startTime),
                                     style: AppFonts.defaultFont(
                                       fontSize: 15,
                                       color: AppColors.darkGreen,
@@ -236,7 +219,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
                         ),
                       ),
                       onTap: () {
-                        Modular.get<EditLiturgyStore>().addBox();
+                        Modular.get<ManageServiceStore>().addBox();
                       },
                     ),
                     Container(
@@ -262,11 +245,11 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
                       ),
                       child: ReorderableListView.builder(
                         shrinkWrap: true,
-                        itemCount: _editStore.liturgiesList.length,
+                        itemCount: _store.liturgiesList.length,
                         buildDefaultDragHandles: false,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (BuildContext context, int index) {
-                          final liturgy = _editStore.liturgiesList[index];
+                          final liturgy = _store.liturgiesList[index];
                           final itemKey = Key('${liturgy.id}');
                           final GlobalKey gestureKey = GlobalKey();
 
@@ -311,9 +294,9 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             TextFormField(
-                                              controller: _editStore
+                                              controller: _store
                                                   .controllers["${liturgy.id}_0"],
-                                              focusNode: _editStore
+                                              focusNode: _store
                                                   .focusNodes["${liturgy.id}_0"],
                                               decoration: InputDecoration(
                                                 border: InputBorder.none,
@@ -330,7 +313,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
                                               onChanged: (newValue) {},
                                             ),
                                             Visibility(
-                                              visible: _editStore
+                                              visible: _store
                                                   .liturgiesList[index]
                                                   .isAdditional,
                                               child: Container(
@@ -338,9 +321,9 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
                                                   top: 4,
                                                 ),
                                                 child: TextFormField(
-                                                  controller: _editStore
+                                                  controller: _store
                                                       .controllers["${liturgy.id}_1"],
-                                                  focusNode: _editStore
+                                                  focusNode: _store
                                                       .focusNodes["${liturgy.id}_1"],
                                                   decoration: InputDecoration(
                                                     border: InputBorder.none,
@@ -375,9 +358,9 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
                             child: GestureDetector(
                               key: gestureKey,
                               onLongPressStart: (details) async {
-                                Modular.get<EditLiturgyStore>().liturgyModel =
+                                Modular.get<ManageServiceStore>().liturgyModel =
                                     LiturgyAdapter.toModel(liturgy);
-                                Modular.get<EditLiturgyStore>().index = index;
+                                Modular.get<ManageServiceStore>().index = index;
                                 await showOptionsDialog(
                                   context: context,
                                   itemKey: gestureKey,
@@ -391,7 +374,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
                                         icon: AppIcons.contentCopy,
                                         label: 'Duplicar',
                                         action: () {
-                                          Modular.get<EditLiturgyStore>()
+                                          Modular.get<ManageServiceStore>()
                                               .copyBox();
                                           pop(context);
                                         },
@@ -408,7 +391,8 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
                                         icon: AppIcons.trash,
                                         label: 'Deletar',
                                         action: () {
-                                          Modular.get<EditLiturgyStore>().deleteBox(key: liturgy.id);
+                                          Modular.get<ManageServiceStore>()
+                                              .deleteBox(key: liturgy.id);
                                           pop(context);
                                         },
                                       ),
@@ -425,9 +409,9 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
                             if (oldIndex < newIndex) {
                               newIndex -= 1;
                             }
-                            final LiturgyEntity item = _editStore.liturgiesList
+                            final LiturgyEntity item = _store.liturgiesList
                                 .removeAt(oldIndex);
-                            _editStore.liturgiesList.insert(newIndex, item);
+                            _store.liturgiesList.insert(newIndex, item);
                           });
                         },
                         proxyDecorator: (Widget child, _, animation) {
@@ -462,7 +446,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
               iconColor: AppColors.grey10,
               size: 33,
               action: () async {
-                _editStore.submit(context);
+                _store.submit(context);
               },
             ),
           );

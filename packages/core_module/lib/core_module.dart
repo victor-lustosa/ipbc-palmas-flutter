@@ -75,8 +75,8 @@ export 'src/design_system/components/scroll_transform/scroll_transform_item.dart
 export 'src/design_system/components/scroll_transform/scroll_transform_view.dart';
 export 'src/design_system/components/icons/hide_icon_widget.dart';
 
-export 'src/design_system/stores/admin/edit_lyric_store.dart';
-export 'src/design_system/stores/admin/edit_liturgy_store.dart';
+export 'src/design_system/stores/admin/manage_lyric_store.dart';
+export 'src/design_system/stores/admin/manage_service_store.dart';
 export 'src/design_system/stores/admin/services_preview_store.dart';
 export 'src/design_system/stores/admin/search_lyrics_store.dart';
 export 'src/design_system/stores/lyrics_list_store.dart';

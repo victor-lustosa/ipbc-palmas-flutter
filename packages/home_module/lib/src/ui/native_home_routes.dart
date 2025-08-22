@@ -46,8 +46,8 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
               ),
             );
 
-          case AppRoutes.editLiturgiesRoute:
-            return CustomFadeTransition(child: const EditLiturgyView());
+          case AppRoutes.manageServicesRoute:
+            return CustomFadeTransition(child: const ManageServiceView());
 
           case AppRoutes.eventRoute + AppRoutes.eventsListRoute:
             return CustomFadeTransition(child: const EventsListView());
