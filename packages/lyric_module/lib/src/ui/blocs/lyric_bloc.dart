@@ -8,19 +8,18 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     with ConnectivityMixin {
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
-  List<LyricModel>? lyricsList;
+  List<LyricModel> entitiesList = [];
 
-  final Map <String, Object> lyricParams = {
+  final Map<String, Object> lyricParams = {
     'table': 'lyrics',
     'orderBy': 'createAt',
     'ascending': false,
-    'selectFields': 'id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))',
+    'selectFields':
+        'id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))',
   };
 
-  LyricBloc({
-    required this.onlineUseCases,
-    this.offlineUseCases,
-  }) : super(LoadingState<LyricState>()) {
+  LyricBloc({required this.onlineUseCases, this.offlineUseCases})
+    : super(LoadingState<LyricState>()) {
     on<GetDataEvent<LyricEvent>>(_getInSupa);
     on<FilterEvent<LyricEvent, LyricModel>>(_filter);
     on<LoadingEvent<LyricEvent>>(_loading);
@@ -31,13 +30,13 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     //Caso esteja sem conexão eu salvo essas musicas no isar
     final response = await isConnected();
     if (response) {
-      lyricsList = await onlineUseCases.get(
+      final lyricsList = await onlineUseCases.get(
         params: lyricParams,
         converter: LyricAdapter.fromMapList,
       );
       if (lyricsList!.isNotEmpty) {
-        emit(DataFetchedState<LyricState, List<LyricModel>>(
-            entities: lyricsList!));
+        entitiesList = lyricsList;
+        emit(DataFetchedState<LyricState>());
       }
     } else {
       emit(NoConnectionState<LyricState>());
@@ -45,12 +44,14 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   }
 
   Future<void> _getPaginationInSupa(
-      GetPaginationEvent<LyricEvent, LyricModel> event, emit) async {
+    GetPaginationEvent<LyricEvent, LyricModel> event,
+    emit,
+  ) async {
     List<LyricModel> lyricsListAux = [];
     //Caso esteja sem conexão eu salvo essas musicas no hive
-    int offset = lyricsList!.length;
+    int offset = entitiesList.length;
 
-    final Map <String, Object> paginationParams = {
+    final Map<String, Object> paginationParams = {
       'table': 'lyrics',
       'limit': event.limit,
       'offset': offset,
@@ -61,14 +62,14 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     );
     //Verificando se tem novos itens retornados se sim eu adiciona lista principal
     if (lyricsListAux.isNotEmpty) {
-      lyricsList!.addAll(lyricsListAux);
-      emit(DataFetchedState<LyricState, List<LyricModel>>(entities: lyricsList!));
+      entitiesList.addAll(lyricsListAux);
+      emit(DataFetchedState<LyricState>());
     } else {
       emit(NoMoreDataState<LyricState, List<LyricModel>>());
     }
   }
 
-/*Future<void> _getInSupa(GetInSupaEvent<LyricEvent> event, emit) async {
+  /*Future<void> _getInSupa(GetInSupaEvent<LyricEvent> event, emit) async {
     await emit.onEach<List<LyricEntity>>(
       await supaUseCase.get(path),
       onData: (lyrics) {
@@ -87,12 +88,11 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   }
 
   Future<void> _filter(FilterEvent<LyricEvent, LyricModel> event, emit) async {
-    if (event.writing && lyricsList != null) {
-      List<LyricModel> list = event.typeFilter.filterListing(event, lyricsList);
-
-      emit(DataFetchedState<LyricState, List<LyricModel>>(entities: list));
+    if (event.writing) {
+      entitiesList = event.typeFilter.filterListing(event, entitiesList);
+      emit(DataFetchedState<LyricState>());
     } else {
-      emit(DataFetchedState<LyricState, List<LyricModel>>(entities: lyricsList!));
+      emit(DataFetchedState<LyricState>());
     }
   }
 }
@@ -132,9 +132,9 @@ class TitleFilter extends Filter<LyricModel, FilterEvent> {
 
     filterList = list!
         .where(
-          (element) => element.title
-              .toLowerCase()
-              .contains(event.searchText.toLowerCase()),
+          (element) => element.title.toLowerCase().contains(
+            event.searchText.toLowerCase(),
+          ),
         )
         .toList();
 
@@ -150,9 +150,9 @@ class ArtistFilter extends Filter<LyricModel, FilterEvent> {
 
     filterList = list!
         .where(
-          (element) => element.group
-              .toLowerCase()
-              .contains(event.searchText.toLowerCase()),
+          (element) => element.group.toLowerCase().contains(
+            event.searchText.toLowerCase(),
+          ),
         )
         .toList();
 

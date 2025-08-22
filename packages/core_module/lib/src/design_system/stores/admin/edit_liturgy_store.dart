@@ -14,6 +14,7 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
   late List<LiturgyEntity> liturgiesList;
   late ServicesEntity servicesEntity;
   ServiceEntity? serviceEntity;
+  late Function? updateCallback;
 
   final TextEditingController preacherController = TextEditingController();
   final TextEditingController themeController = TextEditingController();
@@ -176,6 +177,9 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
             preacherController.clear();
             Modular.get<ServicesPreviewStore>().servicesEntity = servicesEntity;
             Modular.get<ServicesPreviewStore>().serviceEntity = serviceEntity!;
+            if (updateCallback != null) {
+              updateCallback!();
+            }
             popAndPushNamed(
               AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
             );
@@ -189,12 +193,12 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
   }
 
   Future<dynamic> delete(ServiceEntity entitiesList) async {
-   final response = await _useCases.delete(
+    final response = await _useCases.delete(
       params: {
         'table': 'service',
         'referenceField': 'id',
         'referenceValue': entitiesList.id,
-        'selectFields': 'id'
+        'selectFields': 'id',
       },
     );
     notifyListeners();

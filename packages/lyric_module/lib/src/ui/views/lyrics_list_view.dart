@@ -19,7 +19,7 @@ class _LyricsListViewState extends State<LyricsListView>
   final TextEditingController controller = TextEditingController();
   late final LyricsListStore _lyricsListStore;
   late final EditLyricStore _editLyricStore;
-  List<LyricModel> entitiesList = [];
+
   @override
   void initState() {
     super.initState();
@@ -71,8 +71,7 @@ class _LyricsListViewState extends State<LyricsListView>
                   action: () =>
                       nativePushReplacementNamed(AppRoutes.rootRoute, context),
                 );
-              } else if (state
-                  is DataFetchedState<LyricState, List<LyricModel>>) {
+              } else if (state is DataFetchedState<LyricState>) {
                 return RefreshIndicator(
                   color: AppColors.darkGreen,
                   onRefresh: () async {
@@ -137,7 +136,7 @@ class _LyricsListViewState extends State<LyricsListView>
                         Container(
                           margin: const EdgeInsets.only(top: 14),
                           child: LyricsListWidget(
-                            entitiesList: state.entities!,
+                            entitiesList: _bloc.entitiesList,
                             onLongPressStart: (details) async {
                               await showOptionsDialog(
                                 context: context,

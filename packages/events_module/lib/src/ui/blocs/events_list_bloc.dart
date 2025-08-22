@@ -8,17 +8,15 @@ class EventsListBloc
     with ConnectivityMixin {
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
-
+  List<EventEntity> eventsList = [];
   final Map<String, Object> eventParams = {
     'table': 'event',
     'orderBy': 'create_at',
     'ascending': false,
   };
 
-  EventsListBloc({
-    required this.onlineUseCases,
-    this.offlineUseCases,
-  }) : super(LoadingState()) {
+  EventsListBloc({required this.onlineUseCases, this.offlineUseCases})
+    : super(LoadingState()) {
     on<GetDataEvent<EventsListEvent>>(_getInSupa);
     on<LoadingEvent<EventsListEvent>>(_loading);
   }
@@ -27,9 +25,11 @@ class EventsListBloc
     final response = await isConnected();
     if (response) {
       List<EventEntity> events = await onlineUseCases.get(
-          params: eventParams, converter: EventAdapter.fromMapList);
-      emit(DataFetchedState<EventsListState, List<EventEntity>>(
-          entities: events));
+        params: eventParams,
+        converter: EventAdapter.fromMapList,
+      );
+      eventsList = events;
+      emit(DataFetchedState<EventsListState>());
     } else {
       emit(NoConnectionState<EventsListState>());
     }

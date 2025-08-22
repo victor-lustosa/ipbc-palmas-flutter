@@ -17,8 +17,6 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView>
     with AutomaticKeepAliveClientMixin {
   late final HomeBloc _bloc;
-  List<ServicesEntity> _servicesList = [];
-  List<EventEntity> _eventsList = [];
 
   @override
   void initState() {
@@ -50,10 +48,7 @@ class _HomeViewState extends State<HomeView>
                 return NoConnectionView(
                   action: () => nativePushNamed(AppRoutes.homeRoute, context),
                 );
-              } else if (state is DataFetchedState<HomeState, HomeDTO>) {
-                _servicesList = state.entities!.servicesEntitiesList;
-                _eventsList = state.entities!.eventEntitiesList;
-
+              } else if (state is DataFetchedState<HomeState>) {
                 return SingleChildScrollView(
                   child: SizedBox(
                     width: context.sizeOf.width,
@@ -66,7 +61,7 @@ class _HomeViewState extends State<HomeView>
                             nativePushNamed(
                               AppRoutes.servicesListRoute,
                               context,
-                              arguments: _servicesList,
+                              arguments: _bloc.servicesList,
                             );
                           },
                           child: Column(
@@ -96,7 +91,7 @@ class _HomeViewState extends State<HomeView>
                             route: AppRoutes.servicesCollectionRoute,
                             mainAxisAlignment: MainAxisAlignment.center,
                             width: context.sizeOf.width,
-                            services: _servicesList,
+                            services: _bloc.servicesList,
                             height: 182,
                           ),
                         ),
@@ -129,7 +124,7 @@ class _HomeViewState extends State<HomeView>
                             width: 319,
                             scrollDirection: Axis.horizontal,
                             route: AppRoutes.detailEventRoute,
-                            entities: _eventsList,
+                            entities: _bloc.eventsList,
                           ),
                         ),
                       ],

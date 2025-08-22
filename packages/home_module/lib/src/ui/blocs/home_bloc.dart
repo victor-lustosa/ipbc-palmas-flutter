@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 
 class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     with ConnectivityMixin {
-
   final IUseCases _useCases;
+
+  List<ServicesEntity> servicesList = [];
+  List<EventEntity> eventsList = [];
 
   final Map<String, Object> eventParams = {
     'table': 'event',
@@ -34,21 +36,11 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
           params: servicesParams,
           converter: ServicesAdapter.fromMapList,
         ),
-        _useCases.get(
-          params: eventParams,
-          converter: EventAdapter.fromMapList,
-        ),
+        _useCases.get(params: eventParams, converter: EventAdapter.fromMapList),
       ]);
-      final services = results[0];
-      final events = results[1];
-      emit(
-        DataFetchedState<HomeState, HomeDTO>(
-          entities: HomeDTO(
-            servicesEntitiesList: services,
-            eventEntitiesList: events,
-          ),
-        ),
-      );
+      servicesList = results[0];
+      eventsList = results[1];
+      emit(DataFetchedState<HomeState>());
     } else {
       emit(NoConnectionState<HomeState>());
     }
@@ -60,13 +52,3 @@ abstract class HomeEvent {}
 
 @immutable
 abstract class HomeState {}
-
-class HomeDTO {
-  HomeDTO({
-    required this.servicesEntitiesList,
-    required this.eventEntitiesList,
-  });
-
-  final List<ServicesEntity> servicesEntitiesList;
-  final List<EventEntity> eventEntitiesList;
-}

@@ -26,8 +26,20 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
   void initState() {
     super.initState();
     _bloc = Modular.get<ServicesCollectionBloc>();
-    _bloc.add(GetDataEvent(path: widget.entity.path));
+    _bloc.path = widget.entity.path;
+    _bloc.add(GetDataEvent());
   }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  @override
+  void didUpdateWidget(covariant ServicesCollectionView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +60,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                 context,
               ),
             );
-          } else if (state
-              is DataFetchedState<
-                ServicesCollectionState,
-                List<ServiceEntity>
-              >) {
+          } else if (state is DataFetchedState<ServicesCollectionState>) {
             return AnnotatedRegion<SystemUiOverlayStyle>(
               value: SystemUiOverlayStyle.light,
               child: SingleChildScrollView(
@@ -243,7 +251,6 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                         textAlign: TextAlign.center,
                                         style: AppFonts.defaultFont(
                                           fontSize: 13,
-
                                           color: AppColors.grey9,
                                         ),
                                         'Não há cultos cadastrados.',
