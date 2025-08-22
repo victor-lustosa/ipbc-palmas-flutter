@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 
 import '../../../../../core_module.dart';
 
@@ -39,7 +39,7 @@ void main() async {
     heading:   '',
   );
 
- /* final liturgyResponse = await supa.upsert(
+ final liturgyResponse = await supa.upsert(
     params: {'table': 'liturgies', 'selectFields': 'id'},
     data: LiturgyAdapter.supabaseToMap(
       LiturgySupabase(
@@ -47,7 +47,7 @@ void main() async {
         liturgy: LiturgyAdapter.toMapList(liturgiesList),
       ),
     ),
-  );*/
+  );
 
   final serviceResponse = await supa.upsert(
     params: {'table': 'service', 'selectFields': 'id'},
@@ -80,4 +80,4 @@ void main() async {
     );
   }*/
 }
-
+*/

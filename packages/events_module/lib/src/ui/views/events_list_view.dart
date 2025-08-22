@@ -1,4 +1,3 @@
-import 'package:events_module/src/ui/stores/create_event_store.dart';
 import 'package:flutter/material.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/services.dart';
@@ -12,16 +11,13 @@ class EventsListView extends StatefulWidget {
 }
 
 class EventsListViewState extends State<EventsListView> {
-  late final SlideCardsStore _slideCardsStore;
-  late final CreateEventStore _createEventStore;
+
   late final EventsListBloc _bloc;
 
   @override
   void initState() {
     super.initState();
     _bloc = Modular.get<EventsListBloc>();
-    _slideCardsStore = Modular.get<SlideCardsStore>();
-    _createEventStore = Modular.get<CreateEventStore>();
     _bloc.add(GetDataEvent());
   }
 
@@ -95,7 +91,7 @@ class EventsListViewState extends State<EventsListView> {
                           onLongPressStart: (details) async {
                             await showOptionsDialog(
                               context: context,
-                              itemKey: _slideCardsStore.itemKey,
+                              itemKey: _bloc.slideCardsStore.itemKey,
                               popupHeightParam: 110,
                               popupWidthParam: 160,
                               popupWidthPositionParam: 160,
@@ -109,7 +105,7 @@ class EventsListViewState extends State<EventsListView> {
                                     icon: AppIcons.edit,
                                     label: 'Editar',
                                     action: () {
-                                      _createEventStore.isEditing = true;
+                                      _bloc.createEventStore.isEditing = true;
                                       pushNamed(
                                         AppRoutes.eventRoute +
                                             AppRoutes.createEventRoute,
