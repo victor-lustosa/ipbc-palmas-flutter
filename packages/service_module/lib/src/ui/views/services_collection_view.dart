@@ -20,16 +20,12 @@ class ServicesCollectionView extends StatefulWidget {
 class _ServicesCollectionViewState extends State<ServicesCollectionView>
     with DateMixin, ValidationAndFormatMixin {
   late final ServicesCollectionBloc _bloc;
-  late List<ServiceEntity> entitiesList;
   late String path;
-  late final EditLiturgyStore _editStore;
 
   @override
   void initState() {
     super.initState();
-    entitiesList = [];
     _bloc = Modular.get<ServicesCollectionBloc>();
-    _editStore = Modular.get<EditLiturgyStore>();
     _bloc.add(GetDataEvent(path: widget.entity.path));
   }
 
@@ -57,7 +53,6 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                 ServicesCollectionState,
                 List<ServiceEntity>
               >) {
-            entitiesList = state.entities;
             return AnnotatedRegion<SystemUiOverlayStyle>(
               value: SystemUiOverlayStyle.light,
               child: SingleChildScrollView(
@@ -69,7 +64,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                         image: widget.entity.image,
                         title: "Cultos de ${widget.entity.heading}",
                       ),
-                      entitiesList.isNotEmpty
+                      _bloc.entitiesList.isNotEmpty
                           ? Container(
                               margin: const EdgeInsets.only(
                                 top: 24,
@@ -84,10 +79,10 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                 padding: EdgeInsets.zero,
                                 scrollDirection: Axis.vertical,
                                 shrinkWrap: true,
-                                itemCount: entitiesList.length,
+                                itemCount: _bloc.entitiesList.length,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
-                                  final service = entitiesList[index];
+                                  final service = _bloc.entitiesList[index];
                                   final Key itemKey = Key('${service.id}');
                                   final GlobalKey gestureKey = GlobalKey();
                                   return GestureDetector(
@@ -96,7 +91,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                       nativePushNamed(
                                         AppRoutes.serviceRoute,
                                         arguments: ServiceViewDTO(
-                                          service: entitiesList[index],
+                                          service: _bloc.entitiesList[index],
                                           image: widget.entity.image,
                                         ),
                                         context,
@@ -119,10 +114,9 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                               icon: AppIcons.edit,
                                               label: 'Editar',
                                               action: () {
-                                                _editStore.edit(serviceEntityParam: entitiesList[index],servicesEntityParam: widget.entity);
-                                                pushNamed(
-                                                  AppRoutes.servicesRoute +
-                                                      AppRoutes.editLiturgiesRoute,
+                                                _bloc.editItem(
+                                                  index: index,
+                                                  servicesEntity: widget.entity,
                                                 );
                                                 pop(context);
                                               },
@@ -138,8 +132,13 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                               bottom: 12,
                                               icon: AppIcons.trash,
                                               label: 'Deletar',
-                                              action: () {
-
+                                              action: () async {
+                                                _bloc.add(
+                                                  DeleteItemEvent(index: index),
+                                                );
+                                                if (context.mounted) {
+                                                  pop(context);
+                                                }
                                               },
                                             ),
                                           ],
@@ -172,7 +171,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   maxLines: 1,
-                                                  '${entitiesList[index].title} ${formatDateToString(entitiesList[index].serviceDate)} | ${formatHourToString(date: entitiesList[index].serviceDate)}',
+                                                  '${_bloc.entitiesList[index].title} ${formatDateToString(_bloc.entitiesList[index].serviceDate)} | ${formatHourToString(date: _bloc.entitiesList[index].serviceDate)}',
                                                   style: AppFonts.defaultFont(
                                                     fontWeight: FontWeight.w600,
                                                     color: AppColors.grey9,
@@ -188,14 +187,16 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     maxLines: 2,
-                                                    'Mensagem: ${entitiesList[index].theme}',
+                                                    'Mensagem: ${_bloc.entitiesList[index].theme}',
                                                     style: AppFonts.description(
                                                       color: AppColors.grey8,
                                                     ),
                                                   ),
                                                 ),
                                                 Text(
-                                                  entitiesList[index].preacher,
+                                                  _bloc
+                                                      .entitiesList[index]
+                                                      .preacher,
                                                   style: AppFonts.description(
                                                     color: AppColors.grey8,
                                                   ),
@@ -267,8 +268,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
         backgroundColor: AppColors.add,
         icon: Icons.add,
         action: () {
-          _editStore.servicesEntity = widget.entity;
-          pushNamed(AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute);
+          _bloc.addItem(servicesEntity: widget.entity);
         },
       ),
     );

@@ -24,7 +24,7 @@ abstract class IUpdate {
 }
 
 abstract class IDelete {
-  Future<void> delete<T>({Map<String, dynamic>? params});
+  Future<dynamic> delete<T>({Map<String, dynamic>? params});
 }
 
 abstract class ISaveImage {

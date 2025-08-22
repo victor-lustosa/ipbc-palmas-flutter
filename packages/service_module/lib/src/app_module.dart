@@ -9,7 +9,7 @@ class ServiceModule extends Module {
   @override
   void binds(i) {
     i.addLazySingleton<ServicesCollectionBloc>(
-      () => ServicesCollectionBloc(
+      () => ServicesCollectionBloc(editStore: Modular.get<EditLiturgyStore>(),
         onlineUseCases: i.get<UseCases<SupabaseRepository>>(),
       ),
       config: CoreModule.blocConfig(),

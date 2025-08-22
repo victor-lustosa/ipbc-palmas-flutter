@@ -25,7 +25,7 @@ class UseCases<T> implements IUseCases {
       repository.update(data: data, params: params);
 
   @override
-  Future<void> delete({Map<String, dynamic>? params}) async =>
+  Future<dynamic> delete({Map<String, dynamic>? params}) async =>
       repository.delete(params: params);
 
   @override

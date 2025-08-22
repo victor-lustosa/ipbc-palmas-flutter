@@ -143,17 +143,26 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
             startTime!.minute,
           ),
           liturgiesList: liturgiesList,
-          serviceLiturgiesTableId: isServiceNotNull ? serviceEntity!.serviceLiturgiesTableId : '',
-          liturgiesTableId: isServiceNotNull ? serviceEntity!.liturgiesTableId : '',
+          serviceLiturgiesTableId: isServiceNotNull
+              ? serviceEntity!.serviceLiturgiesTableId
+              : '',
+          liturgiesTableId: isServiceNotNull
+              ? serviceEntity!.liturgiesTableId
+              : '',
           preacher: preacherController.text,
           type: typeList[2],
           guideIsVisible: liturgiesList.isNotEmpty,
-          createAt: (isEditing && isServiceNotNull) ? serviceEntity!.createAt : DateTime.now(),
+          createAt: (isEditing && isServiceNotNull)
+              ? serviceEntity!.createAt
+              : DateTime.now(),
           title: servicesEntity.title,
           heading: servicesEntity.heading,
         );
 
-        upsert();
+        await _useCases.upsert(
+          params: {'table': 'service'},
+          data: ServiceAdapter.toMap(serviceEntity!),
+        );
 
         if (context.mounted) {
           await showCustomSuccessDialog(
@@ -179,62 +188,17 @@ class EditLiturgyStore extends ValueNotifier<GenericState<EditLiturgyState>>
     }
   }
 
-  upsert() async {
-
-    final liturgyResponse = await _useCases.upsert(
-      params: {'table': 'liturgies', 'selectFields': 'id'},
-      data: LiturgyAdapter.supabaseToMap(
-        LiturgySupabase(
-          id: isEditing ? serviceEntity!.liturgiesTableId : null,
-          liturgy: LiturgyAdapter.toMapList(liturgiesList),
-        ),
-      ),
+  Future<dynamic> delete(ServiceEntity entitiesList) async {
+   final response = await _useCases.delete(
+      params: {
+        'table': 'service',
+        'referenceField': 'id',
+        'referenceValue': entitiesList.id,
+        'selectFields': 'id'
+      },
     );
-
-    final serviceResponse = await _useCases.upsert(
-      params: {'table': 'service', 'selectFields': 'id'},
-      data: ServiceAdapter.toMap(serviceEntity!),
-    );
-
-    final auxResponse = await _useCases.upsert(
-      params: {'table': 'service_liturgies', 'selectFields': 'id'},
-      data: ServiceAdapter.serviceLiturgiesToMap(
-        ServiceLiturgiesSupabase(
-          id: isEditing
-              ? serviceEntity?.serviceLiturgiesTableId
-              : null,
-          liturgyId: liturgyResponse[0]['id'],
-          serviceId: serviceResponse[0]['id'],
-        ),
-      ),
-    );
-
-    if(!isEditing){
-      await _useCases.update(
-        data: {
-          'service_liturgies_table_id': auxResponse[0]['id'],
-          'liturgies_table_id': liturgyResponse[0]['id'],
-        },
-        params: {
-          'table': 'service',
-          'referenceField': 'id',
-          'referenceValue': serviceResponse[0]['id'],
-          'selectFields': 'id',
-        },
-      );
-    }
-  }
-
-  delete() async {
-    final liturgyResponse = await _useCases.delete(
-      params: {'table': 'liturgies', 'selectFields': 'id'},
-    );
-
-    final serviceResponse = await _useCases.delete(
-      params: {'table': 'service', 'selectFields': 'id'},
-    );
-
-    await _useCases.delete(params: {'table': 'service_liturgies'});
+    notifyListeners();
+    return Future.value(response[0]);
   }
 
   fillItems() {

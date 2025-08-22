@@ -63,8 +63,8 @@ class SupabaseRepository implements IRepository {
   }
 
   @override
-  Future<void> delete<T>({Map<String, dynamic>? params}) async {
-    dynamic query = _supaClient.from(params?['table']).delete().eq(params?['deleteField'], params?['id']);
+  Future<dynamic> delete<T>({Map<String, dynamic>? params}) async {
+    dynamic query = _supaClient.from(params?['table']).delete().eq(params?['referenceField'], params?['referenceValue']);
     if(params?['selectFields'] != null) {
       query = query.select(params?['selectFields'] ?? '*');
     }

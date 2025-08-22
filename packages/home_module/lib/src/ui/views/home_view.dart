@@ -51,8 +51,8 @@ class _HomeViewState extends State<HomeView>
                   action: () => nativePushNamed(AppRoutes.homeRoute, context),
                 );
               } else if (state is DataFetchedState<HomeState, HomeDTO>) {
-                _servicesList = state.entities.servicesEntitiesList;
-                _eventsList = state.entities.eventEntitiesList;
+                _servicesList = state.entities!.servicesEntitiesList;
+                _eventsList = state.entities!.eventEntitiesList;
 
                 return SingleChildScrollView(
                   child: SizedBox(

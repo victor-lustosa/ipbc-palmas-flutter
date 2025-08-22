@@ -39,7 +39,7 @@ void main() async {
     heading:   '',
   );
 
-  final liturgyResponse = await supa.upsert(
+ /* final liturgyResponse = await supa.upsert(
     params: {'table': 'liturgies', 'selectFields': 'id'},
     data: LiturgyAdapter.supabaseToMap(
       LiturgySupabase(
@@ -47,14 +47,14 @@ void main() async {
         liturgy: LiturgyAdapter.toMapList(liturgiesList),
       ),
     ),
-  );
+  );*/
 
   final serviceResponse = await supa.upsert(
     params: {'table': 'service', 'selectFields': 'id'},
     data: ServiceAdapter.toMap(serviceEntity),
   );
 
-  await supa.upsert(
+ /* await supa.upsert(
     params: {'table': 'service_liturgies', 'selectFields': 'id'},
     data: ServiceAdapter.serviceLiturgiesToMap(
       ServiceLiturgiesSupabase(
@@ -63,7 +63,7 @@ void main() async {
         serviceId: serviceResponse[0]['id'],
       ),
     ),
-  );
+  );*/
 
  /* if(!isEditing){
     await supa.update(

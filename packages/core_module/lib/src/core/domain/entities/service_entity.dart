@@ -33,13 +33,16 @@ class ServiceEntity {
   final List<LyricEntity>? lyricsList;
   final List<LiturgyEntity>? liturgiesList;
 
-}
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is ServiceEntity &&
+        other.runtimeType == runtimeType &&
+        other.id == id;
+  }
 
-class ServiceLiturgiesSupabase {
-  final String? id;
-  final int liturgyId;
-  final int serviceId;
-
-  ServiceLiturgiesSupabase({required this.id, required this.liturgyId, required this.serviceId});
-
+  @override
+  int get hashCode {
+    return id.hashCode;
+  }
 }

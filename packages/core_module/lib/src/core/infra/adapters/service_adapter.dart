@@ -10,9 +10,6 @@ class ServiceAdapter {
 
   static ServiceModel fromJson(String source) => fromMap(json.decode(source));
 
-  static List<ServiceEntity> fromJsonList(String source) =>
-      fromMapList(json.decode(source));
-
   static ServiceModel fromMap(dynamic json) {
     return ServiceModel(
       id: json['id'],
@@ -27,28 +24,10 @@ class ServiceAdapter {
       heading: json['heading'],
       title: json['title'],
       guideIsVisible: json['guide_is_visible'],
-      liturgiesList: json.containsKey('liturgies_list')
-          ? LiturgyAdapter.fromMapList(json['service_liturgies']['liturgies'])
+      liturgiesList: json.containsKey('liturgies')
+          ? LiturgyAdapter.fromMapList(json['liturgies'])
           : [],
       lyricsList: LyricAdapter.fromMapList(json['service_lyrics']['lyrics']),
-    );
-  }
-  static ServiceModel toModel(ServiceEntity data) {
-    return ServiceModel(
-      id: data.id,
-      image: data.image,
-      serviceLiturgiesTableId: data.serviceLiturgiesTableId,
-      serviceDate: data.serviceDate,
-      createAt: data.createAt,
-      type: data.type,
-      theme: data.theme,
-      preacher: data.preacher,
-      heading: data.heading,
-      title: data.title,
-      guideIsVisible: data.guideIsVisible,
-      liturgiesList: data.liturgiesList ?? [],
-      lyricsList: data.lyricsList ?? [],
-      liturgiesTableId: data.liturgiesTableId,
     );
   }
 
@@ -61,18 +40,10 @@ class ServiceAdapter {
       'title': data.title,
       'type': data.type,
       'theme': data.theme,
+      'liturgies': LiturgyAdapter.toMapList(data.liturgiesList ?? []),
       'service_date': data.serviceDate.toIso8601String(),
       'preacher': data.preacher,
-      'service_liturgies_table_id': data.serviceLiturgiesTableId,
-      'liturgies_table_id': data.liturgiesTableId,
       'guide_is_visible': data.guideIsVisible,
-    };
-  }
-  static Map<String, dynamic> serviceLiturgiesToMap(ServiceLiturgiesSupabase data) {
-    return {
-      if (data.id != null) 'id': data.id,
-      'service_id': data.serviceId,
-      'liturgy_id': data.liturgyId,
     };
   }
 
@@ -95,12 +66,9 @@ class ServiceAdapter {
           guideIsVisible: entity['guide_is_visible'],
           title: entity['title'],
           heading: entity['heading'],
-          liturgiesList: entity.containsKey('service_liturgies')
-              ? LiturgyAdapter.fromSupabase(
-                  FlattenMixin.flattenByKey(
-                    entity['service_liturgies'],
-                    'liturgies',
-                  ),
+          liturgiesList: entity.containsKey('liturgies')
+              ? LiturgyAdapter.fromMapList(
+                    entity['liturgies'],
                 )
               : [],
           lyricsList:

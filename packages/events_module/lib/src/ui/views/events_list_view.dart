@@ -55,7 +55,7 @@ class EventsListViewState extends State<EventsListView> {
                   );
                 } else if (state
                     is DataFetchedState<EventsListState, List<EventEntity>>) {
-                  _eventsList = state.entities;
+                  _eventsList = state.entities!;
                   return SingleChildScrollView(
                     child: Column(
                       mainAxisSize:MainAxisSize.min,

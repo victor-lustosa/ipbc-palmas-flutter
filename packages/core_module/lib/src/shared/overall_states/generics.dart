@@ -64,8 +64,8 @@ class ExceptionState<R> extends GenericState<R> {
 
 @immutable
 class DataFetchedState<R, T> extends GenericState<R> {
-  final T entities;
-  DataFetchedState({ required this.entities});
+  final T? entities;
+  DataFetchedState({this.entities});
 }
 
 @immutable

@@ -29,7 +29,7 @@ abstract class IUpdateUseCases {
 }
 
 abstract class IDeleteUseCases {
-  Future<void> delete({Map<String, dynamic>? params});
+  Future<dynamic> delete({Map<String, dynamic>? params});
 }
 
 abstract class ISaveImageUseCases {

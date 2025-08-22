@@ -12,12 +12,14 @@ class ServicesCollectionBloc
     with ConnectivityMixin {
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
+  final EditLiturgyStore editStore;
   late Map<String, Object> servicesCollectionParams;
-
-  ServicesCollectionBloc({required this.onlineUseCases, this.offlineUseCases})
+  List<ServiceEntity> entitiesList = [];
+  ServicesCollectionBloc({required this.editStore, required this.onlineUseCases, this.offlineUseCases})
     : super(LoadingState()) {
     on<GetDataEvent<ServicesCollectionEvent>>(_getInSupa);
     on<LoadingEvent<ServicesCollectionEvent>>(_loading);
+    on<DeleteItemEvent>(_deleteItem);
   }
 
   /*Future<void> _getInSupa(
@@ -47,24 +49,48 @@ class ServicesCollectionBloc
         'filterValue':  pathList[2],
         'ascending':  bool.parse(pathList[4]),
         'selectFields':
-            'id, create_at, image, title, theme, preacher, service_date, service_liturgies_table_id, liturgies_table_id, heading, type, guide_is_visible, service_liturgies (liturgies(id, liturgy)), service_lyrics (lyrics(id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))))',
+            'id, create_at, image, title, theme, preacher, service_date, heading, type, guide_is_visible, liturgies, service_lyrics (lyrics(id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))))',
       };
       add(LoadingEvent<ServicesCollectionEvent>());
       List<ServiceEntity> services = await onlineUseCases.get(
         params: servicesCollectionParams,
         converter: ServiceAdapter.fromMapList,
       );
+      entitiesList = services;
       emit(
-        DataFetchedState<ServicesCollectionState, List<ServiceEntity>>(
-          entities: services,
-        ),
+        DataFetchedState<ServicesCollectionState, List<ServiceEntity>>(),
       );
     } else {
       emit(NoConnectionState<ServicesCollectionState>());
     }
   }
 
-  Future<void> _loading(_, emit) async {
+  Future<void> _deleteItem(event, emit) async {
+    final service = entitiesList[event.index];
+    final response = await editStore.delete(service);
+    if(response != null){
+      entitiesList.remove(service);
+    }
+    emit(
+      DataFetchedState<ServicesCollectionState, List<ServiceEntity>>(),
+    );
+  }
+
+  void editItem({required int index, required ServicesEntity servicesEntity}) {
+    editStore.edit(serviceEntityParam: entitiesList[index],servicesEntityParam: servicesEntity);
+    pushNamed(
+      AppRoutes.servicesRoute +
+          AppRoutes.editLiturgiesRoute,
+    );
+  }
+
+  void addItem({required ServicesEntity servicesEntity}) {
+    editStore.servicesEntity = servicesEntity;
+    pushNamed(AppRoutes.servicesRoute + AppRoutes.editLiturgiesRoute);
+  }
+
+
+  void _loading(_, emit) async {
     emit(LoadingState<ServicesCollectionState>());
   }
 }
@@ -72,5 +98,12 @@ class ServicesCollectionBloc
 @immutable
 abstract class ServicesCollectionEvent {}
 
+class DeleteItemEvent extends GenericEvent<ServicesCollectionEvent> {
+  DeleteItemEvent({required this.index});
+  final int index;
+}
+
 @immutable
 abstract class ServicesCollectionState {}
+
+class UpdateServicesListState extends GenericState<ServicesCollectionState> {}

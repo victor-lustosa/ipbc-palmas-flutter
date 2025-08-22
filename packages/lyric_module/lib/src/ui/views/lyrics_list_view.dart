@@ -137,7 +137,7 @@ class _LyricsListViewState extends State<LyricsListView>
                         Container(
                           margin: const EdgeInsets.only(top: 14),
                           child: LyricsListWidget(
-                            entitiesList: state.entities,
+                            entitiesList: state.entities!,
                             onLongPressStart: (details) async {
                               await showOptionsDialog(
                                 context: context,

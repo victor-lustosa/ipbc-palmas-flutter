@@ -45,9 +45,9 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
   Widget build(BuildContext context) {
     return FocusScope(
       node: _editStore.rootFocusNode,
-      child: ListenableBuilder(
-        listenable: _editStore,
-        builder: (context, child) {
+      child: ValueListenableBuilder(
+        valueListenable: _editStore,
+        builder: (_, state, child) {
           return Scaffold(
             body: SingleChildScrollView(
               child: Container(
@@ -408,8 +408,7 @@ class _EditLiturgyViewState extends State<EditLiturgyView>
                                         icon: AppIcons.trash,
                                         label: 'Deletar',
                                         action: () {
-                                          Modular.get<EditLiturgyStore>()
-                                              .deleteBox(key: liturgy.id);
+                                          Modular.get<EditLiturgyStore>().deleteBox(key: liturgy.id);
                                           pop(context);
                                         },
                                       ),
