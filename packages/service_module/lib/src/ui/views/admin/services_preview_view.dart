@@ -8,7 +8,7 @@ class ServicesPreviewView extends StatefulWidget {
   State<ServicesPreviewView> createState() => _ServicesPreviewViewState();
 }
 
-class _ServicesPreviewViewState extends State<ServicesPreviewView> {
+class _ServicesPreviewViewState extends State<ServicesPreviewView> with DateMixin{
 
   late final ServicesPreviewStore _store;
 
@@ -30,15 +30,20 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ServiceTopBarWidget(
-                image: _store.servicesEntity.image,
-                title: "Cultos de ${_store.servicesEntity.title}",
+                image: _store.serviceEntity.image!,
+                title: "Cultos de ${_store.serviceEntity.title}",
+                dateIsVisible: _store.serviceEntity.guideIsVisible,
+                createAt: formatDateToString(_store.serviceEntity.createAt),
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 24.7, left: 16),
-                child: GuidelineWidget(
-                  circleColor: AppColors.cardBallsGrey,
-                  timelineColor: AppColors.timelineGuideTGreen,
-                  liturgiesList: _store.serviceEntity.liturgiesList ?? [],
+              Visibility(
+                visible: _store.serviceEntity.guideIsVisible,
+                child: Container(
+                  margin: const EdgeInsets.only(top: 25, left: 16),
+                  child: GuidelineWidget(
+                    circleColor: AppColors.cardBallsGrey,
+                    timelineColor: AppColors.timelineGuideTGreen,
+                    liturgiesList: _store.serviceEntity.liturgiesList ?? [],
+                  ),
                 ),
               ),
               Container(

@@ -27,7 +27,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
   late List<LiturgyEntity> liturgiesList;
   late ServicesEntity servicesEntity;
   ServiceEntity? serviceEntity;
-  late Function? updateCallback;
+  late Function? updateCallbackParam;
 
   TextEditingController preacherController = TextEditingController();
   TextEditingController themeController = TextEditingController();
@@ -58,9 +58,9 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     fillItems();
     setDayInTheWeek();
     controllersAndFocusNodes();
-    if(!isEditing){
-      preacherController = TextEditingController();
-      themeController = TextEditingController();
+    if (!isEditing) {
+      preacherController.clear();
+      themeController.clear();
     }
     _rootFocusNode = FocusScopeNode();
     _rootFocusNode.addListener(_handleRootFocusChange);
@@ -202,18 +202,16 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
             message: 'Culto salvo',
           );
 
-          Future.delayed(Duration(milliseconds: 2), () {
-            themeController.clear();
-            preacherController.clear();
-            Modular.get<ServicesPreviewStore>().servicesEntity = servicesEntity;
-            Modular.get<ServicesPreviewStore>().serviceEntity = serviceEntity!;
-            if (updateCallback != null) {
-              updateCallback!();
-            }
-            popAndPushNamed(
-              AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
-            );
-          });
+          Modular.get<ServicesPreviewStore>().servicesEntity = servicesEntity;
+          Modular.get<ServicesPreviewStore>().serviceEntity = serviceEntity!;
+
+          if (updateCallbackParam != null) {
+            updateCallbackParam!();
+          }
+
+          popAndPushNamed(
+            AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
+          );
         }
       }
       value = DataAddedState<ManageServiceState>();
@@ -344,7 +342,9 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
       _manageLyricStore.buttonCallback = () {
         _manageLyricStore.addLyric();
         popUntil(
-          (route) => route.settings.name == AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
+          (route) =>
+              route.settings.name ==
+              AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
         );
       };
       pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);

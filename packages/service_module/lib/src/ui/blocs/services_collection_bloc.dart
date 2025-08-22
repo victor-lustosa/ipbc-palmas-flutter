@@ -10,13 +10,12 @@ class ServicesCollectionBloc
           GenericState<ServicesCollectionState>
         >
     with ConnectivityMixin {
-
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
   final ManageServiceStore editStore;
   Map<String, Object> servicesCollectionParams = {};
   List<ServiceEntity> entitiesList = [];
-
+  late final Function updateCallback;
   late String path;
 
   ServicesCollectionBloc({
@@ -24,6 +23,10 @@ class ServicesCollectionBloc
     required this.onlineUseCases,
     this.offlineUseCases,
   }) : super(LoadingState()) {
+    updateCallback = () {
+      add(GetDataEvent());
+    };
+
     on<GetDataEvent<ServicesCollectionEvent>>(_getInSupa);
     on<LoadingEvent<ServicesCollectionEvent>>(_loading);
     on<DeleteItemEvent>(_deleteItem);
@@ -68,17 +71,15 @@ class ServicesCollectionBloc
       serviceEntityParam: entitiesList[index],
       servicesEntityParam: servicesEntity,
     );
+    editStore.updateCallbackParam = updateCallback;
     pushNamed(AppRoutes.servicesRoute + AppRoutes.manageServicesRoute);
   }
 
   Future<void> addItem({required ServicesEntity servicesEntity}) async {
     editStore.servicesEntity = servicesEntity;
     editStore.isEditing = false;
-    editStore.updateCallback = (){
-      add(GetDataEvent());
-    };
+    editStore.updateCallbackParam = updateCallback;
     pushNamed(AppRoutes.servicesRoute + AppRoutes.manageServicesRoute);
-
   }
 
   void _loading(_, emit) async {

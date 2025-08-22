@@ -2,17 +2,10 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ServiceViewDTO {
-  ServiceViewDTO({required this.service, required this.image});
-
-  final ServiceEntity service;
-  final String image;
-}
-
 class ServiceView extends StatefulWidget {
   const ServiceView({super.key, required this.entity});
 
-  final ServiceViewDTO entity;
+  final ServiceEntity entity;
 
   @override
   State<ServiceView> createState() => _ServiceViewState();
@@ -28,19 +21,19 @@ class _ServiceViewState extends State<ServiceView> with DateMixin{
           child: Column(
             children: [
               ServiceTopBarWidget(
-                image: widget.entity.image,
-                title: "Cultos de ${widget.entity.service.title}",
-                dateIsVisible: widget.entity.service.guideIsVisible,
-                createAt: formatDateToString(widget.entity.service.createAt),
+                image: widget.entity.image ?? '',
+                title: "Cultos de ${widget.entity.title}",
+                dateIsVisible: widget.entity.guideIsVisible,
+                createAt: formatDateToString(widget.entity.createAt),
               ),
               Visibility(
-                visible: widget.entity.service.guideIsVisible,
+                visible: widget.entity.guideIsVisible,
                 child: Container(
                   margin: const EdgeInsets.only(top: 25, left: 16),
                   child: GuidelineWidget(
                     circleColor: AppColors.cardBallsGrey,
                     timelineColor: AppColors.timelineGuideTGreen,
-                    liturgiesList: widget.entity.service.liturgiesList ?? [],
+                    liturgiesList: widget.entity.liturgiesList ?? [],
                   ),
                 ),
               ),
@@ -49,13 +42,13 @@ class _ServiceViewState extends State<ServiceView> with DateMixin{
                 child: Container(
                   margin: const EdgeInsets.only(top: 24, left: 15, bottom: 20),
                   child: Text(
-                    "Músicas de ${widget.entity.service.heading}",
+                    "Músicas de ${widget.entity.heading}",
                     style: AppFonts.headline(),
                   ),
                 ),
               ),
               LyricsListWidget(
-                entitiesList: widget.entity.service.lyricsList ?? [],
+                entitiesList: widget.entity.lyricsList ?? [],
                 onTap: () {},
                 onLongPressStart: (s) {},
               ),

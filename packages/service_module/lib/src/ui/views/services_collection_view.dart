@@ -4,8 +4,6 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-
-import '../../../service_module.dart';
 import '../blocs/services_collection_bloc.dart';
 
 class ServicesCollectionView extends StatefulWidget {
@@ -29,17 +27,6 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
     _bloc.path = widget.entity.path;
     _bloc.add(GetDataEvent());
   }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
-  void didUpdateWidget(covariant ServicesCollectionView oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -98,10 +85,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                     onTap: () {
                                       nativePushNamed(
                                         AppRoutes.serviceRoute,
-                                        arguments: ServiceViewDTO(
-                                          service: _bloc.entitiesList[index],
-                                          image: widget.entity.image,
-                                        ),
+                                        arguments: service,
                                         context,
                                       );
                                     },
