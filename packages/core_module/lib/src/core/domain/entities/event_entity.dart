@@ -27,4 +27,17 @@ class EventEntity {
   final String signUpLink;
   final String contactLink;
   final DateTime createAt;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is EventEntity &&
+        other.runtimeType == runtimeType &&
+        other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode;
+  }
 }

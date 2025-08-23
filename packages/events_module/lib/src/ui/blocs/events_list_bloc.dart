@@ -30,6 +30,8 @@ class EventsListBloc
        super(LoadingState()) {
     on<GetDataEvent<EventsListEvent>>(_getInSupa);
     on<LoadingEvent<EventsListEvent>>(_loading);
+    on<DeleteItemEvent>(_deleteItem);
+
   }
 
   Future<void> _getInSupa(GetDataEvent event, emit) async {
@@ -49,6 +51,17 @@ class EventsListBloc
   Future<void> _loading(_, emit) async {
     emit(LoadingState<EventsListState>());
   }
+
+
+  Future<void> _deleteItem(_, emit) async {
+    final event = eventsList[slideCardsStore.index];
+    final response = await _createEventStore.delete(event);
+    if (response != null) {
+      eventsList.remove(event);
+    }
+    emit(DataFetchedState<EventsListState>());
+  }
+
 }
 
 @immutable
@@ -56,3 +69,9 @@ abstract class EventsListEvent {}
 
 @immutable
 abstract class EventsListState {}
+
+class DeleteItemEvent extends GenericEvent<EventsListEvent> {
+  DeleteItemEvent({ this.index});
+
+  final int? index;
+}

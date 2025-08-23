@@ -72,7 +72,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   ValueNotifier<bool> isCoverImageValid = ValueNotifier(true);
   bool isPressed = false;
   File coverImage = File('');
-  late String eventImage;
   late EventEntity eventEntity;
 
   formValidation(String? data, ValueNotifier<bool> isValid) {
@@ -89,12 +88,17 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     eventEntity = event;
     eventTitleController.text = event.title;
     eventSubtitleController.text = event.subtitle;
-    eventImage = event.image;
-    coverImage = File("");
+    coverImage = File('');
     startDate = event.startDateTime; // ou separa data e hora se precisar
     endDate = event.endDateTime;
-    startTime = TimeOfDay(hour: event.startDateTime.hour, minute: event.startDateTime.minute);
-    endTime = TimeOfDay(hour: event.endDateTime.hour, minute: event.endDateTime.minute);
+    startTime = TimeOfDay(
+      hour: event.startDateTime.hour,
+      minute: event.startDateTime.minute,
+    );
+    endTime = TimeOfDay(
+      hour: event.endDateTime.hour,
+      minute: event.endDateTime.minute,
+    );
     eventDescriptionController.text = event.description;
     eventLocationController.text = event.location;
     eventLocationNameController.text = event.localName;
@@ -110,7 +114,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
         allTextValid = false;
       }
     });
-    final imageValid = coverImage.path.trim().isNotEmpty;
+    final imageValid = isEditing ? true : coverImage.path.trim().isNotEmpty;
     changeValue(isCoverImageValid, imageValid);
 
     return allTextValid && imageValid;
@@ -145,12 +149,12 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     }
   }
 
-  EventEntity fillEventEntity(String? resultUrl) {
+  EventEntity fillEventEntity(String resultUrl) {
     EventEntity entity = EventEntity(
       id: isEditing ? eventEntity.id : null,
       title: eventTitleController.text,
       subtitle: eventSubtitleController.text,
-      image: eventEntity.image,
+      image: resultUrl,
       startDateTime: combineDateAndTime(startDate!, startTime!),
       endDateTime: combineDateAndTime(endDate!, endTime!),
       description: eventDescriptionController.text,
@@ -167,22 +171,22 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     if (validateAllFields()) {
       final response = await isConnected();
       if (response) {
-
         value = AddDataEvent<CreateEventState>();
-        // final resultUrl = await _useCases.saveImage(
-        //   coverImage: coverImage,
-        //   bucketName: 'covers',
-        //   fileName:
-        //       'mobile_event_covers/${formatText(eventTitleController.text)}_${DateTime.now().toIso8601String()}.jpg',
-        // );
-        // if (resultUrl != null) {
-          // _useCases.add(
-          //   data: EventAdapter.toMap(fillEventEntity(resultUrl)),
-          //   params: {'table': 'event'},
-          // );
+        String? resultUrl;
+        bool isImageUpdated = (isEditing && coverImage.path.isNotEmpty);
+        if (isImageUpdated || !isEditing) {
+          resultUrl = await _useCases.saveImage(
+            coverImage: coverImage,
+            bucketName: 'covers',
+            fileName:
+                'mobile_event_covers/${formatText(eventTitleController.text)}_${DateTime.now().toIso8601String()}.jpg',
+          );
+        }
+
+        if (resultUrl != null || !isImageUpdated) {
           _useCases.upsert(
+            data: EventAdapter.toMap(fillEventEntity(isEditing ? eventEntity.image : resultUrl!)),
             params: {'table': 'event'},
-            data: EventAdapter.toMap(fillEventEntity(null)),
           );
           if (context.mounted) {
             showCustomSuccessDialog(
@@ -191,14 +195,33 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
               message: 'Evento salvo',
             );
           }
-        // }
-        value = DataAddedState<CreateEventState>();
+          value = DataAddedState<CreateEventState>();
 
+        }
+        // }
       } else {
         value = NoConnectionState<CreateEventState>();
       }
     }
   }
+
+
+
+  Future<dynamic> delete(EventEntity entity) async {
+    final response = await _useCases.delete(
+      params: {
+        'table': 'event',
+        'referenceField': 'id',
+        'referenceValue': entity.id,
+        'selectFields': 'id',
+      },
+    );
+    notifyListeners();
+    return Future.value(response[0]);
+  }
+
+
+
 }
 
 @immutable
