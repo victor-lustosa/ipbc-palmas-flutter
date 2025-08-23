@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../stores/create_event_store.dart';
 
 class CreateEventView extends StatefulWidget {
   const CreateEventView({super.key});
@@ -15,22 +14,26 @@ class CreateEventView extends StatefulWidget {
 class _CreateEventViewState extends State<CreateEventView> with DateMixin {
   late final CreateEventStore _store;
   late final SlideCardsStore _slideCardsStore;
+  bool isPressed = false;
 
   @override
   void initState() {
     super.initState();
     _store = Modular.get<CreateEventStore>();
     _slideCardsStore = Modular.get<SlideCardsStore>();
-    if (_store.isEditing) {
-      _store.fillFormWithEvent(_slideCardsStore.eventEntity);
+    final args = Modular.args.data as Map<String, dynamic>?;
+    if (args?["isEditing"] == true) {
+      _store.isEditing = true;
+      _store.fillFormWithEvent(args?["event"]);
     }
     Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
   }
 
-  get prefixLocationIcon => Container(
-    margin: const EdgeInsets.only(left: 18, right: 10),
-    child: Image.asset(AppIcons.linkIcon, width: 20, height: 13),
-  );
+  get prefixLocationIcon =>
+      Container(
+        margin: const EdgeInsets.only(left: 18, right: 10),
+        child: Image.asset(AppIcons.linkIcon, width: 20, height: 13),
+      );
 
 
   @override
@@ -103,76 +106,74 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                 child: InkWell(
                                   onTap: () async => await _store.getImage(),
                                   child:
-                                      state is FetchedImageState ||
-                                          (state is UpdateFormFieldState &&
-                                              _store.coverImage.path.isNotEmpty)
+                                  state is FetchedImageState ||
+                                      (state is UpdateFormFieldState &&
+                                          _store.coverImage.path.isNotEmpty)
                                       ? Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(20),
-                                            ),
-                                            image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: FileImage(
-                                                _store.coverImage,
-                                              ),
-                                            ),
-                                          ),
-                                        )
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(20),
+                                      ),
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: FileImage(
+                                          _store.coverImage,
+                                        ),
+                                      ),
+                                    ),
+                                  )
                                       : _store.isEditing
                                       ? Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(20),
-                                            ),
-                                            image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: NetworkImage(
-                                                _slideCardsStore
-                                                    .eventEntity
-                                                    .image,
-                                              ),
-                                            ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(20),
+                                      ),
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(
+                                          _store.eventImage,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                      : Column(
+                                    children: [
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                          top: 41.33,
+                                          bottom: 13.33,
+                                        ),
+                                        child: state is LoadingImageState
+                                            ? Container(
+                                          margin:
+                                          const EdgeInsets.symmetric(
+                                            vertical: 6,
+                                          ),
+                                          child: LoadingWidget(
+                                            size: Platform.isIOS
+                                                ? 10
+                                                : 22,
                                           ),
                                         )
-                                      : Column(
-                                          children: [
-                                            Container(
-                                              margin: const EdgeInsets.only(
-                                                top: 41.33,
-                                                bottom: 13.33,
-                                              ),
-                                              child: state is LoadingImageState
-                                                  ? Container(
-                                                      margin:
-                                                          const EdgeInsets.symmetric(
-                                                            vertical: 6,
-                                                          ),
-                                                      child: LoadingWidget(
-                                                        size: Platform.isIOS
-                                                            ? 10
-                                                            : 22,
-                                                      ),
-                                                    )
-                                                  : Image.asset(
-                                                      color: value
-                                                          ? AppColors.darkGreen
-                                                          : Colors.red,
-                                                      AppIcons.folderUpload,
-                                                      width: 26.67,
-                                                      height: 21.33,
-                                                    ),
-                                            ),
-                                            Text(
-                                              'Suba um arquivo PNG ou JPG com dimensões de até 343x144 e 4MB',
-                                              textAlign: TextAlign.center,
-                                              style: AppFonts.defaultFont(
-                                                fontSize: 13,
-                                                color: AppColors.grey6,
-                                              ),
-                                            ),
-                                          ],
+                                            : Image.asset(
+                                          color: value
+                                              ? AppColors.darkGreen
+                                              : Colors.red,
+                                          AppIcons.folderUpload,
+                                          width: 26.67,
+                                          height: 21.33,
                                         ),
+                                      ),
+                                      Text(
+                                        'Suba um arquivo PNG ou JPG com dimensões de até 343x144 e 4MB',
+                                        textAlign: TextAlign.center,
+                                        style: AppFonts.defaultFont(
+                                          fontSize: 13,
+                                          color: AppColors.grey6,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
                             },
@@ -330,12 +331,13 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                       ),
                                     ),
                                     InkWell(
-                                      onTap: () => setDateTime(
-                                        selectedDate: _store.startDate!,
-                                        onDatePicked: (newDate) =>
+                                      onTap: () =>
+                                          setDateTime(
+                                            selectedDate: _store.startDate!,
+                                            onDatePicked: (newDate) =>
                                             _store.startDate = newDate,
-                                        context: context,
-                                      ),
+                                            context: context,
+                                          ),
                                       child: Text(
                                         getFormattedDateTime(_store.startDate!),
                                         style: AppFonts.defaultFont(
@@ -350,17 +352,19 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                 Visibility(
                                   visible: !_store.isSwitchOn,
                                   child: InkWell(
-                                    onTap: () => _store.pickTime(
-                                      selectedTime: _store.startTime!,
-                                      context: context,
-                                      onTimePicked: (newTime) {
-                                        setState(() {
-                                          _store.startTime = newTime;
-                                        });
-                                      },
-                                    ),
+                                    onTap: () =>
+                                        _store.pickTime(
+                                          selectedTime: _store.startTime!,
+                                          context: context,
+                                          onTimePicked: (newTime) {
+                                            setState(() {
+                                              _store.startTime = newTime;
+                                            });
+                                          },
+                                        ),
                                     child: Text(
-                                      _store.formatHourToString(time: _store.startTime),
+                                      _store.formatHourToString(
+                                          time: _store.startTime),
                                       style: AppFonts.defaultFont(
                                         fontSize: 15,
                                         color: AppColors.darkGreen,
@@ -387,12 +391,13 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                       ),
                                     ),
                                     InkWell(
-                                      onTap: () => setDateTime(
-                                        selectedDate: _store.endDate!,
-                                        onDatePicked: (newDate) =>
+                                      onTap: () =>
+                                          setDateTime(
+                                            selectedDate: _store.endDate!,
+                                            onDatePicked: (newDate) =>
                                             _store.endDate = newDate,
-                                        context: context,
-                                      ),
+                                            context: context,
+                                          ),
                                       child: Text(
                                         getFormattedDateTime(_store.endDate!),
                                         style: AppFonts.defaultFont(
@@ -407,17 +412,19 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                 Visibility(
                                   visible: !_store.isSwitchOn,
                                   child: InkWell(
-                                    onTap: () => _store.pickTime(
-                                      selectedTime: _store.endTime!,
-                                      context: context,
-                                      onTimePicked: (newTime) {
-                                        setState(() {
-                                          _store.endTime = newTime;
-                                        });
-                                      },
-                                    ),
+                                    onTap: () =>
+                                        _store.pickTime(
+                                          selectedTime: _store.endTime!,
+                                          context: context,
+                                          onTimePicked: (newTime) {
+                                            setState(() {
+                                              _store.endTime = newTime;
+                                            });
+                                          },
+                                        ),
                                     child: Text(
-                                      _store.formatHourToString(time: _store.endTime),
+                                      _store.formatHourToString(
+                                          time: _store.endTime),
                                       style: AppFonts.defaultFont(
                                         fontSize: 15,
                                         color: AppColors.darkGreen,
@@ -557,8 +564,19 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                         ),
                       ),
                       ButtonWidget(
+                        isPressed: isPressed,
+                        isAnimated: true,
                         action: () {
+                          setState(() {
+                            isPressed = true;
+                          });
                           _store.addData(context);
+                         Future.delayed(Duration(seconds: 1), (){
+                           if (_store.editingCallback != null) {
+                             _store.editingCallback!();
+                             pop(context);
+                           }
+                         });
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),

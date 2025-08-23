@@ -1,7 +1,7 @@
 
 class EventEntity {
   EventEntity({
-    required this.id,
+    this.id,
     required this.title,
     required this.subtitle,
     required this.image,
@@ -15,7 +15,7 @@ class EventEntity {
     required this.createAt,
   });
 
-  final String id;
+  final String? id;
   final String title;
   final String subtitle;
   final String image;

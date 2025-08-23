@@ -7,7 +7,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     with ImageMixin, ConnectivityMixin, DateMixin, ValidationAndFormatMixin {
   bool isSwitchOn = false;
   bool isEditing = false;
-
+  Function? editingCallback;
   final IUseCases _useCases;
   final String eventPath = 'event';
 
@@ -72,6 +72,8 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   ValueNotifier<bool> isCoverImageValid = ValueNotifier(true);
   bool isPressed = false;
   File coverImage = File('');
+  late String eventImage;
+  late EventEntity eventEntity;
 
   formValidation(String? data, ValueNotifier<bool> isValid) {
     if (isEmptyData(data)) {
@@ -83,14 +85,16 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     }
   }
 
-  fillFormWithEvent(EventEntity event){
+  fillFormWithEvent(EventEntity event) {
+    eventEntity = event;
     eventTitleController.text = event.title;
     eventSubtitleController.text = event.subtitle;
-    // resultUrl = event.image;
+    eventImage = event.image;
+    coverImage = File("");
     startDate = event.startDateTime; // ou separa data e hora se precisar
-    // startTime = event.startDateTime;
     endDate = event.endDateTime;
-    // endTime = event.endDateTime;
+    startTime = TimeOfDay(hour: event.startDateTime.hour, minute: event.startDateTime.minute);
+    endTime = TimeOfDay(hour: event.endDateTime.hour, minute: event.endDateTime.minute);
     eventDescriptionController.text = event.description;
     eventLocationController.text = event.location;
     eventLocationNameController.text = event.localName;
@@ -141,12 +145,12 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     }
   }
 
-  EventEntity fillEventEntity(String resultUrl) {
+  EventEntity fillEventEntity(String? resultUrl) {
     EventEntity entity = EventEntity(
-      id: MockUtil.createId(),
+      id: isEditing ? eventEntity.id : null,
       title: eventTitleController.text,
       subtitle: eventSubtitleController.text,
-      image: resultUrl,
+      image: eventEntity.image,
       startDateTime: combineDateAndTime(startDate!, startTime!),
       endDateTime: combineDateAndTime(endDate!, endTime!),
       description: eventDescriptionController.text,
@@ -154,7 +158,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       localName: eventLocationNameController.text,
       signUpLink: eventLinkController.text,
       contactLink: contactLinkController.text,
-      createAt: DateTime.now(),
+      createAt: isEditing ? eventEntity.createAt : DateTime.now(),
     );
     return entity;
   }
@@ -163,17 +167,22 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     if (validateAllFields()) {
       final response = await isConnected();
       if (response) {
+
         value = AddDataEvent<CreateEventState>();
-        final resultUrl = await _useCases.saveImage(
-          coverImage: coverImage,
-          bucketName: 'covers',
-          fileName:
-              'mobile_event_covers/${formatText(eventTitleController.text)}_${DateTime.now().toIso8601String()}.jpg',
-        );
-        if (resultUrl != null) {
-          _useCases.add(
-            data: EventAdapter.toMap(fillEventEntity(resultUrl)),
+        // final resultUrl = await _useCases.saveImage(
+        //   coverImage: coverImage,
+        //   bucketName: 'covers',
+        //   fileName:
+        //       'mobile_event_covers/${formatText(eventTitleController.text)}_${DateTime.now().toIso8601String()}.jpg',
+        // );
+        // if (resultUrl != null) {
+          // _useCases.add(
+          //   data: EventAdapter.toMap(fillEventEntity(resultUrl)),
+          //   params: {'table': 'event'},
+          // );
+          _useCases.upsert(
             params: {'table': 'event'},
+            data: EventAdapter.toMap(fillEventEntity(null)),
           );
           if (context.mounted) {
             showCustomSuccessDialog(
@@ -182,8 +191,9 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
               message: 'Evento salvo',
             );
           }
-        }
+        // }
         value = DataAddedState<CreateEventState>();
+
       } else {
         value = NoConnectionState<CreateEventState>();
       }
