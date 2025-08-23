@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../stores/create_event_store.dart';
 
 class EventsListBloc
     extends Bloc<GenericEvent<EventsListEvent>, GenericState<EventsListState>>

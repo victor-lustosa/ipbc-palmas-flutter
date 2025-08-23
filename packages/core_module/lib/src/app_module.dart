@@ -1,4 +1,5 @@
 import '../core_module.dart';
+import 'design_system/stores/admin/create_event_store.dart';
 
 class CoreModule extends Module {
   static BindConfig<T> blocConfig<T extends Bloc>() {
