@@ -22,9 +22,7 @@ class _BackAuthTopBarWidgetState extends State<BackAuthTopBarWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           BackButtonWidget(action: widget.action),
-          AuthCircleAvatarWidget(
-            key: Modular.get<AppGlobalKeys>().authAvatarKey,
-          ),
+          AuthCircleAvatarWidget(),
         ],
       ),
     );

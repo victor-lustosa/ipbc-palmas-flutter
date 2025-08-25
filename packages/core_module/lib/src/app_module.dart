@@ -1,5 +1,4 @@
 import '../core_module.dart';
-import 'design_system/stores/admin/create_event_store.dart';
 
 class CoreModule extends Module {
   static BindConfig<T> blocConfig<T extends Bloc>() {
@@ -27,7 +26,6 @@ class CoreModule extends Module {
           UseCases<SupabaseRepository>(repository: i.get<SupabaseRepository>()),
     );
     i.addSingleton(() => MainTopBarStore());
-    i.addSingleton(() => AppGlobalKeys());
     i.addSingleton<IOfflineAuthUseCases>(
       () => OfflineAuthUseCases(repository: i.get<IsarRepository>()),
     );

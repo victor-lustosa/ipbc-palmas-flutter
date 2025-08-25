@@ -92,12 +92,11 @@ class _HomeViewState extends State<HomeView>
                             mainAxisAlignment: MainAxisAlignment.center,
                             width: context.sizeOf.width,
                             services: _bloc.servicesList,
-                            height: 182,
+                            height: context.sizeOf.width * 0.49,
                           ),
                         ),
                         InkWell(
                           onTap: () {
-                            Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
                             nativePushNamed(
                               AppRoutes.eventRoute + AppRoutes.eventsListRoute,
                               context,

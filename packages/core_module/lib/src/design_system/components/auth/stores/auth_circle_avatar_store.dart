@@ -10,20 +10,16 @@ class AuthCircleAvatarStore extends ValueNotifier<GenericState<AuthCircleAvatarS
 
   late final IOfflineAuthUseCases _offlineUseCases;
 
-  Future<void> validateAuthentication(BuildContext context) async {
+  Future<void> validateAuthentication() async {
     value = LoadingState<AuthCircleAvatarState>();
 
-      final result = await _offlineUseCases.getLocalUser();
-      if (result != null) {
-        userEntity = result;
-        value = AuthenticatedState();
-        if(context.mounted){
-          precacheImage(NetworkImage(userEntity.picture), context);
-        }
-      } else {
-        value = NotAuthenticatedState();
-      }
-   
+    final result = await _offlineUseCases.getLocalUser();
+    if (result != null) {
+      userEntity = result;
+      value = AuthenticatedState();
+    } else {
+      value = NotAuthenticatedState();
+    }
   }
 }
 

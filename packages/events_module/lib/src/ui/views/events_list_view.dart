@@ -151,6 +151,7 @@ class EventsListViewState extends State<EventsListView> {
                           ),
                           physics: const NeverScrollableScrollPhysics(),
                           width: context.sizeOf.width,
+                          shrinkWrap: true,
                           scrollDirection: Axis.vertical,
                           entities: _bloc.eventsList,
                           route: AppRoutes.detailEventRoute,
@@ -170,7 +171,7 @@ class EventsListViewState extends State<EventsListView> {
             _bloc.createEventStore.isEditing = false;
             _bloc.createEventStore.editingCallback = () =>
                 _bloc.add(GetDataEvent());
-           await  pushNamed(AppRoutes.eventRoute + AppRoutes.createEventRoute);
+           await pushNamed(AppRoutes.eventRoute + AppRoutes.createEventRoute);
           },
           backgroundColor: AppColors.add,
           iconColor: AppColors.white,

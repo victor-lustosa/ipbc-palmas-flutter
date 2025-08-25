@@ -87,7 +87,7 @@ Future<void> showCustomSuccessDialog({
     barrierColor: Colors.transparent,
     builder: (BuildContext context) {
       if(onClose == null){
-        Future.delayed(Duration(seconds: 1), (){
+        Future.delayed(Duration(milliseconds: 800), (){
           if(context.mounted){
             nativePop(context);
           }

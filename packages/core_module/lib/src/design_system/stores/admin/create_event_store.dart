@@ -184,28 +184,26 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
         }
 
         if (resultUrl != null || !isImageUpdated) {
-          _useCases.upsert(
-            data: EventAdapter.toMap(fillEventEntity(isEditing ? eventEntity.image : resultUrl!)),
+          await _useCases.upsert(
+            data: EventAdapter.toMap(
+              fillEventEntity(isEditing ? eventEntity.image : resultUrl!),
+            ),
             params: {'table': 'event'},
           );
           if (context.mounted) {
-            showCustomSuccessDialog(
+            await showCustomSuccessDialog(
               context: context,
               title: 'Sucesso!',
               message: 'Evento salvo',
             );
           }
           value = DataAddedState<CreateEventState>();
-
         }
-        // }
       } else {
         value = NoConnectionState<CreateEventState>();
       }
     }
   }
-
-
 
   Future<dynamic> delete(EventEntity entity) async {
     final response = await _useCases.delete(
@@ -219,9 +217,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     notifyListeners();
     return Future.value(response[0]);
   }
-
-
-
 }
 
 @immutable

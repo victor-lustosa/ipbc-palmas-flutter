@@ -12,20 +12,17 @@ class CreateEventView extends StatefulWidget {
 
 class _CreateEventViewState extends State<CreateEventView> with DateMixin {
   late final CreateEventStore _store;
-  late final SlideCardsStore _slideCardsStore;
   bool isPressed = false;
 
   @override
   void initState() {
     super.initState();
     _store = Modular.get<CreateEventStore>();
-    _slideCardsStore = Modular.get<SlideCardsStore>();
     final args = Modular.args.data as Map<String, dynamic>?;
     if (args?["isEditing"] == true) {
       _store.isEditing = true;
       _store.fillFormWithEvent(args?["event"]);
     }
-    Modular.get<AppGlobalKeys>().resetAuthAvatarKey();
   }
 
   get prefixLocationIcon => Container(
@@ -38,13 +35,14 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
     return ValueListenableBuilder(
       valueListenable: _store,
       builder: (_, state, child) {
-        updateCallback() => Future.delayed(Duration(seconds: 1 ), () {
+        updateCallback() => Future.delayed(Duration(milliseconds: 200), () {
           if (_store.editingCallback != null) {
             _store.editingCallback!();
             if (context.mounted) {
               pop(context);
             }
           }
+
         });
         return Scaffold(
           body: SafeArea(
@@ -567,13 +565,8 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                         ),
                       ),
                       ButtonWidget(
-                        isPressed: isPressed,
-                        isAnimated: true,
-                        action: () {
-                          setState(() {
-                            isPressed = true;
-                          });
-                          _store.addData(context);
+                        action: () async {
+                          await _store.addData(context);
                           updateCallback();
                         },
                         shape: RoundedRectangleBorder(
@@ -589,12 +582,12 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                         margin: EdgeInsets.only(top: 16, bottom: 40),
                         child: ButtonWidget(
                           adaptiveButtonType: AdaptiveButtonType.text,
-                          action: ()  async{
-                            final response = await _store.delete(_store.eventEntity);
-                            if(response != null){
-                              updateCallback();
-                            }
-                          },
+                            action: ()  async{
+                              final response = await _store.delete(_store.eventEntity);
+                              if(response != null){
+                                updateCallback();
+                              }
+                            },
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),

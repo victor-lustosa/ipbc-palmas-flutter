@@ -16,86 +16,67 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _store.validateAuthentication(context);
+      _store.validateAuthentication();
     });
   }
 
   void updateAuthAvatar() {
     setState(() {
-      _store.validateAuthentication(context);
+      _store.validateAuthentication();
     });
   }
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: _store,
-      builder: (_, state, child) {
-        if (state is LoadingState<AuthCircleAvatarState>) {
+    final store = Modular.get<AuthCircleAvatarStore>();
+    if (store.value is InitialState) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        store.validateAuthentication();
+      });
+    }
+
+    return ValueListenableBuilder<GenericState<AuthCircleAvatarState>>(
+      valueListenable: store,
+      builder: (_, state, __) {
+        if (state is LoadingState || state is InitialState) {
           return SizedBox(
             width: 32,
             height: 32,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Image.asset(AppIcons.noProfile),
-                CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    AppColors.darkGreen,
-                  ),
-                  strokeWidth: 1,
-                ),
-              ],
-            ),
+            child: CircularProgressIndicator(strokeWidth: 2),
           );
-        } else {
+        }
+
+        if (state is AuthenticatedState) {
           return Container(
             width: 32,
             height: 32,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(
-                color:
-                    state is AuthenticatedState
-                        ? AppColors.darkGreen
-                        : Colors.transparent,
-                width: 2,
-              ),
+              border: Border.all(color: AppColors.darkGreen, width: 2),
             ),
             child: ButtonWidget(
-              shape: state is AuthenticatedState ? const CircleBorder() : null,
-              action:
-                  state is AuthenticatedState
-                      ? () =>
-                          pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute)
-                      : () =>
-                          pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute),
-              child:
-                  state is AuthenticatedState
-                      ? CircleAvatar(
-                        radius: 16,
-                        backgroundColor: Colors.transparent,
-                          child: ClipOval(
-                          child: Image.network(
-                            _store.userEntity.picture,
-                            width: 32,
-                            height: 32,
-                            fit: BoxFit.cover,
-                            loadingBuilder: (context, child, loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              }
-                              return Image.asset(AppIcons.noProfile);
-                            },
-                            errorBuilder: (context, error, stackTrace) {
-                              return Image.asset(AppIcons.noProfile);
-                            },
-                          ),
-                        ),
-                      )
-                      : Image.asset(AppIcons.noProfile),
+              shape: const CircleBorder(),
+              action: () => pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute),
+              child: ClipOval(
+                child: CachedNetworkImage(
+                  imageUrl: _store.userEntity.picture,
+                  width: 32,
+                  height: 32,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => Image.asset(AppIcons.noProfile),
+                  errorWidget: (context, url, error) => Image.asset(AppIcons.noProfile),
+                ),
+              ),
             ),
           );
         }
+        return ButtonWidget(
+          action: () => pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute),
+          child: SizedBox(
+            width: 32,
+            height: 32,
+            child: Image.asset(AppIcons.noProfile),
+          ),
+        );
       },
     );
   }

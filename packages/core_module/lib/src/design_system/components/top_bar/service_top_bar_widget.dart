@@ -22,8 +22,11 @@ class ServiceTopBarWidget extends StatefulWidget {
 
 class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget> {
   get dateIsVisible => (widget.dateIsVisible ?? false);
+
   @override
   Widget build(BuildContext context) {
+    bool isSmallDevice =
+        context.sizeOf.width > ResponsivityUtil.smallDeviceWidth;
     return Container(
       height: 184,
       width: context.sizeOf.width,
@@ -43,57 +46,69 @@ class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Row(
-              mainAxisAlignment:
-                  dateIsVisible
-                      ? MainAxisAlignment.spaceBetween
-                      : MainAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(left: 16.3, right: 16),
-                      child: BackButtonWidget(
-                        color: AppColors.white,
-                        action: () => nativePop(context),
-                      ),
-                    ),
-                    SizedBox(
-                      child: Text(
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        widget.title ?? '',
-                        style: AppFonts.defaultFont(
-                          color: AppColors.white,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                Visibility(
-                  visible: dateIsVisible,
+                Align(
+                  alignment: Alignment.centerLeft,
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: AppColors.badgeGreen,
-                      borderRadius: BorderRadius.all(Radius.circular(34.7)),
+                    margin: EdgeInsets.only(
+                      left: isSmallDevice ? 16 : 10,
+                      right: isSmallDevice ? 16 : 10,
                     ),
-                    margin: const EdgeInsets.only(right: 15),
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                        left: 13,
-                        right: 13,
-                        bottom: 4,
-                        top: 4,
-                      ),
-                      child: Text(
-                        widget.createAt ?? '',
-                        style: AppFonts.defaultFont(
-                          color: const Color(0xFF005B40),
-                          fontSize: 13,
+                    child: BackButtonWidget(
+                      color: AppColors.white,
+                      size: isSmallDevice ? 30 : 26,
+                      action: () => nativePop(context),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: dateIsVisible
+                        ? MainAxisAlignment.spaceBetween
+                        : MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        child: Text(
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          widget.title ?? '',
+                          style: AppFonts.defaultFont(
+                            fontSize: isSmallDevice ? 18 : 16,
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
-                    ),
+                      Visibility(
+                        visible: dateIsVisible,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: AppColors.badgeGreen,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(34.7),
+                            ),
+                          ),
+                          margin: EdgeInsets.only(
+                            right: isSmallDevice ? 16 : 10,
+                          ),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                              left: 13,
+                              right: 13,
+                              bottom: 4,
+                              top: 4,
+                            ),
+                            child: Text(
+                              widget.createAt ?? '',
+                              style: AppFonts.defaultFont(
+                                color: const Color(0xFF005B40),
+                                fontSize: isSmallDevice ? 13 : 11,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
