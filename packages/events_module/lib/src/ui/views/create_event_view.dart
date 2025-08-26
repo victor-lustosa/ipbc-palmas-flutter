@@ -578,27 +578,33 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                         foregroundColor: AppColors.white,
                         child: const Text("Salvar evento"),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 16, bottom: 40),
-                        child: ButtonWidget(
-                          adaptiveButtonType: AdaptiveButtonType.text,
-                            action: ()  async{
-                              final response = await _store.delete(_store.eventEntity);
-                              if(response != null){
-                                updateCallback();
-                              }
-                            },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+                      Visibility(
+                        visible: _store.isEditing,
+                        child: Container(
+                          margin: EdgeInsets.only(top: 16, bottom: 10),
+                          child: ButtonWidget(
+                            adaptiveButtonType: AdaptiveButtonType.text,
+                              action: ()  async{
+                                final response = await _store.delete(_store.eventEntity);
+                                if(response != null){
+                                  updateCallback();
+                                }
+                              },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            fixedSize: Size(context.sizeOf.width, 48),
+                            overlayColor: Colors.white,
+                            backgroundColor: AppColors.white,
+                            foregroundColor: AppColors.delete,
+                            foregroundHoveredColor: AppColors.delete,
+                            child: const Text("Deletar"),
                           ),
-                          fixedSize: Size(context.sizeOf.width, 48),
-                          overlayColor: Colors.white,
-                          backgroundColor: AppColors.white,
-                          foregroundColor: AppColors.delete,
-                          foregroundHoveredColor: AppColors.delete,
-                          child: const Text("Deletar"),
                         ),
                       ),
+                      SizedBox(
+                        height: 30,
+                      )
                     ],
                   ),
                 ),

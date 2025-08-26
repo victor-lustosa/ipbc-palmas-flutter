@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
+
+  AppColors._();
   //primary
   static const Color darkGreen = Color(0xFF005B40);
   static const Color loginLineDecoration = Color(0xFF338777);

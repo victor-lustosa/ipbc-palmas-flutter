@@ -54,8 +54,9 @@ class EventsListViewState extends State<EventsListView> {
                             margin: const EdgeInsets.only(top: 10, left: 16),
                             child: BackButtonWidget(
                               action: () {
-                                if(_bloc.createEventStore.updateHomeViewCallback != null){
-                                  _bloc.createEventStore.updateHomeViewCallback!();
+                                if(_bloc.createEventStore.updateHomeViewCallback != null
+                                    && _bloc.createEventStore.isChangedOrAdded) {
+                                   _bloc.createEventStore.updateHomeViewCallback!();
                                 }
                                 nativePop(context);
                               },

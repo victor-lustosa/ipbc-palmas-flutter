@@ -155,4 +155,24 @@ mixin DateMixin {
     }
     return '${hour}h$minute';
   }
+
+   String capitalize(String text) {
+     if (text.isEmpty) return text;
+     return text[0].toUpperCase() + text.substring(1);
+   }
+
+   String getFormattedDateTimeFull(DateTime dateTime) {
+     var weekday = DateFormat('EEE', 'pt_BR').format(dateTime);
+     weekday = weekday.replaceAll('.', ''); // remove o ponto
+     weekday = capitalize(weekday);
+
+     final day = DateFormat('d', 'pt_BR').format(dateTime);
+
+     var month = DateFormat('MMMM', 'pt_BR').format(dateTime);
+     month = capitalize(month);
+
+     final year = DateFormat('y', 'pt_BR').format(dateTime);
+
+     return "$weekday, $day de $month $year";
+   }
 }

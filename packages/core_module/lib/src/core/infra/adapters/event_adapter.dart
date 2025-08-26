@@ -84,7 +84,7 @@ class EventAdapter {
           localName: entity['local_name'],
           signUpLink: entity['sign_up_link'],
           contactLink: entity['contact_link'],
-          subtitle: 'subtitle',
+          subtitle: entity['subtitle'],
         ),
       );
     }

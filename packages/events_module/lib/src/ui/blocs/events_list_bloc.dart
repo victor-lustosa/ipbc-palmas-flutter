@@ -13,7 +13,7 @@ class EventsListBloc
   late final SlideCardsStore _slideCardsStore;
   late final CreateEventStore _createEventStore;
   get slideCardsStore => _slideCardsStore;
-  get createEventStore => _createEventStore;
+   CreateEventStore get createEventStore => _createEventStore;
   final Map<String, Object> eventParams = {
     'table': 'event',
     'orderBy': 'create_at',

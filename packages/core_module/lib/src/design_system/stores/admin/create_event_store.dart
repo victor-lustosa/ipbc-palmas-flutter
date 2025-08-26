@@ -7,6 +7,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     with ImageMixin, ConnectivityMixin, DateMixin, ValidationAndFormatMixin {
   bool isSwitchOn = false;
   bool isEditing = false;
+  bool isChangedOrAdded  = false;
   Function? updateEventListViewCallback;
   Function? updateHomeViewCallback;
   final IUseCases _useCases;
@@ -192,6 +193,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
             params: {'table': 'event'},
           );
           if (context.mounted) {
+            isChangedOrAdded = true;
             await showCustomSuccessDialog(
               context: context,
               title: 'Sucesso!',
@@ -215,6 +217,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
         'selectFields': 'id',
       },
     );
+    isChangedOrAdded = true;
     notifyListeners();
     return Future.value(response[0]);
   }
