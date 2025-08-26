@@ -19,7 +19,7 @@ class LiturgyAdapter {
       liturgiesList.add(
         LiturgyEntity(
           id: liturgy['id'],
-          isAdditional: liturgy['isAdditional'],
+          isAdditional: liturgy['is_additional'],
           sequence: liturgy['sequence'],
           additional: liturgy['additional'],
         ),
@@ -34,7 +34,7 @@ class LiturgyAdapter {
         .map(
           (entity) => {
             'id': entity.id,
-            'isAdditional': entity.isAdditional,
+            'is_additional': entity.isAdditional,
             'sequence': entity.sequence,
             'additional': entity.additional,
           },

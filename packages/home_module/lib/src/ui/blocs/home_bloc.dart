@@ -22,18 +22,6 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
   final CreateEventStore _createEventStore;
 
   get createEventStore => _createEventStore;
-  final Map<String, Object> eventParams = {
-    'table': 'event',
-    'orderBy': 'create_at',
-    'ascending': false,
-    'limit': 5,
-  };
-
-  final Map<String, Object> servicesParams = {
-    'table': 'services',
-    'orderBy': 'createAt',
-    'ascending': false,
-  };
 
   Future<void> _getData(GetDataEvent event, emit) async {
     await Future.wait([
@@ -46,7 +34,11 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     final response = await isConnected();
     if (response) {
       final List<ServicesEntity> servicesResponse = await _useCases.get(
-        params: servicesParams,
+        params: {
+          'table': 'services',
+          'orderBy': 'create_at',
+          'ascending': false,
+        },
         converter: ServicesAdapter.fromMapList,
       );
       servicesList = servicesResponse;
@@ -60,7 +52,12 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     final response = await isConnected();
     if (response) {
       final List<EventEntity> eventsResponse = await _useCases.get(
-        params: eventParams,
+        params: {
+          'table': 'event',
+          'orderBy': 'create_at',
+          'ascending': false,
+          'limit': 5,
+        },
         converter: EventAdapter.fromMapList,
       );
       eventsList = eventsResponse;

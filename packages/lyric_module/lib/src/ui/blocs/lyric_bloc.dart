@@ -40,10 +40,10 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
 
   final Map<String, Object> lyricParams = {
     'table': 'lyrics',
-    'orderBy': 'createAt',
+    'orderBy': 'create_at',
     'ascending': false,
     'selectFields':
-        'id, title, group, albumCover, createAt, lyrics_verses (verses(id, isChorus, versesList))',
+        'id, title, group, album_cover, create_at, lyrics_verses (verses(id, is_chorus, verses_list))',
   };
 
   init({required BuildContext context}) async {

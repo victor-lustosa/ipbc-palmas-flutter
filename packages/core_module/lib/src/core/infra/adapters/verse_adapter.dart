@@ -11,11 +11,11 @@ class VerseAdapter {
       versesList.add(
           VerseEntity(
             id: verse['id'].runtimeType == String ? int.parse(verse['id']) : verse['id'],
-            isChorus: verse['isChorus'],
+            isChorus: verse['is_chorus'],
             versesList:
-            verse['versesList'].runtimeType == String
-                ? verseJsonDecode(verse['versesList'])
-                : verseSupaDecode(verse['versesList']),
+            verse['verses_list'].runtimeType == String
+                ? verseJsonDecode(verse['verses_list'])
+                : verseSupaDecode(verse['verses_list']),
           )
       );
     }
@@ -40,8 +40,8 @@ class VerseAdapter {
         .map(
           (entity) => {
             'id': entity.id,
-            'isChorus': entity.isChorus,
-            'versesList': entity.versesList,
+            'is_chorus': entity.isChorus,
+            'verses_list': entity.versesList,
           },
         )
         .toList();

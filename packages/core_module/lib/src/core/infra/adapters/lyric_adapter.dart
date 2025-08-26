@@ -15,7 +15,7 @@ class LyricAdapter with FlattenMixin{
 
   static LyricModel fromMap(dynamic json) {
     return LyricModel(
-      albumCover: json['albumCover'],
+      albumCover: json['album_cover'],
       id: json['id'],
       createAt: '',
       title: json['title'],
@@ -31,8 +31,8 @@ class LyricAdapter with FlattenMixin{
     return {
       'id': data.id,
       'title': data.title,
-      'createAt': data.createAt,
-      'albumCover': data.albumCover,
+      'create_at': data.createAt,
+      'album_cover': data.albumCover,
       'group': data.group,
       'verses': VerseAdapter.toMapList(data.verses),
     };
@@ -43,11 +43,11 @@ class LyricAdapter with FlattenMixin{
     for (dynamic lyric in json) {
       lyricsList.add(
         LyricModel(
-          albumCover: lyric['albumCover'],
+          albumCover: lyric['album_cover'],
           id: lyric['id'].toString(),
-          createAt: lyric['createAt'].runtimeType == String ? lyric['createAt'] : DateFormat(
+          createAt: lyric['create_at'].runtimeType == String ? lyric['create_at'] : DateFormat(
             "dd/MM/yyyy",
-          ).format(DateTime.parse(lyric['createAt'])),
+          ).format(DateTime.parse(lyric['create_at'])),
           title: lyric['title'],
           group: lyric['group'],
           verses:
@@ -92,8 +92,8 @@ class LyricAdapter with FlattenMixin{
           (entity) => {
             'id': entity.id,
             'title': entity.title,
-            'createAt': entity.createAt.toString(),
-            'albumCover': entity.albumCover,
+            'create_at': entity.createAt.toString(),
+            'album_cover': entity.albumCover,
             'group': entity.group,
             'verses': VerseAdapter.toMapList(entity.verses),
           },
