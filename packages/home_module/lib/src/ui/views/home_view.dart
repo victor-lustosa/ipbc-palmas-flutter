@@ -97,6 +97,7 @@ class _HomeViewState extends State<HomeView>
                         ),
                         InkWell(
                           onTap: () {
+                            _bloc.createEventStore.updateHomeViewCallback = () => _bloc.add(GetEventsDataEvent());
                             nativePushNamed(
                               AppRoutes.eventRoute + AppRoutes.eventsListRoute,
                               context,

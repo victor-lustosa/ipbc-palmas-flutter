@@ -5,11 +5,23 @@ import 'package:flutter/material.dart';
 
 class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     with ConnectivityMixin {
+  HomeBloc({
+    required IUseCases useCases,
+    required CreateEventStore createEventStore,
+  }) : _useCases = useCases,
+       _createEventStore = createEventStore,
+       super(LoadingState()) {
+    on<GetDataEvent<HomeEvent>>(_getData);
+    on<GetEventsDataEvent>(_getEventsData);
+  }
+
   final IUseCases _useCases;
 
   List<ServicesEntity> servicesList = [];
   List<EventEntity> eventsList = [];
+  final CreateEventStore _createEventStore;
 
+  get createEventStore => _createEventStore;
   final Map<String, Object> eventParams = {
     'table': 'event',
     'orderBy': 'create_at',
@@ -23,24 +35,35 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     'ascending': false,
   };
 
-  HomeBloc({required IUseCases useCases})
-    : _useCases = useCases,
-      super(LoadingState()) {
-    on<GetDataEvent<HomeEvent>>(_getData);
+  Future<void> _getData(GetDataEvent event, emit) async {
+    await Future.wait([
+      _getServicesData(event, emit),
+      _getEventsData(event, emit),
+    ]);
   }
 
-  Future<void> _getData(GetDataEvent event, emit) async {
+  Future<void> _getServicesData(_, emit) async {
     final response = await isConnected();
     if (response) {
-      final results = await Future.wait([
-        _useCases.get(
-          params: servicesParams,
-          converter: ServicesAdapter.fromMapList,
-        ),
-        _useCases.get(params: eventParams, converter: EventAdapter.fromMapList),
-      ]);
-      servicesList = results[0];
-      eventsList = results[1];
+      final List<ServicesEntity> servicesResponse = await _useCases.get(
+        params: servicesParams,
+        converter: ServicesAdapter.fromMapList,
+      );
+      servicesList = servicesResponse;
+      emit(DataFetchedState<HomeState>());
+    } else {
+      emit(NoConnectionState<HomeState>());
+    }
+  }
+
+  Future<void> _getEventsData(_, emit) async {
+    final response = await isConnected();
+    if (response) {
+      final List<EventEntity> eventsResponse = await _useCases.get(
+        params: eventParams,
+        converter: EventAdapter.fromMapList,
+      );
+      eventsList = eventsResponse;
       emit(DataFetchedState<HomeState>());
     } else {
       emit(NoConnectionState<HomeState>());
@@ -53,3 +76,7 @@ abstract class HomeEvent {}
 
 @immutable
 abstract class HomeState {}
+
+class GetEventsDataEvent extends GenericEvent<HomeEvent> {
+  GetEventsDataEvent();
+}

@@ -34,7 +34,7 @@ class HomeModule extends Module {
   @override
   void binds(Injector i) {
     i.addLazySingleton<HomeBloc>(
-      () => HomeBloc(useCases: i.get<UseCases<SupabaseRepository>>()),
+      () => HomeBloc(useCases: i.get<UseCases<SupabaseRepository>>(), createEventStore: i.get<CreateEventStore>()),
       config: CoreModule.blocConfig(),
     );
   }

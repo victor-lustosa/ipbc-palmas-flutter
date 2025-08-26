@@ -7,7 +7,8 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     with ImageMixin, ConnectivityMixin, DateMixin, ValidationAndFormatMixin {
   bool isSwitchOn = false;
   bool isEditing = false;
-  Function? editingCallback;
+  Function? updateEventListViewCallback;
+  Function? updateHomeViewCallback;
   final IUseCases _useCases;
   final String eventPath = 'event';
 

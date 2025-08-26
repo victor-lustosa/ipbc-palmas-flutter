@@ -53,7 +53,12 @@ class EventsListViewState extends State<EventsListView> {
                           Container(
                             margin: const EdgeInsets.only(top: 10, left: 16),
                             child: BackButtonWidget(
-                              action: () => nativePop(context),
+                              action: () {
+                                if(_bloc.createEventStore.updateHomeViewCallback != null){
+                                  _bloc.createEventStore.updateHomeViewCallback!();
+                                }
+                                nativePop(context);
+                              },
                             ),
                           ),
                         ],
@@ -105,18 +110,19 @@ class EventsListViewState extends State<EventsListView> {
                                     label: 'Editar',
                                     action: () async {
                                       _bloc.createEventStore.isEditing = true;
-                                      _bloc.createEventStore.editingCallback =
+                                      _bloc.createEventStore.updateEventListViewCallback =
                                           () => _bloc.add(GetDataEvent());
                                       await pushNamed(
                                         AppRoutes.eventRoute +
                                             AppRoutes.createEventRoute,
                                         arguments: {
                                           "isEditing": true,
-                                          "event":
-                                              _bloc.slideCardsStore.eventEntity,
+                                          "event": _bloc.slideCardsStore.eventEntity,
                                         },
                                       );
-                                      pop(context);
+                                      if (context.mounted) {
+                                        pop(context);
+                                      }
                                     },
                                   ),
                                   Divider(
@@ -132,9 +138,7 @@ class EventsListViewState extends State<EventsListView> {
                                     icon: AppIcons.trash,
                                     label: 'Deletar',
                                     action: () {
-                                      _bloc.add(
-                                        DeleteItemEvent(),
-                                      );
+                                      _bloc.add(DeleteItemEvent());
                                       if (context.mounted) {
                                         pop(context);
                                       }
@@ -167,11 +171,11 @@ class EventsListViewState extends State<EventsListView> {
           ),
         ),
         floatingActionButton: FloatingButtonWidget(
-          action: ()  async {
+          action: () async {
             _bloc.createEventStore.isEditing = false;
-            _bloc.createEventStore.editingCallback = () =>
+            _bloc.createEventStore.updateEventListViewCallback = () =>
                 _bloc.add(GetDataEvent());
-           await pushNamed(AppRoutes.eventRoute + AppRoutes.createEventRoute);
+            await pushNamed(AppRoutes.eventRoute + AppRoutes.createEventRoute);
           },
           backgroundColor: AppColors.add,
           iconColor: AppColors.white,

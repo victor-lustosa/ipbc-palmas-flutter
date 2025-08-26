@@ -36,8 +36,8 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
       valueListenable: _store,
       builder: (_, state, child) {
         updateCallback() => Future.delayed(Duration(milliseconds: 200), () {
-          if (_store.editingCallback != null) {
-            _store.editingCallback!();
+          if (_store.updateEventListViewCallback != null) {
+            _store.updateEventListViewCallback!();
             if (context.mounted) {
               pop(context);
             }
