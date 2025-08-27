@@ -1,6 +1,4 @@
-import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:core_module/core_module.dart';
 
@@ -64,7 +62,6 @@ class EventsDetailViewState extends State<EventsDetailView>
                         borderRadius: const BorderRadius.all(
                           Radius.circular(16),
                         ),
-
                         image: DecorationImage(
                           image: imageProvider,
                           fit: BoxFit.cover,

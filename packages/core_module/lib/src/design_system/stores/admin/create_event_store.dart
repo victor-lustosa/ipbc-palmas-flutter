@@ -221,6 +221,22 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     notifyListeners();
     return Future.value(response[0]);
   }
+
+  void init() {
+    eventTitleController.clear();
+    eventSubtitleController.clear();
+    coverImage = File('');
+    final now = DateTime.now();
+    startDate = DateTime(now.year, now.month, now.day, 08, 0);
+    endDate = DateTime(now.year, now.month, now.day, 18, 0);
+    startTime = TimeOfDay(hour: 08, minute: 00);
+    endTime = TimeOfDay(hour: 18, minute: 30);
+    eventDescriptionController.clear();
+    eventLocationController.clear();
+    eventLocationNameController.clear();
+    eventLinkController.clear();
+    contactLinkController.clear();
+  }
 }
 
 @immutable

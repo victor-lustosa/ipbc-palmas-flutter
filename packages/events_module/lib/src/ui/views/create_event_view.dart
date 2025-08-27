@@ -22,6 +22,8 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
     if (args?["isEditing"] == true) {
       _store.isEditing = true;
       _store.fillFormWithEvent(args?["event"]);
+    } else {
+      _store.init();
     }
   }
 
