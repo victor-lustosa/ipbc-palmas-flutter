@@ -27,7 +27,7 @@ class SlideCardsWidget extends StatefulWidget {
   State<SlideCardsWidget> createState() => SlideCardsWidgetState();
 }
 
-class SlideCardsWidgetState extends State<SlideCardsWidget> {
+class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin{
   late final SlideCardsStore _store;
 
   @override
@@ -45,8 +45,9 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
       itemCount: widget.entities.length,
       cacheExtent: 1000,
       itemBuilder: (BuildContext context, int index) {
+        bool isSmallDevice = ResponsivityUtil.isSmallDevice(context);
         final GlobalKey itemKey = GlobalKey();
-        final entity = widget.entities[index];
+        final EventEntity entity = widget.entities[index];
         return GestureDetector(
           key: itemKey,
           onLongPressStart: (details) async {
@@ -73,8 +74,8 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                     ),
                     child: CachedNetworkImage(
                       imageUrl: entity.image,
-                      height: 144,
-                      width: double.infinity,
+                      height: context.sizeOf.width * .335,
+                      width: context.sizeOf.width,
                       fit: BoxFit.cover,
                       placeholder: (context, url) =>
                           Container(color: AppColors.grey4),
@@ -101,12 +102,18 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                           ),
                         ),
                         child: Center(
-                          child: Text(
-                            entity.title,
-                            style: AppFonts.defaultFont(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.white,
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 12),
+                            child: Text(
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              entity.title,
+                              textAlign: TextAlign.center,
+                              style: AppFonts.defaultFont(
+                                fontSize: isSmallDevice ? 18 : 20,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.white,
+                              ),
                             ),
                           ),
                         ),
@@ -133,14 +140,15 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                     child: Column(
                       children: [
                         Container(
-                          margin: const EdgeInsets.only(top: 16),
+                          margin:  EdgeInsets.only(top: isSmallDevice ? 11 : 16),
                           child: Row(
                             children: [
                               Text(
-                                'Ter, 10 de Outubro',
+                                maxLines: 1,
+                                getFormattedDateTimeFull(entity.startDateTime),
                                 style: AppFonts.defaultFont(
                                   color: AppColors.darkGreen,
-                                  fontSize: 15,
+                                  fontSize: isSmallDevice ? 14 : 15,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -158,10 +166,12 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                                 ),
                               ),
                               Text(
-                                '16h',
+                                formatHourToString(
+                                  date: entity.startDateTime,
+                                ),
                                 style: AppFonts.defaultFont(
                                   color: AppColors.darkGreen,
-                                  fontSize: 15,
+                                  fontSize: isSmallDevice ? 14 : 15,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -169,20 +179,27 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(top: 8),
+                          margin: EdgeInsets.only(top: isSmallDevice ? 6 : 8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                entity.subtitle,
-                                style: AppFonts.defaultFont(
-                                  color: AppColors.grey12,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w500,
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.only(right: isSmallDevice ? 14 : 10),
+                                  child: Text(
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    entity.subtitle,
+                                    style: AppFonts.defaultFont(
+                                      color: AppColors.grey12,
+                                      fontSize: isSmallDevice ? 15 : 17,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ),
                               ),
                               Container(
-                                margin: const EdgeInsets.only(right: 12),
+                                margin: EdgeInsets.only(right: isSmallDevice ? 7 : 12),
                                 width: 20,
                                 child: const Image(
                                   fit: BoxFit.fitWidth,
@@ -193,7 +210,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(top: 4, bottom: 16),
+                          margin: EdgeInsets.only(top: 4, bottom: isSmallDevice ? 11 : 16),
                           child: Row(
                             children: [
                               Container(
@@ -204,12 +221,19 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> {
                                   image: AssetImage(AppIcons.locationOn),
                                 ),
                               ),
-                              Text(
-                                entity.localName,
-                                style: AppFonts.defaultFont(
-                                  color: AppColors.grey8,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
+                              Expanded(
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 8),
+                                  child: Text(
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    entity.localName,
+                                    style: AppFonts.defaultFont(
+                                      color: AppColors.grey8,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
