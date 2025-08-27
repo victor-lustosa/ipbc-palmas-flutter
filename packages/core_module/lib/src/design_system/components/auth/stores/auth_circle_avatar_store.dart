@@ -4,7 +4,7 @@ import 'package:core_module/core_module.dart';
 class AuthCircleAvatarStore extends ValueNotifier<GenericState<AuthCircleAvatarState>> {
   AuthCircleAvatarStore({required IOfflineAuthUseCases offlineUse})
     : _offlineUseCases = offlineUse,
-      super(LoadingState<AuthCircleAvatarState>());
+      super(InitialState<AuthCircleAvatarState>());
 
   UserEntity userEntity = UserModel.empty();
 
@@ -16,9 +16,14 @@ class AuthCircleAvatarStore extends ValueNotifier<GenericState<AuthCircleAvatarS
     final result = await _offlineUseCases.getLocalUser();
     if (result != null) {
       userEntity = result;
-      value = AuthenticatedState();
+      Future.delayed(const Duration(seconds: 1),(){
+        value = AuthenticatedState();
+
+      });
     } else {
+      Future.delayed(const Duration(seconds: 1),(){
       value = NotAuthenticatedState();
+      });
     }
   }
 }

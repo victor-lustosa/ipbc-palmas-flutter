@@ -73,14 +73,13 @@ class CarouselWidgetState extends State<CarouselWidget> {
             itemBuilder: (context, position) {
               bool active = position == activePage;
               return InkWell(
-                onTap:
-                    widget.route == null
-                        ? () {}
-                        : () => nativePushNamed(
-                          widget.route!,
-                          arguments: widget.services[position],
-                          context,
-                        ),
+                onTap: widget.route == null || widget.services.isEmpty
+                    ? () {}
+                    : () => nativePushNamed(
+                        widget.route!,
+                        arguments: widget.services[position],
+                        context,
+                      ),
                 child: AnimatedContainer(
                   padding: EdgeInsets.zero,
                   margin: EdgeInsets.only(
@@ -92,22 +91,23 @@ class CarouselWidgetState extends State<CarouselWidget> {
                   duration: const Duration(milliseconds: 250),
                   decoration: BoxDecoration(
                     color: AppColors.grey4,
-                    boxShadow:
-                        kIsWeb
-                            ? []
-                            : [
-                              BoxShadow(
-                                color: Colors.grey.withValues(alpha: .4),
-                                offset: const Offset(1, 1),
-                                spreadRadius: 3,
-                                blurRadius: 7,
-                              ),
-                            ],
+                    boxShadow: kIsWeb
+                        ? []
+                        : [
+                            BoxShadow(
+                              color: Colors.grey.withValues(alpha: .4),
+                              offset: const Offset(1, 1),
+                              spreadRadius: 3,
+                              blurRadius: 7,
+                            ),
+                          ],
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: imagesList[position].image,
-                    ),
+                    image: imagesList.isEmpty
+                        ? null
+                        : DecorationImage(
+                            fit: BoxFit.cover,
+                            image: imagesList[position].image,
+                          ),
                   ),
                   curve: Curves.easeInOutCubic,
                   child: InkWell(
@@ -119,7 +119,9 @@ class CarouselWidgetState extends State<CarouselWidget> {
                           CrossAxisAlignment.center,
                       children: [
                         Text(
-                          widget.services[position].title,
+                          widget.services.isEmpty
+                              ? ''
+                              : widget.services[position].title,
                           style: widget.fontStyle,
                         ),
                       ],
@@ -143,10 +145,9 @@ class CarouselWidgetState extends State<CarouselWidget> {
               width: activePage == index ? 8 : 4,
               height: activePage == index ? 8 : 4,
               decoration: BoxDecoration(
-                color:
-                    activePage == index
-                        ? AppColors.highlightGreen
-                        : const Color(0xFFCCCCCC),
+                color: activePage == index
+                    ? AppColors.highlightGreen
+                    : const Color(0xFFCCCCCC),
                 shape: BoxShape.circle,
               ),
             );

@@ -124,18 +124,20 @@ class EventsDetailViewState extends State<EventsDetailView>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 4, top: 8),
-                      child: Text(
-                        style: AppFonts.defaultFont(
-                          color: AppColors.grey10,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w500,
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 4, top: 8, right: 8),
+                        child: Text(
+                          style: AppFonts.defaultFont(
+                            color: AppColors.grey10,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          widget.eventEntity.subtitle,
                         ),
-                        widget.eventEntity.subtitle,
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       height: 22,
                       child: InkWell(child: Image.asset(AppIcons.iosShare)),
                     ),
@@ -147,15 +149,17 @@ class EventsDetailViewState extends State<EventsDetailView>
                       margin: const EdgeInsets.only(right: 1),
                       child: Image.asset(height: 14, AppIcons.locationOn),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(left: 4),
-                      child: Text(
-                        style: AppFonts.defaultFont(
-                          color: AppColors.grey8,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.only(left: 4),
+                        child: Text(
+                          style: AppFonts.defaultFont(
+                            color: AppColors.grey8,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          widget.eventEntity.localName,
                         ),
-                        widget.eventEntity.localName,
                       ),
                     ),
                   ],

@@ -11,73 +11,67 @@ class AuthCircleAvatarWidget extends StatefulWidget {
 class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget> {
   final AuthCircleAvatarStore _store = Modular.get<AuthCircleAvatarStore>();
 
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _store.validateAuthentication();
-    });
-  }
-
-  void updateAuthAvatar() {
-    setState(() {
-      _store.validateAuthentication();
-    });
-  }
   @override
   Widget build(BuildContext context) {
-    final store = Modular.get<AuthCircleAvatarStore>();
-    if (store.value is InitialState) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        store.validateAuthentication();
-      });
-    }
-
     return ValueListenableBuilder<GenericState<AuthCircleAvatarState>>(
-      valueListenable: store,
+      valueListenable: _store,
       builder: (_, state, __) {
-        if (state is LoadingState || state is InitialState) {
-          return SizedBox(
-            width: 32,
-            height: 32,
-            child: CircularProgressIndicator(strokeWidth: 2),
-          );
+        noProfile(bool isCircularActivated) => SizedBox(
+          width: 32,
+          height: 32,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Image.asset(AppIcons.noProfile),
+              Visibility(
+                visible: isCircularActivated,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    AppColors.darkGreen,
+                  ),
+                  strokeWidth: 1,
+                ),
+              ),
+            ],
+          ),
+        );
+        if (state is LoadingState<AuthCircleAvatarState>) {
+          return noProfile(true);
         }
-
-        if (state is AuthenticatedState) {
+        if(_store.userEntity.picture.isEmpty){
+          return noProfile(false);
+        }
           return Container(
             width: 32,
             height: 32,
-            decoration: BoxDecoration(
+            decoration: state is AuthenticatedState
+            ? BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: AppColors.darkGreen, width: 2),
-            ),
+            ) : null,
             child: ButtonWidget(
+              backgroundColor: Colors.transparent,
+              overlayColor: Colors.transparent,
+              elevation: 0,
               shape: const CircleBorder(),
-              action: () => pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute),
+              action:
+                  () => state is AuthenticatedState
+                  ? pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute)
+                  : pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute),
               child: ClipOval(
                 child: CachedNetworkImage(
                   imageUrl: _store.userEntity.picture,
                   width: 32,
                   height: 32,
                   fit: BoxFit.cover,
-                  placeholder: (context, url) => Image.asset(AppIcons.noProfile),
-                  errorWidget: (context, url, error) => Image.asset(AppIcons.noProfile),
+                  placeholder: (context, url) => noProfile(true),
+                  errorWidget: (context, url, error) =>
+                      Image.asset(AppIcons.noProfile),
                 ),
               ),
             ),
           );
         }
-        return ButtonWidget(
-          action: () => pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute),
-          child: SizedBox(
-            width: 32,
-            height: 32,
-            child: Image.asset(AppIcons.noProfile),
-          ),
-        );
-      },
     );
   }
 }

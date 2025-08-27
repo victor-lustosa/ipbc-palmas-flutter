@@ -8,8 +8,10 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
   HomeBloc({
     required IUseCases useCases,
     required CreateEventStore createEventStore,
+    required AuthCircleAvatarStore authCircleAvatarStore,
   }) : _useCases = useCases,
        _createEventStore = createEventStore,
+       _authCircleAvatarStore = authCircleAvatarStore,
        super(LoadingState()) {
     on<GetDataEvent<HomeEvent>>(_getData);
     on<GetEventsDataEvent>(_getEventsData);
@@ -20,6 +22,7 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
   List<ServicesEntity> servicesList = [];
   List<EventEntity> eventsList = [];
   final CreateEventStore _createEventStore;
+  final AuthCircleAvatarStore _authCircleAvatarStore;
 
   get createEventStore => _createEventStore;
 
@@ -28,6 +31,9 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
       _getServicesData(event, emit),
       _getEventsData(event, emit),
     ]);
+    Future.delayed(Duration.zero, () {
+      _authCircleAvatarStore.validateAuthentication();
+    });
   }
 
   Future<void> _getServicesData(_, emit) async {

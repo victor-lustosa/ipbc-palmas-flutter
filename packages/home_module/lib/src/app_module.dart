@@ -14,7 +14,7 @@ class InitModule extends Module {
     CoreModule(),
     LyricModule(),
     AuthModule(),
-    EventModule()
+    EventModule(),
   ];
 
   @override
@@ -34,9 +34,12 @@ class HomeModule extends Module {
   @override
   void binds(Injector i) {
     i.addLazySingleton<HomeBloc>(
-      () => HomeBloc(useCases: i.get<UseCases<SupabaseRepository>>(), createEventStore: i.get<CreateEventStore>()),
+      () => HomeBloc(
+        useCases: i.get<UseCases<SupabaseRepository>>(),
+        createEventStore: i.get<CreateEventStore>(),
+        authCircleAvatarStore: i.get<AuthCircleAvatarStore>(),
+      ),
       config: CoreModule.blocConfig(),
     );
   }
 }
-
