@@ -12,10 +12,12 @@ class CarouselWidget extends StatefulWidget {
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
   final TextStyle? fontStyle;
+  final AnimationController? shimmerController;
 
   const CarouselWidget({
     required this.services,
     required this.width,
+    this.shimmerController,
     required this.height,
     super.key,
     this.mainAxisAlignment,
@@ -32,7 +34,6 @@ class CarouselWidget extends StatefulWidget {
 
 class CarouselWidgetState extends State<CarouselWidget> {
   late PageController _pageController;
-
   int activePage = 0;
   final List<Image> imagesList = [];
 
@@ -58,103 +59,135 @@ class CarouselWidgetState extends State<CarouselWidget> {
     _pageController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
+    Widget placeholder({child}) =>
+        ShimmerWidget(animation: widget.shimmerController!, child: child);
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
-        Container(
-          margin: widget.margin,
-          width: widget.width,
-          height: widget.height,
-          child: PageView.builder(
-            itemCount: widget.services.length,
-            controller: _pageController,
-            onPageChanged: (page) {
-              setState(() {
-                activePage = page;
-              });
-            },
-            itemBuilder: (context, position) {
-              bool active = position == activePage;
-              return InkWell(
-                onTap: widget.route == null || widget.services.isEmpty
-                    ? () {}
-                    : () => nativePushNamed(
-                        widget.route!,
-                        arguments: widget.services[position],
-                        context,
-                      ),
-                child: AnimatedContainer(
-                  padding: EdgeInsets.zero,
-                  margin: EdgeInsets.only(
-                    top: active ? 10 : 14,
-                    bottom: active ? 10 : 14,
-                    left: active ? 10 : 3,
-                    right: active ? 10 : 3,
-                  ),
-                  duration: const Duration(milliseconds: 250),
+        widget.services.isEmpty
+            ? placeholder(
+                child: Container(
+                  width: context.sizeOf.width,
+                  height: context.sizeOf.width * .44,
+                  margin: const EdgeInsets.only(left: 16, right: 16, top: 14),
                   decoration: BoxDecoration(
-                    color: AppColors.grey4,
-                    boxShadow: kIsWeb
-                        ? []
-                        : [
-                            BoxShadow(
-                              color: Colors.grey.withValues(alpha: .4),
-                              offset: const Offset(1, 1),
-                              spreadRadius: 3,
-                              blurRadius: 7,
-                            ),
-                          ],
-                    borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: imagesList[position].image,
-                          ),
-                  ),
-                  curve: Curves.easeInOutCubic,
-                  child: InkWell(
-                    child: Column(
-                      mainAxisAlignment:
-                          widget.mainAxisAlignment ?? MainAxisAlignment.start,
-                      crossAxisAlignment:
-                          widget.crossAxisAlignment ??
-                          CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          widget.services.isEmpty
-                              ? ''
-                              : widget.services[position].title,
-                          style: widget.fontStyle,
-                        ),
-                      ],
-                    ),
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
+              )
+            : Container(
+                margin: widget.margin,
+                width: widget.width,
+                height: widget.height,
+                child: PageView.builder(
+                  itemCount: widget.services.length,
+                  controller: _pageController,
+                  onPageChanged: (page) {
+                    setState(() {
+                      activePage = page;
+                    });
+                  },
+                  itemBuilder: (context, position) {
+                    bool active = position == activePage;
+                    return InkWell(
+                      onTap: widget.route == null || imagesList.isEmpty
+                          ? null
+                          : () => nativePushNamed(
+                              widget.route!,
+                              arguments: widget.services[position],
+                              context,
+                            ),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 250),
+                        curve: Curves.easeInOutCubic,
+                        margin: EdgeInsets.only(
+                          top: active ? 10 : 14,
+                          bottom: active ? 10 : 14,
+                          left: active ? 10 : 3,
+                          right: active ? 10 : 3,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withAlpha(40),
+                          boxShadow: (kIsWeb || imagesList.isEmpty)
+                              ? []
+                              : [
+                                  BoxShadow(
+                                    color: Colors.grey.withAlpha(100),
+                                    offset: const Offset(1, 1),
+                                    spreadRadius: 3,
+                                    blurRadius: 7,
+                                  ),
+                                ],
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              CachedNetworkImage(
+                                imageUrl: widget.services[position].image,
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) =>
+                                    placeholder(child: Container()),
+                                errorWidget: (context, url, error) =>
+                                    placeholder(),
+                              ),
+                              Column(
+                                mainAxisAlignment:
+                                    widget.mainAxisAlignment ??
+                                    MainAxisAlignment.start,
+                                crossAxisAlignment:
+                                    widget.crossAxisAlignment ??
+                                    CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    widget.services.isEmpty
+                                        ? ''
+                                        : widget.services[position].title,
+                                    style: widget.fontStyle,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+        Visibility(
+          visible: widget.services.isNotEmpty,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List<Widget>.generate(widget.services.length, (index) {
+              return Container(
+                margin: const EdgeInsets.only(
+                  top: 3,
+                  left: 2,
+                  right: 2,
+                  bottom: 3,
+                ),
+                width: activePage == index ? 8 : 4,
+                height: activePage == index ? 8 : 4,
+                decoration: BoxDecoration(
+                  color: activePage == index
+                      ? AppColors.highlightGreen
+                      : const Color(0xFFCCCCCC),
+                  shape: BoxShape.circle,
+                ),
               );
-            },
+            }),
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List<Widget>.generate(widget.services.length, (index) {
-            return Container(
-              margin: const EdgeInsets.only(
-                top: 3,
-                left: 2,
-                right: 2,
-                bottom: 3,
-              ),
-              width: activePage == index ? 8 : 4,
-              height: activePage == index ? 8 : 4,
-              decoration: BoxDecoration(
-                color: activePage == index
-                    ? AppColors.highlightGreen
-                    : const Color(0xFFCCCCCC),
-                shape: BoxShape.circle,
-              ),
-            );
-          }),
         ),
         Visibility(
           visible: kIsWeb,

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../home_module.dart';
-import '../blocs/home_bloc.dart' ;
+import '../blocs/home_bloc.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -18,6 +18,7 @@ class _HomeViewState extends State<HomeView>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late final HomeBloc _bloc;
   late final AnimationController _shimmerController;
+
   @override
   void initState() {
     super.initState();
@@ -80,42 +81,25 @@ class _HomeViewState extends State<HomeView>
                             ],
                           ),
                         ),
-                        _bloc.servicesList.isNotEmpty
-                            ? Container(
-                          margin: const EdgeInsets.only(top: 2),
-                          child: CarouselWidget(
-                            fontStyle: AppFonts.defaultFont(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.white,
-                            ),
-                            margin: const EdgeInsets.only(
-                              left: 6,
-                              right: 6,
-                              bottom: 9,
-                            ),
-                            route: AppRoutes.servicesCollectionRoute,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            width: context.sizeOf.width,
-                            services: _bloc.servicesList,
-                            height: context.sizeOf.width * 0.49,
+                        CarouselWidget(
+                          shimmerController: _shimmerController,
+                          fontStyle: AppFonts.defaultFont(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.white,
                           ),
-                        ) : ShimmerLoading(
-                          animation: _shimmerController,
-                                  child: Container(
-                                    margin: const EdgeInsets.only(
-                                      left: 16,
-                                      right: 16,
-                                      top: 10,
-                                    ),
-                                    width: context.sizeOf.width,
-                                    height: context.sizeOf.width * 0.43,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade300,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
-                                ),
+                          margin: const EdgeInsets.only(
+                            top: 2,
+                            left: 6,
+                            right: 6,
+                            bottom: 9,
+                          ),
+                          route: AppRoutes.servicesCollectionRoute,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          width: context.sizeOf.width,
+                          services: _bloc.servicesList,
+                          height: context.sizeOf.width * 0.49,
+                        ),
                         InkWell(
                           onTap: () {
                             _bloc.createEventStore.updateHomeViewCallback =
@@ -200,46 +184,3 @@ class _HomeViewState extends State<HomeView>
     ),
   );
 }
-
-class ShimmerLoading extends AnimatedWidget {
-
-  final Widget child;
-
-  const ShimmerLoading({
-    super.key,
-    required Animation<double> animation,
-    required this.child,
-  }) : super(listenable: animation);
-
-  static const _shimmerGradient = LinearGradient(
-    colors: [
-      Color(0xFFEBEBF4),
-      Color(0xFFF4F4F4),
-      Color(0xFFEBEBF4),
-    ],
-    stops: [0.1, 0.3, 0.4],
-    begin: Alignment(-1.0, -0.3),
-    end: Alignment(1.0, 0.3),
-    tileMode: TileMode.clamp,
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    final animation = listenable as Animation<double>;
-    return ShaderMask(
-      blendMode: BlendMode.srcATop,
-      shaderCallback: (bounds) {
-        return _shimmerGradient.createShader(
-          Rect.fromLTWH(
-            -bounds.width * animation.value,
-            0,
-            bounds.width * 3,
-            bounds.height,
-          ),
-        );
-      },
-      child: child,
-    );
-  }
-}
-
