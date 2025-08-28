@@ -38,9 +38,6 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget> {
         if (state is LoadingState<AuthCircleAvatarState>) {
           return noProfile(true);
         }
-        if(_store.userEntity.picture.isEmpty){
-          return noProfile(false);
-        }
           return Container(
             width: 32,
             height: 32,
@@ -58,7 +55,7 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget> {
                   () => state is AuthenticatedState
                   ? pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute)
                   : pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute),
-              child: ClipOval(
+              child: _store.userEntity.picture.isEmpty ? noProfile(false) : ClipOval(
                 child: CachedNetworkImage(
                   imageUrl: _store.userEntity.picture,
                   width: 32,

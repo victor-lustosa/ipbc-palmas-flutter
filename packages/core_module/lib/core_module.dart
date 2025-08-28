@@ -34,6 +34,7 @@ export 'src/design_system/components/search_bar/search_bar_widget.dart';
 export 'src/design_system/components/loading/loading_widget.dart';
 export 'src/design_system/components/guideline/guideline_widget.dart';
 export 'src/design_system/components/slide_cards/slide_cards_widget.dart';
+export 'src/design_system/components/shimmer/shimmer_widget.dart';
 export 'src/design_system/components/buttons/icon_button_widget.dart';
 export 'src/design_system/components/buttons/icon_widget.dart';
 export 'src/design_system/components/buttons/floating_button_widget.dart';

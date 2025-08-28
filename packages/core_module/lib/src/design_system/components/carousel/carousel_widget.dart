@@ -31,7 +31,7 @@ class CarouselWidget extends StatefulWidget {
 }
 
 class CarouselWidgetState extends State<CarouselWidget> {
-  static late PageController _pageController;
+  late PageController _pageController;
 
   int activePage = 0;
   final List<Image> imagesList = [];
@@ -53,6 +53,11 @@ class CarouselWidgetState extends State<CarouselWidget> {
     super.didChangeDependencies();
   }
 
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -102,9 +107,7 @@ class CarouselWidgetState extends State<CarouselWidget> {
                             ),
                           ],
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    image: imagesList.isEmpty
-                        ? null
-                        : DecorationImage(
+                    image: DecorationImage(
                             fit: BoxFit.cover,
                             image: imagesList[position].image,
                           ),

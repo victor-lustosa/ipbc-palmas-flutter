@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../home_module.dart';
-import '../blocs/home_bloc.dart';
+import '../blocs/home_bloc.dart' ;
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -15,13 +15,15 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late final HomeBloc _bloc;
-
+  late final AnimationController _shimmerController;
   @override
   void initState() {
     super.initState();
     _bloc = Modular.get<HomeBloc>();
+    _shimmerController = AnimationController.unbounded(vsync: this)
+      ..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1200));
     _bloc.add(GetDataEvent());
   }
 
@@ -48,7 +50,9 @@ class _HomeViewState extends State<HomeView>
                 return NoConnectionView(
                   action: () => nativePushNamed(AppRoutes.homeRoute, context),
                 );
-              } else if (state is DataFetchedState<HomeState>) {
+              } else if (state is DataFetchedState<HomeState> ||
+                  state is LoadingEvents ||
+                  state is LoadingServices) {
                 bool isSmallDevice = ResponsivityUtil.isSmallDevice(context);
                 return SingleChildScrollView(
                   child: SizedBox(
@@ -76,7 +80,8 @@ class _HomeViewState extends State<HomeView>
                             ],
                           ),
                         ),
-                        Container(
+                        _bloc.servicesList.isNotEmpty
+                            ? Container(
                           margin: const EdgeInsets.only(top: 2),
                           child: CarouselWidget(
                             fontStyle: AppFonts.defaultFont(
@@ -95,10 +100,26 @@ class _HomeViewState extends State<HomeView>
                             services: _bloc.servicesList,
                             height: context.sizeOf.width * 0.49,
                           ),
-                        ),
+                        ) : ShimmerLoading(
+                          animation: _shimmerController,
+                                  child: Container(
+                                    margin: const EdgeInsets.only(
+                                      left: 16,
+                                      right: 16,
+                                      top: 10,
+                                    ),
+                                    width: context.sizeOf.width,
+                                    height: context.sizeOf.width * 0.43,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade300,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                ),
                         InkWell(
                           onTap: () {
-                            _bloc.createEventStore.updateHomeViewCallback = () => _bloc.add(GetEventsDataEvent());
+                            _bloc.createEventStore.updateHomeViewCallback =
+                                () => _bloc.add(GetEventsDataEvent());
                             nativePushNamed(
                               AppRoutes.eventRoute + AppRoutes.eventsListRoute,
                               context,
@@ -120,9 +141,13 @@ class _HomeViewState extends State<HomeView>
                         ),
                         Container(
                           margin: const EdgeInsets.only(top: 12, bottom: 20),
-                          height: isSmallDevice ? context.sizeOf.width * 0.72 : context.sizeOf.width * 0.663,
+                          height: isSmallDevice
+                              ? context.sizeOf.width * 0.72
+                              : context.sizeOf.width * 0.663,
                           child: SlideCardsWidget(
-                            width: isSmallDevice ? context.sizeOf.width * 0.8 : context.sizeOf.width * 0.742,
+                            width: isSmallDevice
+                                ? context.sizeOf.width * 0.8
+                                : context.sizeOf.width * 0.742,
                             scrollDirection: Axis.horizontal,
                             route: AppRoutes.detailEventRoute,
                             entities: _bloc.eventsList,
@@ -175,3 +200,46 @@ class _HomeViewState extends State<HomeView>
     ),
   );
 }
+
+class ShimmerLoading extends AnimatedWidget {
+
+  final Widget child;
+
+  const ShimmerLoading({
+    super.key,
+    required Animation<double> animation,
+    required this.child,
+  }) : super(listenable: animation);
+
+  static const _shimmerGradient = LinearGradient(
+    colors: [
+      Color(0xFFEBEBF4),
+      Color(0xFFF4F4F4),
+      Color(0xFFEBEBF4),
+    ],
+    stops: [0.1, 0.3, 0.4],
+    begin: Alignment(-1.0, -0.3),
+    end: Alignment(1.0, 0.3),
+    tileMode: TileMode.clamp,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    final animation = listenable as Animation<double>;
+    return ShaderMask(
+      blendMode: BlendMode.srcATop,
+      shaderCallback: (bounds) {
+        return _shimmerGradient.createShader(
+          Rect.fromLTWH(
+            -bounds.width * animation.value,
+            0,
+            bounds.width * 3,
+            bounds.height,
+          ),
+        );
+      },
+      child: child,
+    );
+  }
+}
+

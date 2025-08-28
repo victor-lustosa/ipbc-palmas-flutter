@@ -27,6 +27,7 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
   get createEventStore => _createEventStore;
 
   Future<void> _getData(GetDataEvent event, emit) async {
+    print('iniciando busca no supabase');
     await Future.wait([
       _getServicesData(event, emit),
       _getEventsData(event, emit),
@@ -39,6 +40,10 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
   Future<void> _getServicesData(_, emit) async {
     final response = await isConnected();
     if (response) {
+      print('iniciando busca de service no supabase');
+      Future.delayed(Duration.zero,(){
+        emit(LoadingServices());
+      });
       final List<ServicesEntity> servicesResponse = await _useCases.get(
         params: {
           'table': 'services',
@@ -47,6 +52,7 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
         },
         converter: ServicesAdapter.fromMapList,
       );
+      print('tamanho da lista de services: ${servicesResponse.length}');
       servicesList = servicesResponse;
       emit(DataFetchedState<HomeState>());
     } else {
@@ -57,6 +63,10 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
   Future<void> _getEventsData(_, emit) async {
     final response = await isConnected();
     if (response) {
+      print('iniciando busca de service no supabase');
+      Future.delayed(Duration.zero,(){
+        emit(LoadingEvents());
+      });
       final List<EventEntity> eventsResponse = await _useCases.get(
         params: {
           'table': 'event',
@@ -82,4 +92,12 @@ abstract class HomeState {}
 
 class GetEventsDataEvent extends GenericEvent<HomeEvent> {
   GetEventsDataEvent();
+}
+
+class LoadingServices extends GenericState<HomeState> {
+  LoadingServices();
+}
+
+class LoadingEvents extends GenericState<HomeState> {
+  LoadingEvents();
 }
