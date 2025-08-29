@@ -10,9 +10,11 @@ class EventsListView extends StatefulWidget {
   State<EventsListView> createState() => EventsListViewState();
 }
 
-class EventsListViewState extends State<EventsListView> with SingleTickerProviderStateMixin{
+class EventsListViewState extends State<EventsListView>
+    with SingleTickerProviderStateMixin {
   late final EventsListBloc _bloc;
   late final AnimationController _shimmerController;
+
   @override
   void initState() {
     super.initState();
@@ -21,11 +23,13 @@ class EventsListViewState extends State<EventsListView> with SingleTickerProvide
     _bloc = Modular.get<EventsListBloc>();
     _bloc.add(GetDataEvent());
   }
+
   @override
- dispose() {
+  dispose() {
     _shimmerController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -54,22 +58,28 @@ class EventsListViewState extends State<EventsListView> with SingleTickerProvide
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      MainTopBarWidget(),
-                      Row(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(top: 10, left: 16),
-                            child: BackButtonWidget(
+                      MainTopBarWidget(
+                        margin: const EdgeInsets.only(top: 22, left: 16, right: 18, bottom: 15),
+                        items: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            BackButtonWidget(
                               action: () {
-                                if(_bloc.createEventStore.updateHomeViewCallback != null
-                                    && _bloc.createEventStore.isChangedOrAdded) {
-                                   _bloc.createEventStore.updateHomeViewCallback!();
+                                if (_bloc
+                                            .createEventStore
+                                            .updateHomeViewCallback !=
+                                        null &&
+                                    _bloc.createEventStore.isChangedOrAdded) {
+                                  _bloc
+                                      .createEventStore
+                                      .updateHomeViewCallback!();
                                 }
                                 nativePop(context);
                               },
                             ),
-                          ),
-                        ],
+                            AuthCircleAvatarWidget(),
+                          ],
+                        ),
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
@@ -119,14 +129,17 @@ class EventsListViewState extends State<EventsListView> with SingleTickerProvide
                                     label: 'Editar',
                                     action: () async {
                                       _bloc.createEventStore.isEditing = true;
-                                      _bloc.createEventStore.updateEventListViewCallback =
-                                          () => _bloc.add(GetDataEvent());
+                                      _bloc
+                                          .createEventStore
+                                          .updateEventListViewCallback = () =>
+                                          _bloc.add(GetDataEvent());
                                       await pushNamed(
                                         AppRoutes.eventRoute +
                                             AppRoutes.createEventRoute,
                                         arguments: {
                                           "isEditing": true,
-                                          "event": _bloc.slideCardsStore.eventEntity,
+                                          "event":
+                                              _bloc.slideCardsStore.eventEntity,
                                         },
                                       );
                                       if (context.mounted) {

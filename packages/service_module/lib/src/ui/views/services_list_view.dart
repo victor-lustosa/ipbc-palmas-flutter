@@ -19,26 +19,27 @@ class _ServicesListViewState extends State<ServicesListView> with DateMixin {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 17, top: 30),
-                    child: BackButtonWidget(action: () => nativePop(context)),
-                  ),
-                ],
+              MainTopBarWidget(
+                margin: const EdgeInsets.only(top: 22, left: 16, right: 18, bottom: 15),
+                items: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    BackButtonWidget(action: () => nativePop(context)),
+                    AuthCircleAvatarWidget(),
+                  ],
+                ),
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  margin: const EdgeInsets.only(left: 25, top: 10),
+                  margin: const EdgeInsets.only(left: 20, top: 10),
                   child: Text("Cultos", style: AppFonts.title2),
                 ),
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  margin: const EdgeInsets.only(left: 25, top: 8, right: 20),
+                  margin: const EdgeInsets.only(left: 20, top: 8, right: 20),
                   child: Text(
                     "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
                     style: AppFonts.defaultFont(
