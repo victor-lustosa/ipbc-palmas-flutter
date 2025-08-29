@@ -72,7 +72,12 @@ class CarouselWidgetState extends State<CarouselWidget> {
                 child: Container(
                   width: context.sizeOf.width,
                   height: context.sizeOf.width * .44,
-                  margin: const EdgeInsets.only(left: 16, right: 16, top: 14),
+                  margin: const EdgeInsets.only(
+                    left: 16,
+                    right: 16,
+                    top: 14,
+                    bottom: 18,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.grey.shade300,
                     borderRadius: BorderRadius.circular(12),

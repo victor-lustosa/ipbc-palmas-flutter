@@ -40,7 +40,7 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     final response = await isConnected();
     if (response) {
       Future.delayed(Duration.zero, () {
-        emit(LoadingServices());
+        emit(LoadingServicesState());
       });
       final List<ServicesEntity> servicesResponse = await _useCases.get(
         params: {
@@ -61,7 +61,7 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     final response = await isConnected();
     if (response) {
       Future.delayed(Duration.zero, () {
-        emit(LoadingEvents());
+        emit(LoadingEventsState());
       });
       final List<EventEntity> eventsResponse = await _useCases.get(
         params: {
@@ -90,10 +90,10 @@ class GetEventsDataEvent extends GenericEvent<HomeEvent> {
   GetEventsDataEvent();
 }
 
-class LoadingServices extends GenericState<HomeState> {
-  LoadingServices();
+class LoadingServicesState extends GenericState<HomeState> {
+  LoadingServicesState();
 }
 
-class LoadingEvents extends GenericState<HomeState> {
-  LoadingEvents();
+class LoadingEventsState extends GenericState<HomeState> {
+  LoadingEventsState();
 }

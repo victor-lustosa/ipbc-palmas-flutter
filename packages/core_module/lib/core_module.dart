@@ -16,6 +16,7 @@ export 'package:isar_flutter_libs/isar_flutter_libs.dart';
 export 'package:isar/isar.dart';
 export 'package:diacritic/diacritic.dart';
 export 'package:cached_network_image/cached_network_image.dart';
+export 'package:bloc_concurrency/bloc_concurrency.dart';
 
 export 'src/core/configs/app_configs.dart';
 export 'src/core/configs/app_routes.dart';

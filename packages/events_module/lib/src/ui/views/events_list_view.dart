@@ -10,16 +10,22 @@ class EventsListView extends StatefulWidget {
   State<EventsListView> createState() => EventsListViewState();
 }
 
-class EventsListViewState extends State<EventsListView> {
+class EventsListViewState extends State<EventsListView> with SingleTickerProviderStateMixin{
   late final EventsListBloc _bloc;
-
+  late final AnimationController _shimmerController;
   @override
   void initState() {
     super.initState();
+    _shimmerController = AnimationController.unbounded(vsync: this)
+      ..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1200));
     _bloc = Modular.get<EventsListBloc>();
     _bloc.add(GetDataEvent());
   }
-
+  @override
+ dispose() {
+    _shimmerController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -42,7 +48,8 @@ class EventsListViewState extends State<EventsListView> {
                     context,
                   ),
                 );
-              } else if (state is DataFetchedState<EventsListState>) {
+              } else if (state is DataFetchedState<EventsListState> ||
+                  state is LoadingEventsState) {
                 return SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -93,6 +100,7 @@ class EventsListViewState extends State<EventsListView> {
                       Container(
                         margin: const EdgeInsets.only(bottom: 40),
                         child: SlideCardsWidget(
+                          shimmerController: _shimmerController,
                           onLongPressStart: (details) async {
                             await showOptionsDialog(
                               context: context,

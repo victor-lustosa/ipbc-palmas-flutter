@@ -14,11 +14,6 @@ class EventsListBloc
   late final CreateEventStore _createEventStore;
   get slideCardsStore => _slideCardsStore;
    CreateEventStore get createEventStore => _createEventStore;
-  final Map<String, Object> eventParams = {
-    'table': 'event',
-    'orderBy': 'create_at',
-    'ascending': false,
-  };
 
   EventsListBloc({
     required this.onlineUseCases,
@@ -37,13 +32,24 @@ class EventsListBloc
   Future<void> _getInSupa(GetDataEvent event, emit) async {
     final response = await isConnected();
     if (response) {
+      Future.delayed(Duration.zero, () {
+        if (emit.isDone) return;
+        emit(LoadingEventsState());
+      });
       List<EventEntity> events = await onlineUseCases.get(
-        params: eventParams,
+        params: {
+          'table': 'event',
+          'orderBy': 'create_at',
+          'ascending': false,
+        },
         converter: EventAdapter.fromMapList,
       );
-      eventsList = events;
+      await Future.delayed(const Duration(milliseconds: 400));
+      //eventsList = events;
+      if (emit.isDone) return;
       emit(DataFetchedState<EventsListState>());
     } else {
+      if (emit.isDone) return;
       emit(NoConnectionState<EventsListState>());
     }
   }
@@ -59,6 +65,7 @@ class EventsListBloc
     if (response != null) {
       eventsList.remove(event);
     }
+    if (emit.isDone) return;
     emit(DataFetchedState<EventsListState>());
   }
 
@@ -74,4 +81,8 @@ class DeleteItemEvent extends GenericEvent<EventsListEvent> {
   DeleteItemEvent({ this.index});
 
   final int? index;
+}
+
+class LoadingEventsState extends GenericState<EventsListState> {
+  LoadingEventsState();
 }

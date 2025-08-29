@@ -52,8 +52,8 @@ class _HomeViewState extends State<HomeView>
                   action: () => nativePushNamed(AppRoutes.homeRoute, context),
                 );
               } else if (state is DataFetchedState<HomeState> ||
-                  state is LoadingEvents ||
-                  state is LoadingServices) {
+                  state is LoadingEventsState ||
+                  state is LoadingServicesState) {
                 bool isSmallDevice = ResponsivityUtil.isSmallDevice(context);
                 return SingleChildScrollView(
                   child: SizedBox(
@@ -125,13 +125,18 @@ class _HomeViewState extends State<HomeView>
                         ),
                         Container(
                           margin: const EdgeInsets.only(top: 12, bottom: 20),
-                          height: isSmallDevice
-                              ? context.sizeOf.width * 0.72
-                              : context.sizeOf.width * 0.663,
+                          height: _bloc.eventsList.isEmpty
+                              ? (isSmallDevice
+                                    ? context.sizeOf.width * .59
+                                    : context.sizeOf.width * .59)
+                              : (isSmallDevice
+                                    ? context.sizeOf.width * .72
+                                    : context.sizeOf.width * .663),
                           child: SlideCardsWidget(
+                            shimmerController: _shimmerController,
                             width: isSmallDevice
-                                ? context.sizeOf.width * 0.8
-                                : context.sizeOf.width * 0.742,
+                                ? context.sizeOf.width * .8
+                                : context.sizeOf.width * .742,
                             scrollDirection: Axis.horizontal,
                             route: AppRoutes.detailEventRoute,
                             entities: _bloc.eventsList,
