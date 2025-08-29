@@ -50,8 +50,17 @@ class CarouselWidgetState extends State<CarouselWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Widget placeholder({child}) =>
-        ShimmerWidget(animation: widget.shimmerController!, child: child);
+    Widget placeholder({child}) => ShimmerWidget(
+      animation: widget.shimmerController!,
+      child:
+          child ??
+           Container(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(12),
+              ),
+          ),
+    );
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -129,8 +138,7 @@ class CarouselWidgetState extends State<CarouselWidget> {
                               CachedNetworkImage(
                                 imageUrl: widget.services[position].image,
                                 fit: BoxFit.cover,
-                                placeholder: (context, url) =>
-                                    placeholder(child: Container()),
+                                placeholder: (context, url) => placeholder(),
                                 errorWidget: (context, url, error) =>
                                     placeholder(),
                               ),

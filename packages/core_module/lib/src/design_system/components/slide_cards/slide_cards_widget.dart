@@ -42,8 +42,17 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
   Widget build(BuildContext context) {
     bool isSmallDevice = ResponsivityUtil.isSmallDevice(context);
     bool isHorizontal = widget.scrollDirection == Axis.horizontal;
-    Widget placeholder({child}) =>
-        ShimmerWidget(animation: widget.shimmerController, child: child);
+    Widget placeholder({child}) => ShimmerWidget(
+      animation: widget.shimmerController,
+      child:
+          child ??
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade300,
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+    );
     return widget.entities.isEmpty
         ? placeholder(
             child: ListView.builder(
@@ -113,10 +122,8 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
                           height: context.sizeOf.width * .335,
                           width: context.sizeOf.width,
                           fit: BoxFit.cover,
-                          placeholder: (context, url) =>
-                              Container(color: AppColors.grey4),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
+                          placeholder: (context, url) => placeholder(),
+                          errorWidget: (context, url, error) => placeholder(),
                           color: const Color.fromRGBO(0, 66, 46, 0.40),
                           colorBlendMode: BlendMode.color,
                           imageBuilder: (context, imageProvider) => Container(
