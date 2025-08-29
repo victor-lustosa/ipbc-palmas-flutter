@@ -15,7 +15,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   late final HomeBloc _bloc;
   late final AnimationController _shimmerController;
 
@@ -61,7 +61,7 @@ class _HomeViewState extends State<HomeView>
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        MainTopBarWidget(),
+                        BackAuthTopBarWidget(isHome: true),
                         InkWell(
                           onTap: () {
                             nativePushNamed(

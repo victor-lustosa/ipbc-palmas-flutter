@@ -85,7 +85,6 @@ export 'src/design_system/stores/admin/services_preview_store.dart';
 export 'src/design_system/stores/admin/search_lyrics_store.dart';
 export 'src/design_system/stores/lyrics_list_store.dart';
 export 'src/design_system/stores/slide_cards_store.dart';
-export 'src/design_system/stores/main_top_bar_store.dart';
 
 export 'src/core/domain/use_cases/use_cases.dart';
 export 'src/core/domain/entities/lyric_entity.dart';

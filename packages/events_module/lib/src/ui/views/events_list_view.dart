@@ -58,28 +58,20 @@ class EventsListViewState extends State<EventsListView>
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      MainTopBarWidget(
+                      BackAuthTopBarWidget(
                         margin: const EdgeInsets.only(top: 22, left: 16, right: 16, bottom: 15),
-                        items: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            BackButtonWidget(
-                              action: () {
-                                if (_bloc
-                                            .createEventStore
-                                            .updateHomeViewCallback !=
-                                        null &&
-                                    _bloc.createEventStore.isChangedOrAdded) {
-                                  _bloc
-                                      .createEventStore
-                                      .updateHomeViewCallback!();
-                                }
-                                nativePop(context);
-                              },
-                            ),
-                            AuthCircleAvatarWidget(),
-                          ],
-                        ),
+                        action: () {
+                          if (_bloc
+                              .createEventStore
+                              .updateHomeViewCallback !=
+                              null &&
+                              _bloc.createEventStore.isChangedOrAdded) {
+                            _bloc
+                                .createEventStore
+                                .updateHomeViewCallback!();
+                          }
+                          nativePop(context);
+                        },
                       ),
                       Align(
                         alignment: Alignment.centerLeft,

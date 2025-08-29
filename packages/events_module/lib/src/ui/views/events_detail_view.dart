@@ -34,15 +34,9 @@ class EventsDetailViewState extends State<EventsDetailView>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                MainTopBarWidget(
+                BackAuthTopBarWidget(
                   margin: const EdgeInsets.only(top: 22, bottom: 15),
-                  items: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      BackButtonWidget(action: () => nativePop(context)),
-                      AuthCircleAvatarWidget(),
-                    ],
-                  ),
+                  action: () => nativePop(context),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24, bottom: 16),

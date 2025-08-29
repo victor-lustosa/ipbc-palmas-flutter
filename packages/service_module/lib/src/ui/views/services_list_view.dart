@@ -19,14 +19,13 @@ class _ServicesListViewState extends State<ServicesListView> with DateMixin {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              MainTopBarWidget(
-                margin: const EdgeInsets.only(top: 22, left: 16, right: 18, bottom: 15),
-                items: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    BackButtonWidget(action: () => nativePop(context)),
-                    AuthCircleAvatarWidget(),
-                  ],
+              BackAuthTopBarWidget(
+                action: () => nativePop(context),
+                margin: const EdgeInsets.only(
+                  top: 22,
+                  left: 16,
+                  right: 16,
+                  bottom: 15,
                 ),
               ),
               Align(

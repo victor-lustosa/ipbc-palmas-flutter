@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core_module.dart';
-
+/*
 class MainTopBarWidget extends StatefulWidget {
   const MainTopBarWidget({super.key, this.margin, this.items});
 
@@ -32,4 +32,4 @@ class _MainTopBarWidgetState extends State<MainTopBarWidget> {
   void dispose() {
     super.dispose();
   }
-}
+}*/

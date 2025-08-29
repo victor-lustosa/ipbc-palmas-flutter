@@ -4,18 +4,44 @@ import 'package:flutter/material.dart';
 class AuthCircleAvatarWidget extends StatefulWidget {
   const AuthCircleAvatarWidget({super.key});
 
+
   @override
   State<AuthCircleAvatarWidget> createState() => AuthCircleAvatarWidgetState();
 }
 
-class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget> {
+class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget> with TickerProviderStateMixin {
   final AuthCircleAvatarStore _store = Modular.get<AuthCircleAvatarStore>();
+  late final AnimationController _shimmerController;
+  @override
+  void initState() {
+    super.initState();
+    _shimmerController = AnimationController.unbounded(vsync: this)
+      ..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1200));
+  }
+
+  @override
+  dispose() {
+    _shimmerController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<GenericState<AuthCircleAvatarState>>(
       valueListenable: _store,
       builder: (_, state, __) {
+        placeholder() => ShimmerWidget(
+          animation: _shimmerController,
+          child: Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.grey.shade300,
+            ),
+          ),
+        );
+
         noProfile(bool isCircularActivated) => SizedBox(
           width: 32,
           height: 32,
@@ -36,39 +62,40 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget> {
           ),
         );
         if (state is LoadingState<AuthCircleAvatarState>) {
-          return noProfile(true);
+          return placeholder();
         }
-          return Container(
-            width: 32,
-            height: 32,
-            decoration: state is AuthenticatedState
-            ? BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: AppColors.darkGreen, width: 2),
-            ) : null,
-            child: ButtonWidget(
-              backgroundColor: Colors.transparent,
-              overlayColor: Colors.transparent,
-              elevation: 0,
-              shape: const CircleBorder(),
-              action:
-                  () => state is AuthenticatedState
-                  ? pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute)
-                  : pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute),
-              child: _store.userEntity.picture.isEmpty ? noProfile(false) : ClipOval(
-                child: CachedNetworkImage(
-                  imageUrl: _store.userEntity.picture,
-                  width: 32,
-                  height: 32,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => noProfile(true),
-                  errorWidget: (context, url, error) =>
-                      Image.asset(AppIcons.noProfile),
-                ),
-              ),
-            ),
-          );
-        }
+        return Container(
+          width: 32,
+          height: 32,
+          decoration: state is AuthenticatedState
+              ? BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: AppColors.darkGreen, width: 2),
+                )
+              : null,
+          child: ButtonWidget(
+            backgroundColor: Colors.transparent,
+            overlayColor: Colors.transparent,
+            elevation: 0,
+            shape: const CircleBorder(),
+            action: () => state is AuthenticatedState
+                ? pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute)
+                : pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute),
+            child: _store.userEntity.picture.isEmpty
+                ? placeholder()
+                : ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl: _store.userEntity.picture,
+                      width: 32,
+                      height: 32,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => placeholder(),
+                      errorWidget: (context, url, error) => placeholder(),
+                    ),
+                  ),
+          ),
+        );
+      },
     );
   }
 }
