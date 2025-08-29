@@ -51,15 +51,15 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
               shrinkWrap: widget.shrinkWrap ?? false,
               scrollDirection: widget.scrollDirection,
               physics: widget.physics,
-              itemCount: 2,
+              itemCount: 3,
               itemBuilder: (context, index) => Container(
                 margin: isHorizontal
-                    ? const EdgeInsets.symmetric(horizontal: 16)
-                    : const EdgeInsets.symmetric(vertical: 16),
+                    ? const EdgeInsets.only(left: 16)
+                    : const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 height: isHorizontal
                     ? (isSmallDevice
-                    ? context.sizeOf.width * .48
-                    : context.sizeOf.width * .48)
+                          ? context.sizeOf.width * .48
+                          : context.sizeOf.width * .48)
                     : (isSmallDevice
                           ? context.sizeOf.width * 0.6
                           : context.sizeOf.width * 0.6),
@@ -97,9 +97,11 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
                   margin:
                       widget.margin ??
                       EdgeInsets.only(left: index == 0 ? 16 : 0, right: 16),
-                  height: isHorizontal ?(isSmallDevice
-                      ? context.sizeOf.width * .60
-                      : context.sizeOf.width * .60) : null,
+                  height: isHorizontal
+                      ? (isSmallDevice
+                            ? context.sizeOf.width * .60
+                            : context.sizeOf.width * .60)
+                      : null,
                   child: Column(
                     children: [
                       ClipRRect(

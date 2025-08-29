@@ -44,8 +44,8 @@ class EventsListBloc
         },
         converter: EventAdapter.fromMapList,
       );
-      await Future.delayed(const Duration(milliseconds: 400));
-      //eventsList = events;
+      await Future.delayed(const Duration(milliseconds: 300));
+      eventsList = events;
       if (emit.isDone) return;
       emit(DataFetchedState<EventsListState>());
     } else {
