@@ -59,7 +59,6 @@ class EventsListViewState extends State<EventsListView>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       BackAuthTopBarWidget(
-                        margin: const EdgeInsets.only(top: 22, left: 16, right: 16, bottom: 15),
                         action: () {
                           if (_bloc
                               .createEventStore
@@ -76,7 +75,7 @@ class EventsListViewState extends State<EventsListView>
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Container(
-                          margin: const EdgeInsets.only(left: 25, top: 10),
+                          margin: const EdgeInsets.only(left: 25),
                           child: Text("Eventos", style: AppFonts.title2),
                         ),
                       ),
