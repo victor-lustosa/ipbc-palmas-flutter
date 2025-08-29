@@ -35,23 +35,11 @@ class CarouselWidget extends StatefulWidget {
 class CarouselWidgetState extends State<CarouselWidget> {
   late PageController _pageController;
   int activePage = 0;
-  final List<Image> imagesList = [];
 
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < widget.services.length; i++) {
-      imagesList.add(Image.network(widget.services[i].image));
-    }
     _pageController = PageController(initialPage: 0);
-  }
-
-  @override
-  void didChangeDependencies() {
-    for (Image entity in imagesList) {
-      precacheImage(entity.image, context);
-    }
-    super.didChangeDependencies();
   }
 
   @override
@@ -99,7 +87,7 @@ class CarouselWidgetState extends State<CarouselWidget> {
                   itemBuilder: (context, position) {
                     bool active = position == activePage;
                     return InkWell(
-                      onTap: widget.route == null || imagesList.isEmpty
+                      onTap: widget.route == null || widget.services.isEmpty
                           ? null
                           : () => nativePushNamed(
                               widget.route!,
@@ -117,7 +105,7 @@ class CarouselWidgetState extends State<CarouselWidget> {
                         ),
                         decoration: BoxDecoration(
                           color: Colors.grey.withAlpha(40),
-                          boxShadow: (kIsWeb || imagesList.isEmpty)
+                          boxShadow: (kIsWeb || widget.services.isEmpty)
                               ? []
                               : [
                                   BoxShadow(

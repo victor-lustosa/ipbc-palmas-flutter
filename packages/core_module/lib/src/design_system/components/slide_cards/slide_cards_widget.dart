@@ -35,7 +35,6 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
   @override
   void initState() {
     super.initState();
-
     _store = Modular.get<SlideCardsStore>();
   }
 

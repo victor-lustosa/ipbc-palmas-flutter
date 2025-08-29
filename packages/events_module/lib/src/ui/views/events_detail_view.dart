@@ -35,15 +35,14 @@ class EventsDetailViewState extends State<EventsDetailView>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MainTopBarWidget(
-                  margin: EdgeInsets.only(top: 22, bottom: 24, right: 2),
-                ),
-                Row(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      child: BackButtonWidget(action: () => nativePop(context)),
-                    ),
-                  ],
+                  margin: const EdgeInsets.only(top: 22, bottom: 15),
+                  items: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      BackButtonWidget(action: () => nativePop(context)),
+                      AuthCircleAvatarWidget(),
+                    ],
+                  ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24, bottom: 16),

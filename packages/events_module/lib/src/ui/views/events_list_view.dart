@@ -59,7 +59,7 @@ class EventsListViewState extends State<EventsListView>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       MainTopBarWidget(
-                        margin: const EdgeInsets.only(top: 22, left: 16, right: 18, bottom: 15),
+                        margin: const EdgeInsets.only(top: 22, left: 16, right: 16, bottom: 15),
                         items: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
