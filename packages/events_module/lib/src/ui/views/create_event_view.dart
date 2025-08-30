@@ -561,7 +561,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                     ButtonWidget(
                       action: () async {
                         await _store.addData(context);
-                        updateCallback();
+                        // updateCallback();
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),

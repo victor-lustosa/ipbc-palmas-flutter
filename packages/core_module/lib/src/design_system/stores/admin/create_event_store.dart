@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:core_module/core_module.dart';
+import 'package:core_module/src/core/infra/use_cases/event_use_cases.dart';
 import 'package:flutter/material.dart';
 
 class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
@@ -11,10 +12,12 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   Function? updateEventListViewCallback;
   Function? updateHomeViewCallback;
   final IUseCases _useCases;
+  final IEventUseCases _eventUseCases;
   final String eventPath = 'event';
 
-  CreateEventStore({required IUseCases useCases})
-    : _useCases = useCases,
+  CreateEventStore({required IUseCases useCases, required IEventUseCases eventUseCases})
+      : _eventUseCases = eventUseCases,
+       _useCases = useCases,
       super(InitialState<CreateEventState>()) {
     controllerValidators = {
       eventTitleController: isEventTitleValid,
@@ -169,10 +172,16 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     return entity;
   }
 
+
+
+
   Future<void> addData(BuildContext context) async {
+    final latLong = await   _eventUseCases.getLocationFromUrl(url: 'https://maps.app.goo.gl/Vz46eoU2RGgsdBmY8');
     if (validateAllFields()) {
       final response = await isConnected();
       if (response) {
+
+
         value = AddDataEvent<CreateEventState>();
         String? resultUrl;
         bool isImageUpdated = (isEditing && coverImage.path.isNotEmpty);

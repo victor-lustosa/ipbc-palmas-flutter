@@ -29,196 +29,196 @@ class EventsDetailViewState extends State<EventsDetailView>
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              BackAuthTopBarWidget(
-                action: () => nativePop(context),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 24, bottom: 16),
-                child: CachedNetworkImage(
-                  imageUrl: widget.eventEntity.image,
-                  height: 144,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) =>
-                      Container(color: AppColors.grey4),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                  color: const Color.fromRGBO(0, 66, 46, 0.40),
-                  colorBlendMode: BlendMode.color,
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(16),
-                      ),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BackAuthTopBarWidget(
+                  margin: const EdgeInsets.only(top: 22),
+                  action: () => nativePop(context),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 16, bottom: 16),
+                  child: CachedNetworkImage(
+                    imageUrl: widget.eventEntity.image,
+                    height: 144,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) =>
+                        Container(color: AppColors.grey4),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    color: const Color.fromRGBO(0, 66, 46, 0.40),
+                    colorBlendMode: BlendMode.color,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(16),
+                        ),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(bottom: 16),
-                child: Text(
-                  style: AppFonts.defaultFont(
-                    color: AppColors.grey10,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
+                Container(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  child: Text(
+                    style: AppFonts.defaultFont(
+                      color: AppColors.grey10,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    widget.eventEntity.title,
                   ),
-                  widget.eventEntity.title,
                 ),
-              ),
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        style: AppFonts.defaultFont(
-                          color: AppColors.darkGreen,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        getFormattedDateTimeFull(
-                          widget.eventEntity.startDateTime,
-                        ),
+                Row(
+                  children: [
+                    Text(
+                      style: AppFonts.defaultFont(
+                        color: AppColors.darkGreen,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 4, right: 4),
-                        height: 8,
-                        width: 8,
-                        decoration: const BoxDecoration(
-                          color: AppColors.darkGreen,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      Text(
-                        style: AppFonts.defaultFont(
-                          color: AppColors.darkGreen,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        formatHourToString(
-                          date: widget.eventEntity.startDateTime,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Container(
-                      margin: const EdgeInsets.only(bottom: 4, top: 8, right: 8),
-                      child: Text(
-                        style: AppFonts.defaultFont(
-                          color: AppColors.grey10,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        widget.eventEntity.subtitle,
+                      getFormattedDateTimeFull(
+                        widget.eventEntity.startDateTime,
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 22,
-                    child: InkWell(child: Image.asset(AppIcons.iosShare)),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 1),
-                    child: Image.asset(height: 14, AppIcons.locationOn),
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.only(left: 4),
-                      child: Text(
-                        style: AppFonts.defaultFont(
-                          color: AppColors.grey8,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        widget.eventEntity.localName,
+                    Container(
+                      margin: const EdgeInsets.only(left: 4, right: 4),
+                      height: 8,
+                      width: 8,
+                      decoration: const BoxDecoration(
+                        color: AppColors.darkGreen,
+                        shape: BoxShape.circle,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Container(
-                margin: const EdgeInsets.only(bottom: 16, top: 16),
-                child: Text(
-                  style: AppFonts.defaultFont(
-                    color: AppColors.grey8,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  widget.eventEntity.description,
-                ),
-              ),
-              ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(18)),
-                child: SizedBox(
-                  width: context.mediaQuery.size.width,
-                  height: 140,
-                  child: GoogleMap(
-                    scrollGesturesEnabled: false,
-                    myLocationButtonEnabled: false,
-                    mapType: MapType.normal,
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(-10.195851391811726, -48.31897737627334),
-                      zoom: 15,
-                    ),
-                    markers: {
-                      Marker(
-                        markerId: MarkerId('0'),
-                        position: LatLng(
-                          -10.195851391811726,
-                          -48.31897737627334,
-                        ),
-                        onTap: () => {
-                          locationLink = launchInBrowser(_locationLink),
-                        },
+                    Text(
+                      style: AppFonts.defaultFont(
+                        color: AppColors.darkGreen,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
                       ),
-                    },
+                      formatHourToString(
+                        date: widget.eventEntity.startDateTime,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 4, top: 8, right: 8),
+                        child: Text(
+                          style: AppFonts.defaultFont(
+                            color: AppColors.grey10,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          widget.eventEntity.subtitle,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 22,
+                      child: InkWell(child: Image.asset(AppIcons.iosShare)),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(right: 1),
+                      child: Image.asset(height: 14, AppIcons.locationOn),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.only(left: 4),
+                        child: Text(
+                          style: AppFonts.defaultFont(
+                            color: AppColors.grey8,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          widget.eventEntity.localName,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 16, top: 16),
+                  child: Text(
+                    style: AppFonts.defaultFont(
+                      color: AppColors.grey8,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    widget.eventEntity.description,
                   ),
                 ),
-              ),
-              SizedBox(height: 32),
-              ButtonWidget(
-                action: () {},
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+                ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(18)),
+                  child: SizedBox(
+                    width: context.mediaQuery.size.width,
+                    height: 140,
+                    child: GoogleMap(
+                      scrollGesturesEnabled: false,
+                      myLocationButtonEnabled: false,
+                      mapType: MapType.normal,
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(-10.195851391811726, -48.31897737627334),
+                        zoom: 15,
+                      ),
+                      markers: {
+                        Marker(
+                          markerId: MarkerId('0'),
+                          position: LatLng(
+                            -10.195851391811726,
+                            -48.31897737627334,
+                          ),
+                          onTap: () => {
+                            locationLink = launchInBrowser(_locationLink),
+                          },
+                        ),
+                      },
+                    ),
+                  ),
                 ),
-                fixedSize: Size(context.sizeOf.width, 48),
-                backgroundColor: AppColors.darkGreen,
-                shadowColor: AppColors.grey0,
-                foregroundColor: AppColors.white,
-                child: const Text("Inscrições"),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 16, bottom: 40),
-                child: ButtonWidget(
+                SizedBox(height: 32),
+                ButtonWidget(
                   action: () {},
-                  adaptiveButtonType: AdaptiveButtonType.outlined,
-                  sideColor: AppColors.darkGreen,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                   fixedSize: Size(context.sizeOf.width, 48),
-                  backgroundColor: AppColors.white,
+                  backgroundColor: AppColors.darkGreen,
                   shadowColor: AppColors.grey0,
-                  foregroundColor: AppColors.darkGreen,
-                  child: const Text("Contato"),
+                  foregroundColor: AppColors.white,
+                  child: const Text("Inscrições"),
                 ),
-              ),
-            ],
+                Container(
+                  margin: const EdgeInsets.only(top: 16, bottom: 40),
+                  child: ButtonWidget(
+                    action: () {},
+                    adaptiveButtonType: AdaptiveButtonType.outlined,
+                    sideColor: AppColors.darkGreen,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    fixedSize: Size(context.sizeOf.width, 48),
+                    backgroundColor: AppColors.white,
+                    shadowColor: AppColors.grey0,
+                    foregroundColor: AppColors.darkGreen,
+                    child: const Text("Contato"),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

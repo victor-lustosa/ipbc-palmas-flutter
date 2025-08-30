@@ -1,3 +1,6 @@
+import 'package:core_module/src/core/external/repositories/event_repository.dart';
+import 'package:core_module/src/core/infra/use_cases/event_use_cases.dart';
+
 import '../core_module.dart';
 
 class CoreModule extends Module {
@@ -29,8 +32,15 @@ class CoreModule extends Module {
     i.addSingleton<IOfflineAuthUseCases>(
       () => OfflineAuthUseCases(repository: i.get<IsarRepository>()),
     );
+    i.addLazySingleton<IEventRepository>(EventRepository.new);
     i.addLazySingleton(
-          () => CreateEventStore(useCases: i.get<UseCases<SupabaseRepository>>()),
+      () => EventUseCases(repository: i.get<IEventRepository>()),
+    );
+    i.addLazySingleton(
+      () => CreateEventStore(
+        useCases: i.get<UseCases<SupabaseRepository>>(),
+        eventUseCases: i.get<EventUseCases>(),
+      ),
     );
     i.addSingleton(
       () => UseCases<IsarRepository>(repository: i.get<IsarRepository>()),
@@ -40,7 +50,7 @@ class CoreModule extends Module {
         useCases: i.get<UseCases<SupabaseRepository>>(),
         servicesPreviewStore: Modular.get<ServicesPreviewStore>(),
         searchLyricsStore: Modular.get<SearchLyricsStore>(),
-        manageLyricStore: Modular.get<ManageLyricStore>()
+        manageLyricStore: Modular.get<ManageLyricStore>(),
       ),
     );
     i.addLazySingleton<SearchLyricsStore>(SearchLyricsStore.new);

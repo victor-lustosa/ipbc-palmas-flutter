@@ -39,3 +39,4 @@ abstract class ISaveImageUseCases {
     required String bucketName,
   });
 }
+
