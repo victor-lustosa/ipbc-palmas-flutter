@@ -104,12 +104,13 @@ class EventsListViewState extends State<EventsListView>
                           shimmerController: _shimmerController,
                           onLongPressStart: (details) async {
                             await showOptionsDialog(
+                              isBackgroundSolid: true,
                               context: context,
                               itemKey: _bloc.slideCardsStore.itemKey,
                               popupHeightParam: 110,
                               popupWidthParam: 160,
                               popupWidthPositionParam: 160,
-                              verticalMarginParam: 3,
+                              verticalMarginParam: -80,
                               buttons: Column(
                                 children: [
                                   actionButton(
@@ -130,7 +131,7 @@ class EventsListViewState extends State<EventsListView>
                                         arguments: {
                                           "isEditing": true,
                                           "event":
-                                              _bloc.slideCardsStore.eventEntity,
+                                          _bloc.slideCardsStore.eventEntity,
                                         },
                                       );
                                       if (context.mounted) {

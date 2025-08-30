@@ -13,6 +13,7 @@ Future<void> showOptionsDialog({
   double? verticalMarginParam,
   double? popupWidthParam,
   double? popupWidthPositionParam,
+  bool? isBackgroundSolid,
 }) async {
   final RenderBox renderBox = itemKey.currentContext!.findRenderObject() as RenderBox;
   final itemOffset = renderBox.localToGlobal(Offset.zero);
@@ -58,6 +59,7 @@ Future<void> showOptionsDialog({
         itemOffset: itemOffset,
         itemSize: itemSize,
         popupWidth: popupWidthParam,
+        isBackgroundSolid: isBackgroundSolid ?? false,
       );
     },
     transitionBuilder: (context, animation, secondaryAnimation, child) {
@@ -87,6 +89,7 @@ class OptionsDialogWidget extends StatefulWidget {
     required this.itemOffset,
     required this.popupTop,
     this.popupWidth,
+    required this.isBackgroundSolid,
   });
 
   final Offset itemOffset;
@@ -96,6 +99,7 @@ class OptionsDialogWidget extends StatefulWidget {
   final double popupLeft;
   final double? popupWidth;
   final double popupTop;
+  final bool isBackgroundSolid;
 
   @override
   State<OptionsDialogWidget> createState() => _OptionsDialogWidgetState();
@@ -138,7 +142,15 @@ class _OptionsDialogWidgetState extends State<OptionsDialogWidget> {
           top: widget.popupTop,
           left: widget.popupLeft,
           child: ClipRRect(
-            child: BackdropFilter(
+            child: widget.isBackgroundSolid ? Container(
+                width: widget.popupWidth ?? 170,
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.dividerModal.withValues(alpha: .1)),
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: widget.buttons
+            ): BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
               child: Container(
                   width: widget.popupWidth ?? 170,
