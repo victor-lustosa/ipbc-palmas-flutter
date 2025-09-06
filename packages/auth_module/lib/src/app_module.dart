@@ -24,6 +24,7 @@ class AuthModule extends Module {
       () => LoginStore(
         offlineUse: i.get<IOfflineAuthUseCases>(),
         onlineUse: i.get<IOnlineAuthUseCases>(),
+        authCircleAvatarStore: i.get<AuthCircleAvatarStore>(),
       ),
     );
     i.addSingleton<IOnlineAuthUseCases>(

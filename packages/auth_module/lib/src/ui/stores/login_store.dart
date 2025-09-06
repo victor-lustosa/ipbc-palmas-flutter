@@ -3,14 +3,18 @@ import 'package:core_module/core_module.dart';
 
 class LoginStore extends ValueNotifier<GenericState<LoginState>>{
   LoginStore({
+    required AuthCircleAvatarStore authCircleAvatarStore,
     required IOfflineAuthUseCases offlineUse,
     required IOnlineAuthUseCases onlineUse,
   }) : _offlineUseCases = offlineUse,
        _onlineUseCases = onlineUse,
-       super(InitialState<LoginState>());
+        _authCircleAvatarStore = authCircleAvatarStore,
+
+      super(InitialState<LoginState>());
 
   final IOfflineAuthUseCases _offlineUseCases;
   final IOnlineAuthUseCases _onlineUseCases;
+  final AuthCircleAvatarStore _authCircleAvatarStore;
 
   final String _email = 'victor.olustosa@outlook.com';
   final String _password = '!Helena2201';
@@ -76,6 +80,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>>{
   }
 
   void toHome(BuildContext context) {
+    _authCircleAvatarStore.validateAuthentication();
       if(context.mounted){
         pop(context);
       }
