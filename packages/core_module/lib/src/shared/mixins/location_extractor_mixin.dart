@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-
-import '../../../core_module.dart';
 
 mixin LocationExtractorMixin {
 

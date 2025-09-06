@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:core_module/core_module.dart';
 
 import '../../external/repositories/event_repository.dart';
 

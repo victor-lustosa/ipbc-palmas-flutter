@@ -1,6 +1,4 @@
-import 'dart:io';
-import 'package:uno/uno.dart';
-import '../../../../core_module.dart';
+
 import 'package:http/http.dart' as http;
 
 import '../../../shared/mixins/location_extractor_mixin.dart';
