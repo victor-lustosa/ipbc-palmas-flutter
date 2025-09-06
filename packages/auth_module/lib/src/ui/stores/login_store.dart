@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:core_module/core_module.dart';
 
-class LoginStore extends ValueNotifier<GenericState<LoginState>>{
+class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   LoginStore({
     required AuthCircleAvatarStore authCircleAvatarStore,
     required IOfflineAuthUseCases offlineUse,
     required IOnlineAuthUseCases onlineUse,
   }) : _offlineUseCases = offlineUse,
        _onlineUseCases = onlineUse,
-        _authCircleAvatarStore = authCircleAvatarStore,
+       _authCircleAvatarStore = authCircleAvatarStore,
 
-      super(InitialState<LoginState>());
+       super(InitialState<LoginState>());
 
   final IOfflineAuthUseCases _offlineUseCases;
   final IOnlineAuthUseCases _onlineUseCases;
@@ -19,7 +19,11 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>>{
   final String _email = 'victor.olustosa@outlook.com';
   final String _password = '!Helena2201';
 
-  Future<void> logIn(String email, String password, BuildContext context) async {
+  Future<void> logIn(
+    String email,
+    String password,
+    BuildContext context,
+  ) async {
     value = LoadingState<LoginState>();
     Future.delayed(const Duration(seconds: 1), () {
       if (_email == email && _password == password) {
@@ -56,7 +60,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>>{
     final String? token = await _onlineUseCases.signInWithGoogle();
     final UserEntity? currentUser = _onlineUseCases.getCurrentUser();
     saveUserAndToken(currentUser, token);
-    if(context.mounted){
+    if (context.mounted) {
       token != null && token.isNotEmpty ? toHome(context) : null;
     }
   }
@@ -66,7 +70,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>>{
     if (token != null) _offlineUseCases.saveToken(token);
   }
 
- /* // Login Facebook
+  /* // Login Facebook
   Future<void> signInWithFacebook() async {
     await _onlineUseCases.signInWithFacebook();
   }*/
@@ -80,10 +84,14 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>>{
   }
 
   void toHome(BuildContext context) {
-    _authCircleAvatarStore.validateAuthentication();
-      if(context.mounted){
-        pop(context);
-      }
+    Future.delayed(
+      Duration(milliseconds: 200),
+      () => _authCircleAvatarStore.validateAuthentication(),
+    );
+
+    if (context.mounted) {
+      pop(context);
+    }
   }
 
   Future createAccount() async {

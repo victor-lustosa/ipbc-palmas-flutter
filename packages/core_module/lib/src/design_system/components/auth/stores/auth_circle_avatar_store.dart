@@ -16,12 +16,12 @@ class AuthCircleAvatarStore extends ValueNotifier<GenericState<AuthCircleAvatarS
     final result = await _offlineUseCases.getLocalUser();
     if (result != null) {
       userEntity = result;
-      Future.delayed(const Duration(seconds: 1),(){
+      Future.delayed(const Duration(milliseconds: 500),(){
         value = AuthenticatedState();
 
       });
     } else {
-      Future.delayed(const Duration(seconds: 1),(){
+      Future.delayed(const Duration(milliseconds: 500),(){
       value = NotAuthenticatedState();
       });
     }

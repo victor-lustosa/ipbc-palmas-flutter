@@ -42,14 +42,14 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
   Widget build(BuildContext context) {
     bool isSmallDevice = ResponsivityUtil.isSmallDevice(context);
     bool isHorizontal = widget.scrollDirection == Axis.horizontal;
-    Widget placeholder({child}) => ShimmerWidget(
+    Widget placeholder({child, border}) => ShimmerWidget(
       animation: widget.shimmerController,
       child:
           child ??
           Container(
             decoration: BoxDecoration(
               color: Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: border ?? BorderRadius.circular(12),
             ),
           ),
     );
@@ -122,8 +122,18 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
                           height: context.sizeOf.width * .335,
                           width: context.sizeOf.width,
                           fit: BoxFit.cover,
-                          placeholder: (context, url) => placeholder(),
-                          errorWidget: (context, url, error) => placeholder(),
+                          placeholder: (context, url) => placeholder(
+                            border: const BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              topRight: Radius.circular(16),
+                            ),
+                          ),
+                          errorWidget: (context, url, error) => placeholder(
+                            border: const BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              topRight: Radius.circular(16),
+                            ),
+                          ),
                           color: const Color.fromRGBO(0, 66, 46, 0.40),
                           colorBlendMode: BlendMode.color,
                           imageBuilder: (context, imageProvider) => Container(
