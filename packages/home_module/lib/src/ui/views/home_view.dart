@@ -56,94 +56,99 @@ class _HomeViewState extends State<HomeView>
                   state is LoadingServicesState) {
                 bool isSmallDevice = ResponsivityUtil.isSmallDevice(context);
                 return SingleChildScrollView(
-                  child: SizedBox(
-                    width: context.sizeOf.width,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        BackAuthTopBarWidget(isHome: true),
-                        InkWell(
-                          onTap: () {
-                            nativePushNamed(
-                              AppRoutes.servicesListRoute,
-                              context,
-                              arguments: _bloc.servicesList,
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              title(text: "Cultos"),
-                              subtitle(
-                                right: 17,
-                                text:
-                                    "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
-                              ),
-                            ],
-                          ),
-                        ),
-                        CarouselWidget(
-                          shimmerController: _shimmerController,
-                          fontStyle: AppFonts.defaultFont(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.white,
-                          ),
-                          margin: const EdgeInsets.only(
-                            top: 2,
-                            left: 6,
-                            right: 6,
-                            bottom: 9,
-                          ),
-                          route: AppRoutes.servicesCollectionRoute,
+                  child: Stack(
+                    children: [
+                      SizedBox(
+                        width: context.sizeOf.width,
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          width: context.sizeOf.width,
-                          services: _bloc.servicesList,
-                          height: context.sizeOf.width * 0.49,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            _bloc.createEventStore.updateHomeViewCallback =
-                                () => _bloc.add(GetEventsDataEvent());
-                            nativePushNamed(
-                              AppRoutes.eventRoute + AppRoutes.eventsListRoute,
-                              context,
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(top: 15),
-                                child: title(text: "Eventos"),
+                          children: [
+                            const SizedBox(height: 78),
+                            InkWell(
+                              onTap: () {
+                                nativePushNamed(
+                                  AppRoutes.servicesListRoute,
+                                  context,
+                                  arguments: _bloc.servicesList,
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  title(text: "Cultos"),
+                                  subtitle(
+                                    right: 17,
+                                    text:
+                                        "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
+                                  ),
+                                ],
                               ),
-                              subtitle(
-                                right: 18,
-                                text:
-                                    "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
+                            ),
+                            CarouselWidget(
+                              shimmerController: _shimmerController,
+                              fontStyle: AppFonts.defaultFont(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.white,
                               ),
-                            ],
-                          ),
+                              margin: const EdgeInsets.only(
+                                top: 2,
+                                left: 6,
+                                right: 6,
+                                bottom: 9,
+                              ),
+                              route: AppRoutes.servicesCollectionRoute,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              width: context.sizeOf.width,
+                              services: _bloc.servicesList,
+                              height: context.sizeOf.width * 0.49,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                _bloc.createEventStore.updateHomeViewCallback =
+                                    () => _bloc.add(GetEventsDataEvent());
+                                nativePushNamed(
+                                  AppRoutes.eventRoute + AppRoutes.eventsListRoute,
+                                  context,
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 15),
+                                    child: title(text: "Eventos"),
+                                  ),
+                                  subtitle(
+                                    right: 18,
+                                    text:
+                                        "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 12, bottom: 20),
+                              height: _bloc.eventsList.isEmpty
+                                  ? (isSmallDevice
+                                        ? context.sizeOf.width * .59
+                                        : context.sizeOf.width * .59)
+                                  : (isSmallDevice
+                                        ? context.sizeOf.width * .72
+                                        : context.sizeOf.width * .663),
+                              child: SlideCardsWidget(
+                                shimmerController: _shimmerController,
+                                width: isSmallDevice
+                                    ? context.sizeOf.width * .8
+                                    : context.sizeOf.width * .742,
+                                scrollDirection: Axis.horizontal,
+                                route: AppRoutes.detailEventRoute,
+                                entities: _bloc.eventsList,
+                              ),
+                            ),
+                          ],
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 12, bottom: 20),
-                          height: _bloc.eventsList.isEmpty
-                              ? (isSmallDevice
-                                    ? context.sizeOf.width * .59
-                                    : context.sizeOf.width * .59)
-                              : (isSmallDevice
-                                    ? context.sizeOf.width * .72
-                                    : context.sizeOf.width * .663),
-                          child: SlideCardsWidget(
-                            shimmerController: _shimmerController,
-                            width: isSmallDevice
-                                ? context.sizeOf.width * .8
-                                : context.sizeOf.width * .742,
-                            scrollDirection: Axis.horizontal,
-                            route: AppRoutes.detailEventRoute,
-                            entities: _bloc.eventsList,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                      BackAuthTopBarWidget(isHome: true),
+                    ],
                   ),
                 );
               } else {

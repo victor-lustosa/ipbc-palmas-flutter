@@ -47,7 +47,6 @@ class IconWidget extends StatelessWidget {
                 BlendMode.srcIn,
               ),
               iconName!,
-              matchTextDirection: true,
             )
           : Icon(
               size: sizeIcon,

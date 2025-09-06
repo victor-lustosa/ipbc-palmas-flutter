@@ -45,6 +45,7 @@ class AppIcons {
   static const String trash = 'assets/icons/delete.png';
   static const String addNotes = 'assets/icons/add_notes.png';
   static const String addNotesSvg = 'assets/icons/add_notes.svg';
+  static const String logoutSvg = 'assets/icons/logout.svg';
   static const String contentCopy = 'assets/icons/content_copy.png';
   static const String edit = 'assets/icons/edit_square.png';
   static const String info = 'assets/icons/info.png';

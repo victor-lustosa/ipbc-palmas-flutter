@@ -12,6 +12,7 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget>
     with TickerProviderStateMixin {
   final AuthCircleAvatarStore _store = Modular.get<AuthCircleAvatarStore>();
   late final AnimationController _shimmerController;
+  bool isLogoutButtonVisible = false;
 
   @override
   void initState() {
@@ -52,7 +53,11 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget>
             elevation: 0,
             shape: const CircleBorder(),
             action: () => state is AuthenticatedState
-                ? pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute)
+                ? () {
+                    setState(() {
+                      isLogoutButtonVisible = !isLogoutButtonVisible;
+                    });
+                  }
                 : pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute),
             child: Stack(
               alignment: Alignment.center,
@@ -76,40 +81,109 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget>
                   (state is AuthenticatedState &&
                       _store.userEntity.picture.isEmpty))
               ? noProfile()
-              : Container(
-                  width: 32,
-                  height: 32,
-                  decoration: state is AuthenticatedState
-                      ? BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: AppColors.darkGreen,
-                            width: 2,
-                          ),
-                        )
-                      : null,
-                  child: ButtonWidget(
-                    backgroundColor: Colors.transparent,
-                    overlayColor: Colors.transparent,
-                    elevation: 0,
-                    shape: const CircleBorder(),
-                    action: () => state is AuthenticatedState
-                        ? pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute)
-                        : pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute),
-                    child: _store.userEntity.picture.isEmpty
-                        ? placeholder()
-                        : ClipOval(
-                            child: CachedNetworkImage(
-                              imageUrl: _store.userEntity.picture,
-                              width: 32,
-                              height: 32,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) => placeholder(),
-                              errorWidget: (context, url, error) =>
-                                  placeholder(),
+              : Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      width: 32,
+                      height: 32,
+                      decoration: state is AuthenticatedState
+                          ? BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: AppColors.darkGreen,
+                                width: 2,
+                              ),
+                            )
+                          : null,
+                      child: ButtonWidget(
+                        backgroundColor: Colors.transparent,
+                        overlayColor: Colors.transparent,
+                        elevation: 0,
+                        shape: const CircleBorder(),
+                        action: state is AuthenticatedState
+                            ? () {
+                                setState(() {
+                                  isLogoutButtonVisible =
+                                      !isLogoutButtonVisible;
+                                });
+                              }
+                            : () => pushNamed(
+                                AppRoutes.authRoute +
+                                    AppRoutes.loginRoute,
+                              ),
+                        child: _store.userEntity.picture.isEmpty
+                            ? placeholder()
+                            : ClipOval(
+                                child: CachedNetworkImage(
+                                  imageUrl: _store.userEntity.picture,
+                                  width: 32,
+                                  height: 32,
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) =>
+                                      placeholder(),
+                                  errorWidget: (context, url, error) =>
+                                      placeholder(),
+                                ),
+                              ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 40,
+                      right: 0,
+                      child: Visibility(
+                        visible: isLogoutButtonVisible,
+                        child: Material(
+                          color: AppColors.white,
+                          child: Container(
+                            width: 83,
+                            height: 44,
+                            decoration: BoxDecoration(
+                              color: AppColors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: ButtonWidget(
+                              action: () async {},
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.0),
+                              ),
+                              backgroundColor: AppColors.white,
+                              shadowColor: AppColors.grey0,
+                              foregroundColor: AppColors.darkGreen,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Sair",
+                                    style: AppFonts.defaultFont(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                      color: AppColors.darkGreen,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 8),
+                                    child: IconWidget(
+                                      iconFormat: IconFormat.svg,
+                                      size: Size(16, 16),
+                                      iconName: AppIcons.logoutSvg,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                  ),
+                        ),
+                      ),
+                    ),
+                  ],
                 );
         } else {
           return placeholder();
