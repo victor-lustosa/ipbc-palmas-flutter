@@ -27,8 +27,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 25, left: 16, right: 11),
-      width: context.sizeOf.width,
+      margin: const EdgeInsets.only(bottom: 25, left: 16, right: 16),
       child: ListView.separated(
         separatorBuilder: (__, _) {
           return const SizedBox(height: 8);
@@ -40,60 +39,58 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (__, index) {
           final GlobalKey itemKey = GlobalKey();
-          final Widget itemContent = Container(
-            padding: const EdgeInsets.only(left: 8, top: 8, bottom: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
+          final Widget itemContent = Row(
+            children: [
+              Expanded(
+                child: Row(
                   children: [
-                    AlbumCoverWidget(
-                      albumCover: widget.entitiesList[index].albumCover,
-                      height: 48,
-                      width: 48,
+                    Container(
+                      margin: const EdgeInsets.all(8),
+                      child: AlbumCoverWidget(
+                        albumCover: widget.entitiesList[index].albumCover,
+                        height: 48,
+                        width: 48,
+                      ),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          margin: const EdgeInsets.only(left: 8),
-                          width: context.sizeOf.width * .61,
-                          child: Text(
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            widget.entitiesList[index].title,
-                            style: AppFonts.subhead(
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.grey9,
-                              fontSize: 15,
-                            ),
+                        Text(
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          widget.entitiesList[index].title,
+                          style: AppFonts.subhead(
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.grey9,
+                            fontSize: 15,
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 8),
-                          child: Text(
-                            widget.entitiesList[index].group,
-                            style: AppFonts.description(
-                              color: AppColors.grey9,
-                              fontSize: 13,
-                            ),
+                        Text(
+                          widget.entitiesList[index].group,
+                          style: AppFonts.description(
+                            color: AppColors.grey9,
+                            fontSize: 13,
                           ),
                         ),
                       ],
                     ),
                   ],
                 ),
-                IconButtonWidget(
-                  size: 36,
-                  sizeIcon: Platform.isIOS ? 29 : null,
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                  right: ResponsivityUtil.isSmallDevice(context) ? 7 : 12,
+                ),
+                child: IconButtonWidget(
+                  size: Platform.isIOS ? 30 : 34,
                   color: AppColors.darkGreen,
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   iOSIcon: CupertinoIcons.chevron_forward,
                   androidIcon: Icons.navigate_next_sharp,
                 ),
-              ],
-            ),
+              ),
+            ],
           );
 
           return GestureDetector(

@@ -63,8 +63,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                           ? Container(
                               margin: const EdgeInsets.only(
                                 top: 24,
-                                left: 15.5,
-                                right: 15.5,
+                                left: 16,
+                                right: 16,
                               ),
                               child: ListView.separated(
                                 separatorBuilder:
@@ -148,63 +148,69 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                       ),
                                       child: Row(
                                         children: [
-                                          Container(
-                                            margin: const EdgeInsets.only(
-                                              left: 16,
-                                              top: 12,
-                                              bottom: 12,
-                                            ),
-                                            width: context.sizeOf.width * .77,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                  '${_bloc.entitiesList[index].title} ${formatDateToString(_bloc.entitiesList[index].serviceDate)} | ${formatHourToString(date: _bloc.entitiesList[index].serviceDate)}',
-                                                  style: AppFonts.defaultFont(
-                                                    fontWeight: FontWeight.w600,
-                                                    color: AppColors.grey9,
-                                                    fontSize: 15,
-                                                  ),
-                                                ),
-                                                Container(
-                                                  margin: const EdgeInsets.only(
-                                                    bottom: 4,
-                                                    top: 4,
-                                                  ),
-                                                  child: Text(
+                                          Expanded(
+                                            child: Container(
+                                              margin: const EdgeInsets.only(
+                                                left: 16,
+                                                top: 16,
+                                                bottom: 16,
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
                                                     overflow:
                                                         TextOverflow.ellipsis,
-                                                    maxLines: 2,
-                                                    'Mensagem: ${_bloc.entitiesList[index].theme}',
+                                                    maxLines: 1,
+                                                    '${_bloc.entitiesList[index].title} ${formatDateToString(_bloc.entitiesList[index].serviceDate)} | ${formatHourToString(date: _bloc.entitiesList[index].serviceDate)}',
+                                                    style: AppFonts.defaultFont(
+                                                      fontWeight: FontWeight.w600,
+                                                      color: AppColors.grey9,
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    margin: const EdgeInsets.only(
+                                                      bottom: 4,
+                                                      top: 4,
+                                                    ),
+                                                    child: Text(
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 2,
+                                                      'Mensagem: ${_bloc.entitiesList[index].theme}',
+                                                      style: AppFonts.description(
+                                                        color: AppColors.grey8,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    _bloc
+                                                        .entitiesList[index]
+                                                        .preacher,
                                                     style: AppFonts.description(
                                                       color: AppColors.grey8,
                                                     ),
                                                   ),
-                                                ),
-                                                Text(
-                                                  _bloc
-                                                      .entitiesList[index]
-                                                      .preacher,
-                                                  style: AppFonts.description(
-                                                    color: AppColors.grey8,
-                                                  ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                          IconButtonWidget(
-                                            size: Platform.isIOS ? 28 : 32,
-                                            color: AppColors.darkGreen,
-                                            splashColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            iOSIcon:
-                                                CupertinoIcons.chevron_forward,
-                                            androidIcon:
-                                                Icons.navigate_next_sharp,
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              right: ResponsivityUtil.isSmallDevice(context) ? 7 : 12,
+                                            ),
+                                            child: IconButtonWidget(
+                                              size: Platform.isIOS ? 30 : 34,
+                                              color: AppColors.darkGreen,
+                                              splashColor: Colors.transparent,
+                                              highlightColor: Colors.transparent,
+                                              iOSIcon:
+                                                  CupertinoIcons.chevron_forward,
+                                              androidIcon:
+                                                  Icons.navigate_next_sharp,
+                                            ),
                                           ),
                                         ],
                                       ),
