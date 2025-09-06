@@ -14,6 +14,8 @@ class EventModel extends EventEntity {
     required super.signUpLink,
     required super.contactLink,
     required super.createAt,
+    required super.latitude,
+    required super.longitude,
   });
 
   factory EventModel.empty() => EventModel(
@@ -29,6 +31,8 @@ class EventModel extends EventEntity {
     localName: '',
     signUpLink: '',
     contactLink: '',
+    latitude: 0.0,
+    longitude: 0.0,
   );
 
   EventModel copyWith({
@@ -44,6 +48,8 @@ class EventModel extends EventEntity {
     String? signUpLink,
     String? contactLink,
     DateTime? createAt,
+    double? latitude,
+    double? longitude,
   }) {
     return EventModel(
       id: id ?? this.id,
@@ -58,6 +64,8 @@ class EventModel extends EventEntity {
       localName: this.localName,
       signUpLink: this.signUpLink,
       contactLink: this.contactLink,
+      latitude: this.latitude,
+      longitude: this.longitude,
     );
   }
 }

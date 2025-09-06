@@ -24,6 +24,8 @@ class EventAdapter {
       localName: json['local_name'],
       signUpLink: json['sign_up_link'],
       contactLink: json['contact_link'],
+      latitude: json['latitude'],
+      longitude: json['longitude'],
     );
   }
 
@@ -43,6 +45,8 @@ class EventAdapter {
             'sign_up_link': e.signUpLink,
             'contact_link': e.contactLink,
             'create_at': e.createAt,
+            'latitude': e.latitude,
+            'longitude': e.longitude,
           },
         )
         .toList();
@@ -62,6 +66,8 @@ class EventAdapter {
       'sign_up_link': data.signUpLink,
       'contact_link': data.contactLink,
       'create_at': data.createAt.toIso8601String(),
+      'latitude': data.latitude,
+      'longitude': data.longitude,
     };
   }
 
@@ -85,6 +91,8 @@ class EventAdapter {
           signUpLink: entity['sign_up_link'],
           contactLink: entity['contact_link'],
           subtitle: entity['subtitle'],
+          latitude: entity['latitude'],
+          longitude: entity['longitude'],
         ),
       );
     }

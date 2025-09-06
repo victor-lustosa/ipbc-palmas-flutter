@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:core_module/core_module.dart';
 
@@ -17,12 +16,11 @@ class EventsDetailView extends StatefulWidget {
 
 class EventsDetailViewState extends State<EventsDetailView>
     with LaunchUrlMixin, DateMixin {
+
   Future<void>? locationLink;
-  final Uri _locationLink = Uri(
-    scheme: 'https',
-    host: 'maps.app.goo.gl',
-    path: 'SGwA4JvUZ5SWNS287',
-  );
+  Future<void>? signUpLink;
+  Future<void>? contactLink;
+
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +110,11 @@ class EventsDetailViewState extends State<EventsDetailView>
                   children: [
                     Expanded(
                       child: Container(
-                        margin: const EdgeInsets.only(bottom: 4, top: 8, right: 8),
+                        margin: const EdgeInsets.only(
+                          bottom: 4,
+                          top: 8,
+                          right: 8,
+                        ),
                         child: Text(
                           style: AppFonts.defaultFont(
                             color: AppColors.grey10,
@@ -161,37 +163,49 @@ class EventsDetailViewState extends State<EventsDetailView>
                     widget.eventEntity.description,
                   ),
                 ),
-                ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(18)),
-                  child: SizedBox(
-                    width: context.mediaQuery.size.width,
-                    height: 140,
-                    child: GoogleMap(
-                      scrollGesturesEnabled: false,
-                      myLocationButtonEnabled: false,
-                      mapType: MapType.normal,
-                      initialCameraPosition: CameraPosition(
-                        target: LatLng(-10.195851391811726, -48.31897737627334),
-                        zoom: 15,
-                      ),
-                      markers: {
-                        Marker(
-                          markerId: MarkerId('0'),
-                          position: LatLng(
-                            -10.195851391811726,
-                            -48.31897737627334,
+                widget.eventEntity.latitude != null &&
+                        widget.eventEntity.longitude != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(18)),
+                        child: SizedBox(
+                          width: context.mediaQuery.size.width,
+                          height: 140,
+                          child: GoogleMap(
+                            scrollGesturesEnabled: false,
+                            myLocationButtonEnabled: false,
+                            mapType: MapType.normal,
+                            initialCameraPosition: CameraPosition(
+                              target: LatLng(
+                                widget.eventEntity.latitude!,
+                                widget.eventEntity.latitude!,
+                              ),
+                              zoom: 15,
+                            ),
+                            markers: {
+                              Marker(
+                                markerId: MarkerId('0'),
+                                position: LatLng(
+                                  widget.eventEntity.latitude!,
+                                  widget.eventEntity.latitude!,
+                                ),
+                                onTap: () => {
+                                  locationLink = launchInBrowser(Uri.parse(
+                                    "https://www.google.com/maps/search/?api=1&query=${widget.eventEntity.latitude!},${widget.eventEntity.longitude!}",
+                                  )),
+                                },
+                              ),
+                            },
                           ),
-                          onTap: () => {
-                            locationLink = launchInBrowser(_locationLink),
-                          },
                         ),
-                      },
-                    ),
-                  ),
-                ),
+                      )
+                    : const SizedBox(height: 30),
                 SizedBox(height: 32),
                 ButtonWidget(
-                  action: () {},
+                  action: () {
+                    signUpLink = launchInBrowser(Uri.parse(
+                      widget.eventEntity.signUpLink,
+                    ));
+                  },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
@@ -204,7 +218,11 @@ class EventsDetailViewState extends State<EventsDetailView>
                 Container(
                   margin: const EdgeInsets.only(top: 16, bottom: 40),
                   child: ButtonWidget(
-                    action: () {},
+                    action: () {
+                      contactLink = launchInBrowser(Uri.parse(
+                        widget.eventEntity.contactLink,
+                      ));
+                    },
                     adaptiveButtonType: AdaptiveButtonType.outlined,
                     sideColor: AppColors.darkGreen,
                     shape: RoundedRectangleBorder(

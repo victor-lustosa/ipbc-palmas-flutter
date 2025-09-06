@@ -13,6 +13,8 @@ class EventEntity {
     required this.signUpLink,
     required this.contactLink,
     required this.createAt,
+    this.latitude,
+    this.longitude,
   });
 
   final String? id;
@@ -27,6 +29,8 @@ class EventEntity {
   final String signUpLink;
   final String contactLink;
   final DateTime createAt;
+  final double? latitude;
+  final double? longitude;
 
   @override
   bool operator ==(Object other) {

@@ -8,17 +8,19 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     with ImageMixin, ConnectivityMixin, DateMixin, ValidationAndFormatMixin {
   bool isSwitchOn = false;
   bool isEditing = false;
-  bool isChangedOrAdded  = false;
+  bool isChangedOrAdded = false;
   Function? updateEventListViewCallback;
   Function? updateHomeViewCallback;
   final IUseCases _useCases;
   final IEventUseCases _eventUseCases;
   final String eventPath = 'event';
 
-  CreateEventStore({required IUseCases useCases, required IEventUseCases eventUseCases})
-      : _eventUseCases = eventUseCases,
+  CreateEventStore({
+    required IUseCases useCases,
+    required IEventUseCases eventUseCases,
+  }) : _eventUseCases = eventUseCases,
        _useCases = useCases,
-      super(InitialState<CreateEventState>()) {
+       super(InitialState<CreateEventState>()) {
     controllerValidators = {
       eventTitleController: isEventTitleValid,
       eventSubtitleController: isEventSubtitleValid,
@@ -50,7 +52,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   final String contactLinkErrorText =
       'por favor, insira o link do contato do evento.';
   final String eventLocationErrorText =
-      'por favor, insira o link da localização do evento.';
+      'por favor, insira um link de localização válido.';
   final String eventLocationNameErrorText =
       'por favor, insira o nome da localização do evento.';
   final String eventDescriptionErrorText =
@@ -89,6 +91,20 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     }
   }
 
+  locationValidation(String? data, ValueNotifier<bool> isValid) {
+    if (!isLocationLinkValid(data)) {
+      changeValue(isValid, false);
+      return null;
+    } else {
+      changeValue(isValid, true);
+      return null;
+    }
+  }
+
+  bool isLocationLinkValid(String? data) {
+    return (isEmptyData(data) || (isValidGoogleMapsLink(data!)));
+  }
+
   fillFormWithEvent(EventEntity event) {
     eventEntity = event;
     eventTitleController.text = event.title;
@@ -119,6 +135,12 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
         allTextValid = false;
       }
     });
+
+    if (!isLocationLinkValid(eventLocationController.text)) {
+      changeValue(isEventLocationValid, false);
+      allTextValid = false;
+    }
+
     final imageValid = isEditing ? true : coverImage.path.trim().isNotEmpty;
     changeValue(isCoverImageValid, imageValid);
 
@@ -154,7 +176,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     }
   }
 
-  EventEntity fillEventEntity(String resultUrl) {
+  EventEntity fillEventEntity(String resultUrl, Map<String, double>? latLong) {
     EventEntity entity = EventEntity(
       id: isEditing ? eventEntity.id : null,
       title: eventTitleController.text,
@@ -168,20 +190,39 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       signUpLink: eventLinkController.text,
       contactLink: contactLinkController.text,
       createAt: isEditing ? eventEntity.createAt : DateTime.now(),
+      latitude: latLong?['lat'],
+      longitude: latLong?['lng'],
     );
     return entity;
   }
 
+  bool isValidGoogleMapsLink(String url) {
+    final regex = RegExp(r'^https:\/\/maps\.app\.goo\.gl\/[A-Za-z0-9]+$');
+    return regex.hasMatch(url);
+  }
 
-
-
-  Future<void> addData(BuildContext context) async {
-    final latLong = await   _eventUseCases.getLocationFromUrl(url: 'https://maps.app.goo.gl/Vz46eoU2RGgsdBmY8');
+  Future<bool> addData(BuildContext context) async {
     if (validateAllFields()) {
       final response = await isConnected();
       if (response) {
+         Map<String, double>? latLong;
+        if (eventLocationController.text.isNotEmpty &&
+            isValidGoogleMapsLink(eventLocationController.text)) {
+          latLong = await _eventUseCases
+              .getLocationFromUrl(url: eventLocationController.text);
 
-
+          if (latLong == null &&
+              eventLocationController.text.isNotEmpty &&
+              context.mounted) {
+            await showCustomErrorDialog(
+              context: context,
+              title: 'Erro',
+              message:
+                  'Não foi possível extrair a localização do link fornecido. Por favor, verifique o link e tente novamente.',
+            );
+           return  Future.value(false);
+          }
+        }
         value = AddDataEvent<CreateEventState>();
         String? resultUrl;
         bool isImageUpdated = (isEditing && coverImage.path.isNotEmpty);
@@ -197,7 +238,10 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
         if (resultUrl != null || !isImageUpdated) {
           await _useCases.upsert(
             data: EventAdapter.toMap(
-              fillEventEntity(isEditing ? eventEntity.image : resultUrl!),
+              fillEventEntity(
+                isEditing ? eventEntity.image : resultUrl!,
+                latLong,
+              ),
             ),
             params: {'table': 'event'},
           );
@@ -210,11 +254,14 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
             );
           }
           value = DataAddedState<CreateEventState>();
+         return  Future.value(true);
         }
       } else {
         value = NoConnectionState<CreateEventState>();
+        return Future.value(false);
       }
     }
+    return Future.value(false);
   }
 
   Future<dynamic> delete(EventEntity entity) async {
