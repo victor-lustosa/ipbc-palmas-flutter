@@ -2,10 +2,10 @@
 import '../../../../core_module.dart';
 
 abstract class IOfflineAuthUseCases
-    implements IGetLocalUser, ISaveLocalUser, IGetToken, ISaveToken {}
+    implements IGetLocalUser, ISaveLocalUser, IGetToken, ISaveToken, ILogout{}
 
 abstract class IOnlineAuthUseCases
-    implements ISignInEmail, ISignInGoogle, IGetCurrentUser, ISignInFacebook {}
+    implements ISignInEmail, ISignInGoogle, IGetCurrentUser, ISignInFacebook, ILogout{}
 
 abstract class ISignInEmail {
   Future<String?> signInWithEmail(String email, String password);
@@ -32,6 +32,10 @@ abstract class IGetToken {
 
 abstract class ISaveLocalUser {
   void saveLocalUser(UserEntity user);
+}
+
+abstract class ILogout {
+  dynamic logout({Map<String, dynamic>? params});
 }
 
 abstract class ISaveToken {

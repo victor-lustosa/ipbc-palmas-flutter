@@ -27,4 +27,10 @@ class OnlineAuthUseCases implements IOnlineAuthUseCases {
   Stream streamFacebook() {
    return repository.streamFacebook();
   }
+
+  @override
+  logout({Map<String, dynamic>? params}) {
+    // TODO: implement deleteCurrentUser
+    throw UnimplementedError();
+  }
 }

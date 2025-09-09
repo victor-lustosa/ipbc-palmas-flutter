@@ -150,7 +150,9 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget>
                               ],
                             ),
                             child: ButtonWidget(
-                              action: () async {},
+                              action: () async {
+                                _store.logout();
+                              },
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4.0),
                               ),

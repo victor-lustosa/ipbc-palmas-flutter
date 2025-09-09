@@ -33,4 +33,9 @@ class OfflineAuthUseCases implements IOfflineAuthUseCases {
   @override
   void saveLocalUser(UserEntity user) =>
       repository.add<IsarUserDTO>(data: IsarUserDTO.create(user));
+
+  @override
+  dynamic logout({Map<String, dynamic>? params}) {
+     return repository.delete(params: params);
+  }
 }

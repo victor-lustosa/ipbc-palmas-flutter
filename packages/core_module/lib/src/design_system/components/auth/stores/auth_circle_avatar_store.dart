@@ -26,6 +26,15 @@ class AuthCircleAvatarStore extends ValueNotifier<GenericState<AuthCircleAvatarS
       });
     }
   }
+
+  void logout() async{
+    final result = await _offlineUseCases.logout(params: {'id': userEntity.id});
+    print(result);
+    userEntity = UserModel.empty();
+    Future.delayed(const Duration(milliseconds: 500),(){
+      value = NotAuthenticatedState();
+    });
+  }
 }
 
 @immutable
