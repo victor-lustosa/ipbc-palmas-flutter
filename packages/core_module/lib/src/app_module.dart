@@ -20,7 +20,14 @@ class CoreModule extends Module {
     i.addSingleton<SupabaseRepository>(
       () => SupabaseRepository(supabaseClient: i.get<SupabaseClient>()),
     );
-
+    i.addSingleton<IAuthUseCases>(
+      () => AuthUseCases(
+        offlineRepository: i.get<IsarRepository>(),
+        onlineRepository: SupaAuthRepository(
+          supaClient: i.get<SupabaseClient>(),
+        ),
+      ),
+    );
     i.addLazySingleton(
       () => AuthCircleAvatarStore(authUseCase: i.get<IAuthUseCases>()),
     );
@@ -29,15 +36,6 @@ class CoreModule extends Module {
     i.addSingleton(
       () =>
           UseCases<SupabaseRepository>(repository: i.get<SupabaseRepository>()),
-    );
-    //i.addSingleton(() => MainTopBarStore());
-    i.addSingleton<IAuthUseCases>(
-      () => AuthUseCases(
-        offlineRepository: i.get<IsarRepository>(),
-        onlineRepository: SupaAuthRepository(
-          supaClient: i.get<SupabaseClient>(),
-        ),
-      ),
     );
     i.addLazySingleton<IEventRepository>(EventRepository.new);
     i.addLazySingleton(

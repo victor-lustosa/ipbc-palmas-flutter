@@ -61,9 +61,9 @@ export 'src/design_system/components/dropdowns/dropdown_widget.dart';
 export 'src/design_system/components/exceptions/generic_error_view.dart';
 export 'src/design_system/components/exceptions/no_connection_view.dart';
 export 'src/design_system/components/exceptions/unknown_route_view.dart';
-export 'src/design_system/components/auth/auth_circle_avatar_widget.dart';
+export 'src/auth/components/auth_circle_avatar_widget.dart';
 
-export 'src/design_system/components/auth/stores/auth_circle_avatar_store.dart';
+export 'src/auth/components/stores/auth_circle_avatar_store.dart';
 export 'src/design_system/components/bottom_bar/material_bottom_bar_widget.dart';
 export 'src/design_system/components/dialogs/error_dialog_widget.dart';
 export 'src/design_system/components/dialogs/options_dialog_widget.dart';
@@ -90,8 +90,8 @@ export 'src/core/domain/entities/lyric_entity.dart';
 export 'src/core/domain/entities/verse_entity.dart';
 export 'src/core/domain/entities/service_entity.dart';
 export 'src/core/domain/entities/services_entity.dart';
-export 'src/core/domain/entities/auth/user_entity.dart';
-export 'src/core/domain/entities/auth/auth_credentials.dart';
+export 'src/auth/domain/entities/user_entity.dart';
+export 'src/auth/domain/entities/auth_credentials.dart';
 export 'src/core/domain/entities/liturgy_entity.dart';
 export 'src/core/domain/entities/event_entity.dart';
 
@@ -102,9 +102,8 @@ export 'src/core/infra/adapters/liturgy_adapter.dart';
 export 'src/core/infra/adapters/verse_adapter.dart';
 export 'src/core/infra/adapters/lyric_adapter.dart';
 export 'src/core/infra/adapters/service_adapter.dart';
-export 'src/core/infra/adapters/isar/isar_auth_adapter.dart';
-export 'src/core/infra/models/isar_dtos/isar_credentials_dto.dart';
-export 'src/core/infra/models/isar_dtos/isar_user_dto.dart';
+export 'src/auth/infra/isar_dtos/isar_credentials_dto.dart';
+export 'src/auth/infra/isar_dtos/isar_user_dto.dart';
 export 'src/core/infra/use_cases/use_cases.dart';
 
 export 'src/core/external/repositories/supa_repository.dart';

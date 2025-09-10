@@ -19,7 +19,7 @@ migrate_working_dir/
 *.iws
 .idea/
 lib/src/core/configs/api_keys.dart
-lib/src/core/infra/models/isar_dtos/*.g.dart
+lib/src/auth/infra/isar_dtos/*.g.dart
 lib/src/configs/firebase_options.dart
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
