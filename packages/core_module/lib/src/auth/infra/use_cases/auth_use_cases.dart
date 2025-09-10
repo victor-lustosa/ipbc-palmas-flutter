@@ -19,7 +19,7 @@ class AuthUseCases implements IAuthUseCases {
     _saveUserAndCredentials(
       currentUser,
       AuthCredentials(
-        token: token ?? '',
+        token: token,
         provider: currentUser?.provider ?? '',
         role: currentUser?.role ?? '',
       ),
