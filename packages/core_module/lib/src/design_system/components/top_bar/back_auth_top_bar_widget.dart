@@ -20,23 +20,19 @@ class BackAuthTopBarWidget extends StatefulWidget {
 class _BackAuthTopBarWidgetState extends State<BackAuthTopBarWidget> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          margin:
-              widget.margin ??
-              const EdgeInsets.only(top: 22, left: 16, right: 16, bottom: 24),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              (widget.isHome ?? false)
-                  ? LogoIconWidget()
-                  : BackButtonWidget(action: widget.action),
-              AuthCircleAvatarWidget(),
-            ],
-          ),
-        ),
-      ],
+    return Container(
+      margin:
+          widget.margin ??
+          const EdgeInsets.only(top: 22, left: 16, right: 16, bottom: 24),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          (widget.isHome ?? false)
+              ? LogoIconWidget()
+              : BackButtonWidget(action: widget.action),
+          AuthCircleAvatarWidget(),
+        ],
+      ),
     );
   }
 }
