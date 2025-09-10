@@ -4,16 +4,12 @@ import 'package:core_module/core_module.dart';
 class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   LoginStore({
     required AuthCircleAvatarStore authCircleAvatarStore,
-    required IOfflineAuthUseCases offlineUse,
-    required IOnlineAuthUseCases onlineUse,
-  }) : _offlineUseCases = offlineUse,
-       _onlineUseCases = onlineUse,
+    required IAuthUseCases useCases,
+  }) : _useCases = useCases,
        _authCircleAvatarStore = authCircleAvatarStore,
-
        super(InitialState<LoginState>());
 
-  final IOfflineAuthUseCases _offlineUseCases;
-  final IOnlineAuthUseCases _onlineUseCases;
+  final IAuthUseCases _useCases;
   final AuthCircleAvatarStore _authCircleAvatarStore;
 
   final String _email = 'victor.olustosa@outlook.com';
@@ -54,27 +50,16 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     //}
   }
 
-  //Login Google
   Future<void> nativeGoogleSignIn(BuildContext context) async {
     value = LoadingState<LoginState>();
-    final String? token = await _onlineUseCases.signInWithGoogle();
-    UserEntity? currentUser = _onlineUseCases.getCurrentUser();
-    saveUserAndCredentials(
-      currentUser,
-      AuthCredentials(
-        token: token ?? '',
-        provider: currentUser?.provider ?? '',
-        role: currentUser?.role ?? '',
-      ),
-    );
+    final token = await _useCases.signInWithGoogle();
     if (context.mounted) {
-      token != null && token.isNotEmpty ? toHome(context) : null;
+      if(token != null && token.isNotEmpty){
+        toHome(context);
+      } else {
+        value = InitialState<LoginState>();
+      }
     }
-  }
-
-  Future<void> saveUserAndCredentials(UserEntity? currentUser, AuthCredentials auth) async {
-    await _offlineUseCases.saveCredentials(auth);
-    if(currentUser != null) _offlineUseCases.saveLocalUser(currentUser);
   }
 
   /* // Login Facebook
@@ -104,7 +89,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   Future createAccount() async {
     //_useCase.add('auth', HiveAuthDTO(token: emailController.text,));
     Future.delayed(const Duration(microseconds: 300), () {
-      navigate('/login');
+      navigate(AppRoutes.loginRoute);
     });
   }
 }

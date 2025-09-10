@@ -1,8 +1,15 @@
-
 import '../../../../../core_module.dart';
 
 abstract class IOnlineAuthRepository
-    implements ISignInEmail, ISignInGoogle, IGetCurrentUser, ISignInFacebook , ILogoutWithGoogle{}
+    implements
+        ISignInEmail,
+        ISignInGoogle,
+        IGetCurrentUser,
+        ISignInFacebook,
+        ILogoutWithGoogle {}
+
+abstract class IOfflineAuthRepository
+    implements IGetLocalUser, IGetToken, ISaveLocalUser, ISaveToken {}
 
 abstract class ISignInEmail {
   Future<String?> signInWithEmail(String email, String password);
@@ -24,10 +31,6 @@ abstract class ISignInFacebook {
 abstract class IGetCurrentUser {
   UserEntity? getCurrentUser();
 }
-
-abstract class IOfflineAuthRepository
-    implements IGetLocalUser, IGetToken, ISaveLocalUser , ISaveToken{}
-
 
 abstract class IGetLocalUser {
   Future<UserEntity?> getLocalUser();

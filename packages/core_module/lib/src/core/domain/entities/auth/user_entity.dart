@@ -134,7 +134,7 @@ class UserEntity {
     isAnonymous: user.isAnonymous,
   );
 
-  factory UserEntity.createFromIsar(IsarUserDTO dto) => UserEntity(
+  factory UserEntity.fromIsar(IsarUserDTO dto) => UserEntity(
     id: dto.id.toString(),
     picture: dto.picture,
     appMetadata: {},
@@ -157,6 +157,6 @@ class UserEntity {
     invitedAt: dto.invitedAt,
     actionLink: dto.actionLink,
     emailConfirmedAt: dto.emailConfirmedAt,
-    phoneConfirmedAt: dto.phoneConfirmedAt
+    phoneConfirmedAt: dto.phoneConfirmedAt,
   );
 }

@@ -22,8 +22,7 @@ class AuthModule extends Module {
   void binds(i) {
     i.addLazySingleton(
       () => LoginStore(
-        offlineUse: i.get<IOfflineAuthUseCases>(),
-        onlineUse: i.get<IOnlineAuthUseCases>(),
+        useCases: i.get<IAuthUseCases>(),
         authCircleAvatarStore: i.get<AuthCircleAvatarStore>(),
       ),
     );

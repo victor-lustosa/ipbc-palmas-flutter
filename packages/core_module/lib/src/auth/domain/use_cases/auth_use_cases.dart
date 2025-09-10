@@ -1,11 +1,15 @@
-
 import '../../../../core_module.dart';
 
-abstract class IOfflineAuthUseCases
-    implements IGetLocalUser, ISaveLocalUser, IGetCredentials, ISaveCredentials, ILogout{}
-
-abstract class IOnlineAuthUseCases
-    implements ISignInEmail, ISignInGoogle, IGetCurrentUser, ISignInFacebook, ILogout{}
+abstract class IAuthUseCases
+    implements
+        ISignInEmail,
+        ISignInGoogle,
+        ISignInFacebook,
+        ILogout,
+        IGetLocalUser,
+        ISaveLocalUser,
+        IGetCredentials,
+        ISaveCredentials {}
 
 abstract class ISignInEmail {
   Future<String?> signInWithEmail(String email, String password);
@@ -14,10 +18,12 @@ abstract class ISignInEmail {
 abstract class ISignInGoogle {
   Future<String?> signInWithGoogle();
 }
+
 abstract class ISignInFacebook {
   Future<void> signInWithFacebook();
-  Stream streamFacebook();
+  // Stream streamFacebook();
 }
+
 abstract class IGetCurrentUser {
   UserEntity? getCurrentUser();
 }
@@ -35,7 +41,7 @@ abstract class ISaveLocalUser {
 }
 
 abstract class ILogout {
-  dynamic logoutWithGoogle({Map<String, dynamic>? params});
+  dynamic logoutWithGoogle({required int id, required String? provider});
 }
 
 abstract class ISaveCredentials {

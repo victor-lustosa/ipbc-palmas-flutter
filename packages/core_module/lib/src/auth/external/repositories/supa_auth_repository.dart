@@ -2,12 +2,10 @@ import 'dart:async';
 
 import 'package:core_module/core_module.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
 import '../../infra/repositories/auth_repositories.dart';
 
-const List<String> _scopes = <String>[
-  'email',
-  'profile',
-];
+const List<String> _scopes = <String>['email', 'profile'];
 
 class SupaAuthRepository implements IOnlineAuthRepository {
   SupaAuthRepository({required SupabaseClient supaClient})
@@ -17,7 +15,6 @@ class SupaAuthRepository implements IOnlineAuthRepository {
 
   final SupabaseClient _supaClient;
   late final GoogleSignIn googleSignIn;
-  late final GoogleSignInAccount? user;
 
   @override
   UserEntity? getCurrentUser() {
@@ -32,28 +29,32 @@ class SupaAuthRepository implements IOnlineAuthRepository {
       clientId: ApiKeys.iosCredencial,
       serverClientId: ApiKeys.webCredencial,
     );
+    try {
+      GoogleSignInAccount? user = await googleSignIn.authenticate();
+      final GoogleSignInAuthentication googleAuth = user.authentication;
+      final GoogleSignInClientAuthorization? authorization = await user
+          .authorizationClient
+          .authorizationForScopes(_scopes);
+      final idToken = googleAuth.idToken;
+      final accessToken = authorization?.accessToken;
 
-    user = await googleSignIn.authenticate();
-    final GoogleSignInAuthentication? googleAuth = user?.authentication;
-    final GoogleSignInClientAuthorization? authorization = await user?.authorizationClient.authorizationForScopes(_scopes);
-    final idToken = googleAuth?.idToken;
-    final accessToken = authorization?.accessToken;
+      if (idToken == null) {
+        throw 'No ID Token found.';
+      }
 
-    if (idToken == null) {
-      throw 'No ID Token found.';
+      if (accessToken == null) {
+        throw 'No Access Token found.';
+      }
+
+      await _supaClient.auth.signInWithIdToken(
+        provider: OAuthProvider.google,
+        idToken: idToken,
+        accessToken: accessToken,
+      );
+      return idToken;
+    } catch (e) {
+      return null;
     }
-
-    if (accessToken == null) {
-      throw 'No Access Token found.';
-    }
-
-    await _supaClient.auth.signInWithIdToken(
-      provider: OAuthProvider.google,
-      idToken: idToken,
-      accessToken: accessToken,
-    );
-
-    return idToken;
   }
 
   @override

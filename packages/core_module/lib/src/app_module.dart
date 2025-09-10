@@ -2,6 +2,7 @@ import 'package:core_module/src/core/external/repositories/event_repository.dart
 import 'package:core_module/src/core/infra/use_cases/event_use_cases.dart';
 
 import '../core_module.dart';
+import 'auth/infra/use_cases/auth_use_cases.dart';
 
 class CoreModule extends Module {
   static BindConfig<T> blocConfig<T extends Bloc>() {
@@ -19,13 +20,9 @@ class CoreModule extends Module {
     i.addSingleton<SupabaseRepository>(
       () => SupabaseRepository(supabaseClient: i.get<SupabaseClient>()),
     );
-    i.addSingleton<IOnlineAuthUseCases>(
-          () => OnlineAuthUseCases(
-        repository: SupaAuthRepository(supaClient: i.get<SupabaseClient>()),
-      ),
-    );
+
     i.addLazySingleton(
-      () => AuthCircleAvatarStore(offlineUse: i.get<IOfflineAuthUseCases>(), onlineUse: i.get<IOnlineAuthUseCases>()),
+      () => AuthCircleAvatarStore(authUseCase: i.get<IAuthUseCases>()),
     );
     i.addSingleton<Isar>(() => Isar.getInstance());
     i.addSingleton<IsarRepository>(() => IsarRepository(isar: i.get<Isar>()));
@@ -34,8 +31,13 @@ class CoreModule extends Module {
           UseCases<SupabaseRepository>(repository: i.get<SupabaseRepository>()),
     );
     //i.addSingleton(() => MainTopBarStore());
-    i.addSingleton<IOfflineAuthUseCases>(
-      () => OfflineAuthUseCases(repository: i.get<IsarRepository>()),
+    i.addSingleton<IAuthUseCases>(
+      () => AuthUseCases(
+        offlineRepository: i.get<IsarRepository>(),
+        onlineRepository: SupaAuthRepository(
+          supaClient: i.get<SupabaseClient>(),
+        ),
+      ),
     );
     i.addLazySingleton<IEventRepository>(EventRepository.new);
     i.addLazySingleton(

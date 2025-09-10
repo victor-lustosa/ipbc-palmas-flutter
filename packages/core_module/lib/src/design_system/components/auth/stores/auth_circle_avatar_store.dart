@@ -1,48 +1,40 @@
-import 'package:flutter/cupertino.dart';
 import 'package:core_module/core_module.dart';
+import 'package:flutter/cupertino.dart';
 
-class AuthCircleAvatarStore extends ValueNotifier<GenericState<AuthCircleAvatarState>> {
-  AuthCircleAvatarStore({required IOfflineAuthUseCases offlineUse, required IOnlineAuthUseCases onlineUse})
-      : _onlineUseCases = onlineUse,
-        _offlineUseCases = offlineUse,
+class AuthCircleAvatarStore
+    extends ValueNotifier<GenericState<AuthCircleAvatarState>> {
+  AuthCircleAvatarStore({required IAuthUseCases authUseCase})
+    : _authUseCase = authUseCase,
       super(InitialState<AuthCircleAvatarState>());
 
   UserEntity userEntity = UserEntity.empty();
 
-  late final IOfflineAuthUseCases _offlineUseCases;
-  late final IOnlineAuthUseCases _onlineUseCases;
+  late final IAuthUseCases _authUseCase;
 
   Future<void> validateAuthentication() async {
     value = LoadingState<AuthCircleAvatarState>();
 
-    final result = await _offlineUseCases.getLocalUser();
+    final result = await _authUseCase.getLocalUser();
     if (result != null) {
       userEntity = result;
-      Future.delayed(const Duration(milliseconds: 500),(){
+      Future.delayed(const Duration(milliseconds: 500), () {
         value = AuthenticatedState();
       });
     } else {
-      Future.delayed(const Duration(milliseconds: 500),(){
-      value = NotAuthenticatedState();
+      Future.delayed(const Duration(milliseconds: 500), () {
+        value = NotAuthenticatedState();
       });
     }
   }
 
-  void logout() async{
+  void logout() async {
     value = LoadingState<AuthCircleAvatarState>();
-    switch(userEntity.provider){
-      case 'google':
-        await _onlineUseCases.logoutWithGoogle();
-        await _offlineUseCases.logoutWithGoogle(params: {'id': int.parse(userEntity.id)});
-        break;
-      case 'facebook':
-        //await logoutWithGoogle();
-        break;
-      default:
-        //await logoutWithGoogle();
-    }
+    await _authUseCase.logoutWithGoogle(
+      id: int.parse(userEntity.id),
+      provider: userEntity.provider,
+    );
     userEntity = UserEntity.empty();
-    Future.delayed(const Duration(milliseconds: 500),(){
+    Future.delayed(const Duration(milliseconds: 500), () {
       value = NotAuthenticatedState();
     });
   }
