@@ -42,7 +42,7 @@ class ServicesPreviewStore
         );
       }
     }
-    return LyricModel(
+    return LyricEntity(
       id: MockUtil.createId(),
       title: 'Título Padrão',
       group: 'Grupo Padrão',

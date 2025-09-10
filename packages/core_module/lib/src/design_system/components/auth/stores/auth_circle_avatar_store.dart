@@ -7,7 +7,7 @@ class AuthCircleAvatarStore extends ValueNotifier<GenericState<AuthCircleAvatarS
         _offlineUseCases = offlineUse,
       super(InitialState<AuthCircleAvatarState>());
 
-  UserEntity userEntity = UserModel.empty();
+  UserEntity userEntity = UserEntity.empty();
 
   late final IOfflineAuthUseCases _offlineUseCases;
   late final IOnlineAuthUseCases _onlineUseCases;
@@ -28,11 +28,20 @@ class AuthCircleAvatarStore extends ValueNotifier<GenericState<AuthCircleAvatarS
     }
   }
 
-  void logoutWithGoogle() async{
-    await _onlineUseCases.logoutWithGoogle();
-    final result = await _offlineUseCases.logoutWithGoogle(params: {'id': userEntity.id});
-    print(result);
-    userEntity = UserModel.empty();
+  void logout() async{
+    value = LoadingState<AuthCircleAvatarState>();
+    switch(userEntity.provider){
+      case 'google':
+        await _onlineUseCases.logoutWithGoogle();
+        await _offlineUseCases.logoutWithGoogle(params: {'id': int.parse(userEntity.id)});
+        break;
+      case 'facebook':
+        //await logoutWithGoogle();
+        break;
+      default:
+        //await logoutWithGoogle();
+    }
+    userEntity = UserEntity.empty();
     Future.delayed(const Duration(milliseconds: 500),(){
       value = NotAuthenticatedState();
     });

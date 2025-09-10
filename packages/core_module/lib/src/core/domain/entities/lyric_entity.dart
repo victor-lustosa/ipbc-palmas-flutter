@@ -15,4 +15,31 @@ class LyricEntity {
     required this.group,
     required this.verses,
   });
+
+  factory LyricEntity.empty() => LyricEntity(
+    id: MockUtil.createId(),
+    createAt: '',
+    title: '',
+    group: '',
+    albumCover: '',
+    verses: [],
+  );
+
+  LyricEntity copyWith({
+    String? id,
+    String? title,
+    String? createAt,
+    String? group,
+    String? albumCover,
+    List<VerseEntity>? verses,
+  }) {
+    return LyricEntity(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      createAt: createAt ?? this.createAt,
+      albumCover: albumCover ?? this.albumCover,
+      group: group ?? this.group,
+      verses: verses ?? this.verses,
+    );
+  }
 }

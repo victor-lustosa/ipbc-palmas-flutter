@@ -58,20 +58,23 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   Future<void> nativeGoogleSignIn(BuildContext context) async {
     value = LoadingState<LoginState>();
     final String? token = await _onlineUseCases.signInWithGoogle();
-    final UserEntity? currentUser = _onlineUseCases.getCurrentUser();
-    saveUserAndCredentials(currentUser, AuthCredentials(
-      token: token ?? '',
-      provider: 'google',
-      role: currentUser?.role ?? '',
-    ),);
+    UserEntity? currentUser = _onlineUseCases.getCurrentUser();
+    saveUserAndCredentials(
+      currentUser,
+      AuthCredentials(
+        token: token ?? '',
+        provider: currentUser?.provider ?? '',
+        role: currentUser?.role ?? '',
+      ),
+    );
     if (context.mounted) {
       token != null && token.isNotEmpty ? toHome(context) : null;
     }
   }
 
-  Future<void> saveUserAndCredentials(currentUser, AuthCredentials auth) async {
-    if (currentUser != null) _offlineUseCases.saveLocalUser(currentUser);
-    _offlineUseCases.saveCredentials(auth);
+  Future<void> saveUserAndCredentials(UserEntity? currentUser, AuthCredentials auth) async {
+    await _offlineUseCases.saveCredentials(auth);
+    if(currentUser != null) _offlineUseCases.saveLocalUser(currentUser);
   }
 
   /* // Login Facebook

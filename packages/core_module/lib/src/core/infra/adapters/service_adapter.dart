@@ -8,10 +8,10 @@ import '../../../shared/mixins/flatten_mixin.dart';
 class ServiceAdapter {
   ServiceAdapter._();
 
-  static ServiceModel fromJson(String source) => fromMap(json.decode(source));
+  static ServiceEntity fromJson(String source) => fromMap(json.decode(source));
 
-  static ServiceModel fromMap(dynamic json) {
-    return ServiceModel(
+  static ServiceEntity fromMap(dynamic json) {
+    return ServiceEntity(
       id: json['id'],
       image: json['image'],
       serviceLiturgiesTableId: json['service_liturgies_table_id'],

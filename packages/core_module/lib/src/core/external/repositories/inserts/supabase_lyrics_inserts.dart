@@ -10,7 +10,7 @@ void main() async {
     supabaseClient: Supabase.instance.client,
   );
   try {
-    List<LyricModel> lyricsInserted =
+    List<LyricEntity> lyricsInserted =
         await SupaServicesUtil.convertUnknownLyrics(
           'assets/data/unknown-lyrics/lyrics_mock.json',
         );

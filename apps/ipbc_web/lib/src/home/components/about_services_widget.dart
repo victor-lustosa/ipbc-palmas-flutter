@@ -15,57 +15,57 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
   late double vWidth;
 
   final List<ServicesEntity> servicesImagesLg = [
-    ServicesModel.empty().copyWith(
+    ServicesEntity.empty().copyWith(
       title: 'Culto Solene',
       image: AppImages.sundayEveningServiceLg,
     ),
-    ServicesModel.empty().copyWith(
+    ServicesEntity.empty().copyWith(
       title: 'Culto de Jovens',
       image: AppImages.saturdayServiceLg,
     ),
-    ServicesModel.empty().copyWith(
+    ServicesEntity.empty().copyWith(
       title: 'Escola Bíblica Dominical',
       image: AppImages.sundayMorningServiceLg,
     ),
-    ServicesModel.empty().copyWith(
+    ServicesEntity.empty().copyWith(
       title: 'Pequeno Grupo',
       image: AppImages.littleGroupLg,
     ),
   ];
 
   final List<ServicesEntity> servicesImagesMd = [
-    ServicesModel.empty().copyWith(
+    ServicesEntity.empty().copyWith(
       title: 'Culto Solene',
       image: AppImages.sundayEveningServiceMd,
     ),
-    ServicesModel.empty().copyWith(
+    ServicesEntity.empty().copyWith(
       title: 'Culto de Jovens',
       image: AppImages.saturdayServiceMd,
     ),
-    ServicesModel.empty().copyWith(
+    ServicesEntity.empty().copyWith(
       title: 'Escola Bíblica Dominical',
       image: AppImages.sundayMorningServiceMd,
     ),
-    ServicesModel.empty().copyWith(
+    ServicesEntity.empty().copyWith(
       title: 'Pequeno Grupo',
       image: AppImages.littleGroupMd,
     ),
   ];
 
   final List<ServicesEntity> servicesImagesSm = [
-    ServicesModel.empty().copyWith(
+    ServicesEntity.empty().copyWith(
       title: 'Culto Solene',
       image: AppImages.sundayEveningServiceSm,
     ),
-    ServicesModel.empty().copyWith(
+    ServicesEntity.empty().copyWith(
       title: 'Culto de Jovens',
       image: AppImages.saturdayServiceSm,
     ),
-    ServicesModel.empty().copyWith(
+    ServicesEntity.empty().copyWith(
       title: 'Escola Bíblica Dominical',
       image: AppImages.sundayMorningServiceSm,
     ),
-    ServicesModel.empty().copyWith(
+    ServicesEntity.empty().copyWith(
       title: 'Pequeno Grupo',
       image: AppImages.littleGroupSm,
     ),

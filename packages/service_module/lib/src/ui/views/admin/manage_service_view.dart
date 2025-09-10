@@ -358,8 +358,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
                             child: GestureDetector(
                               key: gestureKey,
                               onLongPressStart: (details) async {
-                                Modular.get<ManageServiceStore>().liturgyModel =
-                                    LiturgyAdapter.toModel(liturgy);
+                                Modular.get<ManageServiceStore>().liturgyModel = liturgy;
                                 Modular.get<ManageServiceStore>().index = index;
                                 await showOptionsDialog(
                                   context: context,

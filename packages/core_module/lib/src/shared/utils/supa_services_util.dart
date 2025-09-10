@@ -9,14 +9,14 @@ class SupaServicesUtil {
   static _dateNowDelayed() =>
       Future.delayed(const Duration(seconds: 2), () => DateTime.now());
 
-  static Future<ServiceModel> insertService(
+  static Future<ServiceEntity> insertService(
     String path,
-    List<LyricModel> unknownLyrics,
+    List<LyricEntity> unknownLyrics,
   ) async {
     final String json = await rootBundle.loadString(path);
-    ServiceModel service = ServiceAdapter.fromJson(json);
+    ServiceEntity service = ServiceAdapter.fromJson(json);
     List<LyricEntity> lyricsConverted;
-    List<LyricModel> lyricsAux = [];
+    List<LyricEntity> lyricsAux = [];
 
     if(service.lyricsList != null){
       lyricsConverted = await _generateVersesList(
@@ -24,9 +24,8 @@ class SupaServicesUtil {
       );
       //aqui vai o codigo para alterar a capa do album
       for (int line = 0; service.lyricsList!.length > line; line++) {
-        LyricModel model = LyricAdapter.toModel(service.lyricsList![line]);
         lyricsAux.add(
-          model.copyWith(
+          service.lyricsList![line].copyWith(
             id: MockUtil.createId(),
             // verses: lyricsConverted[line].verses,
             albumCover: lyricsConverted[line].albumCover,
@@ -49,7 +48,7 @@ class SupaServicesUtil {
       // aqui vai o codigo para pegar a letra da musica
      // Map result = await _getLyric(lyricsList[i].title, lyricsList[i].group);
       results.add(
-        LyricModel.empty().copyWith(
+        LyricEntity.empty().copyWith(
           // aqui vai o codigo que converte a letra da musica
           //verses: VerseAdapter.fromVagalume(result),
           albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
@@ -74,9 +73,9 @@ class SupaServicesUtil {
     }
   }*/
 
-  static Future<LyricModel> convertUnknownLyric(String path) async {
+  static Future<LyricEntity> convertUnknownLyric(String path) async {
     final String unknownJson = await rootBundle.loadString(path);
-    LyricModel unknownLyric = LyricAdapter.fromUnknownJson(unknownJson);
+    LyricEntity unknownLyric = LyricAdapter.fromUnknownJson(unknownJson);
     return unknownLyric.copyWith(
       id: MockUtil.createId(),
       albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
@@ -119,9 +118,9 @@ class SupaServicesUtil {
     return servicesList;
   }
 
-  static Future<List<LyricModel>> convertUnknownLyrics(String path) async {
+  static Future<List<LyricEntity>> convertUnknownLyrics(String path) async {
     final String unknownJson = await rootBundle.loadString(path);
-    List<LyricModel> unknownLyric = LyricAdapter.fromJson(unknownJson);
+    List<LyricEntity> unknownLyric = LyricAdapter.fromJson(unknownJson);
     return unknownLyric;
   }
 }

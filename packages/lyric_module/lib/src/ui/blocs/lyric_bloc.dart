@@ -16,14 +16,14 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
        _manageLyricStore = manageLyricStore,
        super(LoadingState<LyricState>()) {
     on<GetDataEvent<LyricEvent>>(_getInSupa);
-    on<FilterEvent<LyricEvent, LyricModel>>(_filter);
+    on<FilterEvent<LyricEvent, LyricEntity>>(_filter);
     on<LoadingEvent<LyricEvent>>(_loading);
-    on<GetPaginationEvent<LyricEvent, LyricModel>>(_getPaginationInSupa);
+    on<GetPaginationEvent<LyricEvent, LyricEntity>>(_getPaginationInSupa);
   }
 
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
-  List<LyricModel> entitiesList = [];
+  List<LyricEntity> entitiesList = [];
 
   bool isSelected = false;
 
@@ -80,10 +80,10 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   }
 
   Future<void> _getPaginationInSupa(
-    GetPaginationEvent<LyricEvent, LyricModel> event,
+    GetPaginationEvent<LyricEvent, LyricEntity> event,
     emit,
   ) async {
-    List<LyricModel> lyricsListAux = [];
+    List<LyricEntity> lyricsListAux = [];
     //Caso esteja sem conexão eu salvo essas musicas no hive
     int offset = entitiesList.length;
 
@@ -101,7 +101,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
       entitiesList.addAll(lyricsListAux);
       emit(DataFetchedState<LyricState>());
     } else {
-      emit(NoMoreDataState<LyricState, List<LyricModel>>());
+      emit(NoMoreDataState<LyricState, List<LyricEntity>>());
     }
   }
 
@@ -109,7 +109,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     emit(LoadingState<LyricState>());
   }
 
-  Future<void> _filter(FilterEvent<LyricEvent, LyricModel> event, emit) async {
+  Future<void> _filter(FilterEvent<LyricEvent, LyricEntity> event, emit) async {
     if (event.writing) {
       entitiesList = event.typeFilter.filterListing(event, entitiesList);
       emit(DataFetchedState<LyricState>());
@@ -147,10 +147,10 @@ class FilterEvent<R, T> extends GenericEvent<R> {
   FilterEvent(this.searchText, this.writing, this.typeFilter, this.selectIndex);
 }
 
-class TitleFilter extends Filter<LyricModel, FilterEvent> {
+class TitleFilter extends Filter<LyricEntity, FilterEvent> {
   @override
-  List<LyricModel> filterListing(FilterEvent event, List<LyricModel>? list) {
-    List<LyricModel> filterList;
+  List<LyricEntity> filterListing(FilterEvent event, List<LyricEntity>? list) {
+    List<LyricEntity> filterList;
 
     filterList = list!
         .where(
@@ -165,10 +165,10 @@ class TitleFilter extends Filter<LyricModel, FilterEvent> {
 }
 //My artist filter
 
-class ArtistFilter extends Filter<LyricModel, FilterEvent> {
+class ArtistFilter extends Filter<LyricEntity, FilterEvent> {
   @override
-  List<LyricModel> filterListing(FilterEvent event, List<LyricModel>? list) {
-    late List<LyricModel> filterList;
+  List<LyricEntity> filterListing(FilterEvent event, List<LyricEntity>? list) {
+    late List<LyricEntity> filterList;
 
     filterList = list!
         .where(

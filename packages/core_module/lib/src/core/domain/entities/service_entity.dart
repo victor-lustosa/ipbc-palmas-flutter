@@ -45,4 +45,54 @@ class ServiceEntity {
   int get hashCode {
     return id.hashCode;
   }
+
+  factory ServiceEntity.empty() => ServiceEntity(
+    createAt: DateTime.now(),
+    lyricsList: [],
+    liturgiesList: [],
+    title: '',
+    serviceLiturgiesTableId: '',
+    liturgiesTableId: '',
+    serviceDate: DateTime.now(),
+    theme: '',
+    image: '',
+    preacher: '',
+    type: '',
+    heading: '',
+    guideIsVisible: false,
+  );
+
+  ServiceEntity copyWith({
+    DateTime? createAt,
+    DateTime? serviceDate,
+    String? title,
+    String? id,
+    String? theme,
+    String? serviceLiturgiesTableId,
+    String? liturgiesTableId,
+    String? preacher,
+    String? type,
+    String? image,
+    String? heading,
+    bool? guideIsVisible,
+    List<LyricEntity>? lyricsList,
+    List<LiturgyEntity>? liturgiesList,
+  }) {
+    return ServiceEntity(
+      title: title ?? this.title,
+      serviceLiturgiesTableId: serviceLiturgiesTableId ?? this.serviceLiturgiesTableId,
+      liturgiesTableId: liturgiesTableId ?? this.liturgiesTableId,
+      image: image ?? this.image,
+      serviceDate: serviceDate ?? this.serviceDate,
+      heading: heading ?? this.heading,
+      createAt: createAt ?? this.createAt,
+      lyricsList: lyricsList ?? this.lyricsList,
+      liturgiesList: liturgiesList ?? this.liturgiesList,
+      guideIsVisible: guideIsVisible ?? this.guideIsVisible,
+      id: id ?? this.id,
+      theme: theme ?? this.theme,
+      preacher: preacher ?? this.preacher,
+      type: type ?? this.type,
+    );
+  }
 }

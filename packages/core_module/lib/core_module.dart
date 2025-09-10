@@ -103,13 +103,8 @@ export 'src/core/infra/adapters/verse_adapter.dart';
 export 'src/core/infra/adapters/lyric_adapter.dart';
 export 'src/core/infra/adapters/service_adapter.dart';
 export 'src/core/infra/adapters/isar/isar_auth_adapter.dart';
-export 'src/core/infra/models/service_model.dart';
-export 'src/core/infra/models/services_model.dart';
-export 'src/core/infra/models/liturgy_model.dart';
-export 'src/core/infra/models/lyric_model.dart';
 export 'src/core/infra/models/isar_dtos/isar_credentials_dto.dart';
 export 'src/core/infra/models/isar_dtos/isar_user_dto.dart';
-export 'src/core/infra/models/auth/user_model.dart';
 export 'src/core/infra/use_cases/use_cases.dart';
 
 export 'src/core/external/repositories/supa_repository.dart';

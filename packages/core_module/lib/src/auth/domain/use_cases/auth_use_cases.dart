@@ -1,9 +1,8 @@
 
 import '../../../../core_module.dart';
-import '../../../core/domain/entities/auth/auth_credentials.dart';
 
 abstract class IOfflineAuthUseCases
-    implements IGetLocalUser, ISaveLocalUser, IGetToken, ISaveToken, ILogout{}
+    implements IGetLocalUser, ISaveLocalUser, IGetCredentials, ISaveCredentials, ILogout{}
 
 abstract class IOnlineAuthUseCases
     implements ISignInEmail, ISignInGoogle, IGetCurrentUser, ISignInFacebook, ILogout{}
@@ -27,8 +26,8 @@ abstract class IGetLocalUser {
   Future<UserEntity?> getLocalUser();
 }
 
-abstract class IGetToken {
-  Future<String?> getToken();
+abstract class IGetCredentials {
+  Future<String?> getCredentials();
 }
 
 abstract class ISaveLocalUser {
@@ -39,6 +38,6 @@ abstract class ILogout {
   dynamic logoutWithGoogle({Map<String, dynamic>? params});
 }
 
-abstract class ISaveToken {
-  void saveCredentials(AuthCredentials auth);
+abstract class ISaveCredentials {
+  dynamic saveCredentials(AuthCredentials auth);
 }

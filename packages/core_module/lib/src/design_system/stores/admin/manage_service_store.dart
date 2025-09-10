@@ -23,7 +23,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
   final IUseCases _useCases;
   bool isEditing = false;
   int index = 0;
-  late LiturgyModel liturgyModel;
+  late LiturgyEntity liturgyModel;
   late List<LiturgyEntity> liturgiesList;
   late ServicesEntity servicesEntity;
   ServiceEntity? serviceEntity;
@@ -235,55 +235,55 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
 
   fillItems() {
     liturgiesList = [
-      LiturgyModel(
+      LiturgyEntity(
         id: '0',
         isAdditional: false,
         sequence: 'Oração',
         additional: '',
       ),
-      LiturgyModel(
+      LiturgyEntity(
         id: '1',
         isAdditional: true,
         sequence: 'Texto Bíblico',
         additional: 'João 10:1-6',
       ),
-      LiturgyModel(
+      LiturgyEntity(
         id: '2',
         isAdditional: true,
         sequence: 'Hino 151',
         additional: 'O Bom Pastor',
       ),
-      LiturgyModel(
+      LiturgyEntity(
         id: '3',
         isAdditional: true,
         sequence: 'Texto Bíblico',
         additional: 'Lucas 15:1-7',
       ),
-      LiturgyModel(
+      LiturgyEntity(
         id: '4',
         isAdditional: false,
         sequence: 'Oração de confissão de pecados',
         additional: '',
       ),
-      LiturgyModel(
+      LiturgyEntity(
         id: '5',
         isAdditional: false,
         sequence: 'Cânticos',
         additional: '',
       ),
-      LiturgyModel(
+      LiturgyEntity(
         id: '6',
         isAdditional: true,
         sequence: 'Pregação',
         additional: 'O Bom Pastor - Salmo 23',
       ),
-      LiturgyModel(
+      LiturgyEntity(
         id: '7',
         isAdditional: false,
         sequence: 'Santa Ceia',
         additional: '',
       ),
-      LiturgyModel(
+      LiturgyEntity(
         id: '8',
         isAdditional: false,
         sequence: 'Oração final',
@@ -296,7 +296,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
   void addBox() {
     liturgiesList.insert(
       0,
-      LiturgyModel(
+      LiturgyEntity(
         id: MockUtil.createId(),
         isAdditional: true,
         sequence: 'Título',

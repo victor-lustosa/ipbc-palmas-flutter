@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
   ManageLyricStore() : super(InitialState());
 
-  final List<LyricModel> _lyricsFetched = [];
+  final List<LyricEntity> _lyricsFetched = [];
   late void Function() buttonCallback;
-  late LyricModel lyric;
+  late LyricEntity lyric;
   bool isEditing = false;
   final Map<String, TextEditingController> _controllers = {};
   final TextEditingController titleController = TextEditingController();

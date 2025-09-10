@@ -1,5 +1,4 @@
 import '../../../../core_module.dart';
-import '../../../core/domain/entities/auth/auth_credentials.dart';
 
 class OfflineAuthUseCases implements IOfflineAuthUseCases {
   final IRepository repository;
@@ -7,7 +6,7 @@ class OfflineAuthUseCases implements IOfflineAuthUseCases {
   OfflineAuthUseCases({required this.repository});
 
   @override
-  Future<String?> getToken() async {
+  Future<String?> getCredentials() async {
     IsarCredentialsDTO? entity = await repository.get<IsarCredentialsDTO>();
     if (entity != null) {
       return entity.token;
@@ -27,7 +26,7 @@ class OfflineAuthUseCases implements IOfflineAuthUseCases {
   }
 
   @override
-  void saveCredentials(AuthCredentials auth) => repository.add<IsarCredentialsDTO>(
+  dynamic saveCredentials(AuthCredentials auth) => repository.add<IsarCredentialsDTO>(
     data: IsarCredentialsDTO(
       token: auth.token,
       provider: auth.provider,
@@ -40,7 +39,8 @@ class OfflineAuthUseCases implements IOfflineAuthUseCases {
       repository.add<IsarUserDTO>(data: IsarUserDTO.create(user));
 
   @override
-  dynamic logoutWithGoogle({Map<String, dynamic>? params}) {
-    return repository.delete(params: params);
+  dynamic logoutWithGoogle({Map<String, dynamic>? params}) async {
+    await repository.delete<IsarUserDTO>(params: params);
+    return await repository.delete<IsarCredentialsDTO>();
   }
 }

@@ -7,14 +7,14 @@ import '../../../shared/mixins/flatten_mixin.dart';
 
 class LyricAdapter with FlattenMixin{
   LyricAdapter._();
-  static List<LyricModel> fromJson(String source) =>
+  static List<LyricEntity> fromJson(String source) =>
       fromMapList(json.decode(source));
 
-  static LyricModel fromUnknownJson(String source) =>
+  static LyricEntity fromUnknownJson(String source) =>
       fromMap(json.decode(source));
 
-  static LyricModel fromMap(dynamic json) {
-    return LyricModel(
+  static LyricEntity fromMap(dynamic json) {
+    return LyricEntity(
       albumCover: json['album_cover'],
       id: json['id'],
       createAt: '',
@@ -38,11 +38,11 @@ class LyricAdapter with FlattenMixin{
     };
   }
 
-  static List<LyricModel> fromMapList(dynamic json) {
-    List<LyricModel> lyricsList = [];
+  static List<LyricEntity> fromMapList(dynamic json) {
+    List<LyricEntity> lyricsList = [];
     for (dynamic lyric in json) {
       lyricsList.add(
-        LyricModel(
+        LyricEntity(
           albumCover: lyric['album_cover'],
           id: lyric['id'].toString(),
           createAt: lyric['create_at'].runtimeType == String ? lyric['create_at'] : DateFormat(
@@ -56,32 +56,6 @@ class LyricAdapter with FlattenMixin{
                   : [],
         ),
       );
-    }
-    return lyricsList;
-  }
-
-  static LyricModel toModel(LyricEntity data) {
-    return LyricModel(
-      albumCover: data.albumCover,
-      id: data.id,
-      createAt: data.createAt.toString(),
-      title: data.title,
-      group: data.group,
-      verses: data.verses,
-    );
-  }
-
-  static List<LyricModel> toModelList(List<LyricEntity> data) {
-    List<LyricModel> lyricsList = [];
-    for (dynamic lyric in data) {
-      lyricsList.add(LyricModel(
-        albumCover: lyric.albumCover,
-        id: lyric.id,
-        createAt: lyric.createAt.toString(),
-        title: lyric.title,
-        group: lyric.group,
-        verses: lyric.verses,
-      ));
     }
     return lyricsList;
   }

@@ -20,6 +20,7 @@ class IsarUserDTO {
   String? phoneConfirmedAt;
   String? lastSignInAt;
   String? role;
+  String? provider;
   String? updatedAt;
   // List<dynamic> identities;
   // List<dynamic> factors;
@@ -30,6 +31,7 @@ class IsarUserDTO {
     required this.aud,
     required this.fullName,
     required this.picture,
+    required this.provider,
     this.confirmationSentAt,
     this.recoverySentAt,
     this.emailChangeSentAt,
@@ -50,6 +52,7 @@ class IsarUserDTO {
   });
 
   factory IsarUserDTO.create(UserEntity user) => IsarUserDTO(
+
     picture: user.userMetadata?['picture'] ?? '',
     fullName: user.userMetadata?['full_name'] ?? '',
     id: Isar.autoIncrement,
@@ -63,5 +66,6 @@ class IsarUserDTO {
     // identities: user.identities,
     // factors: user.factors,
     isAnonymous: user.isAnonymous,
+    provider: '',
   );
 }

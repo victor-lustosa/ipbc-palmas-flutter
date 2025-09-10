@@ -1,3 +1,5 @@
+import '../../../../core_module.dart';
+
 class LiturgyEntity {
   final bool isAdditional;
   final String sequence;
@@ -23,5 +25,26 @@ class LiturgyEntity {
   @override
   int get hashCode {
     return id.hashCode;
+  }
+
+  factory LiturgyEntity.empty() => LiturgyEntity(
+    id: MockUtil.createId(),
+    isAdditional: false,
+    sequence: '',
+    additional: '',
+  );
+
+  LiturgyEntity copyWith({
+    String? id,
+    bool? isAdditional,
+    String? sequence,
+    String? additional,
+  }) {
+    return LiturgyEntity(
+      id: id ?? this.id,
+      isAdditional: isAdditional ?? this.isAdditional,
+      sequence: sequence ?? this.sequence,
+      additional: additional ?? this.additional,
+    );
   }
 }

@@ -58,7 +58,7 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget>
             borderRadius: BorderRadius.circular(8.0),
             child: InkWell(
               onTap: () {
-                _store.logoutWithGoogle();
+                _store.logout();
                 _removeLogoutMenu();
               },
               child: SizedBox(

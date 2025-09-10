@@ -13,8 +13,8 @@ void main() async {
 
   //SupabaseDatasource supa = SupabaseDatasource(supabaseClient: Supabase.instance.client);
   try {
-    List<LyricModel> lyricsInserted = [];
-    List<LyricModel> unknownLyrics = [];
+    List<LyricEntity> lyricsInserted = [];
+    List<LyricEntity> unknownLyrics = [];
 
     const String saturdayPath =
         'assets/data/saturday-services/saturday-service-29-04-23.json';
@@ -23,44 +23,43 @@ void main() async {
     const String sundayEveningPath =
         'assets/data/sunday-evening-services/sunday-evening-service-11-06-23.json';
 
-    LyricModel lyric0 = await SupaServicesUtil.convertUnknownLyric(
+    LyricEntity lyric0 = await SupaServicesUtil.convertUnknownLyric(
       'assets/data/unknown-lyrics/hino-4.json',
     );
-    LyricModel lyric1 = await SupaServicesUtil.convertUnknownLyric(
+    LyricEntity lyric1 = await SupaServicesUtil.convertUnknownLyric(
       'assets/data/unknown-lyrics/hino-395.json',
     );
 
     unknownLyrics.addAll([lyric0, lyric1]);
 
-    ServiceModel saturdayService = await SupaServicesUtil.insertService(
+    ServiceEntity saturdayService = await SupaServicesUtil.insertService(
       saturdayPath,
       unknownLyrics,
     );
     //supa.add('saturday-services', SupaServiceAdapter.toMap(saturdayService));
     print('Saturday lyrics have been successfully added');
     if (saturdayService.lyricsList != null) {
-      lyricsInserted.addAll(
-          LyricAdapter.toModelList(saturdayService.lyricsList!));
+      lyricsInserted.addAll(saturdayService.lyricsList!);
     }
 
-    ServiceModel sundayEveningService = await SupaServicesUtil.insertService(
+    ServiceEntity sundayEveningService = await SupaServicesUtil.insertService(
       sundayEveningPath,
       unknownLyrics,
     );
     //supa.add('sunday-evening-services', SupaServiceAdapter.toMap(sundayEveningService));
     print('Sunday Evening lyrics have been successfully added');
     if (sundayEveningService.lyricsList != null) {
-      lyricsInserted.addAll(LyricAdapter.toModelList(sundayEveningService.lyricsList!));
+      lyricsInserted.addAll(sundayEveningService.lyricsList!);
     }
 
-    ServiceModel sundayMorningService = await SupaServicesUtil.insertService(
+    ServiceEntity sundayMorningService = await SupaServicesUtil.insertService(
       sundayMorningPath,
       unknownLyrics,
     );
     //supa.add('service', SupaServiceAdapter.toMap(sundayMorningService));
     print('Sunday Morning lyrics have been successfully added');
     if (sundayMorningService.lyricsList != null){
-      lyricsInserted.addAll(LyricAdapter.toModelList(sundayMorningService.lyricsList!));
+      lyricsInserted.addAll(sundayMorningService.lyricsList!);
     }
 
     // inserindo lista de letras desconhecidas
