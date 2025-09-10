@@ -32,7 +32,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   google_maps_flutter: ^2.7.0
   equatable: ^2.0.5
-  google_sign_in: ^6.3.0
+  google_sign_in: ^7.1.1
   image_picker: ^1.1.2
   diacritic: ^0.1.6
   cached_network_image: ^3.4.1

@@ -55,13 +55,12 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget>
             color: AppColors.white,
             elevation: 4.0,
             shadowColor: Colors.black38,
-            borderRadius: BorderRadius.circular(4.0),
+            borderRadius: BorderRadius.circular(8.0),
             child: InkWell(
               onTap: () {
                 _store.logout();
                 _removeLogoutMenu();
               },
-              borderRadius: BorderRadius.circular(4.0),
               child: SizedBox(
                 width: 83,
                 height: 44,

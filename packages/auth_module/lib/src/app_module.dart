@@ -27,11 +27,6 @@ class AuthModule extends Module {
         authCircleAvatarStore: i.get<AuthCircleAvatarStore>(),
       ),
     );
-    i.addSingleton<IOnlineAuthUseCases>(
-          () => OnlineAuthUseCases(
-        repository: SupaAuthRepository(supaClient: i.get<SupabaseClient>()),
-      ),
-    );
     i.addSingleton(ResetPasswordStore.new);
     i.addLazySingleton(CreateAccountStore.new);
     i.addSingleton(RegistrationCompletionStore.new);

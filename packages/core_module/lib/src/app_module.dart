@@ -19,8 +19,13 @@ class CoreModule extends Module {
     i.addSingleton<SupabaseRepository>(
       () => SupabaseRepository(supabaseClient: i.get<SupabaseClient>()),
     );
+    i.addSingleton<IOnlineAuthUseCases>(
+          () => OnlineAuthUseCases(
+        repository: SupaAuthRepository(supaClient: i.get<SupabaseClient>()),
+      ),
+    );
     i.addLazySingleton(
-      () => AuthCircleAvatarStore(offlineUse: i.get<IOfflineAuthUseCases>()),
+      () => AuthCircleAvatarStore(offlineUse: i.get<IOfflineAuthUseCases>(), onlineUse: i.get<IOnlineAuthUseCases>()),
     );
     i.addSingleton<Isar>(() => Isar.getInstance());
     i.addSingleton<IsarRepository>(() => IsarRepository(isar: i.get<Isar>()));
