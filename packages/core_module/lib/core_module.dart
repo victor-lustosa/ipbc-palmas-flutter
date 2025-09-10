@@ -91,6 +91,7 @@ export 'src/core/domain/entities/verse_entity.dart';
 export 'src/core/domain/entities/service_entity.dart';
 export 'src/core/domain/entities/services_entity.dart';
 export 'src/core/domain/entities/auth/user_entity.dart';
+export 'src/core/domain/entities/auth/auth_credentials.dart';
 export 'src/core/domain/entities/liturgy_entity.dart';
 export 'src/core/domain/entities/event_entity.dart';
 
@@ -106,7 +107,7 @@ export 'src/core/infra/models/service_model.dart';
 export 'src/core/infra/models/services_model.dart';
 export 'src/core/infra/models/liturgy_model.dart';
 export 'src/core/infra/models/lyric_model.dart';
-export 'src/core/infra/models/isar_dtos/isar_token_dto.dart';
+export 'src/core/infra/models/isar_dtos/isar_credentials_dto.dart';
 export 'src/core/infra/models/isar_dtos/isar_user_dto.dart';
 export 'src/core/infra/models/auth/user_model.dart';
 export 'src/core/infra/use_cases/use_cases.dart';

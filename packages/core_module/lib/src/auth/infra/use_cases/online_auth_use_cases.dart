@@ -29,8 +29,7 @@ class OnlineAuthUseCases implements IOnlineAuthUseCases {
   }
 
   @override
-  logout({Map<String, dynamic>? params}) {
-    // TODO: implement deleteCurrentUser
-    throw UnimplementedError();
+  logoutWithGoogle({Map<String, dynamic>? params}) {
+    return repository.logoutWithGoogle();
   }
 }

@@ -21,7 +21,7 @@ class IsarAuthAdapter {
     'isAnonymous': dto.isAnonymous,
   };
 
-  static Map<String, dynamic> toMapToken(IsarTokenDTO data) => {
+  static Map<String, dynamic> toMapToken(IsarCredentialsDTO data) => {
     'token': data.token,
   };
 }

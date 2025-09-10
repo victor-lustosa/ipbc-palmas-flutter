@@ -1,5 +1,6 @@
 
 import '../../../../core_module.dart';
+import '../../../core/domain/entities/auth/auth_credentials.dart';
 
 abstract class IOfflineAuthUseCases
     implements IGetLocalUser, ISaveLocalUser, IGetToken, ISaveToken, ILogout{}
@@ -35,9 +36,9 @@ abstract class ISaveLocalUser {
 }
 
 abstract class ILogout {
-  dynamic logout({Map<String, dynamic>? params});
+  dynamic logoutWithGoogle({Map<String, dynamic>? params});
 }
 
 abstract class ISaveToken {
-  void saveToken(String token);
+  void saveCredentials(AuthCredentials auth);
 }

@@ -28,9 +28,9 @@ class AuthCircleAvatarStore extends ValueNotifier<GenericState<AuthCircleAvatarS
     }
   }
 
-  void logout() async{
-    await _onlineUseCases.logout();
-    final result = await _offlineUseCases.logout(params: {'id': userEntity.id});
+  void logoutWithGoogle() async{
+    await _onlineUseCases.logoutWithGoogle();
+    final result = await _offlineUseCases.logoutWithGoogle(params: {'id': userEntity.id});
     print(result);
     userEntity = UserModel.empty();
     Future.delayed(const Duration(milliseconds: 500),(){

@@ -11,7 +11,7 @@ class IsarRepository implements IRepository {
   static Future init() async {
     final dir = await getApplicationDocumentsDirectory();
     await Isar.open([
-      IsarTokenDTOSchema,
+      IsarCredentialsDTOSchema,
       IsarUserDTOSchema,
     ], directory: dir.path);
   }
