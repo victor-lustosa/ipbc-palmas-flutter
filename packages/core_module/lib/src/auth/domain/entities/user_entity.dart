@@ -117,7 +117,7 @@ class UserEntity {
   }
 
   factory UserEntity.create(User user) => UserEntity(
-    provider: user.userMetadata?['provider'] ?? '',
+    provider: user.appMetadata['provider'],
     id: user.id,
     picture: user.userMetadata?['picture'] ?? '',
     appMetadata: user.appMetadata,

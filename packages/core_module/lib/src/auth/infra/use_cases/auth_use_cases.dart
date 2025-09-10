@@ -13,18 +13,18 @@ class AuthUseCases implements IAuthUseCases {
 
   @override
   Future<String?> signInWithGoogle() async {
-    final String? token = await _onlineRepository.signInWithGoogle();
-    if(token == null) return null;
+    final String? jwtToken = await _onlineRepository.signInWithGoogle();
+    if(jwtToken == null) return null;
     UserEntity? currentUser = _onlineRepository.getCurrentUser();
-    _saveUserAndCredentials(
+    await _saveUserAndCredentials(
       currentUser,
       AuthCredentials(
-        token: token,
+        token: jwtToken,
         provider: currentUser?.provider ?? '',
         role: currentUser?.role ?? '',
       ),
     );
-    return token;
+    return jwtToken;
   }
 
   Future<void> _saveUserAndCredentials(
@@ -71,7 +71,7 @@ class AuthUseCases implements IAuthUseCases {
       _offlineRepository.add<IsarUserDTO>(data: IsarUserDTO.create(user));
 
   @override
-  dynamic logoutWithGoogle({required int id, required String? provider}) async {
+  dynamic logout({required int id, required String? provider}) async {
     switch (provider ?? '') {
       case 'google':
         await _onlineRepository.logoutWithGoogle();

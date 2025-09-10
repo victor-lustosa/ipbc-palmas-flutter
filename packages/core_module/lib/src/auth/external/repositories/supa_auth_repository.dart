@@ -51,7 +51,7 @@ class SupaAuthRepository implements IOnlineAuthRepository {
         idToken: idToken,
         accessToken: accessToken,
       );
-      return idToken;
+      return getJWTToken();
     } catch (e) {
       return null;
     }
@@ -89,5 +89,10 @@ class SupaAuthRepository implements IOnlineAuthRepository {
   @override
   Stream streamFacebook() {
     return _supaClient.auth.onAuthStateChange;
+  }
+
+  @override
+  String? getJWTToken() {
+    return _supaClient.auth.currentSession?.accessToken;
   }
 }

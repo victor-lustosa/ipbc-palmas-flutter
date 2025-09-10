@@ -29,7 +29,7 @@ class AuthCircleAvatarStore
 
   void logout() async {
     value = LoadingState<AuthCircleAvatarState>();
-    await _authUseCase.logoutWithGoogle(
+    await _authUseCase.logout(
       id: int.parse(userEntity.id),
       provider: userEntity.provider,
     );

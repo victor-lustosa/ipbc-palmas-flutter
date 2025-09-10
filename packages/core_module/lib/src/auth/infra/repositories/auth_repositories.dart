@@ -6,6 +6,7 @@ abstract class IOnlineAuthRepository
         ISignInGoogle,
         IGetCurrentUser,
         ISignInFacebook,
+        IGetJWTToken,
         ILogoutWithGoogle {}
 
 abstract class IOfflineAuthRepository
@@ -26,6 +27,10 @@ abstract class ILogoutWithGoogle {
 abstract class ISignInFacebook {
   Future<void> signInFacebook();
   Stream streamFacebook();
+}
+
+abstract class IGetJWTToken {
+  String? getJWTToken();
 }
 
 abstract class IGetCurrentUser {
