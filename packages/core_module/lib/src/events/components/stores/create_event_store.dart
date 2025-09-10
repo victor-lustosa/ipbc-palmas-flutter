@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:core_module/core_module.dart';
-import 'package:core_module/src/core/infra/use_cases/event_use_cases.dart';
+import 'package:core_module/src/events/infra/use_cases/event_use_cases.dart';
 import 'package:flutter/material.dart';
 
 class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
