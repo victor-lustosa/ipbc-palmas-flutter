@@ -29,6 +29,12 @@ class _HomeViewState extends State<HomeView>
   }
 
   @override
+  void dispose() {
+    _shimmerController.dispose();
+    super.dispose();
+  }
+
+  @override
   bool get wantKeepAlive => true;
 
   @override

@@ -2,6 +2,8 @@ import 'package:auth_module/src/ui/stores/create_account_store.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
+import '../components/provider_button_widget.dart';
+
 class CreateAccountView extends StatefulWidget {
   const CreateAccountView({super.key});
 
@@ -23,6 +25,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   bool _isEmailValid = true;
   bool _isPasswordValid = true;
   ValueNotifier<bool> _isPressed = ValueNotifier(false);
+  ValueNotifier<bool> _isGoogleLoginPressed = ValueNotifier(false);
   ValueNotifier<bool> _firstObscure = ValueNotifier(true);
   ValueNotifier<bool> _secondObscure = ValueNotifier(true);
 
@@ -214,74 +217,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       ),
                     ],
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                    height: 48,
-                    width: context.sizeOf.width,
-                    child: ButtonWidget(
-                      backgroundColor: AppColors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      shadowColor: AppColors.grey0,
-                      foregroundColor: AppColors.grey10,
-                      textStyle: AppFonts.defaultFont(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      action: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(right: 12),
-                            child: Image.asset(
-                              AppIcons.googleIcon,
-                              width: 30,
-                              height: 30,
-                            ),
-                          ),
-                          const Text("Fazer login com o Google"),
-                          const SizedBox(width: 18),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                      top: 12,
-                      left: 16,
-                      bottom: 25,
-                      right: 16,
-                    ),
-                    height: 48,
-                    width: context.sizeOf.width,
-                    child: ButtonWidget(
-                      backgroundColor: AppColors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      foregroundColor: AppColors.grey10,
-                      textStyle: AppFonts.defaultFont(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      action: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(right: 12),
-                            child: Image.asset(
-                              AppIcons.faceIcon,
-                              width: 32,
-                              height: 32,
-                            ),
-                          ),
-                          const Text("Fazer login com o Facebook"),
-                        ],
-                      ),
-                    ),
+                  ProviderButtonWidget(
+                    isPressed: _isGoogleLoginPressed,
+                    action: () {
+                    },
                   ),
                 ],
               ),
