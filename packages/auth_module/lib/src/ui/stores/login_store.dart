@@ -35,7 +35,9 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   get passwordErrorText => _passwordErrorText;
   ValueNotifier<bool> isEmailValid = ValueNotifier(true);
   ValueNotifier<bool> isPasswordValid = ValueNotifier(true);
-  ValueNotifier<bool> isPressed = ValueNotifier(false);
+  ValueNotifier<bool> isLoginPressed = ValueNotifier(false);
+  ValueNotifier<bool> areFieldsLocked = ValueNotifier(false);
+  ValueNotifier<bool> isGoogleLoginPressed = ValueNotifier(false);
   ValueNotifier<bool> obscure = ValueNotifier(true);
 
   Future<void> logIn(
@@ -43,13 +45,12 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     String password,
     BuildContext context,
   ) async {
-    isPressed.value = true;
-    value = LoadingState<LoginState>();
+    isLoginPressed.value = true;
     Future.delayed(const Duration(seconds: 1), () {
       if (_email == email && _password == password) {
         navigate(AppRoutes.initialRoute);
       } else {
-        isPressed.value = false;
+        isLoginPressed.value = false;
         value = InitialState<LoginState>();
         if (context.mounted) {
           showCustomErrorDialog(
@@ -60,28 +61,17 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
         }
       }
     });
-
-    // var email = '';
-    //Stream<HiveAuthDTO> credentials = await _useCase.get('auth/${emailController.text}/${passwordController.text}');
-    //  await for(final value in credentials){
-    //   email = value.token;
-    // }
-    //await _useCases.get('auth/$email/$password');
-    //if (email.isNotEmpty) {
-    //   navigate('/home/',isNative:false);
-    //   return '';
-    //  } else {
-    //   return 'login inválido';
-    //}
   }
 
-  Future<void> nativeGoogleSignIn(BuildContext context) async {
+  Future<void> googleSignIn(BuildContext context) async {
+    isGoogleLoginPressed.value = true;
     value = LoadingState<LoginState>();
     final token = await _useCases.signInWithGoogle();
     if (context.mounted) {
       if (token != null && token.isNotEmpty) {
         toHome(context);
       } else {
+        isGoogleLoginPressed.value = false;
         value = InitialState<LoginState>();
       }
     }
@@ -92,7 +82,10 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     await _onlineUseCases.signInWithFacebook();
   }*/
   formValidation(bool validation, ValueNotifier<bool> isValid) {
-    changeValue(isValid, validation);
+    Future.delayed(Duration.zero, () async {
+      isValid.value = validation;
+      value = UpdateFormFieldState();
+    });
     return null;
   }
 
@@ -102,13 +95,6 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
 
   bool emailValidation(String? data) {
     return !isEmptyData(data) && EmailValidator.validate(data ?? '');
-  }
-
-  changeValue(ValueNotifier<bool> valueNotifier, bool newValue) {
-    Future.delayed(Duration.zero, () async {
-      valueNotifier.value = newValue;
-      value = UpdateFormFieldState();
-    });
   }
 
   void toCreateAccount() {
@@ -137,13 +123,13 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
         _passwordController.text.isNotEmpty &&
         isEmailValid.value &&
         isPasswordValid.value &&
-        !isPressed.value) {
-      if (emailValidation(_emailController.text)) {
+        !isLoginPressed.value && emailValidation(_emailController.text)) {
         await logIn(_emailController.text, _passwordController.text, context);
       } else {
-        changeValue(isEmailValid, false);
+        isEmailValid.value = false;
+        isPasswordValid.value = false;
+        value = UpdateFormFieldState();
       }
-    }
   }
 }
 

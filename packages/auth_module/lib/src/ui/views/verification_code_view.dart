@@ -96,9 +96,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                     const TextCodeWidget(),
                     LoadingButtonWidget(
                       isPressed: _isPressed,
-                      marginTop: 26,
                       loadingWidth: 80,
-                      marginBottom: 22,
                       action:
                           () =>
                               _store.isListFull

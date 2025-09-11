@@ -56,7 +56,7 @@ class _LoginViewState extends State<LoginView> {
                     isValid: _store.isEmailValid.value,
                     errorText: _store.emailErrorText,
                     globalKey: _store.emailKey,
-                    isPressed: _store.isPressed,
+                    isPressed: _store.areFieldsLocked,
                     inputDecoration: fieldInputDecoration(
                       isValid: _store.isEmailValid.value,
                       hintText: 'Email',
@@ -73,14 +73,12 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   TemplateFormWidget(
                     controller: _store.passwordController,
-                    titleMargin: EdgeInsets.only(
-                      top: _store.isPasswordValid.value ? 24 : 12,
-                    ),
+                    titleMargin: EdgeInsets.only(top: 24),
                     title: 'Insira sua senha',
                     isValid: _store.isPasswordValid.value,
                     errorText: _store.passwordErrorText,
                     globalKey: _store.passwordKey,
-                    isPressed: _store.isPressed,
+                    isPressed: _store.areFieldsLocked,
                     obscure: _store.obscure,
                     inputDecoration: fieldInputDecoration(
                       isValid: _store.isPasswordValid.value,
@@ -114,7 +112,7 @@ class _LoginViewState extends State<LoginView> {
                                 text: "Esqueceu a senha? ",
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    if (!_store.isPressed.value) {
+                                    if (!_store.isLoginPressed.value) {
                                       pushNamed(
                                         AppRoutes.authRoute +
                                             AppRoutes.resetPasswordRoute,
@@ -129,10 +127,8 @@ class _LoginViewState extends State<LoginView> {
                     ],
                   ),
                   LoadingButtonWidget(
-                    marginTop: 40,
-                    marginBottom: 24,
                     loadingWidth: 55,
-                    isPressed: _store.isPressed,
+                    isPressed: _store.isLoginPressed,
                     action: () async {
                       _store.loginValidate(context: context);
                     },
@@ -154,46 +150,69 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ],
                   ),
-                  Container(
+                  LoadingButtonWidget(
+                    decoration:  BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withAlpha(15),
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset: const Offset(0, 1),
+                        ),
+                      ],
+                    ),
+                    loadingIndicatorColor: AppColors.darkGreen,
                     margin: const EdgeInsets.only(
                       top: 16,
                       left: 16,
                       right: 16,
                       bottom: 25,
                     ),
-                    height: 48,
-                    width: context.sizeOf.width,
-                    child: ButtonWidget(
-                      backgroundColor: AppColors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      shadowColor: AppColors.grey0,
-                      foregroundColor: AppColors.grey10,
-                      textStyle: AppFonts.defaultFont(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      action: () {
-                        _store.nativeGoogleSignIn(context);
-                      },
+                    loadingWidth: 55,
+                    textStyle: AppFonts.defaultFont(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    overlayColor: Colors.transparent,
+                    foregroundColor: AppColors.grey10,
+                    backgroundColor: AppColors.white,
+                    disableColor: AppColors.white,
+                    isPressed: _store.isGoogleLoginPressed,
+                    action: () {
+                      _store.googleSignIn(context);
+                    },
+                    isValid: !_store.isGoogleLoginPressed.value,
+                    child: AnimatedOpacity(
+                      opacity: _store.isGoogleLoginPressed.value ? 0.0 : 1.0,
+                      duration: const Duration(milliseconds: 400),
+                      curve: const Interval(0.5, 1.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            margin: const EdgeInsets.only(right: 12),
-                            child: Image.asset(
-                              AppIcons.googleIcon,
-                              width: 30,
-                              height: 30,
+                          Visibility(
+                            visible: !_store.isGoogleLoginPressed.value,
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 12),
+                              child: Image.asset(
+                                AppIcons.googleIcon,
+                                width: 30,
+                                height: 30,
+                              ),
                             ),
                           ),
-                          const Text("Fazer login com o Google"),
-                          const SizedBox(width: 18),
+                          Visibility(
+                            visible: !_store.isGoogleLoginPressed.value,
+                            child: Flexible(
+                              child: const Text("Fazer login com o Google"),
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ),
+
                   /*Container(
                     margin: const EdgeInsets.only(
                       top: 12,
@@ -253,7 +272,7 @@ class _LoginViewState extends State<LoginView> {
                           text: "Criar conta ",
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => setState(() {
-                              if (!_store.isPressed.value) {
+                              if (!_store.isLoginPressed.value) {
                                 navigate(
                                   AppRoutes.authRoute +
                                       AppRoutes.createAccountRoute,

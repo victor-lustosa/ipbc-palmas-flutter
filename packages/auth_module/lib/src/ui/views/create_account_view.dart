@@ -186,8 +186,6 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     ),
                   ),
                   LoadingButtonWidget(
-                    marginTop: 16,
-                    marginBottom: 24,
                     loadingWidth: 55,
                     isPressed: _isPressed,
                     action: () {
