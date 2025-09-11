@@ -81,6 +81,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   Future<void> signInWithFacebook() async {
     await _onlineUseCases.signInWithFacebook();
   }*/
+
   formValidation(bool validation, ValueNotifier<bool> isValid) {
     Future.delayed(Duration.zero, () async {
       isValid.value = validation;

@@ -26,7 +26,7 @@ class _LoginViewState extends State<LoginView> {
               child: Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 28, left: 16),
+                    margin: const EdgeInsets.only(top: 28, left: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [BackButtonWidget(action: () => pop(context))],
@@ -138,18 +138,15 @@ class _LoginViewState extends State<LoginView> {
                         _store.isPasswordValid.value,
                     label: "Entrar",
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColors.loginLineDecoration,
-                          ),
+                  Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColors.loginLineDecoration,
                         ),
-                        width: 159,
                       ),
-                    ],
+                      width: 159,
+                    ),
                   ),
                   ProviderButtonWidget(
                     isPressed: _store.isGoogleLoginPressed,
@@ -157,7 +154,7 @@ class _LoginViewState extends State<LoginView> {
                       _store.googleSignIn(context);
                     },
                   ),
-                 /* ProviderButtonWidget(
+                  /* ProviderButtonWidget(
                     isPressed: _store.isGoogleLoginPressed,
                     action: () {
                       _store.googleSignIn(context);
@@ -226,7 +223,7 @@ class _LoginViewState extends State<LoginView> {
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => setState(() {
                               if (!_store.isLoginPressed.value) {
-                                navigate(
+                                pushNamed(
                                   AppRoutes.authRoute +
                                       AppRoutes.createAccountRoute,
                                 );

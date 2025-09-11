@@ -2,8 +2,6 @@ import 'package:auth_module/src/ui/stores/create_account_store.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../components/provider_button_widget.dart';
-
 class CreateAccountView extends StatefulWidget {
   const CreateAccountView({super.key});
 
@@ -40,20 +38,14 @@ class _CreateAccountViewState extends State<CreateAccountView> {
               child: Column(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 72, left: 16),
+                    margin: const EdgeInsets.only(top: 28, left: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        BackButtonWidget(
-                          action: () => navigate(
-                            AppRoutes.authRoute + AppRoutes.loginRoute,
-                          ),
-                        ),
-                      ],
+                      children: [BackButtonWidget(action: () => pop(context))],
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(bottom: 32),
+                    margin: const EdgeInsets.only(top: 35, bottom: 32),
                     child: const Image(
                       image: AssetImage(AppImages.logoLoginImage),
                       fit: BoxFit.cover,
@@ -204,24 +196,22 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         _store.isPasswordEqual,
                     label: "Criar Conta",
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColors.loginLineDecoration,
-                          ),
+                 /* Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColors.loginLineDecoration,
                         ),
-                        width: 159,
                       ),
-                    ],
+                      width: 159,
+                    ),
                   ),
                   ProviderButtonWidget(
+                    label: 'Fazer cadastro com o Google',
                     isPressed: _isGoogleLoginPressed,
                     action: () {
                     },
-                  ),
+                  ),*/
                 ],
               ),
             ),

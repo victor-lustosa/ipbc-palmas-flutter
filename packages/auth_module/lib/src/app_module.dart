@@ -14,7 +14,6 @@ import 'ui/views/reset_password_view.dart';
 import 'ui/views/verification_code_view.dart';
 
 class AuthModule extends Module {
-
   @override
   List<Module> get imports => [CoreModule()];
 
@@ -35,19 +34,22 @@ class AuthModule extends Module {
   void routes(r) {
     r.child(
       AppRoutes.loginRoute,
-      transition: TransitionType.custom,
-      customTransition: ModularSlideTransition(
-        transitionDuration: const Duration(milliseconds: 400),
-        reverseTransitionDuration: const Duration(milliseconds: 400),
-        begin: const Offset(1, 0),
-        end: const Offset(0, 0),
-        curve: Curves.easeIn,
-      ),
       child: (_) => const LoginView(),
     );
-    r.child(AppRoutes.createAccountRoute, child: (_) => const CreateAccountView());
-    r.child(AppRoutes.resetPasswordRoute, child: (_) => const ResetPasswordView());
-    r.child(AppRoutes.verificationCodeRoute, child: (_) => const VerificationCodeView());
+    r.child(
+      AppRoutes.createAccountRoute,
+      transition: TransitionType.custom,
+      customTransition: ModularFadeTransition(),
+      child: (_) => const CreateAccountView(),
+    );
+    r.child(
+      AppRoutes.resetPasswordRoute,
+      child: (_) => const ResetPasswordView(),
+    );
+    r.child(
+      AppRoutes.verificationCodeRoute,
+      child: (_) => const VerificationCodeView(),
+    );
     r.child(
       AppRoutes.creatingNewPassWordRoute,
       child: (_) => const CreatingNewPasswordView(),
