@@ -14,36 +14,21 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final LoginStore _store = Modular.get<LoginStore>();
 
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  final GlobalKey<FormState> _emailKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
-
-  final String _emailErrorText = 'por favor, insira um email válido.';
-  final String _passwordErrorText = 'por favor, insira uma senha.';
-
-  bool _isEmailValid = true;
-  bool _isPasswordValid = true;
-  bool _obscure = true;
-  bool _isPressed = false;
-
   @override
   Widget build(BuildContext context) {
     void suffixAction() => setState(() {
-      _obscure = !_obscure;
+      _store.obscure = !_store.obscure;
     });
     return ValueListenableBuilder(
       valueListenable: _store,
       builder: (_, state, child) {
         if (state is LoadingState<LoginState>) {
-          _isPressed = true;
+          _store.isPressed = true;
         }
 
         if (state is InitialState<LoginState>) {
-          _isPressed = false;
+          _store.isPressed = false;
         }
-
         return Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(
@@ -53,9 +38,7 @@ class _LoginViewState extends State<LoginView> {
                     margin: EdgeInsets.only(top: 28, left: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        BackButtonWidget(action: () => pop(context))
-                      ],
+                      children: [BackButtonWidget(action: () => pop(context))],
                     ),
                   ),
                   Container(
@@ -77,48 +60,52 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                   TemplateFormWidget(
-                    controller: _emailController,
+                    valueListenable: _store.isEmailValid,
+                    controller: _store.emailController,
                     title: 'Insira seu email',
-                    isValid: _isEmailValid,
-                    errorText: _emailErrorText,
-                    globalKey: _emailKey,
-                    isPressed: _isPressed,
+                    isValid: _store.isEmailValid.value,
+                    errorText: _store.emailErrorText,
+                    globalKey: _store.emailKey,
+                    isPressed: _store.isPressed,
                     inputDecoration: fieldInputDecoration(
-                      isValid: _isEmailValid,
+                      isValid: _store.isEmailValid.value,
                       hintText: 'Email',
                     ),
                     validator: (data) {
-                      _emailValidation(data);
-                      return null;
+                      return _store.formValidation(
+                        _store.emailValidation(data),
+                        _store.isEmailValid,
+                      );
                     },
-                    defaultHintColor:
-                        _isEmailValid
-                            ? AppColors.hintInputForm
-                            : AppColors.delete,
+                    defaultHintColor: _store.isEmailValid.value
+                        ? AppColors.hintInputForm
+                        : AppColors.delete,
                   ),
                   TemplateFormWidget(
-                    controller: _passwordController,
+                    controller: _store.passwordController,
                     titleMargin: EdgeInsets.only(
-                      top: _isPasswordValid ? 24 : 12,
+                      top: _store.isPasswordValid.value ? 24 : 12,
                     ),
                     title: 'Insira sua senha',
-                    isValid: _isPasswordValid,
-                    errorText: _passwordErrorText,
-                    globalKey: _passwordKey,
-                    isPressed: _isPressed,
-                    obscure: _obscure,
+                    isValid: _store.isPasswordValid.value,
+                    errorText: _store.passwordErrorText,
+                    globalKey: _store.passwordKey,
+                    isPressed: _store.isPressed,
+                    obscure: _store.obscure,
                     inputDecoration: fieldInputDecoration(
-                      isValid: _isPasswordValid,
+                      isValid: _store.isPasswordValid.value,
                       hintText: 'Senha',
                       contentPadding: const EdgeInsets.only(left: 16, top: 9),
                       suffixIcon: HideIconWidget(
-                        isObscure: _obscure,
+                        isObscure: _store.obscure,
                         suffixAction: suffixAction,
                       ),
                     ),
                     validator: (data) {
-                       _passwordValidation(data);
-                       return null;
+                      return _store.formValidation(
+                        !_store.isEmptyData(data),
+                        _store.isPasswordValid,
+                      );
                     },
                     defaultHintColor: AppColors.hintInputForm,
                   ),
@@ -138,16 +125,15 @@ class _LoginViewState extends State<LoginView> {
                                   decorationColor: AppColors.darkGreen,
                                 ),
                                 text: "Esqueceu a senha? ",
-                                recognizer:
-                                    TapGestureRecognizer()
-                                      ..onTap = () {
-                                        if (!_isPressed) {
-                                          pushNamed(
-                                            AppRoutes.authRoute +
-                                                AppRoutes.resetPasswordRoute,
-                                          );
-                                        }
-                                      },
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    if (!_store.isPressed) {
+                                      pushNamed(
+                                        AppRoutes.authRoute +
+                                            AppRoutes.resetPasswordRoute,
+                                      );
+                                    }
+                                  },
                               ),
                             ],
                           ),
@@ -159,31 +145,13 @@ class _LoginViewState extends State<LoginView> {
                     marginTop: 40,
                     marginBottom: 24,
                     loadingWidth: 55,
-                    isPressed: _isPressed,
+                    isPressed: _store.isPressed,
                     action: () async {
-                      if (_emailController.text.isEmpty && !_isPressed) {
-                        _emailBorderValidation(false);
-                      }
-                      if (_passwordController.text.isEmpty && !_isPressed) {
-                        _passwordBorderValidation(false);
-                      }
-                      if (_emailController.text.isNotEmpty &&
-                          _passwordController.text.isNotEmpty &&
-                          _isEmailValid &&
-                          _isPasswordValid &&
-                          !_isPressed) {
-                        if (EmailValidator.validate(_emailController.text)) {
-                          await _store.logIn(
-                            _emailController.text,
-                            _passwordController.text,
-                            context,
-                          );
-                        } else {
-                          _emailBorderValidation(false);
-                        }
-                      }
+                      _store.loginValidate(context: context);
                     },
-                    isValid: _isEmailValid && _isPasswordValid,
+                    isValid:
+                        _store.isEmailValid.value &&
+                        _store.isPasswordValid.value,
                     label: "Entrar",
                   ),
                   Row(
@@ -296,17 +264,15 @@ class _LoginViewState extends State<LoginView> {
                             decorationColor: AppColors.darkGreen,
                           ),
                           text: "Criar conta ",
-                          recognizer:
-                              TapGestureRecognizer()
-                                ..onTap =
-                                    () => setState(() {
-                                      if (!_isPressed) {
-                                        navigate(
-                                          AppRoutes.authRoute +
-                                              AppRoutes.createAccountRoute,
-                                        );
-                                      }
-                                    }),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => setState(() {
+                              if (!_store.isPressed) {
+                                navigate(
+                                  AppRoutes.authRoute +
+                                      AppRoutes.createAccountRoute,
+                                );
+                              }
+                            }),
                         ),
                       ],
                     ),
@@ -318,45 +284,5 @@ class _LoginViewState extends State<LoginView> {
         );
       },
     );
-  }
-
-  void _passwordBorderValidation(bool value) {
-    Future.delayed(Duration.zero, () async {
-      if (mounted) {
-        setState(() {
-          _isPasswordValid = value;
-        });
-      }
-    });
-  }
-
-  void _emailBorderValidation(bool value) {
-    Future.delayed(Duration.zero, () async {
-      if (mounted) {
-        setState(() {
-          _isEmailValid = value;
-        });
-      }
-    });
-  }
-
-  void _emailValidation(String? data) {
-    if (data == null || data.isEmpty) {
-      _emailBorderValidation(false);
-    } else {
-      if (EmailValidator.validate(_emailController.text)) {
-        _emailBorderValidation(true);
-      } else {
-        _emailBorderValidation(false);
-      }
-    }
-  }
-
-  void _passwordValidation(String? data) {
-    if (data == null || data.isEmpty) {
-      _passwordBorderValidation(false);
-    } else {
-      _passwordBorderValidation(true);
-    }
   }
 }

@@ -49,7 +49,7 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget>
     _overlayEntry = OverlayEntry(
       builder: (context) {
         return Positioned(
-          top: offset.dy + size.height + 8,
+          top: offset.dy + size.height + 1,
           left: offset.dx + size.width - 83,
           child: Material(
             color: AppColors.white,

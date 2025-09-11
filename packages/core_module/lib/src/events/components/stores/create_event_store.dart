@@ -91,6 +91,13 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     }
   }
 
+  changeValue(ValueNotifier<bool> valueNotifier, bool newValue) {
+    Future.delayed(Duration.zero, () async {
+      valueNotifier.value = newValue;
+      value = UpdateFormFieldState();
+    });
+  }
+
   locationValidation(String? data, ValueNotifier<bool> isValid) {
     if (!isLocationLinkValid(data)) {
       changeValue(isValid, false);
@@ -149,13 +156,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
 
   bool isEmptyData(String? data) {
     return (data == null || data.isEmpty);
-  }
-
-  changeValue(ValueNotifier<bool> valueNotifier, bool newValue) {
-    Future.delayed(Duration.zero, () async {
-      valueNotifier.value = newValue;
-      value = UpdateFormFieldState();
-    });
   }
 
   getImage() async {

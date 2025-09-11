@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:core_module/core_module.dart';
+import 'package:flutter/cupertino.dart';
 
 class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   LoginStore({
@@ -14,6 +14,30 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
 
   final String _email = 'victor.olustosa@outlook.com';
   final String _password = '!Helena2201';
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  get emailController => _emailController;
+
+  get passwordController => _passwordController;
+  final GlobalKey<FormState> _emailKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
+
+  get emailKey => _emailKey;
+
+  get passwordKey => _passwordKey;
+  final String _emailErrorText = 'por favor, insira um email válido.';
+  final String _passwordErrorText = 'por favor, insira uma senha.';
+
+  get emailErrorText => _emailErrorText;
+
+  get passwordErrorText => _passwordErrorText;
+  ValueNotifier<bool> isEmailValid = ValueNotifier(true);
+  ValueNotifier<bool> isPasswordValid = ValueNotifier(true);
+
+  bool obscure = true;
+  bool isPressed = false;
 
   Future<void> logIn(
     String email,
@@ -54,7 +78,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     value = LoadingState<LoginState>();
     final token = await _useCases.signInWithGoogle();
     if (context.mounted) {
-      if(token != null && token.isNotEmpty){
+      if (token != null && token.isNotEmpty) {
         toHome(context);
       } else {
         value = InitialState<LoginState>();
@@ -66,9 +90,24 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   Future<void> signInWithFacebook() async {
     await _onlineUseCases.signInWithFacebook();
   }*/
+  formValidation(bool validation, ValueNotifier<bool> isValid) {
+    changeValue(isValid, validation);
+    return null;
+  }
 
-  void validateFields() {
-    value = ValidateFieldsState();
+  bool isEmptyData(String? data) {
+    return (data == null || data.isEmpty);
+  }
+
+  bool emailValidation(String? data) {
+    return !isEmptyData(data) && EmailValidator.validate(data ?? '');
+  }
+
+  changeValue(ValueNotifier<bool> valueNotifier, bool newValue) {
+    Future.delayed(Duration.zero, () async {
+      valueNotifier.value = newValue;
+      value = UpdateFormFieldState();
+    });
   }
 
   void toCreateAccount() {
@@ -80,7 +119,6 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
       Duration(milliseconds: 200),
       () => _authCircleAvatarStore.validateAuthentication(),
     );
-
     if (context.mounted) {
       pop(context);
     }
@@ -92,9 +130,21 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
       navigate(AppRoutes.loginRoute);
     });
   }
+
+  Future<void> loginValidate({required BuildContext context}) async {
+    if (_emailController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty &&
+        isEmailValid.value &&
+        isPasswordValid.value &&
+        !isPressed) {
+      if (emailValidation(_emailController.text)) {
+        await logIn(_emailController.text, _passwordController.text, context);
+      } else {
+        changeValue(isEmailValid, false);
+      }
+    }
+  }
 }
 
 @immutable
 abstract class LoginState {}
-
-class ValidateFieldsState extends GenericState<LoginState> {}
