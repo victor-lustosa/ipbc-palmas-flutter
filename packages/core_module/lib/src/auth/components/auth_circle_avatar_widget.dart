@@ -20,7 +20,7 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget>
   void initState() {
     super.initState();
     _shimmerController = AnimationController.unbounded(vsync: this)
-      ..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1200));
+      ..repeat(min: -.5, max: 1.5, period: const Duration(milliseconds: 1200));
   }
 
   @override
@@ -53,9 +53,9 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget>
           left: offset.dx + size.width - 83,
           child: Material(
             color: AppColors.white,
-            elevation: 4.0,
+            elevation: 4,
             shadowColor: Colors.black38,
-            borderRadius: BorderRadius.circular(8.0),
+            borderRadius: BorderRadius.circular(8),
             child: InkWell(
               onTap: () {
                 _store.logout();

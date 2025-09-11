@@ -46,9 +46,9 @@ class TemplateFormWidget extends StatefulWidget {
 
   final bool isValid;
 
-  final bool? obscure;
+  final ValueNotifier<bool>? obscure;
 
-  final bool isPressed;
+  final ValueNotifier<bool> isPressed;
 
   final List<TextInputFormatter>? inputFormatters;
 
@@ -83,7 +83,7 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
               widget.horizontalSymmetric ??
               const EdgeInsets.symmetric(horizontal: 16),
           fieldKey: widget.globalKey,
-          isSubmitted: !widget.isPressed,
+          isSubmitted: !widget.isPressed.value,
           fieldMargin: widget.fieldMargin ?? const EdgeInsets.only(top: 4),
           titleMargin: widget.titleMargin,
           fieldDecoration: _fieldDecoration(
@@ -101,7 +101,7 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
           keyboardType: widget.textInputType,
           controller: widget.controller,
           inputDecoration: widget.inputDecoration,
-          obscureText: widget.obscure,
+          obscureText: widget.obscure?.value,
           errorText: widget.errorText,
           fieldHeight: widget.fieldHeight ?? 48,
           validator: widget.validator,

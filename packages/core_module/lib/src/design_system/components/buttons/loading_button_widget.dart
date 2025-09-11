@@ -13,7 +13,7 @@ class LoadingButtonWidget extends StatelessWidget {
     this.loadingWidth,
   });
 
-  final bool isPressed;
+  final ValueNotifier<bool> isPressed;
   final double? marginBottom;
   final double? marginTop;
   final double? loadingWidth;
@@ -31,7 +31,7 @@ class LoadingButtonWidget extends StatelessWidget {
         left: 16,
         right: 16,
       ),
-      width: isPressed ? (loadingWidth ?? 48) : context.sizeOf.width,
+      width: isPressed.value ? (loadingWidth ?? 48) : context.sizeOf.width,
       height: 48,
       duration: const Duration(milliseconds: 750),
       curve: Curves.fastOutSlowIn,
@@ -42,7 +42,7 @@ class LoadingButtonWidget extends StatelessWidget {
             isValid ? AppColors.darkGreen : AppColors.disableButton,
         shadowColor: AppColors.grey0,
         child:
-            isPressed
+            isPressed.value
                 ? const LoadingWidget(
                   androidRadius: 2,
                   iosRadius: 11,

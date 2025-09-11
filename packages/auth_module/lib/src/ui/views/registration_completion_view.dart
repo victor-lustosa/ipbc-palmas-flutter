@@ -23,7 +23,7 @@ class _RegistrationCompletionViewState
   final GlobalKey<FormState> _dateOfBirthKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _maritalStatusKey = GlobalKey<FormState>();
 
-  final bool _isPressed = false;
+  ValueNotifier<bool> _isPressed = ValueNotifier(false);
   bool _isValidName = true;
   bool _isValidPhone = true;
   bool _isValidCep = true;

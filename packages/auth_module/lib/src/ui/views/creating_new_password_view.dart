@@ -22,14 +22,13 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
 
   bool _isConfirmPasswordValid = true;
   bool _isPasswordValid = true;
-  bool _obscure = true;
-  bool isPressed = false;
+  ValueNotifier<bool> _firstObscure = ValueNotifier(true);
+  ValueNotifier<bool> _secondObscure = ValueNotifier(true);
+  ValueNotifier<bool> isPressed = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
-    void suffixAction() => setState(() {
-      _obscure = !_obscure;
-    });
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -67,14 +66,13 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                   errorText: _passwordErrorText,
                   globalKey: _passwordKey,
                   isPressed: isPressed,
-                  obscure: _obscure,
+                  obscure: _firstObscure,
                   inputDecoration: fieldInputDecoration(
                     isValid: _isPasswordValid,
                     hintText: 'Senha',
                     contentPadding: const EdgeInsets.only(left: 16, top: 9),
                     suffixIcon: HideIconWidget(
-                      isObscure: _obscure,
-                      suffixAction: suffixAction,
+                      isObscure: _firstObscure,
                     ),
                   ),
                   validator: (data) {
@@ -91,14 +89,13 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                     errorText: _confirmPasswordErrorText,
                     globalKey: _confirmPasswordKey,
                     isPressed: isPressed,
-                    obscure: _obscure,
+                    obscure: _secondObscure,
                     inputDecoration: fieldInputDecoration(
                       isValid: _isConfirmPasswordValid,
                       hintText: 'Repetir senha',
                       contentPadding: const EdgeInsets.only(left: 16, top: 9),
                       suffixIcon: HideIconWidget(
-                        isObscure: _obscure,
-                        suffixAction: suffixAction,
+                        isObscure: _secondObscure,
                       ),
                     ),
                     validator: (data) {

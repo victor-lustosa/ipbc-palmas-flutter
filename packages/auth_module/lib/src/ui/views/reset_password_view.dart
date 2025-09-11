@@ -17,7 +17,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
   final TextEditingController _resetPasswordController =
       TextEditingController();
   bool _isEmailValid = true;
-  final bool _isPressed = false;
+  ValueNotifier<bool> _isPressed = ValueNotifier(false);
   bool _isVerified = false;
   bool _isInit = true;
 
@@ -94,7 +94,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                 ),
                 ButtonWidget(
                   action: () {
-                    if (_resetPasswordController.text.isEmpty && !_isPressed) {
+                    if (_resetPasswordController.text.isEmpty && !_isPressed.value) {
                       _emailBorderValidation(false, false);
                     }
                     pushNamed(

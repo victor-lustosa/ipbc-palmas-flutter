@@ -16,19 +16,9 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    void suffixAction() => setState(() {
-      _store.obscure = !_store.obscure;
-    });
     return ValueListenableBuilder(
       valueListenable: _store,
       builder: (_, state, child) {
-        if (state is LoadingState<LoginState>) {
-          _store.isPressed = true;
-        }
-
-        if (state is InitialState<LoginState>) {
-          _store.isPressed = false;
-        }
         return Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(
@@ -96,10 +86,7 @@ class _LoginViewState extends State<LoginView> {
                       isValid: _store.isPasswordValid.value,
                       hintText: 'Senha',
                       contentPadding: const EdgeInsets.only(left: 16, top: 9),
-                      suffixIcon: HideIconWidget(
-                        isObscure: _store.obscure,
-                        suffixAction: suffixAction,
-                      ),
+                      suffixIcon: HideIconWidget(isObscure: _store.obscure),
                     ),
                     validator: (data) {
                       return _store.formValidation(
@@ -127,7 +114,7 @@ class _LoginViewState extends State<LoginView> {
                                 text: "Esqueceu a senha? ",
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    if (!_store.isPressed) {
+                                    if (!_store.isPressed.value) {
                                       pushNamed(
                                         AppRoutes.authRoute +
                                             AppRoutes.resetPasswordRoute,
@@ -266,7 +253,7 @@ class _LoginViewState extends State<LoginView> {
                           text: "Criar conta ",
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => setState(() {
-                              if (!_store.isPressed) {
+                              if (!_store.isPressed.value) {
                                 navigate(
                                   AppRoutes.authRoute +
                                       AppRoutes.createAccountRoute,

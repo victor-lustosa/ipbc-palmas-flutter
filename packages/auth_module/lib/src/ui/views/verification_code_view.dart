@@ -20,20 +20,13 @@ class VerificationCodeView extends StatefulWidget {
 
 class _VerificationCodeViewState extends State<VerificationCodeView> {
   final _store = Modular.get<ResetPasswordStore>();
-  bool _isPressed = false;
+  ValueNotifier<bool> _isPressed = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _store,
       builder: (_, state, child) {
-        if (state is LoadingState<ResetPasswordState>) {
-          _isPressed = true;
-        }
-
-        if (state is InitialState<ResetPasswordState>) {
-          _isPressed = false;
-        }
         return Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(

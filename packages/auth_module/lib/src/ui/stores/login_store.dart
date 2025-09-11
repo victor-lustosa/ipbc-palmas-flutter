@@ -35,20 +35,21 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   get passwordErrorText => _passwordErrorText;
   ValueNotifier<bool> isEmailValid = ValueNotifier(true);
   ValueNotifier<bool> isPasswordValid = ValueNotifier(true);
-
-  bool obscure = true;
-  bool isPressed = false;
+  ValueNotifier<bool> isPressed = ValueNotifier(false);
+  ValueNotifier<bool> obscure = ValueNotifier(true);
 
   Future<void> logIn(
     String email,
     String password,
     BuildContext context,
   ) async {
+    isPressed.value = true;
     value = LoadingState<LoginState>();
     Future.delayed(const Duration(seconds: 1), () {
       if (_email == email && _password == password) {
         navigate(AppRoutes.initialRoute);
       } else {
+        isPressed.value = false;
         value = InitialState<LoginState>();
         if (context.mounted) {
           showCustomErrorDialog(
@@ -136,7 +137,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
         _passwordController.text.isNotEmpty &&
         isEmailValid.value &&
         isPasswordValid.value &&
-        !isPressed) {
+        !isPressed.value) {
       if (emailValidation(_emailController.text)) {
         await logIn(_emailController.text, _passwordController.text, context);
       } else {

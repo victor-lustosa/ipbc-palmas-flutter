@@ -39,7 +39,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
 
   ValueNotifier<bool> isPreacherValid = ValueNotifier(true);
   ValueNotifier<bool> isThemeValid = ValueNotifier(true);
-  bool isPressed = false;
+  ValueNotifier<bool> isPressed = ValueNotifier(false);
 
   final Map<String, TextEditingController> _controllers = {};
   final Map<String, FocusNode> _focusNodes = {};

@@ -77,7 +77,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   ValueNotifier<bool> isEventLinkValid = ValueNotifier(true);
   ValueNotifier<bool> isEventLinkDescriptionValid = ValueNotifier(true);
   ValueNotifier<bool> isCoverImageValid = ValueNotifier(true);
-  bool isPressed = false;
+  ValueNotifier<bool> isPressed = ValueNotifier(false);
   File coverImage = File('');
   late EventEntity eventEntity;
 

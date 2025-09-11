@@ -1,6 +1,5 @@
 import 'package:auth_module/src/ui/stores/create_account_store.dart';
 import 'package:core_module/core_module.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CreateAccountView extends StatefulWidget {
@@ -23,25 +22,15 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
   bool _isEmailValid = true;
   bool _isPasswordValid = true;
-  bool _obscure = true;
-  bool _isPressed = false;
+  ValueNotifier<bool> _isPressed = ValueNotifier(false);
+  ValueNotifier<bool> _firstObscure = ValueNotifier(true);
+  ValueNotifier<bool> _secondObscure = ValueNotifier(true);
 
   @override
   Widget build(BuildContext context) {
-   void suffixAction() => setState(() {
-      _obscure = !_obscure;
-    });
-
     return ValueListenableBuilder(
       valueListenable: _store,
       builder: (_, state, child) {
-        if (state is LoadingState<CreateAccountState>) {
-          _isPressed = true;
-        }
-        if (state is InitialState<CreateAccountState>) {
-          _isPressed = false;
-        }
-
         return Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(
@@ -53,10 +42,9 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         BackButtonWidget(
-                          action:
-                              () => navigate(
-                                AppRoutes.authRoute + AppRoutes.loginRoute,
-                              ),
+                          action: () => navigate(
+                            AppRoutes.authRoute + AppRoutes.loginRoute,
+                          ),
                         ),
                       ],
                     ),
@@ -86,24 +74,22 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     errorText: _emailErrorText,
                     globalKey: _emailKey,
                     isPressed: _isPressed,
-                    color:
-                        _store.emptyEmail
-                            ? AppColors.secondaryGrey
-                            : (_isEmailValid
-                                ? AppColors.greenInputAccept
-                                : AppColors.delete),
+                    color: _store.emptyEmail
+                        ? AppColors.secondaryGrey
+                        : (_isEmailValid
+                              ? AppColors.greenInputAccept
+                              : AppColors.delete),
                     inputDecoration: fieldInputDecoration(
                       isValid: _isEmailValid,
                       hintText: 'Email',
                     ),
                     validator: (data) {
-                       _emailValidation(data);
-                       return null;
+                      _emailValidation(data);
+                      return null;
                     },
-                    defaultHintColor:
-                        _isEmailValid
-                            ? AppColors.greenInputAccept
-                            : AppColors.delete,
+                    defaultHintColor: _isEmailValid
+                        ? AppColors.greenInputAccept
+                        : AppColors.delete,
                   ),
                   TemplateFormWidget(
                     controller: _store.passwordController,
@@ -115,42 +101,25 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     errorText: _passwordErrorText,
                     globalKey: _passwordKey,
                     isPressed: _isPressed,
-                    obscure: _obscure,
-                    color:
-                        _store.emptyPasswords
-                            ? AppColors.secondaryGrey
-                            : (!_store.emptyPasswords && _store.isPasswordEqual
-                                ? AppColors.disableButton
-                                : AppColors.delete),
+                    obscure: _firstObscure,
+                    color: _store.emptyPasswords
+                        ? AppColors.secondaryGrey
+                        : (!_store.emptyPasswords && _store.isPasswordEqual
+                              ? AppColors.disableButton
+                              : AppColors.delete),
                     inputDecoration: fieldInputDecoration(
                       isValid: _isPasswordValid,
                       hintText: 'Senha',
                       contentPadding: const EdgeInsets.only(left: 16, top: 9),
-                      suffixIcon:
-                          _obscure
-                              ? IconButtonWidget(
-                                action: suffixAction,
-                                size: 24,
-                                color: AppColors.grey7,
-                                iOSIcon: CupertinoIcons.eye_slash,
-                                androidIcon: Icons.visibility_off_outlined,
-                              )
-                              : IconButtonWidget(
-                                action: suffixAction,
-                                size: 24,
-                                color: AppColors.grey7,
-                                iOSIcon: CupertinoIcons.eye,
-                                androidIcon: Icons.visibility_outlined,
-                              ),
+                      suffixIcon: HideIconWidget(isObscure: _firstObscure),
                     ),
                     validator: (data) {
-                       _passwordValidation(data);
-                       return null;
+                      _passwordValidation(data);
+                      return null;
                     },
-                    defaultHintColor:
-                        _isPasswordValid && _store.isPasswordEqual
-                            ? AppColors.greenInputAccept
-                            : AppColors.delete,
+                    defaultHintColor: _isPasswordValid && _store.isPasswordEqual
+                        ? AppColors.greenInputAccept
+                        : AppColors.delete,
                   ),
                   TemplateFormWidget(
                     controller: _store.passwordRepeatController,
@@ -159,42 +128,25 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     errorText: _passwordErrorConfirmText,
                     globalKey: _repeatPasswordKey,
                     isPressed: _isPressed,
-                    obscure: _obscure,
-                    color:
-                        _store.emptyPasswords
-                            ? AppColors.secondaryGrey
-                            : (!_store.emptyPasswords && _store.isPasswordEqual
-                                ? AppColors.disableButton
-                                : AppColors.delete),
+                    obscure: _secondObscure,
+                    color: _store.emptyPasswords
+                        ? AppColors.secondaryGrey
+                        : (!_store.emptyPasswords && _store.isPasswordEqual
+                              ? AppColors.disableButton
+                              : AppColors.delete),
                     inputDecoration: fieldInputDecoration(
                       isValid: _isPasswordValid,
                       hintText: 'Repita a Senha',
                       contentPadding: const EdgeInsets.only(left: 16, top: 9),
-                      suffixIcon:
-                          _obscure
-                              ? IconButtonWidget(
-                                action: suffixAction,
-                                size: 24,
-                                color: AppColors.grey7,
-                                iOSIcon: CupertinoIcons.eye_slash,
-                                androidIcon: Icons.visibility_off_outlined,
-                              )
-                              : IconButtonWidget(
-                                action: suffixAction,
-                                size: 24,
-                                color: AppColors.grey7,
-                                iOSIcon: CupertinoIcons.eye,
-                                androidIcon: Icons.visibility_outlined,
-                              ),
+                      suffixIcon: HideIconWidget(isObscure: _secondObscure),
                     ),
                     validator: (data) {
-                       _passwordValidation(data);
-                       return null;
+                      _passwordValidation(data);
+                      return null;
                     },
-                    defaultHintColor:
-                        _isPasswordValid && _store.isPasswordEqual
-                            ? AppColors.greenInputAccept
-                            : AppColors.delete,
+                    defaultHintColor: _isPasswordValid && _store.isPasswordEqual
+                        ? AppColors.greenInputAccept
+                        : AppColors.delete,
                   ),
                   Container(
                     width: context.sizeOf.width,
@@ -207,12 +159,11 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                               ? " * A senha contém 8 dígitos."
                               : " * Deve conter no mínimo 8 dígitos.",
                           style: AppFonts.defaultFont(
-                            color:
-                                _store.emptyPasswords
-                                    ? AppColors.grey10
-                                    : _store.isPasswordLengthValid
-                                    ? AppColors.disableButton
-                                    : AppColors.delete,
+                            color: _store.emptyPasswords
+                                ? AppColors.grey10
+                                : _store.isPasswordLengthValid
+                                ? AppColors.disableButton
+                                : AppColors.delete,
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
                           ),
@@ -222,12 +173,11 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                               ? " * As senhas correspondem."
                               : " * As senhas devem corresponder.",
                           style: AppFonts.defaultFont(
-                            color:
-                                _store.emptyPasswords
-                                    ? AppColors.grey10
-                                    : _store.isPasswordEqual
-                                    ? AppColors.disableButton
-                                    : AppColors.delete,
+                            color: _store.emptyPasswords
+                                ? AppColors.grey10
+                                : _store.isPasswordEqual
+                                ? AppColors.disableButton
+                                : AppColors.delete,
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
                           ),
@@ -344,7 +294,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     );
   }
 
- void _passwordBorderValidation(bool value) {
+  void _passwordBorderValidation(bool value) {
     Future.delayed(Duration.zero, () async {
       if (mounted) {
         setState(() {
