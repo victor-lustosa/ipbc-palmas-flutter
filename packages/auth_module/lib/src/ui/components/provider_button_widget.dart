@@ -7,7 +7,9 @@ class ProviderButtonWidget extends StatefulWidget {
     required this.isPressed,
     required this.action,
     this.icon,
-    this.label, this.size,
+    this.label,
+    this.size,
+    this.loadingWidth,
   });
 
   final ValueNotifier<bool> isPressed;
@@ -15,6 +17,7 @@ class ProviderButtonWidget extends StatefulWidget {
   final String? icon;
   final String? label;
   final double? size;
+  final double? loadingWidth;
 
   @override
   State<ProviderButtonWidget> createState() => _ProviderButtonWidgetState();
@@ -38,7 +41,7 @@ class _ProviderButtonWidgetState extends State<ProviderButtonWidget> {
       ),
       loadingIndicatorColor: AppColors.darkGreen,
       margin: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 25),
-      loadingWidth: 55,
+      loadingWidth: widget.loadingWidth,
       textStyle: AppFonts.defaultFont(
         fontSize: 15,
         fontWeight: FontWeight.w500,

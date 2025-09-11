@@ -128,7 +128,6 @@ class _LoginViewState extends State<LoginView> {
                     ],
                   ),
                   LoadingButtonWidget(
-                    loadingWidth: 55,
                     isPressed: _store.isLoginPressed,
                     action: () async {
                       _store.loginValidate(context: context);

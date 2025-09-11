@@ -13,7 +13,7 @@ class LoadingButtonWidget extends StatelessWidget {
     this.decoration,
     this.margin,
     this.label,
-    required this.loadingWidth,
+    this.loadingWidth,
     this.duration,
     this.backgroundColor,
     this.disableColor,
@@ -27,7 +27,7 @@ class LoadingButtonWidget extends StatelessWidget {
   });
 
   final ValueNotifier<bool> isPressed;
-  final double loadingWidth;
+  final double? loadingWidth;
   final double? width;
   final Duration? duration;
   final double? height;
@@ -57,7 +57,7 @@ class LoadingButtonWidget extends StatelessWidget {
           margin:
               margin ??
               const EdgeInsets.only(top: 40, bottom: 24, left: 16, right: 16),
-          width: isLoading ? loadingWidth : (width ?? context.sizeOf.width),
+          width: isLoading ? (loadingWidth ?? context.sizeOf.width) : (width ?? context.sizeOf.width),
           height: height ?? 48,
           duration: duration ?? const Duration(milliseconds: 750),
           curve: Curves.fastOutSlowIn,
