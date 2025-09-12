@@ -18,7 +18,7 @@ class ServicesPreviewStore
   late ServiceEntity serviceEntity;
   late ServicesEntity servicesEntity;
 
-  ValueNotifier<bool> isAdmin = ValueNotifier(false);
+  ValueNotifier<bool> isAdmin = ValueNotifier(true);
   get manageLyricStore => _manageLyricStore;
   get lyricsListStore => _lyricsListStore;
 

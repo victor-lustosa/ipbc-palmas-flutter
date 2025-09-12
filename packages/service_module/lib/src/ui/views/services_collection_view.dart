@@ -84,10 +84,9 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                     key: gestureKey,
                                     onTap: () {
                                       Modular.get<ServicesPreviewStore>().servicesEntity = widget.entity;
-                                      Modular.get<ServicesPreviewStore>().serviceEntity = _bloc.entitiesList[index];
+                                      Modular.get<ServicesPreviewStore>().serviceEntity = service;
                                       nativePushNamed(
                                         AppRoutes.servicesPreviewRoute,
-                                        arguments: service,
                                         context,
                                       );
                                     },

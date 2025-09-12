@@ -30,6 +30,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
 
   @override
   Widget build(BuildContext context) {
+    setLightAppBar();
     return FocusScope(
       node: _store.rootFocusNode,
       child: ValueListenableBuilder(

@@ -16,11 +16,11 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView>
   void initState() {
     super.initState();
     _store = Modular.get<ServicesPreviewStore>();
-    setLightAppBar();
   }
 
   @override
   Widget build(BuildContext context) {
+    setLightAppBar();
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -148,7 +148,9 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView>
           pngIcon: AppIcons.editIcon,
           size: 37,
           action: () {
-            popAndPushNamed(
+            Modular.get<ManageServiceStore>().servicesEntity = _store.servicesEntity;
+            Modular.get<ManageServiceStore>().isEditing = true;
+            pushNamed(
               AppRoutes.servicesRoute + AppRoutes.manageServicesRoute,
             );
           },
