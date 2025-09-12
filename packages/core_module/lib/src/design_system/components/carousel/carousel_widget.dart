@@ -142,16 +142,16 @@ class CarouselWidgetState extends State<CarouselWidget> {
                                 imageUrl: widget.services[position].image,
                                 fit: BoxFit.cover,
                                 imageBuilder: (context, imageProvider) {
-                                  // Este bloco só é executado quando a imagem carrega.
-                                  // Agendamos o setState para depois do build.
                                   WidgetsBinding.instance.addPostFrameCallback((_) {
                                     if (mounted && !imageHasLoaded.value) {
-                                      setState(() {
-                                        _isImageLoaded[position] = true;
+                                     Future.delayed(Duration(milliseconds: 300), () {
+                                        setState(() {
+                                          _isImageLoaded[position] = true;
+                                          imageHasLoaded.value = true;
+                                        });
                                       });
                                     }
                                   });
-                                  // Retorna o widget da imagem.
                                   return Image(
                                     image: imageProvider,
                                     fit: BoxFit.cover,
