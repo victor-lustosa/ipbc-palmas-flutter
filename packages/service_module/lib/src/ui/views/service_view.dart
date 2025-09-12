@@ -11,7 +11,7 @@ class ServiceView extends StatefulWidget {
   State<ServiceView> createState() => _ServiceViewState();
 }
 
-class _ServiceViewState extends State<ServiceView> with DateMixin{
+class _ServiceViewState extends State<ServiceView> with DateMixin {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -29,33 +29,24 @@ class _ServiceViewState extends State<ServiceView> with DateMixin{
                 createAt: formatDateToString(widget.entity.createAt),
               ),
               Container(
-                margin: const EdgeInsets.only(
-                  bottom: 4,
-                  top: 20,
-                  left: 20
-                ),
+                margin: const EdgeInsets.only(bottom: 4, top: 20, left: 20),
                 child: Column(
                   children: [
                     Text(
                       maxLines: 2,
                       'Preletor: ${widget.entity.preacher}',
-                      style: AppFonts.description(
-                        color: AppColors.grey8,
-                      ),
+                      style: AppFonts.description(color: AppColors.grey8),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(
-                        top: 14,
-                      ),
+                      margin: const EdgeInsets.only(top: 14),
                       child: Text(
                         maxLines: 2,
                         'Mensagem: ${widget.entity.theme}',
-                        style: AppFonts.description(
-                          color: AppColors.grey8,
-                        ),
+                        style: AppFonts.description(color: AppColors.grey8),
                       ),
                     ),
-                ],),
+                  ],
+                ),
               ),
               Visibility(
                 visible: widget.entity.guideIsVisible,

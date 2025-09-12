@@ -115,7 +115,7 @@ class _AccountCreatedSuccessfullyViewState
                           margin: EdgeInsets.only(top: 16),
                           width: context.sizeOf.width * .8,
                           child: Text(
-                            'Agora verifique seu e-mail para confirmação, e em seguida poderá fazer login.',
+                            'Agora verifique seu e-mail e clique em confirmar e-mail, depois é só voltar aqui e fazer login.',
                             textAlign: TextAlign.center,
                             style: AppFonts.defaultFont(
                               color: AppColors.grey7,

@@ -8,15 +8,15 @@ class ServicesPreviewView extends StatefulWidget {
   State<ServicesPreviewView> createState() => _ServicesPreviewViewState();
 }
 
-class _ServicesPreviewViewState extends State<ServicesPreviewView> with DateMixin{
-
+class _ServicesPreviewViewState extends State<ServicesPreviewView>
+    with DateMixin {
   late final ServicesPreviewStore _store;
 
   @override
   void initState() {
     super.initState();
     _store = Modular.get<ServicesPreviewStore>();
-    setDarkAppBar();
+    setLightAppBar();
   }
 
   @override
@@ -35,6 +35,26 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> with DateMixi
                 dateIsVisible: _store.serviceEntity.guideIsVisible,
                 createAt: formatDateToString(_store.serviceEntity.createAt),
               ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 4, top: 20, left: 20),
+                child: Column(
+                  children: [
+                    Text(
+                      maxLines: 2,
+                      'Preletor: ${_store.serviceEntity.preacher}',
+                      style: AppFonts.description(color: AppColors.grey8),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 14),
+                      child: Text(
+                        maxLines: 2,
+                        'Mensagem: ${_store.serviceEntity.theme}',
+                        style: AppFonts.description(color: AppColors.grey8),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Visibility(
                 visible: _store.serviceEntity.guideIsVisible,
                 child: Container(
@@ -47,7 +67,7 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> with DateMixi
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 24.7, left: 16),
+                margin: const EdgeInsets.only(top: 40, left: 16),
                 child: Text(
                   'Músicas de ${_store.servicesEntity.heading}',
                   style: AppFonts.defaultFont(
@@ -58,7 +78,9 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> with DateMixi
                 ),
               ),
               Visibility(
-                visible: _store.manageLyricStore.lyricsFetched.isEmpty,
+                visible:
+                    _store.manageLyricStore.lyricsFetched.isEmpty &&
+                    _store.isAdmin.value,
                 child: Container(
                   margin: const EdgeInsets.only(top: 4, left: 16, bottom: 24),
                   width: context.sizeOf.width * 0.9,
@@ -79,55 +101,58 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView> with DateMixi
                     onTap: () {
                       pushNamed(
                         AppRoutes.lyricsRoute + AppRoutes.lyricRoute,
-                        arguments:  _store.lyricsListStore.lyricModel,
+                        arguments: _store.lyricsListStore.lyricModel,
                       );
                     },
                     onLongPressStart: (s) {},
                   );
                 },
               ),
-              Container(
-                margin: const EdgeInsets.only(
-                  left: 15.5,
-                  right: 15.5,
-                  bottom: 40,
-                ),
-                child: ButtonWidget(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  fixedSize: Size(context.sizeOf.width, 48),
-                  action: () => pushNamed(
-                    AppRoutes.servicesRoute + AppRoutes.searchLyricsRoute,
-                  ),
-                  backgroundColor: AppColors.darkGreen,
-                  shadowColor: AppColors.grey0,
-                  foregroundColor: AppColors.white,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 16),
-                        child: const Text("Adicionar música"),
-                      ),
-                    ],
+              Visibility(
+                visible: _store.isAdmin.value,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 16, right: 16),
+                  child: ButtonWidget(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    fixedSize: Size(context.sizeOf.width, 48),
+                    action: () => pushNamed(
+                      AppRoutes.servicesRoute + AppRoutes.searchLyricsRoute,
+                    ),
+                    backgroundColor: AppColors.darkGreen,
+                    shadowColor: AppColors.grey0,
+                    foregroundColor: AppColors.white,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(right: 16),
+                          child: const Text("Adicionar música"),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
+              const SizedBox(height: 40),
             ],
           ),
         ),
       ),
-      floatingActionButton: FloatingButtonWidget(
-        iconColor: AppColors.white,
-        backgroundColor: AppColors.warning,
-        pngIcon: AppIcons.editIcon,
-        size: 37,
-        action: () {
-          popAndPushNamed(
-            AppRoutes.servicesRoute + AppRoutes.manageServicesRoute,
-          );
-        },
+      floatingActionButton: Visibility(
+        visible: _store.isAdmin.value,
+        child: FloatingButtonWidget(
+          iconColor: AppColors.white,
+          backgroundColor: AppColors.warning,
+          pngIcon: AppIcons.editIcon,
+          size: 37,
+          action: () {
+            popAndPushNamed(
+              AppRoutes.servicesRoute + AppRoutes.manageServicesRoute,
+            );
+          },
+        ),
       ),
     );
   }

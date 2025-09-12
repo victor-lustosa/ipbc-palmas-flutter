@@ -83,8 +83,10 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                   return GestureDetector(
                                     key: gestureKey,
                                     onTap: () {
+                                      Modular.get<ServicesPreviewStore>().servicesEntity = widget.entity;
+                                      Modular.get<ServicesPreviewStore>().serviceEntity = _bloc.entitiesList[index];
                                       nativePushNamed(
-                                        AppRoutes.serviceRoute,
+                                        AppRoutes.servicesPreviewRoute,
                                         arguments: service,
                                         context,
                                       );
