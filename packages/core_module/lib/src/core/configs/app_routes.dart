@@ -23,6 +23,8 @@ class AppRoutes {
   static const String resetPasswordSuccessRoute = '/success-password';
   static const String resetPasswordRoute = '/reset-password';
   static const String registrationCompletionRoute = '/registration-Completion';
+  static const String accountCreatedRoute = '/account-created';
+  static const String couldNotCreateRoute = '/could-not-create-account';
 
   //Services
   static const String serviceRoute = '/service';

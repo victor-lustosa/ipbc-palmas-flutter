@@ -12,6 +12,18 @@ class AuthUseCases implements IAuthUseCases {
        _onlineRepository = onlineRepository;
 
   @override
+  Future<String?> createUser(String email, String password) async {
+    var entity = await _onlineRepository.createUser(email, password);
+    return Future.value(entity as String);
+  }
+  
+  @override
+  Future<String?> signInWithEmail(String email, String password) async {
+    var entity = await _onlineRepository.signInWithEmail(email, password);
+    return Future.value(entity as String);
+  }
+
+  @override
   Future<String?> signInWithGoogle() async {
     final String? jwtToken = await _onlineRepository.signInWithGoogle();
     if(jwtToken == null) return null;
@@ -85,13 +97,8 @@ class AuthUseCases implements IAuthUseCases {
   }
 
   @override
-  Future<String?> signInWithEmail(String email, String password) {
-    var entity = _onlineRepository.signInWithEmail(email, password);
-    return Future.value(entity as String);
-  }
-
-  @override
   Future<void> signInWithFacebook() async {
     await _onlineRepository.signInFacebook();
   }
+
 }

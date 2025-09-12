@@ -46,21 +46,20 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     BuildContext context,
   ) async {
     isLoginPressed.value = true;
-    Future.delayed(const Duration(seconds: 1), () {
-      if (_email == email && _password == password) {
-        navigate(AppRoutes.initialRoute);
-      } else {
-        isLoginPressed.value = false;
-        value = InitialState<LoginState>();
-        if (context.mounted) {
-          showCustomErrorDialog(
-            title: 'Dados Incorretos',
-            message: 'Verifique se a senha e o email estão corretos.',
-            context: context,
-          );
-        }
+    final result = await _useCases.signInWithEmail(email, password);
+    if (result != null && result.isNotEmpty) {
+      navigate(AppRoutes.initialRoute);
+    } else {
+      isLoginPressed.value = false;
+      value = InitialState<LoginState>();
+      if (context.mounted) {
+        showCustomErrorDialog(
+          title: 'Dados Incorretos',
+          message: 'Verifique se a senha e o email estão corretos.',
+          context: context,
+        );
       }
-    });
+    }
   }
 
   Future<void> googleSignIn(BuildContext context) async {
@@ -124,13 +123,14 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
         _passwordController.text.isNotEmpty &&
         isEmailValid.value &&
         isPasswordValid.value &&
-        !isLoginPressed.value && emailValidation(_emailController.text)) {
-        await logIn(_emailController.text, _passwordController.text, context);
-      } else {
-        isEmailValid.value = false;
-        isPasswordValid.value = false;
-        value = UpdateFormFieldState();
-      }
+        !isLoginPressed.value &&
+        emailValidation(_emailController.text)) {
+      await logIn(_emailController.text, _passwordController.text, context);
+    } else {
+      isEmailValid.value = false;
+      isPasswordValid.value = false;
+      value = UpdateFormFieldState();
+    }
   }
 }
 

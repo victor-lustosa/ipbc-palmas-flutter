@@ -17,10 +17,32 @@ class SupaAuthRepository implements IOnlineAuthRepository {
   late final GoogleSignIn googleSignIn;
 
   @override
-  UserEntity? getCurrentUser() {
-    User? user = _supaClient.auth.currentUser;
-    if (user == null) return null;
-    return UserEntity.create(user);
+  Future<String?> createUser(String email, String password) async {
+    try {
+      await _supaClient.auth.signUp(
+        email: email,
+        password: password,
+      );
+      return "sucesso";
+    } on AuthException catch (e) {
+      // Trata erros específicos de autenticação
+      print('Erro no cadastro: ${e.message}');
+      return e.message; // Retorna a mensagem de erro
+    } catch (e) {
+      // Trata outros erros inesperados
+      print('Erro inesperado no cadastro: $e');
+      return 'Ocorreu um erro inesperado.';
+    }
+    return 'Ocorreu um erro desconhecido.';
+  }
+
+  @override
+  Future<String> signInWithEmail(String email, String password) async {
+    final AuthResponse res = await _supaClient.auth.signInWithPassword(
+      email: email,
+      password: password,
+    );
+    return res.session?.accessToken != null ? res.session!.accessToken : '';
   }
 
   @override
@@ -63,15 +85,6 @@ class SupaAuthRepository implements IOnlineAuthRepository {
   }
 
   @override
-  Future<String> signInWithEmail(String email, String password) async {
-    final AuthResponse res = await _supaClient.auth.signInWithPassword(
-      email: email,
-      password: password,
-    );
-    return res.session?.accessToken != null ? res.session!.accessToken : '';
-  }
-
-  @override
   Future<void> signInFacebook() async {
     try {
       await _supaClient.auth.signOut();
@@ -89,6 +102,13 @@ class SupaAuthRepository implements IOnlineAuthRepository {
   @override
   Stream streamFacebook() {
     return _supaClient.auth.onAuthStateChange;
+  }
+
+  @override
+  UserEntity? getCurrentUser() {
+    User? user = _supaClient.auth.currentUser;
+    if (user == null) return null;
+    return UserEntity.create(user);
   }
 
   @override

@@ -1,6 +1,7 @@
+import 'package:auth_module/src/ui/views/account_created_successfully_view.dart';
+import 'package:auth_module/src/ui/views/could_not_create_account_view.dart';
 import 'package:auth_module/src/ui/views/registration_completion_view.dart';
 import 'package:core_module/core_module.dart';
-import 'package:flutter/animation.dart';
 
 import '../auth_module.dart';
 import 'ui/stores/create_account_store.dart';
@@ -61,6 +62,14 @@ class AuthModule extends Module {
     r.child(
       AppRoutes.registrationCompletionRoute,
       child: (_) => const RegistrationCompletionView(),
+    );
+    r.child(
+      AppRoutes.couldNotCreateRoute,
+      child: (_) => const CouldNotCreateAccountView(),
+    );
+    r.child(
+      AppRoutes.accountCreatedRoute,
+      child: (_) => const AccountCreatedSuccessfullyView(),
     );
   }
 }
