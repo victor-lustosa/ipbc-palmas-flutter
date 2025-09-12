@@ -7,7 +7,7 @@ abstract class IOnlineAuthRepository
         IGetCurrentUser,
         ISignInFacebook,
         IGetJWTToken,
-        ICreateUser,
+        ICreateAccount,
         ILogoutWithGoogle {}
 
 abstract class IOfflineAuthRepository
@@ -17,8 +17,8 @@ abstract class ISignInEmail {
   Future<String?> signInWithEmail(String email, String password);
 }
 
-abstract class ICreateUser {
-  Future<String?> createUser(String email, String password);
+abstract class ICreateAccount {
+  Future<String?> createAccount(String email, String password);
 }
 
 abstract class ISignInGoogle {

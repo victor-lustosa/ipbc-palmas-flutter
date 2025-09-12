@@ -3,19 +3,31 @@ import 'package:flutter/cupertino.dart';
 
 class CreateAccountStore
     extends ValueNotifier<GenericState<CreateAccountState>> {
-  CreateAccountStore() : super(InitialState<CreateAccountState>());
+  CreateAccountStore({required IAuthUseCases useCases})
+    : _useCases = useCases,
+      super(InitialState<CreateAccountState>());
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordRepeatController =
       TextEditingController();
 
-  TextEditingController get  emailController => _emailController;
-  TextEditingController get passwordController => _passwordController;
-  TextEditingController get passwordRepeatController => _passwordRepeatController;
+  final IAuthUseCases _useCases;
+  ValueNotifier<bool> isCreateAccountPressed = ValueNotifier(false);
+  ValueNotifier<bool> isGoogleLoginPressed = ValueNotifier(false);
+  ValueNotifier<bool> firstObscure = ValueNotifier(true);
+  ValueNotifier<bool> secondObscure = ValueNotifier(true);
+  TextEditingController get emailController => _emailController;
 
- String get email => _emailController.text;
+  TextEditingController get passwordController => _passwordController;
+
+  TextEditingController get passwordRepeatController =>
+      _passwordRepeatController;
+
+  String get email => _emailController.text;
+
   String get password => _passwordController.text;
+
   String get passwordConfirm => _passwordRepeatController.text;
 
   bool isError = false;
@@ -40,13 +52,12 @@ class CreateAccountStore
     isError = value;
   }
 
-  void validateCode(BuildContext context) {
+  void createAccount(BuildContext context) async{
+    isCreateAccountPressed.value = true;
     value = LoadingState<CreateAccountState>();
-    Future.delayed(const Duration(seconds: 1), () {
-      if (isPasswordEqual && emptyData) {
-        pushNamed(
-          AppRoutes.authRoute + AppRoutes.registrationCompletionRoute,
-        );
+    final result = await _useCases.createAccount(email, password);
+      if (result == 'sucesso') {
+        pushNamed(AppRoutes.authRoute + AppRoutes.accountCreatedRoute);
       } else {
         notifyBorderError(value: true);
         if (context.mounted) {
@@ -57,8 +68,8 @@ class CreateAccountStore
           );
         }
       }
-      value = InitialState<CreateAccountState>();
-    });
+     isCreateAccountPressed.value = false;
+     value = InitialState<CreateAccountState>();
   }
 
   @override

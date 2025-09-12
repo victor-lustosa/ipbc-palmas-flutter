@@ -69,6 +69,8 @@ class AuthModule extends Module {
     );
     r.child(
       AppRoutes.accountCreatedRoute,
+      transition: TransitionType.custom,
+      customTransition: ModularFadeTransition(),
       child: (_) => const AccountCreatedSuccessfullyView(),
     );
   }

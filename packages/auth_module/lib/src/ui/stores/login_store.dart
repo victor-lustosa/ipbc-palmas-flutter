@@ -12,9 +12,6 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
   final IAuthUseCases _useCases;
   final AuthCircleAvatarStore _authCircleAvatarStore;
 
-  final String _email = 'victor.olustosa@outlook.com';
-  final String _password = '!Helena2201';
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 

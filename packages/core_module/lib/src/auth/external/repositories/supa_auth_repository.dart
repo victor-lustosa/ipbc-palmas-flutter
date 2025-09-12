@@ -17,13 +17,13 @@ class SupaAuthRepository implements IOnlineAuthRepository {
   late final GoogleSignIn googleSignIn;
 
   @override
-  Future<String?> createUser(String email, String password) async {
+  Future<String?> createAccount(String email, String password) async {
     try {
-      await _supaClient.auth.signUp(
+      final result = await _supaClient.auth.signUp(
         email: email,
         password: password,
       );
-      return "sucesso";
+      return result.user?.id != null ?"sucesso" : "Falha no cadastro";
     } on AuthException catch (e) {
       // Trata erros específicos de autenticação
       print('Erro no cadastro: ${e.message}');

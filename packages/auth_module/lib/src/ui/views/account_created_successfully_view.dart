@@ -77,8 +77,14 @@ class _AccountCreatedSuccessfullyViewState
                   Row(
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(top: 22, left: 16, bottom: 24),
-                        child:  BackButtonWidget(action: (){}),
+                        margin: const EdgeInsets.only(top: 28, left: 16),
+                        child:  BackButtonWidget(action: (){
+                          popUntil(
+                                (route) =>
+                            route.settings.name ==
+                                AppRoutes.authRoute + AppRoutes.loginRoute,
+                          );
+                        }),
                       ),
                     ],
                   ),

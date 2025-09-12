@@ -99,7 +99,7 @@ class CarouselWidgetState extends State<CarouselWidget> {
                     bool active = position == activePage;
                     imageHasLoaded.value = _isImageLoaded[position] ?? false;
                     return InkWell(
-                      onTap: widget.route == null || widget.services.isEmpty
+                      onTap: widget.route == null || widget.services.isEmpty || !imageHasLoaded.value
                           ? null
                           : () => nativePushNamed(
                               widget.route!,
@@ -124,7 +124,7 @@ class CarouselWidgetState extends State<CarouselWidget> {
                                     color: Colors.grey.withAlpha(100),
                                     offset: const Offset(1, 1),
                                     spreadRadius: 2,
-                                    blurRadius: 5,
+                                    blurRadius: 7,
                                   ),
                                 ],
                           borderRadius: const BorderRadius.all(

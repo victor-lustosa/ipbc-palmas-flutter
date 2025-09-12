@@ -8,12 +8,12 @@ abstract class IAuthUseCases
         ILogout,
         IGetLocalUser,
         ISaveLocalUser,
-        ICreateUser,
+        ICreateAccount,
         IGetCredentials,
         ISaveCredentials {}
 
-abstract class ICreateUser {
-  Future<String?> createUser(String email, String password);
+abstract class ICreateAccount {
+  Future<String?> createAccount(String email, String password);
 }
 
 abstract class ISignInEmail {

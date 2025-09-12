@@ -12,8 +12,8 @@ class AuthUseCases implements IAuthUseCases {
        _onlineRepository = onlineRepository;
 
   @override
-  Future<String?> createUser(String email, String password) async {
-    var entity = await _onlineRepository.createUser(email, password);
+  Future<String?> createAccount(String email, String password) async {
+    var entity = await _onlineRepository.createAccount(email, password);
     return Future.value(entity as String);
   }
   

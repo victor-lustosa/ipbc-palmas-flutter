@@ -22,10 +22,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
   bool _isEmailValid = true;
   bool _isPasswordValid = true;
-  ValueNotifier<bool> _isPressed = ValueNotifier(false);
-  ValueNotifier<bool> _isGoogleLoginPressed = ValueNotifier(false);
-  ValueNotifier<bool> _firstObscure = ValueNotifier(true);
-  ValueNotifier<bool> _secondObscure = ValueNotifier(true);
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +65,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     isValid: _isEmailValid,
                     errorText: _emailErrorText,
                     globalKey: _emailKey,
-                    isPressed: _isPressed,
+                    isPressed: _store.isCreateAccountPressed,
                     color: _store.emptyEmail
                         ? AppColors.secondaryGrey
                         : (_isEmailValid
@@ -95,8 +92,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     isValid: _isPasswordValid,
                     errorText: _passwordErrorText,
                     globalKey: _passwordKey,
-                    isPressed: _isPressed,
-                    obscure: _firstObscure,
+                    isPressed:  _store.isCreateAccountPressed,
+                    obscure: _store.firstObscure,
                     color: _store.emptyPasswords
                         ? AppColors.secondaryGrey
                         : (!_store.emptyPasswords && _store.isPasswordEqual
@@ -106,7 +103,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       isValid: _isPasswordValid,
                       hintText: 'Senha',
                       contentPadding: const EdgeInsets.only(left: 16, top: 9),
-                      suffixIcon: HideIconWidget(isObscure: _firstObscure),
+                      suffixIcon: HideIconWidget(isObscure:  _store.firstObscure),
                     ),
                     validator: (data) {
                       _passwordValidation(data);
@@ -122,8 +119,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     isValid: _isPasswordValid,
                     errorText: _passwordErrorConfirmText,
                     globalKey: _repeatPasswordKey,
-                    isPressed: _isPressed,
-                    obscure: _secondObscure,
+                    isPressed:  _store.isCreateAccountPressed,
+                    obscure:  _store.secondObscure,
                     color: _store.emptyPasswords
                         ? AppColors.secondaryGrey
                         : (!_store.emptyPasswords && _store.isPasswordEqual
@@ -133,7 +130,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       isValid: _isPasswordValid,
                       hintText: 'Repita a Senha',
                       contentPadding: const EdgeInsets.only(left: 16, top: 9),
-                      suffixIcon: HideIconWidget(isObscure: _secondObscure),
+                      suffixIcon: HideIconWidget(isObscure:  _store.secondObscure),
                     ),
                     validator: (data) {
                       _passwordValidation(data);
@@ -181,13 +178,12 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     ),
                   ),
                   LoadingButtonWidget(
-                    loadingWidth: 55,
-                    isPressed: _isPressed,
+                    isPressed:  _store.isCreateAccountPressed,
                     action: () {
                       _store.emptyData &&
                               _store.isPasswordEqual &&
                               _isEmailValid
-                          ? _store.validateCode(context)
+                          ? _store.createAccount(context)
                           : null;
                     },
                     isValid:
@@ -208,7 +204,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                   ),
                   ProviderButtonWidget(
                     label: 'Fazer cadastro com o Google',
-                    isPressed: _isGoogleLoginPressed,
+                    isPressed:  _store.isGoogleLoginPressed,
                     action: () {
                     },
                   ),*/
