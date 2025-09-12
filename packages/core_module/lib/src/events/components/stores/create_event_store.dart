@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     with ImageMixin, ConnectivityMixin, DateMixin, ValidationAndFormatMixin {
   bool isSwitchOn = false;
+  bool isMultipleDay = false;
   bool isEditing = false;
   bool isChangedOrAdded = false;
   Function? updateEventListViewCallback;

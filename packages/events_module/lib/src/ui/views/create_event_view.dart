@@ -288,6 +288,40 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                         width: context.sizeOf.width,
                         child: Column(
                           children: [
+                            Container(
+                              margin: EdgeInsets.only(bottom: 6),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Image.asset(AppIcons.watchIcon, height: 22),
+                                      Container(
+                                        margin: EdgeInsets.only(left: 8),
+                                        child: Text(
+                                          "Mais de 1 dia",
+                                          style: AppFonts.defaultFont(
+                                            fontSize: 13,
+                                            color: AppColors.grey8,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SwitchButtonWidget(
+                                    value: _store.isMultipleDay,
+                                    onChanged: (bool newValue) {
+                                      setState(() {
+                                        _store.isMultipleDay = newValue;
+                                        if(newValue) {
+                                          _store.isSwitchOn = false;
+                                        }
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -311,6 +345,9 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                   onChanged: (bool newValue) {
                                     setState(() {
                                       _store.isSwitchOn = newValue;
+                                      if(newValue) {
+                                        _store.isMultipleDay = false;
+                                      }
                                     });
                                   },
                                 ),
@@ -354,7 +391,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                   ],
                                 ),
                                 Visibility(
-                                  visible: !_store.isSwitchOn,
+                                  visible: ((!_store.isSwitchOn) && (!_store.isMultipleDay)),
                                   child: InkWell(
                                     onTap: () => _store.pickTime(
                                       selectedTime: _store.startTime!,
@@ -413,7 +450,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                   ],
                                 ),
                                 Visibility(
-                                  visible: !_store.isSwitchOn,
+                                  visible: ((!_store.isSwitchOn) && (!_store.isMultipleDay)),
                                   child: InkWell(
                                     onTap: () => _store.pickTime(
                                       selectedTime: _store.endTime!,

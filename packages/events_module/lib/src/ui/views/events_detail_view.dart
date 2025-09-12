@@ -16,14 +16,16 @@ class EventsDetailView extends StatefulWidget {
 
 class EventsDetailViewState extends State<EventsDetailView>
     with LaunchUrlMixin, DateMixin {
-
   Future<void>? locationLink;
   Future<void>? signUpLink;
   Future<void>? contactLink;
 
-
   @override
   Widget build(BuildContext context) {
+    final LatLng position = LatLng(
+      widget.eventEntity.latitude ?? 0,
+      widget.eventEntity.longitude ?? 0,
+    );
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -81,7 +83,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                         fontWeight: FontWeight.w500,
                       ),
                       getFormattedDateTimeFull(
-                        widget.eventEntity.startDateTime,
+                        widget.eventEntity.startDateTime!,
                       ),
                     ),
                     Container(
@@ -131,26 +133,29 @@ class EventsDetailViewState extends State<EventsDetailView>
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(right: 1),
-                      child: Image.asset(height: 14, AppIcons.locationOn),
-                    ),
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.only(left: 4),
-                        child: Text(
-                          style: AppFonts.defaultFont(
-                            color: AppColors.grey8,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
+                Visibility(
+                  visible: widget.eventEntity.localName != null,
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(right: 1),
+                        child: Image.asset(height: 14, AppIcons.locationOn),
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(left: 4),
+                          child: Text(
+                            style: AppFonts.defaultFont(
+                              color: AppColors.grey8,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            widget.eventEntity.localName ?? '',
                           ),
-                          widget.eventEntity.localName,
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(bottom: 16, top: 16),
@@ -163,78 +168,87 @@ class EventsDetailViewState extends State<EventsDetailView>
                     widget.eventEntity.description,
                   ),
                 ),
-                widget.eventEntity.latitude != null &&
-                        widget.eventEntity.longitude != null
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(18)),
-                        child: SizedBox(
-                          width: context.mediaQuery.size.width,
-                          height: 140,
-                          child: GoogleMap(
-                            scrollGesturesEnabled: false,
-                            myLocationButtonEnabled: false,
-                            mapType: MapType.normal,
-                            initialCameraPosition: CameraPosition(
-                              target: LatLng(
-                                widget.eventEntity.latitude!,
-                                widget.eventEntity.latitude!,
-                              ),
-                              zoom: 15,
-                            ),
-                            markers: {
-                              Marker(
-                                markerId: MarkerId('0'),
-                                position: LatLng(
-                                  widget.eventEntity.latitude!,
-                                  widget.eventEntity.latitude!,
+                Visibility(
+                  visible:
+                      widget.eventEntity.latitude != null &&
+                      widget.eventEntity.longitude != null,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(18)),
+                    child: SizedBox(
+                      width: context.mediaQuery.size.width,
+                      height: 140,
+                      child: GoogleMap(
+                        scrollGesturesEnabled: false,
+                        myLocationButtonEnabled: false,
+                        mapType: MapType.normal,
+                        initialCameraPosition: CameraPosition(
+                          target: position,
+                          zoom: 15,
+                        ),
+                        markers: {
+                          Marker(
+                            markerId: MarkerId('0'),
+                            position: position,
+                            onTap: () => {
+                              locationLink = launchInBrowser(
+                                Uri.parse(
+                                  "https://www.google.com/maps/search/?api=1&query=${widget.eventEntity.latitude!},${widget.eventEntity.longitude!}",
                                 ),
-                                onTap: () => {
-                                  locationLink = launchInBrowser(Uri.parse(
-                                    "https://www.google.com/maps/search/?api=1&query=${widget.eventEntity.latitude!},${widget.eventEntity.longitude!}",
-                                  )),
-                                },
                               ),
                             },
                           ),
-                        ),
-                      )
-                    : const SizedBox(height: 30),
-                SizedBox(height: 32),
-                ButtonWidget(
-                  action: () {
-                    signUpLink = launchInBrowser(Uri.parse(
-                      widget.eventEntity.signUpLink,
-                    ));
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  fixedSize: Size(context.sizeOf.width, 48),
-                  backgroundColor: AppColors.darkGreen,
-                  shadowColor: AppColors.grey0,
-                  foregroundColor: AppColors.white,
-                  child: const Text("Inscrições"),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 16, bottom: 40),
-                  child: ButtonWidget(
-                    action: () {
-                      contactLink = launchInBrowser(Uri.parse(
-                        widget.eventEntity.contactLink,
-                      ));
-                    },
-                    adaptiveButtonType: AdaptiveButtonType.outlined,
-                    sideColor: AppColors.darkGreen,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                        },
+                      ),
                     ),
-                    fixedSize: Size(context.sizeOf.width, 48),
-                    backgroundColor: AppColors.white,
-                    shadowColor: AppColors.grey0,
-                    foregroundColor: AppColors.darkGreen,
-                    child: const Text("Contato"),
                   ),
                 ),
+                SizedBox(height: 16),
+               Visibility(
+                 visible: widget.eventEntity.signUpLink != null,
+                 child: Container(
+                    margin: const EdgeInsets.only(top: 16),
+                   child: ButtonWidget(
+                            action: () {
+                              signUpLink = launchInBrowser(
+                                Uri.parse(widget.eventEntity.signUpLink ?? ''),
+                              );
+                            },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            fixedSize: Size(context.sizeOf.width, 48),
+                            backgroundColor: AppColors.darkGreen,
+                            shadowColor: AppColors.grey0,
+                            foregroundColor: AppColors.white,
+                            child: const Text("Inscrições"),
+                          ),
+                 ),
+               )
+                    ,
+                Visibility(
+                  visible: widget.eventEntity.contactLink != null,
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 16),
+                    child: ButtonWidget(
+                      action: () {
+                        contactLink = launchInBrowser(
+                          Uri.parse(widget.eventEntity.contactLink ?? ''),
+                        );
+                      },
+                      adaptiveButtonType: AdaptiveButtonType.outlined,
+                      sideColor: AppColors.darkGreen,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      fixedSize: Size(context.sizeOf.width, 48),
+                      backgroundColor: AppColors.white,
+                      shadowColor: AppColors.grey0,
+                      foregroundColor: AppColors.darkGreen,
+                      child: const Text("Contato"),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 40)
               ],
             ),
           ),
