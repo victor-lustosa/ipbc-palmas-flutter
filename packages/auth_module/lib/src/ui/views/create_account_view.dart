@@ -22,9 +22,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
   bool _isEmailValid = true;
   bool _isPasswordValid = true;
-  ValueNotifier<bool> _isPressed = ValueNotifier(false);
-  ValueNotifier<bool> _firstObscure = ValueNotifier(true);
-  ValueNotifier<bool> _secondObscure = ValueNotifier(true);
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,20 +35,14 @@ class _CreateAccountViewState extends State<CreateAccountView> {
               child: Column(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 72, left: 16),
+                    margin: const EdgeInsets.only(top: 28, left: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        BackButtonWidget(
-                          action: () => navigate(
-                            AppRoutes.authRoute + AppRoutes.loginRoute,
-                          ),
-                        ),
-                      ],
+                      children: [BackButtonWidget(action: () => pop(context))],
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(bottom: 32),
+                    margin: const EdgeInsets.only(top: 35, bottom: 32),
                     child: const Image(
                       image: AssetImage(AppImages.logoLoginImage),
                       fit: BoxFit.cover,
@@ -73,7 +65,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     isValid: _isEmailValid,
                     errorText: _emailErrorText,
                     globalKey: _emailKey,
-                    isPressed: _isPressed,
+                    isPressed: _store.isCreateAccountPressed,
                     color: _store.emptyEmail
                         ? AppColors.secondaryGrey
                         : (_isEmailValid
@@ -100,8 +92,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     isValid: _isPasswordValid,
                     errorText: _passwordErrorText,
                     globalKey: _passwordKey,
-                    isPressed: _isPressed,
-                    obscure: _firstObscure,
+                    isPressed:  _store.isCreateAccountPressed,
+                    obscure: _store.firstObscure,
                     color: _store.emptyPasswords
                         ? AppColors.secondaryGrey
                         : (!_store.emptyPasswords && _store.isPasswordEqual
@@ -111,7 +103,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       isValid: _isPasswordValid,
                       hintText: 'Senha',
                       contentPadding: const EdgeInsets.only(left: 16, top: 9),
-                      suffixIcon: HideIconWidget(isObscure: _firstObscure),
+                      suffixIcon: HideIconWidget(isObscure:  _store.firstObscure),
                     ),
                     validator: (data) {
                       _passwordValidation(data);
@@ -127,8 +119,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     isValid: _isPasswordValid,
                     errorText: _passwordErrorConfirmText,
                     globalKey: _repeatPasswordKey,
-                    isPressed: _isPressed,
-                    obscure: _secondObscure,
+                    isPressed:  _store.isCreateAccountPressed,
+                    obscure:  _store.secondObscure,
                     color: _store.emptyPasswords
                         ? AppColors.secondaryGrey
                         : (!_store.emptyPasswords && _store.isPasswordEqual
@@ -138,7 +130,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       isValid: _isPasswordValid,
                       hintText: 'Repita a Senha',
                       contentPadding: const EdgeInsets.only(left: 16, top: 9),
-                      suffixIcon: HideIconWidget(isObscure: _secondObscure),
+                      suffixIcon: HideIconWidget(isObscure:  _store.secondObscure),
                     ),
                     validator: (data) {
                       _passwordValidation(data);
@@ -186,15 +178,12 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                     ),
                   ),
                   LoadingButtonWidget(
-                    marginTop: 16,
-                    marginBottom: 24,
-                    loadingWidth: 55,
-                    isPressed: _isPressed,
+                    isPressed:  _store.isCreateAccountPressed,
                     action: () {
                       _store.emptyData &&
                               _store.isPasswordEqual &&
                               _isEmailValid
-                          ? _store.validateCode(context)
+                          ? _store.createAccount(context)
                           : null;
                     },
                     isValid:
@@ -203,88 +192,22 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         _store.isPasswordEqual,
                     label: "Criar Conta",
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColors.loginLineDecoration,
-                          ),
+                 /* Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColors.loginLineDecoration,
                         ),
-                        width: 159,
                       ),
-                    ],
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                    height: 48,
-                    width: context.sizeOf.width,
-                    child: ButtonWidget(
-                      backgroundColor: AppColors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      shadowColor: AppColors.grey0,
-                      foregroundColor: AppColors.grey10,
-                      textStyle: AppFonts.defaultFont(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      action: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(right: 12),
-                            child: Image.asset(
-                              AppIcons.googleIcon,
-                              width: 30,
-                              height: 30,
-                            ),
-                          ),
-                          const Text("Fazer login com o Google"),
-                          const SizedBox(width: 18),
-                        ],
-                      ),
+                      width: 159,
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                      top: 12,
-                      left: 16,
-                      bottom: 25,
-                      right: 16,
-                    ),
-                    height: 48,
-                    width: context.sizeOf.width,
-                    child: ButtonWidget(
-                      backgroundColor: AppColors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      foregroundColor: AppColors.grey10,
-                      textStyle: AppFonts.defaultFont(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      action: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(right: 12),
-                            child: Image.asset(
-                              AppIcons.faceIcon,
-                              width: 32,
-                              height: 32,
-                            ),
-                          ),
-                          const Text("Fazer login com o Facebook"),
-                        ],
-                      ),
-                    ),
-                  ),
+                  ProviderButtonWidget(
+                    label: 'Fazer cadastro com o Google',
+                    isPressed:  _store.isGoogleLoginPressed,
+                    action: () {
+                    },
+                  ),*/
                 ],
               ),
             ),

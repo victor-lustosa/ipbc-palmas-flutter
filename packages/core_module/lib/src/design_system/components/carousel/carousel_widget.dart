@@ -35,6 +35,8 @@ class CarouselWidget extends StatefulWidget {
 class CarouselWidgetState extends State<CarouselWidget> {
   late PageController _pageController;
   int activePage = 0;
+  ValueNotifier<bool> imageHasLoaded = ValueNotifier(false);
+  final Map<int, bool> _isImageLoaded = {};
 
   @override
   void initState() {
@@ -95,8 +97,9 @@ class CarouselWidgetState extends State<CarouselWidget> {
                   },
                   itemBuilder: (context, position) {
                     bool active = position == activePage;
+                    imageHasLoaded.value = _isImageLoaded[position] ?? false;
                     return InkWell(
-                      onTap: widget.route == null || widget.services.isEmpty
+                      onTap: widget.route == null || widget.services.isEmpty || !imageHasLoaded.value
                           ? null
                           : () => nativePushNamed(
                               widget.route!,
@@ -114,13 +117,13 @@ class CarouselWidgetState extends State<CarouselWidget> {
                         ),
                         decoration: BoxDecoration(
                           color: Colors.grey.withAlpha(40),
-                          boxShadow: (kIsWeb || widget.services.isEmpty)
+                          boxShadow: (kIsWeb || widget.services.isEmpty || !imageHasLoaded.value)
                               ? []
                               : [
                                   BoxShadow(
                                     color: Colors.grey.withAlpha(100),
                                     offset: const Offset(1, 1),
-                                    spreadRadius: 3,
+                                    spreadRadius: 2,
                                     blurRadius: 7,
                                   ),
                                 ],
@@ -138,6 +141,22 @@ class CarouselWidgetState extends State<CarouselWidget> {
                               CachedNetworkImage(
                                 imageUrl: widget.services[position].image,
                                 fit: BoxFit.cover,
+                                imageBuilder: (context, imageProvider) {
+                                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                                    if (mounted && !imageHasLoaded.value) {
+                                     Future.delayed(Duration(milliseconds: 300), () {
+                                        setState(() {
+                                          _isImageLoaded[position] = true;
+                                          imageHasLoaded.value = true;
+                                        });
+                                      });
+                                    }
+                                  });
+                                  return Image(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  );
+                                },
                                 placeholder: (context, url) => placeholder(),
                                 errorWidget: (context, url, error) =>
                                     placeholder(),

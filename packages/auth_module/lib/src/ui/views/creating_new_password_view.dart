@@ -149,7 +149,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                       //}
                     },
                     isValid: true,
-                    label: "Entrar",
+                    label: "Entrar", loadingWidth: 48, width: 48,
                   ),
                 ),
               ],

@@ -23,6 +23,8 @@ class AppRoutes {
   static const String resetPasswordSuccessRoute = '/success-password';
   static const String resetPasswordRoute = '/reset-password';
   static const String registrationCompletionRoute = '/registration-Completion';
+  static const String accountCreatedRoute = '/account-created';
+  static const String couldNotCreateRoute = '/could-not-create-account';
 
   //Services
   static const String serviceRoute = '/service';
@@ -196,24 +198,33 @@ class ModularSlideTransition extends CustomTransition {
     Offset? begin,
     Offset? end,
     bool? opaque,
+    Offset? secondaryBegin,
   }) : super(
-         transitionBuilder: (context, anim1, anim2, child) {
-           return SlideTransition(
-             position: anim1.drive(
-               Tween(
-                 begin: begin ?? const Offset(1, 0),
-                 end: end ?? Offset.zero,
-               ).chain(CurveTween(curve: curve ?? Curves.ease)),
-             ),
-             child: child,
-           );
-         },
-         transitionDuration:
-             transitionDuration ?? const Duration(milliseconds: 300),
-         reverseTransitionDuration:
-             reverseTransitionDuration ?? const Duration(milliseconds: 300),
-         opaque: opaque ?? true,
-       );
+    transitionBuilder: (context, anim1, anim2, child) {
+      // Vai da direita (Offset(1,0)) para o centro (Offset.zero)
+      final inTween = Tween(
+        begin: begin ?? const Offset(1, 0),
+        end: end ?? Offset.zero,
+      ).chain(CurveTween(curve: curve ?? Curves.easeOut));
+      // Vai do centro (Offset.zero) para um pouco à esquerda (Offset(-0.3, 0))
+      // O valor -0.3 é um bom valor visual, mas você pode ajustar.
+      final outTween = Tween(
+        begin: Offset.zero,
+        end: secondaryBegin ?? const Offset(-0.3, 0),
+      ).chain(CurveTween(curve: curve ?? Curves.easeOut));
+      return SlideTransition(
+        position: anim2.drive(outTween),
+        child: SlideTransition(
+          position: anim1.drive(inTween),
+          child: child,
+        ),
+      );
+    },
+    transitionDuration:
+    transitionDuration ?? const Duration(milliseconds: 300),
+    reverseTransitionDuration:
+    reverseTransitionDuration ?? const Duration(milliseconds: 300),
+  );
 }
 
 class CustomFadeTransition extends PageRouteBuilder {
