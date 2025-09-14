@@ -11,6 +11,7 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     required AuthCircleAvatarStore authCircleAvatarStore,
   }) : _useCases = useCases,
        _createEventStore = createEventStore,
+
        _authCircleAvatarStore = authCircleAvatarStore,
        super(LoadingState()) {
     on<GetDataEvent<HomeEvent>>(_getData);
@@ -22,9 +23,10 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
   List<ServicesEntity> servicesList = [];
   List<EventEntity> eventsList = [];
   final CreateEventStore _createEventStore;
+
   final AuthCircleAvatarStore _authCircleAvatarStore;
 
-  get createEventStore => _createEventStore;
+  CreateEventStore get createEventStore => _createEventStore;
 
   Future<void> _getData(GetDataEvent event, emit) async {
     await Future.wait([

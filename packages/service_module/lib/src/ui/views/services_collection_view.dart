@@ -1,9 +1,10 @@
 import 'dart:io';
 
 import 'package:core_module/core_module.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../blocs/services_collection_bloc.dart';
 
 class ServicesCollectionView extends StatefulWidget {
@@ -25,21 +26,23 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
     super.initState();
     _bloc = Modular.get<ServicesCollectionBloc>();
     _bloc.path = widget.entity.path;
+    _bloc.editStore.servicesEntity = widget.entity;
     _bloc.add(GetDataEvent());
   }
 
   @override
   Widget build(BuildContext context) {
+    final loadingWidget = const LoadingWidget(
+      androidRadius: 3,
+      iosRadius: 14,
+      color: AppColors.darkGreen,
+    );
     return Scaffold(
       body: BlocBuilder<ServicesCollectionBloc, GenericState<ServicesCollectionState>>(
         bloc: _bloc,
         builder: (context, state) {
           if (state is LoadingState<ServicesCollectionState>) {
-            return const LoadingWidget(
-              androidRadius: 3,
-              iosRadius: 14,
-              color: AppColors.darkGreen,
-            );
+            return loadingWidget;
           } else if (state is NoConnectionState<ServicesCollectionState>) {
             return NoConnectionView(
               action: () => nativePushReplacementNamed(
@@ -47,7 +50,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                 context,
               ),
             );
-          } else if (state is DataFetchedState<ServicesCollectionState>) {
+          } else if (state is DataFetchedState<ServicesCollectionState> ||
+              state is UpdateServicesListState) {
             return AnnotatedRegion<SystemUiOverlayStyle>(
               value: SystemUiOverlayStyle.light,
               child: SingleChildScrollView(
@@ -59,7 +63,12 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                         image: widget.entity.image,
                         title: "Cultos de ${widget.entity.heading}",
                       ),
-                      _bloc.entitiesList.isNotEmpty
+                      (state is UpdateServicesListState)
+                          ? SizedBox(
+                              height: context.sizeOf.height * .6,
+                              child: loadingWidget,
+                            )
+                          : _bloc.entitiesList.isNotEmpty
                           ? Container(
                               margin: const EdgeInsets.only(
                                 top: 24,
@@ -83,11 +92,15 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                   return GestureDetector(
                                     key: gestureKey,
                                     onTap: () {
-                                      Modular.get<ServicesPreviewStore>().servicesEntity = widget.entity;
-                                      Modular.get<ServicesPreviewStore>().serviceEntity = service;
-                                      nativePushNamed(
-                                        AppRoutes.servicesPreviewRoute,
-                                        context,
+                                      Modular.get<ServicesPreviewStore>()
+                                              .servicesEntity =
+                                          widget.entity;
+                                      Modular.get<ServicesPreviewStore>()
+                                              .serviceEntity =
+                                          service;
+                                      pushNamed(
+                                        AppRoutes.servicesRoute +
+                                            AppRoutes.servicesPreviewRoute,
                                       );
                                     },
                                     onLongPressStart: (_) async {
@@ -107,10 +120,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                               icon: AppIcons.edit,
                                               label: 'Editar',
                                               action: () {
-                                                _bloc.editItem(
-                                                  index: index,
-                                                  servicesEntity: widget.entity,
-                                                );
+                                                _bloc.editItem(index: index);
                                                 pop(context);
                                               },
                                             ),
@@ -166,24 +176,28 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                                     maxLines: 1,
                                                     '${_bloc.entitiesList[index].title} ${formatDateToString(_bloc.entitiesList[index].serviceDate)} | ${formatHourToString(date: _bloc.entitiesList[index].serviceDate)}',
                                                     style: AppFonts.defaultFont(
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                       color: AppColors.grey9,
                                                       fontSize: 15,
                                                     ),
                                                   ),
                                                   Container(
-                                                    margin: const EdgeInsets.only(
-                                                      bottom: 4,
-                                                      top: 4,
-                                                    ),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                          bottom: 4,
+                                                          top: 4,
+                                                        ),
                                                     child: Text(
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       maxLines: 2,
                                                       'Mensagem: ${_bloc.entitiesList[index].theme}',
-                                                      style: AppFonts.description(
-                                                        color: AppColors.grey8,
-                                                      ),
+                                                      style:
+                                                          AppFonts.description(
+                                                            color:
+                                                                AppColors.grey8,
+                                                          ),
                                                     ),
                                                   ),
                                                   Text(
@@ -200,15 +214,21 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                           ),
                                           Container(
                                             margin: EdgeInsets.only(
-                                              right: ResponsivityUtil.isSmallDevice(context) ? 7 : 12,
+                                              right:
+                                                  ResponsivityUtil.isSmallDevice(
+                                                    context,
+                                                  )
+                                                  ? 7
+                                                  : 12,
                                             ),
                                             child: IconButtonWidget(
                                               size: Platform.isIOS ? 30 : 34,
                                               color: AppColors.darkGreen,
                                               splashColor: Colors.transparent,
-                                              highlightColor: Colors.transparent,
-                                              iOSIcon:
-                                                  CupertinoIcons.chevron_forward,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              iOSIcon: CupertinoIcons
+                                                  .chevron_forward,
                                               androidIcon:
                                                   Icons.navigate_next_sharp,
                                             ),
@@ -266,7 +286,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
         backgroundColor: AppColors.add,
         icon: Icons.add,
         action: () {
-          _bloc.addItem(servicesEntity: widget.entity);
+          _bloc.addItem();
         },
       ),
     );

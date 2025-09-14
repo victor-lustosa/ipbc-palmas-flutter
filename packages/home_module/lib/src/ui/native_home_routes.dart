@@ -54,12 +54,6 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
               ),
             );
 
-          case AppRoutes.servicesPreviewRoute:
-            return CustomFadeTransition(
-              child: ServicesPreviewView(
-              ),
-            );
-
           default:
             return unknownRoute();
         }

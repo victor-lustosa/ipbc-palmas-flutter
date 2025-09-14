@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
@@ -5,19 +7,14 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     with DateMixin, ConnectivityMixin {
   ManageServiceStore({
     required IUseCases useCases,
-    required ServicesPreviewStore servicesPreviewStore,
     required SearchLyricsStore searchLyricsStore,
     required ManageLyricStore manageLyricStore,
   }) : _useCases = useCases,
-       _servicesPreviewStore = servicesPreviewStore,
        _searchLyricsStore = searchLyricsStore,
        _manageLyricStore = manageLyricStore,
        super(InitialState<ManageServiceState>());
-  final ServicesPreviewStore _servicesPreviewStore;
   final SearchLyricsStore _searchLyricsStore;
   final ManageLyricStore _manageLyricStore;
-
-  get servicesPreviewStore => _servicesPreviewStore;
 
   get searchLyricsStore => _searchLyricsStore;
   final IUseCases _useCases;
@@ -55,10 +52,10 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
   bool isAnyTextFieldFocused = false;
 
   init() {
-    fillItems();
-    setDayInTheWeek();
-    controllersAndFocusNodes();
     if (!isEditing) {
+      fillItems();
+      setDayInTheWeek();
+      controllersAndFocusNodes();
       preacherController.clear();
       themeController.clear();
     }
@@ -88,14 +85,9 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     }
   }
 
-  edit({
-    required ServicesEntity servicesEntityParam,
-    required ServiceEntity serviceEntityParam,
-  }) {
+  edit() {
     isEditing = true;
-    servicesEntity = servicesEntityParam;
-    serviceEntity = serviceEntityParam;
-    liturgiesList = serviceEntityParam.liturgiesList ?? [];
+    liturgiesList = serviceEntity?.liturgiesList ?? [];
     themeController.text = serviceEntity!.theme;
     preacherController.text = serviceEntity!.preacher;
     startDate = serviceEntity?.serviceDate;
@@ -205,13 +197,9 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
           Modular.get<ServicesPreviewStore>().servicesEntity = servicesEntity;
           Modular.get<ServicesPreviewStore>().serviceEntity = serviceEntity!;
 
-          if (updateCallbackParam != null) {
+          if (updateCallbackParam != null && context.mounted) {
             updateCallbackParam!();
           }
-
-          popAndPushNamed(
-            AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
-          );
         }
       }
       value = DataAddedState<ManageServiceState>();
@@ -335,10 +323,40 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     }
     return allTextValid;
   }
+  convertTextInLyric(String text) {
+    final List<String> rawVerseBlocks = text.split(RegExp(r'\n\s*\n+'));
+
+    final List<VerseEntity> parsedVerseEntities = [];
+
+    for (int i = 0; i < rawVerseBlocks.length; i++) {
+      final String block = rawVerseBlocks[i].trim();
+      if (block.isEmpty) continue;
+
+      final List<String> versesInBlock = block
+          .split('\n')
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty)
+          .toList();
+
+      if (versesInBlock.isNotEmpty) {
+        parsedVerseEntities.add(
+          VerseEntity(id: i, isChorus: false, versesList: versesInBlock),
+        );
+      }
+    }
+    return LyricEntity(
+      id: MockUtil.createId(),
+      title: 'Título Padrão',
+      group: 'Grupo Padrão',
+      albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
+      createAt: DateTime.now().toIso8601String(),
+      verses: parsedVerseEntities,
+    );
+  }
 
   void addLyric({required String? text}) {
     if (text != null && text.isNotEmpty) {
-      _manageLyricStore.lyric = servicesPreviewStore.convertTextInLyric(text);
+      _manageLyricStore.lyric = convertTextInLyric(text);
       _manageLyricStore.buttonCallback = () {
         _manageLyricStore.addLyric();
         popUntil(

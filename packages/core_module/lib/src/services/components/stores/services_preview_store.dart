@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:core_module/core_module.dart';
 
@@ -8,48 +6,39 @@ class ServicesPreviewStore
   ServicesPreviewStore({
     required ManageLyricStore manageLyricStore,
     required LyricsListStore lyricsListStore,
+    required ManageServiceStore manageServiceStore,
   }) : _manageLyricStore = manageLyricStore,
        _lyricsListStore = lyricsListStore,
+        _manageServiceStore = manageServiceStore,
        super(InitialState());
 
   final ManageLyricStore _manageLyricStore;
   final LyricsListStore _lyricsListStore;
+  final ManageServiceStore _manageServiceStore;
+  Function? updateServicesCollectionCallback;
+  ValueNotifier<bool> isChanged = ValueNotifier(false);
 
   late ServiceEntity serviceEntity;
   late ServicesEntity servicesEntity;
 
   ValueNotifier<bool> isAdmin = ValueNotifier(true);
-  get manageLyricStore => _manageLyricStore;
-  get lyricsListStore => _lyricsListStore;
 
-  convertTextInLyric(String text) {
-    final List<String> rawVerseBlocks = text.split(RegExp(r'\n\s*\n+'));
+  ManageLyricStore get manageLyricStore => _manageLyricStore;
+  LyricsListStore get lyricsListStore => _lyricsListStore;
+  ManageServiceStore get manageServiceStore => _manageServiceStore;
 
-    final List<VerseEntity> parsedVerseEntities = [];
-
-    for (int i = 0; i < rawVerseBlocks.length; i++) {
-      final String block = rawVerseBlocks[i].trim();
-      if (block.isEmpty) continue;
-
-      final List<String> versesInBlock = block
-          .split('\n')
-          .map((e) => e.trim())
-          .where((e) => e.isNotEmpty)
-          .toList();
-
-      if (versesInBlock.isNotEmpty) {
-        parsedVerseEntities.add(
-          VerseEntity(id: i, isChorus: false, versesList: versesInBlock),
-        );
-      }
-    }
-    return LyricEntity(
-      id: MockUtil.createId(),
-      title: 'Título Padrão',
-      group: 'Grupo Padrão',
-      albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
-      createAt: DateTime.now().toIso8601String(),
-      verses: parsedVerseEntities,
+  void edit() {
+    _manageServiceStore.serviceEntity = serviceEntity;
+    _manageServiceStore.servicesEntity = servicesEntity;
+    _manageServiceStore.updateCallbackParam = () {
+      serviceEntity = _manageServiceStore.serviceEntity!;
+      isChanged.value = true;
+      value = LoadingState();
+      pop();
+    };
+    _manageServiceStore.edit();
+    pushNamed(
+      AppRoutes.servicesRoute + AppRoutes.manageServicesRoute,
     );
   }
 }

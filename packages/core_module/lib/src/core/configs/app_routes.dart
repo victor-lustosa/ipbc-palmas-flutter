@@ -116,7 +116,7 @@ popAndPushNamed(
   );
 }
 
-pop(BuildContext context) {
+pop([BuildContext? context]) {
   Modular.to.pop(context);
 }
 
