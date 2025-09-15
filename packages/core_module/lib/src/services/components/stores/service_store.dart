@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:core_module/core_module.dart';
 
-class ServicesPreviewStore
-    extends ValueNotifier<GenericState<ServicesPreviewState>> {
-  ServicesPreviewStore({
+class ServiceStore
+    extends ValueNotifier<GenericState<ServiceState>> {
+  ServiceStore({
     required ManageLyricStore manageLyricStore,
     required LyricsListStore lyricsListStore,
     required ManageServiceStore manageServiceStore,
@@ -44,4 +44,4 @@ class ServicesPreviewStore
 }
 
 @immutable
-abstract class ServicesPreviewState {}
+abstract class ServiceState {}

@@ -194,8 +194,8 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
             message: 'Culto salvo',
           );
 
-          Modular.get<ServicesPreviewStore>().servicesEntity = servicesEntity;
-          Modular.get<ServicesPreviewStore>().serviceEntity = serviceEntity!;
+          Modular.get<ServiceStore>().servicesEntity = servicesEntity;
+          Modular.get<ServiceStore>().serviceEntity = serviceEntity!;
 
           if (updateCallbackParam != null && context.mounted) {
             updateCallbackParam!();
@@ -362,7 +362,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
         popUntil(
           (route) =>
               route.settings.name ==
-              AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute,
+              AppRoutes.servicesRoute + AppRoutes.serviceRoute,
         );
       };
       pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);

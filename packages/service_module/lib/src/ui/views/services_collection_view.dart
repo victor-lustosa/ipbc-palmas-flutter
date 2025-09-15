@@ -92,15 +92,14 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                   return GestureDetector(
                                     key: gestureKey,
                                     onTap: () {
-                                      Modular.get<ServicesPreviewStore>()
+                                      Modular.get<ServiceStore>()
                                               .servicesEntity =
                                           widget.entity;
-                                      Modular.get<ServicesPreviewStore>()
+                                      Modular.get<ServiceStore>()
                                               .serviceEntity =
                                           service;
                                       pushNamed(
-                                        AppRoutes.servicesRoute +
-                                            AppRoutes.servicesPreviewRoute,
+                                        AppRoutes.servicesRoute + AppRoutes.serviceRoute,
                                       );
                                     },
                                     onLongPressStart: (_) async {

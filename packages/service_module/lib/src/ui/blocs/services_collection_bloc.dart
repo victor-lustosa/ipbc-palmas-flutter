@@ -19,25 +19,25 @@ class ServicesCollectionBloc
   ServicesCollectionBloc({
     required this.editStore,
     required this.onlineUseCases,
-    required ServicesPreviewStore servicesPreviewStore,
-  }) : _servicesPreviewStore = servicesPreviewStore,
+    required ServiceStore serviceStore,
+  }) : _serviceStore = serviceStore,
        super(LoadingState()) {
     on<GetDataEvent<ServicesCollectionEvent>>(_getInSupa);
     on<LoadingEvent<ServicesCollectionEvent>>(_loading);
     on<DeleteItemEvent>(_deleteItem);
   }
 
-  final ServicesPreviewStore _servicesPreviewStore;
+  final ServiceStore _serviceStore;
 
-  ServicesPreviewStore get servicesPreviewStore => _servicesPreviewStore;
+  ServiceStore get serviceStore => _serviceStore;
 
   _updateServicesCollectionCallback() {
     add(GetDataEvent());
   }
 
   _updateCallBack() {
-    _servicesPreviewStore.isChanged.value = true;
-    popAndPushNamed(AppRoutes.servicesRoute + AppRoutes.servicesPreviewRoute);
+    _serviceStore.isChanged.value = true;
+    popAndPushNamed(AppRoutes.servicesRoute + AppRoutes.serviceRoute);
   }
 
   Future<void> _getInSupa(_, emit) async {
@@ -76,7 +76,7 @@ class ServicesCollectionBloc
 
   void editItem({required int index}) {
     editStore.serviceEntity = entitiesList[index];
-    _servicesPreviewStore.updateServicesCollectionCallback = _updateServicesCollectionCallback;
+    _serviceStore.updateServicesCollectionCallback = _updateServicesCollectionCallback;
     editStore.updateCallbackParam = _updateCallBack;
     editStore.edit();
     pushNamed(AppRoutes.servicesRoute + AppRoutes.manageServicesRoute);
@@ -84,7 +84,7 @@ class ServicesCollectionBloc
 
   Future<void> addItem() async {
     editStore.isEditing = false;
-    _servicesPreviewStore.updateServicesCollectionCallback = _updateServicesCollectionCallback;
+    _serviceStore.updateServicesCollectionCallback = _updateServicesCollectionCallback;
     editStore.updateCallbackParam = _updateCallBack;
     pushNamed(AppRoutes.servicesRoute + AppRoutes.manageServicesRoute);
   }

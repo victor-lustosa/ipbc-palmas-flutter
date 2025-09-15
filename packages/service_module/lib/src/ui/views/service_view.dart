@@ -2,27 +2,26 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ServicesPreviewView extends StatefulWidget {
-  const ServicesPreviewView({super.key});
+class ServiceView extends StatefulWidget {
+  const ServiceView({super.key});
 
   @override
-  State<ServicesPreviewView> createState() => _ServicesPreviewViewState();
+  State<ServiceView> createState() => _ServiceViewState();
 }
 
-class _ServicesPreviewViewState extends State<ServicesPreviewView>
-    with DateMixin {
-  late final ServicesPreviewStore _store;
+class _ServiceViewState extends State<ServiceView> with DateMixin {
+  late final ServiceStore _store;
 
   @override
   void initState() {
     super.initState();
-    _store = Modular.get<ServicesPreviewStore>();
+    _store = Modular.get<ServiceStore>();
   }
 
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark,
+      value: SystemUiOverlayStyle.light,
       child: Scaffold(
         body: SingleChildScrollView(
           child: Container(
@@ -33,7 +32,8 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView>
               children: [
                 ServiceTopBarWidget(
                   backAction: () {
-                    if(_store.updateServicesCollectionCallback != null && _store.isChanged.value){
+                    if (_store.updateServicesCollectionCallback != null &&
+                        _store.isChanged.value) {
                       _store.isChanged.value = false;
                       _store.updateServicesCollectionCallback!();
                     }
@@ -45,34 +45,42 @@ class _ServicesPreviewViewState extends State<ServicesPreviewView>
                   createAt: formatDateToString(_store.serviceEntity.createAt),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(bottom: 4, top: 20, left: 20),
+                  margin: const EdgeInsets.only(top: 30, left: 20),
                   child: ValueListenableBuilder(
-                      valueListenable: _store,
-                      builder: (_, state, child) {
+                    valueListenable: _store,
+                    builder: (_, state, child) {
                       return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             maxLines: 2,
-                            'Preletor: ${_store.serviceEntity.preacher}',
-                            style: AppFonts.description(color: AppColors.grey8),
+                            'Mensagem: ${_store.serviceEntity.theme}',
+                            style: AppFonts.defaultFont(
+                              fontSize: 17,
+                              color: AppColors.grey9,
+                            ),
                           ),
+
                           Container(
                             margin: const EdgeInsets.only(top: 14),
                             child: Text(
                               maxLines: 2,
-                              'Mensagem: ${_store.serviceEntity.theme}',
-                              style: AppFonts.description(color: AppColors.grey8),
+                              'Preletor: ${_store.serviceEntity.preacher}',
+                              style: AppFonts.defaultFont(
+                                fontSize: 17,
+                                color: AppColors.grey9,
+                              ),
                             ),
                           ),
                         ],
                       );
-                    }
+                    },
                   ),
                 ),
                 Visibility(
                   visible: _store.serviceEntity.guideIsVisible,
                   child: Container(
-                    margin: const EdgeInsets.only(top: 25, left: 16),
+                    margin: const EdgeInsets.only(top: 20, left: 16),
                     child: GuidelineWidget(
                       circleColor: AppColors.cardBallsGrey,
                       timelineColor: AppColors.timelineGuideTGreen,

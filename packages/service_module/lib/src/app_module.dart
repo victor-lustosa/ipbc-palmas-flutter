@@ -11,7 +11,7 @@ class ServiceModule extends Module {
     i.addLazySingleton<ServicesCollectionBloc>(
       () => ServicesCollectionBloc(
         editStore: Modular.get<ManageServiceStore>(),
-        servicesPreviewStore: i.get<ServicesPreviewStore>(),
+        serviceStore: i.get<ServiceStore>(),
         onlineUseCases: i.get<UseCases<SupabaseRepository>>(),
       ),
       config: CoreModule.blocConfig(),
@@ -36,9 +36,9 @@ class ServiceModule extends Module {
       customTransition: ModularFadeTransition(),
     );
     r.child(
-      AppRoutes.servicesPreviewRoute,
+      AppRoutes.serviceRoute,
       transition: TransitionType.custom,
-      child: (_) => ServicesPreviewView(),
+      child: (_) => ServiceView(),
       customTransition: ModularFadeTransition(),
     );
     r.child(

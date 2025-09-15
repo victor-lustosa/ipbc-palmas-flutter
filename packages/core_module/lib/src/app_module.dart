@@ -50,7 +50,7 @@ class CoreModule extends Module {
     i.addSingleton(
       () => UseCases<IsarRepository>(repository: i.get<IsarRepository>()),
     );
-    i.addLazySingleton<ServicesPreviewStore>(ServicesPreviewStore.new);
+    i.addLazySingleton<ServiceStore>(ServiceStore.new);
     i.addLazySingleton<ManageServiceStore>(
       () => ManageServiceStore(
         useCases: i.get<UseCases<SupabaseRepository>>(),

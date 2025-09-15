@@ -30,7 +30,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark,
+      value: SystemUiOverlayStyle.light,
       child: FocusScope(
         node: _store.rootFocusNode,
         child: ValueListenableBuilder(
