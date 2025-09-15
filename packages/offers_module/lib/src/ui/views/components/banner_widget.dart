@@ -20,26 +20,41 @@ class _BannerWidgetState extends State<BannerWidget> with ClipboardMixin {
   final String cnpj = "38.136.701/0001-25";
 
   final controller = Modular.get<BannerController>();
+  late final Widget _pixBanner;
+  late final Widget _tedBanner;
+  @override
+  void initState() {
+    super.initState();
+    _pixBanner = pixBanner();
+    _tedBanner = tedBanner();
+  }
 
   @override
   Widget build(BuildContext context) {
     isSmallD = ResponsivityUtil.isSmallDevice(context);
-    return ListenableBuilder(
-      listenable: controller,
-      builder: (context, child) {
-        return Container(
-          decoration: BoxDecoration(
-            color: AppColors.cardGreen,
-            borderRadius: BorderRadius.circular(12.36),
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.cardGreen,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        children: [
+          baseBanner(),
+          ListenableBuilder(
+            listenable: controller,
+            builder: (context, child) {
+              return AnimatedSwitcher(
+                duration: const Duration(milliseconds: 150),
+                  switchInCurve: Curves.easeIn,
+                  switchOutCurve: Curves.easeOut,
+                child: controller.isPix
+                    ? KeyedSubtree(key: const ValueKey('pix'), child: _pixBanner)
+                    : KeyedSubtree(key: const ValueKey('ted'), child: _tedBanner),
+              );
+            },
           ),
-          child: Column(
-            children: [
-              baseBanner(),
-              controller.isPix ? pixBanner() : tedBanner(),
-            ],
-          ),
-        );
-      },
+        ],
+      ),
     );
   }
 
@@ -196,7 +211,11 @@ class _BannerWidgetState extends State<BannerWidget> with ClipboardMixin {
         highlightColor: Colors.transparent,
         action: () {
           copy(value);
-          key.currentState?.ensureTooltipVisible();
+          Future.delayed(const Duration(milliseconds: 100), () {
+            if (mounted) {
+              key.currentState?.ensureTooltipVisible();
+            }
+          });
         },
         color: AppColors.white,
         androidIcon: Icons.content_copy_rounded,
