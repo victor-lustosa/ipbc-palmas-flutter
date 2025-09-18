@@ -83,7 +83,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                         fontWeight: FontWeight.w500,
                       ),
                       getFormattedDateTimeFull(
-                        widget.eventEntity.startDateTime!,
+                        widget.eventEntity.startDateTime,
                       ),
                     ),
                     Container(
@@ -133,9 +133,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                     ),
                   ],
                 ),
-                Visibility(
-                  visible: widget.eventEntity.localName != null,
-                  child: Row(
+                Row(
                     children: [
                       Container(
                         margin: const EdgeInsets.only(right: 1),
@@ -150,13 +148,12 @@ class EventsDetailViewState extends State<EventsDetailView>
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
                             ),
-                            widget.eventEntity.localName ?? '',
+                            widget.eventEntity.localName,
                           ),
                         ),
                       ),
                     ],
                   ),
-                ),
                 Container(
                   margin: const EdgeInsets.only(bottom: 16, top: 16),
                   child: Text(
@@ -203,14 +200,12 @@ class EventsDetailViewState extends State<EventsDetailView>
                   ),
                 ),
                 SizedBox(height: 16),
-               Visibility(
-                 visible: widget.eventEntity.signUpLink != null,
-                 child: Container(
+               Container(
                     margin: const EdgeInsets.only(top: 16),
                    child: ButtonWidget(
                             action: () {
                               signUpLink = launchInBrowser(
-                                Uri.parse(widget.eventEntity.signUpLink ?? ''),
+                                Uri.parse(widget.eventEntity.signUpLink),
                               );
                             },
                             shape: RoundedRectangleBorder(
@@ -223,16 +218,12 @@ class EventsDetailViewState extends State<EventsDetailView>
                             child: const Text("Inscrições"),
                           ),
                  ),
-               )
-                    ,
-                Visibility(
-                  visible: widget.eventEntity.contactLink != null,
-                  child: Container(
+                Container(
                     margin: const EdgeInsets.only(top: 16),
                     child: ButtonWidget(
                       action: () {
                         contactLink = launchInBrowser(
-                          Uri.parse(widget.eventEntity.contactLink ?? ''),
+                          Uri.parse(widget.eventEntity.contactLink),
                         );
                       },
                       adaptiveButtonType: AdaptiveButtonType.outlined,
@@ -247,7 +238,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                       child: const Text("Contato"),
                     ),
                   ),
-                ),
+
                 SizedBox(height: 40)
               ],
             ),
