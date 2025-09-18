@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     with ImageMixin, ConnectivityMixin, DateMixin, ValidationAndFormatMixin {
   bool isSwitchOn = false;
-  bool isMultipleDay = false;
   bool isEditing = false;
   bool isChangedOrAdded = false;
   Function? updateEventListViewCallback;
@@ -118,7 +117,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     eventTitleController.text = event.title;
     eventSubtitleController.text = event.subtitle;
     coverImage = File('');
-    startDate = event.startDateTime; // ou separa data e hora se precisar
+    startDate = event.startDateTime;
     endDate = event.endDateTime;
     startTime = TimeOfDay(
       hour: event.startDateTime.hour,
@@ -135,7 +134,21 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     contactLinkController.text = event.contactLink;
   }
 
-  bool validateAllFields() {
+  Future<bool> validateDateTime(BuildContext context) async {
+    if (startDate!.isAfter(endDate!)) {
+      if (context.mounted) {
+        await showCustomErrorDialog(
+          context: context,
+          title: 'Data inválida',
+          message: 'A data final não pode ser anterior à data inicial.',
+        );
+      }
+      return false;
+    }
+    return true;
+  }
+
+  Future<bool> validateAllFields(BuildContext context) async {
     bool allTextValid = true;
     controllerValidators.forEach((controller, isValid) {
       if (controller.text.trim().isEmpty) {
@@ -146,6 +159,9 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
 
     if (!isLocationLinkValid(eventLocationController.text)) {
       changeValue(isEventLocationValid, false);
+      allTextValid = false;
+    }
+    if (await validateDateTime(context) == false) {
       allTextValid = false;
     }
 
@@ -203,14 +219,15 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   }
 
   Future<bool> addData(BuildContext context) async {
-    if (validateAllFields()) {
+    if (await validateAllFields(context)) {
       final response = await isConnected();
       if (response) {
-         Map<String, double>? latLong;
+        Map<String, double>? latLong;
         if (eventLocationController.text.isNotEmpty &&
             isValidGoogleMapsLink(eventLocationController.text)) {
-          latLong = await _eventUseCases
-              .getLocationFromUrl(url: eventLocationController.text);
+          latLong = await _eventUseCases.getLocationFromUrl(
+            url: eventLocationController.text,
+          );
 
           if (latLong == null &&
               eventLocationController.text.isNotEmpty &&
@@ -221,7 +238,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
               message:
                   'Não foi possível extrair a localização do link fornecido. Por favor, verifique o link e tente novamente.',
             );
-           return  Future.value(false);
+            return Future.value(false);
           }
         }
         value = AddDataEvent<CreateEventState>();
@@ -255,7 +272,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
             );
           }
           value = DataAddedState<CreateEventState>();
-         return  Future.value(true);
+          return Future.value(true);
         }
       } else {
         value = NoConnectionState<CreateEventState>();

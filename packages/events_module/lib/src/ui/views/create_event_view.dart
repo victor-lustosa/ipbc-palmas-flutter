@@ -44,7 +44,6 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
               pop(context);
             }
           }
-
         });
         return Scaffold(
           body: SafeArea(
@@ -288,40 +287,6 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                         width: context.sizeOf.width,
                         child: Column(
                           children: [
-                            Container(
-                              margin: EdgeInsets.only(bottom: 6),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Image.asset(AppIcons.watchIcon, height: 22),
-                                      Container(
-                                        margin: EdgeInsets.only(left: 8),
-                                        child: Text(
-                                          "Mais de 1 dia",
-                                          style: AppFonts.defaultFont(
-                                            fontSize: 13,
-                                            color: AppColors.grey8,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SwitchButtonWidget(
-                                    value: _store.isMultipleDay,
-                                    onChanged: (bool newValue) {
-                                      setState(() {
-                                        _store.isMultipleDay = newValue;
-                                        if(newValue) {
-                                          _store.isSwitchOn = false;
-                                        }
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -345,9 +310,6 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                   onChanged: (bool newValue) {
                                     setState(() {
                                       _store.isSwitchOn = newValue;
-                                      if(newValue) {
-                                        _store.isMultipleDay = false;
-                                      }
                                     });
                                   },
                                 ),
@@ -375,8 +337,11 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                     InkWell(
                                       onTap: () => setDateTime(
                                         selectedDate: _store.startDate!,
-                                        onDatePicked: (newDate) =>
-                                            _store.startDate = newDate,
+                                        onDatePicked: (newDate) {
+                                          setState(() {
+                                            _store.startDate = newDate;
+                                          });
+                                        },
                                         context: context,
                                       ),
                                       child: Text(
@@ -391,7 +356,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                   ],
                                 ),
                                 Visibility(
-                                  visible: ((!_store.isSwitchOn) && (!_store.isMultipleDay)),
+                                  visible: ((!_store.isSwitchOn)),
                                   child: InkWell(
                                     onTap: () => _store.pickTime(
                                       selectedTime: _store.startTime!,
@@ -434,8 +399,11 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                     InkWell(
                                       onTap: () => setDateTime(
                                         selectedDate: _store.endDate!,
-                                        onDatePicked: (newDate) =>
-                                            _store.endDate = newDate,
+                                        onDatePicked: (newDate) {
+                                          setState(() {
+                                            _store.endDate = newDate;
+                                          });
+                                        },
                                         context: context,
                                       ),
                                       child: Text(
@@ -449,8 +417,9 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                     ),
                                   ],
                                 ),
+
                                 Visibility(
-                                  visible: ((!_store.isSwitchOn) && (!_store.isMultipleDay)),
+                                  visible: ((!_store.isSwitchOn)),
                                   child: InkWell(
                                     onTap: () => _store.pickTime(
                                       selectedTime: _store.endTime!,
@@ -606,9 +575,9 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                       ButtonWidget(
                         action: () async {
                           final response = await _store.addData(context);
-                           if(response){
-                             updateCallback();
-                           }
+                          if (response) {
+                            updateCallback();
+                          }
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
@@ -625,12 +594,14 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                           margin: EdgeInsets.only(top: 16, bottom: 10),
                           child: ButtonWidget(
                             adaptiveButtonType: AdaptiveButtonType.text,
-                              action: ()  async{
-                                final response = await _store.delete(_store.eventEntity);
-                                if(response != null){
-                                  updateCallback();
-                                }
-                              },
+                            action: () async {
+                              final response = await _store.delete(
+                                _store.eventEntity,
+                              );
+                              if (response != null) {
+                                updateCallback();
+                              }
+                            },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),
@@ -643,9 +614,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 30,
-                      )
+                      SizedBox(height: 30),
                     ],
                   ),
                 ),
