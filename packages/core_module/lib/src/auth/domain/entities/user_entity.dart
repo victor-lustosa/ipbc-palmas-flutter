@@ -116,22 +116,22 @@ class UserEntity {
     );
   }
 
-  factory UserEntity.create(User user) => UserEntity(
-    provider: user.appMetadata['provider'],
-    id: user.id,
-    picture: user.userMetadata?['picture'] ?? '',
-    appMetadata: user.appMetadata,
-    userMetadata: user.userMetadata,
-    aud: user.aud,
-    email: user.email,
-    phone: user.phone,
-    createdAt: user.createdAt,
-    lastSignInAt: user.lastSignInAt,
-    role: user.role,
-    updatedAt: user.updatedAt,
-    identities: user.identities,
-    factors: user.factors,
-    isAnonymous: user.isAnonymous,
+  factory UserEntity.create(User? user) => UserEntity(
+    provider: user?.appMetadata['provider'],
+    id: user?.id ?? "",
+    picture: user?.userMetadata?['picture'] ?? '',
+    appMetadata: user?.appMetadata ?? {},
+    userMetadata: user?.userMetadata,
+    aud: user?.aud ?? "",
+    email: user?.email,
+    phone: user?.phone,
+    createdAt: user?.createdAt ?? "",
+    lastSignInAt: user?.lastSignInAt,
+    role: user?.role,
+    updatedAt: user?.updatedAt,
+    identities: user?.identities,
+    factors: user?.factors,
+    isAnonymous: user?.isAnonymous ?? true,
   );
 
   factory UserEntity.fromIsar(IsarUserDTO dto) => UserEntity(

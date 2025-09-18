@@ -33,13 +33,14 @@ class AppIcons {
   static const String iosArrowBack = 'assets/icons/arrow_back_ios_new.svg';
   static const String googleIcon = 'assets/icons/google-icon.png';
   static const String faceIcon = 'assets/icons/face-icon.png';
-  static const String visibityOff = 'assets/icons/visibility_off.png';
-  static const String visibityOn = 'assets/icons/visibility_on.png';
+  static const String visibilityOff = 'assets/icons/visibility_off.png';
+  static const String visibilityOn = 'assets/icons/visibility_on.png';
   static const String close = 'assets/icons/close.png';
   static const String folderUpload = 'assets/icons/drive_folder_upload.png';
   static const String eventLocation = 'assets/icons/event-location.png';
   static const String linkIcon = 'assets/icons/link-icon.png';
   static const String watchIcon = 'assets/icons/watch.png';
+  static const String popoverIcon = 'assets/icons/popover.svg';
 
   static const String emailSuccess = 'assets/icons/email-success.png';
   static const String trash = 'assets/icons/delete.png';

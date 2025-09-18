@@ -36,7 +36,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
 
   ValueNotifier<bool> isPreacherValid = ValueNotifier(true);
   ValueNotifier<bool> isThemeValid = ValueNotifier(true);
-  ValueNotifier<bool> isPressed = ValueNotifier(false);
+  ValueNotifier<bool> isSavePressed = ValueNotifier(false);
 
   final Map<String, TextEditingController> _controllers = {};
   final Map<String, FocusNode> _focusNodes = {};
@@ -60,19 +60,10 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
       themeController.clear();
     }
     _rootFocusNode = FocusScopeNode();
-    _rootFocusNode.addListener(_handleRootFocusChange);
   }
 
   clear() {
-    _rootFocusNode.removeListener(_handleRootFocusChange);
     resetValidationFields();
-  }
-
-  void _handleRootFocusChange() {
-    if (isAnyTextFieldFocused != _rootFocusNode.hasFocus) {
-      isAnyTextFieldFocused = _rootFocusNode.hasFocus;
-      notifyListeners();
-    }
   }
 
   formValidation(String? data, ValueNotifier<bool> isValid) {
@@ -148,6 +139,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
   }
 
   Future<void> submit(BuildContext context) async {
+    isSavePressed.value = true;
     if (validateAllFields()) {
       final response = await isConnected();
       if (response) {
@@ -203,7 +195,9 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
         }
       }
       value = DataAddedState<ManageServiceState>();
+      isSavePressed.value = false;
     } else {
+      isSavePressed.value = false;
       value = NoConnectionState<ManageServiceState>();
     }
   }

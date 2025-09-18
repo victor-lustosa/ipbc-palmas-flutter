@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 class ResponsivityUtil {
   ResponsivityUtil._();
-  static double smallDeviceWidth = 370;
+  static double smallDeviceWidth = 390;
 
   static isSmallDevice(BuildContext context) {
     double vWidth = context.sizeOf.width;

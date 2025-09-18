@@ -76,12 +76,10 @@ class _ManageLyricViewState extends State<ManageLyricView> {
         node: _store.rootFocusNode,
         child: Scaffold(
           backgroundColor: AppColors.white,
-          body: SafeArea(
-            child: GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () {
-                FocusScope.of(context).unfocus();
-              },
+          body: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: SafeArea(
               child: ValueListenableBuilder(
                 valueListenable: _store,
                 builder: (_, state, child) {
@@ -249,8 +247,6 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                             margin: EdgeInsets.only(top: 10),
                                             width: 30,
                                             child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [

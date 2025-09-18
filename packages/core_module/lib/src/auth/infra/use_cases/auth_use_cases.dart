@@ -1,4 +1,5 @@
 import '../../../../core_module.dart';
+import '../dtos/auth_user_dto.dart';
 import '../repositories/auth_repositories.dart';
 
 class AuthUseCases implements IAuthUseCases {
@@ -19,8 +20,17 @@ class AuthUseCases implements IAuthUseCases {
   
   @override
   Future<String?> signInWithEmail(String email, String password) async {
-    var entity = await _onlineRepository.signInWithEmail(email, password);
-    return Future.value(entity as String);
+    AuthUserDTO? authUserDTO = await _onlineRepository.signInWithEmail(email, password);
+    String jwtToken = authUserDTO?.auth.token ?? "";
+    await _saveUserAndCredentials(
+      authUserDTO?.user,
+      AuthCredentials(
+        token: jwtToken,
+        provider: authUserDTO?.user.provider ?? '',
+        role: authUserDTO?.user.role ?? '',
+      ),
+    );
+    return Future.value(jwtToken);
   }
 
   @override

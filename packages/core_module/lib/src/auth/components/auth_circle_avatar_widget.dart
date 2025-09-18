@@ -112,21 +112,27 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget>
           ),
         );
 
-        noProfile() => SizedBox(
+        noProfile() => Container(
+          key: _avatarKey,
           width: 32,
           height: 32,
-          child: ButtonWidget(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color:
+              state is AuthenticatedState
+                  ? AppColors.darkGreen
+                  : Colors.transparent,
+              width: 2,
+            ),
+          ),child: ButtonWidget(
             backgroundColor: Colors.transparent,
             overlayColor: Colors.transparent,
             elevation: 0,
             shape: const CircleBorder(),
-            action: () => state is AuthenticatedState
-                ? () {
-                    setState(() {
-                      isLogoutButtonVisible = !isLogoutButtonVisible;
-                    });
-                  }
-                : pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute),
+            action: state is AuthenticatedState
+                ?  _showLogoutMenu
+                : () => pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute),
             child: Stack(
               alignment: Alignment.center,
               children: [
