@@ -47,13 +47,6 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
           case AppRoutes.eventRoute + AppRoutes.eventsListRoute:
             return CustomFadeTransition(child: const EventsListView());
 
-          case AppRoutes.detailEventRoute:
-            return CustomFadeTransition(
-              child: EventsDetailView(
-                eventEntity: settings.arguments as EventEntity,
-              ),
-            );
-
           default:
             return unknownRoute();
         }

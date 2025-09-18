@@ -48,7 +48,7 @@ class EventsListViewState extends State<EventsListView>
               } else if (state is NoConnectionState<EventsListState>) {
                 return NoConnectionView(
                   action: () => nativePushReplacementNamed(
-                    AppRoutes.eventsListRoute,
+                    AppRoutes.homeRoute,
                     context,
                   ),
                 );
@@ -172,7 +172,7 @@ class EventsListViewState extends State<EventsListView>
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
                           entities: _bloc.eventsList,
-                          route: AppRoutes.detailEventRoute,
+                          route: AppRoutes.eventRoute + AppRoutes.detailEventRoute,
                         ),
                       ),
                     ],

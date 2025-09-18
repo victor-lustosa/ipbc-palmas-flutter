@@ -146,7 +146,7 @@ class _HomeViewState extends State<HomeView>
                                     ? context.sizeOf.width * .8
                                     : context.sizeOf.width * .742,
                                 scrollDirection: Axis.horizontal,
-                                route: AppRoutes.detailEventRoute,
+                                route: AppRoutes.eventRoute + AppRoutes.detailEventRoute,
                                 entities: _bloc.eventsList,
                               ),
                             ),

@@ -92,7 +92,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
               return GestureDetector(
                 key: itemKey,
                 onTap: () {
-                  nativePushNamed(widget.route, arguments: entity, context);
+                  pushNamed(widget.route, arguments: entity);
                 },
                 onLongPressStart: (details) async {
                   _store.index = index;
