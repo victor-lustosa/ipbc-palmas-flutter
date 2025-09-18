@@ -13,7 +13,6 @@ class IconWidget extends StatelessWidget {
     Size? size,
     String? iconName,
     IconFormat? iconFormat,
-    this.action,
     this.color,
     this.splashColor,
     this.highlightColor,
@@ -31,7 +30,6 @@ class IconWidget extends StatelessWidget {
   final IconData? iOSIcon;
   final IconData? androidIcon;
   final Color? color;
-  final VoidCallback? action;
   final Color? splashColor;
   final Color? highlightColor;
 

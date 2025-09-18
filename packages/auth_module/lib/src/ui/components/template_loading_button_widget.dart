@@ -1,8 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class ProviderButtonWidget extends StatefulWidget {
-  const ProviderButtonWidget({
+class TemplateLoadingButtonWidget extends StatefulWidget {
+  const TemplateLoadingButtonWidget({
     super.key,
     required this.isPressed,
     required this.action,
@@ -20,10 +20,10 @@ class ProviderButtonWidget extends StatefulWidget {
   final double? loadingWidth;
 
   @override
-  State<ProviderButtonWidget> createState() => _ProviderButtonWidgetState();
+  State<TemplateLoadingButtonWidget> createState() => _TemplateLoadingButtonWidgetState();
 }
 
-class _ProviderButtonWidgetState extends State<ProviderButtonWidget> {
+class _TemplateLoadingButtonWidgetState extends State<TemplateLoadingButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return LoadingButtonWidget(

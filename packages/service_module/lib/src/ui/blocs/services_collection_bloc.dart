@@ -11,25 +11,33 @@ class ServicesCollectionBloc
         >
     with ConnectivityMixin {
   final IUseCases onlineUseCases;
-  final IUseCases? offlineUseCases;
   final ManageServiceStore editStore;
   Map<String, Object> servicesCollectionParams = {};
   List<ServiceEntity> entitiesList = [];
-  late final Function updateCallback;
   late String path;
 
   ServicesCollectionBloc({
     required this.editStore,
     required this.onlineUseCases,
-    this.offlineUseCases,
-  }) : super(LoadingState()) {
-    updateCallback = () {
-      add(GetDataEvent());
-    };
-
+    required ServiceStore serviceStore,
+  }) : _serviceStore = serviceStore,
+       super(LoadingState()) {
     on<GetDataEvent<ServicesCollectionEvent>>(_getInSupa);
     on<LoadingEvent<ServicesCollectionEvent>>(_loading);
     on<DeleteItemEvent>(_deleteItem);
+  }
+
+  final ServiceStore _serviceStore;
+
+  ServiceStore get serviceStore => _serviceStore;
+
+  _updateServicesCollectionCallback() {
+    add(GetDataEvent());
+  }
+
+  _updateCallBack() {
+    _serviceStore.isChanged.value = true;
+    popAndPushNamed(AppRoutes.servicesRoute + AppRoutes.serviceRoute);
   }
 
   Future<void> _getInSupa(_, emit) async {
@@ -66,19 +74,18 @@ class ServicesCollectionBloc
     emit(DataFetchedState<ServicesCollectionState>());
   }
 
-  void editItem({required int index, required ServicesEntity servicesEntity}) {
-    editStore.edit(
-      serviceEntityParam: entitiesList[index],
-      servicesEntityParam: servicesEntity,
-    );
-    editStore.updateCallbackParam = updateCallback;
+  void editItem({required int index}) {
+    editStore.serviceEntity = entitiesList[index];
+    _serviceStore.updateServicesCollectionCallback = _updateServicesCollectionCallback;
+    editStore.updateCallbackParam = _updateCallBack;
+    editStore.edit();
     pushNamed(AppRoutes.servicesRoute + AppRoutes.manageServicesRoute);
   }
 
-  Future<void> addItem({required ServicesEntity servicesEntity}) async {
-    editStore.servicesEntity = servicesEntity;
+  Future<void> addItem() async {
     editStore.isEditing = false;
-    editStore.updateCallbackParam = updateCallback;
+    _serviceStore.updateServicesCollectionCallback = _updateServicesCollectionCallback;
+    editStore.updateCallbackParam = _updateCallBack;
     pushNamed(AppRoutes.servicesRoute + AppRoutes.manageServicesRoute);
   }
 

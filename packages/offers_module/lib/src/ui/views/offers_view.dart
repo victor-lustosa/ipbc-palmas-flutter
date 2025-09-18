@@ -1,9 +1,10 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../controller/banner_controller.dart';
-import 'components/card_widget.dart';
 import 'components/banner_widget.dart';
+import 'components/card_widget.dart';
 
 class OffersView extends StatefulWidget {
   const OffersView({super.key});
@@ -28,16 +29,12 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
       price: 'R\$ 0,77 ',
       imagePath: AppIcons.ofertas,
     ),
-    CardOffer(
-      title: 'Missões',
-      price: 'R\$ 0,33 ',
-      imagePath: AppIcons.missao,
-    ),
+    CardOffer(title: 'Missões', price: 'R\$ 0,33 ', imagePath: AppIcons.missao),
     CardOffer(
       title: 'Oferta para compra do lote',
       price: 'R\$ 0,28 ',
       imagePath: AppIcons.lote,
-    )
+    ),
   ];
 
   @override
@@ -52,57 +49,49 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                 const TitleTopBarWidget(title: "Dízimos e Ofertas"),
                 Container(
                   width: context.sizeOf.width,
-                  margin: const EdgeInsets.only(
-                    left: 16,
-                    right: 16,
-                  ),
+                  margin: const EdgeInsets.only(left: 16, right: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(
-                          top: 32,
-                          left: 17.5,
-                          right: 17.5,
-                          bottom: 24,
-                        ),
+                        margin: const EdgeInsets.only(top: 32, bottom: 24),
                         child: AnimatedBuilder(
                           animation: controller,
                           builder: (context, child) {
                             return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                ButtonWidget(
-                                  elevation: 0,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 24,
-                                    vertical: 4,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                    side: BorderSide(
-                                      color: controller.isPix
-                                          ? AppColors.tabGreen
-                                          : AppColors.grey4,
+                                Container(
+                                  margin: const EdgeInsets.only(right: 16),
+                                  child: ButtonWidget(
+                                    elevation: 0,
+                                    adaptiveButtonType: controller.isPix
+                                        ? AdaptiveButtonType.elevated
+                                        : AdaptiveButtonType.outlined,
+                                    fixedSize: Size(73, 30),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16),
                                     ),
-                                  ),
-                                  backgroundColor: controller.isPix
-                                      ? AppColors.tabGreen
-                                      : AppColors.white,
-                                  action: () {
-                                    controller.setPix();
-                                  },
-                                  child: buttonLabel(
-                                    'Pix',
-                                    controller.isPix,
+                                    sideColor: controller.isPix
+                                        ? null
+                                        : AppColors.grey4,
+                                    backgroundColor: controller.isPix
+                                        ? AppColors.tabGreen
+                                        : AppColors.white,
+                                    action: () {
+                                      controller.setPix();
+                                    },
+                                    child: buttonLabel('Pix', controller.isPix),
                                   ),
                                 ),
                                 ButtonWidget(
                                   elevation: 0,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 4,
-                                  ),
+                                  adaptiveButtonType: controller.isPix
+                                      ? AdaptiveButtonType.outlined
+                                      : AdaptiveButtonType.elevated,
+                                  fixedSize: Size(219, 30),
+                                  sideColor: controller.isPix
+                                      ? AppColors.grey4
+                                      : null,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16),
                                     side: BorderSide(
@@ -129,14 +118,12 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                       ),
                       Container(
                         margin: const EdgeInsets.only(bottom: 8),
-                        child: Center(
-                          child: Text(
-                            'Copie e cole o código pix em seu app bancário.',
-                            style: AppFonts.defaultFont(
-                              color: AppColors.grey10,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                            ),
+                        child: Text(
+                          'Copie e cole o código pix em seu app bancário.',
+                          style: AppFonts.defaultFont(
+                            color: AppColors.grey10,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ),
@@ -153,28 +140,24 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                         ),
                       ),
                       Column(
-                        children: List<Widget>.generate(
-                          cardsList.length,
-                          (index) {
-                            calculateTheEdge(index);
-                            return Container(
-                              decoration: BoxDecoration(
-                                border: border,
-                                borderRadius: borderRadius,
-                              ),
-                              child: cardsList[index],
-                            );
-                          },
-                        ),
+                        children: List<Widget>.generate(cardsList.length, (
+                          index,
+                        ) {
+                          calculateTheEdge(index);
+                          return Container(
+                            decoration: BoxDecoration(
+                              border: border,
+                              borderRadius: borderRadius,
+                            ),
+                            child: cardsList[index],
+                          );
+                        }),
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(
-                    top: 12,
-                    bottom: 32,
-                  ),
+                  margin: const EdgeInsets.only(top: 12, bottom: 32),
                   child: Text(
                     'O comprovante deve ser depositado \n no gazofilácio.',
                     style: AppFonts.defaultFont(
@@ -218,11 +201,11 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
   }
 
   buttonLabel(String label, bool isPix) => Text(
-        label,
-        style: TextStyle(
-          fontSize: 17,
-          fontWeight: FontWeight.w500,
-          color: isPix ? AppColors.white : AppColors.grey4,
-        ),
-      );
+    label,
+    style: TextStyle(
+      fontSize: 17,
+      fontWeight: FontWeight.w500,
+      color: isPix ? AppColors.white : AppColors.grey4,
+    ),
+  );
 }

@@ -10,7 +10,7 @@ final lightTheme = ThemeData(
   scaffoldBackgroundColor: AppColors.white,
   primaryColor: AppColors.white,
 );
-
+/*
 setDarkAppBar() {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
@@ -22,3 +22,4 @@ setLightAppBar() {
     const SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
   );
 }
+*/

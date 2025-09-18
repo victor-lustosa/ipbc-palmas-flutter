@@ -8,13 +8,15 @@ class ServiceTopBarWidget extends StatefulWidget {
     this.title,
     this.dateIsVisible,
     this.createAt,
+    this.backAction,
   });
 
   final String image;
   final String? title;
   final bool? dateIsVisible;
   final String? createAt;
-
+  final void Function()? backAction;
+  
   @override
   State<ServiceTopBarWidget> createState() => _ServiceTopBarWidgetState();
 }
@@ -94,7 +96,7 @@ class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget>
                         child: BackButtonWidget(
                           color: AppColors.white,
                           size: isSmallDevice ? 30 : 26,
-                          action: () => nativePop(context),
+                          action: widget.backAction ?? () => nativePop(context),
                         ),
                       ),
                     ),

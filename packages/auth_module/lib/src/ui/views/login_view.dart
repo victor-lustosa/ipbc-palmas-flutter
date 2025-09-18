@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../../auth_module.dart';
-import '../components/provider_button_widget.dart';
+import '../components/template_loading_button_widget.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -147,7 +147,7 @@ class _LoginViewState extends State<LoginView> {
                       width: 159,
                     ),
                   ),
-                  ProviderButtonWidget(
+                  TemplateLoadingButtonWidget(
                     isPressed: _store.isGoogleLoginPressed,
                     action: () {
                       _store.googleSignIn(context);

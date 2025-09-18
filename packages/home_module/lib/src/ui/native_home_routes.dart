@@ -27,11 +27,6 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
           case AppRoutes.homeRoute || AppRoutes.rootRoute:
             return CustomFadeTransition(child: const HomeView());
 
-          case AppRoutes.serviceRoute:
-            return CustomFadeTransition(
-              child: ServiceView(entity: settings.arguments as ServiceEntity),
-            );
-
           case AppRoutes.servicesListRoute:
             return CustomFadeTransition(
               child: ServicesListView(

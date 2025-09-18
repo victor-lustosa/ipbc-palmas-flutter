@@ -1,4 +1,5 @@
 import '../../../../../core_module.dart';
+import '../dtos/auth_user_dto.dart';
 
 abstract class IOnlineAuthRepository
     implements
@@ -14,7 +15,7 @@ abstract class IOfflineAuthRepository
     implements IGetLocalUser, IGetToken, ISaveLocalUser, ISaveToken {}
 
 abstract class ISignInEmail {
-  Future<String?> signInWithEmail(String email, String password);
+  Future<AuthUserDTO?> signInWithEmail(String email, String password);
 }
 
 abstract class ICreateAccount {

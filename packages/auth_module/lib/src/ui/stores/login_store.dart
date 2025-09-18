@@ -43,18 +43,14 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     BuildContext context,
   ) async {
     isLoginPressed.value = true;
-    final result = await _useCases.signInWithEmail(email, password);
-    if (result != null && result.isNotEmpty) {
-      navigate(AppRoutes.initialRoute);
-    } else {
-      isLoginPressed.value = false;
-      value = InitialState<LoginState>();
-      if (context.mounted) {
-        showCustomErrorDialog(
-          title: 'Dados Incorretos',
-          message: 'Verifique se a senha e o email estão corretos.',
-          context: context,
-        );
+    value = LoadingState<LoginState>();
+    final token = await _useCases.signInWithEmail(email, password);
+    if (context.mounted) {
+      if (token != null && token.isNotEmpty) {
+        toHome(context);
+      } else {
+        isLoginPressed.value = false;
+        value = InitialState<LoginState>();
       }
     }
   }

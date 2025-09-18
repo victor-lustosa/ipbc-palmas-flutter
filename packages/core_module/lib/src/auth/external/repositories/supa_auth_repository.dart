@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:core_module/core_module.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../infra/dtos/auth_user_dto.dart';
 import '../../infra/repositories/auth_repositories.dart';
 
 const List<String> _scopes = <String>['email', 'profile'];
@@ -23,7 +24,7 @@ class SupaAuthRepository implements IOnlineAuthRepository {
         email: email,
         password: password,
       );
-      return result.user?.id != null ?"sucesso" : "Falha no cadastro";
+      return result.user?.id != null ? "sucesso" : "Falha no cadastro";
     } on AuthException catch (e) {
       // Trata erros específicos de autenticação
       print('Erro no cadastro: ${e.message}');
@@ -37,12 +38,20 @@ class SupaAuthRepository implements IOnlineAuthRepository {
   }
 
   @override
-  Future<String> signInWithEmail(String email, String password) async {
-    final AuthResponse res = await _supaClient.auth.signInWithPassword(
+  Future<AuthUserDTO> signInWithEmail(String email, String password) async {
+    final AuthResponse authResponse = await _supaClient.auth.signInWithPassword(
       email: email,
       password: password,
     );
-    return res.session?.accessToken != null ? res.session!.accessToken : '';
+    UserEntity? currentUser = UserEntity.create(authResponse.user);
+    return AuthUserDTO(
+     auth: AuthCredentials(
+       token: authResponse.session?.accessToken != null ? authResponse.session!.accessToken : '',
+       provider: currentUser.provider ?? "",
+       role: currentUser.role ?? "",
+     ),
+      user: currentUser
+    );
   }
 
   @override
