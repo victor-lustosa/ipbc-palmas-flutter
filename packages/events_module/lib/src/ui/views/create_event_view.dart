@@ -44,7 +44,6 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
               pop(context);
             }
           }
-
         });
         return Scaffold(
           body: SafeArea(
@@ -338,8 +337,11 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                     InkWell(
                                       onTap: () => setDateTime(
                                         selectedDate: _store.startDate!,
-                                        onDatePicked: (newDate) =>
-                                            _store.startDate = newDate,
+                                        onDatePicked: (newDate) {
+                                          setState(() {
+                                            _store.startDate = newDate;
+                                          });
+                                        },
                                         context: context,
                                       ),
                                       child: Text(
@@ -354,7 +356,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                   ],
                                 ),
                                 Visibility(
-                                  visible: !_store.isSwitchOn,
+                                  visible: ((!_store.isSwitchOn)),
                                   child: InkWell(
                                     onTap: () => _store.pickTime(
                                       selectedTime: _store.startTime!,
@@ -397,8 +399,11 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                     InkWell(
                                       onTap: () => setDateTime(
                                         selectedDate: _store.endDate!,
-                                        onDatePicked: (newDate) =>
-                                            _store.endDate = newDate,
+                                        onDatePicked: (newDate) {
+                                          setState(() {
+                                            _store.endDate = newDate;
+                                          });
+                                        },
                                         context: context,
                                       ),
                                       child: Text(
@@ -412,8 +417,9 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                     ),
                                   ],
                                 ),
+
                                 Visibility(
-                                  visible: !_store.isSwitchOn,
+                                  visible: ((!_store.isSwitchOn)),
                                   child: InkWell(
                                     onTap: () => _store.pickTime(
                                       selectedTime: _store.endTime!,
@@ -569,9 +575,9 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                       ButtonWidget(
                         action: () async {
                           final response = await _store.addData(context);
-                           if(response){
-                             updateCallback();
-                           }
+                          if (response) {
+                            updateCallback();
+                          }
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
@@ -588,12 +594,14 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                           margin: EdgeInsets.only(top: 16, bottom: 10),
                           child: ButtonWidget(
                             adaptiveButtonType: AdaptiveButtonType.text,
-                              action: ()  async{
-                                final response = await _store.delete(_store.eventEntity);
-                                if(response != null){
-                                  updateCallback();
-                                }
-                              },
+                            action: () async {
+                              final response = await _store.delete(
+                                _store.eventEntity,
+                              );
+                              if (response != null) {
+                                updateCallback();
+                              }
+                            },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),
@@ -606,9 +614,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 30,
-                      )
+                      SizedBox(height: 30),
                     ],
                   ),
                 ),

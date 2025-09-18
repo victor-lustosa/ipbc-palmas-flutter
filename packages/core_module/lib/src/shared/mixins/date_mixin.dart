@@ -58,21 +58,39 @@ mixin DateMixin {
     );
   }
 
-  Future<void> setDateTime({
-    required DateTime selectedDate,
-    required Function(DateTime) onDatePicked,
-    required BuildContext context,
-  }) async {
-    DateTime? pickedDate = await selectDateTime(
-      selectedDate: selectedDate,
-      context: context,
-    );
-    if (pickedDate != null) {
-      onDatePicked(pickedDate);
-    }
-  }
+   Future<void> setDateTime({
+     required DateTime selectedDate,
+     required Function(DateTime) onDatePicked,
+     required BuildContext context,
+   }) async {
+     final pickedDate = await selectDateTime(
+       selectedDate: selectedDate,
+       context: context,
+     );
 
-  TimeOfDay parseTimeOfDayFromH(String timeString) {
+     if (pickedDate == null) return;
+
+     final today = DateTime.now();
+     final todayOnly = DateTime(today.year, today.month, today.day);
+     final pickedOnly = DateTime(pickedDate.year, pickedDate.month, pickedDate.day);
+
+     if (pickedOnly.isBefore(todayOnly)) {
+       if (context.mounted) {
+         await showCustomErrorDialog(
+           context: context,
+           title: 'Data inválida',
+           message: 'Selecione uma data igual ou posterior a hoje.',
+         );
+       }
+       return;
+     }
+
+     onDatePicked(pickedDate);
+   }
+
+
+
+   TimeOfDay parseTimeOfDayFromH(String timeString) {
     final parts = timeString.split('h');
     final hour = int.parse(parts[0]);
     final minute = (parts.length > 1 && parts[1].isNotEmpty)
