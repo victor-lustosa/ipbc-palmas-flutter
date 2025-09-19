@@ -13,10 +13,15 @@ class CreateAccountStore
       TextEditingController();
 
   final IAuthUseCases _useCases;
+
   ValueNotifier<bool> isCreateAccountPressed = ValueNotifier(false);
   ValueNotifier<bool> isGoogleLoginPressed = ValueNotifier(false);
   ValueNotifier<bool> firstObscure = ValueNotifier(true);
   ValueNotifier<bool> secondObscure = ValueNotifier(true);
+  ValueNotifier<bool> emailInitState = ValueNotifier(true);
+  ValueNotifier<bool> passwordInitState = ValueNotifier(true);
+  ValueNotifier<bool> secondPasswordInitState = ValueNotifier(true);
+
   TextEditingController get emailController => _emailController;
 
   TextEditingController get passwordController => _passwordController;
@@ -24,15 +29,39 @@ class CreateAccountStore
   TextEditingController get passwordRepeatController =>
       _passwordRepeatController;
 
+  final GlobalKey<FormState> _emailKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _repeatPasswordKey = GlobalKey<FormState>();
+
+  GlobalKey<FormState> get emailKey => _emailKey;
+
+  GlobalKey<FormState> get passwordKey => _passwordKey;
+
+  GlobalKey<FormState> get repeatPasswordKey => _repeatPasswordKey;
+
+  final String _emailErrorText = 'por favor, insira um email válido.';
+  final String _passwordErrorText = 'por favor, insira uma senha.';
+  final String _passwordErrorConfirmText = 'por favor, Repita a senha.';
+
+  String get emailErrorText => _emailErrorText;
+
+  String get passwordErrorText => _passwordErrorText;
+
+  String get passwordErrorConfirmText => _passwordErrorConfirmText;
+
+  ValueNotifier<bool> isEmailValid = ValueNotifier(true);
+  ValueNotifier<bool> isPasswordValid = ValueNotifier(true);
+  ValueNotifier<bool> isSecondPasswordValid = ValueNotifier(true);
+
   String get email => _emailController.text;
 
   String get password => _passwordController.text;
 
   String get passwordConfirm => _passwordRepeatController.text;
 
-  bool isError = false;
-
-  bool get isPasswordLengthValid => _passwordController.text.length > 7;
+  bool get isPasswordLengthValid =>
+      _passwordController.text.length > 7 &&
+      _passwordRepeatController.text.length > 7;
 
   bool get emptyEmail => _emailController.text.isEmpty;
 
@@ -48,36 +77,55 @@ class CreateAccountStore
   bool get isPasswordEqual =>
       emptyPasswords ? false : password == passwordConfirm;
 
-  void notifyBorderError({required value}) {
-    isError = value;
-  }
-
-  void createAccount(BuildContext context) async{
+  void createAccount(BuildContext context) async {
     isCreateAccountPressed.value = true;
     value = LoadingState<CreateAccountState>();
     final result = await _useCases.createAccount(email, password);
-      if (result == 'sucesso') {
-        pushNamed(AppRoutes.authRoute + AppRoutes.accountCreatedRoute);
-      } else {
-        notifyBorderError(value: true);
-        if (context.mounted) {
-          showCustomErrorDialog(
-            context: context,
-            title: 'Dados Incorretos',
-            message: 'Por favor, Verifique os dados e tente novamente.',
-          );
-        }
+    if (result == 'sucesso') {
+      pushNamed(AppRoutes.authRoute + AppRoutes.accountCreatedRoute);
+    } else {
+      if (context.mounted) {
+        showCustomErrorDialog(
+          context: context,
+          title: 'Dados Incorretos',
+          message: 'Por favor, Verifique os dados e tente novamente.',
+        );
       }
-     isCreateAccountPressed.value = false;
-     value = InitialState<CreateAccountState>();
+    }
+    isCreateAccountPressed.value = false;
+    value = InitialState<CreateAccountState>();
   }
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    _passwordRepeatController.dispose();
-    super.dispose();
+  formValidation(bool validation, ValueNotifier<bool> isValid) {
+    Future.delayed(Duration.zero, () async {
+      isValid.value = validation;
+      value = UpdateFormFieldState();
+    });
+    return null;
+  }
+
+  bool emailValidation(String? data) {
+    return !isEmptyData(data) && EmailValidator.validate(data ?? '');
+  }
+
+  bool isEmptyData(String? data) {
+    return (data == null || data.isEmpty);
+  }
+
+  void clear() {
+    _emailController.clear();
+    _passwordController.clear();
+    _passwordRepeatController.clear();
+    emailInitState.value = true;
+    passwordInitState.value = true;
+    secondPasswordInitState.value = true;
+    isEmailValid.value = true;
+    isPasswordValid.value = true;
+    isSecondPasswordValid.value = true;
+    isCreateAccountPressed.value = false;
+    firstObscure.value = true;
+    secondObscure.value = true;
+    value = InitialState<CreateAccountState>();
   }
 }
 

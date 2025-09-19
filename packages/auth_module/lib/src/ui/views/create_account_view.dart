@@ -10,25 +10,42 @@ class CreateAccountView extends StatefulWidget {
 }
 
 class _CreateAccountViewState extends State<CreateAccountView> {
-  final CreateAccountStore _store = Modular.get<CreateAccountStore>();
+  late final CreateAccountStore _store;
 
-  final GlobalKey<FormState> _emailKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _repeatPasswordKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    super.initState();
+    _store = Modular.get<CreateAccountStore>();
+  }
 
-  final String _emailErrorText = 'por favor, insira um email válido.';
-  final String _passwordErrorText = 'por favor, insira uma senha.';
-  final String _passwordErrorConfirmText = 'por favor, Repita a senha.';
-
-  bool _isEmailValid = true;
-  bool _isPasswordValid = true;
-
+  @override
+  void dispose() {
+    _store.clear();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _store,
       builder: (_, state, child) {
+
+      bool isInitPassword = _store.passwordInitState.value && _store.secondPasswordInitState.value;
+
+       Widget point = Container(
+          margin: const EdgeInsets.only(right: 5),
+          height: 5,
+          width: 5,
+          decoration: BoxDecoration(
+            color:  isInitPassword
+                ? AppColors.grey7
+                : _store.isPasswordLengthValid
+                ? AppColors.greenInputAccept
+                : AppColors.codeBorderError,
+            shape: BoxShape.circle,
+          ),
+        );
+
         return Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(
@@ -62,137 +79,175 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                   TemplateFormWidget(
                     controller: _store.emailController,
                     title: 'Insira seu email',
-                    isValid: _isEmailValid,
-                    errorText: _emailErrorText,
-                    globalKey: _emailKey,
+                    isValid: _store.isEmailValid.value,
+                    errorText: _store.emailErrorText,
+                    globalKey: _store.emailKey,
                     isPressed: _store.isCreateAccountPressed,
-                    color: _store.emptyEmail
+                    errorColor: AppColors.codeBorderError,
+                    color: _store.emailInitState.value
                         ? AppColors.secondaryGrey
-                        : (_isEmailValid
-                              ? AppColors.greenInputAccept
-                              : AppColors.delete),
+                        : _store.isEmailValid.value
+                        ? AppColors.greenInputAccept
+                        : AppColors.codeBorderError,
                     inputDecoration: fieldInputDecoration(
-                      isValid: _isEmailValid,
+                      isValid: _store.isEmailValid.value,
+                      errorHintColor: AppColors.codeBorderError,
                       hintText: 'Email',
                     ),
-                    validator: (data) {
-                      _emailValidation(data);
-                      return null;
+                    onChanged: (value){
+                      _store.emailInitState.value = false;
                     },
-                    defaultHintColor: _isEmailValid
+                    validator: (data) {
+                      return _store.formValidation(
+                        _store.emailValidation(data),
+                        _store.isEmailValid,
+                      );
+                    },
+                    defaultHintColor: _store.isEmailValid.value
                         ? AppColors.greenInputAccept
-                        : AppColors.delete,
+                        : AppColors.codeBorderError,
                   ),
                   TemplateFormWidget(
                     controller: _store.passwordController,
                     titleMargin: EdgeInsets.only(
-                      top: _isPasswordValid ? 24 : 12,
+                      top: 24,
                     ),
                     title: 'Crie a sua senha',
-                    isValid: _isPasswordValid,
-                    errorText: _passwordErrorText,
-                    globalKey: _passwordKey,
-                    isPressed:  _store.isCreateAccountPressed,
+                    globalKey: _store.passwordKey,
+                    isPressed: _store.isCreateAccountPressed,
                     obscure: _store.firstObscure,
-                    color: _store.emptyPasswords
+                    errorColor: AppColors.codeBorderError,
+                    color: _store.passwordInitState.value
                         ? AppColors.secondaryGrey
-                        : (!_store.emptyPasswords && _store.isPasswordEqual
-                              ? AppColors.disableButton
-                              : AppColors.delete),
+                        : !_store.emptyPasswords && _store.isPasswordEqual
+                        ? AppColors.greenInputAccept
+                        : AppColors.codeBorderError,
                     inputDecoration: fieldInputDecoration(
-                      isValid: _isPasswordValid,
+                      errorHintColor: AppColors.codeBorderError,
+                      isValid: _store.isPasswordValid.value,
                       hintText: 'Senha',
                       contentPadding: const EdgeInsets.only(left: 16, top: 9),
-                      suffixIcon: HideIconWidget(isObscure:  _store.firstObscure),
+                      suffixIcon: HideIconWidget(
+                        isObscure: _store.firstObscure,
+                      ),
                     ),
                     validator: (data) {
-                      _passwordValidation(data);
-                      return null;
+                      return _store.formValidation(
+                        !_store.isEmptyData(data),
+                        _store.isPasswordValid,
+                      );
                     },
-                    defaultHintColor: _isPasswordValid && _store.isPasswordEqual
+                    onChanged: (value){
+                      _store.passwordInitState.value = false;
+                    },
+                    defaultHintColor:
+                        _store.isPasswordValid.value && _store.isPasswordEqual
                         ? AppColors.greenInputAccept
-                        : AppColors.delete,
+                        : AppColors.codeBorderError,
                   ),
                   TemplateFormWidget(
                     controller: _store.passwordRepeatController,
                     titleMargin: const EdgeInsets.only(top: 8),
-                    isValid: _isPasswordValid,
-                    errorText: _passwordErrorConfirmText,
-                    globalKey: _repeatPasswordKey,
-                    isPressed:  _store.isCreateAccountPressed,
-                    obscure:  _store.secondObscure,
-                    color: _store.emptyPasswords
+                    globalKey: _store.repeatPasswordKey,
+                    isPressed: _store.isCreateAccountPressed,
+                    obscure: _store.secondObscure,
+                    errorColor: AppColors.codeBorderError,
+                    color: _store.secondPasswordInitState.value
                         ? AppColors.secondaryGrey
-                        : (!_store.emptyPasswords && _store.isPasswordEqual
-                              ? AppColors.disableButton
-                              : AppColors.delete),
+                        : !_store.emptyPasswords && _store.isPasswordEqual
+                        ? AppColors.greenInputAccept
+                        : AppColors.codeBorderError,
                     inputDecoration: fieldInputDecoration(
-                      isValid: _isPasswordValid,
+                      errorHintColor: AppColors.codeBorderError,
+                      isValid: _store.isSecondPasswordValid.value,
                       hintText: 'Repita a Senha',
                       contentPadding: const EdgeInsets.only(left: 16, top: 9),
-                      suffixIcon: HideIconWidget(isObscure:  _store.secondObscure),
+                      suffixIcon: HideIconWidget(
+                        isObscure: _store.secondObscure,
+                      ),
                     ),
-                    validator: (data) {
-                      _passwordValidation(data);
-                      return null;
+                    onChanged: (value){
+                      _store.secondPasswordInitState.value = false;
                     },
-                    defaultHintColor: _isPasswordValid && _store.isPasswordEqual
+                    validator: (data) {
+                      return _store.formValidation(
+                        !_store.isEmptyData(data),
+                        _store.isSecondPasswordValid,
+                      );
+                    },
+                    defaultHintColor:
+                        _store.isSecondPasswordValid.value &&
+                            _store.isPasswordEqual
                         ? AppColors.greenInputAccept
-                        : AppColors.delete,
+                        : AppColors.codeBorderError,
                   ),
                   Container(
                     width: context.sizeOf.width,
-                    margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
+                    margin: const EdgeInsets.only(left: 20, top: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          _store.isPasswordLengthValid
-                              ? " * A senha contém 8 dígitos."
-                              : " * Deve conter no mínimo 8 dígitos.",
-                          style: AppFonts.defaultFont(
-                            color: _store.emptyPasswords
-                                ? AppColors.grey10
-                                : _store.isPasswordLengthValid
-                                ? AppColors.disableButton
-                                : AppColors.delete,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
-                          ),
+                        Row(
+                          children: [
+                            point,
+                            Text(
+                              _store.isPasswordLengthValid
+                                  ? "As senhas contém 8 dígitos."
+                                  : "Deve conter no mínimo 8 dígitos.",
+                              style: AppFonts.defaultFont(
+                                color:  isInitPassword
+                                    ? AppColors.grey7
+                                    :_store.isPasswordLengthValid
+                                    ? AppColors.greenInputAccept
+                                    : AppColors.codeBorderError,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          _store.isPasswordEqual
-                              ? " * As senhas correspondem."
-                              : " * As senhas devem corresponder.",
-                          style: AppFonts.defaultFont(
-                            color: _store.emptyPasswords
-                                ? AppColors.grey10
-                                : _store.isPasswordEqual
-                                ? AppColors.disableButton
-                                : AppColors.delete,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
+                        Container(
+                          margin: const EdgeInsets.only(top: 8),
+                          child: Row(
+                            children: [
+                              point,
+                              Text(
+                                _store.isPasswordEqual
+                                    ? "As senhas correspondem."
+                                    : "As senhas devem corresponder.",
+                                style: AppFonts.defaultFont(
+                                  color:  isInitPassword
+                                      ? AppColors.grey7
+                                      : _store.isPasswordEqual
+                                      ? AppColors.greenInputAccept
+                                      : AppColors.codeBorderError,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
                   LoadingButtonWidget(
-                    isPressed:  _store.isCreateAccountPressed,
+                    isPressed: _store.isCreateAccountPressed,
                     action: () {
                       _store.emptyData &&
                               _store.isPasswordEqual &&
-                              _isEmailValid
+                              _store.isEmailValid.value
                           ? _store.createAccount(context)
                           : null;
                     },
                     isValid:
-                        _isEmailValid &&
-                        _isPasswordValid &&
+                        _store.isEmailValid.value &&
+                        _store.isPasswordValid.value &&
+                        _store.isSecondPasswordValid.value &&
                         _store.isPasswordEqual,
                     label: "Criar Conta",
                   ),
-                 /* Center(
+                  /* Center(
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -215,45 +270,5 @@ class _CreateAccountViewState extends State<CreateAccountView> {
         );
       },
     );
-  }
-
-  void _passwordBorderValidation(bool value) {
-    Future.delayed(Duration.zero, () async {
-      if (mounted) {
-        setState(() {
-          _isPasswordValid = value;
-        });
-      }
-    });
-  }
-
-  void _emailBorderValidation(bool value) {
-    Future.delayed(Duration.zero, () async {
-      if (mounted) {
-        setState(() {
-          _isEmailValid = value;
-        });
-      }
-    });
-  }
-
-  void _emailValidation(String? data) {
-    if (data == null || data.isEmpty) {
-      _emailBorderValidation(false);
-    } else {
-      if (EmailValidator.validate(_store.emailController.text)) {
-        _emailBorderValidation(true);
-      } else {
-        _emailBorderValidation(false);
-      }
-    }
-  }
-
-  void _passwordValidation(String? data) {
-    if (data == null || data.isEmpty) {
-      _passwordBorderValidation(false);
-    } else {
-      _passwordBorderValidation(true);
-    }
   }
 }

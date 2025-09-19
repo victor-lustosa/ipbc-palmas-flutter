@@ -1,37 +1,39 @@
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:core_module/core_module.dart';
 
 class FormFieldWidget extends StatefulWidget {
-  const FormFieldWidget(
-      {super.key,
-      required this.validator,
-      required this.isValid,
-      required this.inputDecoration,
-      required this.controller,
-      this.fieldKey,
-      this.isSubmitted,
-      this.maxLength,
-      this.fieldStyle,
-      this.maxLines,
-      this.keyboardType,
-      this.cursorColor,
-      this.inputFormatters,
-      this.autoValidateMode,
-      this.title,
-      this.titleMargin,
-      this.fieldWidth,
-      this.fieldHeight,
-      this.fieldDecoration,
-      this.errorText,
-      this.titleStyle,
-      this.fieldMargin,
-      this.obscureText,
-      this.errorTextMargin,
-      this.horizontalSymmetric,
-      this.inputPadding,
-      required this.colorStyle,
-      this.onChange});
+  const FormFieldWidget({
+    super.key,
+     this.validator,
+     this.isValid,
+    required this.inputDecoration,
+    required this.controller,
+    this.fieldKey,
+    this.isSubmitted,
+    this.maxLength,
+    this.fieldStyle,
+    this.maxLines,
+    this.keyboardType,
+    this.cursorColor,
+    this.inputFormatters,
+    this.autoValidateMode,
+    this.title,
+    this.titleMargin,
+    this.fieldWidth,
+    this.fieldHeight,
+    required this.fieldDecoration,
+    this.errorText,
+    this.titleStyle,
+    this.fieldMargin,
+    this.obscureText,
+    this.errorTextMargin,
+    this.horizontalSymmetric,
+    this.inputPadding,
+    required this.colorStyle,
+    this.onChanged,
+    this.errorColor,
+  });
 
   final String? errorText;
   final EdgeInsetsGeometry? errorTextMargin;
@@ -44,14 +46,15 @@ class FormFieldWidget extends StatefulWidget {
   final int? maxLength;
   final TextInputType? keyboardType;
   final Color? cursorColor;
-  final bool isValid;
+  final Color? errorColor;
+  final bool? isValid;
   final TextStyle? titleStyle;
   final Color colorStyle;
   final TextStyle? fieldStyle;
   final double? fieldWidth;
   final double? fieldHeight;
   final BoxDecoration? fieldDecoration;
-  final FormFieldValidator validator;
+  final FormFieldValidator? validator;
   final InputDecoration inputDecoration;
   final int? maxLines;
   final AutovalidateMode? autoValidateMode;
@@ -59,7 +62,7 @@ class FormFieldWidget extends StatefulWidget {
   final bool? obscureText;
   final EdgeInsetsGeometry? horizontalSymmetric;
   final EdgeInsetsGeometry? inputPadding;
-  final void Function(String)? onChange;
+  final void Function(String)? onChanged;
 
   @override
   State<FormFieldWidget> createState() => _FormFieldWidgetState();
@@ -79,11 +82,9 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
               margin: widget.titleMargin,
               child: Text(
                 widget.title ?? '',
-                style: widget.titleStyle ??
-                    AppFonts.defaultFont(
-                      fontSize: 16,
-                      color: AppColors.grey9,
-                    ),
+                style:
+                    widget.titleStyle ??
+                    AppFonts.defaultFont(fontSize: 16, color: AppColors.grey9),
               ),
             ),
           ),
@@ -92,14 +93,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
             margin: widget.fieldMargin,
             width: widget.fieldWidth,
             height: widget.fieldHeight ?? 42,
-            decoration: widget.fieldDecoration ??
-                BoxDecoration(
-                  color: AppColors.white,
-                  border: Border.all(
-                    color: widget.isValid ? AppColors.white : AppColors.delete,
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
+            decoration: widget.fieldDecoration,
             child: TextFormField(
               obscureText: widget.obscureText ?? false,
               key: widget.fieldKey,
@@ -115,20 +109,24 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
               inputFormatters:
                   widget.inputFormatters ?? const <TextInputFormatter>[],
               decoration: widget.inputDecoration,
-              onChanged: widget.onChange,
-              style: widget.fieldStyle ??
+              onChanged: widget.onChanged,
+              style:
+                  widget.fieldStyle ??
                   AppFonts.defaultFont(fontSize: 14, color: widget.colorStyle),
             ),
           ),
           Visibility(
-            visible: !widget.isValid,
+            visible: !(widget.isValid ?? true),
             child: Container(
               margin:
                   widget.errorTextMargin ??
                   const EdgeInsets.only(top: 4, left: 2),
               child: Text(
                 widget.errorText ?? '',
-                style: AppFonts.defaultFont(fontSize: 14, color: Colors.red),
+                style: AppFonts.defaultFont(
+                  fontSize: 14,
+                  color: widget.errorColor ?? Colors.red,
+                ),
               ),
             ),
           ),
