@@ -93,9 +93,9 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
           fieldDecoration: _fieldDecoration(
             isValid: widget.isValid,
             color: widget.color,
-            errorColor: widget.color,
+            errorColor: widget.errorColor,
           ),
-          errorColor: widget.color,
+          errorColor: widget.errorColor,
           title: widget.title,
           isValid: widget.isValid,
           maxLines: widget.maxLines,
