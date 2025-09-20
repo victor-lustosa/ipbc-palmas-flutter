@@ -289,7 +289,22 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
   }
 
   void copyBox() {
-    liturgiesList.insert(index, liturgyModel.copyWith(id: MockUtil.createId()));
+    final String currentSequence = _controllers['${liturgyModel.id}_0']?.text ?? liturgyModel.sequence;
+    final String? currentAdditional = _controllers['${liturgyModel.id}_1']?.text;
+
+    final updatedLiturgyModel = liturgyModel.copyWith(
+      sequence: currentSequence,
+      additional: currentAdditional,
+    );
+    liturgiesList[index] = updatedLiturgyModel;
+    final newLiturgy = updatedLiturgyModel.copyWith(
+      id: liturgiesList.length.toString(),
+    );
+
+    liturgiesList.insert(
+      index + 1,
+      newLiturgy,
+    );
     controllersAndFocusNodes();
     notifyListeners();
   }
@@ -316,6 +331,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     }
     return allTextValid;
   }
+
   convertTextInLyric(String text) {
     final List<String> rawVerseBlocks = text.split(RegExp(r'\n\s*\n+'));
 
@@ -361,6 +377,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
       pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);
     }
   }
+
   void activateAdditionalField(String liturgyId) {
     final additionalKey = '${liturgyId}_1';
     if (!_controllers.containsKey(additionalKey)) {
@@ -370,6 +387,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
       _focusNodes[additionalKey] = FocusNode();
     }
   }
+
   void deactivateAdditionalField(String liturgyId) {
     final additionalKey = '${liturgyId}_1';
     _controllers.remove(additionalKey);
