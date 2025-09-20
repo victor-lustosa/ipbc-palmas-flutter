@@ -279,10 +279,9 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     liturgiesList.insert(
       0,
       LiturgyEntity(
-        id: MockUtil.createId(),
-        isAdditional: true,
+        id: liturgiesList.length.toString(),
+        isAdditional: false,
         sequence: 'Título',
-        additional: 'Descrição',
       ),
     );
     controllersAndFocusNodes();
@@ -361,6 +360,20 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
       };
       pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);
     }
+  }
+  void activateAdditionalField(String liturgyId) {
+    final additionalKey = '${liturgyId}_1';
+    if (!_controllers.containsKey(additionalKey)) {
+      _controllers[additionalKey] = TextEditingController();
+    }
+    if (!_focusNodes.containsKey(additionalKey)) {
+      _focusNodes[additionalKey] = FocusNode();
+    }
+  }
+  void deactivateAdditionalField(String liturgyId) {
+    final additionalKey = '${liturgyId}_1';
+    _controllers.remove(additionalKey);
+    _focusNodes.remove(additionalKey);
   }
 }
 
