@@ -63,35 +63,6 @@ class _ManageServiceViewState extends State<ManageServiceView>
                             ),
                             child: TemplateFormWidget(
                               horizontalSymmetric: EdgeInsets.zero,
-                              valueListenable: _store.isPreacherValid,
-                              titleMargin: const EdgeInsets.only(bottom: 4),
-                              controller: _store.preacherController,
-                              title: 'Preletor',
-                              isValid: _store.isPreacherValid.value,
-                              errorText: _store.preacherErrorText,
-                              globalKey: _store.preacherKey,
-                              isPressed: _store.isSavePressed,
-                              inputDecoration: fieldInputDecoration(
-                                isValid: _store.isPreacherValid.value,
-                                hintText: 'Preletor do culto',
-                              ),
-                              validator: (data) {
-                                return _store.formValidation(
-                                  data,
-                                  _store.isPreacherValid,
-                                );
-                              },
-                              defaultHintColor: AppColors.hintInputForm,
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(
-                              top: 16,
-                              left: 16,
-                              right: 16,
-                            ),
-                            child: TemplateFormWidget(
-                              horizontalSymmetric: EdgeInsets.zero,
                               valueListenable: _store.isThemeValid,
                               titleMargin: const EdgeInsets.only(bottom: 4),
                               controller: _store.themeController,
@@ -108,6 +79,35 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                 return _store.formValidation(
                                   data,
                                   _store.isThemeValid,
+                                );
+                              },
+                              defaultHintColor: AppColors.hintInputForm,
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(
+                              top: 16,
+                              left: 16,
+                              right: 16,
+                            ),
+                            child: TemplateFormWidget(
+                              horizontalSymmetric: EdgeInsets.zero,
+                              valueListenable: _store.isPreacherValid,
+                              titleMargin: const EdgeInsets.only(bottom: 4),
+                              controller: _store.preacherController,
+                              title: 'Preletor',
+                              isValid: _store.isPreacherValid.value,
+                              errorText: _store.preacherErrorText,
+                              globalKey: _store.preacherKey,
+                              isPressed: _store.isSavePressed,
+                              inputDecoration: fieldInputDecoration(
+                                isValid: _store.isPreacherValid.value,
+                                hintText: 'Preletor do culto',
+                              ),
+                              validator: (data) {
+                                return _store.formValidation(
+                                  data,
+                                  _store.isPreacherValid,
                                 );
                               },
                               defaultHintColor: AppColors.hintInputForm,

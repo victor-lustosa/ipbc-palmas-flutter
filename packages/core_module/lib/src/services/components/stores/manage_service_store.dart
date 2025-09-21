@@ -7,16 +7,12 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     with DateMixin, ConnectivityMixin {
   ManageServiceStore({
     required IUseCases useCases,
-    required SearchLyricsStore searchLyricsStore,
     required ManageLyricStore manageLyricStore,
   }) : _useCases = useCases,
-       _searchLyricsStore = searchLyricsStore,
        _manageLyricStore = manageLyricStore,
        super(InitialState<ManageServiceState>());
-  final SearchLyricsStore _searchLyricsStore;
   final ManageLyricStore _manageLyricStore;
 
-  get searchLyricsStore => _searchLyricsStore;
   final IUseCases _useCases;
   bool isEditing = false;
   int index = 0;

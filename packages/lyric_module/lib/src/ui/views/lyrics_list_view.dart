@@ -20,7 +20,6 @@ class _LyricsListViewState extends State<LyricsListView>
   void initState() {
     super.initState();
     _bloc = Modular.get<LyricBloc>();
-    //setLightAppBar();
     WidgetsBinding.instance.addPostFrameCallback((frameCallback) {
       _bloc.init(context: context);
     });
