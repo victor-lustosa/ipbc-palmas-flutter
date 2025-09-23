@@ -96,16 +96,19 @@ class EventsDetailViewState extends State<EventsDetailView>
                                   widget.eventEntity.startDateTime,
                                 ),
                               ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  left: 4,
-                                  right: 4,
-                                ),
-                                height: 8,
-                                width: 8,
-                                decoration: const BoxDecoration(
-                                  color: AppColors.darkGreen,
-                                  shape: BoxShape.circle,
+                              Visibility(
+                                visible: widget.eventEntity.isAllDay,
+                                child: Container(
+                                  margin: const EdgeInsets.only(
+                                    left: 4,
+                                    right: 4,
+                                  ),
+                                  height: 8,
+                                  width: 8,
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.darkGreen,
+                                    shape: BoxShape.circle,
+                                  ),
                                 ),
                               ),
                               Text(
@@ -114,6 +117,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
                                 ),
+                                widget.eventEntity.isAllDay ? 'O dia todo' :
                                 formatHourToString(
                                   date: widget.eventEntity.startDateTime,
                                 ),
@@ -166,7 +170,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400,
                                     ),
-                                    widget.eventEntity.localName,
+                                    widget.eventEntity.localName ?? '',
                                   ),
                                 ),
                               ),
@@ -225,42 +229,56 @@ class EventsDetailViewState extends State<EventsDetailView>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: 16),
-                          Container(
-                            margin: const EdgeInsets.only(top: 16),
-                            child: ButtonWidget(
-                              action: () {
-                                signUpLink = launchInBrowser(
-                                  Uri.parse(widget.eventEntity.signUpLink),
-                                );
-                              },
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                          Visibility(
+                            visible:
+                                widget.eventEntity.signUpLink != null &&
+                                widget.eventEntity.signUpLink!.isNotEmpty,
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 16),
+                              child: ButtonWidget(
+                                action: () {
+                                  signUpLink = launchInBrowser(
+                                    Uri.parse(
+                                      widget.eventEntity.signUpLink ?? '',
+                                    ),
+                                  );
+                                },
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                fixedSize: Size(context.sizeOf.width, 48),
+                                backgroundColor: AppColors.darkGreen,
+                                shadowColor: AppColors.grey0,
+                                foregroundColor: AppColors.white,
+                                child: const Text("Inscrições"),
                               ),
-                              fixedSize: Size(context.sizeOf.width, 48),
-                              backgroundColor: AppColors.darkGreen,
-                              shadowColor: AppColors.grey0,
-                              foregroundColor: AppColors.white,
-                              child: const Text("Inscrições"),
                             ),
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 16, bottom: 40),
-                            child: ButtonWidget(
-                              action: () {
-                                contactLink = launchInBrowser(
-                                  Uri.parse(widget.eventEntity.contactLink),
-                                );
-                              },
-                              adaptiveButtonType: AdaptiveButtonType.outlined,
-                              sideColor: AppColors.darkGreen,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                          Visibility(
+                            visible:
+                                widget.eventEntity.contactLink != null &&
+                                widget.eventEntity.contactLink!.isNotEmpty,
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 16, bottom: 40),
+                              child: ButtonWidget(
+                                action: () {
+                                  contactLink = launchInBrowser(
+                                    Uri.parse(
+                                      widget.eventEntity.contactLink ?? '',
+                                    ),
+                                  );
+                                },
+                                adaptiveButtonType: AdaptiveButtonType.outlined,
+                                sideColor: AppColors.darkGreen,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                fixedSize: Size(context.sizeOf.width, 48),
+                                backgroundColor: AppColors.white,
+                                shadowColor: AppColors.grey0,
+                                foregroundColor: AppColors.darkGreen,
+                                child: const Text("Contato"),
                               ),
-                              fixedSize: Size(context.sizeOf.width, 48),
-                              backgroundColor: AppColors.white,
-                              shadowColor: AppColors.grey0,
-                              foregroundColor: AppColors.darkGreen,
-                              child: const Text("Contato"),
                             ),
                           ),
                         ],

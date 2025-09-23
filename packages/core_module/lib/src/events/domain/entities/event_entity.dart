@@ -1,4 +1,3 @@
-
 import '../../../../core_module.dart';
 
 class EventEntity {
@@ -10,11 +9,12 @@ class EventEntity {
     required this.startDateTime,
     required this.endDateTime,
     required this.description,
-     this.location,
-     this.localName,
-     this.signUpLink,
-     this.contactLink,
     required this.createAt,
+    required this.isAllDay,
+    this.location,
+    this.localName,
+    this.signUpLink,
+    this.contactLink,
     this.latitude,
     this.longitude,
   });
@@ -26,6 +26,7 @@ class EventEntity {
   final DateTime startDateTime;
   final DateTime endDateTime;
   final String description;
+  final bool isAllDay;
   final String? location;
   final String? localName;
   final String? signUpLink;
@@ -53,6 +54,7 @@ class EventEntity {
     subtitle: '',
     image: '',
     description: '',
+    isAllDay: false,
     location: '',
     createAt: DateTime.now(),
     startDateTime: DateTime.now(),
@@ -72,6 +74,7 @@ class EventEntity {
     DateTime? startDateTime,
     DateTime? endDateTime,
     String? description,
+    bool? isAllDay,
     String? location,
     String? localName,
     String? signUpLink,
@@ -87,12 +90,13 @@ class EventEntity {
       image: image ?? this.image,
       description: description ?? this.description,
       location: location ?? this.location,
+      isAllDay: isAllDay ?? this.isAllDay,
       createAt: createAt ?? this.createAt,
       startDateTime: this.startDateTime,
       endDateTime: this.endDateTime,
       localName: localName ?? this.localName,
       signUpLink: signUpLink ?? this.signUpLink,
-      contactLink:  contactLink ?? this.contactLink,
+      contactLink: contactLink ?? this.contactLink,
       latitude: this.latitude,
       longitude: this.longitude,
     );

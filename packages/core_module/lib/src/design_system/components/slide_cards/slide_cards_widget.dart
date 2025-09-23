@@ -295,7 +295,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
                                       child: Text(
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        entity.localName,
+                                        entity.localName ?? '',
                                         style: AppFonts.defaultFont(
                                           color: AppColors.grey8,
                                           fontSize: 12,

@@ -130,6 +130,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     eventLocationNameController.text = event.localName!;
     eventLinkController.text = event.signUpLink ?? '';
     contactLinkController.text = event.contactLink ?? '';
+    isSwitchOn = event.isAllDay;
   }
 
   Future<bool> validateDateTime(BuildContext context) async {
@@ -143,9 +144,11 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       }
       return false;
     }
-    if (!isSwitchOn && startDate!.year == endDate!.year &&
+    if (!isSwitchOn &&
+        startDate!.year == endDate!.year &&
         startDate!.month == endDate!.month &&
         startDate!.day == endDate!.day) {
+
       final startMinutes = startTime!.hour * 60 + startTime!.minute;
       final endMinutes = endTime!.hour * 60 + endTime!.minute;
       if (startMinutes >= endMinutes) {
@@ -158,9 +161,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
         }
         return false;
       }
-      return true;
     }
-
     return true;
   }
 
@@ -218,10 +219,15 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       startDateTime: combineDateAndTime(startDate!, startTime!),
       endDateTime: combineDateAndTime(endDate!, endTime!),
       description: eventDescriptionController.text,
+      isAllDay: isSwitchOn,
       location: eventLocationController.text,
       localName: eventLocationNameController.text,
-      signUpLink: eventLinkController.text.isEmpty ? null : eventLinkController.text,
-      contactLink: contactLinkController.text.isEmpty ? null : contactLinkController.text,
+      signUpLink: eventLinkController.text.isEmpty
+          ? null
+          : eventLinkController.text,
+      contactLink: contactLinkController.text.isEmpty
+          ? null
+          : contactLinkController.text,
       createAt: isEditing ? eventEntity.createAt : DateTime.now(),
       latitude: latLong?['lat'],
       longitude: latLong?['lng'],
