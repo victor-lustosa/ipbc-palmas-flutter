@@ -10,7 +10,7 @@ class LiturgyEntity {
     this.id,
     required this.isAdditional,
     required this.sequence,
-    required this.additional,
+    this.additional,
   });
 
 

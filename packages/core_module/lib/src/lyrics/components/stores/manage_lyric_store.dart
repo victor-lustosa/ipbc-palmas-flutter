@@ -19,7 +19,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
 
   late FocusScopeNode _rootFocusNode;
 
-  get lyricsFetched => _lyricsFetched;
+  List<LyricEntity> get lyricsFetched => _lyricsFetched;
 
   get controllers => _controllers;
 

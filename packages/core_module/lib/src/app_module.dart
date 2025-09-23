@@ -54,7 +54,6 @@ class CoreModule extends Module {
     i.addLazySingleton<ManageServiceStore>(
       () => ManageServiceStore(
         useCases: i.get<UseCases<SupabaseRepository>>(),
-        searchLyricsStore: Modular.get<SearchLyricsStore>(),
         manageLyricStore: Modular.get<ManageLyricStore>(),
       ),
     );

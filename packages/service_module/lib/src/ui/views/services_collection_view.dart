@@ -46,7 +46,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
           } else if (state is NoConnectionState<ServicesCollectionState>) {
             return NoConnectionView(
               action: () => nativePushReplacementNamed(
-                AppRoutes.servicesCollectionRoute,
+                AppRoutes.homeRoute,
                 context,
               ),
             );

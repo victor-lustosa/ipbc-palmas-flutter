@@ -63,17 +63,12 @@ Future<void> showOptionsDialog({
       );
     },
     transitionBuilder: (context, animation, secondaryAnimation, child) {
-      final curved = CurvedAnimation(
-        parent: animation,
-        curve: Curves.easeOutCubic,
-        reverseCurve: Curves.easeOutCubic,
-      );
-      return SlideTransition(
-        position: Tween<Offset>(
-          begin: const Offset(0.5, .1),
-          end: Offset.zero,
-        ).animate(curved),
-        child: child,
+      return FadeTransition(
+        opacity: animation,
+        child: ScaleTransition(
+          scale: Tween<double>(begin: 0.95, end: 1.0).animate(animation),
+          child: child,
+        ),
       );
     },
   );

@@ -7,16 +7,12 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     with DateMixin, ConnectivityMixin {
   ManageServiceStore({
     required IUseCases useCases,
-    required SearchLyricsStore searchLyricsStore,
     required ManageLyricStore manageLyricStore,
   }) : _useCases = useCases,
-       _searchLyricsStore = searchLyricsStore,
        _manageLyricStore = manageLyricStore,
        super(InitialState<ManageServiceState>());
-  final SearchLyricsStore _searchLyricsStore;
   final ManageLyricStore _manageLyricStore;
 
-  get searchLyricsStore => _searchLyricsStore;
   final IUseCases _useCases;
   bool isEditing = false;
   int index = 0;
@@ -279,10 +275,9 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     liturgiesList.insert(
       0,
       LiturgyEntity(
-        id: MockUtil.createId(),
-        isAdditional: true,
+        id: liturgiesList.length.toString(),
+        isAdditional: false,
         sequence: 'Título',
-        additional: 'Descrição',
       ),
     );
     controllersAndFocusNodes();
@@ -290,7 +285,22 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
   }
 
   void copyBox() {
-    liturgiesList.insert(index, liturgyModel.copyWith(id: MockUtil.createId()));
+    final String currentSequence = _controllers['${liturgyModel.id}_0']?.text ?? liturgyModel.sequence;
+    final String? currentAdditional = _controllers['${liturgyModel.id}_1']?.text;
+
+    final updatedLiturgyModel = liturgyModel.copyWith(
+      sequence: currentSequence,
+      additional: currentAdditional,
+    );
+    liturgiesList[index] = updatedLiturgyModel;
+    final newLiturgy = updatedLiturgyModel.copyWith(
+      id: liturgiesList.length.toString(),
+    );
+
+    liturgiesList.insert(
+      index + 1,
+      newLiturgy,
+    );
     controllersAndFocusNodes();
     notifyListeners();
   }
@@ -317,6 +327,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     }
     return allTextValid;
   }
+
   convertTextInLyric(String text) {
     final List<String> rawVerseBlocks = text.split(RegExp(r'\n\s*\n+'));
 
@@ -361,6 +372,22 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
       };
       pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);
     }
+  }
+
+  void activateAdditionalField(String liturgyId) {
+    final additionalKey = '${liturgyId}_1';
+    if (!_controllers.containsKey(additionalKey)) {
+      _controllers[additionalKey] = TextEditingController();
+    }
+    if (!_focusNodes.containsKey(additionalKey)) {
+      _focusNodes[additionalKey] = FocusNode();
+    }
+  }
+
+  void deactivateAdditionalField(String liturgyId) {
+    final additionalKey = '${liturgyId}_1';
+    _controllers.remove(additionalKey);
+    _focusNodes.remove(additionalKey);
   }
 }
 

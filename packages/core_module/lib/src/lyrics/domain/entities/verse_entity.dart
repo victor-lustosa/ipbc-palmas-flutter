@@ -1,7 +1,7 @@
 class VerseEntity {
   final int id;
   final bool isChorus;
-  final List versesList;
+  final List<String> versesList;
 
   VerseEntity({
     required this.id,

@@ -244,14 +244,15 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                             ),
                                           ),
                                           Container(
-                                            margin: EdgeInsets.only(top: 10),
+                                            margin: EdgeInsets.only(bottom: 10),
                                             width: 30,
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
-                                                IconButtonWidget(
-                                                  action: () async {
+                                                InkWell(
+                                                  onTap: () async {
                                                     await showOptionsDialog(
                                                       context: context,
                                                       itemKey: gestureKey,
@@ -325,9 +326,18 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                                       ),
                                                     );
                                                   },
-                                                  size: 20,
-                                                  color: AppColors.grey7,
-                                                  androidIcon: Icons.menu,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                    children: [
+                                                      IconWidget(
+                                                        iconFormat: IconFormat.svg,
+                                                        size: Size(18, 18),
+                                                        iconName:
+                                                        AppIcons.popoverIcon,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ],
                                             ),

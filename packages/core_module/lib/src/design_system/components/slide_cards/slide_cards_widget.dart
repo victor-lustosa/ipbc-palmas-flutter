@@ -92,7 +92,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
               return GestureDetector(
                 key: itemKey,
                 onTap: () {
-                  nativePushNamed(widget.route, arguments: entity, context);
+                  pushNamed(widget.route, arguments: entity);
                 },
                 onLongPressStart: (details) async {
                   _store.index = index;
@@ -202,7 +202,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
                                   Text(
                                     maxLines: 1,
                                     getFormattedDateTimeFull(
-                                      entity.startDateTime!,
+                                      entity.startDateTime,
                                     ),
                                     style: AppFonts.defaultFont(
                                       color: AppColors.darkGreen,
@@ -295,7 +295,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
                                       child: Text(
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        entity.localName!,
+                                        entity.localName,
                                         style: AppFonts.defaultFont(
                                           color: AppColors.grey8,
                                           fontSize: 12,

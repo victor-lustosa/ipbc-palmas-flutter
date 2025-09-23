@@ -25,7 +25,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     return Container(
       margin: const EdgeInsets.only(left: 16, right: 19),
       child: FormFieldWidget(
-        onChange: widget.onChange,
+        onChanged: widget.onChange,
         fieldHeight: 48,
         fieldWidth: context.sizeOf.width,
         controller: widget.controller,

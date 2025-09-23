@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class OwnChoiceChipsWidget extends StatefulWidget {
   final Function(int)? action;
   final bool? isInitWithoutSelection;
-  const OwnChoiceChipsWidget({super.key, this.action, this.isInitWithoutSelection});
+  final bool? hasEmptyOption;
+  const OwnChoiceChipsWidget({super.key, this.action, this.isInitWithoutSelection, this.hasEmptyOption});
 
   @override
   State<OwnChoiceChipsWidget> createState() => _OwnChoiceChipsWidgetState();
@@ -12,12 +13,11 @@ class OwnChoiceChipsWidget extends StatefulWidget {
 
 class _OwnChoiceChipsWidgetState extends State<OwnChoiceChipsWidget> {
   int _selectedIndex = 0;
-  // final List<String> _options = ['título', 'trecho', 'artista'];
   final List<String> _options = ['título', 'artista'];
  @override
   void initState() {
     super.initState();
-    if(widget.isInitWithoutSelection != null){
+    if(widget.isInitWithoutSelection == true){
       _selectedIndex = _options.length + 1;
     }
   }
@@ -32,7 +32,7 @@ class _OwnChoiceChipsWidgetState extends State<OwnChoiceChipsWidget> {
             return InkWell(
               onTap: () {
                 setState(() {
-                  if(_selectedIndex == index){
+                  if(_selectedIndex == index && widget.hasEmptyOption == true){
                     _selectedIndex = _options.length + 1;
                   } else {
                     _selectedIndex = widget.action!(index);

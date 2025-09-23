@@ -60,6 +60,7 @@ class _LoginViewState extends State<LoginView> {
                     isPressed: _store.areFieldsLocked,
                     inputDecoration: fieldInputDecoration(
                       isValid: _store.isEmailValid.value,
+                      errorHintColor: AppColors.codeBorderError,
                       hintText: 'Email',
                     ),
                     validator: (data) {
@@ -68,9 +69,10 @@ class _LoginViewState extends State<LoginView> {
                         _store.isEmailValid,
                       );
                     },
+                    errorColor: AppColors.codeBorderError,
                     defaultHintColor: _store.isEmailValid.value
                         ? AppColors.hintInputForm
-                        : AppColors.delete,
+                        : AppColors.codeBorderError,
                   ),
                   TemplateFormWidget(
                     controller: _store.passwordController,
@@ -81,9 +83,11 @@ class _LoginViewState extends State<LoginView> {
                     globalKey: _store.passwordKey,
                     isPressed: _store.areFieldsLocked,
                     obscure: _store.obscure,
+                    errorColor: AppColors.codeBorderError,
                     inputDecoration: fieldInputDecoration(
                       isValid: _store.isPasswordValid.value,
                       hintText: 'Senha',
+                      errorHintColor: AppColors.codeBorderError,
                       contentPadding: const EdgeInsets.only(left: 16, top: 9),
                       suffixIcon: HideIconWidget(isObscure: _store.obscure),
                     ),

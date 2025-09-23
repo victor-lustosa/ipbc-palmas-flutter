@@ -100,6 +100,18 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget>
     return ValueListenableBuilder<GenericState<AuthCircleAvatarState>>(
       valueListenable: _store,
       builder: (_, state, __) {
+        actionAuth() {
+          if (state is AuthenticatedState ||
+              (state is AuthenticatedState &&
+                  _store.userEntity.picture.isEmpty)) {
+            _showLogoutMenu();
+          } else if (state is NotAuthenticatedState) {
+            pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute);
+          } else {
+            return null;
+          }
+        }
+
         placeholder() => ShimmerWidget(
           animation: _shimmerController,
           child: Container(
@@ -112,79 +124,53 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget>
           ),
         );
 
-        noProfile() => Container(
-          key: _avatarKey,
-          width: 32,
-          height: 32,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color:
-              state is AuthenticatedState
-                  ? AppColors.darkGreen
-                  : Colors.transparent,
-              width: 2,
+        if (state is AuthenticatedState ||
+            state is NotAuthenticatedState ||
+            state is LoadingState) {
+          return Container(
+            key: _avatarKey,
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: state is AuthenticatedState
+                    ? AppColors.darkGreen
+                    : Colors.transparent,
+                width: _store.userEntity.picture.isEmpty ? 1.2 : 1.5,
+              ),
             ),
-          ),child: ButtonWidget(
-            backgroundColor: Colors.transparent,
-            overlayColor: Colors.transparent,
-            elevation: 0,
-            shape: const CircleBorder(),
-            action: state is AuthenticatedState
-                ?  _showLogoutMenu
-                : () => pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Image.asset(AppIcons.noProfile),
-                Visibility(
-                  visible: state is AuthenticatedState,
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      AppColors.darkGreen,
-                    ),
-                    strokeWidth: 1,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-        if (state is AuthenticatedState || state is NotAuthenticatedState) {
-          return (state is NotAuthenticatedState ||
-                  (state is AuthenticatedState &&
-                      _store.userEntity.picture.isEmpty))
-              ? noProfile()
-              : Container(
-                  key: _avatarKey,
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: AppColors.darkGreen, width: 2),
-                  ),
-                  child: Material(
-                    shape: const CircleBorder(),
-                    clipBehavior: Clip.hardEdge,
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: _showLogoutMenu,
-                      child: _store.userEntity.picture.isEmpty
-                          ? placeholder()
-                          : ClipOval(
-                              child: CachedNetworkImage(
-                                imageUrl: _store.userEntity.picture,
-                                width: 32,
-                                height: 32,
-                                fit: BoxFit.cover,
-                                placeholder: (context, url) => placeholder(),
-                                errorWidget: (context, url, error) =>
-                                    placeholder(),
-                              ),
+            child: InkWell(
+              onTap: actionAuth,
+              child:
+                  (state is LoadingState || _store.userEntity.picture.isEmpty)
+                  ? Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Image.asset(AppIcons.noProfile),
+                        Visibility(
+                          visible: state is LoadingState,
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              AppColors.darkGreen,
                             ),
+                            strokeWidth: 1.3,
+                          ),
+                        ),
+                      ],
+                    )
+                  : ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl: _store.userEntity.picture,
+                        width: 32,
+                        height: 32,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => placeholder(),
+                        errorWidget: (context, url, error) => placeholder(),
+                      ),
                     ),
-                  ),
-                );
+            ),
+          );
         } else {
           return placeholder();
         }

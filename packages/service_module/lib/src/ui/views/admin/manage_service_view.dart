@@ -15,6 +15,8 @@ class _ManageServiceViewState extends State<ManageServiceView>
     with DateMixin, ValidationAndFormatMixin {
   late ManageServiceStore _store;
   final Map<String, GlobalKey> _liturgyKeys = {};
+  final Map<String, GlobalKey> _tileKeys = {};
+  final Map<String, double> _tileHeights = {};
   @override
   void initState() {
     super.initState();
@@ -61,35 +63,6 @@ class _ManageServiceViewState extends State<ManageServiceView>
                             ),
                             child: TemplateFormWidget(
                               horizontalSymmetric: EdgeInsets.zero,
-                              valueListenable: _store.isPreacherValid,
-                              titleMargin: const EdgeInsets.only(bottom: 4),
-                              controller: _store.preacherController,
-                              title: 'Preletor',
-                              isValid: _store.isPreacherValid.value,
-                              errorText: _store.preacherErrorText,
-                              globalKey: _store.preacherKey,
-                              isPressed: _store.isSavePressed,
-                              inputDecoration: fieldInputDecoration(
-                                isValid: _store.isPreacherValid.value,
-                                hintText: 'Preletor do culto',
-                              ),
-                              validator: (data) {
-                                return _store.formValidation(
-                                  data,
-                                  _store.isPreacherValid,
-                                );
-                              },
-                              defaultHintColor: AppColors.hintInputForm,
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(
-                              top: 16,
-                              left: 16,
-                              right: 16,
-                            ),
-                            child: TemplateFormWidget(
-                              horizontalSymmetric: EdgeInsets.zero,
                               valueListenable: _store.isThemeValid,
                               titleMargin: const EdgeInsets.only(bottom: 4),
                               controller: _store.themeController,
@@ -106,6 +79,35 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                 return _store.formValidation(
                                   data,
                                   _store.isThemeValid,
+                                );
+                              },
+                              defaultHintColor: AppColors.hintInputForm,
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(
+                              top: 16,
+                              left: 16,
+                              right: 16,
+                            ),
+                            child: TemplateFormWidget(
+                              horizontalSymmetric: EdgeInsets.zero,
+                              valueListenable: _store.isPreacherValid,
+                              titleMargin: const EdgeInsets.only(bottom: 4),
+                              controller: _store.preacherController,
+                              title: 'Preletor',
+                              isValid: _store.isPreacherValid.value,
+                              errorText: _store.preacherErrorText,
+                              globalKey: _store.preacherKey,
+                              isPressed: _store.isSavePressed,
+                              inputDecoration: fieldInputDecoration(
+                                isValid: _store.isPreacherValid.value,
+                                hintText: 'Preletor do culto',
+                              ),
+                              validator: (data) {
+                                return _store.formValidation(
+                                  data,
+                                  _store.isPreacherValid,
                                 );
                               },
                               defaultHintColor: AppColors.hintInputForm,
@@ -149,7 +151,9 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                             setDateAndTime(
                                               selectedDate: _store.startDate!,
                                               onDatePicked: (newDate) {
-                                                FocusScope.of(context).unfocus();
+                                                FocusScope.of(
+                                                  context,
+                                                ).unfocus();
                                                 setState(() {
                                                   _store.startDate = newDate;
                                                   _store.startTime = TimeOfDay(
@@ -178,7 +182,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                       InkWell(
                                         onTap: () {
                                           FocusScope.of(context).unfocus();
-                                        pickTime(
+                                          pickTime(
                                             selectedTime: _store.startTime!,
                                             context: context,
                                             onTimePicked: (newTime) {
@@ -195,8 +199,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                           style: AppFonts.defaultFont(
                                             fontSize: 15,
                                             color: AppColors.darkGreen,
-                                            decoration:
-                                                TextDecoration.underline,
+                                            decoration: TextDecoration.underline,
                                           ),
                                         ),
                                       ),
@@ -276,12 +279,28 @@ class _ManageServiceViewState extends State<ManageServiceView>
                               itemBuilder: (BuildContext context, int index) {
                                 final liturgy = _store.liturgiesList[index];
                                 final itemKey = Key('${liturgy.id}');
+                                final liturgyId = liturgy.id ?? '';
                                 final gestureKey = _liturgyKeys.putIfAbsent(
-                                  liturgy.id ?? '',
-                                  () => GlobalKey(),
+                                  liturgy.id ?? '', () => GlobalKey(),
                                 );
 
+                                final tileKey = _tileKeys.putIfAbsent(liturgyId, () => GlobalKey());
+
+                                WidgetsBinding.instance.addPostFrameCallback((_) {
+                                  if (tileKey.currentContext != null) {
+                                    final height = tileKey.currentContext!.size!.height;
+                                    if (_tileHeights[liturgyId] != height) {
+                                      setState(() {
+                                        _tileHeights[liturgyId] = height;
+                                      });
+                                    }
+                                  }
+                                });
+
+                                final double currentTileHeight = _tileHeights[liturgyId] ?? 0.0;
+
                                 final Widget itemContent = Container(
+                                  key: tileKey,
                                   decoration: const BoxDecoration(
                                     color: AppColors.secondaryGrey2,
                                     borderRadius: BorderRadius.all(
@@ -314,37 +333,41 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                               top: 8,
                                             ),
                                             child: Padding(
-                                              padding: const EdgeInsets.all(
-                                                2.0,
-                                              ),
+                                              padding: const EdgeInsets.all(2),
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: <Widget>[
                                                   TextFormField(
-                                                    controller: _store
-                                                        .controllers["${liturgy.id}_0"],
-                                                    focusNode: _store
-                                                        .focusNodes["${liturgy.id}_0"],
-                                                    decoration:
-                                                        InputDecoration(
-                                                          border: InputBorder
-                                                              .none,
-                                                          isDense: true,
-                                                          contentPadding:
-                                                              EdgeInsets.zero,
-                                                        ),
-                                                    style:
-                                                        AppFonts.defaultFont(
-                                                          color:
-                                                              AppColors.grey9,
-                                                          fontSize: 17,
-                                                        ),
+                                                    controller: _store.controllers["${liturgy.id}_0"],
+                                                    focusNode: _store.focusNodes["${liturgy.id}_0"],
+                                                    decoration: InputDecoration(
+                                                      border: InputBorder.none,
+                                                      isDense: true,
+                                                      contentPadding: EdgeInsets.zero,
+                                                    ),
+                                                    style: AppFonts.defaultFont(
+                                                      color: AppColors.grey9,
+                                                      fontSize: 17,
+                                                    ),
+                                                    textInputAction: TextInputAction.next,
+                                                    onFieldSubmitted: (_) {
+                                                      if (!liturgy.isAdditional) {
+                                                        setState(() {
+                                                          _store.liturgiesList[index] = liturgy.copyWith(isAdditional: true);
+                                                        });
+                                                        _store.activateAdditionalField(liturgyId);
+                                                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                                                          final nextFocusNode = _store.focusNodes["${liturgy.id}_1"];
+                                                          if (nextFocusNode != null) {
+                                                            nextFocusNode.requestFocus();
+                                                          }
+                                                        });
+                                                      }
+                                                    },
                                                     maxLines: null,
-                                                    keyboardType:
-                                                        TextInputType
-                                                            .multiline,
-                                                    onChanged: (newValue) {},
+                                                    keyboardType: TextInputType.multiline,
+                                                    onChanged: (value) => setState(() {}),
                                                   ),
                                                   Visibility(
                                                     visible: _store
@@ -356,15 +379,11 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                                             top: 4,
                                                           ),
                                                       child: TextFormField(
-                                                        controller: _store
-                                                            .controllers["${liturgy.id}_1"],
-                                                        focusNode: _store
-                                                            .focusNodes["${liturgy.id}_1"],
+                                                        controller: _store.controllers["${liturgy.id}_1"],
+                                                        focusNode: _store.focusNodes["${liturgy.id}_1"],
                                                         decoration:
                                                             InputDecoration(
-                                                              border:
-                                                                  InputBorder
-                                                                      .none,
+                                                              border: InputBorder.none,
                                                               isDense: true,
                                                               contentPadding:
                                                                   EdgeInsets
@@ -377,11 +396,18 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                                               fontSize: 13,
                                                             ),
                                                         maxLines: null,
-                                                        keyboardType:
-                                                            TextInputType
-                                                                .multiline,
-                                                        onChanged:
-                                                            (newValue) {},
+                                                        keyboardType: TextInputType.multiline,
+                                                        onChanged: (value) {
+                                                          setState(() {});
+                                                          if (value.isEmpty) {
+                                                            setState(() {
+                                                              _store.liturgiesList[index] = liturgy.copyWith(isAdditional: false);
+                                                            });
+                                                            _store.deactivateAdditionalField(liturgyId);
+                                                            final previousFocusNode = _store.focusNodes["${liturgy.id}_0"];
+                                                            previousFocusNode?.requestFocus();
+                                                          }
+                                                        },
                                                       ),
                                                     ),
                                                   ),
@@ -393,82 +419,65 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                         Container(
                                           key: gestureKey,
                                           margin: EdgeInsets.only(
-                                            bottom: 12,
-                                            right: 12,
+                                            bottom: currentTileHeight < 46
+                                                ? 0 : 12,
+                                            right:  12,
                                           ),
-                                          child: InkWell(
-                                            onTap: () async {
-                                              FocusScope.of(context).unfocus();
-                                              Modular.get<
-                                                        ManageServiceStore
-                                                      >()
-                                                      .liturgyModel =
-                                                  liturgy;
-                                              Modular.get<
-                                                        ManageServiceStore
-                                                      >()
-                                                      .index =
-                                                  index;
-                                              await showOptionsDialog(
-                                                context: context,
-                                                itemKey: gestureKey,
-                                                buttons: Column(
-                                                  children: [
-                                                    actionButton(
-                                                      context: context,
-                                                      top: 12,
-                                                      bottom: 12,
-                                                      icon: AppIcons
-                                                          .contentCopy,
-                                                      label: 'Duplicar',
-                                                      action: () {
-                                                        Modular.get<
-                                                              ManageServiceStore
-                                                            >()
-                                                            .copyBox();
-                                                        pop(context);
-                                                      },
+                                          child: Column(
+                                            mainAxisAlignment: currentTileHeight < 46
+                                                ? MainAxisAlignment.center
+                                                : MainAxisAlignment.end,
+                                            children: [
+                                              IconButtonWidget(
+                                                iconFormat: IconFormat.svg,
+                                                size: 18,
+                                                iconName: AppIcons.popoverIcon,
+                                                action: () async {
+                                                  FocusScope.of(
+                                                    context,
+                                                  ).unfocus();
+                                                  Modular.get<ManageServiceStore>().liturgyModel = liturgy;
+                                                  Modular.get<ManageServiceStore>().index = index;
+                                                  await showOptionsDialog(
+                                                    context: context,
+                                                    itemKey: gestureKey,
+                                                    buttons: Column(
+                                                      children: [
+                                                        actionButton(
+                                                          context: context,
+                                                          top: 12,
+                                                          bottom: 12,
+                                                          icon: AppIcons.contentCopy,
+                                                          label: 'Duplicar',
+                                                          action: () {
+                                                            Modular.get<ManageServiceStore>().copyBox();
+                                                            pop(context);
+                                                          },
+                                                        ),
+                                                        Divider(
+                                                          height: 1,
+                                                          color: AppColors.dividerModal
+                                                              .withValues(
+                                                                alpha: 25,
+                                                              ),
+                                                        ),
+                                                        actionButton(
+                                                          context: context,
+                                                          top: 12,
+                                                          bottom: 12,
+                                                          icon: AppIcons.trash,
+                                                          label: 'Deletar',
+                                                          action: () {
+                                                            Modular.get<ManageServiceStore>().deleteBox(key: liturgy.id);
+                                                            pop(context);
+                                                          },
+                                                        ),
+                                                      ],
                                                     ),
-                                                    Divider(
-                                                      height: 1,
-                                                      color: AppColors
-                                                          .dividerModal
-                                                          .withValues(
-                                                            alpha: 25,
-                                                          ),
-                                                    ),
-                                                    actionButton(
-                                                      context: context,
-                                                      top: 12,
-                                                      bottom: 12,
-                                                      icon: AppIcons.trash,
-                                                      label: 'Deletar',
-                                                      action: () {
-                                                        Modular.get<
-                                                              ManageServiceStore
-                                                            >()
-                                                            .deleteBox(
-                                                              key: liturgy.id,
-                                                            );
-                                                        pop(context);
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            },
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                IconWidget(
-                                                  iconFormat: IconFormat.svg,
-                                                  size: Size(18, 18),
-                                                  iconName:
-                                                      AppIcons.popoverIcon,
-                                                ),
-                                              ],
-                                            ),
+                                                  );
+                                                },
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -506,11 +515,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                         (BuildContext context, Widget? child) {
                                           final animValue = Curves.easeInOut
                                               .transform(animation.value);
-                                          final scale = lerpDouble(
-                                            1,
-                                            1.1,
-                                            animValue,
-                                          )!;
+                                          final scale = lerpDouble(1, 1.1, animValue)!;
 
                                           return Transform.scale(
                                             scale: scale,
