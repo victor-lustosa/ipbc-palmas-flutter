@@ -539,12 +539,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                             isValid: _store.isEventLinkValid.value,
                             hintText: 'Link do evento',
                           ),
-                          validator: (data) {
-                            return _store.formValidation(
-                              data,
-                              _store.isEventLinkValid,
-                            );
-                          },
+                          validator: (_) => null,
                         ),
                       ),
                       Container(
@@ -564,12 +559,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                             isValid: _store.isContactLinkValid.value,
                             hintText: 'Link do contato',
                           ),
-                          validator: (data) {
-                            return _store.formValidation(
-                              data,
-                              _store.isContactLinkValid,
-                            );
-                          },
+                          validator: (_) => null,
                         ),
                       ),
                       ButtonWidget(

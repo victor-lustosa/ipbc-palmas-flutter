@@ -204,7 +204,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                 ),
                 SizedBox(height: 16),
                Visibility(
-                 visible: widget.eventEntity.signUpLink != null,
+                 visible: widget.eventEntity.signUpLink != null && widget.eventEntity.signUpLink!.isNotEmpty,
                  child: Container(
                     margin: const EdgeInsets.only(top: 16),
                    child: ButtonWidget(
@@ -226,7 +226,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                )
                     ,
                 Visibility(
-                  visible: widget.eventEntity.contactLink != null,
+                  visible: widget.eventEntity.contactLink != null && widget.eventEntity.contactLink!.isNotEmpty,
                   child: Container(
                     margin: const EdgeInsets.only(top: 16),
                     child: ButtonWidget(

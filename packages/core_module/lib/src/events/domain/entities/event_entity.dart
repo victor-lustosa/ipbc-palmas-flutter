@@ -10,10 +10,10 @@ class EventEntity {
     required this.startDateTime,
     required this.endDateTime,
     required this.description,
-    required this.location,
-    required this.localName,
-    required this.signUpLink,
-    required this.contactLink,
+     this.location,
+     this.localName,
+     this.signUpLink,
+     this.contactLink,
     required this.createAt,
     this.latitude,
     this.longitude,
@@ -26,10 +26,10 @@ class EventEntity {
   final DateTime startDateTime;
   final DateTime endDateTime;
   final String description;
-  final String location;
-  final String localName;
-  final String signUpLink;
-  final String contactLink;
+  final String? location;
+  final String? localName;
+  final String? signUpLink;
+  final String? contactLink;
   final DateTime createAt;
   final double? latitude;
   final double? longitude;
@@ -90,9 +90,9 @@ class EventEntity {
       createAt: createAt ?? this.createAt,
       startDateTime: this.startDateTime,
       endDateTime: this.endDateTime,
-      localName: this.localName,
-      signUpLink: this.signUpLink,
-      contactLink: this.contactLink,
+      localName: localName ?? this.localName,
+      signUpLink: signUpLink ?? this.signUpLink,
+      contactLink:  contactLink ?? this.contactLink,
       latitude: this.latitude,
       longitude: this.longitude,
     );
