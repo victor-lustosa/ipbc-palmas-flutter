@@ -22,8 +22,11 @@ class VerseAdapter {
     return versesList;
   }
   static List<String> verseSupaDecode(dynamic json) {
-    final Map<String, dynamic> decoded = jsonDecode(json[0]);
-    return decoded.values.map((e) => e.toString()).toList();
+    List<String> results = [];
+    for (int i = 0; i < json.length; i++) {
+      results.add(json['$i']);
+    }
+    return results;
   }
 
   static List<String> verseJsonDecode(dynamic json) {

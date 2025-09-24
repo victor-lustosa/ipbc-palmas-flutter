@@ -43,7 +43,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     'orderBy': 'create_at',
     'ascending': false,
     'selectFields':
-        'id, title, group, album_cover, create_at, lyrics_verses (verses(id, is_chorus, verses_list))',
+        'id, title, group, album_cover, create_at, verses',
   };
 
   init({required BuildContext context}) async {

@@ -41,6 +41,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
@@ -101,14 +102,16 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                             ),
                           ],
                         ),
-                        IconButtonWidget(
-                          size: 33,
-                          color: AppColors.darkGreen,
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          iOSIcon: CupertinoIcons.clear_thick,
-                          androidIcon: Icons.close_rounded,
-                          action: () => pop(context),
+                        Container(margin: EdgeInsets.only(top: 15),
+                          child: IconButtonWidget(
+                            size: 30,
+                            color: AppColors.darkGreen,
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            iOSIcon: CupertinoIcons.clear_thick,
+                            androidIcon: Icons.close_rounded,
+                            action: () => pop(context),
+                          ),
                         ),
                       ],
                     ),

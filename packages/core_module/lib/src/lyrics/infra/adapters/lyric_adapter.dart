@@ -51,8 +51,8 @@ class LyricAdapter with FlattenMixin{
           title: lyric['title'],
           group: lyric['group'],
           verses:
-              (lyric['lyrics_verses'].isNotEmpty)
-                  ? VerseAdapter.fromMapList(FlattenMixin.flattenByKey(lyric['lyrics_verses'],'verses'))
+              (lyric['verses'] != null)
+                  ? VerseAdapter.fromMapList(lyric['verses'])
                   : [],
         ),
       );
