@@ -398,7 +398,6 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                                         maxLines: null,
                                                         keyboardType: TextInputType.multiline,
                                                         onChanged: (value) {
-                                                          setState(() {});
                                                           if (value.isEmpty) {
                                                             setState(() {
                                                               _store.liturgiesList[index] = liturgy.copyWith(isAdditional: false);
@@ -407,6 +406,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                                             final previousFocusNode = _store.focusNodes["${liturgy.id}_0"];
                                                             previousFocusNode?.requestFocus();
                                                           }
+                                                          setState(() {});
                                                         },
                                                       ),
                                                     ),

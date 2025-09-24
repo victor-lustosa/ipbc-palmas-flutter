@@ -47,7 +47,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                             action: () => nativePop(context),
                           ),
                           Container(
-                            margin: const EdgeInsets.only(top: 16, bottom: 16),
+                            margin: const EdgeInsets.only(top: 20, bottom: 16),
                             child: CachedNetworkImage(
                               imageUrl: widget.eventEntity.image,
                               height: 144,

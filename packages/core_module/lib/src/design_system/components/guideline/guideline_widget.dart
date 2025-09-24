@@ -28,7 +28,11 @@ class GuidelineWidget extends StatelessWidget {
               children: [
                 Container(
                   width: 1,
-                  height: liturgiesList[index].isAdditional ? 29 : 18,
+                  height:
+                      liturgiesList[index].isAdditional &&
+                          liturgiesList[index].additional != null
+                      ? 29
+                      : 18,
                   color: index == 0 ? AppColors.white : timelineColor,
                 ),
                 Container(
@@ -41,7 +45,11 @@ class GuidelineWidget extends StatelessWidget {
                 ),
                 Container(
                   width: 1,
-                  height: liturgiesList[index].isAdditional ? 29 : 18,
+                  height:
+                      liturgiesList[index].isAdditional &&
+                          liturgiesList[index].additional != null
+                      ? 29
+                      : 18,
                   color: index == liturgiesList.length - 1
                       ? AppColors.white
                       : timelineColor,
@@ -68,12 +76,15 @@ class GuidelineWidget extends StatelessWidget {
                       ),
                     ),
                     Visibility(
-                      visible: liturgiesList[index].isAdditional,
+                      visible:
+                          liturgiesList[index].isAdditional &&
+                          liturgiesList[index].additional != null,
                       child: Container(
                         margin: const EdgeInsets.only(top: 4),
                         child: Text(
-                          liturgiesList[index].isAdditional
-                              ? liturgiesList[index].additional!
+                          (liturgiesList[index].isAdditional &&
+                                  liturgiesList[index].additional == null)
+                              ? (liturgiesList[index].additional ?? '')
                               : '',
                           style: AppFonts.defaultFont(
                             color: AppColors.grey8,
