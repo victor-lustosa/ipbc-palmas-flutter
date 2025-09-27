@@ -1,15 +1,22 @@
 import 'dart:io';
 
 import 'package:core_module/core_module.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class LyricsListWidget extends StatefulWidget {
-  const LyricsListWidget({this.onLongPressStart, super.key, this.onTap, required this.entitiesList});
+  const LyricsListWidget({
+    this.onLongPressStart,
+    super.key,
+    this.onTap,
+    required this.entitiesList,
+    this.margin,
+  });
 
   final void Function(LongPressStartDetails)? onLongPressStart;
   final void Function()? onTap;
   final List<LyricEntity> entitiesList;
+  final EdgeInsetsGeometry? margin;
 
   @override
   State<LyricsListWidget> createState() => _LyricsListWidgetState();
@@ -27,7 +34,9 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 25, left: 16, right: 16),
+      margin:
+          widget.margin ??
+          const EdgeInsets.only(bottom: 25, left: 16, right: 16),
       child: ListView.separated(
         separatorBuilder: (__, _) {
           return const SizedBox(height: 8);

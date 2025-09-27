@@ -2,11 +2,14 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
 class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
-  ManageLyricStore() : super(InitialState());
+  ManageLyricStore({required IUseCases useCases})
+    : _useCases = useCases,
+      super(InitialState());
 
+  final IUseCases _useCases;
   final List<LyricEntity> _lyricsFetched = [];
   late void Function() buttonCallback;
-  late LyricEntity lyric;
+  late ValueNotifier<LyricEntity> lyric = ValueNotifier(LyricEntity.empty());
   bool isEditing = false;
   final Map<String, TextEditingController> _controllers = {};
   final TextEditingController titleController = TextEditingController();
@@ -28,11 +31,11 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
   get rootFocusNode => _rootFocusNode;
 
   addLyric() {
-    _lyricsFetched.add(lyric);
-    value = UpdateLyricsListState();
+    _lyricsFetched.add(lyric.value);
+    value = UpdateTilesState();
   }
 
-  clear(){
+  clear() {
     controllers.forEach((key, controller) => controller.dispose());
     focusNodes.forEach((key, focusNode) => focusNode.dispose());
     rootFocusNode.removeListener(_handleRootFocusChange);
@@ -41,8 +44,8 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
 
   init() {
     initializeControllersAndFocusNodes();
-    titleController.text = lyric.title;
-    groupController.text = lyric.group;
+    titleController.text = lyric.value.title;
+    groupController.text = lyric.value.group;
     _rootFocusNode = FocusScopeNode();
     rootFocusNode.addListener(_handleRootFocusChange);
   }
@@ -55,8 +58,8 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
   }
 
   void initializeControllersAndFocusNodes() {
-    for (int i = 0; i < lyric.verses.length; i++) {
-      final verse = lyric.verses[i];
+    for (int i = 0; i < lyric.value.verses.length; i++) {
+      final verse = lyric.value.verses[i];
       for (int j = 0; j < verse.versesList.length; j++) {
         final key = '${verse.id}_$j';
         _controllers[key] = TextEditingController(text: verse.versesList[j]);
@@ -65,10 +68,22 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
     }
   }
 
+  void toggleChorusStatus(int verseIndex) {
+    final verse = lyric.value.verses[verseIndex];
+
+    final updatedVerse = verse.copyWith(isChorus: !verse.isChorus);
+
+    final updatedVerses = List<VerseEntity>.from(lyric.value.verses);
+    updatedVerses[verseIndex] = updatedVerse;
+
+    lyric.value = lyric.value.copyWith(verses: updatedVerses);
+    value = UpdateTilesState();
+  }
+
   void updateControllersAndFocusNodes() {
     final Set<String> currentKeys = {};
-    for (int i = 0; i < lyric.verses.length; i++) {
-      final verse = lyric.verses[i];
+    for (int i = 0; i < lyric.value.verses.length; i++) {
+      final verse = lyric.value.verses[i];
       for (int j = 0; j < verse.versesList.length; j++) {
         final key = '${verse.id}_$j';
         currentKeys.add(key);
@@ -77,7 +92,8 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
           _controllers[key] = TextEditingController(text: verse.versesList[j]);
         } else {
           if (_controllers[key]?.text != verse.versesList[j]) {
-            final TextSelection previousSelection = _controllers[key]!.selection;
+            final TextSelection previousSelection =
+                _controllers[key]!.selection;
             _controllers[key]!.text = verse.versesList[j];
             _controllers[key]!.selection = previousSelection.copyWith(
               baseOffset: previousSelection.baseOffset.clamp(
@@ -112,9 +128,9 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
     required String newValue,
   }) {
     if (focusNode == titleFocusNode) {
-      lyric = lyric.copyWith(title: newValue);
+      lyric.value = lyric.value.copyWith(title: newValue);
     } else if (focusNode == groupFocusNode) {
-      lyric = lyric.copyWith(group: newValue);
+      lyric.value = lyric.value.copyWith(group: newValue);
     }
   }
 
@@ -122,8 +138,8 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
-    final VerseEntity item = lyric.verses.removeAt(oldIndex);
-    lyric.verses.insert(newIndex, item);
+    final VerseEntity item = lyric.value.verses.removeAt(oldIndex);
+    lyric.value.verses.insert(newIndex, item);
     updateControllersAndFocusNodes();
   }
 
@@ -155,9 +171,18 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
       );
     }
   }
+
+  void saveLyric(BuildContext context) async {
+    final lyricsResponse = await _useCases.upsert(
+      params: {'table': 'lyrics', 'selectFields': 'id'},
+      data: LyricAdapter.toMap(lyric.value),
+    );
+    print(lyricsResponse);
+    buttonCallback();
+  }
 }
 
 @immutable
 abstract class ManageLyricState {}
 
-class UpdateLyricsListState extends GenericState<ManageLyricState> {}
+class UpdateTilesState extends GenericState<ManageLyricState> {}

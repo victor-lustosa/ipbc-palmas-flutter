@@ -14,13 +14,24 @@ class CoreModule extends Module {
 
   @override
   void exportedBinds(Injector i) {
-    i.addLazySingleton<ManageLyricStore>(ManageLyricStore.new);
-    i.addLazySingleton<LyricsListStore>(LyricsListStore.new);
     i.addSingleton<SupabaseClient>(() => Supabase.instance.client);
     i.addSingleton<SupabaseRepository>(
       () => SupabaseRepository(supabaseClient: i.get<SupabaseClient>()),
     );
-    i.addSingleton<IAuthUseCases>(
+    i.addSingleton<Isar>(() => Isar.getInstance());
+    i.addSingleton<IsarRepository>(() => IsarRepository(isar: i.get<Isar>()));
+    i.addSingleton(
+      () =>
+          UseCases<SupabaseRepository>(repository: i.get<SupabaseRepository>()),
+    );
+    i.addSingleton(
+      () => UseCases<IsarRepository>(repository: i.get<IsarRepository>()),
+    );
+    i.addLazySingleton<LyricsListStore>(LyricsListStore.new);
+    i.addLazySingleton<ManageLyricStore>(
+      () => ManageLyricStore(useCases: i.get<UseCases<SupabaseRepository>>()),
+    );
+    i.addLazySingleton<IAuthUseCases>(
       () => AuthUseCases(
         offlineRepository: i.get<IsarRepository>(),
         onlineRepository: SupaAuthRepository(
@@ -31,12 +42,7 @@ class CoreModule extends Module {
     i.addLazySingleton(
       () => AuthCircleAvatarStore(authUseCase: i.get<IAuthUseCases>()),
     );
-    i.addSingleton<Isar>(() => Isar.getInstance());
-    i.addSingleton<IsarRepository>(() => IsarRepository(isar: i.get<Isar>()));
-    i.addSingleton(
-      () =>
-          UseCases<SupabaseRepository>(repository: i.get<SupabaseRepository>()),
-    );
+
     i.addLazySingleton<IEventRepository>(EventRepository.new);
     i.addLazySingleton(
       () => EventUseCases(repository: i.get<IEventRepository>()),
@@ -47,9 +53,7 @@ class CoreModule extends Module {
         eventUseCases: i.get<EventUseCases>(),
       ),
     );
-    i.addSingleton(
-      () => UseCases<IsarRepository>(repository: i.get<IsarRepository>()),
-    );
+
     i.addLazySingleton<ServiceStore>(ServiceStore.new);
     i.addLazySingleton<ManageServiceStore>(
       () => ManageServiceStore(

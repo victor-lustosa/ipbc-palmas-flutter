@@ -104,7 +104,10 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                           Align(
                             alignment: Alignment.center,
                             child: Container(
-                              margin: const EdgeInsets.only(top: 16, bottom: 30),
+                              margin: const EdgeInsets.only(
+                                top: 16,
+                                bottom: 30,
+                              ),
                               child: Text(
                                 'Confira a letra e a ordem das estrofes:',
                                 style: AppFonts.defaultFont(
@@ -127,23 +130,27 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                             margin: const EdgeInsets.symmetric(horizontal: 16),
                             child: ReorderableListView.builder(
                               shrinkWrap: true,
-                              itemCount: _store.lyric.verses.length,
+                              itemCount: _store.lyric.value.verses.length,
                               buildDefaultDragHandles: false,
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (BuildContext context, int index) {
-                                final verse = _store.lyric.verses[index];
+                                final verse = _store.lyric.value.verses[index];
                                 final Key itemKey = Key('${verse.id}');
                                 final GlobalKey gestureKey = GlobalKey();
 
                                 return Container(
                                   key: itemKey,
                                   decoration: BoxDecoration(
-                                    color: AppColors.secondaryGrey2,
+                                    color: verse.isChorus
+                                        ? AppColors.badgeGreen
+                                        : AppColors.secondaryGrey2,
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(16),
                                     ),
                                   ),
-                                  margin: const EdgeInsets.symmetric(vertical: 8),
+                                  margin: const EdgeInsets.symmetric(
+                                    vertical: 8,
+                                  ),
                                   child: GestureDetector(
                                     key: gestureKey,
                                     child: IntrinsicHeight(
@@ -154,7 +161,9 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                                 _store.isAnyTextFieldFocused,
                                             child: GestureDetector(
                                               onLongPressStart: (_) async {
-                                                FocusScope.of(context).unfocus();
+                                                FocusScope.of(
+                                                  context,
+                                                ).unfocus();
                                                 HapticFeedback.lightImpact();
                                               },
                                               child:
@@ -163,9 +172,10 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                                     child: SizedBox(
                                                       width: 32,
                                                       height: 50,
-                                                      child: GridBallsTileWidget(
-                                                        index: index,
-                                                      ),
+                                                      child:
+                                                          GridBallsTileWidget(
+                                                            index: index,
+                                                          ),
                                                     ),
                                                   ),
                                             ),
@@ -211,14 +221,17 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                                             .focusNodes[lineKey],
                                                         decoration:
                                                             InputDecoration(
-                                                              border: InputBorder
-                                                                  .none,
+                                                              border:
+                                                                  InputBorder
+                                                                      .none,
                                                               isDense: true,
                                                               contentPadding:
-                                                                  EdgeInsets.zero,
+                                                                  EdgeInsets
+                                                                      .zero,
                                                             ),
                                                         style: AppFonts.defaultFont(
-                                                          color: AppColors.grey10,
+                                                          color:
+                                                              AppColors.grey10,
                                                           fontSize:
                                                               context
                                                                       .sizeOf
@@ -249,7 +262,8 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
-                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
                                               children: [
                                                 InkWell(
                                                   onTap: () async {
@@ -267,10 +281,22 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                                             context: context,
                                                             top: 12,
                                                             bottom: 12,
-                                                            icon:
-                                                                AppIcons.addNotes,
-                                                            label: 'Refrão',
-                                                            action: () {},
+                                                            icon: AppIcons
+                                                                .addNotes,
+                                                            label:
+                                                                verse.isChorus
+                                                                ? 'Retirar Refrão'
+                                                                : 'Tornar Refrão',
+                                                            fontSize: 15,
+                                                            action: () {
+                                                              _store
+                                                                  .toggleChorusStatus(
+                                                                    index,
+                                                                  );
+                                                              Navigator.of(
+                                                                context,
+                                                              ).pop();
+                                                            },
                                                           ),
                                                           Divider(
                                                             height: 1,
@@ -284,8 +310,8 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                                             context: context,
                                                             top: 12,
                                                             bottom: 12,
-                                                            icon:
-                                                                AppIcons.addNotes,
+                                                            icon: AppIcons
+                                                                .addNotes,
                                                             label: 'Add Box',
                                                             action: () {},
                                                           ),
@@ -318,7 +344,8 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                                             context: context,
                                                             top: 12,
                                                             bottom: 12,
-                                                            icon: AppIcons.trash,
+                                                            icon:
+                                                                AppIcons.trash,
                                                             label: 'Deletar',
                                                             action: () {},
                                                           ),
@@ -328,13 +355,14 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                                   },
                                                   child: Column(
                                                     mainAxisAlignment:
-                                                    MainAxisAlignment.end,
+                                                        MainAxisAlignment.end,
                                                     children: [
                                                       IconWidget(
-                                                        iconFormat: IconFormat.svg,
+                                                        iconFormat:
+                                                            IconFormat.svg,
                                                         size: Size(18, 18),
-                                                        iconName:
-                                                        AppIcons.popoverIcon,
+                                                        iconName: AppIcons
+                                                            .popoverIcon,
                                                       ),
                                                     ],
                                                   ),
@@ -417,7 +445,7 @@ class _ManageLyricViewState extends State<ManageLyricView> {
             iconColor: AppColors.grey10,
             size: 33,
             action: () {
-              _store.buttonCallback();
+            _store.saveLyric(context);
             },
           ),
         ),

@@ -168,6 +168,7 @@ actionButton({
   required BuildContext context,
   final Function(bool?)? callback,
   required String icon,
+  double? fontSize,
   required String label,
   required double top,
   required double bottom,
@@ -188,7 +189,7 @@ actionButton({
         ),
         Text(
           label,
-          style: AppFonts.defaultFont(fontSize: 17, color: AppColors.grey10),
+          style: AppFonts.defaultFont(fontSize: fontSize ?? 17, color: AppColors.grey10),
         ),
       ],
     ),

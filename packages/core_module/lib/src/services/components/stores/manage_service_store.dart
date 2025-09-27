@@ -285,8 +285,10 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
   }
 
   void copyBox() {
-    final String currentSequence = _controllers['${liturgyModel.id}_0']?.text ?? liturgyModel.sequence;
-    final String? currentAdditional = _controllers['${liturgyModel.id}_1']?.text;
+    final String currentSequence =
+        _controllers['${liturgyModel.id}_0']?.text ?? liturgyModel.sequence;
+    final String? currentAdditional =
+        _controllers['${liturgyModel.id}_1']?.text;
 
     final updatedLiturgyModel = liturgyModel.copyWith(
       sequence: currentSequence,
@@ -297,10 +299,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
       id: liturgiesList.length.toString(),
     );
 
-    liturgiesList.insert(
-      index + 1,
-      newLiturgy,
-    );
+    liturgiesList.insert(index + 1, newLiturgy);
     controllersAndFocusNodes();
     notifyListeners();
   }
@@ -361,9 +360,11 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
 
   void addLyric({required String? text}) {
     if (text != null && text.isNotEmpty) {
-      _manageLyricStore.lyric = convertTextInLyric(text);
+      _manageLyricStore.lyric.value = convertTextInLyric(text);
       _manageLyricStore.buttonCallback = () {
-        _manageLyricStore.addLyric();
+        Future.delayed(Duration(milliseconds: 100), () {
+          _manageLyricStore.addLyric();
+        });
         popUntil(
           (route) =>
               route.settings.name ==

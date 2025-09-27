@@ -1,6 +1,4 @@
 
-import 'dart:convert';
-
 import 'package:core_module/core_module.dart';
 
 class VerseAdapter {
@@ -28,7 +26,13 @@ class VerseAdapter {
     }
     return results;
   }
-
+  static Map<String, dynamic> verseSupaEncode(List<String> versesList) {
+    Map<String, dynamic> map = {};
+    for (int i = 0; i < versesList.length; i++) {
+      map.addAll({'$i': versesList[i]});
+    }
+    return map;
+  }
   static List<String> verseJsonDecode(dynamic json) {
     List<String> results = [];
     for (int i = 0; i < json[0].length; i++) {
@@ -43,7 +47,7 @@ class VerseAdapter {
           (entity) => {
             'id': entity.id,
             'is_chorus': entity.isChorus,
-            'verses_list': entity.versesList,
+            'verses_list': verseSupaEncode(entity.versesList),
           },
         )
         .toList();

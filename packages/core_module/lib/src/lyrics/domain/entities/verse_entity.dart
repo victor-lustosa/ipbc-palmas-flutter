@@ -8,4 +8,15 @@ class VerseEntity {
     required this.isChorus,
     required this.versesList,
   });
+
+  VerseEntity copyWith({
+    bool? isChorus,
+    List<String>? versesList,
+  }) {
+    return VerseEntity(
+      id: id,
+      isChorus: isChorus ?? this.isChorus,
+      versesList: versesList ?? this.versesList,
+    );
+  }
 }

@@ -22,17 +22,16 @@ class GuidelineWidget extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: liturgiesList.length,
       itemBuilder: (context, index) {
+        bool hasAdditional =
+            liturgiesList[index].isAdditional &&
+            liturgiesList[index].additional != null;
         return Row(
           children: [
             Column(
               children: [
                 Container(
                   width: 1,
-                  height:
-                      liturgiesList[index].isAdditional &&
-                          liturgiesList[index].additional != null
-                      ? 29
-                      : 18,
+                  height: hasAdditional ? 29 : 18,
                   color: index == 0 ? AppColors.white : timelineColor,
                 ),
                 Container(
@@ -45,11 +44,7 @@ class GuidelineWidget extends StatelessWidget {
                 ),
                 Container(
                   width: 1,
-                  height:
-                      liturgiesList[index].isAdditional &&
-                          liturgiesList[index].additional != null
-                      ? 29
-                      : 18,
+                  height: hasAdditional ? 29 : 18,
                   color: index == liturgiesList.length - 1
                       ? AppColors.white
                       : timelineColor,
@@ -76,16 +71,11 @@ class GuidelineWidget extends StatelessWidget {
                       ),
                     ),
                     Visibility(
-                      visible:
-                          liturgiesList[index].isAdditional &&
-                          liturgiesList[index].additional != null,
+                      visible: hasAdditional,
                       child: Container(
                         margin: const EdgeInsets.only(top: 4),
                         child: Text(
-                          (liturgiesList[index].isAdditional &&
-                                  liturgiesList[index].additional == null)
-                              ? (liturgiesList[index].additional ?? '')
-                              : '',
+                          liturgiesList[index].additional ?? '',
                           style: AppFonts.defaultFont(
                             color: AppColors.grey8,
                             fontSize: 13,
