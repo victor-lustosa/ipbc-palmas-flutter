@@ -129,14 +129,16 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     pop(context);
   }
 
-  void deleteLyric(BuildContext context) {
+  void deleteLyric(BuildContext context) async{
     String? lyricIdParam = lyricsListStore
         .lyricEntity
         .id;
     if (lyricIdParam != null) {
       manageLyricStore.delete(
+        context: context,
         lyricId: lyricIdParam,
       );
+      pop(context);
     }
   }
 }

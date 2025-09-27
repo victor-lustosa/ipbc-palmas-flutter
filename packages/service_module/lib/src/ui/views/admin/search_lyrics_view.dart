@@ -192,7 +192,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
             showAddLyricsDialog(
               context: context,
               callback: (text) {
-                _store.manageServiceStore.addLyric(text: text);
+                _store.manageServiceStore.addLyric(text: text, context: context);
               },
             );
           },

@@ -357,19 +357,17 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     );
   }
 
-  void addLyric({required String? text}) {
+  void addLyric({required String? text, required BuildContext context}) async{
     if (text != null && text.isNotEmpty) {
       _manageLyricStore.lyric.value = convertTextInLyric(text);
       _manageLyricStore.buttonCallback = () {
-        Future.delayed(Duration(milliseconds: 400), () {
-          _manageLyricStore.addLyric();
-        });
         popUntil(
           (route) =>
               route.settings.name ==
               AppRoutes.servicesRoute + AppRoutes.serviceRoute,
         );
       };
+      pop(context);
       pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);
     }
   }

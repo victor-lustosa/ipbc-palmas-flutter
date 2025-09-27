@@ -1,15 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:core_module/core_module.dart';
+import 'package:flutter/cupertino.dart';
 
-class ServiceStore
-    extends ValueNotifier<GenericState<ServiceState>> {
+class ServiceStore extends ValueNotifier<GenericState<ServiceState>> {
   ServiceStore({
     required ManageLyricStore manageLyricStore,
     required LyricsListStore lyricsListStore,
     required ManageServiceStore manageServiceStore,
   }) : _manageLyricStore = manageLyricStore,
        _lyricsListStore = lyricsListStore,
-        _manageServiceStore = manageServiceStore,
+       _manageServiceStore = manageServiceStore,
        super(InitialState());
 
   final ManageLyricStore _manageLyricStore;
@@ -24,7 +23,9 @@ class ServiceStore
   ValueNotifier<bool> isAdmin = ValueNotifier(true);
 
   ManageLyricStore get manageLyricStore => _manageLyricStore;
+
   LyricsListStore get lyricsListStore => _lyricsListStore;
+
   ManageServiceStore get manageServiceStore => _manageServiceStore;
 
   void edit() {
@@ -37,32 +38,29 @@ class ServiceStore
       pop();
     };
     _manageServiceStore.edit();
-    pushNamed(
-      AppRoutes.servicesRoute + AppRoutes.manageServicesRoute,
-    );
+    pushNamed(AppRoutes.servicesRoute + AppRoutes.manageServicesRoute);
   }
 
   void addLyric() {
     manageLyricStore.serviceId = serviceEntity.id!;
-    pushNamed(
-      AppRoutes.servicesRoute +
-          AppRoutes.searchLyricsRoute,
-    );
+    pushNamed(AppRoutes.servicesRoute + AppRoutes.searchLyricsRoute);
   }
 
   void editLyric(BuildContext context) {
     manageLyricStore.isEditing = true;
     pushNamed(
-      AppRoutes.servicesRoute +
-          AppRoutes.manageLyricsRoute,
-      arguments:
-      lyricsListStore.lyricEntity,
+      AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute,
+      arguments: lyricsListStore.lyricEntity,
     );
     pop(context);
   }
 
-  void deleteLyric(BuildContext context) {
-    manageLyricStore.delete(lyricId: lyricsListStore.lyricEntity.id!);
+  void deleteLyric(BuildContext context) async{
+    manageLyricStore.delete(
+      context: context,
+      lyricId: lyricsListStore.lyricEntity.id!,
+    );
+    pop(context);
   }
 }
 

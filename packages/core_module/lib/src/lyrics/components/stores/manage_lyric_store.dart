@@ -29,11 +29,6 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
 
   get rootFocusNode => _rootFocusNode;
 
-  addLyric() {
-    lyricsFetched.add(lyric.value);
-    value = UpdateTilesState();
-  }
-
   clear() {
     controllers.forEach((key, controller) => controller.dispose());
     focusNodes.forEach((key, focusNode) => focusNode.dispose());
@@ -180,15 +175,14 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
         },
         data: LyricAdapter.toMap(lyric.value),
       );
-
-      final auxResponse = await _useCases.upsert(
+      await _useCases.upsert(
         params: {'table': 'service_lyrics'},
         data: {
           'service_id': int.parse(serviceId),
-          'lyric_id': lyricsResponse['id'][0]
+          'lyric_id': lyricsResponse[0]['id']
         },
       );
-      print(auxResponse);
+      lyric.value = lyric.value.copyWith(id: lyricsResponse[0]['id'].toString());
       if (context.mounted) {
         await showCustomSuccessDialog(
           context: context,
@@ -196,28 +190,41 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
           message: 'Música salva',
         );
       }
+      Future.delayed(Duration(milliseconds: 500),(){
+        lyricsFetched.add(lyric.value);
+        value = UpdateTilesState();
+      });
       buttonCallback();
     } catch (e) {
 
     }
   }
 
-  delete({required String lyricId}) async {
+  delete({required BuildContext context, required String lyricId}) async {
     await _useCases.delete(
       params: {
         'table': 'service_lyrics',
-        'whereClause': 'where',
-        'id': lyricId
+        'whereClause': 'lyric_id',
+        'id': int.parse(lyricId)
       },
     );
 
     await _useCases.delete(
       params: {
         'table': 'lyrics',
-        'whereClause': 'where',
-        'id': lyricId
+        'whereClause': 'id',
+        'id': int.parse(lyricId)
       },
     );
+    if (context.mounted) {
+      await showCustomSuccessDialog(
+        context: context,
+        title: 'Sucesso!',
+        message: 'Música salva',
+      );
+    }
+    lyricsFetched.remove(lyricsFetched.firstWhere((e) => e.id == lyricId));
+    value = UpdateTilesState();
   }
 }
 
