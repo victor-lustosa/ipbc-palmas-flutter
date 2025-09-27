@@ -29,14 +29,14 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
               return SingleChildScrollView(
                 child: ConstrainedBox(
                   constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                  child: ValueListenableBuilder(
-                    valueListenable: _store,
-                    builder: (_, state, child) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ValueListenableBuilder(
+                          valueListenable: _store,
+                          builder: (_, state, child) {
+                          return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ServiceTopBarWidget(
@@ -107,101 +107,140 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                                 ),
                               ),
                             ],
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(top: 30),
-                                  child: Text(
-                                    'Músicas de ${_store.servicesEntity.heading}',
-                                    style: AppFonts.defaultFont(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17,
-                                      color: AppColors.grey10,
-                                    ),
-                                  ),
+                          );
+                        }
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(top: 30),
+                              child: Text(
+                                'Músicas de ${_store.servicesEntity.heading}',
+                                style: AppFonts.defaultFont(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 17,
+                                  color: AppColors.grey10,
                                 ),
-                                Visibility(
-                                  visible:
-                                      _store
-                                          .manageLyricStore
-                                          .lyricsFetched
-                                          .isEmpty &&
-                                      _store.isAdmin.value,
-                                  child: Container(
-                                    margin: const EdgeInsets.only(
-                                      top: 4,
-                                      bottom: 25,
-                                    ),
-                                    width: context.sizeOf.width * 0.9,
-                                    child: Text(
-                                      'As músicas adicionadas aparecerão aqui. Adicione músicas para este culto:',
-                                      style: AppFonts.defaultFont(
-                                        fontSize: 13,
-                                        color: AppColors.grey8,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Visibility(
-                                  visible: _store
+                              ),
+                            ),
+                            Visibility(
+                              visible:
+                                  _store
                                       .manageLyricStore
                                       .lyricsFetched
-                                      .isNotEmpty,
-                                  child: Container(
-                                    margin: const EdgeInsets.only(
-                                      bottom: 24,
-                                      top: 24,
-                                    ),
-                                    child: ValueListenableBuilder(
-                                      valueListenable: _store.manageLyricStore,
-                                      builder: (context, state, child) {
-                                        return LyricsListWidget(
-                                          margin: EdgeInsets.zero,
-                                          entitiesList: _store
-                                              .manageLyricStore
-                                              .lyricsFetched,
-                                          onTap: () {
-                                            pushNamed(
-                                              AppRoutes.lyricsRoute +
-                                                  AppRoutes.lyricRoute,
-                                              arguments: _store
-                                                  .lyricsListStore
-                                                  .lyricModel,
-                                            );
-                                          },
+                                      .isEmpty &&
+                                  _store.isAdmin.value,
+                              child: Container(
+                                margin: const EdgeInsets.only(
+                                  top: 4,
+                                  bottom: 25,
+                                ),
+                                width: context.sizeOf.width * 0.9,
+                                child: Text(
+                                  'As músicas adicionadas aparecerão aqui. Adicione músicas para este culto.',
+                                  style: AppFonts.defaultFont(
+                                    fontSize: 13,
+                                    color: AppColors.grey8,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Visibility(
+                              visible: _store
+                                  .manageLyricStore
+                                  .lyricsFetched
+                                  .isNotEmpty,
+                              child: Container(
+                                margin: const EdgeInsets.only(
+                                  bottom: 24,
+                                  top: 24,
+                                ),
+                                child: ValueListenableBuilder(
+                                  valueListenable: _store.manageLyricStore,
+                                  builder: (context, state, child) {
+                                    return LyricsListWidget(
+                                      onLongPressStart: (details) async {
+                                        await showOptionsDialog(
+                                          context: context,
+                                          itemKey: _store.lyricsListStore.itemKey,
+                                          popupHeightParam: 110,
+                                          popupWidthParam: 160,
+                                          popupWidthPositionParam: 160,
+                                          verticalMarginParam: 5,
+                                          buttons: Column(
+                                            children: [
+                                              actionButton(
+                                                context: context,
+                                                top: 12,
+                                                bottom: 12,
+                                                icon: AppIcons.edit,
+                                                label: 'Editar',
+                                                action: () {
+                                                  _store.editLyric(context);
+                                                },
+                                              ),
+                                              Divider(
+                                                height: 1,
+                                                color: AppColors.dividerModal.withValues(
+                                                  alpha: .3,
+                                                ),
+                                              ),
+                                              actionButton(
+                                                context: context,
+                                                top: 12,
+                                                bottom: 12,
+                                                icon: AppIcons.trash,
+                                                label: 'Deletar',
+                                                action: () {
+                                                  _store.deleteLyric(context);
+                                                },
+                                              ),
+                                            ],
+                                          ),
                                         );
                                       },
-                                    ),
-                                  ),
+                                      margin: EdgeInsets.zero,
+                                      entitiesList: _store
+                                          .manageLyricStore
+                                          .lyricsFetched,
+                                      onTap: () {
+                                        pushNamed(
+                                          AppRoutes.lyricsRoute +
+                                              AppRoutes.lyricRoute,
+                                          arguments: _store
+                                              .lyricsListStore
+                                              .lyricEntity,
+                                        );
+                                      },
+                                    );
+                                  },
                                 ),
-                                Visibility(
-                                  visible: _store.isAdmin.value,
-                                  child: ButtonWidget(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    fixedSize: Size(context.sizeOf.width, 48),
-                                    action: () => pushNamed(
-                                      AppRoutes.servicesRoute +
-                                          AppRoutes.searchLyricsRoute,
-                                    ),
-                                    backgroundColor: AppColors.darkGreen,
-                                    shadowColor: AppColors.grey0,
-                                    foregroundColor: AppColors.white,
-                                    child: const Text("Adicionar música"),
-                                  ),
-                                ),
-                                const SizedBox(height: 40),
-                              ],
+                              ),
                             ),
-                          ),
-                        ],
-                      );
-                    },
+                            Visibility(
+                              visible: _store.isAdmin.value,
+                              child: ButtonWidget(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                fixedSize: Size(context.sizeOf.width, 48),
+                                action: () {
+                                  _store.addLyric();
+                                },
+                                backgroundColor: AppColors.darkGreen,
+                                shadowColor: AppColors.grey0,
+                                foregroundColor: AppColors.white,
+                                child: const Text("Adicionar música"),
+                              ),
+                            ),
+                            const SizedBox(height: 40),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               );

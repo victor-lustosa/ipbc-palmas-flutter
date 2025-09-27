@@ -89,21 +89,13 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                   itemCount: _bloc.entitiesList.length,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
-                                    final service = _bloc.entitiesList[index];
+                                    final ServiceEntity service = _bloc.entitiesList[index];
                                     final Key itemKey = Key('${service.id}');
                                     final GlobalKey gestureKey = GlobalKey();
                                     return GestureDetector(
                                       key: gestureKey,
                                       onTap: () {
-                                        Modular.get<ServiceStore>()
-                                                .servicesEntity =
-                                            widget.entity;
-                                        Modular.get<ServiceStore>()
-                                                .serviceEntity =
-                                            service;
-                                        pushNamed(
-                                          AppRoutes.servicesRoute + AppRoutes.serviceRoute,
-                                        );
+                                       _bloc.toService(widget.entity, service);
                                       },
                                       onLongPressStart: (_) async {
                                         await showOptionsDialog(

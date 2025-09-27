@@ -349,7 +349,6 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
       }
     }
     return LyricEntity(
-      id: MockUtil.createId(),
       title: 'Título Padrão',
       group: 'Grupo Padrão',
       albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
@@ -362,7 +361,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     if (text != null && text.isNotEmpty) {
       _manageLyricStore.lyric.value = convertTextInLyric(text);
       _manageLyricStore.buttonCallback = () {
-        Future.delayed(Duration(milliseconds: 100), () {
+        Future.delayed(Duration(milliseconds: 400), () {
           _manageLyricStore.addLyric();
         });
         popUntil(

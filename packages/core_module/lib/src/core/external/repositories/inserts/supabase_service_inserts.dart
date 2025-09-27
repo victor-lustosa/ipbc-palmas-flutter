@@ -54,7 +54,7 @@ void main() async {
     data: ServiceAdapter.toMap(serviceEntity),
   );
 
- /* await supa.upsert(
+  await supa.upsert(
     params: {'table': 'service_liturgies', 'selectFields': 'id'},
     data: ServiceAdapter.serviceLiturgiesToMap(
       ServiceLiturgiesSupabase(
@@ -63,7 +63,7 @@ void main() async {
         serviceId: serviceResponse[0]['id'],
       ),
     ),
-  );*/
+  );
 
  /* if(!isEditing){
     await supa.update(

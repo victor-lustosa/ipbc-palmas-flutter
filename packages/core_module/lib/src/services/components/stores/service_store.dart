@@ -41,6 +41,29 @@ class ServiceStore
       AppRoutes.servicesRoute + AppRoutes.manageServicesRoute,
     );
   }
+
+  void addLyric() {
+    manageLyricStore.serviceId = serviceEntity.id!;
+    pushNamed(
+      AppRoutes.servicesRoute +
+          AppRoutes.searchLyricsRoute,
+    );
+  }
+
+  void editLyric(BuildContext context) {
+    manageLyricStore.isEditing = true;
+    pushNamed(
+      AppRoutes.servicesRoute +
+          AppRoutes.manageLyricsRoute,
+      arguments:
+      lyricsListStore.lyricEntity,
+    );
+    pop(context);
+  }
+
+  void deleteLyric(BuildContext context) {
+    manageLyricStore.delete(lyricId: lyricsListStore.lyricEntity.id!);
+  }
 }
 
 @immutable

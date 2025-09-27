@@ -29,7 +29,7 @@ class LyricAdapter with FlattenMixin{
 
   static Map<String, dynamic> toMap(LyricEntity data) {
     return {
-      'id': data.id,
+      if (data.id != null) 'id': data.id,
       'title': data.title,
       'create_at': data.createAt,
       'album_cover': data.albumCover,
@@ -64,7 +64,7 @@ class LyricAdapter with FlattenMixin{
     return data
         .map(
           (entity) => {
-            'id': entity.id,
+            if (entity.id != null) 'id': entity.id,
             'title': entity.title,
             'create_at': entity.createAt.toString(),
             'album_cover': entity.albumCover,

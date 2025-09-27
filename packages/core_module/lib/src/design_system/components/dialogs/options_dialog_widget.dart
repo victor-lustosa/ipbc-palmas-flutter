@@ -13,6 +13,7 @@ Future<void> showOptionsDialog({
   double? verticalMarginParam,
   double? popupWidthParam,
   double? popupWidthPositionParam,
+  double? screenEdgeMarginParam,
   bool? isBackgroundSolid,
 }) async {
   final RenderBox renderBox = itemKey.currentContext!.findRenderObject() as RenderBox;
@@ -24,7 +25,7 @@ Future<void> showOptionsDialog({
 
   double popupWidthPosition = popupWidthPositionParam ?? 170.0;
   double popupHeight = popupHeightParam ?? 160.0;
-  const screenEdgeMargin = 16.0;
+  double screenEdgeMargin = screenEdgeMarginParam ?? 16.0;
 
   final double popupLeft = screenWidth - popupWidthPosition - screenEdgeMargin;
 

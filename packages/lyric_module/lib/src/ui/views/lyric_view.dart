@@ -1,8 +1,8 @@
 import 'package:core_module/core_module.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 
 class LyricView extends StatefulWidget {
   const LyricView({super.key, required this.entity});
@@ -13,7 +13,14 @@ class LyricView extends StatefulWidget {
   State<LyricView> createState() => _LyricViewState();
 }
 
-class _LyricViewState extends State<LyricView> {
+class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
+  final Uri toLaunch = Uri(
+    scheme: 'https',
+    host: 'api.vagalume.com.br',
+    path: 'terms/',
+  );
+
+  Future<void>? _launched;
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +122,47 @@ class _LyricViewState extends State<LyricView> {
                          entity: widget.entity.verses,
                        ),
                      ),
+                    Container(
+                      margin: const EdgeInsets.only(
+                        top: 30,
+                        left: 16,
+                        right: 16,
+                        bottom: 30,
+                      ),
+                      child: Center(
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text:
+                                "Esse sistema não possui fins lucrativos sobre a obra representada a cima. Todos os direitos reservados aos autores da letra. ",
+                                style: context.sizeOf.width >
+                                    ResponsivityUtil.smallDeviceWidth
+                                    ? AppFonts.copyright(fontSize: 13)
+                                    : AppFonts.copyright(fontSize: 12),
+                              ),
+                              TextSpan(
+                                style: AppFonts.defaultFont(
+                                  color: AppColors.darkGreen,
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 13,
+                                ),
+                                text: "Saiba mais.",
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () => setState(
+                                        () {
+                                      _launched = launchInBrowser(toLaunch);
+                                      if (kDebugMode) {
+                                        print(_launched);
+                                      }
+                                    },
+                                  ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 60,
                     ),

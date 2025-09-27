@@ -5,7 +5,7 @@ class LyricsListStore {
 
   late GlobalKey itemKey;
   int index = 0;
-  late LyricEntity lyricModel;
+  late LyricEntity lyricEntity;
 
 }
 

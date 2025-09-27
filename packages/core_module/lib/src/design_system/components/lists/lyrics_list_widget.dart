@@ -107,12 +107,12 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
             onLongPressStart: (details) async {
               _store.index = index;
               _store.itemKey = itemKey;
-              _store.lyricModel = widget.entitiesList[index];
+              _store.lyricEntity = widget.entitiesList[index];
               widget.onLongPressStart?.call(details);
             },
             child: InkWell(
               onTap: () {
-                _store.lyricModel = widget.entitiesList[index];
+                _store.lyricEntity = widget.entitiesList[index];
                 widget.onTap?.call();
               },
               child: itemContent,

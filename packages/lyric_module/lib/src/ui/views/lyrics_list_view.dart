@@ -13,7 +13,6 @@ class LyricsListView extends StatefulWidget {
 
 class _LyricsListViewState extends State<LyricsListView>
     with TickerProviderStateMixin {
-
   late final LyricBloc _bloc;
 
   @override
@@ -131,15 +130,8 @@ class _LyricsListViewState extends State<LyricsListView>
                                       icon: AppIcons.edit,
                                       label: 'Editar',
                                       action: () {
-                                        _bloc.manageLyricStore.isEditing = true;
-                                        pushNamed(
-                                          AppRoutes.servicesRoute +
-                                              AppRoutes.manageLyricsRoute,
-                                          arguments:
-                                              _bloc.lyricsListStore.lyricModel,
-                                        );
-                                        pop(context);
-                                      },
+                                        _bloc.editLyric(context);
+                                      }
                                     ),
                                     Divider(
                                       height: 1,
@@ -153,7 +145,9 @@ class _LyricsListViewState extends State<LyricsListView>
                                       bottom: 12,
                                       icon: AppIcons.trash,
                                       label: 'Deletar',
-                                      action: () {},
+                                      action: () {
+                                        _bloc.deleteLyric(context);
+                                      },
                                     ),
                                   ],
                                 ),
@@ -162,7 +156,7 @@ class _LyricsListViewState extends State<LyricsListView>
                             onTap: () {
                               pushNamed(
                                 AppRoutes.lyricsRoute + AppRoutes.lyricRoute,
-                                arguments: _bloc.lyricsListStore.lyricModel,
+                                arguments: _bloc.lyricsListStore.lyricEntity,
                               );
                             },
                           ),

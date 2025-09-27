@@ -7,10 +7,11 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
       super(InitialState());
 
   final IUseCases _useCases;
-  final List<LyricEntity> _lyricsFetched = [];
+  List<LyricEntity> lyricsFetched = [];
   late void Function() buttonCallback;
   late ValueNotifier<LyricEntity> lyric = ValueNotifier(LyricEntity.empty());
   bool isEditing = false;
+  late String serviceId;
   final Map<String, TextEditingController> _controllers = {};
   final TextEditingController titleController = TextEditingController();
   final TextEditingController groupController = TextEditingController();
@@ -22,8 +23,6 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
 
   late FocusScopeNode _rootFocusNode;
 
-  List<LyricEntity> get lyricsFetched => _lyricsFetched;
-
   get controllers => _controllers;
 
   get focusNodes => _focusNodes;
@@ -31,7 +30,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
   get rootFocusNode => _rootFocusNode;
 
   addLyric() {
-    _lyricsFetched.add(lyric.value);
+    lyricsFetched.add(lyric.value);
     value = UpdateTilesState();
   }
 
@@ -173,12 +172,52 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
   }
 
   void saveLyric(BuildContext context) async {
-    final lyricsResponse = await _useCases.upsert(
-      params: {'table': 'lyrics', 'selectFields': 'id'},
-      data: LyricAdapter.toMap(lyric.value),
+    try {
+      final lyricsResponse = await _useCases.upsert(
+        params: {
+          'table': 'lyrics',
+          'selectFields': 'id'
+        },
+        data: LyricAdapter.toMap(lyric.value),
+      );
+
+      final auxResponse = await _useCases.upsert(
+        params: {'table': 'service_lyrics'},
+        data: {
+          'service_id': int.parse(serviceId),
+          'lyric_id': lyricsResponse['id'][0]
+        },
+      );
+      print(auxResponse);
+      if (context.mounted) {
+        await showCustomSuccessDialog(
+          context: context,
+          title: 'Sucesso!',
+          message: 'Música salva',
+        );
+      }
+      buttonCallback();
+    } catch (e) {
+
+    }
+  }
+
+  delete({required String lyricId}) async {
+    await _useCases.delete(
+      params: {
+        'table': 'service_lyrics',
+        'whereClause': 'where',
+        'id': lyricId
+      },
     );
-    print(lyricsResponse);
-    buttonCallback();
+
+    await _useCases.delete(
+      params: {
+        'table': 'lyrics',
+        'whereClause': 'where',
+        'id': lyricId
+      },
+    );
   }
 }
 

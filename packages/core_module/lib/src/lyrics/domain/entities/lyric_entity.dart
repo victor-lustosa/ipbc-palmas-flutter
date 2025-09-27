@@ -1,14 +1,14 @@
 import 'package:core_module/core_module.dart';
 
 class LyricEntity {
-  final String id;
+  final String? id;
   final String title;
   final String group;
   final String albumCover;
   final String createAt;
   final List<VerseEntity> verses;
   LyricEntity({
-    required this.id,
+    this.id,
     required this.title,
     required this.createAt,
     required this.albumCover,
@@ -17,7 +17,6 @@ class LyricEntity {
   });
 
   factory LyricEntity.empty() => LyricEntity(
-    id: MockUtil.createId(),
     createAt: '',
     title: '',
     group: '',

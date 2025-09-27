@@ -76,7 +76,8 @@ class ServicesCollectionBloc
 
   void editItem({required int index}) {
     editStore.serviceEntity = entitiesList[index];
-    _serviceStore.updateServicesCollectionCallback = _updateServicesCollectionCallback;
+    _serviceStore.updateServicesCollectionCallback =
+        _updateServicesCollectionCallback;
     editStore.updateCallbackParam = _updateCallBack;
     editStore.edit();
     pushNamed(AppRoutes.servicesRoute + AppRoutes.manageServicesRoute);
@@ -91,6 +92,19 @@ class ServicesCollectionBloc
 
   void _loading(_, emit) async {
     emit(LoadingState<ServicesCollectionState>());
+  }
+
+  void toService(
+    ServicesEntity servicesEntityParam,
+    ServiceEntity serviceEntityParam,
+  ) {
+    Modular.get<ServiceStore>().servicesEntity = servicesEntityParam;
+    Modular.get<ServiceStore>().serviceEntity = serviceEntityParam;
+    Modular.get<ManageLyricStore>().lyricsFetched = [];
+    if (serviceEntityParam.lyricsList != null && serviceEntityParam.lyricsList!.isNotEmpty) {
+      Modular.get<ManageLyricStore>().lyricsFetched = serviceEntityParam.lyricsList!;
+    }
+    pushNamed(AppRoutes.servicesRoute + AppRoutes.serviceRoute);
   }
 }
 

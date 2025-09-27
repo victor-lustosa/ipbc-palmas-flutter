@@ -17,57 +17,84 @@ class SupabaseRepository implements IRepository {
 
   @override
   Future<dynamic> get<T>({Map<String, dynamic>? params}) async {
-    dynamic query = _supaClient
-        .from(params?['table'])
-        .select(params?['selectFields'] ?? '*');
+    dynamic query = _supaClient.from(params?['table']).select(params?['selectFields'] ?? '*');
+
     if (params?['filterColumn'] != null && params?['filterValue'] != null) {
       query = query.eq(params?['filterColumn'], params?['filterValue']);
     }
+
     if (params?['orderBy'] != null) {
       query = query.order(
         params?['orderBy'],
         ascending: params?['ascending'] ?? true,
       );
     }
+
     if (params?['limit'] != null) {
       query = query.limit(params?['limit']);
     }
+
     return await query;
   }
 
   @override
-  Future<dynamic> upsert<T>({required data, Map<String, dynamic>? params}) async {
+  Future<dynamic> upsert<T>({
+    required data,
+    Map<String, dynamic>? params,
+  }) async {
     dynamic query = _supaClient.from(params?['table']).upsert(data);
-    if(params?['selectFields'] != null) {
+
+    if (params?['selectFields'] != null) {
       query = query.select(params?['selectFields'] ?? '*');
     }
+
     return await query;
   }
 
   @override
   Future<dynamic> add<T>({required data, Map<String, dynamic>? params}) async {
     dynamic query = _supaClient.from(params?['table']).insert(data);
-    if(params?['selectFields'] != null) {
+
+    if (params?['selectFields'] != null) {
       query = query.select(params?['selectFields'] ?? '*');
     }
+
     return await query;
   }
 
   @override
   Future<void> update<T>({required data, Map<String, dynamic>? params}) async {
-    dynamic query = _supaClient.from(params?['table']).update(data).eq(params?['referenceField'], params?['referenceValue']);
-    if(params?['selectFields'] != null) {
+    dynamic query = _supaClient.from(params?['table']).update(data);
+
+    if (params?['referenceField'] != null && params?['referenceValue'] != null) {
+      query = query.eq(params?['referenceField'], params?['referenceValue']);
+    }
+
+    if (params?['selectFields'] != null) {
       query = query.select(params?['selectFields'] ?? '*');
     }
+
     return await query;
   }
 
   @override
   Future<dynamic> delete<T>({Map<String, dynamic>? params}) async {
-    dynamic query = _supaClient.from(params?['table']).delete().eq(params?['referenceField'], params?['referenceValue']);
-    if(params?['selectFields'] != null) {
+    dynamic query = _supaClient.from(params?['table']).delete();
+
+    if (params?['whereClause'] != null && params?['id'] != null) {
+      query = query.eq(params?['whereClause'], params?['id']);
+    } else {
+      throw ArgumentError("A exclusão em massa não é permitida. Forneça uma cláusula 'where' ou id.");
+    }
+
+    if (params?['referenceField'] != null && params?['referenceValue'] != null) {
+      query = query.eq(params?['referenceField'], params?['referenceValue']);
+    }
+
+    if (params?['selectFields'] != null) {
       query = query.select(params?['selectFields'] ?? '*');
     }
+
     return await query;
   }
 
@@ -75,7 +102,7 @@ class SupabaseRepository implements IRepository {
   Future getByPagination<T>({Map<String, dynamic>? params}) async {
     // int limit = int.parse(params[1]);
     //int offset = params.length > 1 ? int.parse(params[2]) : 0;
-     final dynamic data = await _supaClient
+    final dynamic data = await _supaClient
         .from(params?['table'])
         .select()
         .range(0, 9)

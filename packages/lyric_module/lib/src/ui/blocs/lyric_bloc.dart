@@ -34,8 +34,8 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   final LyricsListStore _lyricsListStore;
   final ManageLyricStore _manageLyricStore;
 
-  get lyricsListStore => _lyricsListStore;
-  get manageLyricStore => _manageLyricStore;
+  LyricsListStore get lyricsListStore => _lyricsListStore;
+  ManageLyricStore  get manageLyricStore => _manageLyricStore;
   get controller => _controller;
 
   final Map<String, Object> lyricParams = {
@@ -115,6 +115,28 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
       emit(DataFetchedState<LyricState>());
     } else {
       emit(DataFetchedState<LyricState>());
+    }
+  }
+
+  void editLyric(BuildContext context) {
+    manageLyricStore.isEditing = true;
+    pushNamed(
+      AppRoutes.servicesRoute +
+          AppRoutes.manageLyricsRoute,
+      arguments:
+      lyricsListStore.lyricEntity,
+    );
+    pop(context);
+  }
+
+  void deleteLyric(BuildContext context) {
+    String? lyricIdParam = lyricsListStore
+        .lyricEntity
+        .id;
+    if (lyricIdParam != null) {
+      manageLyricStore.delete(
+        lyricId: lyricIdParam,
+      );
     }
   }
 }
