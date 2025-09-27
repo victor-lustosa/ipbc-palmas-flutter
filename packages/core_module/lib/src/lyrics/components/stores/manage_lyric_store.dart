@@ -2,12 +2,13 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
 class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
-  ManageLyricStore({required IUseCases useCases})
+  ManageLyricStore({required IUseCases useCases,required LyricsListStore lyricsListStore})
     : _useCases = useCases,
+      _lyricsListStore = lyricsListStore,
       super(InitialState());
 
   final IUseCases _useCases;
-  List<LyricEntity> lyricsFetched = [];
+  final LyricsListStore _lyricsListStore;
   late void Function() buttonCallback;
   late ValueNotifier<LyricEntity> lyric = ValueNotifier(LyricEntity.empty());
   bool isEditing = false;
@@ -191,7 +192,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
         );
       }
       Future.delayed(Duration(milliseconds: 500),(){
-        lyricsFetched.add(lyric.value);
+        _lyricsListStore.entitiesList.add(lyric.value);
         value = UpdateTilesState();
       });
       buttonCallback();
@@ -223,7 +224,9 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
         message: 'Música salva',
       );
     }
-    lyricsFetched.remove(lyricsFetched.firstWhere((e) => e.id == lyricId));
+    _lyricsListStore.entitiesList.remove(
+        _lyricsListStore.entitiesList.firstWhere((e) => e.id == lyricId)
+    );
     value = UpdateTilesState();
   }
 }

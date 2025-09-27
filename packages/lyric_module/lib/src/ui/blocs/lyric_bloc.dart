@@ -23,7 +23,6 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
 
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
-  List<LyricEntity> entitiesList = [];
 
   bool isSelected = false;
 
@@ -71,7 +70,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
         converter: LyricAdapter.fromMapList,
       );
       if (lyricsList!.isNotEmpty) {
-        entitiesList = lyricsList;
+        _lyricsListStore.entitiesList = lyricsList;
         emit(DataFetchedState<LyricState>());
       }
     } else {
@@ -85,7 +84,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   ) async {
     List<LyricEntity> lyricsListAux = [];
     //Caso esteja sem conexão eu salvo essas musicas no hive
-    int offset = entitiesList.length;
+    int offset = _lyricsListStore.entitiesList.length;
 
     final Map<String, Object> paginationParams = {
       'table': 'lyrics',
@@ -98,7 +97,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     );
     //Verificando se tem novos itens retornados se sim eu adiciona lista principal
     if (lyricsListAux.isNotEmpty) {
-      entitiesList.addAll(lyricsListAux);
+      _lyricsListStore.entitiesList.addAll(lyricsListAux);
       emit(DataFetchedState<LyricState>());
     } else {
       emit(NoMoreDataState<LyricState, List<LyricEntity>>());
@@ -111,7 +110,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
 
   Future<void> _filter(FilterEvent<LyricEvent, LyricEntity> event, emit) async {
     if (event.writing) {
-      entitiesList = event.typeFilter.filterListing(event, entitiesList);
+      _lyricsListStore.entitiesList = event.typeFilter.filterListing(event, _lyricsListStore.entitiesList);
       emit(DataFetchedState<LyricState>());
     } else {
       emit(DataFetchedState<LyricState>());

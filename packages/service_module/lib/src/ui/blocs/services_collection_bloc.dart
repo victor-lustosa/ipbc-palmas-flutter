@@ -20,13 +20,14 @@ class ServicesCollectionBloc
     required this.editStore,
     required this.onlineUseCases,
     required ServiceStore serviceStore,
-  }) : _serviceStore = serviceStore,
+    required LyricsListStore lyricsListStore,
+  }) : _serviceStore = serviceStore,_lyricsListStore = lyricsListStore,
        super(LoadingState()) {
     on<GetDataEvent<ServicesCollectionEvent>>(_getInSupa);
     on<LoadingEvent<ServicesCollectionEvent>>(_loading);
     on<DeleteItemEvent>(_deleteItem);
   }
-
+  final LyricsListStore _lyricsListStore;
   final ServiceStore _serviceStore;
 
   ServiceStore get serviceStore => _serviceStore;
@@ -100,9 +101,9 @@ class ServicesCollectionBloc
   ) {
     Modular.get<ServiceStore>().servicesEntity = servicesEntityParam;
     Modular.get<ServiceStore>().serviceEntity = serviceEntityParam;
-    Modular.get<ManageLyricStore>().lyricsFetched = [];
+    _lyricsListStore.entitiesList = [];
     if (serviceEntityParam.lyricsList != null && serviceEntityParam.lyricsList!.isNotEmpty) {
-      Modular.get<ManageLyricStore>().lyricsFetched = serviceEntityParam.lyricsList!;
+      _lyricsListStore.entitiesList = serviceEntityParam.lyricsList!;
     }
     pushNamed(AppRoutes.servicesRoute + AppRoutes.serviceRoute);
   }

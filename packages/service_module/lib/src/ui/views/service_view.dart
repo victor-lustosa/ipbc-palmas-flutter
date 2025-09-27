@@ -134,13 +134,12 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                               child: ValueListenableBuilder(
                                 valueListenable: _store.manageLyricStore,
                                 builder: (context, state, child) {
+                                 List<LyricEntity> lyricsList = _store.lyricsListStore.entitiesList;
                                   return Column(
                                     children: [
                                       Visibility(
                                         visible:
-                                        _store
-                                            .manageLyricStore
-                                            .lyricsFetched
+                                        lyricsList
                                             .isEmpty &&
                                             _store.isAdmin.value,
                                         child: SizedBox(
@@ -155,9 +154,7 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                                         ),
                                       ),
                                       Visibility(
-                                        visible: _store
-                                            .manageLyricStore
-                                            .lyricsFetched
+                                        visible: lyricsList
                                             .isNotEmpty,
                                         child: LyricsListWidget(
                                           onLongPressStart: (details) async {
@@ -201,8 +198,6 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                                             );
                                           },
                                           margin: EdgeInsets.zero,
-                                          entitiesList:
-                                              _store.manageLyricStore.lyricsFetched,
                                           onTap: () {
                                             pushNamed(
                                               AppRoutes.lyricsRoute +

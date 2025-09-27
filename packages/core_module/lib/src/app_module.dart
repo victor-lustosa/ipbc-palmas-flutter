@@ -29,7 +29,10 @@ class CoreModule extends Module {
     );
     i.addLazySingleton<LyricsListStore>(LyricsListStore.new);
     i.addLazySingleton<ManageLyricStore>(
-      () => ManageLyricStore(useCases: i.get<UseCases<SupabaseRepository>>()),
+      () => ManageLyricStore(
+          useCases: i.get<UseCases<SupabaseRepository>>(),
+          lyricsListStore: i.get<LyricsListStore>(),
+      ),
     );
     i.addLazySingleton<IAuthUseCases>(
       () => AuthUseCases(
