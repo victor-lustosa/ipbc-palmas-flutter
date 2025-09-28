@@ -280,16 +280,14 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                 final liturgy = _store.liturgiesList[index];
                                 final itemKey = Key('${liturgy.id}');
                                 final liturgyId = liturgy.id ?? '';
-                                final gestureKey = _liturgyKeys.putIfAbsent(
-                                  liturgy.id ?? '', () => GlobalKey(),
-                                );
 
+                                final gestureKey = _liturgyKeys.putIfAbsent(liturgyId, () => GlobalKey());
                                 final tileKey = _tileKeys.putIfAbsent(liturgyId, () => GlobalKey());
 
                                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                                  if (tileKey.currentContext != null) {
+                                  if (_tileHeights[liturgyId] == null && tileKey.currentContext != null) {
                                     final height = tileKey.currentContext!.size!.height;
-                                    if (_tileHeights[liturgyId] != height) {
+                                    if (mounted) {
                                       setState(() {
                                         _tileHeights[liturgyId] = height;
                                       });

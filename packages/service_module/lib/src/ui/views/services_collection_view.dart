@@ -19,6 +19,7 @@ class ServicesCollectionView extends StatefulWidget {
 class _ServicesCollectionViewState extends State<ServicesCollectionView>
     with DateMixin, ValidationAndFormatMixin {
   late final ServicesCollectionBloc _bloc;
+  final Map<String, GlobalKey> _gestureKeys = {};
   late String path;
 
   @override
@@ -29,7 +30,11 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
     _bloc.editStore.servicesEntity = widget.entity;
     _bloc.add(GetDataEvent());
   }
-
+  @override
+  void dispose() {
+    _gestureKeys.clear();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final loadingWidget = const LoadingWidget(
@@ -52,6 +57,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
             );
           } else if (state is DataFetchedState<ServicesCollectionState> ||
               state is UpdateServicesListState) {
+            final currentIds = _bloc.entitiesList.map((e) => e.id!).toSet();
+            _gestureKeys.removeWhere((key, _) => !currentIds.contains(key));
             return AnnotatedRegion<SystemUiOverlayStyle>(
               value: SystemUiOverlayStyle.dark,
               child: SafeArea(
@@ -90,8 +97,9 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
                                     final ServiceEntity service = _bloc.entitiesList[index];
-                                    final Key itemKey = Key('${service.id}');
-                                    final GlobalKey gestureKey = GlobalKey();
+                                    final Key itemKey = Key(service.id!);
+                                    final GlobalKey gestureKey = _gestureKeys.putIfAbsent(service.id!, () => GlobalKey());
+
                                     return GestureDetector(
                                       key: gestureKey,
                                       onTap: () {
