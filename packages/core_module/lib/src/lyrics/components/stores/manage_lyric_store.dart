@@ -33,10 +33,12 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
   get rootFocusNode => _rootFocusNode;
 
   clear() {
-    controllers.forEach((key, controller) => controller.dispose());
-    focusNodes.forEach((key, focusNode) => focusNode.dispose());
-    rootFocusNode.removeListener(_handleRootFocusChange);
-    rootFocusNode.dispose();
+    if(!isEditing){
+      controllers.forEach((key, controller) => controller.dispose());
+      focusNodes.forEach((key, focusNode) => focusNode.dispose());
+      rootFocusNode.removeListener(_handleRootFocusChange);
+      rootFocusNode.dispose();
+    }
   }
 
   init() {

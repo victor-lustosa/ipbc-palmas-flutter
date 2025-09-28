@@ -52,9 +52,9 @@ class ServiceStore extends ValueNotifier<GenericState<ServiceState>> {
 
   void editLyric(BuildContext context) {
     manageLyricStore.isEditing = true;
+    manageLyricStore.lyric.value = lyricsListStore.lyricEntity;
     pushNamed(
       AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute,
-      arguments: lyricsListStore.lyricEntity,
     );
     pop(context);
   }

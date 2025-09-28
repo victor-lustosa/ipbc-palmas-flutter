@@ -61,6 +61,7 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
   void newLyric(String? text,BuildContext context) {
     if (text != null && text.isNotEmpty) {
       manageLyricStore.lyric.value = convertTextInLyric(text);
+      manageLyricStore.isEditing = false;
       manageLyricStore.buttonCallback = () {
         popUntil(
               (route) =>
