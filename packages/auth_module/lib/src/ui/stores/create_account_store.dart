@@ -85,7 +85,8 @@ class CreateAccountStore
       pushNamed(AppRoutes.authRoute + AppRoutes.accountCreatedRoute);
     } else {
       if (context.mounted) {
-        showCustomErrorDialog(
+        showCustomMessageDialog(
+          type: DialogType.error,
           context: context,
           title: 'Dados Incorretos',
           message: 'Por favor, Verifique os dados e tente novamente.',

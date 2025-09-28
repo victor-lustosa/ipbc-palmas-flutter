@@ -136,7 +136,8 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   Future<bool> validateDateTime(BuildContext context) async {
     if (startDate!.isAfter(endDate!)) {
       if (context.mounted) {
-        await showCustomErrorDialog(
+        await showCustomMessageDialog(
+          type: DialogType.error,
           context: context,
           title: 'Data inválida',
           message: 'A data final não pode ser anterior à data inicial.',
@@ -153,7 +154,8 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       final endMinutes = endTime!.hour * 60 + endTime!.minute;
       if (startMinutes >= endMinutes) {
         if (context.mounted) {
-          await showCustomErrorDialog(
+          await showCustomMessageDialog(
+            type: DialogType.error,
             context: context,
             title: 'Hora inválida',
             message: 'A hora final deve ser posterior à hora inicial.',
@@ -254,7 +256,8 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
           if (latLong == null &&
               eventLocationController.text.isNotEmpty &&
               context.mounted) {
-            await showCustomErrorDialog(
+            await showCustomMessageDialog(
+              type: DialogType.error,
               context: context,
               title: 'Erro',
               message:
@@ -287,7 +290,8 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
           );
           if (context.mounted) {
             isChangedOrAdded = true;
-            await showCustomSuccessDialog(
+            await showCustomMessageDialog(
+              type: DialogType.success,
               context: context,
               title: 'Sucesso!',
               message: 'Evento salvo',

@@ -15,6 +15,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
   late ValueNotifier<LyricEntity> lyric = ValueNotifier(LyricEntity.empty());
   bool isEditing = false;
   late String serviceId;
+  ValueNotifier<bool> isSavePressed = ValueNotifier(false);
   final Map<String, TextEditingController> _controllers = {};
   final TextEditingController titleController = TextEditingController();
   final TextEditingController groupController = TextEditingController();
@@ -172,6 +173,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
   }
 
   void saveLyric(BuildContext context) async {
+    isSavePressed.value = true;
     try {
       final lyricsResponse = await _useCases.upsert(
         params: {'table': 'lyrics', 'selectFields': 'id'},
@@ -188,18 +190,31 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
         id: lyricsResponse[0]['id'].toString(),
       );
       if (context.mounted) {
-        await showCustomSuccessDialog(
+        await showCustomMessageDialog(
+          type: DialogType.success,
           context: context,
           title: 'Sucesso!',
-          message: 'Música salva',
+          message: 'Musica salva com sucesso.',
         );
       }
       Future.delayed(Duration(milliseconds: 500), () {
         _lyricsListStore.entitiesList.add(lyric.value);
+        isSavePressed.value = false;
         value = UpdateTilesState();
       });
       buttonCallback();
-    } catch (e) {}
+    } catch (e) {
+      if (context.mounted) {
+        await showCustomMessageDialog(
+          type: DialogType.error,
+          context: context,
+          title: 'Erro ao salvar!',
+          message: 'Ocorreu um erro ao salvar a música. Verifique a internet e tente novamente.',
+        );
+      }
+    isSavePressed.value = false;
+    value = UpdateTilesState();
+    }
   }
 
   deleteLyric({required BuildContext context, required String lyricId}) async {
@@ -219,10 +234,11 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
       },
     );
     if (context.mounted) {
-      await showCustomSuccessDialog(
+      await showCustomMessageDialog(
+        type: DialogType.success,
         context: context,
         title: 'Sucesso!',
-        message: 'Música salva',
+        message: 'Música deletada com sucesso.',
       );
     }
     _lyricsListStore.entitiesList.remove(

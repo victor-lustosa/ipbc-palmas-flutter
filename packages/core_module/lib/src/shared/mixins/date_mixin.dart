@@ -76,7 +76,8 @@ mixin DateMixin {
 
      if (pickedOnly.isBefore(todayOnly)) {
        if (context.mounted) {
-         await showCustomErrorDialog(
+         await showCustomMessageDialog(
+           type: DialogType.error,
            context: context,
            title: 'Data inválida',
            message: 'Selecione uma data igual ou posterior a hoje.',

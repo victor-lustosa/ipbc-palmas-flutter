@@ -213,10 +213,11 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
         );
 
         if (context.mounted) {
-          await showCustomSuccessDialog(
+          await showCustomMessageDialog(
             context: context,
             title: 'Sucesso!',
             message: 'Culto salvo',
+            type: DialogType.success,
           );
 
           Modular.get<ServiceStore>().servicesEntity = servicesEntity;
