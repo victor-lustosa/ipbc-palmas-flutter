@@ -333,7 +333,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     );
     liturgiesList[index] = updatedLiturgyModel;
     final newLiturgy = updatedLiturgyModel.copyWith(
-      id: liturgiesList.length.toString(),
+      id: (liturgiesList.length + 1).toString(),
     );
 
     liturgiesList.insert(index + 1, newLiturgy);
