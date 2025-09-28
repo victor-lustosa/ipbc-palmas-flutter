@@ -45,7 +45,7 @@ android {
 
     defaultConfig {
         applicationId = "com.ipbc.ipbc_palmas"
-        minSdk = 21
+        minSdk = flutter.minSdkVersion
         targetSdk = 36
         versionCode = flutterVersionCode
         versionName = flutterVersionName

@@ -152,9 +152,6 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                             setDateAndTime(
                                               selectedDate: _store.startDate!,
                                               onDatePicked: (newDate) {
-                                                FocusScope.of(
-                                                  context,
-                                                ).unfocus();
                                                 setState(() {
                                                   _store.startDate = newDate;
                                                   _store.startTime = TimeOfDay(
@@ -182,7 +179,6 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                       ),
                                       InkWell(
                                         onTap: () {
-                                          FocusScope.of(context).unfocus();
                                           pickTime(
                                             selectedTime: _store.startTime!,
                                             context: context,
@@ -251,8 +247,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
                               ),
                             ),
                             onTap: () {
-                              FocusScope.of(context).unfocus();
-                              Modular.get<ManageServiceStore>().addBox();
+                              _store.addBox();
                             },
                           ),
                           Container(
@@ -315,8 +310,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                             color: Colors.transparent,
                                             width: 36,
                                             child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
                                                 GridBallsTileWidget(
                                                   index: index,
@@ -334,8 +328,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                             child: Padding(
                                               padding: const EdgeInsets.all(2),
                                               child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: <Widget>[
                                                   TextFormField(
                                                     controller: _store.controllers["${liturgy.id}_0"],
@@ -352,32 +345,23 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                                     textInputAction: TextInputAction.next,
                                                     onFieldSubmitted: (_) {
                                                       if (!liturgy.isAdditional) {
+                                                        _tileHeights.remove(liturgyId);
                                                         _store.activateAdditionalField(liturgyId);
-                                                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                                                          final nextFocusNode = _store.focusNodes["${liturgy.id}_1"];
-                                                          if (nextFocusNode != null) {
-                                                            FocusScope.of(context).requestFocus(nextFocusNode);
-                                                          }
-                                                        });
-                                                      } else {
+                                                      }
+                                                      WidgetsBinding.instance.addPostFrameCallback((_) {
                                                         final nextFocusNode = _store.focusNodes["${liturgy.id}_1"];
                                                         if (nextFocusNode != null) {
                                                           FocusScope.of(context).requestFocus(nextFocusNode);
                                                         }
-                                                      }
+                                                      });
                                                     },
                                                     maxLines: null,
                                                     keyboardType: TextInputType.multiline,
                                                   ),
                                                   Visibility(
-                                                    visible: _store
-                                                        .liturgiesList[index]
-                                                        .isAdditional,
+                                                    visible: _store.liturgiesList[index].isAdditional,
                                                     child: Container(
-                                                      margin:
-                                                          const EdgeInsets.only(
-                                                            top: 4,
-                                                          ),
+                                                      margin: const EdgeInsets.only(top: 4),
                                                       child: TextFormField(
                                                         controller: _store.controllers["${liturgy.id}_1"],
                                                         focusNode: _store.focusNodes["${liturgy.id}_1"],
@@ -386,27 +370,20 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                                             InputDecoration(
                                                               border: InputBorder.none,
                                                               isDense: true,
-                                                              contentPadding:
-                                                                  EdgeInsets
-                                                                      .zero,
+                                                              contentPadding: EdgeInsets.zero,
                                                             ),
                                                         style:
                                                             AppFonts.defaultFont(
-                                                              color: AppColors
-                                                                  .grey10,
+                                                              color: AppColors.grey10,
                                                               fontSize: 13,
                                                             ),
                                                         maxLines: null,
                                                         keyboardType: TextInputType.multiline,
                                                         onChanged: (value) {
                                                           if (value.isEmpty) {
-                                                            final itemIndex = _store.liturgiesList.indexWhere((item) => item.id == liturgyId);
-                                                            if (itemIndex != -1) {
-                                                              setState(() {
-                                                                _store.liturgiesList[itemIndex] = liturgy.copyWith(isAdditional: false);
-                                                              });
-                                                              _store.focusNodes["${liturgy.id}_0"]?.requestFocus();
-                                                            }
+                                                            _tileHeights.remove(liturgyId);
+                                                            _store.updateLiturgyItemState(liturgyId, false);
+                                                            _store.focusNodes["${liturgy.id}_0"]?.requestFocus();
                                                           } else {
                                                             setState(() {});
                                                           }
@@ -436,11 +413,8 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                                 size: 18,
                                                 iconName: AppIcons.popoverIcon,
                                                 action: () async {
-                                                  FocusScope.of(
-                                                    context,
-                                                  ).unfocus();
-                                                  Modular.get<ManageServiceStore>().liturgyModel = liturgy;
-                                                  Modular.get<ManageServiceStore>().index = index;
+                                                  _store.liturgyModel = liturgy;
+                                                  _store.index = index;
                                                   await showOptionsDialog(
                                                     context: context,
                                                     itemKey: gestureKey,
@@ -457,7 +431,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                                           icon: AppIcons.contentCopy,
                                                           label: 'Duplicar',
                                                           action: () {
-                                                            Modular.get<ManageServiceStore>().copyBox();
+                                                            _store.copyBox();
                                                             pop(context);
                                                           },
                                                         ),
@@ -476,8 +450,15 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                                           icon: AppIcons.trash,
                                                           label: 'Deletar',
                                                           action: () {
-                                                            Modular.get<ManageServiceStore>().deleteBox(key: liturgy.id);
                                                             pop(context);
+                                                            final bool shouldMoveFocus = _store.deleteBox(key: liturgy.id);
+                                                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                                                              if (shouldMoveFocus) {
+                                                                _store.requestFocusAfterBuild();
+                                                              } else {
+                                                                FocusScope.of(context).unfocus();
+                                                              }
+                                                            });
                                                           },
                                                         ),
                                                       ],
@@ -506,9 +487,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                   if (oldIndex < newIndex) {
                                     newIndex -= 1;
                                   }
-                                  final LiturgyEntity item = _store
-                                      .liturgiesList
-                                      .removeAt(oldIndex);
+                                  final LiturgyEntity item = _store.liturgiesList.removeAt(oldIndex);
                                   _store.liturgiesList.insert(newIndex, item);
                                 });
                                 FocusScope.of(context).unfocus();
@@ -520,8 +499,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                     animation: animation,
                                     builder:
                                         (BuildContext context, Widget? child) {
-                                          final animValue = Curves.easeInOut
-                                              .transform(animation.value);
+                                          final animValue = Curves.easeInOut.transform(animation.value);
                                           final scale = lerpDouble(1, 1.1, animValue)!;
                                           return Transform.scale(
                                             scale: scale,

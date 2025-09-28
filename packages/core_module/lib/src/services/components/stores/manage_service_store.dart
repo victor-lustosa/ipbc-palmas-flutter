@@ -10,6 +10,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
        super(InitialState<ManageServiceState>());
 
   String? _nextFocusId;
+  String? _currentlyFocusedLiturgyId;
   final IUseCases _useCases;
   bool isEditing = false;
   int index = 0;
@@ -106,12 +107,21 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     final sequenceKey = '${liturgyId}_0';
     final additionalKey = '${liturgyId}_1';
 
+    void focusListener(bool hasFocus) {
+      if (hasFocus) {
+        _currentlyFocusedLiturgyId = liturgyId;
+      } else {
+        if (_currentlyFocusedLiturgyId == liturgyId) {
+          _currentlyFocusedLiturgyId = null;
+        }
+      }
+      value = UpdateFormFieldState();
+    }
+
     final titleController = TextEditingController(text: liturgy.sequence);
     final titleFocusNode = FocusNode();
 
-    titleFocusNode.addListener(() {
-      notifyListeners();
-    });
+    titleFocusNode.addListener(() => focusListener(titleFocusNode.hasFocus));
 
     _controllers[sequenceKey] = titleController;
     _focusNodes[sequenceKey] = titleFocusNode;
@@ -120,6 +130,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
       final subtitleController = TextEditingController(text: liturgy.additional);
       final subtitleFocusNode = FocusNode();
       subtitleFocusNode.addListener(() {
+        focusListener(subtitleFocusNode.hasFocus);
         value = UpdateFormFieldState();
         if (!subtitleFocusNode.hasFocus && subtitleController.text.isEmpty) {
           final index = liturgiesList.indexWhere((item) => item.id == liturgyId);
@@ -330,14 +341,39 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     value = UpdateFormFieldState();
   }
 
-  void deleteBox({required String? key}) {
-    if (key == null) return;
-    liturgiesList.removeWhere((item) => item.id == key);
+  bool deleteBox({required String? key}) {
+    if (key == null) return false;
+
+    final indexToDelete = liturgiesList.indexWhere((item) => item.id == key);
+    if (indexToDelete == -1) return false;
+
+    bool shouldMoveFocus = false;
+
+    if (_currentlyFocusedLiturgyId != null) {
+      shouldMoveFocus = true;
+
+      final indexToFocus = (indexToDelete > 0) ? indexToDelete - 1 : 0;
+      if (liturgiesList.length > 1) {
+        _nextFocusId = liturgiesList[indexToFocus].id;
+      } else {
+        _nextFocusId = null;
+      }
+    }
+
+    liturgiesList.removeAt(indexToDelete);
+
+    if (liturgiesList.isNotEmpty) {
+      final indexToFocus = (indexToDelete > 0) ? indexToDelete - 1 : 0;
+      _nextFocusId = liturgiesList[indexToFocus].id;
+    }
+
     _controllers.remove("${key}_0")?.dispose();
     _focusNodes.remove("${key}_0")?.dispose();
     _controllers.remove("${key}_1")?.dispose();
     _focusNodes.remove("${key}_1")?.dispose();
+
     value = UpdateFormFieldState();
+    return shouldMoveFocus;
   }
 
   bool validateAllFields() {
@@ -364,6 +400,14 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     }
   }
 
+  void requestFocusAfterBuild() {
+    if (_nextFocusId != null) {
+      final focusNode = _focusNodes["${_nextFocusId}_0"];
+      focusNode?.requestFocus();
+      _nextFocusId = null;
+    }
+  }
+
   void deactivateAdditionalField(String liturgyId) {
     final additionalKey = '${liturgyId}_1';
     _controllers.remove(additionalKey);
@@ -376,6 +420,13 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
       return true;
     }
     return false;
+  }
+  void updateLiturgyItemState(String liturgyId, bool isAdditional) {
+    final index = liturgiesList.indexWhere((item) => item.id == liturgyId);
+    if (index != -1) {
+      liturgiesList[index] = liturgiesList[index].copyWith(isAdditional: isAdditional);
+      notifyListeners();
+    }
   }
 }
 
