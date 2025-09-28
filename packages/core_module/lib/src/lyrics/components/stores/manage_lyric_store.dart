@@ -2,10 +2,12 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
 class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
-  ManageLyricStore({required IUseCases useCases,required LyricsListStore lyricsListStore})
-    : _useCases = useCases,
-      _lyricsListStore = lyricsListStore,
-      super(InitialState());
+  ManageLyricStore({
+    required IUseCases useCases,
+    required LyricsListStore lyricsListStore,
+  }) : _useCases = useCases,
+       _lyricsListStore = lyricsListStore,
+       super(InitialState());
 
   final IUseCases _useCases;
   final LyricsListStore _lyricsListStore;
@@ -170,20 +172,19 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
   void saveLyric(BuildContext context) async {
     try {
       final lyricsResponse = await _useCases.upsert(
-        params: {
-          'table': 'lyrics',
-          'selectFields': 'id'
-        },
+        params: {'table': 'lyrics', 'selectFields': 'id'},
         data: LyricAdapter.toMap(lyric.value),
       );
       await _useCases.upsert(
         params: {'table': 'service_lyrics'},
         data: {
           'service_id': int.parse(serviceId),
-          'lyric_id': lyricsResponse[0]['id']
+          'lyric_id': lyricsResponse[0]['id'],
         },
       );
-      lyric.value = lyric.value.copyWith(id: lyricsResponse[0]['id'].toString());
+      lyric.value = lyric.value.copyWith(
+        id: lyricsResponse[0]['id'].toString(),
+      );
       if (context.mounted) {
         await showCustomSuccessDialog(
           context: context,
@@ -191,22 +192,20 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
           message: 'Música salva',
         );
       }
-      Future.delayed(Duration(milliseconds: 500),(){
+      Future.delayed(Duration(milliseconds: 500), () {
         _lyricsListStore.entitiesList.add(lyric.value);
         value = UpdateTilesState();
       });
       buttonCallback();
-    } catch (e) {
-
-    }
+    } catch (e) {}
   }
 
-  delete({required BuildContext context, required String lyricId}) async {
+  deleteLyric({required BuildContext context, required String lyricId}) async {
     await _useCases.delete(
       params: {
         'table': 'service_lyrics',
         'whereClause': 'lyric_id',
-        'id': int.parse(lyricId)
+        'id': int.parse(lyricId),
       },
     );
 
@@ -214,7 +213,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
       params: {
         'table': 'lyrics',
         'whereClause': 'id',
-        'id': int.parse(lyricId)
+        'id': int.parse(lyricId),
       },
     );
     if (context.mounted) {
@@ -225,7 +224,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
       );
     }
     _lyricsListStore.entitiesList.remove(
-        _lyricsListStore.entitiesList.firstWhere((e) => e.id == lyricId)
+      _lyricsListStore.entitiesList.firstWhere((e) => e.id == lyricId),
     );
     value = UpdateTilesState();
   }

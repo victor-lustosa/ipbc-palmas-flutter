@@ -62,7 +62,6 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   }
 
   Future<void> _getInSupa(GetDataEvent<LyricEvent> event, emit) async {
-    //Caso esteja sem conexão eu salvo essas musicas no isar
     final response = await isConnected();
     if (response) {
       final lyricsList = await onlineUseCases.get(
@@ -83,9 +82,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     emit,
   ) async {
     List<LyricEntity> lyricsListAux = [];
-    //Caso esteja sem conexão eu salvo essas musicas no hive
     int offset = _lyricsListStore.entitiesList.length;
-
     final Map<String, Object> paginationParams = {
       'table': 'lyrics',
       'limit': event.limit,
@@ -133,7 +130,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
         .lyricEntity
         .id;
     if (lyricIdParam != null) {
-      manageLyricStore.delete(
+      manageLyricStore.deleteLyric(
         context: context,
         lyricId: lyricIdParam,
       );

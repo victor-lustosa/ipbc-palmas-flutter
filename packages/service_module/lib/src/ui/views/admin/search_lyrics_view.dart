@@ -39,7 +39,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ServiceTopBarWidget(
-                      image: _store.manageServiceStore.servicesEntity.image,
+                      image: _store.servicesEntity.image,
                       title: "Voltar para liturgia",
                     ),
                     Container(
@@ -192,7 +192,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
             showAddLyricsDialog(
               context: context,
               callback: (text) {
-                _store.manageServiceStore.addLyric(text: text, context: context);
+                _store.newLyric(text, context);
               },
             );
           },

@@ -12,11 +12,12 @@ class ManageLyricView extends StatefulWidget {
 }
 
 class _ManageLyricViewState extends State<ManageLyricView> {
-  final ManageLyricStore _store = Modular.get<ManageLyricStore>();
+  late final ManageLyricStore _store;
 
   @override
   void initState() {
     super.initState();
+    _store = Modular.get<ManageLyricStore>();
     _store.init();
   }
 

@@ -30,8 +30,8 @@ class CoreModule extends Module {
     i.addLazySingleton<LyricsListStore>(LyricsListStore.new);
     i.addLazySingleton<ManageLyricStore>(
       () => ManageLyricStore(
-          useCases: i.get<UseCases<SupabaseRepository>>(),
-          lyricsListStore: i.get<LyricsListStore>(),
+        useCases: i.get<UseCases<SupabaseRepository>>(),
+        lyricsListStore: i.get<LyricsListStore>(),
       ),
     );
     i.addLazySingleton<IAuthUseCases>(
@@ -57,14 +57,20 @@ class CoreModule extends Module {
       ),
     );
 
-    i.addLazySingleton<ServiceStore>(ServiceStore.new);
-    i.addLazySingleton<ManageServiceStore>(
-      () => ManageServiceStore(
-        useCases: i.get<UseCases<SupabaseRepository>>(),
-        manageLyricStore: Modular.get<ManageLyricStore>(),
+    i.addLazySingleton<ServiceStore>(
+      () => ServiceStore(
+        manageLyricStore: i.get<ManageLyricStore>(),
+        lyricsListStore: i.get<LyricsListStore>(),
+        searchLyricsStore: i.get<SearchLyricsStore>(),
+        manageServiceStore: i.get<ManageServiceStore>(),
       ),
     );
-    i.addLazySingleton<SearchLyricsStore>(SearchLyricsStore.new);
+    i.addLazySingleton<ManageServiceStore>(
+      () => ManageServiceStore(useCases: i.get<UseCases<SupabaseRepository>>()),
+    );
+    i.addLazySingleton<SearchLyricsStore>(
+      () => SearchLyricsStore(manageLyricStore: i.get<ManageLyricStore>()),
+    );
     i.addLazySingleton<SlideCardsStore>(SlideCardsStore.new);
   }
 }

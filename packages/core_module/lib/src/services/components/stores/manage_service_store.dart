@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +6,8 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     with DateMixin, ConnectivityMixin {
   ManageServiceStore({
     required IUseCases useCases,
-    required ManageLyricStore manageLyricStore,
   }) : _useCases = useCases,
-       _manageLyricStore = manageLyricStore,
        super(InitialState<ManageServiceState>());
-  final ManageLyricStore _manageLyricStore;
 
   final IUseCases _useCases;
   bool isEditing = false;
@@ -325,51 +321,6 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
       allTextValid = false;
     }
     return allTextValid;
-  }
-
-  convertTextInLyric(String text) {
-    final List<String> rawVerseBlocks = text.split(RegExp(r'\n\s*\n+'));
-
-    final List<VerseEntity> parsedVerseEntities = [];
-
-    for (int i = 0; i < rawVerseBlocks.length; i++) {
-      final String block = rawVerseBlocks[i].trim();
-      if (block.isEmpty) continue;
-
-      final List<String> versesInBlock = block
-          .split('\n')
-          .map((e) => e.trim())
-          .where((e) => e.isNotEmpty)
-          .toList();
-
-      if (versesInBlock.isNotEmpty) {
-        parsedVerseEntities.add(
-          VerseEntity(id: i, isChorus: false, versesList: versesInBlock),
-        );
-      }
-    }
-    return LyricEntity(
-      title: 'Título Padrão',
-      group: 'Grupo Padrão',
-      albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
-      createAt: DateTime.now().toIso8601String(),
-      verses: parsedVerseEntities,
-    );
-  }
-
-  void addLyric({required String? text, required BuildContext context}) async{
-    if (text != null && text.isNotEmpty) {
-      _manageLyricStore.lyric.value = convertTextInLyric(text);
-      _manageLyricStore.buttonCallback = () {
-        popUntil(
-          (route) =>
-              route.settings.name ==
-              AppRoutes.servicesRoute + AppRoutes.serviceRoute,
-        );
-      };
-      pop(context);
-      pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);
-    }
   }
 
   void activateAdditionalField(String liturgyId) {
