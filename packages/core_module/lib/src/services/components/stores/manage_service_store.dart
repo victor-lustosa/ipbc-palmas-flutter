@@ -9,6 +9,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
   }) : _useCases = useCases,
        super(InitialState<ManageServiceState>());
 
+  String? _nextFocusId;
   final IUseCases _useCases;
   bool isEditing = false;
   int index = 0;
@@ -54,8 +55,20 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     _rootFocusNode = FocusScopeNode();
   }
 
-  clear() {
-    resetValidationFields();
+  resetValidationFields() {
+    changeValue(isThemeValid, true);
+    changeValue(isPreacherValid, true);
+  }
+
+  clearFocusAndControllers() {
+    for (var node in _focusNodes.values) {
+      node.dispose();
+    }
+    for (var controller in _controllers.values) {
+      controller.dispose();
+    }
+    _focusNodes.clear();
+    _controllers.clear();
   }
 
   formValidation(String? data, ValueNotifier<bool> isValid) {
@@ -81,21 +94,43 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     controllersAndFocusNodes();
   }
 
-  void controllersAndFocusNodes({bool isRemove = false}) {
-    for (int i = 0; i < liturgiesList.length; i++) {
-      final liturgy = liturgiesList[i];
-      final sequenceKey = '${liturgy.id}_0';
-      final additionalKey = '${liturgy.id}_1';
-      _controllers[sequenceKey] = TextEditingController(
-        text: liturgiesList[i].sequence,
-      );
-      _focusNodes[sequenceKey] = FocusNode();
-      if (liturgy.isAdditional) {
-        _controllers[additionalKey] = TextEditingController(
-          text: liturgiesList[i].additional,
-        );
-        _focusNodes[additionalKey] = FocusNode();
-      }
+  void controllersAndFocusNodes() {
+    clearFocusAndControllers();
+    for (var liturgy in liturgiesList) {
+      _addControllersAndFocusNodesForItem(liturgy);
+    }
+  }
+
+  void _addControllersAndFocusNodesForItem(LiturgyEntity liturgy) {
+    final liturgyId = liturgy.id!;
+    final sequenceKey = '${liturgyId}_0';
+    final additionalKey = '${liturgyId}_1';
+
+    final titleController = TextEditingController(text: liturgy.sequence);
+    final titleFocusNode = FocusNode();
+
+    titleFocusNode.addListener(() {
+      notifyListeners();
+    });
+
+    _controllers[sequenceKey] = titleController;
+    _focusNodes[sequenceKey] = titleFocusNode;
+
+    if (liturgy.isAdditional) {
+      final subtitleController = TextEditingController(text: liturgy.additional);
+      final subtitleFocusNode = FocusNode();
+      subtitleFocusNode.addListener(() {
+        value = UpdateFormFieldState();
+        if (!subtitleFocusNode.hasFocus && subtitleController.text.isEmpty) {
+          final index = liturgiesList.indexWhere((item) => item.id == liturgyId);
+          if (index != -1 && liturgiesList[index].isAdditional) {
+            liturgiesList[index] = liturgiesList[index].copyWith(isAdditional: false);
+          }
+        }
+      });
+
+      _controllers[additionalKey] = subtitleController;
+      _focusNodes[additionalKey] = subtitleFocusNode;
     }
   }
 
@@ -111,12 +146,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
         startTime,
       ),
     );
-    notifyListeners();
-  }
-
-  resetValidationFields() {
-    changeValue(isThemeValid, true);
-    changeValue(isPreacherValid, true);
+    value = UpdateFormFieldState();
   }
 
   bool isEmptyData(String? data) {
@@ -126,7 +156,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
   changeValue(ValueNotifier<bool> valueNotifier, bool newValue) {
     Future.delayed(Duration.zero, () async {
       valueNotifier.value = newValue;
-      notifyListeners();
+      value = UpdateFormFieldState();
     });
   }
 
@@ -203,7 +233,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
         'selectFields': 'id',
       },
     );
-    notifyListeners();
+    value = UpdateFormFieldState();
     return Future.value(response[0]);
   }
 
@@ -264,20 +294,20 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
         additional: '',
       ),
     ];
-    notifyListeners();
+    value = UpdateFormFieldState();
   }
 
   void addBox() {
     liturgiesList.insert(
       0,
       LiturgyEntity(
-        id: liturgiesList.length.toString(),
+        id: (liturgiesList.length + 1).toString(),
         isAdditional: false,
         sequence: 'Título',
       ),
     );
     controllersAndFocusNodes();
-    notifyListeners();
+    value = UpdateFormFieldState();
   }
 
   void copyBox() {
@@ -297,19 +327,17 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
 
     liturgiesList.insert(index + 1, newLiturgy);
     controllersAndFocusNodes();
-    notifyListeners();
+    value = UpdateFormFieldState();
   }
 
   void deleteBox({required String? key}) {
-    liturgiesList.remove(liturgyModel);
-    _controllers.remove("${key}_0");
-    _focusNodes.remove("${key}_0");
-    if (liturgyModel.isAdditional) {
-      _controllers.remove("${key}_1");
-      _focusNodes.remove("${key}_1");
-    }
-    controllersAndFocusNodes();
-    notifyListeners();
+    if (key == null) return;
+    liturgiesList.removeWhere((item) => item.id == key);
+    _controllers.remove("${key}_0")?.dispose();
+    _focusNodes.remove("${key}_0")?.dispose();
+    _controllers.remove("${key}_1")?.dispose();
+    _focusNodes.remove("${key}_1")?.dispose();
+    value = UpdateFormFieldState();
   }
 
   bool validateAllFields() {
@@ -324,12 +352,15 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
   }
 
   void activateAdditionalField(String liturgyId) {
-    final additionalKey = '${liturgyId}_1';
-    if (!_controllers.containsKey(additionalKey)) {
-      _controllers[additionalKey] = TextEditingController();
-    }
-    if (!_focusNodes.containsKey(additionalKey)) {
-      _focusNodes[additionalKey] = FocusNode();
+    final index = liturgiesList.indexWhere((item) => item.id == liturgyId);
+    if (index != -1) {
+      final liturgy = liturgiesList[index];
+      if (!liturgy.isAdditional) {
+        _nextFocusId = liturgyId;
+        liturgiesList[index] = liturgy.copyWith(isAdditional: true);
+        _addControllersAndFocusNodesForItem(liturgiesList[index]);
+        value = UpdateFormFieldState();
+      }
     }
   }
 
@@ -337,6 +368,14 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     final additionalKey = '${liturgyId}_1';
     _controllers.remove(additionalKey);
     _focusNodes.remove(additionalKey);
+  }
+
+  bool shouldAutofocus(String liturgyId) {
+    if (_nextFocusId == liturgyId) {
+      _nextFocusId = null;
+      return true;
+    }
+    return false;
   }
 }
 

@@ -17,6 +17,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
   final Map<String, GlobalKey> _liturgyKeys = {};
   final Map<String, GlobalKey> _tileKeys = {};
   final Map<String, double> _tileHeights = {};
+
   @override
   void initState() {
     super.initState();
@@ -26,7 +27,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
 
   @override
   dispose() {
-    _store.clear();
+    _store.resetValidationFields();
     super.dispose();
   }
 
@@ -351,21 +352,22 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                                     textInputAction: TextInputAction.next,
                                                     onFieldSubmitted: (_) {
                                                       if (!liturgy.isAdditional) {
-                                                        setState(() {
-                                                          _store.liturgiesList[index] = liturgy.copyWith(isAdditional: true);
-                                                        });
                                                         _store.activateAdditionalField(liturgyId);
                                                         WidgetsBinding.instance.addPostFrameCallback((_) {
                                                           final nextFocusNode = _store.focusNodes["${liturgy.id}_1"];
                                                           if (nextFocusNode != null) {
-                                                            nextFocusNode.requestFocus();
+                                                            FocusScope.of(context).requestFocus(nextFocusNode);
                                                           }
                                                         });
+                                                      } else {
+                                                        final nextFocusNode = _store.focusNodes["${liturgy.id}_1"];
+                                                        if (nextFocusNode != null) {
+                                                          FocusScope.of(context).requestFocus(nextFocusNode);
+                                                        }
                                                       }
                                                     },
                                                     maxLines: null,
                                                     keyboardType: TextInputType.multiline,
-                                                    onChanged: (value) => setState(() {}),
                                                   ),
                                                   Visibility(
                                                     visible: _store
@@ -379,6 +381,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                                       child: TextFormField(
                                                         controller: _store.controllers["${liturgy.id}_1"],
                                                         focusNode: _store.focusNodes["${liturgy.id}_1"],
+                                                        autofocus: _store.shouldAutofocus(liturgyId),
                                                         decoration:
                                                             InputDecoration(
                                                               border: InputBorder.none,
@@ -397,14 +400,16 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                                         keyboardType: TextInputType.multiline,
                                                         onChanged: (value) {
                                                           if (value.isEmpty) {
-                                                            setState(() {
-                                                              _store.liturgiesList[index] = liturgy.copyWith(isAdditional: false);
-                                                            });
-                                                            _store.deactivateAdditionalField(liturgyId);
-                                                            final previousFocusNode = _store.focusNodes["${liturgy.id}_0"];
-                                                            previousFocusNode?.requestFocus();
+                                                            final itemIndex = _store.liturgiesList.indexWhere((item) => item.id == liturgyId);
+                                                            if (itemIndex != -1) {
+                                                              setState(() {
+                                                                _store.liturgiesList[itemIndex] = liturgy.copyWith(isAdditional: false);
+                                                              });
+                                                              _store.focusNodes["${liturgy.id}_0"]?.requestFocus();
+                                                            }
+                                                          } else {
+                                                            setState(() {});
                                                           }
-                                                          setState(() {});
                                                         },
                                                       ),
                                                     ),
@@ -439,6 +444,10 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                                   await showOptionsDialog(
                                                     context: context,
                                                     itemKey: gestureKey,
+                                                    popupHeightParam: 110,
+                                                    popupWidthParam: 140,
+                                                    popupWidthPositionParam: 140,
+                                                    verticalMarginParam: 3,
                                                     buttons: Column(
                                                       children: [
                                                         actionButton(
@@ -454,10 +463,11 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                                         ),
                                                         Divider(
                                                           height: 1,
-                                                          color: AppColors.dividerModal
+                                                          color: AppColors
+                                                              .dividerModal
                                                               .withValues(
-                                                                alpha: 25,
-                                                              ),
+                                                            alpha: .3,
+                                                          ),
                                                         ),
                                                         actionButton(
                                                           context: context,
@@ -482,7 +492,6 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                     ),
                                   ),
                                 );
-
                                 return Container(
                                   key: itemKey,
                                   padding: const EdgeInsets.only(
@@ -514,7 +523,6 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                           final animValue = Curves.easeInOut
                                               .transform(animation.value);
                                           final scale = lerpDouble(1, 1.1, animValue)!;
-
                                           return Transform.scale(
                                             scale: scale,
                                             child: child,
@@ -532,8 +540,7 @@ class _ManageServiceViewState extends State<ManageServiceView>
                             action: () async {
                               _store.submit(context);
                             },
-                            isValid:
-                                _store.isThemeValid.value &&
+                            isValid: _store.isThemeValid.value &&
                                 _store.isPreacherValid.value &&
                                 _store.liturgiesList.isNotEmpty,
                             label: "Salvar Culto",
