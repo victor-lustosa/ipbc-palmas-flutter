@@ -22,6 +22,9 @@ class EventsListViewState extends State<EventsListView>
       ..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1200));
     _bloc = Modular.get<EventsListBloc>();
     _bloc.add(GetDataEvent());
+    _bloc.createEventStore
+        .updateEventListViewCallback = () =>
+        _bloc.add(GetDataEvent());
   }
 
   @override
@@ -121,18 +124,11 @@ class EventsListViewState extends State<EventsListView>
                                     label: 'Editar',
                                     action: () async {
                                       _bloc.createEventStore.isEditing = true;
-                                      _bloc
-                                          .createEventStore
-                                          .updateEventListViewCallback = () =>
-                                          _bloc.add(GetDataEvent());
+                                      _bloc.createEventStore.eventEntity = _bloc.slideCardsStore.eventEntity;
+
                                       await pushNamed(
                                         AppRoutes.eventRoute +
                                             AppRoutes.createEventRoute,
-                                        arguments: {
-                                          "isEditing": true,
-                                          "event":
-                                          _bloc.slideCardsStore.eventEntity,
-                                        },
                                       );
                                       if (context.mounted) {
                                         pop(context);

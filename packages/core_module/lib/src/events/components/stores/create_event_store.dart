@@ -10,10 +10,12 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   bool isEditing = false;
   bool isChangedOrAdded = false;
   Function? updateEventListViewCallback;
+  Function? updateCallbackParam;
   Function? updateHomeViewCallback;
   final IUseCases _useCases;
   final IEventUseCases _eventUseCases;
   final String eventPath = 'event';
+  String fromCalled = '';
 
   CreateEventStore({
     required IUseCases useCases,
@@ -234,6 +236,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       latitude: latLong?['lat'],
       longitude: latLong?['lng'],
     );
+    eventEntity = entity;
     return entity;
   }
 
@@ -297,6 +300,9 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
               message: 'Evento salvo',
             );
           }
+          if (updateCallbackParam != null && context.mounted) {
+            updateCallbackParam!();
+          }
           value = DataAddedState<CreateEventState>();
           return Future.value(true);
         }
@@ -323,19 +329,23 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   }
 
   void init() {
-    eventTitleController.clear();
-    eventSubtitleController.clear();
-    coverImage = File('');
-    final now = DateTime.now();
-    startDate = DateTime(now.year, now.month, now.day, 08, 0);
-    endDate = DateTime(now.year, now.month, now.day, 18, 0);
-    startTime = TimeOfDay(hour: 08, minute: 00);
-    endTime = TimeOfDay(hour: 18, minute: 30);
-    eventDescriptionController.clear();
-    eventLocationController.clear();
-    eventLocationNameController.clear();
-    eventLinkController.clear();
-    contactLinkController.clear();
+    if (isEditing) {
+      fillFormWithEvent(eventEntity);
+    } else {
+      eventTitleController.clear();
+      eventSubtitleController.clear();
+      coverImage = File('');
+      final now = DateTime.now();
+      startDate = DateTime(now.year, now.month, now.day, 08, 0);
+      endDate = DateTime(now.year, now.month, now.day, 18, 0);
+      startTime = TimeOfDay(hour: 08, minute: 00);
+      endTime = TimeOfDay(hour: 18, minute: 30);
+      eventDescriptionController.clear();
+      eventLocationController.clear();
+      eventLocationNameController.clear();
+      eventLinkController.clear();
+      contactLinkController.clear();
+    }
   }
 }
 

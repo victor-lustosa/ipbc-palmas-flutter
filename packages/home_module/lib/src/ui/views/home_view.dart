@@ -23,6 +23,8 @@ class _HomeViewState extends State<HomeView>
   void initState() {
     super.initState();
     _bloc = Modular.get<HomeBloc>();
+    _bloc.createEventStore.updateHomeViewCallback =
+        () => _bloc.add(GetEventsDataEvent());
     _shimmerController = AnimationController.unbounded(vsync: this)
       ..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1200));
     _bloc.add(GetDataEvent());
@@ -110,10 +112,12 @@ class _HomeViewState extends State<HomeView>
                             ),
                             InkWell(
                               onTap: () {
-                                _bloc.createEventStore.updateHomeViewCallback =
-                                    () => _bloc.add(GetEventsDataEvent());
+                                _bloc.createEventStore.fromCalled =
+                                    'eventsList';
+
                                 nativePushNamed(
-                                  AppRoutes.eventRoute + AppRoutes.eventsListRoute,
+                                  AppRoutes.eventRoute +
+                                      AppRoutes.eventsListRoute,
                                   context,
                                 );
                               },
@@ -132,7 +136,10 @@ class _HomeViewState extends State<HomeView>
                               ),
                             ),
                             Container(
-                              margin: const EdgeInsets.only(top: 12, bottom: 20),
+                              margin: const EdgeInsets.only(
+                                top: 12,
+                                bottom: 20,
+                              ),
                               height: _bloc.eventsList.isEmpty
                                   ? (isSmallDevice
                                         ? context.sizeOf.width * .59
@@ -141,12 +148,24 @@ class _HomeViewState extends State<HomeView>
                                         ? context.sizeOf.width * .72
                                         : context.sizeOf.width * .663),
                               child: SlideCardsWidget(
+                                action: () {
+                                  _bloc.createEventStore.fromCalled =
+                                      'home';
+                                  pushNamed(
+                                    AppRoutes.eventRoute +
+                                        AppRoutes.detailEventRoute,
+                                    arguments: Modular.get<SlideCardsStore>()
+                                        .eventEntity,
+                                  );
+                                },
                                 shimmerController: _shimmerController,
                                 width: isSmallDevice
                                     ? context.sizeOf.width * .8
                                     : context.sizeOf.width * .742,
                                 scrollDirection: Axis.horizontal,
-                                route: AppRoutes.eventRoute + AppRoutes.detailEventRoute,
+                                route:
+                                    AppRoutes.eventRoute +
+                                    AppRoutes.detailEventRoute,
                                 entities: _bloc.eventsList,
                               ),
                             ),

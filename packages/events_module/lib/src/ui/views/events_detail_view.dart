@@ -19,17 +19,32 @@ class EventsDetailViewState extends State<EventsDetailView>
   Future<void>? locationLink;
   Future<void>? signUpLink;
   Future<void>? contactLink;
+  ValueNotifier<bool> isChanged = ValueNotifier(false);
+  late final CreateEventStore _createEventStore;
+  late EventEntity event;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _createEventStore = Modular.get<CreateEventStore>();
+    event = widget.eventEntity;
+  }
 
   @override
   Widget build(BuildContext context) {
     final LatLng position = LatLng(
-      widget.eventEntity.latitude ?? 0,
-      widget.eventEntity.longitude ?? 0,
+      event.latitude ?? 0,
+      event.longitude ?? 0,
     );
     return Scaffold(
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
+            final bool isEqualDate = (isSameDate(
+              event.startDateTime,
+              event.endDateTime,
+            ));
             return SingleChildScrollView(
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: constraints.maxHeight),
@@ -44,12 +59,26 @@ class EventsDetailViewState extends State<EventsDetailView>
                         children: [
                           BackAuthTopBarWidget(
                             margin: const EdgeInsets.only(top: 22),
-                            action: () => nativePop(context),
+                            action: () {
+                              if(_createEventStore.fromCalled == 'home'){
+                                if(_createEventStore.updateHomeViewCallback != null && isChanged.value){
+                                  isChanged.value = false;
+                                  _createEventStore.updateHomeViewCallback!();
+                                }
+                              }
+                              if(_createEventStore.fromCalled == 'eventList'){
+                                if(_createEventStore.updateEventListViewCallback != null && isChanged.value){
+                                  isChanged.value = false;
+                                  _createEventStore.updateEventListViewCallback!();
+                                }
+                              }
+                              nativePop(context);
+                            },
                           ),
                           Container(
                             margin: const EdgeInsets.only(top: 20, bottom: 16),
                             child: CachedNetworkImage(
-                              imageUrl: widget.eventEntity.image,
+                              imageUrl: event.image,
                               height: 144,
                               width: double.infinity,
                               fit: BoxFit.cover,
@@ -81,49 +110,69 @@ class EventsDetailViewState extends State<EventsDetailView>
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                               ),
-                              widget.eventEntity.title,
+                              event.title,
                             ),
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                style: AppFonts.defaultFont(
-                                  color: AppColors.darkGreen,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
+
+                          ((isEqualDate) ||
+                                  (!isEqualDate && event.isAllDay))
+                              ? Row(
+                                  children: [
+                                    Text(
+                                      style: AppFonts.defaultFont(
+                                        color: AppColors.darkGreen,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+
+                                      isEqualDate
+                                          ? getFormattedDateTimeFull(
+                                              event.startDateTime,
+                                              isNotYear: true,
+                                            )
+                                          : "${getFormattedDateTimeFull(event.startDateTime, isShortDate: true)} a ${getFormattedDateTimeFull(event.endDateTime, isShortDate: true)}",
+                                    ),
+
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                        left: 4,
+                                        right: 4,
+                                      ),
+                                      height: 8,
+                                      width: 8,
+                                      decoration: const BoxDecoration(
+                                        color: AppColors.darkGreen,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+
+                                    Text(
+                                      style: AppFonts.defaultFont(
+                                        color: AppColors.darkGreen,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      event.isAllDay
+                                          ? 'O dia todo'
+                                          : "${formatHourToString(date: event.startDateTime)} às ${formatHourToString(date: event.endDateTime)}",
+                                    ),
+                                  ],
+                                )
+                              : Row(
+                                  children: [
+                                    SizedBox(
+                                      width: context.sizeOf.width - 32,
+                                      child: Text(
+                                        style: AppFonts.defaultFont(
+                                          color: AppColors.darkGreen,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        "${getFormattedDateTimeFull(event.startDateTime, isDateAndTime: true)} a ${getFormattedDateTimeFull(event.endDateTime, isDateAndTime: true)}",
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                getFormattedDateTimeFull(
-                                  widget.eventEntity.startDateTime,
-                                ),
-                              ),
-                              Visibility(
-                                visible: widget.eventEntity.isAllDay,
-                                child: Container(
-                                  margin: const EdgeInsets.only(
-                                    left: 4,
-                                    right: 4,
-                                  ),
-                                  height: 8,
-                                  width: 8,
-                                  decoration: const BoxDecoration(
-                                    color: AppColors.darkGreen,
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                style: AppFonts.defaultFont(
-                                  color: AppColors.darkGreen,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                widget.eventEntity.isAllDay ? 'O dia todo' :
-                                formatHourToString(
-                                  date: widget.eventEntity.startDateTime,
-                                ),
-                              ),
-                            ],
-                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -140,7 +189,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                                       fontSize: 17,
                                       fontWeight: FontWeight.w500,
                                     ),
-                                    widget.eventEntity.subtitle,
+                                    event.subtitle,
                                   ),
                                 ),
                               ),
@@ -170,7 +219,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400,
                                     ),
-                                    widget.eventEntity.localName ?? '',
+                                    event.localName ?? '',
                                   ),
                                 ),
                               ),
@@ -184,13 +233,13 @@ class EventsDetailViewState extends State<EventsDetailView>
                                 fontSize: 13,
                                 fontWeight: FontWeight.w400,
                               ),
-                              widget.eventEntity.description,
+                              event.description,
                             ),
                           ),
                           Visibility(
                             visible:
-                                widget.eventEntity.latitude != null &&
-                                widget.eventEntity.longitude != null,
+                                event.latitude != null &&
+                                event.longitude != null,
                             child: ClipRRect(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(18),
@@ -213,7 +262,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                                       onTap: () => {
                                         locationLink = launchInBrowser(
                                           Uri.parse(
-                                            "https://www.google.com/maps/search/?api=1&query=${widget.eventEntity.latitude!},${widget.eventEntity.longitude!}",
+                                            "https://www.google.com/maps/search/?api=1&query=${event.latitude!},${event.longitude!}",
                                           ),
                                         ),
                                       },
@@ -231,15 +280,15 @@ class EventsDetailViewState extends State<EventsDetailView>
                           SizedBox(height: 16),
                           Visibility(
                             visible:
-                                widget.eventEntity.signUpLink != null &&
-                                widget.eventEntity.signUpLink!.isNotEmpty,
+                                event.signUpLink != null &&
+                                event.signUpLink!.isNotEmpty,
                             child: Container(
                               margin: const EdgeInsets.only(top: 16),
                               child: ButtonWidget(
                                 action: () {
                                   signUpLink = launchInBrowser(
                                     Uri.parse(
-                                      widget.eventEntity.signUpLink ?? '',
+                                      event.signUpLink ?? '',
                                     ),
                                   );
                                 },
@@ -256,15 +305,18 @@ class EventsDetailViewState extends State<EventsDetailView>
                           ),
                           Visibility(
                             visible:
-                                widget.eventEntity.contactLink != null &&
-                                widget.eventEntity.contactLink!.isNotEmpty,
+                                event.contactLink != null &&
+                                event.contactLink!.isNotEmpty,
                             child: Container(
-                              margin: const EdgeInsets.only(top: 16, bottom: 40),
+                              margin: const EdgeInsets.only(
+                                top: 16,
+                                bottom: 40,
+                              ),
                               child: ButtonWidget(
                                 action: () {
                                   contactLink = launchInBrowser(
                                     Uri.parse(
-                                      widget.eventEntity.contactLink ?? '',
+                                      event.contactLink ?? '',
                                     ),
                                   );
                                 },
@@ -287,6 +339,32 @@ class EventsDetailViewState extends State<EventsDetailView>
                   ),
                 ),
               ),
+            );
+          },
+        ),
+      ),
+      floatingActionButton: Visibility(
+        visible: true,
+        child: FloatingButtonWidget(
+          iconColor: AppColors.white,
+          backgroundColor: AppColors.warning,
+          pngIcon: AppIcons.editIcon,
+          size: 37,
+          action: () async {
+            _createEventStore.isEditing = true;
+            _createEventStore.eventEntity = event;
+            _createEventStore
+                .updateCallbackParam = () {
+                    setState(() {
+                      event = _createEventStore.eventEntity;
+                       isChanged.value = true;
+                    });
+                    pop();
+
+            };
+            await pushNamed(
+              AppRoutes.eventRoute +
+                  AppRoutes.createEventRoute,
             );
           },
         ),

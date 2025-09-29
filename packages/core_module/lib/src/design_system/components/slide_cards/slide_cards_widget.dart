@@ -11,6 +11,7 @@ class SlideCardsWidget extends StatefulWidget {
   final bool? shrinkWrap;
   final AnimationController shimmerController;
   final void Function(LongPressStartDetails)? onLongPressStart;
+  final Function()? action;
 
   const SlideCardsWidget({
     this.onLongPressStart,
@@ -23,6 +24,7 @@ class SlideCardsWidget extends StatefulWidget {
     this.physics,
     this.margin,
     this.shrinkWrap,
+    this.action,
   });
 
   @override
@@ -91,7 +93,10 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
               final EventEntity entity = widget.entities[index];
               return GestureDetector(
                 key: itemKey,
-                onTap: () {
+                onTap: widget.action != null ?(){
+                  _store.eventEntity = entity;
+                  widget.action!();
+                }: () {
                   pushNamed(widget.route, arguments: entity);
                 },
                 onLongPressStart: (details) async {

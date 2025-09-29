@@ -18,13 +18,8 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
   void initState() {
     super.initState();
     _store = Modular.get<CreateEventStore>();
-    final args = Modular.args.data as Map<String, dynamic>?;
-    if (args?["isEditing"] == true) {
-      _store.isEditing = true;
-      _store.fillFormWithEvent(args?["event"]);
-    } else {
       _store.init();
-    }
+
   }
 
   get prefixLocationIcon => Container(
