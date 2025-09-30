@@ -211,8 +211,8 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
           heading: servicesEntity.heading,
         );
 
-        await _useCases.upsert(
-          params: {'table': 'service'},
+       final response = await _useCases.upsert(
+          params: {'table': 'service', 'selectFields': 'id'},
           data: ServiceAdapter.toMap(serviceEntity!),
         );
 
@@ -225,7 +225,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
           );
 
           Modular.get<ServiceStore>().servicesEntity = servicesEntity;
-          Modular.get<ServiceStore>().serviceEntity = serviceEntity!;
+          Modular.get<ServiceStore>().serviceEntity = serviceEntity!.copyWith(id: response[0]['id'].toString());
 
           Future.delayed(Duration(seconds: 1), () {
             if (updateCallbackParam != null && context.mounted) {
@@ -248,12 +248,12 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
       params: {
         'table': 'service',
         'whereClause': 'id',
-        'id': entitiesList.id,
+        'referenceValue': entitiesList.id,
         'selectFields': 'id',
       },
     );
     value = UpdateFormFieldState();
-    return Future.value(response[0]);
+      return Future.value(response[0]);
   }
 
   fillItems() {

@@ -233,7 +233,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
       params: {
         'table': 'lyrics',
         'whereClause': 'id',
-        'id': int.parse(lyricId),
+        'referenceValue': int.parse(lyricId),
       },
     );
     _lyricsListStore.entitiesList.remove(

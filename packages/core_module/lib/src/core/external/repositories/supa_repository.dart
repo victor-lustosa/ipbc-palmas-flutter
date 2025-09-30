@@ -81,8 +81,8 @@ class SupabaseRepository implements IRepository {
   Future<dynamic> delete<T>({Map<String, dynamic>? params}) async {
     dynamic query = _supaClient.from(params?['table']).delete();
 
-    if (params?['whereClause'] != null && params?['id'] != null) {
-      query = query.eq(params?['whereClause'], params?['id']);
+    if (params?['whereClause'] != null && params?['referenceValue'] != null) {
+      query = query.eq(params?['whereClause'], params?['referenceValue']);
     } else {
       throw ArgumentError("A exclusão em massa não é permitida. Forneça uma cláusula 'where' ou id.");
     }

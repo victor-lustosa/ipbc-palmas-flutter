@@ -125,7 +125,10 @@ class EventsListViewState extends State<EventsListView>
                                     action: () async {
                                       _bloc.createEventStore.isEditing = true;
                                       _bloc.createEventStore.eventEntity = _bloc.slideCardsStore.eventEntity;
-
+                                      _bloc.createEventStore.updateCallbackParam = () {
+                                        _bloc.add(GetDataEvent());
+                                        pop(context);
+                                      };
                                       await pushNamed(
                                         AppRoutes.eventRoute +
                                             AppRoutes.createEventRoute,
@@ -149,6 +152,14 @@ class EventsListViewState extends State<EventsListView>
                                     label: 'Deletar',
                                     action: () {
                                       _bloc.add(DeleteItemEvent());
+                                      if (context.mounted) {
+                                        showCustomMessageDialog(
+                                          type: DialogType.success,
+                                          context: context,
+                                          title: 'Sucesso!',
+                                          message: 'Evento deletado com sucesso.',
+                                        );
+                                      }
                                       if (context.mounted) {
                                         pop(context);
                                       }
@@ -183,8 +194,10 @@ class EventsListViewState extends State<EventsListView>
         floatingActionButton: FloatingButtonWidget(
           action: () async {
             _bloc.createEventStore.isEditing = false;
-            _bloc.createEventStore.updateEventListViewCallback = () =>
-                _bloc.add(GetDataEvent());
+            _bloc.createEventStore.updateCallbackParam = () {
+              _bloc.add(GetDataEvent());
+              pop(context);
+            };
             await pushNamed(AppRoutes.eventRoute + AppRoutes.createEventRoute);
           },
           backgroundColor: AppColors.add,

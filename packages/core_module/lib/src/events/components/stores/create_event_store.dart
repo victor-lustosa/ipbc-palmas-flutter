@@ -33,33 +33,26 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     initDate();
   }
 
-  late final Map<TextEditingController, ValueNotifier<bool>>
-  controllerValidators;
+  late final Map<TextEditingController, ValueNotifier<bool>>controllerValidators;
+
   final TextEditingController eventTitleController = TextEditingController();
   final TextEditingController eventSubtitleController = TextEditingController();
   final TextEditingController eventLocationController = TextEditingController();
-  final TextEditingController eventLocationNameController =
-      TextEditingController();
+  final TextEditingController eventLocationNameController = TextEditingController();
   final TextEditingController eventLinkController = TextEditingController();
   final TextEditingController contactLinkController = TextEditingController();
-  final TextEditingController eventLinkDescriptionController =
-      TextEditingController();
-  final TextEditingController eventDescriptionController =
-      TextEditingController();
+  final TextEditingController eventLinkDescriptionController = TextEditingController();
+  final TextEditingController eventDescriptionController = TextEditingController();
+
   final String eventTitleErrorText = 'por favor, insira o título do evento.';
-  final String eventSubtitleErrorText =
-      'por favor, insira o subtítulo do evento.';
-  final String contactLinkErrorText =
-      'por favor, insira o link do contato do evento.';
-  final String eventLocationErrorText =
-      'por favor, insira um link de localização válido.';
-  final String eventLocationNameErrorText =
-      'por favor, insira o nome da localização do evento.';
-  final String eventDescriptionErrorText =
-      'por favor, insira a descrição do evento.';
+  final String eventSubtitleErrorText = 'por favor, insira o subtítulo do evento.';
+  final String contactLinkErrorText = 'por favor, insira o link do contato do evento.';
+  final String eventLocationErrorText = 'por favor, insira um link de localização válido.';
+  final String eventLocationNameErrorText = 'por favor, insira o nome da localização do evento.';
+  final String eventDescriptionErrorText = 'por favor, insira a descrição do evento.';
   final String eventLinkErrorText = 'por favor, insira o link do evento.';
-  final String eventLinkDescriptionErrorText =
-      'por favor, insira a descrição do link do evento.';
+  final String eventLinkDescriptionErrorText = 'por favor, insira a descrição do link do evento.';
+
   final eventTitleKey = GlobalKey<FormState>();
   final eventSubtitleKey = GlobalKey<FormState>();
   final contactLinkKey = GlobalKey<FormState>();
@@ -68,6 +61,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   final eventLocationKey = GlobalKey<FormState>();
   final eventLocationNameKey = GlobalKey<FormState>();
   final eventDescriptionKey = GlobalKey<FormState>();
+
   ValueNotifier<bool> isEventTitleValid = ValueNotifier(true);
   ValueNotifier<bool> isEventSubtitleValid = ValueNotifier(true);
   ValueNotifier<bool> isContactLinkValid = ValueNotifier(true);
@@ -78,6 +72,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   ValueNotifier<bool> isEventLinkDescriptionValid = ValueNotifier(true);
   ValueNotifier<bool> isCoverImageValid = ValueNotifier(true);
   ValueNotifier<bool> isPressed = ValueNotifier(false);
+
   File coverImage = File('');
   late EventEntity eventEntity;
 
@@ -300,11 +295,13 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
               message: 'Evento salvo',
             );
           }
+          Future.delayed(Duration(seconds: 1), () {
           if (updateCallbackParam != null && context.mounted) {
             updateCallbackParam!();
-          }
+            }
           value = DataAddedState<CreateEventState>();
           return Future.value(true);
+          });
         }
       } else {
         value = NoConnectionState<CreateEventState>();
@@ -318,7 +315,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     final response = await _useCases.delete(
       params: {
         'table': 'event',
-        'referenceField': 'id',
+        'whereClause': 'id',
         'referenceValue': entity.id,
         'selectFields': 'id',
       },

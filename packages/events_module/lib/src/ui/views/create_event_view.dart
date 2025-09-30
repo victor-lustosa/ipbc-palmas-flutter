@@ -32,14 +32,6 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
     return ValueListenableBuilder(
       valueListenable: _store,
       builder: (_, state, child) {
-        updateCallback() => Future.delayed(Duration(milliseconds: 200), () {
-          if (_store.updateEventListViewCallback != null) {
-            _store.updateEventListViewCallback!();
-            if (context.mounted) {
-              pop(context);
-            }
-          }
-        });
         return Scaffold(
           body: SafeArea(
             child: SizedBox(
@@ -559,10 +551,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                       ),
                       ButtonWidget(
                         action: () async {
-                          final response = await _store.addData(context);
-                          if (response) {
-                            updateCallback();
-                          }
+                          _store.addData(context);
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
@@ -580,12 +569,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                           child: ButtonWidget(
                             adaptiveButtonType: AdaptiveButtonType.text,
                             action: () async {
-                              final response = await _store.delete(
-                                _store.eventEntity,
-                              );
-                              if (response != null) {
-                                updateCallback();
-                              }
+                              await _store.delete(_store.eventEntity);
                             },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
