@@ -11,7 +11,7 @@ class ServiceModule extends Module {
     i.addLazySingleton<ServicesCollectionBloc>(
       () => ServicesCollectionBloc(
         lyricsListStore: Modular.get<LyricsListStore>(),
-        editStore: Modular.get<ManageServiceStore>(),
+        manageServiceStore: Modular.get<ManageServiceStore>(),
         serviceStore: i.get<ServiceStore>(),
         onlineUseCases: i.get<UseCases<SupabaseRepository>>(),
       ),

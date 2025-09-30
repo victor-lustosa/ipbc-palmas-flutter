@@ -112,9 +112,7 @@ class _HomeViewState extends State<HomeView>
                             ),
                             InkWell(
                               onTap: () {
-                                _bloc.createEventStore.fromCalled =
-                                    'eventsList';
-
+                                _bloc.createEventStore.fromCalled = 'eventsList';
                                 nativePushNamed(
                                   AppRoutes.eventRoute +
                                       AppRoutes.eventsListRoute,
@@ -142,15 +140,14 @@ class _HomeViewState extends State<HomeView>
                               ),
                               height: _bloc.eventsList.isEmpty
                                   ? (isSmallDevice
-                                        ? context.sizeOf.width * .59
+                                        ? context.sizeOf.width * .578
                                         : context.sizeOf.width * .59)
                                   : (isSmallDevice
                                         ? context.sizeOf.width * .72
                                         : context.sizeOf.width * .663),
                               child: SlideCardsWidget(
                                 action: () {
-                                  _bloc.createEventStore.fromCalled =
-                                      'home';
+                                  _bloc.createEventStore.fromCalled = 'home';
                                   pushNamed(
                                     AppRoutes.eventRoute +
                                         AppRoutes.detailEventRoute,
@@ -160,7 +157,7 @@ class _HomeViewState extends State<HomeView>
                                 },
                                 shimmerController: _shimmerController,
                                 width: isSmallDevice
-                                    ? context.sizeOf.width * .8
+                                    ? context.sizeOf.width * .742
                                     : context.sizeOf.width * .742,
                                 scrollDirection: Axis.horizontal,
                                 route:

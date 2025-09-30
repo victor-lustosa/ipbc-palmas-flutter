@@ -218,13 +218,6 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
   }
 
   deleteLyric({required BuildContext context, required String lyricId}) async {
-    await _useCases.delete(
-      params: {
-        'table': 'service_lyrics',
-        'whereClause': 'lyric_id',
-        'id': int.parse(lyricId),
-      },
-    );
 
     await _useCases.delete(
       params: {

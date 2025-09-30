@@ -68,7 +68,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
                     : const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 height: isHorizontal
                     ? (isSmallDevice
-                          ? context.sizeOf.width * .48
+                          ? context.sizeOf.width * .43
                           : context.sizeOf.width * .48)
                     : (isSmallDevice
                           ? context.sizeOf.width * 0.6

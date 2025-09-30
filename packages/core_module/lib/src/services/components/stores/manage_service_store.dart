@@ -240,8 +240,8 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     final response = await _useCases.delete(
       params: {
         'table': 'service',
-        'referenceField': 'id',
-        'referenceValue': entitiesList.id,
+        'whereClause': 'id',
+        'id': entitiesList.id,
         'selectFields': 'id',
       },
     );

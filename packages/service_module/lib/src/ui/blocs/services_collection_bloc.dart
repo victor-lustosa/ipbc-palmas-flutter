@@ -11,13 +11,13 @@ class ServicesCollectionBloc
         >
     with ConnectivityMixin {
   final IUseCases onlineUseCases;
-  final ManageServiceStore editStore;
+  final ManageServiceStore manageServiceStore;
   Map<String, Object> servicesCollectionParams = {};
   List<ServiceEntity> entitiesList = [];
   late String path;
 
   ServicesCollectionBloc({
-    required this.editStore,
+    required this.manageServiceStore,
     required this.onlineUseCases,
     required ServiceStore serviceStore,
     required LyricsListStore lyricsListStore,
@@ -67,7 +67,7 @@ class ServicesCollectionBloc
 
   Future<void> _deleteItem(event, emit) async {
     final service = entitiesList[event.index];
-    final response = await editStore.delete(service);
+    final response = await manageServiceStore.delete(service);
     if (response != null) {
       entitiesList.remove(service);
     }
@@ -75,18 +75,18 @@ class ServicesCollectionBloc
   }
 
   void editItem({required int index}) {
-    editStore.serviceEntity = entitiesList[index];
+    manageServiceStore.serviceEntity = entitiesList[index];
     _serviceStore.updateServicesCollectionCallback =
         _updateServicesCollectionCallback;
-    editStore.updateCallbackParam = _updateCallBack;
-    editStore.edit();
+    manageServiceStore.updateCallbackParam = _updateCallBack;
+    manageServiceStore.edit();
     pushNamed(AppRoutes.servicesRoute + AppRoutes.manageServicesRoute);
   }
 
   Future<void> addItem() async {
-    editStore.isEditing = false;
+    manageServiceStore.isEditing = false;
     _serviceStore.updateServicesCollectionCallback = _updateServicesCollectionCallback;
-    editStore.updateCallbackParam = _updateCallBack;
+    manageServiceStore.updateCallbackParam = _updateCallBack;
     pushNamed(AppRoutes.servicesRoute + AppRoutes.manageServicesRoute);
   }
 

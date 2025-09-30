@@ -5,7 +5,7 @@ plugins {
     id("kotlin-android")
     id("dev.flutter.flutter-gradle-plugin")
 }
-val kotlin_version = "1.9.10"
+val kotlin_version = "2.1.0"
 // Carrega o local.properties
 val localProperties = Properties().apply {
     val localPropertiesFile = rootProject.file("local.properties")

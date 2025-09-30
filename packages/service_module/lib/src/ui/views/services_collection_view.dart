@@ -27,7 +27,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
     super.initState();
     _bloc = Modular.get<ServicesCollectionBloc>();
     _bloc.path = widget.entity.path;
-    _bloc.editStore.servicesEntity = widget.entity;
+    _bloc.manageServiceStore.servicesEntity = widget.entity;
     _bloc.add(GetDataEvent());
   }
   @override
