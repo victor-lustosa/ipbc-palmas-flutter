@@ -47,7 +47,6 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
 
   init({required BuildContext context}) async {
     add(GetDataEvent<LyricEvent>());
-    _manageLyricStore.isEditing = true;
     _manageLyricStore.buttonCallback = () {
       add(GetDataEvent<LyricEvent>());
       pop(context);
@@ -116,24 +115,26 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
 
   void editLyric(BuildContext context) {
     manageLyricStore.isEditing = true;
+    manageLyricStore.lyric.value = lyricsListStore.lyricEntity;
     pushNamed(
-      AppRoutes.servicesRoute +
-          AppRoutes.manageLyricsRoute,
-      arguments:
-      lyricsListStore.lyricEntity,
+      AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute,
     );
+    Future.delayed(Duration(seconds: 1), () {
+      _lyricsListStore.value = UpdateTilesState();
+    });
     pop(context);
   }
 
-  void deleteLyric(BuildContext context) async{
-    String? lyricIdParam = lyricsListStore
-        .lyricEntity
-        .id;
+  void deleteLyric({required BuildContext context}) async{
+    String? lyricIdParam = lyricsListStore.lyricEntity.id;
     if (lyricIdParam != null) {
       manageLyricStore.deleteLyric(
         context: context,
         lyricId: lyricIdParam,
       );
+      Future.delayed(Duration(seconds: 1), () {
+        _lyricsListStore.value = UpdateTilesState();
+      });
       pop(context);
     }
   }

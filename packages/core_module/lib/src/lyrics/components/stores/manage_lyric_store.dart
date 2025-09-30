@@ -34,7 +34,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
   get rootFocusNode => _rootFocusNode;
 
   clear() {
-    if(!isEditing){
+    if (!isEditing) {
       controllers.forEach((key, controller) => controller.dispose());
       focusNodes.forEach((key, focusNode) => focusNode.dispose());
       rootFocusNode.removeListener(_handleRootFocusChange);
@@ -190,35 +190,45 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
         id: lyricsResponse[0]['id'].toString(),
       );
       if (context.mounted) {
-        await showCustomMessageDialog(
+        showCustomMessageDialog(
           type: DialogType.success,
           context: context,
           title: 'Sucesso!',
           message: 'Musica salva com sucesso.',
         );
       }
-      Future.delayed(Duration(milliseconds: 500), () {
+
+      final index = _lyricsListStore.entitiesList.indexWhere(
+        (item) => item.id == lyric.value.id,
+      );
+      if (index != -1) {
+        _lyricsListStore.entitiesList[index] = lyric.value;
+      } else {
         _lyricsListStore.entitiesList.add(lyric.value);
+      }
+      Future.delayed(const Duration(seconds: 1), () {
         isSavePressed.value = false;
         value = UpdateTilesState();
+        buttonCallback();
       });
-      buttonCallback();
     } catch (e) {
       if (context.mounted) {
-        await showCustomMessageDialog(
+        showCustomMessageDialog(
           type: DialogType.error,
           context: context,
           title: 'Erro ao salvar!',
-          message: 'Ocorreu um erro ao salvar a música. Verifique a internet e tente novamente.',
+          message:
+              'Ocorreu um erro ao salvar a música. Verifique a internet e tente novamente.',
         );
       }
-    isSavePressed.value = false;
-    value = UpdateTilesState();
+      Future.delayed(const Duration(seconds: 1), () {
+      isSavePressed.value = false;
+      value = UpdateTilesState();
+      });
     }
   }
 
   deleteLyric({required BuildContext context, required String lyricId}) async {
-
     await _useCases.delete(
       params: {
         'table': 'lyrics',
@@ -226,18 +236,17 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
         'id': int.parse(lyricId),
       },
     );
+    _lyricsListStore.entitiesList.remove(
+      _lyricsListStore.entitiesList.firstWhere((e) => e.id == lyricId),
+    );
     if (context.mounted) {
-      await showCustomMessageDialog(
+       showCustomMessageDialog(
         type: DialogType.success,
         context: context,
         title: 'Sucesso!',
         message: 'Música deletada com sucesso.',
       );
     }
-    _lyricsListStore.entitiesList.remove(
-      _lyricsListStore.entitiesList.firstWhere((e) => e.id == lyricId),
-    );
-    value = UpdateTilesState();
   }
 }
 

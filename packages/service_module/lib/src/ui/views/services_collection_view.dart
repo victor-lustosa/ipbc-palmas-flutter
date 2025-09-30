@@ -55,10 +55,10 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                 context,
               ),
             );
-          } else if (state is DataFetchedState<ServicesCollectionState> ||
-              state is UpdateServicesListState) {
+          } else if (state is DataFetchedState<ServicesCollectionState> || state is UpdateServicesListState) {
             final currentIds = _bloc.entitiesList.map((e) => e.id!).toSet();
             _gestureKeys.removeWhere((key, _) => !currentIds.contains(key));
+
             return AnnotatedRegion<SystemUiOverlayStyle>(
               value: SystemUiOverlayStyle.dark,
               child: SafeArea(
@@ -139,7 +139,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                                 label: 'Deletar',
                                                 action: () async {
                                                   _bloc.add(
-                                                    DeleteItemEvent(index: index),
+                                                    DeleteItemEvent(index: index, context: context),
                                                   );
                                                   if (context.mounted) {
                                                     pop(context);

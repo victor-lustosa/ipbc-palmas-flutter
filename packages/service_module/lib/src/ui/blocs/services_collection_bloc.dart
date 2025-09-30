@@ -71,6 +71,12 @@ class ServicesCollectionBloc
     if (response != null) {
       entitiesList.remove(service);
     }
+      showCustomMessageDialog(
+        type: DialogType.success,
+        context: event.context,
+        title: 'Sucesso!',
+        message: 'Música deletada com sucesso.',
+      );
     emit(DataFetchedState<ServicesCollectionState>());
   }
 
@@ -112,8 +118,8 @@ class ServicesCollectionBloc
 abstract class ServicesCollectionEvent {}
 
 class DeleteItemEvent extends GenericEvent<ServicesCollectionEvent> {
-  DeleteItemEvent({required this.index});
-
+  DeleteItemEvent({ required this.context, required this.index});
+  final BuildContext context;
   final int index;
 }
 

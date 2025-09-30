@@ -1,13 +1,11 @@
-
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     with DateMixin, ConnectivityMixin {
-  ManageServiceStore({
-    required IUseCases useCases,
-  }) : _useCases = useCases,
-       super(InitialState<ManageServiceState>());
+  ManageServiceStore({required IUseCases useCases})
+    : _useCases = useCases,
+      super(InitialState<ManageServiceState>());
 
   String? _nextFocusId;
   String? _currentlyFocusedLiturgyId;
@@ -127,15 +125,21 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     _focusNodes[sequenceKey] = titleFocusNode;
 
     if (liturgy.isAdditional) {
-      final subtitleController = TextEditingController(text: liturgy.additional);
+      final subtitleController = TextEditingController(
+        text: liturgy.additional,
+      );
       final subtitleFocusNode = FocusNode();
       subtitleFocusNode.addListener(() {
         focusListener(subtitleFocusNode.hasFocus);
         value = UpdateFormFieldState();
         if (!subtitleFocusNode.hasFocus && subtitleController.text.isEmpty) {
-          final index = liturgiesList.indexWhere((item) => item.id == liturgyId);
+          final index = liturgiesList.indexWhere(
+            (item) => item.id == liturgyId,
+          );
           if (index != -1 && liturgiesList[index].isAdditional) {
-            liturgiesList[index] = liturgiesList[index].copyWith(isAdditional: false);
+            liturgiesList[index] = liturgiesList[index].copyWith(
+              isAdditional: false,
+            );
           }
         }
       });
@@ -213,7 +217,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
         );
 
         if (context.mounted) {
-          await showCustomMessageDialog(
+          showCustomMessageDialog(
             context: context,
             title: 'Sucesso!',
             message: 'Culto salvo',
@@ -223,12 +227,15 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
           Modular.get<ServiceStore>().servicesEntity = servicesEntity;
           Modular.get<ServiceStore>().serviceEntity = serviceEntity!;
 
-          if (updateCallbackParam != null && context.mounted) {
-            updateCallbackParam!();
-          }
+          Future.delayed(Duration(seconds: 1), () {
+            if (updateCallbackParam != null && context.mounted) {
+              updateCallbackParam!();
+            }
+          });
         }
       }
       value = DataAddedState<ManageServiceState>();
+      Modular.get<LyricsListStore>().entitiesList = [];
       isSavePressed.value = false;
     } else {
       isSavePressed.value = false;
@@ -422,10 +429,13 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     }
     return false;
   }
+
   void updateLiturgyItemState(String liturgyId, bool isAdditional) {
     final index = liturgiesList.indexWhere((item) => item.id == liturgyId);
     if (index != -1) {
-      liturgiesList[index] = liturgiesList[index].copyWith(isAdditional: isAdditional);
+      liturgiesList[index] = liturgiesList[index].copyWith(
+        isAdditional: isAdditional,
+      );
       notifyListeners();
     }
   }
