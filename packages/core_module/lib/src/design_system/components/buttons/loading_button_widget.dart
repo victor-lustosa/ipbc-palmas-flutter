@@ -57,7 +57,9 @@ class LoadingButtonWidget extends StatelessWidget {
           margin:
               margin ??
               const EdgeInsets.only(top: 40, bottom: 24, left: 16, right: 16),
-          width: isLoading ? (loadingWidth ?? context.sizeOf.width) : (width ?? context.sizeOf.width),
+          width: isLoading
+              ? (loadingWidth ?? context.sizeOf.width)
+              : (width ?? context.sizeOf.width),
           height: height ?? 48,
           duration: duration ?? const Duration(milliseconds: 750),
           curve: Curves.fastOutSlowIn,
