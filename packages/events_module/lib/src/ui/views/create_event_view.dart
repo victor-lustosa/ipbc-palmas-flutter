@@ -21,6 +21,12 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
       _store.init();
 
   }
+  @override
+  dispose() {
+    _store.resetValidationFields();
+    super.dispose();
+  }
+
 
   get prefixLocationIcon => Container(
     margin: const EdgeInsets.only(left: 18, right: 10),
@@ -549,18 +555,14 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                           validator: (_) => null,
                         ),
                       ),
-                      ButtonWidget(
+                      LoadingButtonWidget(
+                        margin: EdgeInsets.zero,
+                          isPressed: _store.isAddEventPressed,
                         action: () async {
                           _store.addData(context);
                         },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        fixedSize: Size(context.sizeOf.width, 48),
-                        backgroundColor: AppColors.darkGreen,
-                        shadowColor: AppColors.grey0,
-                        foregroundColor: AppColors.white,
-                        child: const Text("Salvar evento"),
+                        label: "Salvar evento",
+                        isValid: _store.isAllFieldsValid,
                       ),
                       Visibility(
                         visible: _store.isEditing,

@@ -72,9 +72,44 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   ValueNotifier<bool> isEventLinkDescriptionValid = ValueNotifier(true);
   ValueNotifier<bool> isCoverImageValid = ValueNotifier(true);
   ValueNotifier<bool> isPressed = ValueNotifier(false);
+  ValueNotifier<bool> isAddEventPressed = ValueNotifier(false);
+  ValueNotifier<bool> isFormValid = ValueNotifier(true);
+
+  get isAllFieldsValid =>
+      isEventTitleValid.value &&
+      isEventSubtitleValid.value &&
+      isEventLocationValid.value &&
+      isEventLocationNameValid.value &&
+      isEventDescriptionValid.value &&
+      isEventLinkValid.value &&
+      isEventLinkDescriptionValid.value &&
+      isContactLinkValid.value &&
+      isCoverImageValid.value;
+
 
   File coverImage = File('');
   late EventEntity eventEntity;
+
+  void init() {
+    if (isEditing) {
+      fillFormWithEvent(eventEntity);
+    } else {
+      eventTitleController.clear();
+      eventSubtitleController.clear();
+      coverImage = File('');
+      final now = DateTime.now();
+      startDate = DateTime(now.year, now.month, now.day, 08, 0);
+      endDate = DateTime(now.year, now.month, now.day, 18, 0);
+      startTime = TimeOfDay(hour: 08, minute: 00);
+      endTime = TimeOfDay(hour: 18, minute: 30);
+      eventDescriptionController.clear();
+      eventLocationController.clear();
+      eventLocationNameController.clear();
+      eventLinkController.clear();
+      contactLinkController.clear();
+    }
+  }
+
 
   formValidation(String? data, ValueNotifier<bool> isValid) {
     if (isEmptyData(data)) {
@@ -184,6 +219,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     final imageValid = isEditing ? true : coverImage.path.trim().isNotEmpty;
     changeValue(isCoverImageValid, imageValid);
 
+    changeValue(isFormValid, allTextValid && imageValid);
     return allTextValid && imageValid;
   }
 
@@ -241,6 +277,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   }
 
   Future<bool> addData(BuildContext context) async {
+    isAddEventPressed.value = true;
     if (await validateAllFields(context)) {
       final response = await isConnected();
       if (response) {
@@ -300,14 +337,17 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
             updateCallbackParam!();
             }
           value = DataAddedState<CreateEventState>();
+          isAddEventPressed.value = false;
           return Future.value(true);
           });
         }
       } else {
         value = NoConnectionState<CreateEventState>();
+        isAddEventPressed.value = false;
         return Future.value(false);
       }
     }
+    isAddEventPressed.value = false;
     return Future.value(false);
   }
 
@@ -325,24 +365,20 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     return Future.value(response[0]);
   }
 
-  void init() {
-    if (isEditing) {
-      fillFormWithEvent(eventEntity);
-    } else {
-      eventTitleController.clear();
-      eventSubtitleController.clear();
-      coverImage = File('');
-      final now = DateTime.now();
-      startDate = DateTime(now.year, now.month, now.day, 08, 0);
-      endDate = DateTime(now.year, now.month, now.day, 18, 0);
-      startTime = TimeOfDay(hour: 08, minute: 00);
-      endTime = TimeOfDay(hour: 18, minute: 30);
-      eventDescriptionController.clear();
-      eventLocationController.clear();
-      eventLocationNameController.clear();
-      eventLinkController.clear();
-      contactLinkController.clear();
-    }
+
+
+  resetValidationFields() {
+    isFormValid.value = true;
+    isEventTitleValid.value = true;
+    isEventSubtitleValid.value = true;
+    isEventLocationValid.value = true;
+    isEventLocationNameValid.value = true;
+    isEventDescriptionValid.value = true;
+    isEventLinkValid.value = true;
+    isEventLinkDescriptionValid.value = true;
+    isContactLinkValid.value = true;
+    isCoverImageValid.value = true;
+
   }
 }
 

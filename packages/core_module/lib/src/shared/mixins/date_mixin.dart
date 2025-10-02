@@ -67,7 +67,6 @@ mixin DateMixin {
        selectedDate: selectedDate,
        context: context,
      );
-
      if (pickedDate == null) return;
 
      final today = DateTime.now();
