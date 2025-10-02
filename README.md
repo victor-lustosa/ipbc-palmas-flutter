@@ -74,5 +74,40 @@ $ dart run build_runner build
 ```bash
 $ git rm --cached nome_do_arquivo
 ```
+# Gerar o Cache de Shaders (Arquivo JSON)
 
+Primeiro, você precisa rodar seu aplicativo em modo de perfil e interagir com todas as animações para que o Flutter possa registrar os shaders utilizados.
+Conecte um dispositivo físico.
+Execute o seguinte comando no terminal:
 
+```bash
+$ flutter run --profile --cache-sksl
+```
+Com o aplicativo rodando, navegue por todas as telas e interaja com todas as animações, transições, ListViews com rolagem rápida, e qualquer outro widget que possa ter efeitos gráficos complexos. Quanto mais partes do app você usar, mais completo será o cache.
+Quando terminar, pressione 'q' no terminal para encerrar a aplicação.
+
+Isso criará um arquivo chamado flutter_01.sksl.json na raiz do seu projeto.
+
+## Usar o Cache para Gerar o Build
+
+## Android
+
+Para App Bundle (recomendado para a Play Store):
+
+```bash
+$ flutter build appbundle --bundle-sksl-path flutter_01.sksl.json
+```
+
+Para APK:
+
+```bash
+$ flutter build apk --bundle-sksl-path flutter_01.sksl.json
+```
+
+## iOS
+
+Para IPA (recomendado para a App Store):
+
+```bash
+$ flutter build ipa --bundle-sksl-path flutter_01.sksl.json
+```

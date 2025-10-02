@@ -75,7 +75,7 @@ mixin DateMixin {
 
      if (pickedOnly.isBefore(todayOnly)) {
        if (context.mounted) {
-         await showCustomMessageDialog(
+         showCustomMessageDialog(
            type: DialogType.error,
            context: context,
            title: 'Data inválida',

@@ -87,10 +87,6 @@ class SupabaseRepository implements IRepository {
       throw ArgumentError("A exclusão em massa não é permitida. Forneça uma cláusula 'where' ou id.");
     }
 
-    if (params?['referenceField'] != null && params?['referenceValue'] != null) {
-      query = query.eq(params?['referenceField'], params?['referenceValue']);
-    }
-
     if (params?['selectFields'] != null) {
       query = query.select(params?['selectFields'] ?? '*');
     }

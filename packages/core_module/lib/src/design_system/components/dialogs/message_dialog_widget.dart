@@ -1,52 +1,110 @@
+import 'dart:async';
+
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 enum DialogType { success, error }
-
-Future<void> showCustomMessageDialog({
+OverlayEntry? _currentOverlayEntry;
+void showCustomMessageDialog({
   required BuildContext context,
   required String title,
   required String message,
-  Function()? onClose,
+  Duration duration = const Duration(milliseconds: 900),
   required DialogType type,
 }) async {
-  await showGeneralDialog(
-    context: context,
-    barrierDismissible: true,
-    barrierLabel: 'Toast',
-    barrierColor: Colors.transparent,
-    transitionDuration: const Duration(milliseconds: 200),
-    pageBuilder: (buildContext, animation, secondaryAnimation) {
-      if(onClose == null){
-        Future.delayed(Duration(milliseconds: 800), (){
-          if(context.mounted){
-            nativePop(context);
-          }
-        });
-      }
-      return ErrorDialogWidget(
-        title: title,
-        message: message,
-        onClose: onClose,
-        type: type,
-      );
-    },
-    transitionBuilder: (context, animation, secondaryAnimation, child) {
-      return FadeTransition(
-        opacity: animation,
-        child: child,
+  if (_currentOverlayEntry != null) {
+    _currentOverlayEntry!.remove();
+    _currentOverlayEntry = null;
+  }
+
+  final OverlayState overlayState = Overlay.of(context);
+
+  _currentOverlayEntry = OverlayEntry(
+    builder: (context) {
+      return ToastAnimation(
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: MessageDialogWidget(
+            title: title,
+            message: message,
+            type: type,
+            onClose: () {
+              if (_currentOverlayEntry != null) {
+                _currentOverlayEntry!.remove();
+                _currentOverlayEntry = null;
+              }
+            },
+          ),
+        ),
       );
     },
   );
+
+  overlayState.insert(_currentOverlayEntry!);
+
+  Timer(duration, () {
+    if (_currentOverlayEntry != null) {
+      _currentOverlayEntry!.remove();
+      _currentOverlayEntry = null;
+    }
+  });
 }
 
-class ErrorDialogWidget extends StatelessWidget {
+class ToastAnimation extends StatefulWidget {
+  final Widget child;
+  const ToastAnimation({super.key, required this.child});
+
+  @override
+  State<ToastAnimation> createState() => _ToastAnimationState();
+}
+
+class _ToastAnimationState extends State<ToastAnimation>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _opacity;
+  late Animation<Offset> _position;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 250),
+    );
+    _opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
+    );
+    _position = Tween<Offset>(begin: const Offset(0, 0.1), end: Offset.zero).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
+    );
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: _opacity,
+      child: SlideTransition(
+        position: _position,
+        child: widget.child,
+      ),
+    );
+  }
+}
+
+class MessageDialogWidget extends StatelessWidget {
   final String title;
   final String message;
   final Function()? onClose;
   final DialogType type;
 
-  const ErrorDialogWidget({
+  const MessageDialogWidget({
     super.key,
     required this.title,
     required this.message,
