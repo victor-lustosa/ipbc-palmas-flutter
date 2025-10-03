@@ -67,10 +67,8 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
         params: lyricParams,
         converter: LyricAdapter.fromMapList,
       );
-      if (lyricsList!.isNotEmpty) {
-        _lyricsListStore.entitiesList = lyricsList;
-        emit(DataFetchedState<LyricState>());
-      }
+      _lyricsListStore.entitiesList = lyricsList;
+      emit(DataFetchedState<LyricState>());
     } else {
       emit(NoConnectionState<LyricState>());
     }

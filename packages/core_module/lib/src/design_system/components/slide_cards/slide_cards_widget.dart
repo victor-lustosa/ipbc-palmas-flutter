@@ -67,12 +67,8 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
                     ? const EdgeInsets.only(left: 16)
                     : const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 height: isHorizontal
-                    ? (isSmallDevice
-                          ? context.sizeOf.width * .43
-                          : context.sizeOf.width * .48)
-                    : (isSmallDevice
-                          ? context.sizeOf.width * 0.6
-                          : context.sizeOf.width * 0.6),
+                    ? null
+                    : context.sizeOf.width * 0.65,
                 width: widget.width,
                 decoration: BoxDecoration(
                   color: Colors.grey.shade300,
@@ -111,9 +107,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
                       widget.margin ??
                       EdgeInsets.only(left: index == 0 ? 16 : 0, right: 16),
                   height: isHorizontal
-                      ? (isSmallDevice
-                            ? context.sizeOf.width * .60
-                            : context.sizeOf.width * .60)
+                      ? context.sizeOf.width * .60
                       : null,
                   child: Column(
                     children: [

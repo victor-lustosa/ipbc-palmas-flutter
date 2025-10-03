@@ -140,8 +140,8 @@ class _HomeViewState extends State<HomeView>
                               ),
                               height: _bloc.eventsList.isEmpty
                                   ? (isSmallDevice
-                                        ? context.sizeOf.width * .578
-                                        : context.sizeOf.width * .59)
+                                        ? context.sizeOf.width * .62
+                                        : context.sizeOf.width * .64)
                                   : (isSmallDevice
                                         ? context.sizeOf.width * .72
                                         : context.sizeOf.width * .663),
