@@ -31,7 +31,7 @@ class LoadingButtonWidget extends StatelessWidget {
   final double? width;
   final Duration? duration;
   final double? height;
-  final bool isValid;
+  final ValueNotifier<bool> isValid;
   final String? label;
   final Color? backgroundColor;
   final Color? disableColor;
@@ -70,8 +70,8 @@ class LoadingButtonWidget extends StatelessWidget {
             shape:
                 shape ??
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-            action: isValid && !isLoading ? action : null,
-            backgroundColor: isValid
+            action: isValid.value && !isLoading ? action : null,
+            backgroundColor: isValid.value
                 ? (backgroundColor ?? AppColors.darkGreen)
                 : (disableColor ?? AppColors.disableButton),
             shadowColor: shadowColor ?? AppColors.grey0,

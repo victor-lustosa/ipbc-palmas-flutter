@@ -137,8 +137,8 @@ class _LoginViewState extends State<LoginView> {
                       _store.loginValidate(context: context);
                     },
                     isValid:
-                        _store.isEmailValid.value &&
-                        _store.isPasswordValid.value,
+                    ValueNotifier(_store.isEmailValid.value &&
+                        _store.isPasswordValid.value),
                     label: "Entrar",
                   ),
                   Center(

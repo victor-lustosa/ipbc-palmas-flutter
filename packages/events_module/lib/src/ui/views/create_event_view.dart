@@ -252,7 +252,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                           isValid: _store.isEventDescriptionValid.value,
                           errorText: _store.eventDescriptionErrorText,
                           globalKey: _store.eventDescriptionKey,
-                          isPressed: _store.isPressed,
+                          isPressed: _store.isAddEventPressed,
                           inputDecoration: fieldInputDecoration(
                             hintColor: _store.isEventDescriptionValid.value
                                 ? AppColors.grey5
@@ -452,7 +452,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                           isValid: _store.isEventLocationValid.value,
                           errorText: _store.eventLocationErrorText,
                           globalKey: _store.eventLocationKey,
-                          isPressed: _store.isPressed,
+                          isPressed: _store.isAddEventPressed,
                           inputDecoration: fieldInputDecoration(
                             prefixIconConstraints: const BoxConstraints(),
                             prefixIcon: Padding(
@@ -489,7 +489,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                           isValid: _store.isEventLocationNameValid.value,
                           errorText: _store.eventLocationNameErrorText,
                           globalKey: _store.eventLocationNameKey,
-                          isPressed: _store.isPressed,
+                          isPressed: _store.isAddEventPressed,
                           inputDecoration: fieldInputDecoration(
                             prefixIconConstraints: const BoxConstraints(),
                             prefixIcon: Padding(
@@ -525,7 +525,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                           isValid: _store.isEventLinkValid.value,
                           errorText: _store.eventLinkErrorText,
                           globalKey: _store.eventLinkKey,
-                          isPressed: _store.isPressed,
+                          isPressed: _store.isAddEventPressed,
                           inputDecoration: fieldInputDecoration(
                             prefixIconConstraints: const BoxConstraints(),
                             prefixIcon: prefixLocationIcon,
@@ -545,7 +545,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                           isValid: _store.isContactLinkValid.value,
                           errorText: _store.contactLinkErrorText,
                           globalKey: _store.contactLinkKey,
-                          isPressed: _store.isPressed,
+                          isPressed: _store.isAddEventPressed,
                           inputDecoration: fieldInputDecoration(
                             prefixIconConstraints: const BoxConstraints(),
                             prefixIcon: prefixLocationIcon,

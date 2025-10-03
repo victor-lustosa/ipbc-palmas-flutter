@@ -52,7 +52,7 @@ class _TemplateLoadingButtonWidgetState extends State<TemplateLoadingButtonWidge
       disableColor: AppColors.white,
       isPressed: widget.isPressed,
       action: widget.action,
-      isValid: !widget.isPressed.value,
+      isValid: ValueNotifier(!widget.isPressed.value),
       child: AnimatedOpacity(
         opacity: widget.isPressed.value ? 0.0 : 1.0,
         duration: const Duration(milliseconds: 400),

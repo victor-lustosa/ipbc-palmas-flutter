@@ -241,10 +241,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           : null;
                     },
                     isValid:
-                        _store.isEmailValid.value &&
+                    ValueNotifier(_store.isEmailValid.value &&
                         _store.isPasswordValid.value &&
                         _store.isSecondPasswordValid.value &&
-                        _store.isPasswordEqual,
+                        _store.isPasswordEqual),
                     label: "Criar Conta",
                   ),
                   /* Center(

@@ -75,22 +75,23 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   ValueNotifier<bool> isAddEventPressed = ValueNotifier(false);
   ValueNotifier<bool> isFormValid = ValueNotifier(true);
 
-  get isAllFieldsValid =>
-      isEventTitleValid.value &&
-      isEventSubtitleValid.value &&
-      isEventLocationValid.value &&
-      isEventLocationNameValid.value &&
-      isEventDescriptionValid.value &&
-      isEventLinkValid.value &&
-      isEventLinkDescriptionValid.value &&
-      isContactLinkValid.value &&
-      isCoverImageValid.value;
+  late ValueNotifier<bool>  isAllFieldsValid;
+
 
 
   File coverImage = File('');
   late EventEntity eventEntity;
 
   void init() {
+    isAllFieldsValid = ValueNotifier(isEventTitleValid.value &&
+        isEventSubtitleValid.value &&
+        isEventLocationValid.value &&
+        isEventLocationNameValid.value &&
+        isEventDescriptionValid.value &&
+        isEventLinkValid.value &&
+        isEventLinkDescriptionValid.value &&
+        isContactLinkValid.value &&
+        isCoverImageValid.value);
     if (isEditing) {
       fillFormWithEvent(eventEntity);
     } else {
@@ -276,7 +277,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     return regex.hasMatch(url);
   }
 
-  Future<bool> addData(BuildContext context) async {
+  Future<void> addData(BuildContext context) async {
     isAddEventPressed.value = true;
     if (await validateAllFields(context)) {
       final response = await isConnected();
@@ -298,7 +299,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
               message:
                   'Não foi possível extrair a localização do link fornecido. Por favor, verifique o link e tente novamente.',
             );
-            return Future.value(false);
           }
         }
         value = AddDataEvent<CreateEventState>();
@@ -324,8 +324,8 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
             params: {'table': 'event'},
           );
           if (context.mounted) {
-            isChangedOrAdded = true;
-            showCustomMessageDialog(
+            isAllFieldsValid.value = false;
+              showCustomMessageDialog(
               type: DialogType.success,
               context: context,
               title: 'Sucesso!',
@@ -336,19 +336,18 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
           if (updateCallbackParam != null && context.mounted) {
             updateCallbackParam!();
             }
+
           value = DataAddedState<CreateEventState>();
+
           isAddEventPressed.value = false;
-          return Future.value(true);
           });
         }
       } else {
         value = NoConnectionState<CreateEventState>();
         isAddEventPressed.value = false;
-        return Future.value(false);
       }
     }
     isAddEventPressed.value = false;
-    return Future.value(false);
   }
 
   Future<dynamic> delete(EventEntity entity) async {

@@ -148,7 +148,7 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                       );
                       //}
                     },
-                    isValid: true,
+                    isValid: ValueNotifier(true),
                     label: "Entrar", loadingWidth: 48, width: 48,
                   ),
                 ),

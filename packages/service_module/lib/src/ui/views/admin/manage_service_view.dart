@@ -518,9 +518,9 @@ class _ManageServiceViewState extends State<ManageServiceView>
                             action: () async {
                               _store.submit(context);
                             },
-                            isValid: _store.isThemeValid.value &&
+                            isValid: ValueNotifier(_store.isThemeValid.value &&
                                 _store.isPreacherValid.value &&
-                                _store.liturgiesList.isNotEmpty,
+                                _store.liturgiesList.isNotEmpty),
                             label: "Salvar Culto",
                           ),
                         ],

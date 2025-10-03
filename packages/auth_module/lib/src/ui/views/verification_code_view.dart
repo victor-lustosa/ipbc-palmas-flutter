@@ -102,7 +102,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                               _store.isListFull
                                   ? _store.validateCode(context)
                                   : null,
-                      isValid: _store.isListFull,
+                      isValid: ValueNotifier(_store.isListFull),
                       label: "Verificar",
                     ),
                     TextVerificationWidget(
