@@ -38,20 +38,31 @@ class SupaAuthRepository implements IOnlineAuthRepository {
   }
 
   @override
-  Future<AuthUserDTO> signInWithEmail(String email, String password) async {
-    final AuthResponse authResponse = await _supaClient.auth.signInWithPassword(
-      email: email,
-      password: password,
-    );
-    UserEntity? currentUser = UserEntity.create(authResponse.user);
-    return AuthUserDTO(
-     auth: AuthCredentials(
-       token: authResponse.session?.accessToken != null ? authResponse.session!.accessToken : '',
-       provider: currentUser.provider ?? "",
-       role: currentUser.role ?? "",
-     ),
-      user: currentUser
-    );
+  Future<Either<AuthUserDTO, SupaAuthException>> signInWithEmail(String email, String password) async {
+    try {
+      final AuthResponse authResponse = await _supaClient.auth.signInWithPassword(email: email, password: password);
+      UserEntity? currentUser = UserEntity.create(authResponse.user);
+      return left(
+        AuthUserDTO(
+          auth: AuthCredentials(
+            token: authResponse.session?.accessToken != null
+                ? authResponse.session!.accessToken
+                : '',
+            provider: currentUser.provider ?? "",
+            role: currentUser.role ?? "",
+          ),
+          user: currentUser,
+        ),
+      );
+    } on AuthApiException catch (e) {
+      return right(
+        SupaAuthException(
+          message: e.message,
+          statusCode: e.statusCode != null ? e.statusCode! : '500',
+          code: e.code,
+        ),
+      );
+    }
   }
 
   @override

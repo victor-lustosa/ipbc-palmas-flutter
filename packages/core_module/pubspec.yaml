@@ -38,6 +38,7 @@ dependencies:
   cached_network_image: ^3.4.1
   bloc_concurrency: ^0.3.0
   uno: ^1.1.12
+  dartz: ^0.10.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

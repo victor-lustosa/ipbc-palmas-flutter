@@ -48,9 +48,11 @@ class AppColors {
   static const Color greenInputAccept = Color(0xFF80AD9F);
   static const Color delete = Color(0xFFFF3B30);
   static const Color codeBorderError = Color(0xFFC72C41);
-  static const Color redModal = Color(0xffC72C41);
+  static const Color modalRed = Color(0xffC72C41);
   static const Color redCircleModal = Color(0xff9D2333);
   static const Color warning = Color(0xFFFF9500);
+  static const Color modalWarning = Color(0xFFF5902E);
+  static const Color iconModalWarning = Color(0xFFDE8200);
   static const Color add = Color(0xFF007AFF);
   static const Color information = Color(0xFF30AAC7);
 }

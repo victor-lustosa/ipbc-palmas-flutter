@@ -32,8 +32,8 @@ class CarouselWidget extends StatefulWidget {
   State<CarouselWidget> createState() => CarouselWidgetState();
 }
 
-class CarouselWidgetState extends State<CarouselWidget> {
-  late PageController _pageController;
+class CarouselWidgetState extends State<CarouselWidget> with AutomaticKeepAliveClientMixin<CarouselWidget>{
+late PageController _pageController;
   int activePage = 0;
   ValueNotifier<bool> imageHasLoaded = ValueNotifier(false);
   final Map<int, bool> _isImageLoaded = {};
@@ -51,7 +51,11 @@ class CarouselWidgetState extends State<CarouselWidget> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     Widget placeholder({child}) => ShimmerWidget(
       animation: widget.shimmerController!,
       child:

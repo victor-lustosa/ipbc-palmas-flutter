@@ -78,8 +78,8 @@ class CreateAccountStore
       emptyPasswords ? false : password == passwordConfirm;
 
   void createAccount(BuildContext context) async {
-    isCreateAccountPressed.value = true;
     value = LoadingState<CreateAccountState>();
+    isCreateAccountPressed.value = true;
     final result = await _useCases.createAccount(email, password);
     if (result == 'sucesso') {
       pushNamed(AppRoutes.authRoute + AppRoutes.accountCreatedRoute);

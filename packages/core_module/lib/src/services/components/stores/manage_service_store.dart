@@ -131,7 +131,6 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
       final subtitleFocusNode = FocusNode();
       subtitleFocusNode.addListener(() {
         focusListener(subtitleFocusNode.hasFocus);
-        value = UpdateFormFieldState();
         if (!subtitleFocusNode.hasFocus && subtitleController.text.isEmpty) {
           final index = liturgiesList.indexWhere(
             (item) => item.id == liturgyId,
@@ -142,6 +141,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
             );
           }
         }
+        value = UpdateFormFieldState();
       });
 
       _controllers[additionalKey] = subtitleController;
@@ -216,27 +216,27 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
           data: ServiceAdapter.toMap(serviceEntity!),
         );
 
+        Modular.get<ServiceStore>().servicesEntity = servicesEntity;
+        Modular.get<ServiceStore>().serviceEntity = serviceEntity!.copyWith(id: response[0]['id'].toString());
+
         if (context.mounted) {
           showCustomMessageDialog(
             context: context,
             title: 'Sucesso!',
             message: 'Culto salvo',
             type: DialogType.success,
-          );
-
-          Modular.get<ServiceStore>().servicesEntity = servicesEntity;
-          Modular.get<ServiceStore>().serviceEntity = serviceEntity!.copyWith(id: response[0]['id'].toString());
-
-          Future.delayed(Duration(seconds: 1), () {
-            if (updateCallbackParam != null && context.mounted) {
-              updateCallbackParam!();
+            duration: const Duration(seconds: 1),
+            onDelayedAction: () {
+              if (updateCallbackParam != null && context.mounted) {
+                updateCallbackParam!();
+              }
             }
-          });
+          );
         }
       }
-      value = DataAddedState<ManageServiceState>();
       Modular.get<LyricsListStore>().entitiesList = [];
       isSavePressed.value = false;
+      value = DataAddedState<ManageServiceState>();
     } else {
       isSavePressed.value = false;
       value = NoConnectionState<ManageServiceState>();

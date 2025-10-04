@@ -1,5 +1,4 @@
 import '../../../../core_module.dart';
-import '../dtos/auth_user_dto.dart';
 import '../repositories/auth_repositories.dart';
 
 class AuthUseCases implements IAuthUseCases {
@@ -17,26 +16,44 @@ class AuthUseCases implements IAuthUseCases {
     var entity = await _onlineRepository.createAccount(email, password);
     return Future.value(entity as String);
   }
-  
+
   @override
   Future<String?> signInWithEmail(String email, String password) async {
-    AuthUserDTO? authUserDTO = await _onlineRepository.signInWithEmail(email, password);
-    String jwtToken = authUserDTO?.auth.token ?? "";
-    await _saveUserAndCredentials(
-      authUserDTO?.user,
-      AuthCredentials(
-        token: jwtToken,
-        provider: authUserDTO?.user.provider ?? '',
-        role: authUserDTO?.user.role ?? '',
-      ),
+    final response = await _onlineRepository.signInWithEmail(email, password);
+    return response.fold(
+      (authUserDTO) async {
+        String jwtToken = authUserDTO.auth.token ?? "";
+        await _saveUserAndCredentials(
+          authUserDTO.user,
+          AuthCredentials(
+            token: jwtToken,
+            provider: authUserDTO.user.provider ?? '',
+            role: authUserDTO.user.role ?? '',
+          ),
+        );
+        return Future.value(jwtToken);
+      },
+      (exception) {
+        switch(exception.statusCode) {
+          case '400':
+            return Future.value('Por favor, verifique seu e-mail ou senha e tente novamente.');
+          case '403':
+            return Future.value('Acesso proibido. Verifique suas credenciais.');
+          case '404':
+            return Future.value('Usuário não encontrado. Verifique o email informado.');
+          case '500':
+            return Future.value('Erro no servidor. Tente novamente mais tarde.');
+          default:
+            return Future.value('Erro desconhecido. Código: ${exception.code}');
+        }
+      },
     );
-    return Future.value(jwtToken);
   }
 
   @override
   Future<String?> signInWithGoogle() async {
     final String? jwtToken = await _onlineRepository.signInWithGoogle();
-    if(jwtToken == null) return null;
+    if (jwtToken == null) return null;
     UserEntity? currentUser = _onlineRepository.getCurrentUser();
     await _saveUserAndCredentials(
       currentUser,
@@ -110,5 +127,4 @@ class AuthUseCases implements IAuthUseCases {
   Future<void> signInWithFacebook() async {
     await _onlineRepository.signInFacebook();
   }
-
 }

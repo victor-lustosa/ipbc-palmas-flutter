@@ -330,17 +330,16 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
               context: context,
               title: 'Sucesso!',
               message: 'Evento salvo',
+              duration: const Duration(seconds: 1),
+              onDelayedAction: () {
+                if (updateCallbackParam != null && context.mounted) {
+                  updateCallbackParam!();
+                }
+                value = DataAddedState<CreateEventState>();
+                isAddEventPressed.value = false;
+              }
             );
           }
-          Future.delayed(Duration(seconds: 1), () {
-          if (updateCallbackParam != null && context.mounted) {
-            updateCallbackParam!();
-            }
-
-          value = DataAddedState<CreateEventState>();
-
-          isAddEventPressed.value = false;
-          });
         }
       } else {
         value = NoConnectionState<CreateEventState>();
@@ -363,8 +362,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     notifyListeners();
     return Future.value(response[0]);
   }
-
-
 
   resetValidationFields() {
     isFormValid.value = true;

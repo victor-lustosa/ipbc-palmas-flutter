@@ -138,13 +138,6 @@ class _HomeViewState extends State<HomeView>
                                 top: 12,
                                 bottom: 20,
                               ),
-                              height: _bloc.eventsList.isEmpty
-                                  ? (isSmallDevice
-                                        ? context.sizeOf.width * .62
-                                        : context.sizeOf.width * .64)
-                                  : (isSmallDevice
-                                        ? context.sizeOf.width * .72
-                                        : context.sizeOf.width * .663),
                               child: SlideCardsWidget(
                                 action: () {
                                   _bloc.createEventStore.fromCalled = 'home';
@@ -156,9 +149,7 @@ class _HomeViewState extends State<HomeView>
                                   );
                                 },
                                 shimmerController: _shimmerController,
-                                width: isSmallDevice
-                                    ? context.sizeOf.width * .742
-                                    : context.sizeOf.width * .742,
+                                width: context.sizeOf.width * .742,
                                 scrollDirection: Axis.horizontal,
                                 route:
                                     AppRoutes.eventRoute +

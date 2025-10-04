@@ -40,6 +40,7 @@ class AppIcons {
   static const String eventLocation = 'assets/icons/event-location.png';
   static const String linkIcon = 'assets/icons/link-icon.png';
   static const String watchIcon = 'assets/icons/watch.png';
+  static const String warningIcon = 'assets/icons/warning.png';
   static const String popoverIcon = 'assets/icons/popover.svg';
 
   static const String emailSuccess = 'assets/icons/email-success.png';

@@ -1,7 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-class LoginStore extends ValueNotifier<GenericState<LoginState>> {
+class LoginStore extends ValueNotifier<GenericState<LoginState>>
+    with ConnectivityMixin {
   LoginStore({
     required AuthCircleAvatarStore authCircleAvatarStore,
     required IAuthUseCases useCases,
@@ -42,22 +43,41 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>> {
     String password,
     BuildContext context,
   ) async {
-    isLoginPressed.value = true;
     value = LoadingState<LoginState>();
-    final token = await _useCases.signInWithEmail(email, password);
-    if (context.mounted) {
-      if (token != null && token.isNotEmpty) {
-        toHome(context);
-      } else {
-        isLoginPressed.value = false;
-        value = InitialState<LoginState>();
+    isLoginPressed.value = true;
+    final response = await isConnected(
+      context: context,
+      onDelayedAction: () {
+        Future.delayed(Duration.zero, () {
+          isLoginPressed.value = false;
+          value = InitialState<LoginState>();
+        });
+      },
+    );
+    if (response) {
+      final message = await _useCases.signInWithEmail(email, password);
+      if (context.mounted) {
+        if (message == null) {
+          toHome(context);
+        } else {
+          showCustomMessageDialog(
+            type: DialogType.error,
+            context: context,
+            title: 'Email ou senha incorretos!',
+            message: message,
+            onDelayedAction: () {
+              isLoginPressed.value = false;
+              value = InitialState<LoginState>();
+            },
+          );
+        }
       }
     }
   }
 
   Future<void> googleSignIn(BuildContext context) async {
-    isGoogleLoginPressed.value = true;
     value = LoadingState<LoginState>();
+    isGoogleLoginPressed.value = true;
     final token = await _useCases.signInWithGoogle();
     if (context.mounted) {
       if (token != null && token.isNotEmpty) {

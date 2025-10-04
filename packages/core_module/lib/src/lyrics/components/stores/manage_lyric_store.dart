@@ -189,14 +189,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
       lyric.value = lyric.value.copyWith(
         id: lyricsResponse[0]['id'].toString(),
       );
-      if (context.mounted) {
-        showCustomMessageDialog(
-          type: DialogType.success,
-          context: context,
-          title: 'Sucesso!',
-          message: 'Musica salva com sucesso.',
-        );
-      }
+
 
       final index = _lyricsListStore.entitiesList.indexWhere(
         (item) => item.id == lyric.value.id,
@@ -206,25 +199,36 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
       } else {
         _lyricsListStore.entitiesList.add(lyric.value);
       }
-      Future.delayed(const Duration(seconds: 1), () {
-        isSavePressed.value = false;
-        value = UpdateTilesState();
-        buttonCallback();
-      });
+
+      if (context.mounted) {
+        showCustomMessageDialog(
+          type: DialogType.success,
+          context: context,
+          title: 'Sucesso!',
+          message: 'Musica salva com sucesso.',
+          duration: const Duration(seconds: 1),
+          onDelayedAction: (){
+            isSavePressed.value = false;
+            value = UpdateTilesState();
+            buttonCallback();
+          }
+        );
+      }
+
     } catch (e) {
       if (context.mounted) {
         showCustomMessageDialog(
           type: DialogType.error,
           context: context,
+          duration: const Duration(seconds: 1),
           title: 'Erro ao salvar!',
-          message:
-              'Ocorreu um erro ao salvar a música. Verifique a internet e tente novamente.',
+          message: 'Ocorreu um erro ao salvar a música. Verifique a internet e tente novamente.',
+          onDelayedAction: (){
+            isSavePressed.value = false;
+            value = UpdateTilesState();
+          }
         );
       }
-      Future.delayed(const Duration(seconds: 1), () {
-      isSavePressed.value = false;
-      value = UpdateTilesState();
-      });
     }
   }
 

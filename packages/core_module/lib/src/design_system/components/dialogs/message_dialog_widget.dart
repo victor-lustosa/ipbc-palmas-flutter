@@ -3,13 +3,14 @@ import 'dart:async';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-enum DialogType { success, error }
+enum DialogType { success, error, warning }
 OverlayEntry? _currentOverlayEntry;
 void showCustomMessageDialog({
   required BuildContext context,
   required String title,
   required String message,
   Duration duration = const Duration(milliseconds: 900),
+  Function()? onDelayedAction,
   required DialogType type,
 }) async {
   if (_currentOverlayEntry != null) {
@@ -28,12 +29,7 @@ void showCustomMessageDialog({
             title: title,
             message: message,
             type: type,
-            onClose: () {
-              if (_currentOverlayEntry != null) {
-                _currentOverlayEntry!.remove();
-                _currentOverlayEntry = null;
-              }
-            },
+            onDelayedAction: onDelayedAction,
           ),
         ),
       );
@@ -43,10 +39,15 @@ void showCustomMessageDialog({
   overlayState.insert(_currentOverlayEntry!);
 
   Timer(duration, () {
-    if (_currentOverlayEntry != null) {
-      _currentOverlayEntry!.remove();
-      _currentOverlayEntry = null;
-    }
+    Future.delayed(const Duration(milliseconds: 250), () {
+      if(onDelayedAction != null) {
+        onDelayedAction();
+      }
+      if (_currentOverlayEntry != null) {
+        _currentOverlayEntry!.remove();
+        _currentOverlayEntry = null;
+      }
+    });
   });
 }
 
@@ -101,15 +102,14 @@ class _ToastAnimationState extends State<ToastAnimation>
 class MessageDialogWidget extends StatelessWidget {
   final String title;
   final String message;
-  final Function()? onClose;
+  final Function()? onDelayedAction;
   final DialogType type;
-
   const MessageDialogWidget({
     super.key,
     required this.title,
     required this.message,
     required this.type,
-    this.onClose,
+    this.onDelayedAction,
   });
 
   @override
@@ -124,8 +124,12 @@ class MessageDialogWidget extends StatelessWidget {
         icon = const SuccessIconWidget();
         break;
       case DialogType.error:
-        backgroundColor = AppColors.redModal;
+        backgroundColor = AppColors.modalRed;
         icon = const ErrorIconWidget();
+        break;
+      case DialogType.warning:
+        backgroundColor = AppColors.modalWarning;
+        icon = const WarningIconWidget();
         break;
     }
 
@@ -188,9 +192,12 @@ class MessageDialogWidget extends StatelessWidget {
                       right: 16,
                       child: InkWell(
                         onTap: () {
-                          Navigator.of(context).pop();
-                          if (onClose != null) {
-                            onClose!();
+                          if(onDelayedAction != null) {
+                            onDelayedAction!();
+                          }
+                          if (_currentOverlayEntry != null) {
+                            _currentOverlayEntry!.remove();
+                            _currentOverlayEntry = null;
                           }
                         },
                         child: Image.asset(
@@ -314,5 +321,27 @@ class SuccessIconPainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return false;
+  }
+}
+
+class WarningIconWidget extends StatelessWidget {
+  const WarningIconWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        width: 50,
+        height: 50,
+        decoration: BoxDecoration(shape: BoxShape.circle,
+        color: AppColors.iconModalWarning),
+        child: Image.asset(
+          AppIcons.warningIcon,
+          width: 12,
+          height: 12,
+          color: AppColors.white,
+        ),
+      )
+    );
   }
 }

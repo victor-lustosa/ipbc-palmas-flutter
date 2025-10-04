@@ -14,10 +14,11 @@ export 'package:google_maps_flutter/google_maps_flutter.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:isar_flutter_libs/isar_flutter_libs.dart';
 export 'package:isar/isar.dart';
+export 'package:dartz/dartz.dart' hide State;
 export 'package:diacritic/diacritic.dart';
 export 'package:cached_network_image/cached_network_image.dart';
 export 'package:bloc_concurrency/bloc_concurrency.dart';
-
+export 'src/auth/infra/exceptions/supa_auth_exception.dart';
 export 'src/core/configs/app_configs.dart';
 export 'src/core/configs/app_routes.dart';
 export 'src/core/configs/api_keys.dart';

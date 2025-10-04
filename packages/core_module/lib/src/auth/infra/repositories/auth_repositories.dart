@@ -15,7 +15,7 @@ abstract class IOfflineAuthRepository
     implements IGetLocalUser, IGetToken, ISaveLocalUser, ISaveToken {}
 
 abstract class ISignInEmail {
-  Future<AuthUserDTO?> signInWithEmail(String email, String password);
+  Future<Either<AuthUserDTO,SupaAuthException>> signInWithEmail(String email, String password);
 }
 
 abstract class ICreateAccount {
