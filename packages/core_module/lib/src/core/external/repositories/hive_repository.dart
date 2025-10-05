@@ -24,10 +24,10 @@ class HiveRepository implements IRepository {
     switch (params?['type']) {
       case credentialsHiveBox:
         var value = box.get(credentialsHiveBox);
-        return AuthCredentials.fromHive(value as HiveCredentialsDTO);
+        return value != null ? AuthCredentials.fromHive(value as HiveCredentialsDTO) : null;
       case userHiveBox:
         var value = box.get(userHiveBox);
-        return UserEntity.fromHive(value as HiveUserDTO);
+        return value != null ? UserEntity.fromHive(value as HiveUserDTO) : null;
     }
   }
 
