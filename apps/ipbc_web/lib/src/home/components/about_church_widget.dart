@@ -2,27 +2,25 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class AboutChurchWidget extends StatefulWidget {
-  const AboutChurchWidget({super.key});
-
+  const AboutChurchWidget({super.key, required this.shimmerController});
+  final AnimationController shimmerController;
   @override
   State<AboutChurchWidget> createState() => _AboutChurchWidgetState();
 }
 
 class _AboutChurchWidgetState extends State<AboutChurchWidget> {
   late double width;
-
   final List<String> assetsList = [
     AppIcons.announce,
     AppIcons.book,
     AppIcons.volunteerActivismCube
   ];
-  late final Image heroImage;
   final List<Image> imagesList = [];
 
   @override
   void initState() {
     super.initState();
-    heroImage = Image.network(AppImages.hero);
+
     for (String imagePath in assetsList) {
       imagesList.add(Image.asset(imagePath));
     }
@@ -277,20 +275,43 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
           ),
         ),
       );
+  
+  Widget placeholder({child, border}) => ShimmerWidget(
+    animation: widget.shimmerController,
+    child:
+    child ??
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade300,
+            borderRadius: border ?? BorderRadius.circular(12),
+          ),
+        ),
+  );
 
   mainImage({double? width, required double height}) => Container(
         width: width,
         height: height,
         margin: const EdgeInsets.only(top: 40),
-        child: Container(
+        child: CachedNetworkImage(
+          imageUrl: AppImages.hero,
+          fit: BoxFit.cover,
+          placeholder: (context, url) => placeholder(
+            border: BorderRadius.circular(20),
+          ),
+          errorWidget: (context, url, error) => placeholder(
+            border: BorderRadius.circular(20),
+          ),
+          color: const Color.fromRGBO(0, 66, 46, 0.40),
+          colorBlendMode: BlendMode.color,
+          imageBuilder: (context, imageProvider) => Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: heroImage.image,
+              image: imageProvider,
             ),
           ),
-        ),
+        ),),
       );
 
   titleAbout({required double fontSize}) => Text(
