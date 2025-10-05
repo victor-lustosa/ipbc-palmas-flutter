@@ -19,16 +19,10 @@ class CoreModule extends Module {
           () => SupabaseRepository(supabaseClient: i.get<SupabaseClient>()),
     );
 
-    i.addLazySingleton<HiveRepository<HiveCredentialsDTO>>(() =>
-        HiveRepository<HiveCredentialsDTO>(
-          boxLabel: HiveRepository.credentialsHiveBox,
-        ),
+    i.addLazySingleton<HiveRepository>(() =>
+        HiveRepository(),
     );
-    i.addLazySingleton<HiveRepository<HiveUserDTO>>(() =>
-        HiveRepository<HiveUserDTO>(
-          boxLabel: HiveRepository.userHiveBox,
-        ),
-    );
+
     i.addSingleton(
           () =>
           UseCases<SupabaseRepository>(repository: i.get<SupabaseRepository>()),
@@ -45,7 +39,7 @@ class CoreModule extends Module {
     i.addLazySingleton<IAuthUseCases>(
           () =>
           AuthUseCases(
-            offlineRepository: i.get<HiveRepository<HiveCredentialsDTO>>(),
+            offlineRepository: i.get<HiveRepository>(),
             onlineRepository: SupaAuthRepository(
               supaClient: i.get<SupabaseClient>(),
             ),

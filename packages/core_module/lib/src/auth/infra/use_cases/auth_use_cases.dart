@@ -34,15 +34,21 @@ class AuthUseCases implements IAuthUseCases {
         return Future.value(jwtToken);
       },
       (exception) {
-        switch(exception.statusCode) {
+        switch (exception.statusCode) {
           case '400':
-            return Future.value('Por favor, verifique seu e-mail ou senha e tente novamente.');
+            return Future.value(
+              'Por favor, verifique seu e-mail ou senha e tente novamente.',
+            );
           case '403':
             return Future.value('Acesso proibido. Verifique suas credenciais.');
           case '404':
-            return Future.value('Usuário não encontrado. Verifique o email informado.');
+            return Future.value(
+              'Usuário não encontrado. Verifique o email informado.',
+            );
           case '500':
-            return Future.value('Erro no servidor. Tente novamente mais tarde.');
+            return Future.value(
+              'Erro no servidor. Tente novamente mais tarde.',
+            );
           default:
             return Future.value('Erro desconhecido. Código: ${exception.code}');
         }
@@ -86,31 +92,23 @@ class AuthUseCases implements IAuthUseCases {
   }
 
   @override
-  Future<UserEntity?> getLocalUser() async {
-    final user = await _offlineRepository.get<HiveUserDTO>();
-    if (user != null) {
-      return UserEntity.fromIsar(user);
-    } else {
-      return null;
-    }
-  }
+  Future<UserEntity?> getLocalUser() async => await _offlineRepository.get<HiveUserDTO>(params: {'type': HiveRepository.userHiveBox});
 
   @override
   dynamic saveCredentials(AuthCredentials auth) =>
       _offlineRepository.add<HiveCredentialsDTO>(
-        data: HiveCredentialsDTO(
-          token: auth.token,
-          provider: auth.provider,
-          role: auth.role,
-        ),
+        params: {'type': HiveRepository.credentialsHiveBox},
+        data: auth,
       );
 
   @override
-  void saveLocalUser(UserEntity user) =>
-      _offlineRepository.add<HiveUserDTO>(data: HiveUserDTO.create(user));
+  void saveLocalUser(UserEntity user) => _offlineRepository.add<HiveUserDTO>(
+    data: user,
+    params: {'type': HiveRepository.userHiveBox},
+  );
 
   @override
-  dynamic logout({required int id, required String? provider}) async {
+  dynamic logout({required String? provider}) async {
     switch (provider ?? '') {
       case 'google':
         await _onlineRepository.logoutWithGoogle();
@@ -119,7 +117,7 @@ class AuthUseCases implements IAuthUseCases {
         break;
       default:
     }
-    await _offlineRepository.delete<HiveUserDTO>(params: {'id': id});
+    await _offlineRepository.delete<HiveUserDTO>();
     return await _offlineRepository.delete<HiveCredentialsDTO>();
   }
 

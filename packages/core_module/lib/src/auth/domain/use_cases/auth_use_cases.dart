@@ -46,7 +46,7 @@ abstract class ISaveLocalUser {
 }
 
 abstract class ILogout {
-  dynamic logout({required int id, required String? provider});
+  dynamic logout({required String? provider});
 }
 
 abstract class ISaveCredentials {

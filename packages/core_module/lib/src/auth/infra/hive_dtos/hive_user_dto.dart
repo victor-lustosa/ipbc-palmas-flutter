@@ -66,7 +66,7 @@ class HiveUserDTO {
   final bool isAnonymous;
 
   HiveUserDTO({
-    required this.id, // Adicionado
+    required this.id,
     required this.aud,
     required this.picture,
     required this.fullName,
@@ -89,7 +89,7 @@ class HiveUserDTO {
   });
 
   factory HiveUserDTO.create(UserEntity user) => HiveUserDTO(
-    id: user.id, // Adicionado
+    id: user.id,
     picture: user.userMetadata?['picture'] ?? '',
     fullName: user.userMetadata?['full_name'] ?? '',
     aud: user.aud,

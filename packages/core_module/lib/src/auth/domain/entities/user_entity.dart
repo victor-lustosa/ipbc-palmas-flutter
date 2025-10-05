@@ -134,7 +134,7 @@ class UserEntity {
     isAnonymous: user?.isAnonymous ?? true,
   );
 
-  factory UserEntity.fromIsar(HiveUserDTO dto) => UserEntity(
+  factory UserEntity.fromHive(HiveUserDTO dto) => UserEntity(
     id: dto.id.toString(),
     picture: dto.picture,
     appMetadata: {},
@@ -159,4 +159,5 @@ class UserEntity {
     emailConfirmedAt: dto.emailConfirmedAt,
     phoneConfirmedAt: dto.phoneConfirmedAt,
   );
+
 }

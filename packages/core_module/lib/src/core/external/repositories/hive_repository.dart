@@ -2,16 +2,9 @@ import 'dart:io';
 
 import '../../../../core_module.dart';
 
-class HiveRepository<R> implements IRepository {
-  String boxLabel;
-  late Box<R> box;
-
+class HiveRepository implements IRepository {
   static const String userHiveBox = 'user';
   static const String credentialsHiveBox = 'credentials';
-
-  HiveRepository({required this.boxLabel}) {
-    box = Hive.box<R>(boxLabel);
-  }
 
   static Future init() async {
     await Hive.initFlutter();
@@ -20,23 +13,31 @@ class HiveRepository<R> implements IRepository {
     Hive.registerAdapter(HiveUserDTOAdapter());
 
     await Future.wait<void>([
-          Hive.openBox<HiveUserDTO>(userHiveBox),
-          Hive.openBox<HiveCredentialsDTO>(credentialsHiveBox),
+      Hive.openBox<HiveUserDTO>(userHiveBox),
+      Hive.openBox<HiveCredentialsDTO>(credentialsHiveBox),
     ]);
   }
 
   @override
-  Future<dynamic> get<T>({Map<String, dynamic>? params})  async {
-    var result;
-   /* switch (params?['type']) {
+  Future<dynamic> get<T>({Map<String, dynamic>? params}) async {
+    final Box<T> box = _getBoxForType<T>();
+    switch (params?['type']) {
       case credentialsHiveBox:
-        result = box.get(params?['id']);
-        return result != null ? HiveAuthAdapter.fromMap(result as HiveAuthDTO) : HiveAuthDTO.empty();
+        var value = box.get(credentialsHiveBox);
+        return AuthCredentials.fromHive(value as HiveCredentialsDTO);
       case userHiveBox:
-        result = box.get(params?['id']);
-        return result != null ? HiveAuthAdapter.fromMap(result as HiveAuthDTO) : HiveAuthDTO.empty();
-    }*/
-    return null;
+        var value = box.get(userHiveBox);
+        return UserEntity.fromHive(value as HiveUserDTO);
+    }
+  }
+
+  Box<T> _getBoxForType<T>() {
+    if (T == HiveUserDTO) {
+      return Hive.box<T>(userHiveBox);
+    } else if (T == HiveCredentialsDTO) {
+      return Hive.box<T>(credentialsHiveBox);
+    }
+    throw Exception('Hive box for type $T not found');
   }
 
   @override
@@ -44,26 +45,52 @@ class HiveRepository<R> implements IRepository {
     required data,
     Map<String, dynamic>? params,
   }) async {
-    //   box.put(path, HiveAuthAdapter.toDTO(data) as R);
+    final Box box = _getBoxForType<T>();
+    switch (params?['type']) {
+      case credentialsHiveBox:
+        box.put(credentialsHiveBox, HiveCredentialsDTO.create(data as AuthCredentials));
+        break;
+      case userHiveBox:
+        box.put(userHiveBox, HiveUserDTO.create(data as UserEntity));
+        break;
+    }
   }
 
   @override
   Future<dynamic> delete<T>({Map<String, dynamic>? params}) async {
-    box.delete(params);
+    final Box box = _getBoxForType<T>();
+    final key = params?['key'];
+    if (key != null) {
+      await box.delete(key);
+    } else {
+      await box.clear();
+    }
   }
 
   @override
-  Future<dynamic> add<T>({required data, Map<String, dynamic>? params}) {
-    throw UnimplementedError();
+  Future<dynamic> add<T>({required data, Map<String, dynamic>? params}) =>
+      update<T>(data: data, params: params);
+
+  @override
+  Future<List<T>> getByPagination<T>({Map<String, dynamic>? params}) async {
+    final Box box = _getBoxForType<T>();
+    final int page = params?["page"] ?? 1;
+    final int pageSize = params?["pageSize"] ?? 10;
+
+    final items = box.values
+        .skip((page - 1) * pageSize)
+        .take(pageSize)
+        .toList();
+
+    return items as List<T>;
   }
 
   @override
-  Future getByPagination<T>({Map<String, dynamic>? params}) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<String?> saveImage({required File coverImage, required String fileName, required String bucketName}) {
+  Future<String?> saveImage({
+    required File coverImage,
+    required String fileName,
+    required String bucketName,
+  }) {
     throw UnimplementedError();
   }
 
