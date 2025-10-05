@@ -134,7 +134,7 @@ class UserEntity {
     isAnonymous: user?.isAnonymous ?? true,
   );
 
-  factory UserEntity.fromIsar(IsarUserDTO dto) => UserEntity(
+  factory UserEntity.fromIsar(HiveUserDTO dto) => UserEntity(
     id: dto.id.toString(),
     picture: dto.picture,
     appMetadata: {},

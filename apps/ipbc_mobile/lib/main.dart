@@ -7,12 +7,12 @@ void main() async {
  Modular.setInitialRoute(AppRoutes.initialRoute);
   //Modular.setInitialRoute(AppRoutes.servicesRoute + AppRoutes.manageLyricRoute);
   //Modular.setInitialRoute(AppRoutes.lyricsListRoute);
- //Modular.setInitialRoute(AppRoutes.authRoute + AppRoutes.accountCreatedRoute);
+  //Modular.setInitialRoute(AppRoutes.authRoute + AppRoutes.accountCreatedRoute);
 
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([
     SupabaseRepository.init(),
-    IsarRepository.init(),
+    HiveRepository.init(),
     initializeDateFormatting('pt_BR', null),
   ]);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(

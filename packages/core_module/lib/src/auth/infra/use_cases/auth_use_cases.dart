@@ -76,8 +76,8 @@ class AuthUseCases implements IAuthUseCases {
 
   @override
   Future<String?> getCredentials() async {
-    IsarCredentialsDTO? entity = await _offlineRepository
-        .get<IsarCredentialsDTO>();
+    HiveCredentialsDTO? entity = await _offlineRepository
+        .get<HiveCredentialsDTO>();
     if (entity != null) {
       return entity.token;
     } else {
@@ -87,7 +87,7 @@ class AuthUseCases implements IAuthUseCases {
 
   @override
   Future<UserEntity?> getLocalUser() async {
-    final user = await _offlineRepository.get<IsarUserDTO>();
+    final user = await _offlineRepository.get<HiveUserDTO>();
     if (user != null) {
       return UserEntity.fromIsar(user);
     } else {
@@ -97,8 +97,8 @@ class AuthUseCases implements IAuthUseCases {
 
   @override
   dynamic saveCredentials(AuthCredentials auth) =>
-      _offlineRepository.add<IsarCredentialsDTO>(
-        data: IsarCredentialsDTO(
+      _offlineRepository.add<HiveCredentialsDTO>(
+        data: HiveCredentialsDTO(
           token: auth.token,
           provider: auth.provider,
           role: auth.role,
@@ -107,7 +107,7 @@ class AuthUseCases implements IAuthUseCases {
 
   @override
   void saveLocalUser(UserEntity user) =>
-      _offlineRepository.add<IsarUserDTO>(data: IsarUserDTO.create(user));
+      _offlineRepository.add<HiveUserDTO>(data: HiveUserDTO.create(user));
 
   @override
   dynamic logout({required int id, required String? provider}) async {
@@ -119,8 +119,8 @@ class AuthUseCases implements IAuthUseCases {
         break;
       default:
     }
-    await _offlineRepository.delete<IsarUserDTO>(params: {'id': id});
-    return await _offlineRepository.delete<IsarCredentialsDTO>();
+    await _offlineRepository.delete<HiveUserDTO>(params: {'id': id});
+    return await _offlineRepository.delete<HiveCredentialsDTO>();
   }
 
   @override

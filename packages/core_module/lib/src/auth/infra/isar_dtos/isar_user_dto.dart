@@ -1,4 +1,4 @@
-import 'package:core_module/core_module.dart';
+/*import 'package:core_module/core_module.dart';
 part 'isar_user_dto.g.dart';
 
 @collection
@@ -69,3 +69,4 @@ class IsarUserDTO {
     provider: '',
   );
 }
+*/

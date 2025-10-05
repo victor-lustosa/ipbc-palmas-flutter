@@ -1,4 +1,4 @@
-import 'package:core_module/core_module.dart';
+/*import 'package:core_module/core_module.dart';
 part 'isar_credentials_dto.g.dart';
 
 @collection
@@ -10,3 +10,4 @@ class IsarCredentialsDTO {
 
   IsarCredentialsDTO({required this.token, required this.role, required this.provider});
 }
+*/

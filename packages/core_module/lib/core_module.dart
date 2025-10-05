@@ -12,8 +12,6 @@ export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:supabase_flutter/supabase_flutter.dart';
 export 'package:google_maps_flutter/google_maps_flutter.dart';
 export 'package:flutter_svg/flutter_svg.dart';
-export 'package:isar_flutter_libs/isar_flutter_libs.dart';
-export 'package:isar/isar.dart';
 export 'package:dartz/dartz.dart' hide State;
 export 'package:diacritic/diacritic.dart';
 export 'package:cached_network_image/cached_network_image.dart';
@@ -101,12 +99,12 @@ export 'src/lyrics/infra/adapters/liturgy_adapter.dart';
 export 'src/lyrics/infra/adapters/verse_adapter.dart';
 export 'src/lyrics/infra/adapters/lyric_adapter.dart';
 export 'src/services/infra/adapters/service_adapter.dart';
-export 'src/auth/infra/isar_dtos/isar_credentials_dto.dart';
-export 'src/auth/infra/isar_dtos/isar_user_dto.dart';
+export 'src/auth/infra/hive_dtos/hive_credentials_dto.dart';
+export 'src/auth/infra/hive_dtos/hive_user_dto.dart';
 export 'src/core/infra/use_cases/use_cases.dart';
 
 export 'src/core/external/repositories/supa_repository.dart';
-export 'src/core/external/repositories/isar_repository.dart';
+export 'src/core/external/repositories/hive_repository.dart';
 
 export 'src/shared/mixins/launch_url_mixin.dart';
 export 'src/shared/mixins/date_mixin.dart';

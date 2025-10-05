@@ -111,3 +111,15 @@ Para IPA (recomendado para a App Store):
 ```bash
 $ flutter build ipa --bundle-sksl-path flutter_01.sksl.json
 ```
+
+Para gerar arquivos de uma plataforma especifica:
+
+```bash
+$ flutter create --platforms platform_name . 
+```
+
+Para gerar packages no projeto
+
+```bash
+$ flutter create --template=package package_name
+```
