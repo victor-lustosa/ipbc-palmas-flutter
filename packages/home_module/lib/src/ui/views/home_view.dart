@@ -99,10 +99,8 @@ class _HomeViewState extends State<HomeView>
                                 color: AppColors.white,
                               ),
                               margin: const EdgeInsets.only(
-                                top: 2,
                                 left: 6,
                                 right: 6,
-                                bottom: 9,
                               ),
                               route: AppRoutes.servicesCollectionRoute,
                               mainAxisAlignment: MainAxisAlignment.center,

@@ -32,7 +32,7 @@ class CarouselWidget extends StatefulWidget {
   State<CarouselWidget> createState() => CarouselWidgetState();
 }
 
-class CarouselWidgetState extends State<CarouselWidget> with AutomaticKeepAliveClientMixin<CarouselWidget>{
+class CarouselWidgetState extends State<CarouselWidget> {
 late PageController _pageController;
   int activePage = 0;
   ValueNotifier<bool> imageHasLoaded = ValueNotifier(false);
@@ -51,11 +51,7 @@ late PageController _pageController;
   }
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
     Widget placeholder({child}) => ShimmerWidget(
       animation: widget.shimmerController!,
       child:
@@ -67,8 +63,7 @@ late PageController _pageController;
               ),
           ),
     );
-    return Stack(
-      alignment: Alignment.bottomCenter,
+    return Column(
       children: [
         widget.services.isEmpty
             ? placeholder(
@@ -114,8 +109,8 @@ late PageController _pageController;
                         duration: const Duration(milliseconds: 250),
                         curve: Curves.easeInOutCubic,
                         margin: EdgeInsets.only(
-                          top: active ? 10 : 14,
-                          bottom: active ? 10 : 14,
+                          top: active ? 8 : 10,
+                          bottom: active ? 8 : 10,
                           left: active ? 10 : 3,
                           right: active ? 10 : 3,
                         ),
@@ -165,21 +160,24 @@ late PageController _pageController;
                                 errorWidget: (context, url, error) =>
                                     placeholder(),
                               ),
-                              Column(
-                                mainAxisAlignment:
-                                    widget.mainAxisAlignment ??
-                                    MainAxisAlignment.start,
-                                crossAxisAlignment:
-                                    widget.crossAxisAlignment ??
-                                    CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    widget.services.isEmpty
-                                        ? ''
-                                        : widget.services[position].title,
-                                    style: widget.fontStyle,
-                                  ),
-                                ],
+                              Container(
+                                margin: EdgeInsets.only(left: 16,bottom: 16),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      widget.mainAxisAlignment ??
+                                      MainAxisAlignment.start,
+                                  crossAxisAlignment:
+                                      widget.crossAxisAlignment ??
+                                      CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      widget.services.isEmpty
+                                          ? ''
+                                          : widget.services[position].title,
+                                      style: widget.fontStyle,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
