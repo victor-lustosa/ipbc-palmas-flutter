@@ -32,7 +32,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
           body: SafeArea(
             child: SingleChildScrollView(
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 16,),
+                margin: EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   children: [
                     Container(
