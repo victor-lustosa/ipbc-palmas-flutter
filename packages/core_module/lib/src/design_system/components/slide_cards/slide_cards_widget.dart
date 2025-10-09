@@ -9,6 +9,7 @@ class SlideCardsWidget extends StatefulWidget {
   final ScrollPhysics? physics;
   final Axis scrollDirection;
   final bool? shrinkWrap;
+  final bool isLoading;
   final AnimationController shimmerController;
   final void Function(LongPressStartDetails)? onLongPressStart;
   final Function()? action;
@@ -24,6 +25,7 @@ class SlideCardsWidget extends StatefulWidget {
     this.physics,
     this.margin,
     this.shrinkWrap,
+    required this.isLoading,
     this.action,
   });
 
@@ -279,14 +281,16 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
     Widget shimmerWrapper = ListView.builder(
       shrinkWrap: !isHorizontal,
       scrollDirection: widget.scrollDirection,
-      physics: widget.physics,
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: 3,
       itemBuilder: (context, index) => Container(
         margin: isHorizontal
             ? const EdgeInsets.only(left: 16)
             : const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         width: widget.width,
-        height: isHorizontal ? null : context.sizeOf.width * .62,
+        height: isHorizontal
+            ? null
+            : context.sizeOf.width * .55,
         decoration: BoxDecoration(
           color: Colors.grey.shade300,
           borderRadius: BorderRadius.circular(16),
@@ -297,7 +301,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
     if (isHorizontal) {
       return placeholder(
         child: SizedBox(
-          height: context.sizeOf.width * .6,
+          height: context.sizeOf.width * .585,
           child: shimmerWrapper,
         ),
       );
@@ -308,15 +312,35 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
 
   @override
   Widget build(BuildContext context) {
-    bool isSmallDevice = ResponsivityUtil.isSmallDevice(context);
     bool isHorizontal = widget.scrollDirection == Axis.horizontal;
-
+    bool isLoading = widget.isLoading && widget.entities.isEmpty;
+    Widget emptyList = Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 30),
+          width: 26,
+          height: 26,
+          child: Image.asset(AppIcons.info, color: Colors.blueAccent),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 8),
+          width: context.sizeOf.width * .6,
+          child: Text(
+            textAlign: TextAlign.center,
+            style: AppFonts.defaultFont(fontSize: 13, color: AppColors.grey9),
+            'Não há eventos cadastrados no momento.',
+          ),
+        ),
+      ],
+    );
     if (widget.scrollDirection == Axis.horizontal) {
-      return widget.entities.isEmpty
+      return isLoading
           ? _buildPlaceholder(context, isHorizontal, widget.shrinkWrap)
+          : !widget.isLoading && widget.entities.isEmpty
+          ? emptyList
           : SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              physics: widget.physics,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: List.generate(widget.entities.length, (index) {
@@ -332,10 +356,15 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
               ),
             );
     } else {
-      return widget.entities.isEmpty
+      return isLoading
           ? _buildPlaceholder(context, isHorizontal, widget.shrinkWrap)
+          : !widget.isLoading && widget.entities.isEmpty
+          ? Container(
+              margin: EdgeInsets.only(top: context.sizeOf.height * .15),
+              child: emptyList,
+            )
           : ListView.builder(
-              physics: widget.physics,
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: widget.shrinkWrap ?? false,
               scrollDirection: widget.scrollDirection,
               itemCount: widget.entities.length,

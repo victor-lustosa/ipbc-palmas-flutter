@@ -78,7 +78,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                       builder: (_, state, child) {
                         if (state is InitialState) {
                           return Container(
-                            margin: const EdgeInsets.only(top: 150),
+                            margin: EdgeInsets.only(top: context.sizeOf.height * .15),
                             child: SizedBox(
                               width: context.sizeOf.width,
                               child: Column(

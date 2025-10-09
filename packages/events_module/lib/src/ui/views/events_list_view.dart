@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:core_module/core_module.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../blocs/events_list_bloc.dart';
 
 class EventsListView extends StatefulWidget {
@@ -22,8 +23,7 @@ class EventsListViewState extends State<EventsListView>
       ..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1200));
     _bloc = Modular.get<EventsListBloc>();
     _bloc.add(GetDataEvent());
-    _bloc.createEventStore
-        .updateEventListViewCallback = () =>
+    _bloc.createEventStore.updateEventListViewCallback = () =>
         _bloc.add(GetDataEvent());
   }
 
@@ -50,27 +50,24 @@ class EventsListViewState extends State<EventsListView>
                 );
               } else if (state is NoConnectionState<EventsListState>) {
                 return NoConnectionView(
-                  action: () => nativePushReplacementNamed(
-                    AppRoutes.homeRoute,
-                    context,
-                  ),
+                  action: () =>
+                      nativePushReplacementNamed(AppRoutes.homeRoute, context),
                 );
               } else if (state is DataFetchedState<EventsListState> ||
                   state is LoadingEventsState) {
                 return SingleChildScrollView(
+                  physics: state is LoadingEventsState
+                      ? NeverScrollableScrollPhysics()
+                      : const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       BackAuthTopBarWidget(
                         action: () {
-                          if (_bloc
-                              .createEventStore
-                              .updateHomeViewCallback !=
-                              null &&
+                          if (_bloc.createEventStore.updateHomeViewCallback !=
+                                  null &&
                               _bloc.createEventStore.isChangedOrAdded) {
-                            _bloc
-                                .createEventStore
-                                .updateHomeViewCallback!();
+                            _bloc.createEventStore.updateHomeViewCallback!();
                           }
                           nativePop(context);
                         },
@@ -104,6 +101,7 @@ class EventsListViewState extends State<EventsListView>
                       Container(
                         margin: const EdgeInsets.only(bottom: 40),
                         child: SlideCardsWidget(
+                          isLoading: state is LoadingEventsState,
                           shimmerController: _shimmerController,
                           onLongPressStart: (details) async {
                             await showOptionsDialog(
@@ -124,8 +122,11 @@ class EventsListViewState extends State<EventsListView>
                                     label: 'Editar',
                                     action: () async {
                                       _bloc.createEventStore.isEditing = true;
-                                      _bloc.createEventStore.eventEntity = _bloc.slideCardsStore.eventEntity;
-                                      _bloc.createEventStore.updateCallbackParam = () {
+                                      _bloc.createEventStore.eventEntity =
+                                          _bloc.slideCardsStore.eventEntity;
+                                      _bloc
+                                          .createEventStore
+                                          .updateCallbackParam = () {
                                         _bloc.add(GetDataEvent());
                                         pop(context);
                                       };
@@ -157,7 +158,8 @@ class EventsListViewState extends State<EventsListView>
                                           type: DialogType.success,
                                           context: context,
                                           title: 'Sucesso!',
-                                          message: 'Evento deletado com sucesso.',
+                                          message:
+                                              'Evento deletado com sucesso.',
                                         );
                                       }
                                       if (context.mounted) {
@@ -174,12 +176,12 @@ class EventsListViewState extends State<EventsListView>
                             left: 16,
                             right: 16,
                           ),
-                          physics: const NeverScrollableScrollPhysics(),
                           width: context.sizeOf.width,
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
                           entities: _bloc.eventsList,
-                          route: AppRoutes.eventRoute + AppRoutes.detailEventRoute,
+                          route:
+                              AppRoutes.eventRoute + AppRoutes.detailEventRoute,
                         ),
                       ),
                     ],
