@@ -121,11 +121,8 @@ class EventsListViewState extends State<EventsListView>
                                     label: 'Editar',
                                     action: () async {
                                       _bloc.createEventStore.isEditing = true;
-                                      _bloc.createEventStore.eventEntity =
-                                          _bloc.slideCardsStore.eventEntity;
-                                      _bloc
-                                          .createEventStore
-                                          .updateCallbackParam = () {
+                                      _bloc.createEventStore.eventEntity = _bloc.slideCardsStore.eventEntity;
+                                      _bloc.createEventStore.updateCallbackParam = () {
                                         _bloc.add(GetDataEvent());
                                         pop(context);
                                       };
@@ -151,7 +148,7 @@ class EventsListViewState extends State<EventsListView>
                                     icon: AppIcons.trash,
                                     label: 'Deletar',
                                     action: () {
-                                      _bloc.add(DeleteItemEvent());
+                                      _bloc.add(DeleteItemEvent(context: context));
                                       if (context.mounted) {
                                         showCustomMessageDialog(
                                           type: DialogType.success,
