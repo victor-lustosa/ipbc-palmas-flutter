@@ -151,15 +151,7 @@ class EventsListViewState extends State<EventsListView>
                                     icon: AppIcons.trash,
                                     label: 'Deletar',
                                     action: () {
-                                      _bloc.add(DeleteItemEvent());
-                                      if (context.mounted) {
-                                        showCustomMessageDialog(
-                                          type: DialogType.success,
-                                          context: context,
-                                          title: 'Sucesso!',
-                                          message: 'Evento deletado com sucesso.',
-                                        );
-                                      }
+                                      _bloc.add(DeleteItemEvent(context: context));
                                       if (context.mounted) {
                                         pop(context);
                                       }

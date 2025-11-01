@@ -571,7 +571,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                           child: ButtonWidget(
                             adaptiveButtonType: AdaptiveButtonType.text,
                             action: () async {
-                              await _store.delete(_store.eventEntity);
+                              await _store.delete(_store.eventEntity, context);
                             },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),

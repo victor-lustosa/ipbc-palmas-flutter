@@ -12,6 +12,8 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   Function? updateEventListViewCallback;
   Function? updateCallbackParam;
   Function? updateHomeViewCallback;
+  Function? deleteCallback;
+
   final IUseCases _useCases;
   final IEventUseCases _eventUseCases;
   final String eventPath = 'event';
@@ -349,7 +351,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     isAddEventPressed.value = false;
   }
 
-  Future<dynamic> delete(EventEntity entity) async {
+  Future<dynamic> delete(EventEntity entity, BuildContext context) async {
     final response = await _useCases.delete(
       params: {
         'table': 'event',
@@ -358,6 +360,22 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
         'selectFields': 'id',
       },
     );
+    if(context.mounted){
+      showCustomMessageDialog(
+          type: DialogType.success,
+          context: context,
+          title: 'Sucesso!',
+          message: 'Evento salvo',
+          duration: const Duration(seconds: 1),
+          onDelayedAction: () {
+
+              if(deleteCallback != null){
+                deleteCallback!();
+              }
+
+          }
+      );
+    }
     isChangedOrAdded = true;
     notifyListeners();
     return Future.value(response[0]);

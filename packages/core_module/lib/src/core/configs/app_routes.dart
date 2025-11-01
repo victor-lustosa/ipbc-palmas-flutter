@@ -84,6 +84,10 @@ popUntil(bool Function(Route<dynamic>) predicate) {
   Modular.to.popUntil(predicate);
 }
 
+nativePopUntil(bool Function(Route<dynamic>) predicate, BuildContext context) {
+  Navigator.popUntil(context, predicate);
+}
+
 nativePop(BuildContext context) {
   Navigator.pop(context);
 }

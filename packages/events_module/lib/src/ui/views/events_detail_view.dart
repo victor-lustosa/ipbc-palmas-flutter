@@ -358,8 +358,24 @@ class EventsDetailViewState extends State<EventsDetailView>
                     setState(() {
                       event = _createEventStore.eventEntity;
                        isChanged.value = true;
+
                     });
-                    pop();
+                      pop();
+
+            };
+
+            _createEventStore.deleteCallback = () {
+              if (_createEventStore.fromCalled == 'home') {
+                if (_createEventStore.updateHomeViewCallback != null) {
+                  _createEventStore.updateHomeViewCallback!();
+                }
+              } else if (_createEventStore.fromCalled == 'eventList') {
+                if (_createEventStore.updateEventListViewCallback != null) {
+                  _createEventStore.updateEventListViewCallback!();
+                }
+              }
+              int count = 0;
+              nativePopUntil((_) => count++ >= 2, context);
 
             };
             await pushNamed(

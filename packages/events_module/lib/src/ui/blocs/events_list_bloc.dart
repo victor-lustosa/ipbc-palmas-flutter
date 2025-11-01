@@ -59,11 +59,11 @@ class EventsListBloc
   }
 
 
-  Future<void> _deleteItem(_, emit) async {
-    final event = eventsList[slideCardsStore.index];
-    final response = await _createEventStore.delete(event);
+  Future<void> _deleteItem(DeleteItemEvent event, emit) async {
+    final eventEntity = eventsList[slideCardsStore.index];
+    final response = await _createEventStore.delete(eventEntity, event.context);
     if (response != null) {
-      eventsList.remove(event);
+      eventsList.remove(eventEntity);
     }
     if (emit.isDone) return;
     emit(DataFetchedState<EventsListState>());
@@ -78,8 +78,8 @@ abstract class EventsListEvent {}
 abstract class EventsListState {}
 
 class DeleteItemEvent extends GenericEvent<EventsListEvent> {
-  DeleteItemEvent({ this.index});
-
+  DeleteItemEvent({ required this.context, this.index});
+  final BuildContext context;
   final int? index;
 }
 
