@@ -23,8 +23,8 @@ class _HomeViewState extends State<HomeView>
   void initState() {
     super.initState();
     _bloc = Modular.get<HomeBloc>();
-    _bloc.createEventStore.updateHomeViewCallback =
-        () => _bloc.add(GetEventsDataEvent());
+    _bloc.createEventStore.updateHomeViewCallback = () =>
+        _bloc.add(GetEventsDataEvent());
     _shimmerController = AnimationController.unbounded(vsync: this)
       ..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1200));
     _bloc.add(GetDataEvent());
@@ -62,7 +62,6 @@ class _HomeViewState extends State<HomeView>
               } else if (state is DataFetchedState<HomeState> ||
                   state is LoadingEventsState ||
                   state is LoadingServicesState) {
-                bool isSmallDevice = ResponsivityUtil.isSmallDevice(context);
                 return SingleChildScrollView(
                   child: Stack(
                     children: [
@@ -77,7 +76,10 @@ class _HomeViewState extends State<HomeView>
                                 nativePushNamed(
                                   AppRoutes.servicesListRoute,
                                   context,
-                                  arguments: _bloc.servicesList,
+                                  arguments: {
+                                    'servicesList': _bloc.servicesList,
+                                    'shimmerController': _shimmerController,
+                                  },
                                 );
                               },
                               child: Column(
@@ -98,10 +100,7 @@ class _HomeViewState extends State<HomeView>
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.white,
                               ),
-                              margin: const EdgeInsets.only(
-                                left: 6,
-                                right: 6,
-                              ),
+                              margin: const EdgeInsets.only(left: 6, right: 6),
                               route: AppRoutes.servicesCollectionRoute,
                               mainAxisAlignment: MainAxisAlignment.center,
                               width: context.sizeOf.width,
@@ -110,7 +109,8 @@ class _HomeViewState extends State<HomeView>
                             ),
                             InkWell(
                               onTap: () {
-                                _bloc.createEventStore.fromCalled = 'eventsList';
+                                _bloc.createEventStore.fromCalled =
+                                    'eventsList';
                                 nativePushNamed(
                                   AppRoutes.eventRoute +
                                       AppRoutes.eventsListRoute,
@@ -137,6 +137,7 @@ class _HomeViewState extends State<HomeView>
                                 bottom: 20,
                               ),
                               child: SlideCardsWidget(
+                                isLoading: state is LoadingEventsState,
                                 action: () {
                                   _bloc.createEventStore.fromCalled = 'home';
                                   pushNamed(

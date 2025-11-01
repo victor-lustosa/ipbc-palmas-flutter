@@ -24,13 +24,16 @@ class _NativeHomeRoutesState extends State<NativeHomeRoutes> {
       key: Platform.isIOS ? null : _androidNavigatorKey,
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
+
           case AppRoutes.homeRoute || AppRoutes.rootRoute:
             return CustomFadeTransition(child: const HomeView());
 
           case AppRoutes.servicesListRoute:
+            final args = settings.arguments as Map<String, dynamic>;
             return CustomFadeTransition(
               child: ServicesListView(
-                entities: settings.arguments as List<ServicesEntity>,
+                entities: args['servicesList'],
+                shimmerController: args['shimmerController'],
               ),
             );
 

@@ -1,43 +1,32 @@
 import 'package:core_module/core_module.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ServicesListView extends StatefulWidget {
-  const ServicesListView({super.key, required this.entities});
+  const ServicesListView({super.key, required this.entities, required this.shimmerController});
+  final AnimationController shimmerController;
   final List<ServicesEntity> entities;
 
   @override
   State<ServicesListView> createState() => _ServicesListViewState();
 }
 
-class _ServicesListViewState extends State<ServicesListView> with DateMixin, TickerProviderStateMixin {
-
-  late final AnimationController _shimmerController;
-
-  @override
-  void initState() {
-    super.initState();
-    _shimmerController = AnimationController.unbounded(vsync: this)
-      ..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1200));
-  }
-
-  @override
-  dispose() {
-    _shimmerController.dispose();
-    super.dispose();
-  }
+class _ServicesListViewState extends State<ServicesListView>
+    with DateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Widget placeholder() =>
-        ShimmerWidget(animation: _shimmerController, child: Container(
-          height: 110,
-          width: context.sizeOf.width,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade300,
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ));
+    Widget placeholder() => ShimmerWidget(
+      animation: widget.shimmerController,
+      child: Container(
+        height: 110,
+        width: context.sizeOf.width,
+        decoration: BoxDecoration(
+          color: Colors.grey.shade300,
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+    );
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -90,8 +79,8 @@ class _ServicesListViewState extends State<ServicesListView> with DateMixin, Tic
                       child: CachedNetworkImage(
                         imageUrl: widget.entities[index].image,
                         fit: BoxFit.cover,
-                        placeholder: (context, url) =>placeholder(),
-                        errorWidget: (context, url, error) =>placeholder(),
+                        placeholder: (context, url) => placeholder(),
+                        errorWidget: (context, url, error) => placeholder(),
                         color: const Color.fromRGBO(0, 66, 46, 0.40),
                         colorBlendMode: BlendMode.color,
                         imageBuilder: (context, imageProvider) => Container(
