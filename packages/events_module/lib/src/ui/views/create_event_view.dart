@@ -88,89 +88,90 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                           ValueListenableBuilder(
                             valueListenable: _store.isCoverImageValid,
                             builder: (_, value, ___) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.grey0,
-                                  border: Border.all(
-                                    color: value ? AppColors.grey0 : Colors.red,
+                              return AspectRatio(
+                                aspectRatio: 343 / 144,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: AppColors.grey0,
+                                    border: Border.all(
+                                      color: value ? AppColors.grey0 : Colors.red,
+                                    ),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20.0),
+                                    ),
                                   ),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(20.0),
-                                  ),
-                                ),
-                                width: context.sizeOf.width,
-                                height: 144,
-                                child: InkWell(
-                                  onTap: () async => await _store.getImage(),
-                                  child:
-                                      state is FetchedImageState ||
-                                          (state is UpdateFormFieldState &&
-                                              _store.coverImage.path.isNotEmpty)
-                                      ? Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(20),
-                                            ),
-                                            image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: FileImage(
-                                                _store.coverImage,
+                                  child: InkWell(
+                                    onTap: () async => await _store.getImage(),
+                                    child:
+                                        state is FetchedImageState ||
+                                            (state is UpdateFormFieldState &&
+                                                _store.coverImage.path.isNotEmpty)
+                                        ? Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(20),
+                                              ),
+                                              image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: FileImage(
+                                                  _store.coverImage,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        )
-                                      : _store.isEditing
-                                      ? Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(20),
-                                            ),
-                                            image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: NetworkImage(
-                                                _store.eventEntity.image,
+                                          )
+                                        : _store.isEditing
+                                        ? Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(20),
+                                              ),
+                                              image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: NetworkImage(
+                                                  _store.eventEntity.image,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        )
-                                      : Column(
-                                          children: [
-                                            Container(
-                                              margin: const EdgeInsets.only(
-                                                top: 41.33,
-                                                bottom: 13.33,
-                                              ),
-                                              child: state is LoadingImageState
-                                                  ? Container(
-                                                      margin:
-                                                          const EdgeInsets.symmetric(
-                                                            vertical: 6,
-                                                          ),
-                                                      child: LoadingWidget(
-                                                        size: Platform.isIOS
-                                                            ? 10
-                                                            : 22,
+                                          )
+                                        : Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                margin: const EdgeInsets.only(
+                                                  bottom: 13.33,
+                                                ),
+                                                child: state is LoadingImageState
+                                                    ? Container(
+                                                        margin:
+                                                            const EdgeInsets.symmetric(
+                                                              vertical: 6,
+                                                            ),
+                                                        child: LoadingWidget(
+                                                          size: Platform.isIOS
+                                                              ? 10
+                                                              : 22,
+                                                        ),
+                                                      )
+                                                    : Image.asset(
+                                                        color: value
+                                                            ? AppColors.darkGreen
+                                                            : Colors.red,
+                                                        AppIcons.folderUpload,
+                                                        width: 26.67,
+                                                        height: 21.33,
                                                       ),
-                                                    )
-                                                  : Image.asset(
-                                                      color: value
-                                                          ? AppColors.darkGreen
-                                                          : Colors.red,
-                                                      AppIcons.folderUpload,
-                                                      width: 26.67,
-                                                      height: 21.33,
-                                                    ),
-                                            ),
-                                            Text(
-                                              'Suba um arquivo PNG ou JPG com dimensões de até 343x144 e 4MB',
-                                              textAlign: TextAlign.center,
-                                              style: AppFonts.defaultFont(
-                                                fontSize: 13,
-                                                color: AppColors.grey6,
                                               ),
-                                            ),
-                                          ],
-                                        ),
+                                              Text(
+                                                'Suba um arquivo PNG ou JPG com dimensões de até 343x144 e 4MB',
+                                                textAlign: TextAlign.center,
+                                                style: AppFonts.defaultFont(
+                                                  fontSize: 13,
+                                                  color: AppColors.grey6,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                  ),
                                 ),
                               );
                             },

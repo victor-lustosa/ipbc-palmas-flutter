@@ -143,7 +143,7 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                                             .isEmpty &&
                                             _store.isAdmin.value,
                                         child: SizedBox(
-                                          width: context.sizeOf.width * 0.86,
+                                          width: context.sizeOf.width * .86,
                                           child: Text(
                                             'As músicas adicionadas aparecerão aqui. Adicione músicas para este culto.',
                                             style: AppFonts.defaultFont(
