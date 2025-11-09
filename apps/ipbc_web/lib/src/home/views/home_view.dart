@@ -28,25 +28,27 @@ class _HomeViewState extends State<HomeView>
       ..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1200));
   }
 
-  Future<void> _abrirWhatsAppWeb() async {
-    String numeroTelefone = "5511987654321";
-    String mensagem = "Olá! Gostaria de entrar em contato com a sece";
+  Future<void> _openWhatsAppWeb() async {
+    String phone = "+556332132775";
+    String message = "Olá! Gostaria de entrar em contato com o pastor.";
 
     launchInBrowser(
       Uri(
         scheme: 'https',
         host: 'wa.me',
-        path: numeroTelefone,
-        queryParameters: {'text': mensagem},
+        path: phone,
+        queryParameters: {'text': message},
       ),
       context,
+      width: 350,
+      alignment: Alignment.bottomRight,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     double width = context.sizeOf.width;
-    floatingActionRightPadding(){
+    floatingActionRightPadding() {
       if (width > 1200) {
         return 125.0;
       } else if (width > 800) {
@@ -58,7 +60,10 @@ class _HomeViewState extends State<HomeView>
 
     return Scaffold(
       floatingActionButton: Container(
-        margin: EdgeInsets.only(bottom: 10, right: floatingActionRightPadding()),
+        margin: EdgeInsets.only(
+          bottom: 10,
+          right: floatingActionRightPadding(),
+        ),
         child: FloatingButtonWidget(
           iconPath: AppIcons.whatsappIcon,
           iconFormat: IconFormat.svg,
@@ -68,7 +73,7 @@ class _HomeViewState extends State<HomeView>
           width: 60,
           height: 60,
           padding: EdgeInsets.only(bottom: 2, left: 2),
-          action: _abrirWhatsAppWeb,
+          action: _openWhatsAppWeb,
         ),
       ),
       body: SafeArea(

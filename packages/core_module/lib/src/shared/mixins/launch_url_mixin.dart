@@ -5,9 +5,11 @@ import '../../../core_module.dart';
 mixin LaunchUrlMixin {
   Future<void> launchInBrowser(
     Uri url,
-    BuildContext context, [
+    BuildContext context, {
     LaunchMode? launchMode,
-  ]) async {
+        double? width,
+        Alignment? alignment,
+  }) async {
     if (!await launchUrl(
       url,
       mode: launchMode ?? LaunchMode.externalApplication,
@@ -15,8 +17,8 @@ mixin LaunchUrlMixin {
       if (context.mounted) {
         showCustomMessageDialog(
             context: context,
-            alignment: Alignment.bottomRight,
-            width: 350,
+            alignment: alignment,
+            width: width,
             title: 'Erro ao redirecionar',
             message: 'Verifique sua conexão com a internet e tente novamente.',
             type: DialogType.error,
