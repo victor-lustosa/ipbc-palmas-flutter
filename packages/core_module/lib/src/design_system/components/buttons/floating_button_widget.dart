@@ -10,11 +10,14 @@ class FloatingButtonWidget extends StatelessWidget {
     this.icon,
     required this.backgroundColor,
     this.size,
-    this.pngIcon,
+    this.iconPath,
     this.isPressed,
     this.isValid,
     this.duration,
     this.loadingIndicatorColor,
+    this.iconFormat,
+    this.padding,
+    this.fit,
   });
 
   final Color? loadingIndicatorColor;
@@ -22,9 +25,12 @@ class FloatingButtonWidget extends StatelessWidget {
   final ValueNotifier<bool>? isPressed;
   final void Function()? action;
   final Color? iconColor;
+  final IconFormat? iconFormat;
+  final EdgeInsetsGeometry? padding;
   final Color backgroundColor;
   final IconData? icon;
-  final String? pngIcon;
+  final BoxFit? fit;
+  final String? iconPath;
   final double? size;
   final bool? isValid;
 
@@ -40,28 +46,42 @@ class FloatingButtonWidget extends StatelessWidget {
           height: 56,
           width: 56,
           child: FloatingActionButton(
-                  shape: const CircleBorder(),
-                  elevation: 3,
-                  highlightElevation: 1.8,
-                  focusElevation: 1.8,
-                  hoverElevation: 1.8,
-                  onPressed: action,
-                  backgroundColor: backgroundColor,
-                  child: isLoading
-                      ? LoadingWidget(
+            shape: const CircleBorder(),
+            elevation: 3,
+            highlightElevation: 1.8,
+            focusElevation: 1.8,
+            hoverElevation: 1.8,
+            onPressed: action,
+            backgroundColor: backgroundColor,
+            child: isLoading
+                ? LoadingWidget(
                     androidRadius: 2,
                     iosRadius: 11,
                     size: 20,
                     color: loadingIndicatorColor ?? AppColors.white,
                   )
-                      : icon != null
-                      ? Icon(size: size ?? 45, icon, color: iconColor)
-                      : SizedBox(
-                          height: size,
-                          width: size,
-                          child: Image.asset(pngIcon ?? ''),
-                        ),
-                ),
+                : icon != null
+                ? Icon(size: size ?? 45, icon, color: iconColor)
+                : iconFormat == IconFormat.svg
+                ? Container(
+                    padding: padding,
+                    child: SvgPicture.asset(
+                      fit: fit ?? BoxFit.contain,
+                      height: size,
+                      width: size,
+                      colorFilter: ColorFilter.mode(
+                        iconColor ?? AppColors.darkGreen,
+                        BlendMode.srcIn,
+                      ),
+                      iconPath!,
+                    ),
+                  )
+                : SizedBox(
+                    height: size,
+                    width: size,
+                    child: Image.asset(iconPath ?? ''),
+                  ),
+          ),
         );
       },
     );

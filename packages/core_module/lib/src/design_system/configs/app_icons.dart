@@ -3,6 +3,7 @@ class AppIcons {
   static const String announce = 'assets/icons/announce.png';
   static const String appleIcon = 'assets/icons/apple_icon.png';
   static const String playIcon = 'assets/icons/play_icon.png';
+  static const String whatsappIcon = 'assets/icons/whatsapp_icon.svg';
   static const String contactIconDarkGreen =
       'assets/icons/contact_icon_dark_green.png';
   static const String contactIcon = 'assets/icons/contact_icon.png';

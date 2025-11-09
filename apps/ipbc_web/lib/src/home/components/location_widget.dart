@@ -239,7 +239,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
               () {
                 setState(
                   () {
-                    locationLink = launchInBrowser(_locationLink);
+                    locationLink = launchInBrowser(_locationLink, context);
                   },
                 );
               },

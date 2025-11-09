@@ -246,7 +246,7 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
           child: FloatingButtonWidget(
             iconColor: AppColors.white,
             backgroundColor: AppColors.warning,
-            pngIcon: AppIcons.editIcon,
+            iconPath: AppIcons.editIcon,
             size: 37,
             action: () {
               _store.edit();
