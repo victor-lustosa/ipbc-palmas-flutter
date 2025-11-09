@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import '../../../core_module.dart';
 
 mixin LaunchUrlMixin {
@@ -13,9 +11,12 @@ mixin LaunchUrlMixin {
     if (context.mounted) {
       showCustomMessageDialog(
         context: context,
-        title: 'Erro ao abrir link',
+        alignment: Alignment.bottomRight,
+        width: 350,
+        title: 'Erro ao redirecionar',
         message: 'Verifique sua conexão com a internet e tente novamente.',
         type: DialogType.error,
+        duration: Duration(seconds: 6)
       );
     }
   }
