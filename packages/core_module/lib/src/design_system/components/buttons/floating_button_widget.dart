@@ -17,7 +17,7 @@ class FloatingButtonWidget extends StatelessWidget {
     this.loadingIndicatorColor,
     this.iconFormat,
     this.padding,
-    this.fit,
+    this.fit, this.width, this.height,
   });
 
   final Color? loadingIndicatorColor;
@@ -32,6 +32,8 @@ class FloatingButtonWidget extends StatelessWidget {
   final BoxFit? fit;
   final String? iconPath;
   final double? size;
+  final double? width;
+  final double? height;
   final bool? isValid;
 
   @override
@@ -43,8 +45,8 @@ class FloatingButtonWidget extends StatelessWidget {
           decoration: const BoxDecoration(shape: BoxShape.circle),
           curve: Curves.fastOutSlowIn,
           duration: duration ?? const Duration(milliseconds: 400),
-          height: 56,
-          width: 56,
+          height: height ?? 56,
+          width: width ?? 56,
           child: FloatingActionButton(
             shape: const CircleBorder(),
             elevation: 3,

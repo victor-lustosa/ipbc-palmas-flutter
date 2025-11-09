@@ -30,7 +30,7 @@ class _HomeViewState extends State<HomeView>
 
   Future<void> _abrirWhatsAppWeb() async {
     String numeroTelefone = "5511987654321";
-    String mensagem = "Olá! Vi seu site e gostaria de mais informações.";
+    String mensagem = "Olá! Gostaria de entrar em contato com a sece";
 
     launchInBrowser(
       Uri(
@@ -45,16 +45,28 @@ class _HomeViewState extends State<HomeView>
 
   @override
   Widget build(BuildContext context) {
+    double width = context.sizeOf.width;
+    floatingActionRightPadding(){
+      if (width > 1200) {
+        return 125.0;
+      } else if (width > 800) {
+        return 24.0;
+      } else {
+        return 5.0;
+      }
+    }
+
     return Scaffold(
       floatingActionButton: Container(
-        margin: EdgeInsets.only(bottom: 10, right: 5),
+        margin: EdgeInsets.only(bottom: 10, right: floatingActionRightPadding()),
         child: FloatingButtonWidget(
           iconPath: AppIcons.whatsappIcon,
           iconFormat: IconFormat.svg,
           backgroundColor: AppColors.whatsappButton,
           iconColor: AppColors.white,
           fit: BoxFit.scaleDown,
-          size: 60,
+          width: 60,
+          height: 60,
           padding: EdgeInsets.only(bottom: 2, left: 2),
           action: _abrirWhatsAppWeb,
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../core_module.dart';
 
 mixin LaunchUrlMixin {
@@ -7,17 +8,20 @@ mixin LaunchUrlMixin {
     BuildContext context, [
     LaunchMode? launchMode,
   ]) async {
-
-    if (context.mounted) {
-      showCustomMessageDialog(
-        context: context,
-        alignment: Alignment.bottomRight,
-        width: 350,
-        title: 'Erro ao redirecionar',
-        message: 'Verifique sua conexão com a internet e tente novamente.',
-        type: DialogType.error,
-        duration: Duration(seconds: 6)
-      );
+    if (!await launchUrl(
+      url,
+      mode: launchMode ?? LaunchMode.externalApplication,
+    )) {
+      if (context.mounted) {
+        showCustomMessageDialog(
+            context: context,
+            alignment: Alignment.bottomRight,
+            width: 350,
+            title: 'Erro ao redirecionar',
+            message: 'Verifique sua conexão com a internet e tente novamente.',
+            type: DialogType.error,
+        );
+      }
     }
   }
 }

@@ -1,11 +1,11 @@
 {
-    "name": "ipbc_web",
+    "name": "IPBC Palmas",
     "short_name": "ipbc_web",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#005B40",
+    "theme_color": "#005B40",
+    "description": "Site oficial da Igreja Presbiteriana Central de Palmas.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
