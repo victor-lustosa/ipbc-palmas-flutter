@@ -53,6 +53,11 @@ flutter:
     - assets/data/sunday-evening-services/
     - assets/data/unknown-lyrics/
     - assets/data/events/
+    - assets/icons/
+    - assets/images/
+    - assets/mocks/
+    - assets/images/auth/
+    - assets/icons/auth/
 # To add assets to your package, add an assets section, like this:
 # assets:
 #   - images/a_dot_burr.jpeg

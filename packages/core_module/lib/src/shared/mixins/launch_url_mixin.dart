@@ -9,27 +9,14 @@ mixin LaunchUrlMixin {
     BuildContext context, [
     LaunchMode? launchMode,
   ]) async {
-    if (!await launchUrl(
-      url,
-      mode: launchMode ?? LaunchMode.externalApplication,
-    )) {
-      if (context.mounted) {
-        showCustomMessageDialog(
-          context: context,
-          title: 'Erro ao abrir link',
-          message: 'Verifique sua conexão com a internet e tente novamente.',
-          type: DialogType.error,
-        );
-      }
-    } else {
-      if (context.mounted) {
-        showCustomMessageDialog(
-          context: context,
-          title: 'Erro ao abrir link',
-          message: 'Verifique sua conexão com a internet e tente novamente.',
-          type: DialogType.error,
-        );
-      }
+
+    if (context.mounted) {
+      showCustomMessageDialog(
+        context: context,
+        title: 'Erro ao abrir link',
+        message: 'Verifique sua conexão com a internet e tente novamente.',
+        type: DialogType.error,
+      );
     }
   }
 }
