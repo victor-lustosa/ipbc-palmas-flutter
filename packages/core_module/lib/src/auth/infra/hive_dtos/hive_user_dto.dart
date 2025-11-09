@@ -1,5 +1,4 @@
 import 'package:core_module/core_module.dart';
-import 'package:hive/hive.dart';
 
 part 'hive_user_dto.g.dart';
 

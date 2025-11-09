@@ -85,7 +85,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
               ),
               child: CachedNetworkImage(
                 imageUrl: entity.image,
-                height: context.sizeOf.width * .335,
+                height: context.sizeOf.width * .35,
                 width: context.sizeOf.width,
                 fit: BoxFit.cover,
                 placeholder: (context, url) => placeholder(
@@ -104,14 +104,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
                 colorBlendMode: BlendMode.color,
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(2, 4),
-                        blurRadius: 10,
-                        spreadRadius: 0,
-                        color: AppColors.grey2.withAlpha(153),
-                      ),
-                    ],
+
                     image: DecorationImage(
                       image: imageProvider,
                       fit: BoxFit.cover,

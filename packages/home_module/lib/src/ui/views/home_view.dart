@@ -105,7 +105,6 @@ class _HomeViewState extends State<HomeView>
                               mainAxisAlignment: MainAxisAlignment.center,
                               width: context.sizeOf.width,
                               services: _bloc.servicesList,
-                              height: context.sizeOf.width * 0.49,
                             ),
                             InkWell(
                               onTap: () {
@@ -120,7 +119,9 @@ class _HomeViewState extends State<HomeView>
                               child: Column(
                                 children: [
                                   Container(
-                                    margin: const EdgeInsets.only(top: 15),
+                                    margin: EdgeInsets.only(
+                                      top: _bloc.servicesList.isEmpty ? 29 : 15,
+                                    ),
                                     child: title(text: "Eventos"),
                                   ),
                                   subtitle(

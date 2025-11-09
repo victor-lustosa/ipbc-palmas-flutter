@@ -151,7 +151,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () => setState(
                                         () {
-                                      _launched = launchInBrowser(toLaunch);
+                                      _launched = launchInBrowser(toLaunch, context);
                                       if (kDebugMode) {
                                         print(_launched);
                                       }

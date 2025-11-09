@@ -215,7 +215,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         iconPath: AppIcons.playIcon,
         labelStore: 'Baixe na PlayStore',
         onPressed: () {
-          playStoreLink = launchInBrowser(_playStoreLink);
+          playStoreLink = launchInBrowser(_playStoreLink, context);
         },
       );
 
