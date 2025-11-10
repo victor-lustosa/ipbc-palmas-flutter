@@ -9,8 +9,7 @@ class CreateAccountStore
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordRepeatController =
-      TextEditingController();
+  final TextEditingController _passwordRepeatController = TextEditingController();
 
   final IAuthUseCases _useCases;
 
