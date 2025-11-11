@@ -16,7 +16,8 @@ Future<void> showOptionsDialog({
   double? screenEdgeMarginParam,
   bool? isBackgroundSolid,
 }) async {
-  final RenderBox renderBox = itemKey.currentContext!.findRenderObject() as RenderBox;
+  final RenderBox renderBox =
+      itemKey.currentContext!.findRenderObject() as RenderBox;
   final itemOffset = renderBox.localToGlobal(Offset.zero);
   final itemSize = renderBox.size;
 
@@ -104,6 +105,15 @@ class OptionsDialogWidget extends StatefulWidget {
 class _OptionsDialogWidgetState extends State<OptionsDialogWidget> {
   @override
   Widget build(BuildContext context) {
+    Widget dialog = Container(
+      width: widget.popupWidth ?? 170,
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.dividerModal.withValues(alpha: .1)),
+        color: widget.isBackgroundSolid ? AppColors.white :  AppColors.dividerModal.withValues(alpha: .1),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: widget.buttons,
+    );
     return Stack(
       children: [
         IgnorePointer(
@@ -138,26 +148,12 @@ class _OptionsDialogWidgetState extends State<OptionsDialogWidget> {
           top: widget.popupTop,
           left: widget.popupLeft,
           child: ClipRRect(
-            child: widget.isBackgroundSolid ? Container(
-                width: widget.popupWidth ?? 170,
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.dividerModal.withValues(alpha: .1)),
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: widget.buttons
-            ): BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
-              child: Container(
-                  width: widget.popupWidth ?? 170,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.dividerModal.withValues(alpha: .1)),
-                    color: AppColors.dividerModal.withValues(alpha: .1),
-                    borderRadius: BorderRadius.circular(16),
+            child: widget.isBackgroundSolid
+                ? dialog
+                : BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
+                    child: dialog,
                   ),
-                  child: widget.buttons
-              ),
-            ),
           ),
         ),
       ],
@@ -190,7 +186,10 @@ actionButton({
         ),
         Text(
           label,
-          style: AppFonts.defaultFont(fontSize: fontSize ?? 17, color: AppColors.grey10),
+          style: AppFonts.defaultFont(
+            fontSize: fontSize ?? 17,
+            color: AppColors.grey10,
+          ),
         ),
       ],
     ),
