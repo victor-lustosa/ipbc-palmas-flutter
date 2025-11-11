@@ -9,6 +9,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   bool isSwitchOn = false;
   bool isEditing = false;
   bool isChangedOrAdded = false;
+  int popNumber = 2;
   Function? updateEventListViewCallback;
   Function? updateCallbackParam;
   Function? updateHomeViewCallback;

@@ -64,6 +64,7 @@ export 'src/auth/components/auth_circle_avatar_widget.dart';
 export 'src/auth/components/stores/auth_circle_avatar_store.dart';
 export 'src/design_system/components/bottom_bar/material_bottom_bar_widget.dart';
 export 'src/design_system/components/dialogs/options_dialog_widget.dart';
+export 'src/design_system/components/dialogs/confirm_dialog_widget.dart';
 export 'src/design_system/components/dialogs/message_dialog_widget.dart';
 export 'src/design_system/components/side_bar/side_bar_widget.dart';
 export 'src/design_system/components/top_bar/back_auth_top_bar_widget.dart';

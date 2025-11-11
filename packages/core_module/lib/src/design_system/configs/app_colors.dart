@@ -51,6 +51,7 @@ class AppColors {
   static const Color codeBorderError = Color(0xFFC72C41);
   static const Color modalRed = Color(0xffC72C41);
   static const Color redCircleModal = Color(0xff9D2333);
+  static const Color cancelDeleteModal = Color(0xffD25667);
   static const Color warning = Color(0xFFFF9500);
   static const Color modalWarning = Color(0xFFF5902E);
   static const Color iconModalWarning = Color(0xFFDE8200);

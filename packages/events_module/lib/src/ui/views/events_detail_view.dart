@@ -379,7 +379,8 @@ class EventsDetailViewState extends State<EventsDetailView>
                 }
               }
               int count = 0;
-              nativePopUntil((_) => count++ >= 2, context);
+              nativePopUntil((_) => count++ >= _createEventStore.popNumber, context);
+              _createEventStore.popNumber = 2;
 
             };
             await pushNamed(
