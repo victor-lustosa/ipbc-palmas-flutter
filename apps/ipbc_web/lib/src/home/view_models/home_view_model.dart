@@ -2,7 +2,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class HomeViewModel extends ValueNotifier<GenericState<HomeViewState>>
-    with ConnectivityMixin, ValidationMixin{
+    with ConnectivityMixin, ValidationMixin {
   ScrollController scrollController = ScrollController();
 
   HomeViewModel({required IUseCases useCases})
@@ -15,6 +15,7 @@ class HomeViewModel extends ValueNotifier<GenericState<HomeViewState>>
   final TextEditingController messageController = TextEditingController();
 
   final double mdSize = 770;
+  final double maxMessageLength = 500;
 
   final nameKey = GlobalKey<FormState>();
   final emailKey = GlobalKey<FormState>();
@@ -27,22 +28,8 @@ class HomeViewModel extends ValueNotifier<GenericState<HomeViewState>>
   ValueNotifier<bool> isNameValid = ValueNotifier(true);
   ValueNotifier<bool> isEmailValid = ValueNotifier(true);
   ValueNotifier<bool> isMessageValid = ValueNotifier(true);
-  ValueNotifier<bool> isAllFieldsValid = ValueNotifier(true);
-  ValueNotifier<bool> isAllFieldsNotEmpty = ValueNotifier(true);
   ValueNotifier<bool> isSubmitted = ValueNotifier(false);
-
-  void init() {
-    isAllFieldsValid = ValueNotifier(
-      isNameValid.value &&
-          isEmailValid.value &&
-          isMessageValid.value,
-    );
-    isAllFieldsNotEmpty = ValueNotifier(
-      nameController.text.isNotEmpty &&
-          emailController.text.isNotEmpty &&
-          messageController.text.isNotEmpty,
-    );
-  }
+  ValueNotifier<int> messageLength = ValueNotifier<int>(0);
 
   formValidation(bool validation, ValueNotifier<bool> isValid) {
     Future.delayed(Duration.zero, () async {
@@ -53,7 +40,12 @@ class HomeViewModel extends ValueNotifier<GenericState<HomeViewState>>
   }
 
   void submit(BuildContext context) async {
-    if (isAllFieldsNotEmpty.value && isAllFieldsValid.value) {
+    if (nameController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        messageController.text.isNotEmpty &&
+        isNameValid.value &&
+        isEmailValid.value &&
+        isMessageValid.value) {
       final response = await isConnected(
         context: context,
         width: 350,
@@ -69,7 +61,6 @@ class HomeViewModel extends ValueNotifier<GenericState<HomeViewState>>
           params: {'table': 'form_website'},
         );
         if (context.mounted) {
-          isAllFieldsValid.value = false;
           showCustomMessageDialog(
             width: 350,
             alignment: Alignment.bottomRight,
@@ -81,6 +72,7 @@ class HomeViewModel extends ValueNotifier<GenericState<HomeViewState>>
           );
         }
         isSubmitted.value = true;
+        messageLength.value = 0;
         nameController.clear();
         messageController.clear();
         emailController.clear();

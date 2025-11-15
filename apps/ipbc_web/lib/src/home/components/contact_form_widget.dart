@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ipbc_web/src/home/view_models/home_view_model.dart';
 
 class ContactFormWidget extends StatefulWidget {
@@ -15,7 +16,6 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
   @override
   void initState() {
     viewModel = Modular.get<HomeViewModel>();
-    viewModel.init();
     super.initState();
   }
 
@@ -123,6 +123,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         viewModel.isNameValid,
       );
     },
+    fieldHeight: 42,
     fieldWidth: width,
     isSubmitted: !viewModel.isSubmitted.value,
     inputDecoration: _inputDecoration(
@@ -151,6 +152,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
     controller: viewModel.emailController,
     errorText: viewModel.emailErrorText,
     fieldWidth: width,
+    fieldHeight: 42,
     isSubmitted: !viewModel.isSubmitted.value,
     inputDecoration: _inputDecoration(
       isValid: viewModel.isEmailValid.value,
@@ -184,15 +186,17 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
     errorText: viewModel.messageErrorText,
     titleMargin: const EdgeInsets.only(top: 16, bottom: 8),
     maxLines: 5,
-    maxLength: 500,
-    fieldHeight: 115,
     onChanged: (data) {
+      viewModel.messageLength.value = data.length;
       viewModel.formValidation(
         !viewModel.isEmptyData(data),
         viewModel.isMessageValid,
       );
     },
     fieldWidth: width,
+    inputFormatters: [
+      LengthLimitingTextInputFormatter(500),
+    ],
     isSubmitted: !viewModel.isSubmitted.value,
     fieldStyle: _fieldStyle(viewModel.isMessageValid.value),
     inputDecoration: _inputDecoration(
@@ -202,8 +206,26 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         left: 10,
         right: 10,
         top: 12,
+        bottom: 2
         //top 8 pra celular
       ),
+      counter: ValueListenableBuilder<int>(
+        valueListenable: viewModel.messageLength,
+        builder: (context, length, child) {
+          return Container(
+            padding: const EdgeInsets.only(bottom: 5),
+            child: Text(
+              '$length/${viewModel.maxMessageLength}',
+              style: TextStyle(
+                color: viewModel.isMessageValid.value
+                    ? AppColors.hintInputForm
+                    : AppColors.delete,
+                fontSize: 11,
+              ),
+            ),
+          );
+        },
+      )
     ),
     colorStyle: AppColors.hintInputForm,
   );
@@ -212,6 +234,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
     required bool isValid,
     required hintText,
     EdgeInsetsGeometry? contentPadding,
+    Widget? counter
   }) {
     return InputDecoration(
       isDense: true,
@@ -229,6 +252,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
         fontSize: 10,
         color: isValid ? const Color(0xff979797) : AppColors.delete,
       ),
+      counter: counter,
       hintStyle: AppFonts.defaultFont(
         fontSize: 14,
         color: isValid ? const Color(0xff979797) : AppColors.delete,

@@ -8,4 +8,9 @@ final lightTheme = ThemeData(
   highlightColor: Colors.transparent,
   scaffoldBackgroundColor: AppColors.white,
   primaryColor: AppColors.white,
+  textSelectionTheme: TextSelectionThemeData(
+    cursorColor: AppColors.hintInputForm,
+    selectionColor: AppColors.hintInputForm.withAlpha(30),
+    selectionHandleColor: AppColors.hintInputForm,
+  ),
 );
