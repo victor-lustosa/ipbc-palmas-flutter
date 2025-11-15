@@ -178,7 +178,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
   Future<void> submit(BuildContext context) async {
     isSavePressed.value = true;
     if (validateAllFields()) {
-      final response = await isConnected();
+      final response = await isConnected(context: context);
       if (response) {
         final typeList = servicesEntity.path.split('/');
         value = AddDataEvent<ManageServiceState>();

@@ -46,9 +46,9 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   };
 
   init({required BuildContext context}) async {
-    add(GetDataEvent<LyricEvent>());
+    add(GetDataEvent<LyricEvent>(context: context));
     _manageLyricStore.buttonCallback = () {
-      add(GetDataEvent<LyricEvent>());
+      add(GetDataEvent<LyricEvent>(context: context));
       pop(context);
     };
   }
@@ -61,7 +61,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   }
 
   Future<void> _getInSupa(GetDataEvent<LyricEvent> event, emit) async {
-    final response = await isConnected();
+    final response = await isConnected(context: event.context);
     if (response) {
       final lyricsList = await onlineUseCases.get(
         params: lyricParams,

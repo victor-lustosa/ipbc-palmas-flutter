@@ -2,7 +2,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
 class CreateAccountStore
-    extends ValueNotifier<GenericState<CreateAccountState>> {
+    extends ValueNotifier<GenericState<CreateAccountState>> with ValidationMixin{
   CreateAccountStore({required IAuthUseCases useCases})
     : _useCases = useCases,
       super(InitialState<CreateAccountState>());
@@ -102,14 +102,6 @@ class CreateAccountStore
       value = UpdateFormFieldState();
     });
     return null;
-  }
-
-  bool emailValidation(String? data) {
-    return !isEmptyData(data) && EmailValidator.validate(data ?? '');
-  }
-
-  bool isEmptyData(String? data) {
-    return (data == null || data.isEmpty);
   }
 
   void clear() {

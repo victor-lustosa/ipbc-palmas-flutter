@@ -21,9 +21,9 @@ class EventsListViewState extends State<EventsListView>
     _shimmerController = AnimationController.unbounded(vsync: this)
       ..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1200));
     _bloc = Modular.get<EventsListBloc>();
-    _bloc.add(GetDataEvent());
+    _bloc.add(GetDataEvent(context: context));
     _bloc.createEventStore.updateEventListViewCallback = () =>
-        _bloc.add(GetDataEvent());
+        _bloc.add(GetDataEvent(context: context));
   }
 
   @override
@@ -123,7 +123,7 @@ class EventsListViewState extends State<EventsListView>
                                       _bloc.createEventStore.isEditing = true;
                                       _bloc.createEventStore.eventEntity = _bloc.slideCardsStore.eventEntity;
                                       _bloc.createEventStore.updateCallbackParam = () {
-                                        _bloc.add(GetDataEvent());
+                                        _bloc.add(GetDataEvent(context: context));
                                         pop(context);
                                       };
                                       await pushNamed(
@@ -194,7 +194,7 @@ class EventsListViewState extends State<EventsListView>
           action: () async {
             _bloc.createEventStore.isEditing = false;
             _bloc.createEventStore.updateCallbackParam = () {
-              _bloc.add(GetDataEvent());
+              _bloc.add(GetDataEvent(context: context));
               pop(context);
             };
             await pushNamed(AppRoutes.eventRoute + AppRoutes.createEventRoute);

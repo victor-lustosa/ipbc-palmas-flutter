@@ -27,7 +27,7 @@ class _HomeViewState extends State<HomeView>
         _bloc.add(GetEventsDataEvent());
     _shimmerController = AnimationController.unbounded(vsync: this)
       ..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1200));
-    _bloc.add(GetDataEvent());
+    _bloc.add(GetDataEvent(context: context));
   }
 
   @override

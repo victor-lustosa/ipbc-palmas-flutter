@@ -109,10 +109,9 @@ export 'src/core/external/repositories/hive_repository.dart';
 
 export 'src/shared/mixins/launch_url_mixin.dart';
 export 'src/shared/mixins/date_mixin.dart';
-export 'src/shared/mixins/buttons_bar_mixin.dart';
 export 'src/shared/mixins/clipboard_mixin.dart';
-export 'src/shared/mixins/email_mixin.dart';
-export 'src/shared/mixins/validation_and_format_mixin.dart';
+export 'src/shared/mixins/format_mixin.dart';
+export 'src/shared/mixins/validation_mixin.dart';
 export 'src/shared/mixins/connectivity_mixin.dart';
 export 'src/shared/mixins/image_mixin.dart';
 export 'src/core/overall_states/generics.dart';

@@ -13,7 +13,7 @@ void showCustomMessageDialog({
   Alignment? alignment,
   double? width,
   required String message,
-  Duration duration = const Duration(milliseconds: 900),
+  Duration? duration,
   Function()? onDelayedAction,
   required DialogType type,
 }) async {
@@ -44,7 +44,7 @@ void showCustomMessageDialog({
 
   overlayState.insert(_currentOverlayEntry!);
 
-  Timer(duration, () {
+  Timer(duration ?? const Duration(milliseconds: 900), () {
     Future.delayed(const Duration(milliseconds: 250), () {
       if (onDelayedAction != null) {
         onDelayedAction();

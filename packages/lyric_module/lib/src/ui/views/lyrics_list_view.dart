@@ -49,7 +49,7 @@ class _LyricsListViewState extends State<LyricsListView>
                 return RefreshIndicator(
                   color: AppColors.darkGreen,
                   onRefresh: () async {
-                    _bloc.add(GetDataEvent());
+                    _bloc.add(GetDataEvent(context: context));
                   },
                   child: SingleChildScrollView(
                     child: Column(

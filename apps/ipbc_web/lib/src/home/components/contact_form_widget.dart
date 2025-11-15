@@ -15,17 +15,23 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
   @override
   void initState() {
     viewModel = Modular.get<HomeViewModel>();
+    viewModel.init();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     viewModel.vWidth = context.sizeOf.width;
-    if (viewModel.vWidth > viewModel.mdSize) {
-      return web();
-    } else {
-      return mobile();
-    }
+    return ValueListenableBuilder(
+      valueListenable: viewModel,
+      builder: (_, state, child) {
+        if (viewModel.vWidth > viewModel.mdSize) {
+          return web();
+        } else {
+          return mobile();
+        }
+      },
+    );
   }
 
   web() => Container(
@@ -111,10 +117,10 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
     isValid: viewModel.isNameValid.value,
     controller: viewModel.nameController,
     errorText: viewModel.nameErrorText,
-    validator: (data) {
-      return viewModel.formValidation(
+    onChanged: (data) {
+      viewModel.formValidation(
         !viewModel.isEmptyData(data),
-        viewModel.isMessageValid,
+        viewModel.isNameValid,
       );
     },
     fieldWidth: width,
@@ -151,8 +157,8 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
       hintText: 'me@company.com',
     ),
     fieldStyle: _fieldStyle(viewModel.isEmailValid.value),
-    validator: (data) {
-      return viewModel.formValidation(
+    onChanged: (data) {
+      viewModel.formValidation(
         viewModel.emailValidation(data),
         viewModel.isEmailValid,
       );
@@ -180,8 +186,8 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
     maxLines: 5,
     maxLength: 500,
     fieldHeight: 115,
-    validator: (data) {
-      return viewModel.formValidation(
+    onChanged: (data) {
+      viewModel.formValidation(
         !viewModel.isEmptyData(data),
         viewModel.isMessageValid,
       );
@@ -250,7 +256,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
           : AppColors.darkGreen,
       overlayColor: viewModel.isSubmitted.value
           ? AppColors.highlightGreen
-          : null,
+          : AppColors.darkGreen,
       foregroundColor: viewModel.isSubmitted.value
           ? AppColors.grey12
           : AppColors.white,

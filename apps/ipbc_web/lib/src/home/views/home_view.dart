@@ -50,7 +50,7 @@ class _HomeViewState extends State<HomeView>
     double width = context.sizeOf.width;
     floatingActionRightPadding() {
       if (width > 1200) {
-        return 125.0;
+        return 115.0;
       } else if (width > 800) {
         return 24.0;
       } else {

@@ -17,7 +17,7 @@ class ServicesCollectionView extends StatefulWidget {
 }
 
 class _ServicesCollectionViewState extends State<ServicesCollectionView>
-    with DateMixin, ValidationAndFormatMixin {
+    with DateMixin, FormatMixin {
   late final ServicesCollectionBloc _bloc;
   final Map<String, GlobalKey> _gestureKeys = {};
   late String path;
@@ -28,7 +28,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
     _bloc = Modular.get<ServicesCollectionBloc>();
     _bloc.path = widget.entity.path;
     _bloc.manageServiceStore.servicesEntity = widget.entity;
-    _bloc.add(GetDataEvent());
+    _bloc.add(GetDataEvent(context: context));
   }
   @override
   void dispose() {

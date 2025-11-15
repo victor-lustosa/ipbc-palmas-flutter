@@ -2,7 +2,7 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
 class LoginStore extends ValueNotifier<GenericState<LoginState>>
-    with ConnectivityMixin {
+    with ConnectivityMixin, ValidationMixin {
   LoginStore({
     required AuthCircleAvatarStore authCircleAvatarStore,
     required IAuthUseCases useCases,
@@ -100,14 +100,6 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>>
       value = UpdateFormFieldState();
     });
     return null;
-  }
-
-  bool isEmptyData(String? data) {
-    return (data == null || data.isEmpty);
-  }
-
-  bool emailValidation(String? data) {
-    return !isEmptyData(data) && EmailValidator.validate(data ?? '');
   }
 
   void toCreateAccount() {

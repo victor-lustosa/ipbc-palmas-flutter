@@ -32,8 +32,8 @@ class ServicesCollectionBloc
 
   ServiceStore get serviceStore => _serviceStore;
 
-  _updateServicesCollectionCallback() {
-    add(GetDataEvent());
+  _updateServicesCollectionCallback(BuildContext context) {
+    add(GetDataEvent(context: context));
   }
 
   _updateCallBack() {
@@ -41,8 +41,8 @@ class ServicesCollectionBloc
     popAndPushNamed(AppRoutes.servicesRoute + AppRoutes.serviceRoute);
   }
 
-  Future<void> _getInSupa(_, emit) async {
-    final response = await isConnected();
+  Future<void> _getInSupa(event, emit) async {
+    final response = await isConnected(context: event.context);
     if (response) {
       List<String> pathList = path.split('/');
       servicesCollectionParams = {

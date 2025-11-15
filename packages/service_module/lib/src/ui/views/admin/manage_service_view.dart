@@ -12,7 +12,7 @@ class ManageServiceView extends StatefulWidget {
 }
 
 class _ManageServiceViewState extends State<ManageServiceView>
-    with DateMixin, ValidationAndFormatMixin {
+    with DateMixin, FormatMixin {
   late ManageServiceStore _store;
   final Map<String, GlobalKey> _liturgyKeys = {};
   final Map<String, GlobalKey> _tileKeys = {};
