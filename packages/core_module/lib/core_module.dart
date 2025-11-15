@@ -113,6 +113,7 @@ export 'src/shared/mixins/clipboard_mixin.dart';
 export 'src/shared/mixins/format_mixin.dart';
 export 'src/shared/mixins/validation_mixin.dart';
 export 'src/shared/mixins/connectivity_mixin.dart';
+export 'src/shared/mixins/device_info_mixin.dart';
 export 'src/shared/mixins/image_mixin.dart';
 export 'src/core/overall_states/generics.dart';
 export 'src/shared/utils/supa_services_util.dart';

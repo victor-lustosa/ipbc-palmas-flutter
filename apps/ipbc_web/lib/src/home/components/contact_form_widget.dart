@@ -10,13 +10,20 @@ class ContactFormWidget extends StatefulWidget {
   State<ContactFormWidget> createState() => _ContactFormWidgetState();
 }
 
-class _ContactFormWidgetState extends State<ContactFormWidget> {
+class _ContactFormWidgetState extends State<ContactFormWidget>
+    with DeviceInfoMixin {
   late HomeViewModel viewModel;
+  bool isBrowserDevice = false;
 
   @override
-  void initState() {
-    viewModel = Modular.get<HomeViewModel>();
+   initState() {
     super.initState();
+    viewModel = Modular.get<HomeViewModel>();
+    getBrowserType();
+  }
+
+  getBrowserType() async {
+    isBrowserDevice = await isBrowserOnDevice();
   }
 
   @override
@@ -194,19 +201,17 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
       );
     },
     fieldWidth: width,
-    inputFormatters: [
-      LengthLimitingTextInputFormatter(500),
-    ],
+    inputFormatters: [LengthLimitingTextInputFormatter(500)],
     isSubmitted: !viewModel.isSubmitted.value,
     fieldStyle: _fieldStyle(viewModel.isMessageValid.value),
     inputDecoration: _inputDecoration(
       isValid: viewModel.isMessageValid.value,
       hintText: 'Sua mensagem...',
-      contentPadding: const EdgeInsets.only(
+      contentPadding: EdgeInsets.only(
         left: 10,
         right: 10,
-        top: 12,
-        bottom: 2
+        top: isBrowserDevice ? 10 : 12,
+        bottom: 2,
         //top 8 pra celular
       ),
       counter: ValueListenableBuilder<int>(
@@ -225,7 +230,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
             ),
           );
         },
-      )
+      ),
     ),
     colorStyle: AppColors.hintInputForm,
   );
@@ -234,7 +239,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
     required bool isValid,
     required hintText,
     EdgeInsetsGeometry? contentPadding,
-    Widget? counter
+    Widget? counter,
   }) {
     return InputDecoration(
       isDense: true,
@@ -242,11 +247,10 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
       border: InputBorder.none,
       contentPadding:
           contentPadding ??
-          const EdgeInsets.only(
+          EdgeInsets.only(
             left: 10,
             right: 10,
-            //top 11 pra celular
-            top: 12,
+            top: isBrowserDevice ? 10 : 12,
           ),
       counterStyle: AppFonts.defaultFont(
         fontSize: 10,
