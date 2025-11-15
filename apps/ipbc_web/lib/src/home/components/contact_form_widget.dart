@@ -23,7 +23,8 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
   }
 
   getBrowserType() async {
-    isBrowserDevice = await isBrowserOnDevice();
+      isBrowserDevice = await isBrowserOnDevice();
+      viewModel.value = UpdateFormFieldState();
   }
 
   @override
@@ -210,7 +211,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
       contentPadding: EdgeInsets.only(
         left: 10,
         right: 10,
-        top: isBrowserDevice ? 10 : 12,
+        top: isBrowserDevice ? 8 : 12,
         bottom: 2,
         //top 8 pra celular
       ),
@@ -250,7 +251,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
           EdgeInsets.only(
             left: 10,
             right: 10,
-            top: isBrowserDevice ? 10 : 12,
+            top: isBrowserDevice ? 8 : 12,
           ),
       counterStyle: AppFonts.defaultFont(
         fontSize: 10,

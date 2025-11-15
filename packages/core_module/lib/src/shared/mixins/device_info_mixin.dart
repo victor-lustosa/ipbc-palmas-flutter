@@ -10,12 +10,11 @@ mixin DeviceInfoMixin {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     WebBrowserInfo webInfo = await deviceInfo.webBrowserInfo;
 
-    String userAgent = webInfo.userAgent ?? '';
+    String userAgent = (webInfo.userAgent ?? '').toLowerCase();
 
     return userAgent.toLowerCase().contains('android') ||
         userAgent.contains('iphone') ||
         userAgent.contains('ipad') ||
         userAgent.contains('ipod');
   }
-
 }
