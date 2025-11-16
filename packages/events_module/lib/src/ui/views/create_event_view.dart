@@ -583,43 +583,10 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                               child: const Text("Deletar"),
                               action: () async {
                                 await showConfirmationDialog(
-                                  buttons: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      ButtonWidget(
-                                        padding: EdgeInsets.zero,
-                                        adaptiveButtonType: AdaptiveButtonType.text,
-                                        action: () => nativePop(context),
-                                        child: Text(
-                                          'Cancelar',
-                                          style: AppFonts.defaultFont(
-                                            color: AppColors.grey10,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                      VerticalDivider(
-                                        width: 2,
-                                        thickness: 1,
-                                        color: AppColors.dividerModal.withValues(alpha: .3),
-                                      ),
-                                      ButtonWidget(
-                                        padding: EdgeInsets.zero,
-                                        adaptiveButtonType: AdaptiveButtonType.text,
-                                        action: () async {
-                                          _store.popNumber = 3;
-                                          await _store.delete(_store.eventEntity, context);
-                                        },
-                                        child: const Text(
-                                          'Deletar',
-                                          style: TextStyle(
-                                            color: AppColors.cancelDeleteModal,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  confirmAction: () async {
+                                    _store.popNumber = 3;
+                                    await _store.delete(_store.eventEntity, context);
+                                  },
                                   title: "Deletar evento",
                                   message: "O item será deletado permanentemente. Tem certeza?",
                                   context: context,);

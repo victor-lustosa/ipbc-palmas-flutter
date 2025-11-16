@@ -7,7 +7,8 @@ Future<void> showConfirmationDialog({
   required BuildContext context,
   required String title,
   required String message,
-  required Widget buttons,
+  Widget? buttons,
+  VoidCallback? confirmAction,
 }) async {
   await showGeneralDialog(
     context: context,
@@ -20,6 +21,7 @@ Future<void> showConfirmationDialog({
         buttons: buttons,
         message: message,
         title: title,
+        confirmAction: confirmAction,
       );
     },
     transitionBuilder: (context, animation, secondaryAnimation, child) {
@@ -37,14 +39,17 @@ Future<void> showConfirmationDialog({
 class ConfirmDialogWidget extends StatefulWidget {
   const ConfirmDialogWidget({
     super.key,
-    required this.buttons,
+     this.buttons,
     required this.message,
     required this.title,
+    this.confirmAction
   });
 
-  final Widget buttons;
+  final Widget? buttons;
   final String message;
   final String title;
+  final VoidCallback? confirmAction;
+
 
   @override
   State<ConfirmDialogWidget> createState() => _ConfirmDialogWidgetState();
@@ -109,7 +114,40 @@ class _ConfirmDialogWidgetState extends State<ConfirmDialogWidget> {
                         ),
                         SizedBox(
                           height: 48,
-                          child: widget.buttons,
+                          child: widget.buttons?? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ButtonWidget(
+                                padding: EdgeInsets.zero,
+                                adaptiveButtonType: AdaptiveButtonType.text,
+                                action: () => nativePop(context),
+                                child: Text(
+                                  'Cancelar',
+                                  style: AppFonts.defaultFont(
+                                    color: AppColors.grey10,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              VerticalDivider(
+                                width: 2,
+                                thickness: 1,
+                                color: AppColors.dividerModal.withValues(alpha: .3),
+                              ),
+                              ButtonWidget(
+                                padding: EdgeInsets.zero,
+                                adaptiveButtonType: AdaptiveButtonType.text,
+                                action: widget.confirmAction,
+                                child: const Text(
+                                  'Deletar',
+                                  style: TextStyle(
+                                    color: AppColors.cancelDeleteModal,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ) ,
                         ),
                       ],
                     ),

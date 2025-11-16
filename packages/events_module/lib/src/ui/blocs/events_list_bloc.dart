@@ -62,6 +62,8 @@ class EventsListBloc
   Future<void> _deleteItem(DeleteItemEvent event, emit) async {
     final eventEntity = eventsList[slideCardsStore.index];
     final response = await _createEventStore.delete(eventEntity, event.context);
+      int count = 0;
+      popUntil((_) => count++ >= _createEventStore.popNumber);
     if (response != null) {
       eventsList.remove(eventEntity);
     }
