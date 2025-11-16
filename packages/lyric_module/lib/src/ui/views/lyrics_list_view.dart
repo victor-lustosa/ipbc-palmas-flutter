@@ -14,6 +14,7 @@ class LyricsListView extends StatefulWidget {
 class _LyricsListViewState extends State<LyricsListView>
     with TickerProviderStateMixin {
   late final LyricBloc _bloc;
+  final List<String> _options = ['título', 'artista'];
 
   @override
   void initState() {
@@ -90,6 +91,7 @@ class _LyricsListViewState extends State<LyricsListView>
                         Container(
                           margin: const EdgeInsets.only(left: 21.5),
                           child: OwnChoiceChipsWidget(
+                            options: SearchParameters.values,
                             action: _bloc.selectOptions,
                           ),
                         ),

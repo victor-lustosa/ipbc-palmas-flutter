@@ -13,13 +13,53 @@ class SearchLyricsView extends StatefulWidget {
 
 class _SearchLyricsViewState extends State<SearchLyricsView> {
   late final SearchLyricsStore _store;
-
   @override
   void initState() {
     super.initState();
     _store = Modular.get<SearchLyricsStore>();
+    _store.init();
   }
+  loadingWidget(BuildContext context) =>  SizedBox(
+      height: context.sizeOf.height * .4,
+      width: context.sizeOf.width,
+      child: const LoadingWidget(
+        androidRadius: 3,
+        iosRadius: 14,
+        color: AppColors.darkGreen,
+      ),
+  );
 
+  lyricNotFound(BuildContext context) => Container(
+    margin: const EdgeInsets.only(top: 150),
+    child: SizedBox(
+      width: context.sizeOf.width,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 26,
+            height: 26,
+            child: Image.asset(
+              AppIcons.info,
+              color: Colors.blueAccent,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 8),
+            width: context.sizeOf.width * .6,
+            child: Text(
+              textAlign: TextAlign.center,
+              style: AppFonts.defaultFont(
+                fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context),
+                color: AppColors.grey9,
+              ),
+              'Nenhuma música encontrada.',
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -61,15 +101,18 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                       margin: const EdgeInsets.only(bottom: 13),
                       child: SearchBarWidget(
                         controller: _store.searchController,
-                        action: () {
-                          _store.searchLyrics();
-                        },
+                        onChange: (value){
+                          if(value.isNotEmpty){
+                            _store.searchLyrics(value);
+                          }
+                      },
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 21.5),
                       child: OwnChoiceChipsWidget(
                         hasEmptyOption: false,
+                        options: SearchParameters.values,
                         action: _store.selectOptions,
                       ),
                     ),
@@ -98,7 +141,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                                     child: Text(
                                       textAlign: TextAlign.center,
                                       style: AppFonts.defaultFont(
-                                        fontSize: 13,
+                                        fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context),
                                         color: AppColors.grey9,
                                       ),  
                                       'As músicas que você pesquisar aparecerão aqui',
@@ -109,8 +152,9 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                             ),
                           );
                         } else if (state is SearchSuccessState ||
-                            state is NotFoundState) {
+                            state is NotFoundState || state is LoadingState) {
                           if (state is SearchSuccessState) {
+                            if(_store.lyricsListStore.entitiesList.isNotEmpty){
                             return Column(
                               children: [
                                 Column(
@@ -134,47 +178,71 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                                     ),
                                   ],
                                 ),
+                                Container(
+                                  margin: const EdgeInsets.only(top: 14),
+                                  child: ValueListenableBuilder(
+                                    valueListenable: _store.lyricsListStore,
+                                    builder: (context, state, child) {
+                                      return Visibility(
+                                        visible: _store.lyricsListStore
+                                            .entitiesList.isNotEmpty,
+                                        child: LyricsListWidget(
+                                          onTap: () {
+                                            pushNamed(
+                                              AppRoutes.lyricsRoute +
+                                                  AppRoutes.lyricRoute,
+                                              arguments:
+                                              _store.lyricsListStore
+                                                  .lyricEntity,
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
                               ],
                             );
-                          } else {
-                            return Container(
-                              margin: const EdgeInsets.only(top: 150),
-                              child: SizedBox(
-                                width: context.sizeOf.width,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      width: 26,
-                                      height: 26,
-                                      child: Image.asset(
-                                        AppIcons.info,
-                                        color: Colors.blueAccent,
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(top: 8),
-                                      width: context.sizeOf.width * .6,
-                                      child: Text(
-                                        textAlign: TextAlign.center,
-                                        style: AppFonts.defaultFont(
-                                          fontSize: 13,
-                                          color: AppColors.grey9,
+                            } else {
+                              return Container(
+                                margin: const EdgeInsets.only(top: 150),
+                                child: SizedBox(
+                                  width: context.sizeOf.width,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: 26,
+                                        height: 26,
+                                        child: Image.asset(
+                                          AppIcons.info,
+                                          color: Colors.blueAccent,
                                         ),
-                                        'Nenhuma música encontrada.',
                                       ),
-                                    ),
-                                  ],
+                                      Container(
+                                        margin: EdgeInsets.only(top: 8),
+                                        width: context.sizeOf.width * .6,
+                                        child: Text(
+                                          textAlign: TextAlign.center,
+                                          style: AppFonts.defaultFont(
+                                            fontSize: 13,
+                                            color: AppColors.grey9,
+                                          ),
+                                          'Nenhuma música encontrada.',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
+                          } else if (state is LoadingState) {
+                            return loadingWidget(context);
+                          } else {
+                            return lyricNotFound(context);
                           }
                         } else {
-                          return const LoadingWidget(
-                            androidRadius: 3,
-                            iosRadius: 14,
-                            color: AppColors.darkGreen,
-                          );
+                          return loadingWidget(context);
                         }
                       },
                     ),

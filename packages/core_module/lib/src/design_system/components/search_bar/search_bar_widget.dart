@@ -6,11 +6,11 @@ class SearchBarWidget extends StatefulWidget {
   const SearchBarWidget(
       {super.key,
       required this.controller,
-      required this.action,
+      this.action,
       this.onChange});
 
   final TextEditingController controller;
-  final void Function() action;
+  final void Function()? action;
   final void Function(String)? onChange;
 
   @override
