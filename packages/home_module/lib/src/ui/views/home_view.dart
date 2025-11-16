@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -43,7 +40,7 @@ class _HomeViewState extends State<HomeView>
   Widget build(BuildContext context) {
     super.build(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark,
+      value: .dark,
       child: Scaffold(
         body: SafeArea(
           child: BlocBuilder<HomeBloc, GenericState<HomeState>>(
@@ -68,7 +65,7 @@ class _HomeViewState extends State<HomeView>
                       SizedBox(
                         width: context.sizeOf.width,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: .center,
                           children: [
                             const SizedBox(height: 78),
                             InkWell(
@@ -100,9 +97,9 @@ class _HomeViewState extends State<HomeView>
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.white,
                               ),
-                              margin: const EdgeInsets.only(left: 6, right: 6),
+                              margin: const .only(left: 6, right: 6),
                               route: AppRoutes.servicesCollectionRoute,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: .center,
                               width: context.sizeOf.width,
                               services: _bloc.servicesList,
                             ),
@@ -119,7 +116,7 @@ class _HomeViewState extends State<HomeView>
                               child: Column(
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(
+                                    margin: .only(
                                       top: _bloc.servicesList.isEmpty ? 29 : 15,
                                     ),
                                     child: title(text: "Eventos"),
@@ -133,10 +130,7 @@ class _HomeViewState extends State<HomeView>
                               ),
                             ),
                             Container(
-                              margin: const EdgeInsets.only(
-                                top: 12,
-                                bottom: 20,
-                              ),
+                              margin: const .only(top: 12, bottom: 20),
                               child: SlideCardsWidget(
                                 isLoading: state is LoadingEventsState,
                                 action: () {
@@ -150,7 +144,7 @@ class _HomeViewState extends State<HomeView>
                                 },
                                 shimmerController: _shimmerController,
                                 width: context.sizeOf.width * .742,
-                                scrollDirection: Axis.horizontal,
+                                scrollDirection: .horizontal,
                                 route:
                                     AppRoutes.eventRoute +
                                     AppRoutes.detailEventRoute,

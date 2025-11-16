@@ -25,7 +25,7 @@ class _BackAuthTopBarWidgetState extends State<BackAuthTopBarWidget> {
           widget.margin ??
           const EdgeInsets.only(top: 22, left: 16, right: 16, bottom: 24),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: [
           (widget.isHome ?? false)
               ? LogoIconWidget()
