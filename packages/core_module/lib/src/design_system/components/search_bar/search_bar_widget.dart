@@ -40,7 +40,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           suffixIcon: InkWell(
             onTap: widget.action,
             child: IconButtonWidget(
-              size: 28,
+              height: 28,
               color: AppColors.grey7,
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,

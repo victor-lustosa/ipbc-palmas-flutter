@@ -27,11 +27,12 @@ class AppIcons {
   static const String iosShare = 'packages/core_module/assets/icons/ios_share.png';
   static const String locationOn = 'packages/core_module/assets/icons/location_on.png';
   static const String logo = 'packages/core_module/assets/icons/logo.svg';
-  static const String arrowBack = 'packages/core_module/assets/icons/arrow_back_ios_new.svg';
+  static const String arrowForward = 'packages/core_module/assets/icons/arrow_forward.svg';
+  static const String arrowBack = 'packages/core_module/assets/icons/arrow_back.svg';
   static const String home = 'packages/core_module/assets/icons/home.svg';
   static const String volunteerActivism = 'packages/core_module/assets/icons/volunteer_activism.svg';
   static const String accountCircle = 'packages/core_module/assets/icons/account_circle.svg';
-  static const String iosArrowBack = 'packages/core_module/assets/icons/arrow_back_ios_new.svg';
+  static const String iosArrowBack = 'packages/core_module/assets/icons/arrow_forward.svg';
   static const String googleIcon = 'packages/core_module/assets/icons/google-icon.png';
   static const String faceIcon = 'packages/core_module/assets/icons/face-icon.png';
   static const String visibilityOff = 'packages/core_module/assets/icons/visibility_off.png';

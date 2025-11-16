@@ -158,89 +158,80 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                           ),
                                         );
                                       },
-                                      child: AspectRatio(
-                                        aspectRatio: 343 / 92,
-                                        child: Container(
-                                          key: itemKey,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(16),
-                                            color: index == 0
-                                                ? AppColors.highlightGreen.withValues(alpha: .1)
-                                                : AppColors.grey0,
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                margin: const EdgeInsets.only(
-                                                  left: 16,
-                                                ),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
+                                      child: Container(
+                                        key: itemKey,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(16),
+                                          color: index == 0
+                                              ? AppColors.highlightGreen.withValues(alpha: .1)
+                                              : AppColors.grey0,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              margin: const EdgeInsets.only(
+                                                left: 16,
+                                                top: 16,
+                                                bottom: 16,
+                                              ),
+                                              width: ResponsivityUtil(sm:context.sizeOf.width * .76, xl:context.sizeOf.width * .8).get(context),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    overflow: TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                    '${_bloc.entitiesList[index].title} ${formatDateToString(_bloc.entitiesList[index].serviceDate)} | ${formatHourToString(date: _bloc.entitiesList[index].serviceDate)}',
+                                                    style: AppFonts.defaultFont(
+                                                      fontWeight: FontWeight.w600,
+                                                      color: AppColors.grey9,
+                                                      fontSize: ResponsivityUtil<double>(sm: 15, xl: 16).get(context),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                          bottom: 4,
+                                                          top: 4,
+                                                        ),
+                                                    child: Text(
                                                       overflow: TextOverflow.ellipsis,
-                                                      maxLines: 1,
-                                                      '${_bloc.entitiesList[index].title} ${formatDateToString(_bloc.entitiesList[index].serviceDate)} | ${formatHourToString(date: _bloc.entitiesList[index].serviceDate)}',
-                                                      style: AppFonts.defaultFont(
-                                                        fontWeight: FontWeight.w600,
-                                                        color: AppColors.grey9,
-                                                        fontSize: ResponsivityUtil<double>(sm: 15, xl: 16).get(context),
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      margin:
-                                                          const EdgeInsets.only(
-                                                            bottom: 4,
-                                                            top: 4,
-                                                          ),
-                                                      child: Text(
-                                                        overflow: TextOverflow.ellipsis,
-                                                        maxLines: 2,
-                                                        'Mensagem: ${_bloc.entitiesList[index].theme}',
-                                                        style:
-                                                            AppFonts.description(
-                                                              color: AppColors.grey8,
-                                                              fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context),
-                                                            ),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      _bloc.entitiesList[index].preacher,
+                                                      maxLines: 2,
+                                                      'Mensagem: ${_bloc.entitiesList[index].theme}',
                                                       style:
                                                           AppFonts.description(
                                                             color: AppColors.grey8,
                                                             fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context),
                                                           ),
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                  Text(
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    _bloc.entitiesList[index].preacher,
+                                                    style:
+                                                        AppFonts.description(
+                                                          color: AppColors.grey8,
+                                                          fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context),
+                                                        ),
+                                                  ),
+                                                ],
                                               ),
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  right:
-                                                      ResponsivityUtil.isSmallDevice(
-                                                        context,
-                                                      )
-                                                      ? 7
-                                                      : 12,
-                                                ),
-                                                child: IconButtonWidget(
-                                                  size: 34,
-                                                  color: AppColors.darkGreen,
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  iOSIcon: CupertinoIcons
-                                                      .chevron_forward,
-                                                  androidIcon:
-                                                      Icons.navigate_next_sharp,
-                                                ),
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                right: 16,
                                               ),
-                                            ],
-                                          ),
+                                              child: IconButtonWidget(
+                                                sizeIcon: ResponsivityUtil<double>(sm: 23, xl: 26).get(context),
+                                                color: AppColors.darkGreen,
+                                                iconFormat: IconFormat.svg,
+                                                iconPath: AppIcons.arrowForward,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     );

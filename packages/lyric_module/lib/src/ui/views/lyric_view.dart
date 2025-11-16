@@ -104,7 +104,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                           ),
                           Container(margin: EdgeInsets.only(top: 15),
                             child: IconButtonWidget(
-                              size: 30,
+                              height: 30,
                               color: AppColors.darkGreen,
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,

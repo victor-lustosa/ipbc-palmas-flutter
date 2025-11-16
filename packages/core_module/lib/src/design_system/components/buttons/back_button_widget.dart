@@ -5,25 +5,28 @@ import 'package:flutter/cupertino.dart';
 class BackButtonWidget extends StatelessWidget {
   final void Function()? action;
   final Color? color;
-  final double? size;
+  final double? height;
+  final double? sizeIcon;
+  final double? width;
 
   const BackButtonWidget({
     super.key,
     required this.action,
     this.color,
-    this.size,
+    this.height,
+    this.width, this.sizeIcon,
   });
 
   @override
   Widget build(BuildContext context) {
     return IconButtonWidget(
-      size: size ?? 30,
+      height: height ?? 33,
+      sizeIcon: sizeIcon ?? 23,
+      width: width ?? 33,
       color: color ?? AppColors.darkGreen,
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      iOSIcon: CupertinoIcons.chevron_back,
-      androidIcon: Icons.arrow_back_rounded,
+      iconFormat: IconFormat.svg,
       action: action,
+      iconPath: AppIcons.arrowBack,
     );
   }
 }

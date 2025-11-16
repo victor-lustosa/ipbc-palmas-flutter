@@ -294,15 +294,12 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         margin: const EdgeInsets.only(top: 40),
         child: CachedNetworkImage(
           imageUrl: AppImages.hero,
-          fit: BoxFit.cover,
           placeholder: (context, url) => placeholder(
             border: BorderRadius.circular(20),
           ),
           errorWidget: (context, url, error) => placeholder(
             border: BorderRadius.circular(20),
           ),
-          color: const Color.fromRGBO(0, 66, 46, 0.40),
-          colorBlendMode: BlendMode.color,
           imageBuilder: (context, imageProvider) => Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),

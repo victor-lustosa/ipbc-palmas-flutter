@@ -189,7 +189,7 @@ class _RegistrationCompletionViewState
                         padding: const EdgeInsets.only(right: 16),
                         child: IconButtonWidget(
                           action: selectDate,
-                          size: 24,
+                          height: 24,
                           color: AppColors.grey7,
                           iOSIcon: CupertinoIcons.calendar,
                           androidIcon: Icons.date_range,
