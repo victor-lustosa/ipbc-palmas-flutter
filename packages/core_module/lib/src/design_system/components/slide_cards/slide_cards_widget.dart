@@ -321,7 +321,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
           width: context.sizeOf.width * .6,
           child: Text(
             textAlign: TextAlign.center,
-            style: AppFonts.defaultFont(fontSize: 13, color: AppColors.grey9),
+            style: AppFonts.defaultFont(fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context), color: AppColors.grey9),
             'Não há eventos cadastrados no momento.',
           ),
         ),

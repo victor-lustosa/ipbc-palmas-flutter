@@ -30,11 +30,13 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
     _bloc.manageServiceStore.servicesEntity = widget.entity;
     _bloc.add(GetDataEvent(context: context));
   }
+
   @override
   void dispose() {
     _gestureKeys.clear();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final loadingWidget = const LoadingWidget(
@@ -50,12 +52,11 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
             return loadingWidget;
           } else if (state is NoConnectionState<ServicesCollectionState>) {
             return NoConnectionView(
-              action: () => nativePushReplacementNamed(
-                AppRoutes.homeRoute,
-                context,
-              ),
+              action: () =>
+                  nativePushReplacementNamed(AppRoutes.homeRoute, context),
             );
-          } else if (state is DataFetchedState<ServicesCollectionState> || state is UpdateServicesListState) {
+          } else if (state is DataFetchedState<ServicesCollectionState> ||
+              state is UpdateServicesListState) {
             final currentIds = _bloc.entitiesList.map((e) => e.id!).toSet();
             _gestureKeys.removeWhere((key, _) => !currentIds.contains(key));
 
@@ -83,7 +84,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                   top: 24,
                                   left: 16,
                                   right: 16,
-                                  bottom: 30
+                                  bottom: 30,
                                 ),
                                 child: ListView.separated(
                                   separatorBuilder:
@@ -96,14 +97,19 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                   itemCount: _bloc.entitiesList.length,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
-                                    final ServiceEntity service = _bloc.entitiesList[index];
+                                    final ServiceEntity service =
+                                        _bloc.entitiesList[index];
                                     final Key itemKey = Key(service.id!);
-                                    final GlobalKey gestureKey = _gestureKeys.putIfAbsent(service.id!, () => GlobalKey());
+                                    final GlobalKey gestureKey = _gestureKeys
+                                        .putIfAbsent(
+                                          service.id!,
+                                          () => GlobalKey(),
+                                        );
 
                                     return GestureDetector(
                                       key: gestureKey,
                                       onTap: () {
-                                       _bloc.toService(widget.entity, service);
+                                        _bloc.toService(widget.entity, service);
                                       },
                                       onLongPressStart: (_) async {
                                         await showOptionsDialog(
@@ -128,8 +134,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                               ),
                                               Divider(
                                                 height: 1,
-                                                color: AppColors.dividerModal
-                                                    .withValues(alpha: .3),
+                                                color: AppColors.dividerModal.withValues(alpha: .3),
                                               ),
                                               actionButton(
                                                 context: context,
@@ -139,7 +144,10 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                                 label: 'Deletar',
                                                 action: () async {
                                                   _bloc.add(
-                                                    DeleteItemEvent(index: index, context: context),
+                                                    DeleteItemEvent(
+                                                      index: index,
+                                                      context: context,
+                                                    ),
                                                   );
                                                   if (context.mounted) {
                                                     pop(context);
@@ -150,38 +158,35 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                           ),
                                         );
                                       },
-                                      child: Container(
-                                        key: itemKey,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(16),
-                                          color: index == 0
-                                              ? AppColors.highlightGreen
-                                                    .withValues(alpha: .1)
-                                              : AppColors.grey0,
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              child: Container(
+                                      child: AspectRatio(
+                                        aspectRatio: 343 / 92,
+                                        child: Container(
+                                          key: itemKey,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(16),
+                                            color: index == 0
+                                                ? AppColors.highlightGreen.withValues(alpha: .1)
+                                                : AppColors.grey0,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
                                                 margin: const EdgeInsets.only(
                                                   left: 16,
-                                                  top: 16,
-                                                  bottom: 16,
                                                 ),
                                                 child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                      overflow: TextOverflow.ellipsis,
                                                       maxLines: 1,
                                                       '${_bloc.entitiesList[index].title} ${formatDateToString(_bloc.entitiesList[index].serviceDate)} | ${formatHourToString(date: _bloc.entitiesList[index].serviceDate)}',
                                                       style: AppFonts.defaultFont(
-                                                        fontWeight:
-                                                            FontWeight.w600,
+                                                        fontWeight: FontWeight.w600,
                                                         color: AppColors.grey9,
-                                                        fontSize: 15,
+                                                        fontSize: ResponsivityUtil<double>(sm: 15, xl: 16).get(context),
                                                       ),
                                                     ),
                                                     Container(
@@ -191,51 +196,51 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                                             top: 4,
                                                           ),
                                                       child: Text(
-                                                        overflow:
-                                                            TextOverflow.ellipsis,
+                                                        overflow: TextOverflow.ellipsis,
                                                         maxLines: 2,
                                                         'Mensagem: ${_bloc.entitiesList[index].theme}',
                                                         style:
                                                             AppFonts.description(
-                                                              color:
-                                                                  AppColors.grey8,
+                                                              color: AppColors.grey8,
+                                                              fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context),
                                                             ),
                                                       ),
                                                     ),
                                                     Text(
-                                                      _bloc
-                                                          .entitiesList[index]
-                                                          .preacher,
-                                                      style: AppFonts.description(
-                                                        color: AppColors.grey8,
-                                                      ),
+                                                      _bloc.entitiesList[index].preacher,
+                                                      style:
+                                                          AppFonts.description(
+                                                            color: AppColors.grey8,
+                                                            fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context),
+                                                          ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                right:
-                                                    ResponsivityUtil.isSmallDevice(
-                                                      context,
-                                                    )
-                                                    ? 7
-                                                    : 12,
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  right:
+                                                      ResponsivityUtil.isSmallDevice(
+                                                        context,
+                                                      )
+                                                      ? 7
+                                                      : 12,
+                                                ),
+                                                child: IconButtonWidget(
+                                                  size: 34,
+                                                  color: AppColors.darkGreen,
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  iOSIcon: CupertinoIcons
+                                                      .chevron_forward,
+                                                  androidIcon:
+                                                      Icons.navigate_next_sharp,
+                                                ),
                                               ),
-                                              child: IconButtonWidget(
-                                                size: Platform.isIOS ? 30 : 34,
-                                                color: AppColors.darkGreen,
-                                                splashColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                iOSIcon: CupertinoIcons
-                                                    .chevron_forward,
-                                                androidIcon:
-                                                    Icons.navigate_next_sharp,
-                                              ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     );
@@ -247,7 +252,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                 child: SizedBox(
                                   width: context.sizeOf.width,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       SizedBox(
                                         width: 26,
@@ -263,7 +269,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                         child: Text(
                                           textAlign: TextAlign.center,
                                           style: AppFonts.defaultFont(
-                                            fontSize: 13,
+                                            fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context),
                                             color: AppColors.grey9,
                                           ),
                                           'Não há cultos cadastrados.',
