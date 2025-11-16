@@ -135,14 +135,14 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
             ),
             Container(
               padding: const EdgeInsets.only(left: 12),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: AppColors.white,
                 boxShadow: [
                   BoxShadow(
-                    blurRadius: 10,
+                    blurRadius: 6,
                     spreadRadius: 1,
-                    offset: Offset(4, 4),
-                    color: AppColors.grey2,
+                    offset: Offset(3, 3),
+                    color: AppColors.grey2.withAlpha(150),
                   ),
                 ],
                 borderRadius: BorderRadius.only(
@@ -283,7 +283,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
         width: widget.width,
         height: isHorizontal
             ? null
-            : context.sizeOf.width * .55,
+            : context.sizeOf.width * .56,
         decoration: BoxDecoration(
           color: Colors.grey.shade300,
           borderRadius: BorderRadius.circular(16),
