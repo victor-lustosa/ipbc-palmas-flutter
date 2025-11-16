@@ -92,7 +92,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
             padding: widget.inputPadding,
             margin: widget.fieldMargin,
             width: widget.fieldWidth,
-            height: widget.fieldHeight ?? 42,
+            height: widget.fieldHeight,
             decoration: widget.fieldDecoration,
             child: TextFormField(
               obscureText: widget.obscureText ?? false,

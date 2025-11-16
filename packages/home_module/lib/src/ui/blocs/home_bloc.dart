@@ -38,8 +38,8 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     });
   }
 
-  Future<void> _getServicesData(_, emit) async {
-    final response = await isConnected();
+  Future<void> _getServicesData(event, emit) async {
+    final response = await isConnected(context: event.context);
     if (response) {
       Future.delayed(Duration.zero, () {
         emit(LoadingServicesState());
@@ -59,8 +59,8 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     }
   }
 
-  Future<void> _getEventsData(_, emit) async {
-    final response = await isConnected();
+  Future<void> _getEventsData(event, emit) async {
+    final response = await isConnected(context: event.context);
     if (response) {
       Future.delayed(Duration.zero, () {
         emit(LoadingEventsState());

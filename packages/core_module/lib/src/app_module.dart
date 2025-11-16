@@ -16,66 +16,63 @@ class CoreModule extends Module {
   void exportedBinds(Injector i) {
     i.addSingleton<SupabaseClient>(() => Supabase.instance.client);
     i.addSingleton<SupabaseRepository>(
-          () => SupabaseRepository(supabaseClient: i.get<SupabaseClient>()),
+      () => SupabaseRepository(supabaseClient: i.get<SupabaseClient>()),
     );
 
-    i.addLazySingleton<HiveRepository>(() =>
-        HiveRepository(),
-    );
+    i.addLazySingleton<HiveRepository>(() => HiveRepository());
 
     i.addSingleton(
-          () =>
+      () =>
           UseCases<SupabaseRepository>(repository: i.get<SupabaseRepository>()),
     );
 
     i.addLazySingleton<LyricsListStore>(LyricsListStore.new);
     i.addLazySingleton<ManageLyricStore>(
-          () =>
-          ManageLyricStore(
-            useCases: i.get<UseCases<SupabaseRepository>>(),
-            lyricsListStore: i.get<LyricsListStore>(),
-          ),
+      () => ManageLyricStore(
+        useCases: i.get<UseCases<SupabaseRepository>>(),
+        lyricsListStore: i.get<LyricsListStore>(),
+      ),
     );
     i.addLazySingleton<IAuthUseCases>(
-          () =>
-          AuthUseCases(
-            offlineRepository: i.get<HiveRepository>(),
-            onlineRepository: SupaAuthRepository(
-              supaClient: i.get<SupabaseClient>(),
-            ),
-          ),
+      () => AuthUseCases(
+        offlineRepository: i.get<HiveRepository>(),
+        onlineRepository: SupaAuthRepository(
+          supaClient: i.get<SupabaseClient>(),
+        ),
+      ),
     );
     i.addLazySingleton(
-          () => AuthCircleAvatarStore(authUseCase: i.get<IAuthUseCases>()),
+      () => AuthCircleAvatarStore(authUseCase: i.get<IAuthUseCases>()),
     );
 
     i.addLazySingleton<IEventRepository>(EventRepository.new);
     i.addLazySingleton(
-          () => EventUseCases(repository: i.get<IEventRepository>()),
+      () => EventUseCases(repository: i.get<IEventRepository>()),
     );
     i.addLazySingleton(
-          () =>
-          CreateEventStore(
-            useCases: i.get<UseCases<SupabaseRepository>>(),
-            eventUseCases: i.get<EventUseCases>(),
-          ),
+      () => CreateEventStore(
+        useCases: i.get<UseCases<SupabaseRepository>>(),
+        eventUseCases: i.get<EventUseCases>(),
+      ),
     );
 
     i.addLazySingleton<ServiceStore>(
-          () =>
-          ServiceStore(
-            manageLyricStore: i.get<ManageLyricStore>(),
-            lyricsListStore: i.get<LyricsListStore>(),
-            searchLyricsStore: i.get<SearchLyricsStore>(),
-            manageServiceStore: i.get<ManageServiceStore>(),
-          ),
+      () => ServiceStore(
+        manageLyricStore: i.get<ManageLyricStore>(),
+        lyricsListStore: i.get<LyricsListStore>(),
+        searchLyricsStore: i.get<SearchLyricsStore>(),
+        manageServiceStore: i.get<ManageServiceStore>(),
+      ),
     );
     i.addLazySingleton<ManageServiceStore>(
-          () =>
-          ManageServiceStore(useCases: i.get<UseCases<SupabaseRepository>>()),
+      () => ManageServiceStore(useCases: i.get<UseCases<SupabaseRepository>>()),
     );
     i.addLazySingleton<SearchLyricsStore>(
-          () => SearchLyricsStore(manageLyricStore: i.get<ManageLyricStore>()),
+      () => SearchLyricsStore(
+        lyricsListStore: i.get<LyricsListStore>(),
+        manageLyricStore: i.get<ManageLyricStore>(),
+        useCases: i.get<UseCases<SupabaseRepository>>(),
+      ),
     );
     i.addLazySingleton<SlideCardsStore>(SlideCardsStore.new);
   }

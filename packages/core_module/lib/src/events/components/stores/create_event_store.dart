@@ -5,7 +5,7 @@ import 'package:core_module/src/events/infra/use_cases/event_use_cases.dart';
 import 'package:flutter/material.dart';
 
 class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
-    with ImageMixin, ConnectivityMixin, DateMixin, ValidationAndFormatMixin {
+    with ImageMixin, ConnectivityMixin, DateMixin, FormatMixin {
   bool isSwitchOn = false;
   bool isEditing = false;
   bool isChangedOrAdded = false;
@@ -36,25 +36,35 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     initDate();
   }
 
-  late final Map<TextEditingController, ValueNotifier<bool>>controllerValidators;
+  late final Map<TextEditingController, ValueNotifier<bool>>
+  controllerValidators;
 
   final TextEditingController eventTitleController = TextEditingController();
   final TextEditingController eventSubtitleController = TextEditingController();
   final TextEditingController eventLocationController = TextEditingController();
-  final TextEditingController eventLocationNameController = TextEditingController();
+  final TextEditingController eventLocationNameController =
+      TextEditingController();
   final TextEditingController eventLinkController = TextEditingController();
   final TextEditingController contactLinkController = TextEditingController();
-  final TextEditingController eventLinkDescriptionController = TextEditingController();
-  final TextEditingController eventDescriptionController = TextEditingController();
+  final TextEditingController eventLinkDescriptionController =
+      TextEditingController();
+  final TextEditingController eventDescriptionController =
+      TextEditingController();
 
   final String eventTitleErrorText = 'por favor, insira o título do evento.';
-  final String eventSubtitleErrorText = 'por favor, insira o subtítulo do evento.';
-  final String contactLinkErrorText = 'por favor, insira o link do contato do evento.';
-  final String eventLocationErrorText = 'por favor, insira um link de localização válido.';
-  final String eventLocationNameErrorText = 'por favor, insira o nome da localização do evento.';
-  final String eventDescriptionErrorText = 'por favor, insira a descrição do evento.';
+  final String eventSubtitleErrorText =
+      'por favor, insira o subtítulo do evento.';
+  final String contactLinkErrorText =
+      'por favor, insira o link do contato do evento.';
+  final String eventLocationErrorText =
+      'por favor, insira um link de localização válido.';
+  final String eventLocationNameErrorText =
+      'por favor, insira o nome da localização do evento.';
+  final String eventDescriptionErrorText =
+      'por favor, insira a descrição do evento.';
   final String eventLinkErrorText = 'por favor, insira o link do evento.';
-  final String eventLinkDescriptionErrorText = 'por favor, insira a descrição do link do evento.';
+  final String eventLinkDescriptionErrorText =
+      'por favor, insira a descrição do link do evento.';
 
   final eventTitleKey = GlobalKey<FormState>();
   final eventSubtitleKey = GlobalKey<FormState>();
@@ -78,23 +88,23 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   ValueNotifier<bool> isAddEventPressed = ValueNotifier(false);
   ValueNotifier<bool> isFormValid = ValueNotifier(true);
 
-  late ValueNotifier<bool>  isAllFieldsValid;
-
-
+  late ValueNotifier<bool> isAllFieldsValid;
 
   File coverImage = File('');
   late EventEntity eventEntity;
 
   void init() {
-    isAllFieldsValid = ValueNotifier(isEventTitleValid.value &&
-        isEventSubtitleValid.value &&
-        isEventLocationValid.value &&
-        isEventLocationNameValid.value &&
-        isEventDescriptionValid.value &&
-        isEventLinkValid.value &&
-        isEventLinkDescriptionValid.value &&
-        isContactLinkValid.value &&
-        isCoverImageValid.value);
+    isAllFieldsValid = ValueNotifier(
+      isEventTitleValid.value &&
+          isEventSubtitleValid.value &&
+          isEventLocationValid.value &&
+          isEventLocationNameValid.value &&
+          isEventDescriptionValid.value &&
+          isEventLinkValid.value &&
+          isEventLinkDescriptionValid.value &&
+          isContactLinkValid.value &&
+          isCoverImageValid.value,
+    );
     if (isEditing) {
       fillFormWithEvent(eventEntity);
     } else {
@@ -113,7 +123,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       contactLinkController.clear();
     }
   }
-
 
   formValidation(String? data, ValueNotifier<bool> isValid) {
     if (isEmptyData(data)) {
@@ -172,7 +181,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   Future<bool> validateDateTime(BuildContext context) async {
     if (startDate!.isAfter(endDate!)) {
       if (context.mounted) {
-         showCustomMessageDialog(
+        showCustomMessageDialog(
           type: DialogType.error,
           context: context,
           title: 'Data inválida',
@@ -185,12 +194,11 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
         startDate!.year == endDate!.year &&
         startDate!.month == endDate!.month &&
         startDate!.day == endDate!.day) {
-
       final startMinutes = startTime!.hour * 60 + startTime!.minute;
       final endMinutes = endTime!.hour * 60 + endTime!.minute;
       if (startMinutes >= endMinutes) {
         if (context.mounted) {
-           showCustomMessageDialog(
+          showCustomMessageDialog(
             type: DialogType.error,
             context: context,
             title: 'Hora inválida',
@@ -283,70 +291,72 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   Future<void> addData(BuildContext context) async {
     isAddEventPressed.value = true;
     if (await validateAllFields(context)) {
-      final response = await isConnected();
-      if (response) {
-        Map<String, double>? latLong;
-        if (eventLocationController.text.isNotEmpty &&
-            isValidGoogleMapsLink(eventLocationController.text)) {
-          latLong = await _eventUseCases.getLocationFromUrl(
-            url: eventLocationController.text,
-          );
-
-          if (latLong == null &&
-              eventLocationController.text.isNotEmpty &&
-              context.mounted) {
-            showCustomMessageDialog(
-              type: DialogType.error,
-              context: context,
-              title: 'Erro',
-              message:
-                  'Não foi possível extrair a localização do link fornecido. Por favor, verifique o link e tente novamente.',
+      if (context.mounted) {
+        final response = await isConnected(context: context);
+        if (response) {
+          Map<String, double>? latLong;
+          if (eventLocationController.text.isNotEmpty &&
+              isValidGoogleMapsLink(eventLocationController.text)) {
+            latLong = await _eventUseCases.getLocationFromUrl(
+              url: eventLocationController.text,
             );
-          }
-        }
-        value = AddDataEvent<CreateEventState>();
-        String? resultUrl;
-        bool isImageUpdated = (isEditing && coverImage.path.isNotEmpty);
-        if (isImageUpdated || !isEditing) {
-          resultUrl = await _useCases.saveImage(
-            coverImage: coverImage,
-            bucketName: 'covers',
-            fileName:
-                'mobile_event_covers/${formatText(eventTitleController.text)}_${DateTime.now().toIso8601String()}.jpg',
-          );
-        }
 
-        if (resultUrl != null || !isImageUpdated) {
-          await _useCases.upsert(
-            data: EventAdapter.toMap(
-              fillEventEntity(
-                isEditing ? eventEntity.image : resultUrl!,
-                latLong,
-              ),
-            ),
-            params: {'table': 'event'},
-          );
-          if (context.mounted) {
-            isAllFieldsValid.value = false;
+            if (latLong == null &&
+                eventLocationController.text.isNotEmpty &&
+                context.mounted) {
               showCustomMessageDialog(
-              type: DialogType.success,
-              context: context,
-              title: 'Sucesso!',
-              message: 'Evento salvo',
-              duration: const Duration(seconds: 1),
-              onDelayedAction: () {
-                if (updateCallbackParam != null && context.mounted) {
-                  updateCallbackParam!();
-                }
-                value = DataAddedState<CreateEventState>();
-                isAddEventPressed.value = false;
-              }
+                type: DialogType.error,
+                context: context,
+                title: 'Erro',
+                message:
+                    'Não foi possível extrair a localização do link fornecido. Por favor, verifique o link e tente novamente.',
+              );
+            }
+          }
+          value = AddDataEvent<CreateEventState>();
+          String? resultUrl;
+          bool isImageUpdated = (isEditing && coverImage.path.isNotEmpty);
+          if (isImageUpdated || !isEditing) {
+            resultUrl = await _useCases.saveImage(
+              coverImage: coverImage,
+              bucketName: 'covers',
+              fileName:
+                  'mobile_event_covers/${formatText(eventTitleController.text)}_${DateTime.now().toIso8601String()}.jpg',
             );
           }
+
+          if (resultUrl != null || !isImageUpdated) {
+            await _useCases.upsert(
+              data: EventAdapter.toMap(
+                fillEventEntity(
+                  isEditing ? eventEntity.image : resultUrl!,
+                  latLong,
+                ),
+              ),
+              params: {'table': 'event'},
+            );
+            if (context.mounted) {
+              isAllFieldsValid.value = false;
+              showCustomMessageDialog(
+                type: DialogType.success,
+                context: context,
+                title: 'Sucesso!',
+                message: 'Evento salvo',
+                duration: const Duration(seconds: 1),
+                onDelayedAction: () {
+                  if (updateCallbackParam != null && context.mounted) {
+                    updateCallbackParam!();
+                  }
+                  value = DataAddedState<CreateEventState>();
+                  isAddEventPressed.value = false;
+                },
+              );
+            }
+          }
+        } else {
+          value = NoConnectionState<CreateEventState>();
+          isAddEventPressed.value = false;
         }
-      } else {
-        value = NoConnectionState<CreateEventState>();
-        isAddEventPressed.value = false;
       }
     }
     isAddEventPressed.value = false;
@@ -361,20 +371,18 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
         'selectFields': 'id',
       },
     );
-    if(context.mounted){
+    if (context.mounted) {
       showCustomMessageDialog(
-          type: DialogType.success,
-          context: context,
-          title: 'Sucesso!',
-          message: 'Evento salvo',
-          duration: const Duration(seconds: 1),
-          onDelayedAction: () {
-
-              if(deleteCallback != null){
-                deleteCallback!();
-              }
-
+        type: DialogType.success,
+        context: context,
+        title: 'Sucesso!',
+        message: 'Evento salvo',
+        duration: const Duration(seconds: 1),
+        onDelayedAction: () {
+          if (deleteCallback != null) {
+            deleteCallback!();
           }
+        },
       );
     }
     isChangedOrAdded = true;
@@ -393,7 +401,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     isEventLinkDescriptionValid.value = true;
     isContactLinkValid.value = true;
     isCoverImageValid.value = true;
-
   }
 }
 

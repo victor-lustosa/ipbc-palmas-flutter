@@ -21,7 +21,8 @@ class AddDataEvent<R> extends GenericState<R> {
 @immutable
 class GetDataEvent<R> extends GenericEvent<R> {
   final String path;
-  GetDataEvent({this.path = ''});
+  final BuildContext context;
+  GetDataEvent({this.path = '', required this.context});
 }
 
 @immutable

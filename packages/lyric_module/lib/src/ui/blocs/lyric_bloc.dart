@@ -41,14 +41,13 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     'table': 'lyrics',
     'orderBy': 'create_at',
     'ascending': false,
-    'selectFields':
-        'id, title, group, album_cover, create_at, verses',
+    'selectFields': 'id, title, group, album_cover, create_at, verses',
   };
 
   init({required BuildContext context}) async {
-    add(GetDataEvent<LyricEvent>());
+    add(GetDataEvent<LyricEvent>(context: context));
     _manageLyricStore.buttonCallback = () {
-      add(GetDataEvent<LyricEvent>());
+      add(GetDataEvent<LyricEvent>(context: context));
       pop(context);
     };
   }
@@ -61,7 +60,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   }
 
   Future<void> _getInSupa(GetDataEvent<LyricEvent> event, emit) async {
-    final response = await isConnected();
+    final response = await isConnected(context: event.context);
     if (response) {
       final lyricsList = await onlineUseCases.get(
         params: lyricParams,

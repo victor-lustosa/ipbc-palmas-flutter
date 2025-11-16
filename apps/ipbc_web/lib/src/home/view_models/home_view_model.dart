@@ -1,10 +1,13 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-class HomeViewModel with ConnectivityMixin {
+class HomeViewModel extends ValueNotifier<GenericState<HomeViewState>>
+    with ConnectivityMixin, ValidationMixin {
   ScrollController scrollController = ScrollController();
 
-  HomeViewModel({required IUseCases useCases}) : _useCases = useCases;
+  HomeViewModel({required IUseCases useCases})
+    : _useCases = useCases,
+      super(InitialState<HomeViewState>());
   final IUseCases _useCases;
   late double vWidth;
   final TextEditingController nameController = TextEditingController();
@@ -12,6 +15,7 @@ class HomeViewModel with ConnectivityMixin {
   final TextEditingController messageController = TextEditingController();
 
   final double mdSize = 770;
+  final double maxMessageLength = 500;
 
   final nameKey = GlobalKey<FormState>();
   final emailKey = GlobalKey<FormState>();
@@ -24,22 +28,15 @@ class HomeViewModel with ConnectivityMixin {
   ValueNotifier<bool> isNameValid = ValueNotifier(true);
   ValueNotifier<bool> isEmailValid = ValueNotifier(true);
   ValueNotifier<bool> isMessageValid = ValueNotifier(true);
-  ValueNotifier<bool> isAllFieldsValid = ValueNotifier(true);
   ValueNotifier<bool> isSubmitted = ValueNotifier(false);
+  ValueNotifier<int> messageLength = ValueNotifier<int>(0);
 
   formValidation(bool validation, ValueNotifier<bool> isValid) {
     Future.delayed(Duration.zero, () async {
       isValid.value = validation;
+      value = UpdateFormFieldState();
     });
     return null;
-  }
-
-  bool emailValidation(String? data) {
-    return !isEmptyData(data) && EmailValidator.validate(data ?? '');
-  }
-
-  bool isEmptyData(String? data) {
-    return (data == null || data.isEmpty);
   }
 
   void submit(BuildContext context) async {
@@ -48,41 +45,50 @@ class HomeViewModel with ConnectivityMixin {
         messageController.text.isNotEmpty &&
         isNameValid.value &&
         isEmailValid.value &&
-        isMessageValid.value &&
-        !isSubmitted.value) {
-      if (EmailValidator.validate(emailController.text)) {
-        isSubmitted.value = true;
-        isSubmitted.value = true;
-        final response = await isConnected();
-        if (response) {
-          await _useCases.upsert(
-            data: {
-              'name': nameController.text,
-              'email': emailController.text,
-              'message': messageController.text,
-            },
-            params: {'table': 'form_website'},
+        isMessageValid.value) {
+      final response = await isConnected(
+        context: context,
+        width: 350,
+        alignment: Alignment.bottomRight,
+      );
+      if (response) {
+        await _useCases.upsert(
+          data: {
+            'name': nameController.text,
+            'email': emailController.text,
+            'message': messageController.text,
+          },
+          params: {'table': 'form_website'},
+        );
+        if (context.mounted) {
+          showCustomMessageDialog(
+            width: 350,
+            alignment: Alignment.bottomRight,
+            type: DialogType.success,
+            context: context,
+            title: 'Sucesso!',
+            message: 'Evento salvo',
+            duration: const Duration(seconds: 1),
           );
-          if (context.mounted) {
-            isAllFieldsValid.value = false;
-            showCustomMessageDialog(
-              type: DialogType.success,
-              context: context,
-              title: 'Sucesso!',
-              message: 'Evento salvo',
-              duration: const Duration(seconds: 1),
-              onDelayedAction: () {
-                isSubmitted.value = false;
-              },
-            );
-          }
         }
+        isSubmitted.value = true;
+        messageLength.value = 0;
         nameController.clear();
         messageController.clear();
         emailController.clear();
-      } else {
-        isEmailValid.value = false;
+        value = UpdateFormFieldState();
+        Future.delayed(const Duration(seconds: 1), () {
+          isSubmitted.value = false;
+          value = UpdateFormFieldState();
+        });
       }
+    } else {
+      formValidation(!isEmptyData(nameController.text), isNameValid);
+      formValidation(emailValidation(emailController.text), isEmailValid);
+      formValidation(!isEmptyData(messageController.text), isMessageValid);
     }
   }
 }
+
+@immutable
+abstract class HomeViewState {}

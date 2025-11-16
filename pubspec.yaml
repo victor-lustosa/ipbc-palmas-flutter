@@ -30,3 +30,6 @@ melos:
     sonar-all:
       run: melos exec --file-exists="sonar-project.properties" -- bash ../../sonar.sh
       description: Executa o sonar.sh em cada módulo com sonar-project.properties
+    build-web:
+      run: melos exec --scope=ipbc_web -- flutter build web --release
+      description: Gera os arquivos para colocar no servidor web

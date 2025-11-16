@@ -33,8 +33,10 @@ dependencies:
   diacritic: ^0.1.6
   cached_network_image: ^3.4.1
   bloc_concurrency: ^0.3.0
+  device_info_plus: ^12.2.0
   uno: ^1.1.12
   dartz: ^0.10.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

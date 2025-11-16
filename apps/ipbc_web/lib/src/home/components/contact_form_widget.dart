@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ipbc_web/src/home/view_models/home_view_model.dart';
 
 class ContactFormWidget extends StatefulWidget {
@@ -9,23 +10,36 @@ class ContactFormWidget extends StatefulWidget {
   State<ContactFormWidget> createState() => _ContactFormWidgetState();
 }
 
-class _ContactFormWidgetState extends State<ContactFormWidget> {
+class _ContactFormWidgetState extends State<ContactFormWidget>
+    with DeviceInfoMixin {
   late HomeViewModel viewModel;
+  bool isBrowserDevice = false;
 
   @override
-  void initState() {
-    viewModel = Modular.get<HomeViewModel>();
+   initState() {
     super.initState();
+    viewModel = Modular.get<HomeViewModel>();
+    getBrowserType();
+  }
+
+  getBrowserType() async {
+      isBrowserDevice = await isBrowserOnDevice();
+      viewModel.value = UpdateFormFieldState();
   }
 
   @override
   Widget build(BuildContext context) {
     viewModel.vWidth = context.sizeOf.width;
-    if (viewModel.vWidth > viewModel.mdSize) {
-      return web();
-    } else {
-      return mobile();
-    }
+    return ValueListenableBuilder(
+      valueListenable: viewModel,
+      builder: (_, state, child) {
+        if (viewModel.vWidth > viewModel.mdSize) {
+          return web();
+        } else {
+          return mobile();
+        }
+      },
+    );
   }
 
   web() => Container(
@@ -111,12 +125,13 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
     isValid: viewModel.isNameValid.value,
     controller: viewModel.nameController,
     errorText: viewModel.nameErrorText,
-    validator: (data) {
-      return viewModel.formValidation(
+    onChanged: (data) {
+      viewModel.formValidation(
         !viewModel.isEmptyData(data),
-        viewModel.isMessageValid,
+        viewModel.isNameValid,
       );
     },
+    fieldHeight: 42,
     fieldWidth: width,
     isSubmitted: !viewModel.isSubmitted.value,
     inputDecoration: _inputDecoration(
@@ -145,14 +160,15 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
     controller: viewModel.emailController,
     errorText: viewModel.emailErrorText,
     fieldWidth: width,
+    fieldHeight: 42,
     isSubmitted: !viewModel.isSubmitted.value,
     inputDecoration: _inputDecoration(
       isValid: viewModel.isEmailValid.value,
       hintText: 'me@company.com',
     ),
     fieldStyle: _fieldStyle(viewModel.isEmailValid.value),
-    validator: (data) {
-      return viewModel.formValidation(
+    onChanged: (data) {
+      viewModel.formValidation(
         viewModel.emailValidation(data),
         viewModel.isEmailValid,
       );
@@ -178,25 +194,43 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
     errorText: viewModel.messageErrorText,
     titleMargin: const EdgeInsets.only(top: 16, bottom: 8),
     maxLines: 5,
-    maxLength: 500,
-    fieldHeight: 115,
-    validator: (data) {
-      return viewModel.formValidation(
+    onChanged: (data) {
+      viewModel.messageLength.value = data.length;
+      viewModel.formValidation(
         !viewModel.isEmptyData(data),
         viewModel.isMessageValid,
       );
     },
     fieldWidth: width,
+    inputFormatters: [LengthLimitingTextInputFormatter(500)],
     isSubmitted: !viewModel.isSubmitted.value,
     fieldStyle: _fieldStyle(viewModel.isMessageValid.value),
     inputDecoration: _inputDecoration(
       isValid: viewModel.isMessageValid.value,
       hintText: 'Sua mensagem...',
-      contentPadding: const EdgeInsets.only(
+      contentPadding: EdgeInsets.only(
         left: 10,
         right: 10,
-        top: 12,
+        top: isBrowserDevice ? 8 : 12,
+        bottom: 2,
         //top 8 pra celular
+      ),
+      counter: ValueListenableBuilder<int>(
+        valueListenable: viewModel.messageLength,
+        builder: (context, length, child) {
+          return Container(
+            padding: const EdgeInsets.only(bottom: 5),
+            child: Text(
+              '$length/${viewModel.maxMessageLength}',
+              style: TextStyle(
+                color: viewModel.isMessageValid.value
+                    ? AppColors.hintInputForm
+                    : AppColors.delete,
+                fontSize: 11,
+              ),
+            ),
+          );
+        },
       ),
     ),
     colorStyle: AppColors.hintInputForm,
@@ -206,6 +240,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
     required bool isValid,
     required hintText,
     EdgeInsetsGeometry? contentPadding,
+    Widget? counter,
   }) {
     return InputDecoration(
       isDense: true,
@@ -213,16 +248,16 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
       border: InputBorder.none,
       contentPadding:
           contentPadding ??
-          const EdgeInsets.only(
+          EdgeInsets.only(
             left: 10,
             right: 10,
-            //top 11 pra celular
-            top: 12,
+            top: isBrowserDevice ? 8 : 12,
           ),
       counterStyle: AppFonts.defaultFont(
         fontSize: 10,
         color: isValid ? const Color(0xff979797) : AppColors.delete,
       ),
+      counter: counter,
       hintStyle: AppFonts.defaultFont(
         fontSize: 14,
         color: isValid ? const Color(0xff979797) : AppColors.delete,
@@ -250,7 +285,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget> {
           : AppColors.darkGreen,
       overlayColor: viewModel.isSubmitted.value
           ? AppColors.highlightGreen
-          : null,
+          : AppColors.darkGreen,
       foregroundColor: viewModel.isSubmitted.value
           ? AppColors.grey12
           : AppColors.white,
