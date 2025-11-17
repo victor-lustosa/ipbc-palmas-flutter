@@ -17,7 +17,6 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
   void initState() {
     super.initState();
     _store = Modular.get<SearchLyricsStore>();
-    _store.init();
   }
   loadingWidget(BuildContext context) =>  SizedBox(
       height: context.sizeOf.height * .4,
@@ -97,25 +96,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                         ),
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 13),
-                      child: SearchBarWidget(
-                        controller: _store.searchController,
-                        onChange: (value){
-                          if(value.isNotEmpty){
-                            _store.searchLyrics(value);
-                          }
-                      },
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 21.5),
-                      child: OwnChoiceChipsWidget(
-                        hasEmptyOption: false,
-                        options: SearchParameters.values,
-                        action: _store.selectOptions,
-                      ),
-                    ),
+                    SearchWidget(),
                     ValueListenableBuilder(
                       valueListenable: _store,
                       builder: (_, state, child) {

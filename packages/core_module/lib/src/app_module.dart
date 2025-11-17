@@ -3,6 +3,7 @@ import 'package:core_module/src/events/infra/use_cases/event_use_cases.dart';
 
 import '../core_module.dart';
 import 'auth/infra/use_cases/auth_use_cases.dart';
+import 'design_system/stores/search_store.dart';
 
 class CoreModule extends Module {
   static BindConfig<T> blocConfig<T extends Bloc>() {
@@ -71,6 +72,10 @@ class CoreModule extends Module {
       () => SearchLyricsStore(
         lyricsListStore: i.get<LyricsListStore>(),
         manageLyricStore: i.get<ManageLyricStore>(),
+      ),
+    );
+    i.addLazySingleton<SearchStore>(
+          () => SearchStore(
         useCases: i.get<UseCases<SupabaseRepository>>(),
       ),
     );

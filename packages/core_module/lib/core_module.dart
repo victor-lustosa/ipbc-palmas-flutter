@@ -29,7 +29,7 @@ export 'src/design_system/configs/app_fonts.dart';
 export 'src/design_system/configs/app_icons.dart';
 export 'src/design_system/configs/app_colors.dart';
 
-export 'src/design_system/components/search_bar/search_bar_widget.dart';
+export 'src/design_system/components/search/search_widget.dart';
 export 'src/design_system/components/loading/loading_widget.dart';
 export 'src/design_system/components/guideline/guideline_widget.dart';
 export 'src/design_system/components/slide_cards/slide_cards_widget.dart';
@@ -79,7 +79,7 @@ export 'src/lyrics/components/stores/manage_lyric_store.dart';
 export 'src/events/components/stores/create_event_store.dart';
 export 'src/services/components/stores/manage_service_store.dart';
 export 'src/services/components/stores/service_store.dart';
-export 'src/lyrics/components/stores/search_lyrics_store.dart';
+export 'src/design_system/stores/search_lyrics_store.dart';
 export 'src/lyrics/components/stores/lyrics_list_store.dart';
 export 'src/design_system/stores/slide_cards_store.dart';
 

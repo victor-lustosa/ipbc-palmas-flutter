@@ -64,7 +64,7 @@ class _LyricsListViewState extends State<LyricsListView>
                               );
                             },
                             child: const Text('Paginação')),*/
-                        Container(
+                        /*Container(
                           margin: const EdgeInsets.only(top: 30, bottom: 13),
                           child: SearchBarWidget(
                             controller: _bloc.controller,
@@ -94,7 +94,7 @@ class _LyricsListViewState extends State<LyricsListView>
                             options: SearchParameters.values,
                             action: _bloc.selectOptions,
                           ),
-                        ),
+                        ),*/
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
