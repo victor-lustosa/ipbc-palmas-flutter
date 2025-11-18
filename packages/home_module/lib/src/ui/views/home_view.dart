@@ -43,7 +43,7 @@ class _HomeViewState extends State<HomeView>
   Widget build(BuildContext context) {
     super.build(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark,
+      value: .dark,
       child: Scaffold(
         body: SafeArea(
           child: BlocBuilder<HomeBloc, GenericState<HomeState>>(
