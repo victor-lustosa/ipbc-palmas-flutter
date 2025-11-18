@@ -410,8 +410,8 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                             children: [
                                               IconButtonWidget(
                                                 iconFormat: IconFormat.svg,
-                                                size: 18,
-                                                iconName: AppIcons.popoverIcon,
+                                                height: 18,
+                                                iconPath: AppIcons.popoverIcon,
                                                 action: () async {
                                                   _store.liturgyModel = liturgy;
                                                   _store.index = index;

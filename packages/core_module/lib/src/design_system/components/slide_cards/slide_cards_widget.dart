@@ -87,7 +87,6 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
                 imageUrl: entity.image,
                 height: context.sizeOf.width * .35,
                 width: context.sizeOf.width,
-                fit: BoxFit.cover,
                 placeholder: (context, url) => placeholder(
                   border: const BorderRadius.only(
                     topLeft: Radius.circular(16),
@@ -100,8 +99,6 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
                     topRight: Radius.circular(16),
                   ),
                 ),
-                color: const Color.fromRGBO(0, 66, 46, 0.40),
-                colorBlendMode: BlendMode.color,
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
 

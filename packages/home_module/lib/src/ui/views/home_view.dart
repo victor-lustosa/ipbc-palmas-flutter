@@ -175,18 +175,20 @@ class _HomeViewState extends State<HomeView>
   }
 
   Widget title({required String text}) => Container(
-    margin: const EdgeInsets.only(left: 17, right: 9),
+    margin: const EdgeInsets.only(left: 16, right: 11),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(text, style: AppFonts.title2),
         IconButtonWidget(
-          size: Platform.isIOS ? 30 : 35,
+          sizeIcon: 23,
+          height: 33,
+          width: 33,
           color: AppColors.darkGreen,
           splashColor: Colors.transparent,
+          iconFormat: IconFormat.svg,
           highlightColor: Colors.transparent,
-          iOSIcon: CupertinoIcons.chevron_forward,
-          androidIcon: Icons.navigate_next_sharp,
+          iconPath: AppIcons.arrowForward,
         ),
       ],
     ),

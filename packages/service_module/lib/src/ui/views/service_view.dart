@@ -45,7 +45,7 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                                           null &&
                                       _store.isChanged.value) {
                                     _store.isChanged.value = false;
-                                    _store.updateServicesCollectionCallback!();
+                                    _store.updateServicesCollectionCallback!(context);
                                   }
                                   nativePop(context);
                                 },

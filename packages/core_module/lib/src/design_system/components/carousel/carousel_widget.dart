@@ -145,7 +145,6 @@ class CarouselWidgetState extends State<CarouselWidget> {
                   children: [
                     CachedNetworkImage(
                       imageUrl: widget.services[position].image,
-                      fit: BoxFit.cover,
                       imageBuilder: (context, imageProvider) {
                         WidgetsBinding.instance.addPostFrameCallback((_) {
                           if (mounted && !imageHasLoaded.value) {

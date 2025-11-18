@@ -13,7 +13,7 @@ class HideIconWidget extends StatelessWidget {
       action: () {
         isObscure.value = !isObscure.value;
       },
-      size: 24,
+      height: 24,
       color: AppColors.grey7,
       iOSIcon: isObscure.value ? CupertinoIcons.eye_slash : CupertinoIcons.eye,
       androidIcon: isObscure.value
