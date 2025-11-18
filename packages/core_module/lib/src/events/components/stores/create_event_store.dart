@@ -29,8 +29,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     controllerValidators = {
       eventTitleController: isEventTitleValid,
       eventSubtitleController: isEventSubtitleValid,
-      eventLocationController: isEventLocationValid,
-      eventLocationNameController: isEventLocationNameValid,
       eventDescriptionController: isEventDescriptionValid,
     };
     initDate();
@@ -147,8 +145,27 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       return null;
     } else {
       changeValue(isValid, true);
+      changeValue(isEventLocationNameValid, true);
       return null;
     }
+  }
+
+   dynamic nameLocationValidation(
+      String? data,
+      ValueNotifier<bool> isValid,
+      ) {
+    if (isEmptyData(eventLocationController.text)) {
+      changeValue(isValid, true);
+      return true;
+    }
+
+    if (isEmptyData(data)) {
+      changeValue(isValid, false);
+      return false;
+    }
+
+    changeValue(isValid, true);
+    return true;
   }
 
   bool isLocationLinkValid(String? data) {
@@ -177,6 +194,8 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     contactLinkController.text = event.contactLink ?? '';
     isSwitchOn = event.isAllDay;
   }
+
+
 
   Future<bool> validateDateTime(BuildContext context) async {
     if (startDate!.isAfter(endDate!)) {
@@ -224,6 +243,12 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       changeValue(isEventLocationValid, false);
       allTextValid = false;
     }
+
+    if (!nameLocationValidation(eventLocationNameController.text,
+        isEventLocationNameValid)) {
+      allTextValid = false;
+    }
+
     if (await validateDateTime(context) == false) {
       allTextValid = false;
     }
@@ -236,7 +261,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   }
 
   bool isEmptyData(String? data) {
-    return (data == null || data.isEmpty);
+    return (data == null || data.trim().isEmpty);
   }
 
   getImage() async {
@@ -308,9 +333,12 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
                 type: DialogType.error,
                 context: context,
                 title: 'Erro',
+                duration: const Duration(milliseconds: 2000),
                 message:
                     'Não foi possível extrair a localização do link fornecido. Por favor, verifique o link e tente novamente.',
               );
+              isAddEventPressed.value = false;
+              return;
             }
           }
           value = AddDataEvent<CreateEventState>();
