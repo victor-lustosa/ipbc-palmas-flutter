@@ -53,6 +53,7 @@ Design desenvolvido totalmente pela [Product Designer Mayumi Adati](https://www.
 - Testes Unitários: Mocktail;
 - DevOps: Kanban (Notion), github Actions, Git/Gitflow;
 - Monorepo: Melos;
+- Padrão de comunicação entre componentes: Event Bus Stream;
 
 ### Execução
 ---

@@ -1,4 +1,4 @@
-import 'package:home_module/home_module.dart';
+import 'package:core_module/core_module.dart';
 import 'package:mocktail/mocktail.dart';
 
 class LyricEntityMock extends Mock implements LyricEntity {}
