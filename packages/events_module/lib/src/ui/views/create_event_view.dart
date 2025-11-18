@@ -102,7 +102,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                       ),
                                     ),
                                     child: InkWell(
-                                      onTap: () async => await _store.getImage(),
+                                      onTap: () async => await _store.getImage(context),
                                       child:
                                           state is FetchedImageState ||
                                               (state is UpdateFormFieldState &&

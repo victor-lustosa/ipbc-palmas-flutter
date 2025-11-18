@@ -264,22 +264,30 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     return (data == null || data.trim().isEmpty);
   }
 
-  getImage() async {
+  getImage(BuildContext context) async {
     value = LoadingImageState();
-    final result = await getGalleryImage();
-    if (result != null) {
-      coverImage = result;
-      value = FetchedImageState();
-      changeValue(isCoverImageValid, true);
-    } else {
-      if (coverImage.path.isEmpty) {
-        value = InitialState<CreateEventState>();
-        changeValue(isCoverImageValid, false);
-      } else {
+    final result = await getGalleryImage(context);
+    result.fold((l) {
+      if (l != null) {
+        coverImage = l;
         value = FetchedImageState();
         changeValue(isCoverImageValid, true);
+      } else {
+        if (coverImage.path.isEmpty) {
+          value = InitialState<CreateEventState>();
+          changeValue(isCoverImageValid, false);
+        } else {
+          value = FetchedImageState();
+          changeValue(isCoverImageValid, true);
+        }
       }
-    }
+    }, (_){
+      if (coverImage.path.isEmpty) {
+        changeValue(isCoverImageValid, false);
+      }
+      value = FetchedImageState();
+
+    });
   }
 
   EventEntity fillEventEntity(String resultUrl, Map<String, double>? latLong) {
