@@ -471,8 +471,8 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                               isValid: _store.isEventLocationValid.value,
                               hintText: 'Selecione a localização',
                             ),
-                            validator: (data) {
-                              return _store.locationValidation(
+                            onChanged: (data) {
+                               _store.locationValidation(
                                 data,
                                 _store.isEventLocationValid,
                               );
@@ -508,8 +508,8 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                               isValid: _store.isEventLocationNameValid.value,
                               hintText: 'Nome do local',
                             ),
-                            validator: (data) {
-                              return _store.formValidation(
+                            onChanged: (data) {
+                               _store.nameLocationValidation(
                                 data,
                                 _store.isEventLocationNameValid,
                               );
@@ -587,7 +587,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                     _store.popNumber = 3;
                                     await _store.delete(_store.eventEntity, context);
                                   },
-                                  title: "Deletar evento",
+                                  title: "Deletar  evento",
                                   message: "O item será deletado permanentemente. Tem certeza?",
                                   context: context,);
                               },

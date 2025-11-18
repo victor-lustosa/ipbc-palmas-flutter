@@ -108,10 +108,6 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
                     image: DecorationImage(
                       image: imageProvider,
                       fit: BoxFit.cover,
-                      colorFilter: const ColorFilter.mode(
-                        Color.fromRGBO(0, 66, 46, 0.40),
-                        BlendMode.color,
-                      ),
                     ),
                   ),
                   child: Center(
