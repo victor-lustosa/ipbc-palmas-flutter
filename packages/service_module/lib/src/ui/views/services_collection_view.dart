@@ -143,15 +143,18 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                                 icon: AppIcons.trash,
                                                 label: 'Deletar',
                                                 action: () async {
-                                                  _bloc.add(
-                                                    DeleteItemEvent(
-                                                      index: index,
-                                                      context: context,
-                                                    ),
-                                                  );
-                                                  if (context.mounted) {
-                                                    pop(context);
-                                                  }
+                                                    await showConfirmationDialog(
+                                                      confirmAction: () async {
+                                                        _bloc.add(
+                                                          DeleteItemEvent(
+                                                            index: index,
+                                                            context: context,
+                                                          ),
+                                                        );
+                                                      },
+                                                      title: "Deletar Culto",
+                                                      message: "O culto será deletado permanentemente. Tem certeza?",
+                                                      context: context,);
                                                 },
                                               ),
                                             ],
@@ -225,7 +228,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                                 right: 16,
                                               ),
                                               child: IconButtonWidget(
-                                                sizeIcon: ResponsivityUtil<double>(sm: 23, xl: 26).get(context),
+                                                sizeIcon: ResponsivityUtil<double>(sm: 21, xl: 23).get(context),
                                                 color: AppColors.darkGreen,
                                                 iconFormat: IconFormat.svg,
                                                 iconPath: AppIcons.arrowForward,

@@ -77,7 +77,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
     updatedVerses[verseIndex] = updatedVerse;
 
     lyric.value = lyric.value.copyWith(verses: updatedVerses);
-    value = UpdateTilesState();
+    value = RefreshingState();
   }
 
   void updateControllersAndFocusNodes() {
@@ -209,7 +209,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
           duration: const Duration(seconds: 1),
           onDelayedAction: (){
             isSavePressed.value = false;
-            value = UpdateTilesState();
+            value = RefreshingState();
             buttonCallback();
           }
         );
@@ -225,7 +225,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
           message: 'Ocorreu um erro ao salvar a música. Verifique a internet e tente novamente.',
           onDelayedAction: (){
             isSavePressed.value = false;
-            value = UpdateTilesState();
+            value = RefreshingState();
           }
         );
       }
@@ -257,4 +257,3 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
 @immutable
 abstract class ManageLyricState {}
 
-class UpdateTilesState extends GenericState<ManageLyricState> {}

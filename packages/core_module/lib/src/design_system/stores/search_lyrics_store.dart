@@ -1,17 +1,25 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:core_module/core_module.dart';
+import 'package:core_module/src/design_system/stores/search_store.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../../core/overall_states/generic_event_bus.dart';
 
 class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
   SearchLyricsStore({
     required ManageLyricStore manageLyricStore,
     required LyricsListStore lyricsListStore,
+    required GenericEventBus<GenericState<SearchState>> eventBus,
   }) : _manageLyricStore = manageLyricStore,
        _lyricsListStore = lyricsListStore,
+        _eventBus = eventBus,
        super(InitialState());
   final ManageLyricStore _manageLyricStore;
   final LyricsListStore _lyricsListStore;
+  final GenericEventBus<GenericState<SearchState>> _eventBus;
+  late final StreamSubscription _subscription;
   late ServicesEntity servicesEntity;
   final TextEditingController searchController = TextEditingController();
   ManageLyricStore get manageLyricStore => _manageLyricStore;
@@ -67,8 +75,4 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
 @immutable
 abstract class SearchLyricsState {}
 
-class SearchSuccessState extends GenericState<SearchLyricsState> {}
 
-class SearchErrorState extends GenericState<SearchLyricsState> {}
-
-class NotFoundState extends GenericState<SearchLyricsState> {}

@@ -1,12 +1,49 @@
+import 'dart:async';
+
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-class LyricsListStore extends ValueNotifier<GenericState<ManageLyricState>> {
+import '../../../core/overall_states/generic_event_bus.dart';
+import '../../../design_system/stores/search_store.dart';
+
+class LyricsListStore extends ValueNotifier<GenericState<LyricsListState>> {
+  final GenericEventBus<GenericState<SearchState>> _eventBus;
+  late final StreamSubscription _subscription;
+  final ValueNotifier<int?> tappedIndex = ValueNotifier(null);
   List<LyricEntity> entitiesList = [];
   late GlobalKey itemKey;
   int index = 0;
   late LyricEntity lyricEntity;
 
-  LyricsListStore() : super(InitialState());
+  LyricsListStore({
+    required GenericEventBus<GenericState<SearchState>> eventBus,
+  }) : _eventBus = eventBus,
+       super(InitialState()) {
+    _subscription = _eventBus.stream.listen((state) {
+      if (state is LoadingState) {
+        value = LoadingState();
+      }
+
+      if (state is NotFoundState) {
+        value = NotFoundState();
+      }
+
+      if (state is DataFetchedState<SearchState>) {
+        if (state.entities != null && state.entities!.isNotEmpty) {
+          entitiesList = state.entities! as List<LyricEntity>;
+        }
+        value = DataFetchedState<LyricsListState>();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    tappedIndex.dispose();
+    super.dispose();
+  }
 }
 
+@immutable
+abstract class LyricsListState {}

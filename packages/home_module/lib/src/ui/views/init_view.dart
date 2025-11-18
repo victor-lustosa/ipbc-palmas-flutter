@@ -38,17 +38,10 @@ class _InitViewState extends State<InitView> {
         },
         children: const [NativeHomeRoutes(), NativeLyricRoutes(), OffersView()],
       ),
-      bottomNavigationBar: AnimatedBuilder(
-        animation: _controller,
-        builder: (__, _) {
-          return MaterialBottomBarWidget(
-            selectedIndex: selectedIndex,
-            callback: (int index) {
-              setState(() {
-                _onItemTapped(index);
-              });
-            },
-          );
+      bottomNavigationBar: MaterialBottomBarWidget(
+        selectedIndex: selectedIndex,
+        callback: (int index) {
+          _onItemTapped(index);
         },
       ),
     );

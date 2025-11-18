@@ -84,6 +84,16 @@ popUntil(bool Function(Route<dynamic>) predicate) {
   Modular.to.popUntil(predicate);
 }
 
+popToast(int popNumber){
+  int count = 0;
+  popUntil((_) => count++ >= popNumber);
+}
+
+nativePopToast(int popNumber, BuildContext context){
+  int count = 0;
+  nativePopUntil((_) => count++ >= popNumber, context);
+}
+
 nativePopUntil(bool Function(Route<dynamic>) predicate, BuildContext context) {
   Navigator.popUntil(context, predicate);
 }

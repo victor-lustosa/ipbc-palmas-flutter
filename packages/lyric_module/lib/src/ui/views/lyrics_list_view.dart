@@ -56,6 +56,7 @@ class _LyricsListViewState extends State<LyricsListView>
                     child: Column(
                       children: [
                         const TitleTopBarWidget(title: "Músicas"),
+                       SearchWidget(),
                         /*Text(state.entities.length.toString()),
                         ElevatedButton(
                             onPressed: () {
@@ -147,66 +148,65 @@ class _LyricsListViewState extends State<LyricsListView>
                                   ),
                           ],
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 14),
-                          child: ValueListenableBuilder(
-                            valueListenable: _bloc.lyricsListStore,
-                            builder: (context, state, child) {
-                              return Visibility(
-                                visible: _bloc.lyricsListStore.entitiesList.isNotEmpty,
-                                child: LyricsListWidget(
-                                  onLongPressStart: (details) async {
-                                    await showOptionsDialog(
-                                      context: context,
-                                      itemKey: _bloc.lyricsListStore.itemKey,
-                                      popupHeightParam: 110,
-                                      popupWidthParam: 160,
-                                      popupWidthPositionParam: 160,
-                                      verticalMarginParam: 3,
-                                      buttons: Column(
-                                        children: [
-                                          actionButton(
-                                            context: context,
-                                            top: 12,
-                                            bottom: 12,
-                                            icon: AppIcons.edit,
-                                            label: 'Editar',
-                                            action: () {
-                                              _bloc.editLyric(context);
-                                            },
-                                          ),
-                                          Divider(
-                                            height: 1,
-                                            color: AppColors.dividerModal
-                                                .withValues(alpha: .3),
-                                          ),
-                                          actionButton(
-                                            context: context,
-                                            top: 12,
-                                            bottom: 12,
-                                            icon: AppIcons.trash,
-                                            label: 'Deletar',
-                                            action: () {
-                                              _bloc.deleteLyric(context: context);
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                  onTap: () {
-                                    pushNamed(
-                                      AppRoutes.lyricsRoute +
-                                          AppRoutes.lyricRoute,
-                                      arguments:
-                                          _bloc.lyricsListStore.lyricEntity,
-                                    );
+                    Visibility(
+                      visible: _bloc.lyricsListStore.entitiesList.isNotEmpty,
+                      child: LyricsListWidget(
+                        onLongPressStart: (details) async {
+                          await showOptionsDialog(
+                            context: context,
+                            itemKey: _bloc.lyricsListStore.itemKey,
+                            popupHeightParam: 110,
+                            popupWidthParam: 160,
+                            popupWidthPositionParam: 160,
+                            verticalMarginParam: 3,
+                            buttons: Column(
+                              children: [
+                                actionButton(
+                                  context: context,
+                                  top: 12,
+                                  bottom: 12,
+                                  icon: AppIcons.edit,
+                                  label: 'Editar',
+                                  action: () {
+                                    _bloc.editLyric(context);
                                   },
                                 ),
-                              );
-                            },
-                          ),
-                        ),
+                                Divider(
+                                  height: 1,
+                                  color: AppColors.dividerModal
+                                      .withValues(alpha: .3),
+                                ),
+                                actionButton(
+                                  context: context,
+                                  top: 12,
+                                  bottom: 12,
+                                  icon: AppIcons.trash,
+                                  label: 'Deletar',
+                                  action: () async {
+                                    await showConfirmationDialog(
+                                    confirmAction: () async {
+                                      _bloc.deleteLyric(context: context);
+                                    },
+                                    title: "Deletar Letra",
+                                    message: "A letra será deletada permanentemente. Tem certeza?",
+                                    context: context,);
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                          _bloc.lyricsListStore.tappedIndex.value = null;
+                        },
+                        onTap: () {
+                          pushNamed(
+                            AppRoutes.lyricsRoute +
+                                AppRoutes.lyricRoute,
+                            arguments:
+                            _bloc.lyricsListStore.lyricEntity,
+                          );
+                        },
+                       ),
+                      ),
                       ],
                     ),
                   ),

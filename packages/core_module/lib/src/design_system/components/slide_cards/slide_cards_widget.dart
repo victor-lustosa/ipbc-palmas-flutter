@@ -101,7 +101,6 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
                 ),
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
-
                     image: DecorationImage(
                       image: imageProvider,
                       fit: BoxFit.cover,
@@ -276,7 +275,9 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
         width: widget.width,
         height: isHorizontal
             ? null
-            : context.sizeOf.width * .56,
+            : ResponsivityUtil<double>(
+                df: context.sizeOf.width * .56,
+              ).get(context),
         decoration: BoxDecoration(
           color: Colors.grey.shade300,
           borderRadius: BorderRadius.circular(16),
@@ -287,7 +288,9 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
     if (isHorizontal) {
       return placeholder(
         child: SizedBox(
-          height: context.sizeOf.width * .585,
+          height: ResponsivityUtil<double>(
+            df: context.sizeOf.width * .585,
+          ).get(context),
           child: shimmerWrapper,
         ),
       );
@@ -314,7 +317,10 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
           width: context.sizeOf.width * .6,
           child: Text(
             textAlign: TextAlign.center,
-            style: AppFonts.defaultFont(fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context), color: AppColors.grey9),
+            style: AppFonts.defaultFont(
+              fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context),
+              color: AppColors.grey9,
+            ),
             'Não há eventos cadastrados no momento.',
           ),
         ),

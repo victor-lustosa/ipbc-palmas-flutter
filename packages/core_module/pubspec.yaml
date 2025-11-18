@@ -20,7 +20,7 @@ dependencies:
   connectivity_plus: ^6.0.5
   url_launcher: ^6.1.10
   email_validator: ^3.0.0
-  flutter_modular: ^6.3.2
+  flutter_modular: ^6.4.1
   path_provider: ^2.0.14
   google_fonts: ^6.2.1
   cupertino_icons: ^1.0.5

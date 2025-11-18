@@ -65,7 +65,7 @@ class ServiceStore extends ValueNotifier<GenericState<ServiceState>> {
       lyricId: lyricsListStore.lyricEntity.id!,
     );
     Future.delayed(const Duration(seconds: 1), () {
-      manageLyricStore.value = UpdateTilesState();
+      manageLyricStore.value = RefreshingState();
     });
     pop(context);
   }
