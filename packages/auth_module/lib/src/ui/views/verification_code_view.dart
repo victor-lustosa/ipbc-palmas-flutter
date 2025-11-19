@@ -20,7 +20,7 @@ class VerificationCodeView extends StatefulWidget {
 
 class _VerificationCodeViewState extends State<VerificationCodeView> {
   final _store = Modular.get<ResetPasswordStore>();
-  ValueNotifier<bool> _isPressed = ValueNotifier(false);
+  ValueNotifier<bool> isPressed = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +95,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                     ),
                     const TextCodeWidget(),
                     LoadingButtonWidget(
-                      isPressed: _isPressed,
+                      isPressed: isPressed,
                       loadingWidth: 80,
                       action:
                           () =>

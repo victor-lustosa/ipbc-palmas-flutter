@@ -11,7 +11,7 @@ class HideIconWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<bool>(
       valueListenable: isObscure,
-        builder: (_, __, ___) {
+        builder: (_, _, _) {
         return IconButtonWidget(
           action: action,
           height: 24,

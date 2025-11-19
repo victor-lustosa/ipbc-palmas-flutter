@@ -68,7 +68,7 @@ class ResponsivityUtil<T> {
     return sm!;
   }
 
-  static isSmallDevice(BuildContext context) {
+  static bool isSmallDevice(BuildContext context) {
     double vWidth = context.sizeOf.width;
     return ResponsivityUtil.smallDeviceWidth >= vWidth;
   }

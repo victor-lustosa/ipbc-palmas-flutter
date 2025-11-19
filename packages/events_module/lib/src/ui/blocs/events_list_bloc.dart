@@ -12,7 +12,7 @@ class EventsListBloc
   List<EventEntity> eventsList = [];
   late final SlideCardsStore _slideCardsStore;
   late final CreateEventStore _createEventStore;
-  get slideCardsStore => _slideCardsStore;
+  SlideCardsStore get slideCardsStore => _slideCardsStore;
    CreateEventStore get createEventStore => _createEventStore;
 
   EventsListBloc({
@@ -54,7 +54,7 @@ class EventsListBloc
     }
   }
 
-  Future<void> _loading(_, emit) async {
+  Future<void> _loading(_, dynamic emit) async {
     emit(LoadingState<EventsListState>());
   }
 

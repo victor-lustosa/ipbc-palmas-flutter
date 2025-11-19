@@ -76,8 +76,8 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                 isValid: _store.isThemeValid.value,
                                 hintText: 'Mensagem do culto',
                               ),
-                              validator: (data) {
-                                return _store.formValidation(
+                              onChanged: (data) {
+                                _store.formValidation(
                                   data,
                                   _store.isThemeValid,
                                 );
@@ -105,8 +105,8 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                 isValid: _store.isPreacherValid.value,
                                 hintText: 'Preletor do culto',
                               ),
-                              validator: (data) {
-                                return _store.formValidation(
+                              onChanged: (data) {
+                                _store.formValidation(
                                   data,
                                   _store.isPreacherValid,
                                 );

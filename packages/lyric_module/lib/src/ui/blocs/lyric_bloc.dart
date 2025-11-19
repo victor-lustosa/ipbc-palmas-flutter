@@ -36,7 +36,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
 
   ManageLyricStore get manageLyricStore => _manageLyricStore;
 
-  get controller => _controller;
+  TextEditingController get controller => _controller;
 
   final Map<String, Object> lyricParams = {
     'table': 'lyrics',
@@ -45,7 +45,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     'selectFields': 'id, title, group, album_cover, create_at, verses',
   };
 
-  init({required BuildContext context}) async {
+  Future<void> init({required BuildContext context}) async {
     add(GetDataEvent<LyricEvent>(context: context));
     _manageLyricStore.buttonCallback = () {
       add(GetDataEvent<LyricEvent>(context: context));
@@ -99,7 +99,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     }
   }
 
-  Future<void> _loading(_, emit) async {
+  Future<void> _loading(_, dynamic emit) async {
     emit(LoadingState<LyricState>());
   }
 

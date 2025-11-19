@@ -14,7 +14,6 @@ class LyricsListView extends StatefulWidget {
 class _LyricsListViewState extends State<LyricsListView>
     with TickerProviderStateMixin {
   late final LyricBloc _bloc;
-  final List<String> _options = ['título', 'artista'];
 
   @override
   void initState() {

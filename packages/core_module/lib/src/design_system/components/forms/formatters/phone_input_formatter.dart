@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 
 class PhoneInputFormatter extends TextInputFormatter {
-  String phoneFormat(value) {
+  String phoneFormat(dynamic value) {
     String nums = value.replaceAll(RegExp(r'[\D]'), '');
 
     String phoneFormatted =

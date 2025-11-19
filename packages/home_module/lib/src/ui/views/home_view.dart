@@ -72,7 +72,7 @@ class _HomeViewState extends State<HomeView>
                         onRefresh: () async {
                           _bloc.add(GetDataEvent(context: context));
                         },
-                        builder: (_, __, pulledExtent, ___, ____) {
+                        builder: (_, _, pulledExtent, _, _) {
                           return Center(
                             child: Opacity(
                               opacity: (pulledExtent / 100.0).clamp(0.0, 1.0),

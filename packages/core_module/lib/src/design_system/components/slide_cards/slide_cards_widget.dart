@@ -42,7 +42,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
     _store = Modular.get<SlideCardsStore>();
   }
 
-  Widget placeholder({child, border}) => ShimmerWidget(
+  Widget placeholder({Widget? child, BorderRadiusGeometry? border}) => ShimmerWidget(
     animation: widget.shimmerController,
     child:
         child ??

@@ -23,7 +23,7 @@ class ServiceTopBarWidget extends StatefulWidget {
 
 class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget>
     with TickerProviderStateMixin {
-  get dateIsVisible => (widget.dateIsVisible ?? false);
+  bool get dateIsVisible => (widget.dateIsVisible ?? false);
   late final AnimationController _shimmerController;
 
   @override

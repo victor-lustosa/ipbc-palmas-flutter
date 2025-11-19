@@ -99,7 +99,7 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget>
   Widget build(BuildContext context) {
     return ValueListenableBuilder<GenericState<AuthCircleAvatarState>>(
       valueListenable: _store,
-      builder: (_, state, __) {
+      builder: (_, state, _) {
         actionAuth() {
           if (state is AuthenticatedState ||
               (state is AuthenticatedState &&

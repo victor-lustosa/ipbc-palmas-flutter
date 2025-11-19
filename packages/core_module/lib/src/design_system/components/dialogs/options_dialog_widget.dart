@@ -163,7 +163,7 @@ class _OptionsDialogWidgetState extends State<OptionsDialogWidget> {
   }
 }
 
-actionButton({
+ButtonWidget actionButton({
   required BuildContext context,
   final Function(bool?)? callback,
   required String icon,

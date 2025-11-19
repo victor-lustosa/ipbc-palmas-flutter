@@ -29,7 +29,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
   }
 
 
-  get prefixLocationIcon => Container(
+  Container get prefixLocationIcon => Container(
     margin: const EdgeInsets.only(left: 18, right: 10),
     child: Image.asset(AppIcons.linkIcon, width: 20, height: 13),
   );
@@ -88,7 +88,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                           children: [
                             ValueListenableBuilder(
                               valueListenable: _store.isCoverImageValid,
-                              builder: (_, value, ___) {
+                              builder: (_, value, _) {
                                 return AspectRatio(
                                   aspectRatio: 343 / 144,
                                   child: Container(
@@ -179,7 +179,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                             ),
                             ValueListenableBuilder(
                               valueListenable: _store.isCoverImageValid,
-                              builder: (_, value, ___) {
+                              builder: (_, value, _) {
                                 return Visibility(
                                   visible: !value,
                                   child: Text(

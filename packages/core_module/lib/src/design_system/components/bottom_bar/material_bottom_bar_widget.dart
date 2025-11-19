@@ -25,12 +25,12 @@ class _MaterialBottomBarWidgetState extends State<MaterialBottomBarWidget>
     buildButtonsBar();
   }
 
-  get border => const BorderRadius.only(
+  BorderRadius get border => const BorderRadius.only(
     topRight: Radius.circular(22),
     topLeft: Radius.circular(22),
   );
 
-  get labelFont =>
+  TextStyle? get labelFont =>
       AppFonts.defaultFont(fontSize: 12, fontWeight: FontWeight.w500);
 
   @override

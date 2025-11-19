@@ -34,16 +34,16 @@ class ServicesCollectionBloc
 
   ServiceStore get serviceStore => _serviceStore;
 
-  _updateServicesCollectionCallback(BuildContext context) {
+  void _updateServicesCollectionCallback(BuildContext context) {
     add(GetDataEvent(context: context));
   }
 
-  _updateCallBack() {
+  void _updateCallBack() {
     _serviceStore.isChanged.value = true;
     popAndPushNamed(AppRoutes.servicesRoute + AppRoutes.serviceRoute);
   }
 
-  Future<void> _getInSupa(event, emit) async {
+  Future<void> _getInSupa(dynamic event, emit) async {
     final response = await isConnected(context: event.context);
     if (response) {
       List<String> pathList = path.split('/');
@@ -67,7 +67,7 @@ class ServicesCollectionBloc
     }
   }
 
-  Future<void> _deleteItem(event, emit) async {
+  Future<void> _deleteItem(dynamic event, emit) async {
     final service = entitiesList[event.index];
     final response = await manageServiceStore.delete(service);
     popToast(2);
@@ -102,7 +102,7 @@ class ServicesCollectionBloc
     pushNamed(AppRoutes.servicesRoute + AppRoutes.manageServicesRoute);
   }
 
-  void _loading(_, emit) async {
+  void _loading(_, dynamic emit) async {
     emit(LoadingState<ServicesCollectionState>());
   }
 

@@ -38,7 +38,7 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     });
   }
 
-  Future<void> _getServicesData(event, emit) async {
+  Future<void> _getServicesData(dynamic event, emit) async {
     final response = await isConnected(context: event.context);
     if (response) {
       Future.delayed(Duration.zero, () {
@@ -59,7 +59,7 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     }
   }
 
-  Future<void> _getEventsData(event, emit) async {
+  Future<void> _getEventsData(dynamic event, emit) async {
     final response = await isConnected(context: event.context);
     if (response) {
       Future.delayed(Duration.zero, () {

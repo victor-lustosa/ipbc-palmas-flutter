@@ -176,7 +176,7 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
     );
   }
 
-  calculateTheEdge(int index) {
+  void calculateTheEdge(int index) {
     border = Border(
       top: index == 0
           ? const BorderSide(color: AppColors.grey3)
@@ -200,7 +200,7 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
     }
   }
 
-  buttonLabel(String label, bool isPix) => Text(
+  Text buttonLabel(String label, bool isPix) => Text(
     label,
     style: TextStyle(
       fontSize: 17,

@@ -27,13 +27,13 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
 
   late FocusScopeNode _rootFocusNode;
 
-  get controllers => _controllers;
+  Map<String, TextEditingController> get controllers => _controllers;
 
-  get focusNodes => _focusNodes;
+  Map<String, FocusNode> get focusNodes => _focusNodes;
 
-  get rootFocusNode => _rootFocusNode;
+  FocusScopeNode get rootFocusNode => _rootFocusNode;
 
-  clear() {
+  void clear() {
     if (!isEditing) {
       controllers.forEach((key, controller) => controller.dispose());
       focusNodes.forEach((key, focusNode) => focusNode.dispose());
@@ -42,7 +42,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
     }
   }
 
-  init() {
+  void init() {
     initializeControllersAndFocusNodes();
     titleController.text = lyric.value.title;
     groupController.text = lyric.value.group;
@@ -232,7 +232,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
     }
   }
 
-  deleteLyric({required BuildContext context, required String lyricId}) async {
+  Future<void> deleteLyric({required BuildContext context, required String lyricId}) async {
     await _useCases.delete(
       params: {
         'table': 'lyrics',

@@ -30,11 +30,11 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
   bool isSelected = false;
   int selectedIndex = 0;
 
-  init() {
+  void init() {
     searchController.text = '';
   }
 
-  selectOptions(int index) {
+  void selectOptions(int index) {
     selectedIndex = index;
   }
 

@@ -22,7 +22,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
     getBrowserType();
   }
 
-  getBrowserType() async {
+  Future<void> getBrowserType() async {
       isBrowserDevice = await isBrowserOnDevice();
       viewModel.value = UpdateFormFieldState();
   }
@@ -42,7 +42,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
     );
   }
 
-  web() => Container(
+  Container web() => Container(
     width: viewModel.vWidth,
     decoration: const BoxDecoration(color: AppColors.grey0),
     child: Column(
@@ -58,7 +58,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
     ),
   );
 
-  mobile() => Container(
+  Container mobile() => Container(
     decoration: const BoxDecoration(color: AppColors.grey0),
     width: viewModel.vWidth,
     child: Column(
@@ -87,7 +87,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
     ),
   );
 
-  title() => Container(
+  Container title() => Container(
     margin: const EdgeInsets.only(top: 80, bottom: 16),
     child: Text(
       'Entre em contato',
@@ -100,7 +100,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
     ),
   );
 
-  subtitle({required double width}) => Container(
+  Container subtitle({required double width}) => Container(
     width: width,
     margin: const EdgeInsets.only(bottom: 40),
     child: Text(
@@ -110,7 +110,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
     ),
   );
 
-  nameField({required double width}) => FormFieldWidget(
+  FormFieldWidget nameField({required double width}) => FormFieldWidget(
     fieldDecoration: BoxDecoration(
       color: AppColors.white,
       border: Border.all(
@@ -142,7 +142,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
     colorStyle: AppColors.hintInputForm,
   );
 
-  emailField({required double width}) => FormFieldWidget(
+  FormFieldWidget emailField({required double width}) => FormFieldWidget(
     fieldDecoration: BoxDecoration(
       color: AppColors.white,
       border: Border.all(
@@ -176,7 +176,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
     colorStyle: AppColors.hintInputForm,
   );
 
-  messageField({required double width}) => FormFieldWidget(
+  FormFieldWidget messageField({required double width}) => FormFieldWidget(
     fieldDecoration: BoxDecoration(
       color: AppColors.white,
       border: Border.all(
@@ -236,7 +236,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
     colorStyle: AppColors.hintInputForm,
   );
 
-  _inputDecoration({
+  InputDecoration _inputDecoration({
     required bool isValid,
     required hintText,
     EdgeInsetsGeometry? contentPadding,
@@ -265,16 +265,16 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
     );
   }
 
-  _fieldStyle(bool isValid) {
+  TextStyle? _fieldStyle(bool isValid) {
     return AppFonts.defaultFont(
       fontSize: 14,
       color: isValid ? const Color(0xff979797) : AppColors.delete,
     );
   }
 
-  get _titleStyle => AppFonts.defaultFont(fontSize: 14, color: AppColors.grey8);
+  TextStyle? get _titleStyle => AppFonts.defaultFont(fontSize: 14, color: AppColors.grey8);
 
-  sendButton({required double width}) => Container(
+  Container sendButton({required double width}) => Container(
     width: width,
     height: 49,
     margin: const EdgeInsets.only(top: 32, bottom: 80),

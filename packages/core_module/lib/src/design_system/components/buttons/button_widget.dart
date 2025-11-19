@@ -46,7 +46,7 @@ class ButtonWidget extends StatefulWidget {
 }
 
 class _ButtonWidgetState extends State<ButtonWidget> {
-  styleButton({
+  ButtonStyle styleButton({
     required WidgetStateProperty<BorderSide?>? side,
     required WidgetStateProperty<Color?>? foregroundColor,
     required TextStyle? textStyle,
@@ -84,7 +84,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
     ),
   );
 
-  get sideStyle =>
+  WidgetStateProperty<BorderSide>? get sideStyle =>
       widget.sideColor == null && widget.sideHoveredColor == null
           ? null
           : WidgetStateProperty.resolveWith((Set<WidgetState> states) {

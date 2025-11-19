@@ -46,7 +46,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
     }
   }
 
-  web() => Column(
+  Column web() => Column(
         children: [
           Container(
             decoration: const BoxDecoration(
@@ -116,7 +116,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         ],
       );
 
-  tablet() => Column(
+  Column tablet() => Column(
         children: [
           Container(
             decoration: const BoxDecoration(
@@ -188,7 +188,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         ],
       );
 
-  mobile() => Column(
+  Column mobile() => Column(
         children: [
           Container(
             decoration: const BoxDecoration(
@@ -250,7 +250,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         ],
       );
 
-  titlePage({required double fontSize}) => Text(
+  Text titlePage({required double fontSize}) => Text(
         'Uma comunidade de fé',
         textAlign: TextAlign.center,
         style: AppFonts.defaultFont(
@@ -261,7 +261,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         ),
       );
 
-  subtitlePage({required double fontSize, double? width}) => Container(
+  Container subtitlePage({required double fontSize, double? width}) => Container(
         margin: const EdgeInsets.only(top: 24),
         width: width,
         child: Text(
@@ -276,7 +276,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         ),
       );
   
-  Widget placeholder({child, border}) => ShimmerWidget(
+  Widget placeholder({Widget? child, BorderRadiusGeometry? border}) => ShimmerWidget(
     animation: widget.shimmerController,
     child:
     child ??
@@ -288,7 +288,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         ),
   );
 
-  mainImage({double? width, required double height}) => Container(
+  Container mainImage({double? width, required double height}) => Container(
         width: width,
         height: height,
         margin: const EdgeInsets.only(top: 40),
@@ -311,7 +311,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         ),),
       );
 
-  titleAbout({required double fontSize}) => Text(
+  Text titleAbout({required double fontSize}) => Text(
         'Sobre a IPBC Palmas',
         style: AppFonts.defaultFont(
           fontSize: fontSize,
@@ -320,7 +320,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         ),
       );
 
-  aboutChurchText({
+  Text aboutChurchText({
     required TextAlign textAlign,
   }) =>
       Text(
@@ -332,7 +332,7 @@ class _AboutChurchWidgetState extends State<AboutChurchWidget> {
         ),
       );
 
-  churchMissions(
+  Container churchMissions(
           {double? width,
           EdgeInsetsGeometry? margin,
           required EdgeInsetsGeometry insideMargin,

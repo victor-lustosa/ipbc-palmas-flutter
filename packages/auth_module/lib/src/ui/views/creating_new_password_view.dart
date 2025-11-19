@@ -22,8 +22,8 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
 
   bool _isConfirmPasswordValid = true;
   bool _isPasswordValid = true;
-  ValueNotifier<bool> _firstObscure = ValueNotifier(true);
-  ValueNotifier<bool> _secondObscure = ValueNotifier(true);
+  ValueNotifier<bool> firstObscure = ValueNotifier(true);
+  ValueNotifier<bool> secondObscure = ValueNotifier(true);
   ValueNotifier<bool> isPressed = ValueNotifier(false);
 
   @override
@@ -66,15 +66,15 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                   errorText: _passwordErrorText,
                   globalKey: _passwordKey,
                   isPressed: isPressed,
-                  obscure: _firstObscure,
+                  obscure: firstObscure,
                   inputDecoration: fieldInputDecoration(
                     isValid: _isPasswordValid,
                     hintText: 'Senha',
                     contentPadding: const EdgeInsets.only(left: 16, top: 9),
                     suffixIcon: HideIconWidget(
-                      isObscure: _firstObscure,
+                      isObscure: firstObscure,
                       action: (){
-                        _firstObscure.value = !_firstObscure.value;
+                        firstObscure.value = !firstObscure.value;
                       },
                     ),
                   ),
@@ -92,15 +92,15 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                     errorText: _confirmPasswordErrorText,
                     globalKey: _confirmPasswordKey,
                     isPressed: isPressed,
-                    obscure: _secondObscure,
+                    obscure: secondObscure,
                     inputDecoration: fieldInputDecoration(
                       isValid: _isConfirmPasswordValid,
                       hintText: 'Repetir senha',
                       contentPadding: const EdgeInsets.only(left: 16, top: 9),
                       suffixIcon: HideIconWidget(
-                        isObscure: _secondObscure,
+                        isObscure: secondObscure,
                         action: (){
-                          _secondObscure.value = !_secondObscure.value;
+                          secondObscure.value = !secondObscure.value;
                         },
                       ),
                     ),

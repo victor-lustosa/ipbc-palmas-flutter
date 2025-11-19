@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +40,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                   widget.margin ??
                   const EdgeInsets.only(bottom: 25, left: 16, right: 16),
               child: ListView.separated(
-                separatorBuilder: (__, _) {
+                separatorBuilder: (_, _) {
                   return const SizedBox(height: 8);
                 },
                 padding: EdgeInsets.zero,
@@ -49,7 +48,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                 shrinkWrap: true,
                 itemCount: _store.entitiesList.length,
                 physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (__, index) {
+                itemBuilder: (_, index) {
                   final GlobalKey itemKey = GlobalKey();
                   final Widget itemContent = AspectRatio(
                     aspectRatio: 343 / 63,

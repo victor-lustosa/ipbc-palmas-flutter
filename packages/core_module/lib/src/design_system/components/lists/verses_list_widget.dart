@@ -13,7 +13,7 @@ class VersesListWidget extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: entity.length,
-      separatorBuilder: (__, index) {
+      separatorBuilder: (_, index) {
         final currentBlock = entity[index];
         final bool isNextChorus =
             (index < entity.length - 1) && entity[index + 1].isChorus;
