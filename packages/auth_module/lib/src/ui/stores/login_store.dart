@@ -16,21 +16,21 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>>
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  get emailController => _emailController;
+  TextEditingController get emailController => _emailController;
 
-  get passwordController => _passwordController;
+  TextEditingController get passwordController => _passwordController;
   final GlobalKey<FormState> _emailKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
 
-  get emailKey => _emailKey;
+  GlobalKey<FormState> get emailKey => _emailKey;
 
-  get passwordKey => _passwordKey;
+  GlobalKey<FormState> get passwordKey => _passwordKey;
   final String _emailErrorText = 'por favor, insira um email válido.';
   final String _passwordErrorText = 'por favor, insira uma senha.';
 
-  get emailErrorText => _emailErrorText;
+  String get emailErrorText => _emailErrorText;
 
-  get passwordErrorText => _passwordErrorText;
+  String get passwordErrorText => _passwordErrorText;
   ValueNotifier<bool> isEmailValid = ValueNotifier(true);
   ValueNotifier<bool> isPasswordValid = ValueNotifier(true);
   ValueNotifier<bool> isLoginPressed = ValueNotifier(false);
@@ -65,6 +65,7 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>>
             context: context,
             title: 'Email ou senha incorretos!',
             message: message,
+            duration: Duration(milliseconds: 1200),
             onDelayedAction: () {
               isLoginPressed.value = false;
               value = InitialState<LoginState>();
@@ -94,12 +95,11 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>>
     await _onlineUseCases.signInWithFacebook();
   }*/
 
-  formValidation(bool validation, ValueNotifier<bool> isValid) {
+   void formValidation(bool validation, ValueNotifier<bool> isValid) {
     Future.delayed(Duration.zero, () async {
       isValid.value = validation;
       value = UpdateFormFieldState();
     });
-    return null;
   }
 
   void toCreateAccount() {
@@ -128,12 +128,11 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>>
         _passwordController.text.isNotEmpty &&
         isEmailValid.value &&
         isPasswordValid.value &&
-        !isLoginPressed.value &&
-        emailValidation(_emailController.text)) {
+        !isLoginPressed.value) {
       await logIn(_emailController.text, _passwordController.text, context);
     } else {
-      isEmailValid.value = false;
-      isPasswordValid.value = false;
+      if(_emailController.text.isEmpty) isEmailValid.value = false;
+      if(_passwordController.text.isEmpty) isPasswordValid.value = false;
       value = UpdateFormFieldState();
     }
   }

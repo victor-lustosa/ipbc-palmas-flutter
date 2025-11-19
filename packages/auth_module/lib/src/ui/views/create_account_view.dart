@@ -94,10 +94,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       errorHintColor: AppColors.codeBorderError,
                       hintText: 'Email',
                     ),
-                    onChanged: (value){
+                    onChanged: (data) {
                       _store.emailInitState.value = false;
-                    },
-                    validator: (data) {
                       return _store.formValidation(
                         _store.emailValidation(data),
                         _store.isEmailValid,
@@ -129,16 +127,17 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       contentPadding: const EdgeInsets.only(left: 16, top: 9),
                       suffixIcon: HideIconWidget(
                         isObscure: _store.firstObscure,
+                        action: (){
+                          _store.firstObscure.value = !_store.firstObscure.value;
+                        },
                       ),
                     ),
-                    validator: (data) {
-                      return _store.formValidation(
+                    onChanged: (data){
+                      _store.passwordInitState.value = false;
+                      _store.formValidation(
                         !_store.isEmptyData(data),
                         _store.isPasswordValid,
                       );
-                    },
-                    onChanged: (value){
-                      _store.passwordInitState.value = false;
                     },
                     defaultHintColor:
                         _store.isPasswordValid.value && _store.isPasswordEqual
@@ -164,13 +163,14 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       contentPadding: const EdgeInsets.only(left: 16, top: 9),
                       suffixIcon: HideIconWidget(
                         isObscure: _store.secondObscure,
+                        action: (){
+                          _store.secondObscure.value = !_store.secondObscure.value;
+                        },
                       ),
                     ),
-                    onChanged: (value){
+                    onChanged: (data){
                       _store.secondPasswordInitState.value = false;
-                    },
-                    validator: (data) {
-                      return _store.formValidation(
+                      _store.formValidation(
                         !_store.isEmptyData(data),
                         _store.isSecondPasswordValid,
                       );

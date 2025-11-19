@@ -73,6 +73,9 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                     contentPadding: const EdgeInsets.only(left: 16, top: 9),
                     suffixIcon: HideIconWidget(
                       isObscure: _firstObscure,
+                      action: (){
+                        _firstObscure.value = !_firstObscure.value;
+                      },
                     ),
                   ),
                   validator: (data) {
@@ -96,6 +99,9 @@ class _CreatingNewPasswordViewState extends State<CreatingNewPasswordView> {
                       contentPadding: const EdgeInsets.only(left: 16, top: 9),
                       suffixIcon: HideIconWidget(
                         isObscure: _secondObscure,
+                        action: (){
+                          _secondObscure.value = !_secondObscure.value;
+                        },
                       ),
                     ),
                     validator: (data) {

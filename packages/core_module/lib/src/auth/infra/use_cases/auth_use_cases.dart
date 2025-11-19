@@ -22,16 +22,11 @@ class AuthUseCases implements IAuthUseCases {
     final response = await _onlineRepository.signInWithEmail(email, password);
     return response.fold(
       (authUserDTO) async {
-        String jwtToken = authUserDTO.auth.token ?? "";
         await _saveUserAndCredentials(
           authUserDTO.user,
-          AuthCredentials(
-            token: jwtToken,
-            provider: authUserDTO.user.provider ?? '',
-            role: authUserDTO.user.role ?? '',
-          ),
+          authUserDTO.auth
         );
-        return Future.value(jwtToken);
+        return Future.value(null);
       },
       (exception) {
         switch (exception.statusCode) {

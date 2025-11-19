@@ -20,7 +20,7 @@ class ResetPasswordStore
   bool isError = false;
   bool isListFull = false;
 
-  void notifyBorderError({required value}) {
+  void notifyBorderError({required bool value}) {
     isError = value;
   }
 
