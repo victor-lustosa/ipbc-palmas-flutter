@@ -57,126 +57,17 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                         ),
                       ),
                     ),
+                    SearchWidget(),
                     Container(
-                      margin: const EdgeInsets.only(bottom: 13),
-                      child: SearchBarWidget(
-                        controller: _store.searchController,
-                        action: () {
-                          _store.searchLyrics();
+                      margin: const EdgeInsets.only(top: 14),
+                      child: LyricsListWidget(
+                        onTap: () {
+                          pushNamed(
+                            AppRoutes.lyricsRoute + AppRoutes.lyricRoute,
+                            arguments: _store.lyricsListStore.lyricEntity,
+                          );
                         },
                       ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 21.5),
-                      child: OwnChoiceChipsWidget(
-                        hasEmptyOption: false,
-                        action: _store.selectOptions,
-                      ),
-                    ),
-                    ValueListenableBuilder(
-                      valueListenable: _store,
-                      builder: (_, state, child) {
-                        if (state is InitialState) {
-                          return Container(
-                            margin: const EdgeInsets.only(top: 150),
-                            child: SizedBox(
-                              width: context.sizeOf.width,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: 26,
-                                    height: 26,
-                                    child: Image.asset(
-                                      AppIcons.info,
-                                      color: Colors.blueAccent,
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 8),
-                                    width: context.sizeOf.width * .6,
-                                    child: Text(
-                                      textAlign: TextAlign.center,
-                                      style: AppFonts.defaultFont(
-                                        fontSize: 13,
-                                        color: AppColors.grey9,
-                                      ),  
-                                      'As músicas que você pesquisar aparecerão aqui',
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        } else if (state is SearchSuccessState ||
-                            state is NotFoundState) {
-                          if (state is SearchSuccessState) {
-                            return Column(
-                              children: [
-                                Column(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Container(
-                                        margin: const EdgeInsets.only(
-                                          top: 24,
-                                          left: 17,
-                                        ),
-                                        child: Text(
-                                          "Resultados Encontrados",
-                                          style: AppFonts.defaultFont(
-                                            color: AppColors.grey12,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 17,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            );
-                          } else {
-                            return Container(
-                              margin: const EdgeInsets.only(top: 150),
-                              child: SizedBox(
-                                width: context.sizeOf.width,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      width: 26,
-                                      height: 26,
-                                      child: Image.asset(
-                                        AppIcons.info,
-                                        color: Colors.blueAccent,
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(top: 8),
-                                      width: context.sizeOf.width * .6,
-                                      child: Text(
-                                        textAlign: TextAlign.center,
-                                        style: AppFonts.defaultFont(
-                                          fontSize: 13,
-                                          color: AppColors.grey9,
-                                        ),
-                                        'Nenhuma música encontrada.',
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          }
-                        } else {
-                          return const LoadingWidget(
-                            androidRadius: 3,
-                            iosRadius: 14,
-                            color: AppColors.darkGreen,
-                          );
-                        }
-                      },
                     ),
                   ],
                 ),

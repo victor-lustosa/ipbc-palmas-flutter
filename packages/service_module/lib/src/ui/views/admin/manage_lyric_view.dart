@@ -27,7 +27,7 @@ class _ManageLyricViewState extends State<ManageLyricView> {
     super.dispose();
   }
 
-  formField({
+  Align formField({
     required TextEditingController controller,
     required FocusNode focusNode,
   }) => Align(

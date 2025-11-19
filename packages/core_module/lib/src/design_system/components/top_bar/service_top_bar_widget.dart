@@ -23,7 +23,7 @@ class ServiceTopBarWidget extends StatefulWidget {
 
 class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget>
     with TickerProviderStateMixin {
-  get dateIsVisible => (widget.dateIsVisible ?? false);
+  bool get dateIsVisible => (widget.dateIsVisible ?? false);
   late final AnimationController _shimmerController;
 
   @override
@@ -63,11 +63,8 @@ class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget>
         imageUrl: widget.image,
         height: 184,
         width: context.sizeOf.width,
-        fit: BoxFit.cover,
         placeholder: (context, url) => placeholder(),
         errorWidget: (context, url, error) => placeholder(),
-        color: const Color.fromRGBO(0, 66, 46, 0.40),
-        colorBlendMode: BlendMode.color,
         imageBuilder: (context, imageProvider) => Container(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -95,7 +92,7 @@ class _ServiceTopBarWidgetState extends State<ServiceTopBarWidget>
                         ),
                         child: BackButtonWidget(
                           color: AppColors.white,
-                          size: isLargeDevice ? 30 : 26,
+                          sizeIcon: 20.5,
                           action: widget.backAction ?? () => nativePop(context),
                         ),
                       ),

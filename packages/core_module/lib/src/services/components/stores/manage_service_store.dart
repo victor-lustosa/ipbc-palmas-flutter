@@ -35,15 +35,15 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
 
   late FocusScopeNode _rootFocusNode;
 
-  get rootFocusNode => _rootFocusNode;
+  FocusScopeNode get rootFocusNode => _rootFocusNode;
 
-  get controllers => _controllers;
+  Map<String, TextEditingController> get controllers => _controllers;
 
-  get focusNodes => _focusNodes;
+  Map<String, FocusNode> get focusNodes => _focusNodes;
 
   bool isAnyTextFieldFocused = false;
 
-  init() {
+  void init() {
     if (!isEditing) {
       fillItems();
       setDayInTheWeek();
@@ -54,12 +54,12 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     _rootFocusNode = FocusScopeNode();
   }
 
-  resetValidationFields() {
+  void resetValidationFields() {
     changeValue(isThemeValid, true);
     changeValue(isPreacherValid, true);
   }
 
-  clearFocusAndControllers() {
+  void clearFocusAndControllers() {
     for (var node in _focusNodes.values) {
       node.dispose();
     }
@@ -70,17 +70,15 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     _controllers.clear();
   }
 
-  formValidation(String? data, ValueNotifier<bool> isValid) {
+  void formValidation(String? data, ValueNotifier<bool> isValid) {
     if (isEmptyData(data)) {
       changeValue(isValid, false);
-      return null;
     } else {
       changeValue(isValid, true);
-      return null;
     }
   }
 
-  edit() {
+  void edit() {
     isEditing = true;
     liturgiesList = serviceEntity?.liturgiesList ?? [];
     themeController.text = serviceEntity!.theme;
@@ -149,7 +147,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     }
   }
 
-  setDayInTheWeek() {
+  void setDayInTheWeek() {
     startTime = TimeOfDay(
       hour: servicesEntity.serviceDate.hour,
       minute: servicesEntity.serviceDate.minute,
@@ -168,7 +166,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
     return (data == null || data.isEmpty);
   }
 
-  changeValue(ValueNotifier<bool> valueNotifier, bool newValue) {
+  void changeValue(ValueNotifier<bool> valueNotifier, bool newValue) {
     Future.delayed(Duration.zero, () async {
       valueNotifier.value = newValue;
       value = UpdateFormFieldState();
@@ -178,7 +176,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
   Future<void> submit(BuildContext context) async {
     isSavePressed.value = true;
     if (validateAllFields()) {
-      final response = await isConnected();
+      final response = await isConnected(context: context);
       if (response) {
         final typeList = servicesEntity.path.split('/');
         value = AddDataEvent<ManageServiceState>();
@@ -256,7 +254,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
       return Future.value(response[0]);
   }
 
-  fillItems() {
+  void fillItems() {
     liturgiesList = [
       LiturgyEntity(
         id: '0',

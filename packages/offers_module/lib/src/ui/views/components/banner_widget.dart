@@ -91,7 +91,7 @@ class _BannerWidgetState extends State<BannerWidget> with ClipboardMixin {
     ],
   );
 
-  pixBanner() => Container(
+  Container pixBanner() => Container(
     margin: EdgeInsets.only(left: 24, right: 24, bottom: 24, top: 16),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -119,7 +119,7 @@ class _BannerWidgetState extends State<BannerWidget> with ClipboardMixin {
     ),
   );
 
-  tedBanner() => Column(
+  Column tedBanner() => Column(
     children: [
       Container(
         margin: const EdgeInsets.only(left: 24, top: 16),
@@ -183,7 +183,7 @@ class _BannerWidgetState extends State<BannerWidget> with ClipboardMixin {
     ],
   );
 
-  iconTooltip({
+  Container iconTooltip({
     required String value,
     required EdgeInsetsGeometry margin,
     required GlobalKey<TooltipState> key,

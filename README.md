@@ -53,6 +53,7 @@ Design desenvolvido totalmente pela [Product Designer Mayumi Adati](https://www.
 - Testes Unitários: Mocktail;
 - DevOps: Kanban (Notion), github Actions, Git/Gitflow;
 - Monorepo: Melos;
+- Padrão de comunicação entre componentes: Event Bus Stream;
 
 ### Execução
 ---
@@ -122,4 +123,16 @@ Para gerar packages no projeto
 
 ```bash
 $ flutter create --template=package package_name
+```
+
+## Flutter Preview
+Para rodar o Flutter Preview, crie no arquivo da funcionalidade crie a estrutura abaixo :
+@Preview(name: 'TestePreview')
+Widget testPreview() {
+return const Text(' ');
+}
+
+Entre na pasta raiz do modulo que deseja rodar o preview e execute o comando:
+```bash
+$ flutter widget-preview start
 ```

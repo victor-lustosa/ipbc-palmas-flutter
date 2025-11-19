@@ -27,13 +27,13 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
 
   late FocusScopeNode _rootFocusNode;
 
-  get controllers => _controllers;
+  Map<String, TextEditingController> get controllers => _controllers;
 
-  get focusNodes => _focusNodes;
+  Map<String, FocusNode> get focusNodes => _focusNodes;
 
-  get rootFocusNode => _rootFocusNode;
+  FocusScopeNode get rootFocusNode => _rootFocusNode;
 
-  clear() {
+  void clear() {
     if (!isEditing) {
       controllers.forEach((key, controller) => controller.dispose());
       focusNodes.forEach((key, focusNode) => focusNode.dispose());
@@ -42,7 +42,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
     }
   }
 
-  init() {
+  void init() {
     initializeControllersAndFocusNodes();
     titleController.text = lyric.value.title;
     groupController.text = lyric.value.group;
@@ -77,7 +77,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
     updatedVerses[verseIndex] = updatedVerse;
 
     lyric.value = lyric.value.copyWith(verses: updatedVerses);
-    value = UpdateTilesState();
+    value = RefreshingState();
   }
 
   void updateControllersAndFocusNodes() {
@@ -209,7 +209,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
           duration: const Duration(seconds: 1),
           onDelayedAction: (){
             isSavePressed.value = false;
-            value = UpdateTilesState();
+            value = RefreshingState();
             buttonCallback();
           }
         );
@@ -225,14 +225,14 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
           message: 'Ocorreu um erro ao salvar a música. Verifique a internet e tente novamente.',
           onDelayedAction: (){
             isSavePressed.value = false;
-            value = UpdateTilesState();
+            value = RefreshingState();
           }
         );
       }
     }
   }
 
-  deleteLyric({required BuildContext context, required String lyricId}) async {
+  Future<void> deleteLyric({required BuildContext context, required String lyricId}) async {
     await _useCases.delete(
       params: {
         'table': 'lyrics',
@@ -257,4 +257,3 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
 @immutable
 abstract class ManageLyricState {}
 
-class UpdateTilesState extends GenericState<ManageLyricState> {}

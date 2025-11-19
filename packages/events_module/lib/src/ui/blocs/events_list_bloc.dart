@@ -12,7 +12,7 @@ class EventsListBloc
   List<EventEntity> eventsList = [];
   late final SlideCardsStore _slideCardsStore;
   late final CreateEventStore _createEventStore;
-  get slideCardsStore => _slideCardsStore;
+  SlideCardsStore get slideCardsStore => _slideCardsStore;
    CreateEventStore get createEventStore => _createEventStore;
 
   EventsListBloc({
@@ -30,7 +30,7 @@ class EventsListBloc
   }
 
   Future<void> _getInSupa(GetDataEvent event, emit) async {
-    final response = await isConnected();
+    final response = await isConnected(context: event.context);
     if (response) {
       Future.delayed(Duration.zero, () {
         if (emit.isDone) return;
@@ -54,16 +54,17 @@ class EventsListBloc
     }
   }
 
-  Future<void> _loading(_, emit) async {
+  Future<void> _loading(_, dynamic emit) async {
     emit(LoadingState<EventsListState>());
   }
 
 
-  Future<void> _deleteItem(_, emit) async {
-    final event = eventsList[slideCardsStore.index];
-    final response = await _createEventStore.delete(event);
+  Future<void> _deleteItem(DeleteItemEvent event, emit) async {
+    final eventEntity = eventsList[slideCardsStore.index];
+    final response = await _createEventStore.delete(eventEntity, event.context);
+    popToast(_createEventStore.popNumber);
     if (response != null) {
-      eventsList.remove(event);
+      eventsList.remove(eventEntity);
     }
     if (emit.isDone) return;
     emit(DataFetchedState<EventsListState>());
@@ -78,8 +79,8 @@ abstract class EventsListEvent {}
 abstract class EventsListState {}
 
 class DeleteItemEvent extends GenericEvent<EventsListEvent> {
-  DeleteItemEvent({ this.index});
-
+  DeleteItemEvent({ required this.context, this.index});
+  final BuildContext context;
   final int? index;
 }
 

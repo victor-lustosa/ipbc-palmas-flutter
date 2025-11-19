@@ -29,7 +29,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
     }
   }
 
-  web() => Column(
+  Column web() => Column(
         children: [
           Container(
             margin: upperMargin(value: 24),
@@ -95,7 +95,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
         ],
       );
 
-  tablet() => Column(
+  Column tablet() => Column(
         children: [
           Container(
             margin: upperMargin(value: 12),
@@ -120,7 +120,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
         ],
       );
 
-  mobile() => Column(
+  Column mobile() => Column(
         children: [
           Container(
             margin: upperMargin(value: 12),
@@ -146,12 +146,12 @@ class _TopBarWidgetState extends State<TopBarWidget> {
         ],
       );
 
-  logo() => const Image(
+  Image logo() => const Image(
         width: 100,
         image: AssetImage(AppImages.logo),
       );
 
-  contactButton(
+  SizedBox contactButton(
           {required double position,
           required double width,
           required double height,
@@ -185,14 +185,14 @@ class _TopBarWidgetState extends State<TopBarWidget> {
         ),
       );
 
-  upperMargin({required double value}) => EdgeInsets.only(
+  EdgeInsets upperMargin({required double value}) => EdgeInsets.only(
         top: value,
         bottom: value,
         left: TopBarResponsive.leftWidth(vWidth),
         right: TopBarResponsive.rightWidth(vWidth),
       );
 
-  scrollPage(double position) => setState(
+  void scrollPage(double position) => setState(
         () {
           Modular.get<HomeViewModel>().scrollController.animateTo(
                 position,
@@ -202,7 +202,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
         },
       );
 
-  _onPressed({required double position}) async {
+  Future<void> _onPressed({required double position}) async {
     Future.delayed(
         Duration.zero,
         () async => setState(

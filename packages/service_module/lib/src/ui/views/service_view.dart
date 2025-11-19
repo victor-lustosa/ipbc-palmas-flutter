@@ -45,7 +45,7 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                                           null &&
                                       _store.isChanged.value) {
                                     _store.isChanged.value = false;
-                                    _store.updateServicesCollectionCallback!();
+                                    _store.updateServicesCollectionCallback!(context);
                                   }
                                   nativePop(context);
                                 },
@@ -143,7 +143,7 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                                             .isEmpty &&
                                             _store.isAdmin.value,
                                         child: SizedBox(
-                                          width: context.sizeOf.width * 0.86,
+                                          width: context.sizeOf.width * .86,
                                           child: Text(
                                             'As músicas adicionadas aparecerão aqui. Adicione músicas para este culto.',
                                             style: AppFonts.defaultFont(
@@ -246,7 +246,7 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
           child: FloatingButtonWidget(
             iconColor: AppColors.white,
             backgroundColor: AppColors.warning,
-            pngIcon: AppIcons.editIcon,
+            iconPath: AppIcons.editIcon,
             size: 37,
             action: () {
               _store.edit();

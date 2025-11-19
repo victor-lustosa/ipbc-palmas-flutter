@@ -6,8 +6,8 @@ import 'package:flutter/services.dart';
 
 class SupaServicesUtil {
   SupaServicesUtil._();
-  static _dateNowDelayed() =>
-      Future.delayed(const Duration(seconds: 2), () => DateTime.now());
+  static Future<String> _dateNowDelayed() =>
+      Future.delayed(const Duration(seconds: 2), () => DateTime.now().toIso8601String());
 
   static Future<ServiceEntity> insertService(
     String path,

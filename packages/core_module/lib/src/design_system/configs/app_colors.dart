@@ -45,11 +45,13 @@ class AppColors {
 
   static const Color hintInputForm = Color(0xFFA3A3A3); //system colors ios
   static const Color confirmation = Color(0xFF34C759);
+  static const Color whatsappButton = Color(0xFF4FCE5D);
   static const Color greenInputAccept = Color(0xFF80AD9F);
   static const Color delete = Color(0xFFFF3B30);
   static const Color codeBorderError = Color(0xFFC72C41);
   static const Color modalRed = Color(0xffC72C41);
   static const Color redCircleModal = Color(0xff9D2333);
+  static const Color cancelDeleteModal = Color(0xffD25667);
   static const Color warning = Color(0xFFFF9500);
   static const Color modalWarning = Color(0xFFF5902E);
   static const Color iconModalWarning = Color(0xFFDE8200);

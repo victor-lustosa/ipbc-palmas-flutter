@@ -23,11 +23,11 @@ class _HomeViewState extends State<HomeView>
   void initState() {
     super.initState();
     _bloc = Modular.get<HomeBloc>();
-    _bloc.createEventStore.updateHomeViewCallback =
-        () => _bloc.add(GetEventsDataEvent());
+    _bloc.createEventStore.updateHomeViewCallback = () =>
+        _bloc.add(GetEventsDataEvent());
     _shimmerController = AnimationController.unbounded(vsync: this)
       ..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1200));
-    _bloc.add(GetDataEvent());
+    _bloc.add(GetDataEvent(context: context));
   }
 
   @override
@@ -43,7 +43,7 @@ class _HomeViewState extends State<HomeView>
   Widget build(BuildContext context) {
     super.build(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark,
+      value: .dark,
       child: Scaffold(
         body: SafeArea(
           child: BlocBuilder<HomeBloc, GenericState<HomeState>>(
@@ -62,108 +62,152 @@ class _HomeViewState extends State<HomeView>
               } else if (state is DataFetchedState<HomeState> ||
                   state is LoadingEventsState ||
                   state is LoadingServicesState) {
-                bool isSmallDevice = ResponsivityUtil.isSmallDevice(context);
-                return SingleChildScrollView(
-                  child: Stack(
-                    children: [
-                      SizedBox(
-                        width: context.sizeOf.width,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const SizedBox(height: 78),
-                            InkWell(
-                              onTap: () {
-                                nativePushNamed(
-                                  AppRoutes.servicesListRoute,
-                                  context,
-                                  arguments: _bloc.servicesList,
-                                );
-                              },
-                              child: Column(
-                                children: [
-                                  title(text: "Cultos"),
-                                  subtitle(
-                                    right: 17,
-                                    text:
-                                        "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
-                                  ),
-                                ],
-                              ),
-                            ),
-                            CarouselWidget(
-                              shimmerController: _shimmerController,
-                              fontStyle: AppFonts.defaultFont(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.white,
-                              ),
-                              margin: const EdgeInsets.only(
-                                top: 2,
-                                left: 6,
-                                right: 6,
-                                bottom: 9,
-                              ),
-                              route: AppRoutes.servicesCollectionRoute,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              width: context.sizeOf.width,
-                              services: _bloc.servicesList,
-                              height: context.sizeOf.width * 0.49,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                _bloc.createEventStore.fromCalled = 'eventsList';
-                                nativePushNamed(
-                                  AppRoutes.eventRoute +
-                                      AppRoutes.eventsListRoute,
-                                  context,
-                                );
-                              },
-                              child: Column(
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(top: 15),
-                                    child: title(text: "Eventos"),
-                                  ),
-                                  subtitle(
-                                    right: 18,
-                                    text:
-                                        "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(
-                                top: 12,
-                                bottom: 20,
-                              ),
-                              child: SlideCardsWidget(
-                                action: () {
-                                  _bloc.createEventStore.fromCalled = 'home';
-                                  pushNamed(
-                                    AppRoutes.eventRoute +
-                                        AppRoutes.detailEventRoute,
-                                    arguments: Modular.get<SlideCardsStore>()
-                                        .eventEntity,
-                                  );
-                                },
-                                shimmerController: _shimmerController,
-                                width: context.sizeOf.width * .742,
-                                scrollDirection: Axis.horizontal,
-                                route:
-                                    AppRoutes.eventRoute +
-                                    AppRoutes.detailEventRoute,
-                                entities: _bloc.eventsList,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      BackAuthTopBarWidget(isHome: true),
-                    ],
+                Widget scrollView = CustomScrollView(
+                  physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics(),
                   ),
+                  slivers: [
+                    if (Platform.isIOS)
+                      CupertinoSliverRefreshControl(
+                        onRefresh: () async {
+                          _bloc.add(GetDataEvent(context: context));
+                        },
+                        builder: (_, _, pulledExtent, _, _) {
+                          return Center(
+                            child: Opacity(
+                              opacity: (pulledExtent / 100.0).clamp(0.0, 1.0),
+                              child: const CupertinoActivityIndicator(
+                                color: AppColors.darkGreen,
+                                radius: 14,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    SliverToBoxAdapter(
+                      child: Stack(
+                        children: [
+                          SizedBox(
+                            width: context.sizeOf.width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const SizedBox(height: 78),
+                                InkWell(
+                                  onTap: () {
+                                    nativePushNamed(
+                                      AppRoutes.servicesListRoute,
+                                      context,
+                                      arguments: {
+                                        'servicesList': _bloc.servicesList,
+                                        'shimmerController': _shimmerController,
+                                      },
+                                    );
+                                  },
+                                  child: Column(
+                                    children: [
+                                      const _TitleWidget(text: "Cultos"),
+                                      const _SubtitleWidget(
+                                        right: 17,
+                                        text:
+                                            "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                CarouselWidget(
+                                  shimmerController: _shimmerController,
+                                  fontStyle: AppFonts.defaultFont(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.white,
+                                  ),
+                                  margin: const EdgeInsets.only(
+                                    left: 6,
+                                    right: 6,
+                                  ),
+                                  route: AppRoutes.servicesCollectionRoute,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  width: context.sizeOf.width,
+                                  services: _bloc.servicesList,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    _bloc.createEventStore.fromCalled =
+                                        'eventsList';
+                                    nativePushNamed(
+                                      AppRoutes.eventRoute +
+                                          AppRoutes.eventsListRoute,
+                                      context,
+                                    );
+                                  },
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                          top: _bloc.servicesList.isEmpty
+                                              ? 29
+                                              : 15,
+                                        ),
+                                        child: const _TitleWidget(
+                                          text: "Eventos",
+                                        ),
+                                      ),
+                                      const _SubtitleWidget(
+                                        right: 18,
+                                        text:
+                                            "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                    top: 12,
+                                  ),
+                                  child: SlideCardsWidget(
+                                    isLoading: state is LoadingEventsState,
+                                    action: () {
+                                      _bloc.createEventStore.fromCalled =
+                                          'home';
+                                      pushNamed(
+                                        AppRoutes.eventRoute +
+                                            AppRoutes.detailEventRoute,
+                                        arguments:
+                                            Modular.get<SlideCardsStore>()
+                                                .eventEntity,
+                                      );
+                                    },
+                                    shimmerController: _shimmerController,
+                                    width: context.sizeOf.width * .742,
+                                    scrollDirection: Axis.horizontal,
+                                    route:
+                                        AppRoutes.eventRoute +
+                                        AppRoutes.detailEventRoute,
+                                    entities: _bloc.eventsList,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          BackAuthTopBarWidget(isHome: true),
+                        ],
+                      ),
+                    ),
+                  ],
                 );
+                if (Platform.isAndroid) {
+                  return RefreshIndicator(
+                    elevation: .7,
+                    backgroundColor: AppColors.white,
+                    color: AppColors.darkGreen,
+                    onRefresh: () async {
+                      _bloc.add(GetDataEvent(context: context));
+                    },
+                    child: scrollView,
+                  );
+                }
+                return scrollView;
               } else {
                 return const GenericErrorView();
               }
@@ -173,37 +217,58 @@ class _HomeViewState extends State<HomeView>
       ),
     );
   }
+}
 
-  Widget title({required String text}) => Container(
-    margin: const EdgeInsets.only(left: 17, right: 9),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(text, style: AppFonts.title2),
-        IconButtonWidget(
-          size: Platform.isIOS ? 30 : 35,
-          color: AppColors.darkGreen,
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          iOSIcon: CupertinoIcons.chevron_forward,
-          androidIcon: Icons.navigate_next_sharp,
-        ),
-      ],
-    ),
-  );
+class _TitleWidget extends StatelessWidget {
+  const _TitleWidget({required this.text});
 
-  Widget subtitle({required double right, required String text}) => Align(
-    alignment: Alignment.centerLeft,
-    child: Container(
-      margin: EdgeInsets.only(left: 18, top: 4, right: right),
-      child: Text(
-        text,
-        style: AppFonts.defaultFont(
-          fontSize: 15,
-          height: 1.2,
-          color: AppColors.grey9,
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(left: 16, right: 11), // Use 'const'
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(text, style: AppFonts.title2),
+          IconButtonWidget(
+            sizeIcon: 20.5,
+            height: 33,
+            width: 33,
+            color: AppColors.darkGreen,
+            splashColor: Colors.transparent,
+            iconFormat: IconFormat.svg,
+            highlightColor: Colors.transparent,
+            iconPath: AppIcons.arrowForward,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SubtitleWidget extends StatelessWidget {
+  const _SubtitleWidget({required this.right, required this.text});
+
+  final double right;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        margin: EdgeInsets.only(left: 18, top: 4, right: right), // Use 'const'
+        child: Text(
+          text,
+          style: AppFonts.defaultFont(
+            fontSize: 15,
+            height: 1.2,
+            color: AppColors.grey9,
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

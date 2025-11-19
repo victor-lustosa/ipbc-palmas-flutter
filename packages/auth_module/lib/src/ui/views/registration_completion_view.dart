@@ -23,7 +23,7 @@ class _RegistrationCompletionViewState
   final GlobalKey<FormState> _dateOfBirthKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _maritalStatusKey = GlobalKey<FormState>();
 
-  ValueNotifier<bool> _isPressed = ValueNotifier(false);
+  ValueNotifier<bool> isPressed = ValueNotifier(false);
   bool _isValidName = true;
   bool _isValidPhone = true;
   bool _isValidCep = true;
@@ -84,7 +84,7 @@ class _RegistrationCompletionViewState
                     textInputType: TextInputType.text,
                     errorText: 'Preencha o nome completo',
                     isValid: _isValidName,
-                    isPressed: _isPressed,
+                    isPressed: isPressed,
                     validator: (data) {
                       _nameValidation(data);
                       return null;
@@ -107,7 +107,7 @@ class _RegistrationCompletionViewState
                     globalKey: _phoneKey,
                     errorText: 'Preencha o Telefone',
                     isValid: _isValidPhone,
-                    isPressed: _isPressed,
+                    isPressed: isPressed,
                     validator: (data) {
                       _phoneValidation(data);
                       return null;
@@ -129,7 +129,7 @@ class _RegistrationCompletionViewState
                     textInputType: TextInputType.number,
                     errorText: 'Preencha o CEP',
                     isValid: _isValidCep,
-                    isPressed: _isPressed,
+                    isPressed: isPressed,
                     validator: (data) {
                       _cepValidation(data);
                       return null;
@@ -175,7 +175,7 @@ class _RegistrationCompletionViewState
                     inputFormatters: <TextInputFormatter>[DataInputFormatter()],
                     errorText: 'Preencha a data de nascimento',
                     isValid: _isValidDate,
-                    isPressed: _isPressed,
+                    isPressed: isPressed,
                     validator: (data) {
                       _dateValidation(data);
                       return null;
@@ -189,7 +189,7 @@ class _RegistrationCompletionViewState
                         padding: const EdgeInsets.only(right: 16),
                         child: IconButtonWidget(
                           action: selectDate,
-                          size: 24,
+                          height: 24,
                           color: AppColors.grey7,
                           iOSIcon: CupertinoIcons.calendar,
                           androidIcon: Icons.date_range,

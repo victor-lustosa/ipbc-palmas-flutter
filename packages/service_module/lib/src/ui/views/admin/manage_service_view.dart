@@ -12,7 +12,7 @@ class ManageServiceView extends StatefulWidget {
 }
 
 class _ManageServiceViewState extends State<ManageServiceView>
-    with DateMixin, ValidationAndFormatMixin {
+    with DateMixin, FormatMixin {
   late ManageServiceStore _store;
   final Map<String, GlobalKey> _liturgyKeys = {};
   final Map<String, GlobalKey> _tileKeys = {};
@@ -76,8 +76,8 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                 isValid: _store.isThemeValid.value,
                                 hintText: 'Mensagem do culto',
                               ),
-                              validator: (data) {
-                                return _store.formValidation(
+                              onChanged: (data) {
+                                _store.formValidation(
                                   data,
                                   _store.isThemeValid,
                                 );
@@ -105,8 +105,8 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                 isValid: _store.isPreacherValid.value,
                                 hintText: 'Preletor do culto',
                               ),
-                              validator: (data) {
-                                return _store.formValidation(
+                              onChanged: (data) {
+                                _store.formValidation(
                                   data,
                                   _store.isPreacherValid,
                                 );
@@ -410,8 +410,8 @@ class _ManageServiceViewState extends State<ManageServiceView>
                                             children: [
                                               IconButtonWidget(
                                                 iconFormat: IconFormat.svg,
-                                                size: 18,
-                                                iconName: AppIcons.popoverIcon,
+                                                height: 18,
+                                                iconPath: AppIcons.popoverIcon,
                                                 action: () async {
                                                   _store.liturgyModel = liturgy;
                                                   _store.index = index;

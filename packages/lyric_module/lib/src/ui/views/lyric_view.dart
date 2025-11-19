@@ -32,7 +32,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
           body: SafeArea(
             child: SingleChildScrollView(
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 16,),
+                margin: EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   children: [
                     Container(
@@ -104,7 +104,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                           ),
                           Container(margin: EdgeInsets.only(top: 15),
                             child: IconButtonWidget(
-                              size: 30,
+                              height: 30,
                               color: AppColors.darkGreen,
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,
@@ -151,7 +151,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () => setState(
                                         () {
-                                      _launched = launchInBrowser(toLaunch);
+                                      _launched = launchInBrowser(toLaunch, context);
                                       if (kDebugMode) {
                                         print(_launched);
                                       }

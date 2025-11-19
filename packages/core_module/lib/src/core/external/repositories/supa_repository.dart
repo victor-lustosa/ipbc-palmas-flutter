@@ -23,6 +23,10 @@ class SupabaseRepository implements IRepository {
       query = query.eq(params?['filterColumn'], params?['filterValue']);
     }
 
+    if (params?['likeColumn'] != null && params?['likeValue'] != null) {
+      query = query.ilike(params?['likeColumn'], '%${params?['likeValue']}%');
+    }
+
     if (params?['orderBy'] != null) {
       query = query.order(
         params?['orderBy'],
@@ -121,7 +125,7 @@ class SupabaseRepository implements IRepository {
           .from(bucketName)
           .getPublicUrl(fileName);
     } catch (e) {
-      print('Erro ao fazer upload: $e');
+      //print('Erro ao fazer upload: $e');
       return null;
     }
   }

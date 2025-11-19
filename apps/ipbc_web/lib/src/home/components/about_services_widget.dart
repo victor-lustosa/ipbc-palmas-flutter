@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 import '../view_models/home_view_model.dart';
 
 class AboutServicesWidget extends StatefulWidget {
-  const AboutServicesWidget({super.key});
-
+  const AboutServicesWidget({super.key, required this.shimmerController});
+  final AnimationController shimmerController;
   @override
   State<AboutServicesWidget> createState() => _AboutServicesWidgetState();
 }
 
 class _AboutServicesWidgetState extends State<AboutServicesWidget> {
+
   late double vWidth;
 
   final List<ServicesEntity> servicesImagesLg = [
@@ -83,7 +84,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
     }
   }
 
-  web() => Container(
+  Container web() => Container(
         decoration: const BoxDecoration(color: AppColors.white),
         child: Column(
           children: [
@@ -115,7 +116,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  tablet() => Container(
+  Container tablet() => Container(
         decoration: const BoxDecoration(color: AppColors.white),
         child: Column(
           children: [
@@ -147,7 +148,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  mobile() => Container(
+  Container mobile() => Container(
         decoration: const BoxDecoration(color: AppColors.white),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -179,7 +180,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  descriptionServices(
+  Container descriptionServices(
           {CrossAxisAlignment? crossAxisAlignment,
           MainAxisAlignment? mainAxisAlignment,
           required double width,
@@ -257,7 +258,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  title({required double fontSize}) => Text(
+  Text title({required double fontSize}) => Text(
         'Programação',
         style: AppFonts.defaultFont(
           fontSize: fontSize,
@@ -266,9 +267,10 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  horizontalCards() => Container(
+  Container horizontalCards() => Container(
         margin: const EdgeInsets.only(bottom: 80, top: 50),
         child: CarouselWidget(
+          shimmerController: widget.shimmerController,
           padding: const EdgeInsets.only(
             left: 26,
             bottom: 16,
@@ -286,10 +288,10 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  verticalCards() => SingleChildScrollView(
+  SingleChildScrollView verticalCards() => SingleChildScrollView(
         child: SizedBox(
           width: vWidth > 1100 ? 618 : 457,
-          height: 1333,
+          height: vWidth > 1100 ? 1350 : 1370,
           child: ListView.separated(
             separatorBuilder: (BuildContext context, int index) {
               return const SizedBox(height: 24);
@@ -302,6 +304,8 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
                 image: vWidth > 1100
                     ? servicesImagesLg[index].image
                     : servicesImagesMd[index].image,
+                height: vWidth > 1100 ? 320 : 322,
+                width: vWidth > 1100 ? 618 : 457,
                 title: vWidth > 1100
                     ? servicesImagesLg[index].title
                     : servicesImagesMd[index].title,
@@ -310,8 +314,31 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
           ),
         ),
       );
-
-  Widget cardImage({required String image, required String title}) => Container(
+  Widget placeholder({Widget? child, BorderRadiusGeometry? border}) => ShimmerWidget(
+    animation: widget.shimmerController,
+    child:
+    child ??
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade300,
+            borderRadius: border ?? BorderRadius.circular(12),
+          ),
+        ),
+  );
+  Widget cardImage({required String image, required String title, required double height, required double width}) => CachedNetworkImage(
+    height: height,
+    width: width ,
+      imageUrl: image,
+      fit: BoxFit.cover,
+      placeholder: (context, url) => placeholder(
+        border: BorderRadius.circular(20),
+      ),
+      errorWidget: (context, url, error) => placeholder(
+        border: BorderRadius.circular(20),
+      ),
+      color: const Color.fromRGBO(0, 66, 46, 0.40),
+      colorBlendMode: BlendMode.color,
+      imageBuilder: (context, imageProvider) => Container(
         padding: const EdgeInsets.only(
           left: 16,
           top: 270,
@@ -323,7 +350,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
           borderRadius: BorderRadius.circular(20),
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: NetworkImage(image),
+            image: imageProvider,
           ),
         ),
         child: Text(
@@ -333,7 +360,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
             color: AppColors.white,
             fontWeight: FontWeight.w700,
           ),
-        ),
+        ),),
       );
 
   Widget cardService({required String title, required String subtitle}) =>

@@ -88,8 +88,6 @@ mixin DateMixin {
      onDatePicked(pickedDate);
    }
 
-
-
    TimeOfDay parseTimeOfDayFromH(String timeString) {
     final parts = timeString.split('h');
     final hour = int.parse(parts[0]);
@@ -99,7 +97,7 @@ mixin DateMixin {
     return TimeOfDay(hour: hour, minute: minute);
   }
 
-  initDate({
+  void initDate({
     TimeOfDay? startTimeParam,
     TimeOfDay? endTimeParam,
     DateTime? startDateParam,

@@ -12,15 +12,15 @@ abstract class IGetByPagination {
 }
 
 abstract class IUpsert {
-  Future<dynamic> upsert<T>({required data, Map<String, dynamic>? params});
+  Future<dynamic> upsert<T>({required dynamic data, Map<String, dynamic>? params});
 }
 
 abstract class IAdd {
-  Future<dynamic> add<T>({required data, Map<String, dynamic>? params});
+  Future<dynamic> add<T>({required dynamic data, Map<String, dynamic>? params});
 }
 
 abstract class IUpdate {
-  Future<void> update<T>({required data, Map<String, dynamic>? params});
+  Future<void> update<T>({required dynamic data, Map<String, dynamic>? params});
 }
 
 abstract class IDelete {

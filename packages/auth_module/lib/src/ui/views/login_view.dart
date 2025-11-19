@@ -65,8 +65,8 @@ class _LoginViewState extends State<LoginView> {
                         errorHintColor: AppColors.codeBorderError,
                         hintText: 'Email',
                       ),
-                      validator: (data) {
-                        return _store.formValidation(
+                      onChanged: (data) {
+                         _store.formValidation(
                           _store.emailValidation(data),
                           _store.isEmailValid,
                         );
@@ -91,17 +91,22 @@ class _LoginViewState extends State<LoginView> {
                         hintText: 'Senha',
                         errorHintColor: AppColors.codeBorderError,
                         contentPadding: const EdgeInsets.only(left: 16, top: 9),
-                        suffixIcon: HideIconWidget(isObscure: _store.obscure),
+                        suffixIcon: HideIconWidget(
+                          isObscure: _store.obscure,
+                          action: (){
+                            _store.obscure.value = !_store.obscure.value;
+                            _store.value = UpdateFormFieldState();
+                       }),
                       ),
-                      validator: (data) {
-                        return _store.formValidation(
+                      onChanged: (data) {
+                         _store.formValidation(
                           !_store.isEmptyData(data),
                           _store.isPasswordValid,
                         );
                       },
                       defaultHintColor: AppColors.hintInputForm,
                     ),
-                    Row(
+                    /*Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Container(
@@ -132,7 +137,7 @@ class _LoginViewState extends State<LoginView> {
                           ),
                         ),
                       ],
-                    ),
+                    ),*/
                     LoadingButtonWidget(
                       isPressed: _store.isLoginPressed,
                       action: () async {

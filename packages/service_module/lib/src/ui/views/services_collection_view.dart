@@ -1,7 +1,6 @@
-import 'dart:io';
+//import 'dart:io';
 
 import 'package:core_module/core_module.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -17,7 +16,7 @@ class ServicesCollectionView extends StatefulWidget {
 }
 
 class _ServicesCollectionViewState extends State<ServicesCollectionView>
-    with DateMixin, ValidationAndFormatMixin {
+    with DateMixin, FormatMixin {
   late final ServicesCollectionBloc _bloc;
   final Map<String, GlobalKey> _gestureKeys = {};
   late String path;
@@ -28,13 +27,15 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
     _bloc = Modular.get<ServicesCollectionBloc>();
     _bloc.path = widget.entity.path;
     _bloc.manageServiceStore.servicesEntity = widget.entity;
-    _bloc.add(GetDataEvent());
+    _bloc.add(GetDataEvent(context: context));
   }
+
   @override
   void dispose() {
     _gestureKeys.clear();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final loadingWidget = const LoadingWidget(
@@ -50,12 +51,11 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
             return loadingWidget;
           } else if (state is NoConnectionState<ServicesCollectionState>) {
             return NoConnectionView(
-              action: () => nativePushReplacementNamed(
-                AppRoutes.homeRoute,
-                context,
-              ),
+              action: () =>
+                  nativePushReplacementNamed(AppRoutes.homeRoute, context),
             );
-          } else if (state is DataFetchedState<ServicesCollectionState> || state is UpdateServicesListState) {
+          } else if (state is DataFetchedState<ServicesCollectionState> ||
+              state is UpdateServicesListState) {
             final currentIds = _bloc.entitiesList.map((e) => e.id!).toSet();
             _gestureKeys.removeWhere((key, _) => !currentIds.contains(key));
 
@@ -83,7 +83,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                   top: 24,
                                   left: 16,
                                   right: 16,
-                                  bottom: 30
+                                  bottom: 30,
                                 ),
                                 child: ListView.separated(
                                   separatorBuilder:
@@ -96,14 +96,19 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                   itemCount: _bloc.entitiesList.length,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
-                                    final ServiceEntity service = _bloc.entitiesList[index];
+                                    final ServiceEntity service =
+                                        _bloc.entitiesList[index];
                                     final Key itemKey = Key(service.id!);
-                                    final GlobalKey gestureKey = _gestureKeys.putIfAbsent(service.id!, () => GlobalKey());
+                                    final GlobalKey gestureKey = _gestureKeys
+                                        .putIfAbsent(
+                                          service.id!,
+                                          () => GlobalKey(),
+                                        );
 
                                     return GestureDetector(
                                       key: gestureKey,
                                       onTap: () {
-                                       _bloc.toService(widget.entity, service);
+                                        _bloc.toService(widget.entity, service);
                                       },
                                       onLongPressStart: (_) async {
                                         await showOptionsDialog(
@@ -128,8 +133,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                               ),
                                               Divider(
                                                 height: 1,
-                                                color: AppColors.dividerModal
-                                                    .withValues(alpha: .3),
+                                                color: AppColors.dividerModal.withValues(alpha: .3),
                                               ),
                                               actionButton(
                                                 context: context,
@@ -138,12 +142,18 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                                 icon: AppIcons.trash,
                                                 label: 'Deletar',
                                                 action: () async {
-                                                  _bloc.add(
-                                                    DeleteItemEvent(index: index, context: context),
-                                                  );
-                                                  if (context.mounted) {
-                                                    pop(context);
-                                                  }
+                                                    await showConfirmationDialog(
+                                                      confirmAction: () async {
+                                                        _bloc.add(
+                                                          DeleteItemEvent(
+                                                            index: index,
+                                                            context: context,
+                                                          ),
+                                                        );
+                                                      },
+                                                      title: "Deletar Culto",
+                                                      message: "O culto será deletado permanentemente. Tem certeza?",
+                                                      context: context,);
                                                 },
                                               ),
                                             ],
@@ -155,84 +165,72 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(16),
                                           color: index == 0
-                                              ? AppColors.highlightGreen
-                                                    .withValues(alpha: .1)
+                                              ? AppColors.highlightGreen.withValues(alpha: .1)
                                               : AppColors.grey0,
                                         ),
                                         child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Expanded(
-                                              child: Container(
-                                                margin: const EdgeInsets.only(
-                                                  left: 16,
-                                                  top: 16,
-                                                  bottom: 16,
-                                                ),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      maxLines: 1,
-                                                      '${_bloc.entitiesList[index].title} ${formatDateToString(_bloc.entitiesList[index].serviceDate)} | ${formatHourToString(date: _bloc.entitiesList[index].serviceDate)}',
-                                                      style: AppFonts.defaultFont(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: AppColors.grey9,
-                                                        fontSize: 15,
-                                                      ),
+                                            Container(
+                                              margin: const EdgeInsets.only(
+                                                left: 16,
+                                                top: 16,
+                                                bottom: 16,
+                                              ),
+                                              width: ResponsivityUtil(sm:context.sizeOf.width * .76, xl:context.sizeOf.width * .8).get(context),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    overflow: TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                    '${_bloc.entitiesList[index].title} ${formatDateToString(_bloc.entitiesList[index].serviceDate)} | ${formatHourToString(date: _bloc.entitiesList[index].serviceDate)}',
+                                                    style: AppFonts.defaultFont(
+                                                      fontWeight: FontWeight.w600,
+                                                      color: AppColors.grey9,
+                                                      fontSize: ResponsivityUtil<double>(sm: 15, xl: 16).get(context),
                                                     ),
-                                                    Container(
-                                                      margin:
-                                                          const EdgeInsets.only(
-                                                            bottom: 4,
-                                                            top: 4,
+                                                  ),
+                                                  Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                          bottom: 4,
+                                                          top: 4,
+                                                        ),
+                                                    child: Text(
+                                                      overflow: TextOverflow.ellipsis,
+                                                      maxLines: 2,
+                                                      'Mensagem: ${_bloc.entitiesList[index].theme}',
+                                                      style:
+                                                          AppFonts.description(
+                                                            color: AppColors.grey8,
+                                                            fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context),
                                                           ),
-                                                      child: Text(
-                                                        overflow:
-                                                            TextOverflow.ellipsis,
-                                                        maxLines: 2,
-                                                        'Mensagem: ${_bloc.entitiesList[index].theme}',
-                                                        style:
-                                                            AppFonts.description(
-                                                              color:
-                                                                  AppColors.grey8,
-                                                            ),
-                                                      ),
                                                     ),
-                                                    Text(
-                                                      _bloc
-                                                          .entitiesList[index]
-                                                          .preacher,
-                                                      style: AppFonts.description(
-                                                        color: AppColors.grey8,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                  Text(
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    _bloc.entitiesList[index].preacher,
+                                                    style:
+                                                        AppFonts.description(
+                                                          color: AppColors.grey8,
+                                                          fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context),
+                                                        ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                             Container(
                                               margin: EdgeInsets.only(
-                                                right:
-                                                    ResponsivityUtil.isSmallDevice(
-                                                      context,
-                                                    )
-                                                    ? 7
-                                                    : 12,
+                                                right: 16,
                                               ),
                                               child: IconButtonWidget(
-                                                size: Platform.isIOS ? 30 : 34,
+                                                sizeIcon: ResponsivityUtil<double>(sm: 21, xl: 23).get(context),
                                                 color: AppColors.darkGreen,
-                                                splashColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                iOSIcon: CupertinoIcons
-                                                    .chevron_forward,
-                                                androidIcon:
-                                                    Icons.navigate_next_sharp,
+                                                iconFormat: IconFormat.svg,
+                                                iconPath: AppIcons.arrowForward,
                                               ),
                                             ),
                                           ],
@@ -247,7 +245,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                 child: SizedBox(
                                   width: context.sizeOf.width,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       SizedBox(
                                         width: 26,
@@ -263,7 +262,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                         child: Text(
                                           textAlign: TextAlign.center,
                                           style: AppFonts.defaultFont(
-                                            fontSize: 13,
+                                            fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context),
                                             color: AppColors.grey9,
                                           ),
                                           'Não há cultos cadastrados.',

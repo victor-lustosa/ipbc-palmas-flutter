@@ -9,6 +9,7 @@ class SlideCardsWidget extends StatefulWidget {
   final ScrollPhysics? physics;
   final Axis scrollDirection;
   final bool? shrinkWrap;
+  final bool isLoading;
   final AnimationController shimmerController;
   final void Function(LongPressStartDetails)? onLongPressStart;
   final Function()? action;
@@ -24,6 +25,7 @@ class SlideCardsWidget extends StatefulWidget {
     this.physics,
     this.margin,
     this.shrinkWrap,
+    required this.isLoading,
     this.action,
   });
 
@@ -40,7 +42,7 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
     _store = Modular.get<SlideCardsStore>();
   }
 
-  Widget placeholder({child, border}) => ShimmerWidget(
+  Widget placeholder({Widget? child, BorderRadiusGeometry? border}) => ShimmerWidget(
     animation: widget.shimmerController,
     child:
         child ??
@@ -83,9 +85,8 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
               ),
               child: CachedNetworkImage(
                 imageUrl: entity.image,
-                height: context.sizeOf.width * .335,
+                height: context.sizeOf.width * .35,
                 width: context.sizeOf.width,
-                fit: BoxFit.cover,
                 placeholder: (context, url) => placeholder(
                   border: const BorderRadius.only(
                     topLeft: Radius.circular(16),
@@ -98,25 +99,11 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
                     topRight: Radius.circular(16),
                   ),
                 ),
-                color: const Color.fromRGBO(0, 66, 46, 0.40),
-                colorBlendMode: BlendMode.color,
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(2, 4),
-                        blurRadius: 10,
-                        spreadRadius: 0,
-                        color: AppColors.grey2.withAlpha(153),
-                      ),
-                    ],
                     image: DecorationImage(
                       image: imageProvider,
                       fit: BoxFit.cover,
-                      colorFilter: const ColorFilter.mode(
-                        Color.fromRGBO(0, 66, 46, 0.40),
-                        BlendMode.color,
-                      ),
                     ),
                   ),
                   child: Center(
@@ -140,14 +127,14 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
             ),
             Container(
               padding: const EdgeInsets.only(left: 12),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: AppColors.white,
                 boxShadow: [
                   BoxShadow(
-                    blurRadius: 10,
+                    blurRadius: 6,
                     spreadRadius: 1,
-                    offset: Offset(4, 4),
-                    color: AppColors.grey2,
+                    offset: Offset(3, 3),
+                    color: AppColors.grey2.withAlpha(150),
                   ),
                 ],
                 borderRadius: BorderRadius.only(
@@ -279,14 +266,18 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
     Widget shimmerWrapper = ListView.builder(
       shrinkWrap: !isHorizontal,
       scrollDirection: widget.scrollDirection,
-      physics: widget.physics,
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: 3,
       itemBuilder: (context, index) => Container(
         margin: isHorizontal
             ? const EdgeInsets.only(left: 16)
             : const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         width: widget.width,
-        height: isHorizontal ? null : context.sizeOf.width * .62,
+        height: isHorizontal
+            ? null
+            : ResponsivityUtil<double>(
+                df: context.sizeOf.width * .56,
+              ).get(context),
         decoration: BoxDecoration(
           color: Colors.grey.shade300,
           borderRadius: BorderRadius.circular(16),
@@ -297,7 +288,9 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
     if (isHorizontal) {
       return placeholder(
         child: SizedBox(
-          height: context.sizeOf.width * .6,
+          height: ResponsivityUtil<double>(
+            df: context.sizeOf.width * .585,
+          ).get(context),
           child: shimmerWrapper,
         ),
       );
@@ -308,15 +301,38 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
 
   @override
   Widget build(BuildContext context) {
-    bool isSmallDevice = ResponsivityUtil.isSmallDevice(context);
     bool isHorizontal = widget.scrollDirection == Axis.horizontal;
-
+    bool isLoading = widget.isLoading && widget.entities.isEmpty;
+    Widget emptyList = Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 30),
+          width: 26,
+          height: 26,
+          child: Image.asset(AppIcons.info, color: Colors.blueAccent),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 8),
+          width: context.sizeOf.width * .6,
+          child: Text(
+            textAlign: TextAlign.center,
+            style: AppFonts.defaultFont(
+              fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context),
+              color: AppColors.grey9,
+            ),
+            'Não há eventos cadastrados no momento.',
+          ),
+        ),
+      ],
+    );
     if (widget.scrollDirection == Axis.horizontal) {
-      return widget.entities.isEmpty
+      return isLoading
           ? _buildPlaceholder(context, isHorizontal, widget.shrinkWrap)
+          : !widget.isLoading && widget.entities.isEmpty
+          ? emptyList
           : SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              physics: widget.physics,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: List.generate(widget.entities.length, (index) {
@@ -332,10 +348,15 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
               ),
             );
     } else {
-      return widget.entities.isEmpty
+      return isLoading
           ? _buildPlaceholder(context, isHorizontal, widget.shrinkWrap)
+          : !widget.isLoading && widget.entities.isEmpty
+          ? Container(
+              margin: EdgeInsets.only(top: context.sizeOf.height * .15),
+              child: emptyList,
+            )
           : ListView.builder(
-              physics: widget.physics,
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: widget.shrinkWrap ?? false,
               scrollDirection: widget.scrollDirection,
               itemCount: widget.entities.length,

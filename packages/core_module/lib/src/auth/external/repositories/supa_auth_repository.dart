@@ -27,14 +27,14 @@ class SupaAuthRepository implements IOnlineAuthRepository {
       return result.user?.id != null ? "sucesso" : "Falha no cadastro";
     } on AuthException catch (e) {
       // Trata erros específicos de autenticação
-      print('Erro no cadastro: ${e.message}');
+     // print('Erro no cadastro: ${e.message}');
       return e.message; // Retorna a mensagem de erro
     } catch (e) {
       // Trata outros erros inesperados
-      print('Erro inesperado no cadastro: $e');
+     // print('Erro inesperado no cadastro: $e');
       return 'Ocorreu um erro inesperado.';
     }
-    return 'Ocorreu um erro desconhecido.';
+    //return 'Ocorreu um erro desconhecido.';
   }
 
   @override
@@ -115,7 +115,7 @@ class SupaAuthRepository implements IOnlineAuthRepository {
         redirectTo: 'https://xrvmfhpmelyvupfylnfk.supabase.co/auth/v1/callback',
       );
     } catch (e) {
-      print('Erro inesperado: $e');
+     // print('Erro inesperado: $e');
     }
   }
 

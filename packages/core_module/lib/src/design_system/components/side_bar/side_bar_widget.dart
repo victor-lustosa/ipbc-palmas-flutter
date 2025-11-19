@@ -16,8 +16,8 @@ class SideBarWidget extends StatelessWidget {
           bottomLeft: Radius.circular(20),
         ),
         child: SizedBox(
-          height: context.sizeOf.height * 0.67,
-          width: context.sizeOf.width * 0.76,
+          height: context.sizeOf.height * .67,
+          width: context.sizeOf.width * .76,
           child: Drawer(
             backgroundColor: AppColors.white,
             child: Stack(

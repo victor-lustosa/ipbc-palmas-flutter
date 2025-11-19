@@ -4,12 +4,16 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 enum DialogType { success, error, warning }
+
 OverlayEntry? _currentOverlayEntry;
+
 void showCustomMessageDialog({
   required BuildContext context,
   required String title,
+  Alignment? alignment,
+  double? width,
   required String message,
-  Duration duration = const Duration(milliseconds: 900),
+  Duration? duration,
   Function()? onDelayedAction,
   required DialogType type,
 }) async {
@@ -29,6 +33,8 @@ void showCustomMessageDialog({
             title: title,
             message: message,
             type: type,
+            alignment: alignment,
+            width: width,
             onDelayedAction: onDelayedAction,
           ),
         ),
@@ -38,9 +44,9 @@ void showCustomMessageDialog({
 
   overlayState.insert(_currentOverlayEntry!);
 
-  Timer(duration, () {
+  Timer(duration ?? const Duration(milliseconds: 900), () {
     Future.delayed(const Duration(milliseconds: 250), () {
-      if(onDelayedAction != null) {
+      if (onDelayedAction != null) {
         onDelayedAction();
       }
       if (_currentOverlayEntry != null) {
@@ -53,6 +59,7 @@ void showCustomMessageDialog({
 
 class ToastAnimation extends StatefulWidget {
   final Widget child;
+
   const ToastAnimation({super.key, required this.child});
 
   @override
@@ -72,12 +79,14 @@ class _ToastAnimationState extends State<ToastAnimation>
       vsync: this,
       duration: const Duration(milliseconds: 250),
     );
-    _opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
-    );
-    _position = Tween<Offset>(begin: const Offset(0, 0.1), end: Offset.zero).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
-    );
+    _opacity = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
+    _position = Tween<Offset>(
+      begin: const Offset(0, 0.1),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
     _controller.forward();
   }
 
@@ -91,10 +100,7 @@ class _ToastAnimationState extends State<ToastAnimation>
   Widget build(BuildContext context) {
     return FadeTransition(
       opacity: _opacity,
-      child: SlideTransition(
-        position: _position,
-        child: widget.child,
-      ),
+      child: SlideTransition(position: _position, child: widget.child),
     );
   }
 }
@@ -102,19 +108,23 @@ class _ToastAnimationState extends State<ToastAnimation>
 class MessageDialogWidget extends StatelessWidget {
   final String title;
   final String message;
+  final Alignment? alignment;
+  final double? width;
   final Function()? onDelayedAction;
   final DialogType type;
+
   const MessageDialogWidget({
     super.key,
     required this.title,
     required this.message,
     required this.type,
     this.onDelayedAction,
+    this.alignment,
+    this.width,
   });
 
   @override
   Widget build(BuildContext context) {
-
     late final Color backgroundColor;
     late final Widget icon;
 
@@ -134,7 +144,7 @@ class MessageDialogWidget extends StatelessWidget {
     }
 
     return Align(
-      alignment: Alignment.bottomCenter,
+      alignment: alignment ?? Alignment.bottomCenter,
       child: Container(
         margin: const EdgeInsets.only(bottom: 40, left: 16, right: 16),
         child: Material(
@@ -142,7 +152,7 @@ class MessageDialogWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           clipBehavior: Clip.antiAlias,
           child: Container(
-            width: context.sizeOf.width,
+            width: width ?? context.sizeOf.width,
             constraints: const BoxConstraints(minHeight: 95),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -192,7 +202,7 @@ class MessageDialogWidget extends StatelessWidget {
                       right: 16,
                       child: InkWell(
                         onTap: () {
-                          if(onDelayedAction != null) {
+                          if (onDelayedAction != null) {
                             onDelayedAction!();
                           }
                           if (_currentOverlayEntry != null) {
@@ -333,15 +343,17 @@ class WarningIconWidget extends StatelessWidget {
       child: Container(
         width: 50,
         height: 50,
-        decoration: BoxDecoration(shape: BoxShape.circle,
-        color: AppColors.iconModalWarning),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppColors.iconModalWarning,
+        ),
         child: Image.asset(
           AppIcons.warningIcon,
           width: 12,
           height: 12,
           color: AppColors.white,
         ),
-      )
+      ),
     );
   }
 }

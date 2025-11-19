@@ -48,53 +48,66 @@ class AppRoutes {
 
 }
 
-nativePushReplacementNamed(
+Future<void> nativePushReplacementNamed(
   String route,
   BuildContext context, {
   Object? arguments,
-}) {
+}) async {
   Navigator.pushReplacementNamed(context, route, arguments: arguments);
 }
 
-pushReplacementNamed(String route, {Object? arguments}) {
+Future<void> pushReplacementNamed(String route, {Object? arguments}) async {
   Modular.to.pushReplacementNamed(route, arguments: arguments);
 }
 
-pushNamedAndRemoveUntil(
+Future<void> pushNamedAndRemoveUntil(
   String route,
   bool Function(Route<dynamic>) predicate, {
   Object? arguments,
-}) {
+}) async {
   Modular.to.pushNamedAndRemoveUntil(route, predicate, arguments: arguments);
 }
 
-navigate(String route, {Object? arguments}) {
+void navigate(String route, {Object? arguments}) {
   Modular.to.navigate(route, arguments: arguments);
 }
 
-nativePushNamed(String route, BuildContext context, {Object? arguments}) {
+Future<void> nativePushNamed(String route, BuildContext context, {Object? arguments}) async {
   Navigator.pushNamed(context, route, arguments: arguments);
 }
 
-pushNamed(String route, {Object? arguments}) {
+Future<void> pushNamed(String route, {Object? arguments}) async {
   Modular.to.pushNamed(route, arguments: arguments);
 }
 
-popUntil(bool Function(Route<dynamic>) predicate) {
+void popUntil(bool Function(Route<dynamic>) predicate) {
   Modular.to.popUntil(predicate);
 }
 
-nativePop(BuildContext context) {
+void popToast(int popNumber){
+  int count = 0;
+  popUntil((_) => count++ >= popNumber);
+}
+
+void nativePopToast(int popNumber, BuildContext context){
+  int count = 0;
+  nativePopUntil((_) => count++ >= popNumber, context);
+}
+
+void nativePopUntil(bool Function(Route<dynamic>) predicate, BuildContext context) {
+  Navigator.popUntil(context, predicate);
+}
+
+void nativePop(BuildContext context) {
   Navigator.pop(context);
 }
 
-nativePopAndPushNamed(
+Future<void> nativePopAndPushNamed(
   BuildContext context,
   String routeName, {
   dynamic result,
   Object? arguments,
-}) {
-
+}) async {
   Navigator.popAndPushNamed(
     context,
     routeName,
@@ -103,11 +116,11 @@ nativePopAndPushNamed(
   );
 }
 
-popAndPushNamed(
+Future<void> popAndPushNamed(
     String routeName, {
       dynamic result,
       Object? arguments,
-    }) {
+    }) async {
   Modular.to.popAndPushNamed(
     routeName,
     result: result,
@@ -115,7 +128,7 @@ popAndPushNamed(
   );
 }
 
-pop([BuildContext? context]) {
+void pop([BuildContext? context]) {
   Modular.to.pop(context);
 }
 
@@ -147,7 +160,7 @@ class CustomSlideTransition extends PageRouteBuilder {
              reverseSpeed ?? const Duration(milliseconds: 300),
          transitionDuration:
              transitionSpeed ?? const Duration(milliseconds: 300),
-         pageBuilder: (_, __, ___) => child,
+         pageBuilder: (_, _, _) => child,
        );
 
   @override
@@ -238,7 +251,7 @@ class CustomFadeTransition extends PageRouteBuilder {
              reverseSpeed ?? const Duration(milliseconds: 150),
          transitionDuration:
              transitionSpeed ?? const Duration(milliseconds: 150),
-         pageBuilder: (_, __, ___) => child,
+         pageBuilder: (_, _, _) => child,
        );
 
   @override

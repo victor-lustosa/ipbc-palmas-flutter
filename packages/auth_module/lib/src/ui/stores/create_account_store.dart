@@ -2,15 +2,14 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
 class CreateAccountStore
-    extends ValueNotifier<GenericState<CreateAccountState>> {
+    extends ValueNotifier<GenericState<CreateAccountState>> with ValidationMixin{
   CreateAccountStore({required IAuthUseCases useCases})
     : _useCases = useCases,
       super(InitialState<CreateAccountState>());
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordRepeatController =
-      TextEditingController();
+  final TextEditingController _passwordRepeatController = TextEditingController();
 
   final IAuthUseCases _useCases;
 
@@ -97,20 +96,11 @@ class CreateAccountStore
     value = InitialState<CreateAccountState>();
   }
 
-  formValidation(bool validation, ValueNotifier<bool> isValid) {
+  void formValidation(bool validation, ValueNotifier<bool> isValid) {
     Future.delayed(Duration.zero, () async {
       isValid.value = validation;
       value = UpdateFormFieldState();
     });
-    return null;
-  }
-
-  bool emailValidation(String? data) {
-    return !isEmptyData(data) && EmailValidator.validate(data ?? '');
-  }
-
-  bool isEmptyData(String? data) {
-    return (data == null || data.isEmpty);
   }
 
   void clear() {

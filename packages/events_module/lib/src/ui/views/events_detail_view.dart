@@ -264,6 +264,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                                           Uri.parse(
                                             "https://www.google.com/maps/search/?api=1&query=${event.latitude!},${event.longitude!}",
                                           ),
+                                          context
                                         ),
                                       },
                                     ),
@@ -290,6 +291,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                                     Uri.parse(
                                       event.signUpLink ?? '',
                                     ),
+                                    context
                                   );
                                 },
                                 shape: RoundedRectangleBorder(
@@ -317,7 +319,9 @@ class EventsDetailViewState extends State<EventsDetailView>
                                   contactLink = launchInBrowser(
                                     Uri.parse(
                                       event.contactLink ?? '',
+
                                     ),
+                                    context
                                   );
                                 },
                                 adaptiveButtonType: AdaptiveButtonType.outlined,
@@ -348,7 +352,7 @@ class EventsDetailViewState extends State<EventsDetailView>
         child: FloatingButtonWidget(
           iconColor: AppColors.white,
           backgroundColor: AppColors.warning,
-          pngIcon: AppIcons.editIcon,
+          iconPath: AppIcons.editIcon,
           size: 37,
           action: () async {
             _createEventStore.isEditing = true;
@@ -358,9 +362,24 @@ class EventsDetailViewState extends State<EventsDetailView>
                     setState(() {
                       event = _createEventStore.eventEntity;
                        isChanged.value = true;
-                    });
-                    pop();
 
+                    });
+                      pop();
+
+            };
+
+            _createEventStore.deleteCallback = () {
+              if (_createEventStore.fromCalled == 'home') {
+                if (_createEventStore.updateHomeViewCallback != null) {
+                  _createEventStore.updateHomeViewCallback!();
+                }
+              } else if (_createEventStore.fromCalled == 'eventsList') {
+                if (_createEventStore.updateEventListViewCallback != null) {
+                  _createEventStore.updateEventListViewCallback!();
+                }
+              }
+              nativePopToast(_createEventStore.popNumber, context);
+              _createEventStore.popNumber = 2;
             };
             await pushNamed(
               AppRoutes.eventRoute +

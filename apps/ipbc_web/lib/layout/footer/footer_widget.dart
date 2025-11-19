@@ -23,7 +23,7 @@ class _FooterWidgetState extends State<FooterWidget> {
     }
   }
 
-  web() => Container(
+  Container web() => Container(
         decoration: const BoxDecoration(
           color: AppColors.grey12,
         ),
@@ -63,7 +63,7 @@ class _FooterWidgetState extends State<FooterWidget> {
         ),
       );
 
-  tablet() => Container(
+  Container tablet() => Container(
         decoration: const BoxDecoration(
           color: AppColors.grey12,
         ),
@@ -92,7 +92,7 @@ class _FooterWidgetState extends State<FooterWidget> {
         ),
       );
 
-  mobile() => Container(
+  Container mobile() => Container(
         decoration: const BoxDecoration(color: AppColors.grey12),
         width: vWidth,
         child: Column(
@@ -120,12 +120,12 @@ class _FooterWidgetState extends State<FooterWidget> {
         ),
       );
 
-  logo() => SizedBox(
+  SizedBox logo() => SizedBox(
         width: 99.34,
         child: Image.asset(AppImages.footerLogo),
       );
 
-  contacts({double? width, CrossAxisAlignment? crossAxisAlignment}) =>
+  Container contacts({double? width, CrossAxisAlignment? crossAxisAlignment}) =>
       Container(
         margin: const EdgeInsets.only(bottom: 32),
         width: width,
@@ -146,7 +146,7 @@ class _FooterWidgetState extends State<FooterWidget> {
         ),
       );
 
-  location({double? width, CrossAxisAlignment? crossAxisAlignment}) =>
+  Container location({double? width, CrossAxisAlignment? crossAxisAlignment}) =>
       Container(
         margin: const EdgeInsets.only(bottom: 32),
         width: width,
@@ -167,7 +167,7 @@ class _FooterWidgetState extends State<FooterWidget> {
         ),
       );
 
-  services(
+  Container services(
           {double? width,
           CrossAxisAlignment? crossAxisAlignment,
           EdgeInsetsGeometry? margin}) =>
@@ -191,7 +191,7 @@ class _FooterWidgetState extends State<FooterWidget> {
         ),
       );
 
-  footer({double? width, required EdgeInsetsGeometry margin}) => Center(
+  Center footer({double? width, required EdgeInsetsGeometry margin}) => Center(
         child: Container(
           width: width,
           // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
@@ -203,7 +203,7 @@ class _FooterWidgetState extends State<FooterWidget> {
         ),
       );
 
-  titleInfo(String text) => Text(
+  Text titleInfo(String text) => Text(
         text,
         style: AppFonts.defaultFont(
           fontSize: 14,
@@ -212,7 +212,7 @@ class _FooterWidgetState extends State<FooterWidget> {
         ),
       );
 
-  subtitleInfo(String text, {TextAlign? textAlign}) => Text(
+  Text subtitleInfo(String text, {TextAlign? textAlign}) => Text(
         text,
         textAlign: textAlign,
         style: AppFonts.defaultFont(

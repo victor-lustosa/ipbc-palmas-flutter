@@ -3,22 +3,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HideIconWidget extends StatelessWidget {
-  const HideIconWidget({super.key, required this.isObscure});
+  const HideIconWidget({super.key, required this.isObscure,required this.action});
 
   final ValueNotifier<bool> isObscure;
-
+  final VoidCallback action;
   @override
   Widget build(BuildContext context) {
-    return IconButtonWidget(
-      action: () {
-        isObscure.value = !isObscure.value;
-      },
-      size: 24,
-      color: AppColors.grey7,
-      iOSIcon: isObscure.value ? CupertinoIcons.eye_slash : CupertinoIcons.eye,
-      androidIcon: isObscure.value
-          ? Icons.visibility_off_outlined
-          : Icons.visibility_outlined,
+    return ValueListenableBuilder<bool>(
+      valueListenable: isObscure,
+        builder: (_, _, _) {
+        return IconButtonWidget(
+          action: action,
+          height: 24,
+          color: AppColors.grey7,
+          iOSIcon: isObscure.value ? CupertinoIcons.eye_slash : CupertinoIcons.eye,
+          androidIcon: isObscure.value
+              ? Icons.visibility_off_outlined
+              : Icons.visibility_outlined,
+        );
+      }
     );
   }
 }
