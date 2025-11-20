@@ -1,11 +1,21 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import '../../src/home/view_models/home_view_model.dart';
 import '../constraints/layout_responsive.dart';
 import 'tab_button/tab_buttons_widget.dart';
 
 class TopBarWidget extends StatefulWidget {
-  const TopBarWidget({super.key});
+  final VoidCallback onLocationTap;
+  final VoidCallback onServicesTap;
+  final VoidCallback onAppTap;
+  final VoidCallback onContactTap;
+
+  const TopBarWidget({
+    super.key,
+    required this.onLocationTap,
+    required this.onServicesTap,
+    required this.onAppTap,
+    required this.onContactTap,
+  });
 
   @override
   State<TopBarWidget> createState() => _TopBarWidgetState();
@@ -30,133 +40,117 @@ class _TopBarWidgetState extends State<TopBarWidget> {
   }
 
   Column web() => Column(
-        children: [
-          Container(
-            margin: upperMargin(value: 24),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                logo(),
-                SizedBox(
-                  width: 693,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        width: 400,
-                        margin: const EdgeInsets.only(right: 32),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TabButtonsWidget(
-                              label: 'Localização',
-                              action: () {
-                                scrollPage(
-                                  vWidth > lgSize ? 1575 : 1656,
-                                );
-                              },
-                            ),
-                            TabButtonsWidget(
-                              label: 'Programação',
-                              action: () {
-                                scrollPage(
-                                  vWidth > lgSize ? 2175 : 2534,
-                                );
-                              },
-                            ),
-                            TabButtonsWidget(
-                              label: 'Aplicativo',
-                              action: () {
-                                scrollPage(
-                                  vWidth > lgSize ? 3232 : 3560,
-                                );
-                              },
-                            ),
-                          ],
+    children: [
+      Container(
+        margin: upperMargin(value: 24),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            logo(),
+            SizedBox(
+              width: 693,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    width: 400,
+                    margin: const EdgeInsets.only(right: 32),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TabButtonsWidget(
+                          label: 'Localização',
+                          action: widget.onLocationTap,
                         ),
-                      ),
-                      contactButton(
-                        width: 259,
-                        height: 49,
-                        leftMargin: 16,
-                        label: 'Entrar em contato',
-                        position: vWidth > lgSize ? 3965 : 4230,
-                      )
-                    ],
+                        TabButtonsWidget(
+                          label: 'Programação',
+                          action: widget.onServicesTap,
+                        ),
+                        TabButtonsWidget(
+                          label: 'Aplicativo',
+                          action: widget.onAppTap,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  contactButton(
+                    width: 259,
+                    height: 49,
+                    leftMargin: 16,
+                    label: 'Entrar em contato',
+                  )
+                ],
+              ),
             ),
-          ),
-          Container(
-            height: 0.4,
-            decoration: const BoxDecoration(color: AppColors.grey5),
-          )
-        ],
-      );
+          ],
+        ),
+      ),
+      Container(
+        height: 0.4,
+        decoration: const BoxDecoration(color: AppColors.grey5),
+      )
+    ],
+  );
 
   Column tablet() => Column(
-        children: [
-          Container(
-            margin: upperMargin(value: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                logo(),
-                contactButton(
-                  width: 259,
-                  height: 49,
-                  position: 4185,
-                  leftMargin: 16,
-                  label: 'Entrar em contato',
-                )
-              ],
-            ),
-          ),
-          Container(
-            height: 0.4,
-            decoration: const BoxDecoration(color: AppColors.grey5),
-          )
-        ],
-      );
+    children: [
+      Container(
+        margin: upperMargin(value: 12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            logo(),
+            contactButton(
+              width: 259,
+              height: 49,
+              leftMargin: 16,
+              label: 'Entrar em contato',
+            )
+          ],
+        ),
+      ),
+      Container(
+        height: 0.4,
+        decoration: const BoxDecoration(color: AppColors.grey5),
+      )
+    ],
+  );
 
   Column mobile() => Column(
-        children: [
-          Container(
-            margin: upperMargin(value: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                logo(),
-                contactButton(
-                  width: 166,
-                  height: 49,
-                  leftMargin: 8,
-                  label: 'Contato',
-                  position:
-                      vWidth > ResponsivityUtil.smallDeviceWidth ? 4160 : 4330,
-                )
-              ],
-            ),
-          ),
-          Container(
-            height: 0.4,
-            decoration: const BoxDecoration(color: AppColors.grey5),
-          )
-        ],
-      );
+    children: [
+      Container(
+        margin: upperMargin(value: 12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            logo(),
+            contactButton(
+              width: 166,
+              height: 49,
+              leftMargin: 8,
+              label: 'Contato',
+            )
+          ],
+        ),
+      ),
+      Container(
+        height: 0.4,
+        decoration: const BoxDecoration(color: AppColors.grey5),
+      )
+    ],
+  );
 
   Image logo() => const Image(
-        width: 100,
-        image: AssetImage(AppImages.logo),
-      );
+    width: 100,
+    image: AssetImage(AppImages.logo),
+  );
 
-  SizedBox contactButton(
-          {required double position,
-          required double width,
-          required double height,
-          required double leftMargin,
-          required String label}) =>
+  SizedBox contactButton({
+    required double width,
+    required double height,
+    required double leftMargin,
+    required String label,
+  }) =>
       SizedBox(
         width: width,
         height: height,
@@ -164,8 +158,8 @@ class _TopBarWidgetState extends State<TopBarWidget> {
           foregroundColor: isPressed ? AppColors.grey12 : AppColors.white,
           shadowColor: AppColors.grey6,
           backgroundColor:
-              isPressed ? AppColors.highlightGreen : AppColors.darkGreen,
-          action: () => _onPressed(position: position),
+          isPressed ? AppColors.highlightGreen : AppColors.darkGreen,
+          action: _onContactPressed,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -186,45 +180,27 @@ class _TopBarWidgetState extends State<TopBarWidget> {
       );
 
   EdgeInsets upperMargin({required double value}) => EdgeInsets.only(
-        top: value,
-        bottom: value,
-        left: TopBarResponsive.leftWidth(vWidth),
-        right: TopBarResponsive.rightWidth(vWidth),
-      );
+    top: value,
+    bottom: value,
+    left: TopBarResponsive.leftWidth(vWidth),
+    right: TopBarResponsive.rightWidth(vWidth),
+  );
 
-  void scrollPage(double position) => setState(
-        () {
-          Modular.get<HomeViewModel>().scrollController.animateTo(
-                position,
-                curve: Curves.easeInOutQuint,
-                duration: const Duration(milliseconds: 1500),
-              );
-        },
-      );
+  Future<void> _onContactPressed() async {
+    setState(() {
+      isPressed = true;
+    });
 
-  Future<void> _onPressed({required double position}) async {
-    Future.delayed(
-        Duration.zero,
-        () async => setState(
-              () {
-                isPressed = true;
-              },
-            ));
-    Future.delayed(
-      const Duration(milliseconds: 500),
-      () async {
-        scrollPage(position);
-      },
-    );
-    Future.delayed(
-      const Duration(milliseconds: 900),
-      () async {
-        setState(
-          () {
-            isPressed = false;
-          },
-        );
-      },
-    );
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    widget.onContactTap();
+
+    await Future.delayed(const Duration(milliseconds: 600));
+
+    if (mounted) {
+      setState(() {
+        isPressed = false;
+      });
+    }
   }
 }

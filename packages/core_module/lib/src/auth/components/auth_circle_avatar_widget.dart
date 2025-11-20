@@ -33,7 +33,6 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget>
     return ValueListenableBuilder<GenericState<AuthCircleAvatarState>>(
       valueListenable: _store,
       builder: (_, state, _) {
-
         Widget placeholder() => ShimmerWidget(
           animation: _shimmerController,
           child: Container(
@@ -49,14 +48,12 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget>
         void handleOnTap() {
           if (state is AuthenticatedState ||
               (state is AuthenticatedState && _store.userEntity.picture.isEmpty)) {
-            // Se autenticado, abre ou fecha o menu
             if (_menuController.isOpen) {
               _menuController.close();
             } else {
               _menuController.open();
             }
           } else if (state is NotAuthenticatedState) {
-            // Se não autenticado, navega
             pushNamed(AppRoutes.authRoute + AppRoutes.loginRoute);
           }
         }
