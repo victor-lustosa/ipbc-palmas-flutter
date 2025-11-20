@@ -251,6 +251,9 @@ class StoreButton extends StatelessWidget {
       child: ButtonWidget(
         fixedSize: const Size(272, 80),
         adaptiveButtonType: AdaptiveButtonType.text,
+        style: AppFonts.defaultFont(
+          fontWeight: FontWeight.w500,
+        ),
         action: onPressed,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

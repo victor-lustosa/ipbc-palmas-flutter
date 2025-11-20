@@ -31,62 +31,97 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
             onTap: () {
               FocusScope.of(context).unfocus();
             },
-            child: SingleChildScrollView(
-              child: Container(
-                color: AppColors.white,
-                width: context.sizeOf.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ServiceTopBarWidget(
-                      image: _store.servicesEntity.image,
-                      title: "Voltar para liturgia",
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Container(
+                    color: AppColors.white,
+                    width: context.sizeOf.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ServiceTopBarWidget(
+                          image: _store.servicesEntity.image,
+                          title: "Voltar para liturgia",
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(
+                            left: 16,
+                            top: 24.7,
+                            bottom: 16,
+                          ),
+                          child: Text(
+                            'Selecione a música do culto:',
+                            style: AppFonts.defaultFont(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 17,
+                              color: AppColors.grey10,
+                            ),
+                          ),
+                        ),
+                        SearchWidget(),
+                        Container(
+                          margin: const EdgeInsets.only(top: 14),
+                          child: LyricsListWidget(
+                            onTap: () async{
+                              FocusScope.of(context).unfocus();
+                              await Future.delayed(Duration.zero);
+
+                              if (!context.mounted) return;
+                              pushNamed(
+                                AppRoutes.lyricsRoute + AppRoutes.lyricRoute,
+                                arguments: _store.lyricsListStore.lyricEntity,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                        left: 16,
-                        top: 24.7,
-                        bottom: 16,
-                      ),
-                      child: Text(
-                        'Selecione a música do culto:',
-                        style: AppFonts.defaultFont(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17,
-                          color: AppColors.grey10,
+                  ),
+                ),
+
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      width: context.sizeOf.width,
+                      color: AppColors.white,
+                      padding: const EdgeInsets.only(bottom: 10, top: 20),
+                      child: Visibility(
+                        visible: true,
+                        child: LoadingButtonWidget(
+                          margin: EdgeInsets.symmetric(horizontal: 16),
+                          isPressed: _store.isAddEventPressed,
+                          adaptiveButtonType: AdaptiveButtonType.outlined,
+                          sideColor: AppColors.darkGreen,
+                          outlinedBorderWidth: 1,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          backgroundColor: AppColors.white,
+                          shadowColor: AppColors.grey0,
+                          sideHoveredColor: AppColors.highlightGreen,
+                          foregroundHoveredColor: AppColors.darkGreen,
+                          foregroundColor: AppColors.darkGreen,
+                          action: () async {
+                            showAddLyricsDialog(
+                              context: context,
+                              callback: (text) {
+                                _store.newLyric(text, context);
+                              },
+                            );
+                          },
+                          label: "Adicionar nova música",
+                          isValid: ValueNotifier(true),
                         ),
                       ),
                     ),
-                    SearchWidget(),
-                    Container(
-                      margin: const EdgeInsets.only(top: 14),
-                      child: LyricsListWidget(
-                        onTap: () {
-                          pushNamed(
-                            AppRoutes.lyricsRoute + AppRoutes.lyricRoute,
-                            arguments: _store.lyricsListStore.lyricEntity,
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
-        ),
-        floatingActionButton: FloatingButtonWidget(
-          iconColor: AppColors.white,
-          backgroundColor: AppColors.add,
-          icon: Icons.add,
-          action: () {
-            showAddLyricsDialog(
-              context: context,
-              callback: (text) {
-                _store.newLyric(text, context);
-              },
-            );
-          },
         ),
       ),
     );

@@ -19,6 +19,9 @@ class TabButtonsWidget extends StatelessWidget {
       overlayColor: Colors.white,
       backgroundColor: AppColors.white,
       foregroundColor: AppColors.grey6,
+      style: AppFonts.defaultFont(
+        fontWeight: FontWeight.w400,
+      ),
       foregroundHoveredColor: AppColors.darkGreen,
       child: Text(label),
     );

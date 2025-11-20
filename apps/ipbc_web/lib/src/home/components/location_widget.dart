@@ -12,7 +12,6 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
   Future<void>? locationLink;
   late double vWidth;
 
-  // Separamos os estados para evitar conflitos visuais
   bool isPressed = false;
   bool isHovered = false;
 
@@ -22,7 +21,6 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
     path: 'maps/p25aM3t4Azo23URo7',
   );
 
-  // Getter auxiliar para saber se o botão deve estar destacado
   bool get isActive => isPressed || isHovered;
 
   @override
@@ -226,7 +224,6 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
   Container locationButton({required double size}) => Container(
     margin: const EdgeInsets.only(top: 40),
     child: ButtonWidget(
-      // Atualiza apenas o estado de Hover
       onHover: (hovered) {
         setState(() {
           isHovered = hovered;
@@ -234,14 +231,15 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
       },
       adaptiveButtonType: AdaptiveButtonType.outlined,
       fixedSize: Size(size, 49),
-      // Usa o getter isActive para decidir a cor base
+      style: AppFonts.defaultFont(
+        fontWeight: FontWeight.w500,
+      ),
       sideColor: isActive ? AppColors.highlightGreen : AppColors.darkGreen,
       foregroundColor: AppColors.darkGreen,
       overlayColor: AppColors.grey0,
       sideHoveredColor: AppColors.highlightGreen,
       foregroundHoveredColor: AppColors.highlightGreen,
       action: () {
-        // Lógica de clique afeta apenas isPressed
         Future.delayed(Duration.zero, () {
           setState(() {
             isPressed = true;
@@ -274,13 +272,21 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
           const Text('Ver Localização'),
           Container(
             margin: const EdgeInsets.only(left: 16),
-            // Troca o ícone se estiver Hovered OU Pressed
-            child: Image.asset(
-              isActive
-                  ? AppIcons.arrowIconHighlightGreen
-                  : AppIcons.arrowIconDarkGreen,
-              width: 20,
-              height: 20,
+            child: AnimatedCrossFade(
+              duration: const Duration(milliseconds: 230),
+              crossFadeState: isActive
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
+              firstChild: Image.asset(
+                AppIcons.arrowIconDarkGreen,
+                width: 20,
+                height: 20,
+              ),
+              secondChild: Image.asset(
+                AppIcons.arrowIconHighlightGreen,
+                width: 20,
+                height: 20,
+              ),
             ),
           ),
         ],

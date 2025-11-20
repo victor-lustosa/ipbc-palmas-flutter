@@ -219,7 +219,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
           );
         } else {
           return SizedBox(
-            height: context.sizeOf.height * .4,
+            height: context.sizeOf.height * .345,
             width: context.sizeOf.width,
             child: const LoadingWidget(
               androidRadius: 3,

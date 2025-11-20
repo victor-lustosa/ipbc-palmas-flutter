@@ -1,5 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
+
 import '../constraints/layout_responsive.dart';
 import 'tab_button/tab_buttons_widget.dart';
 
@@ -78,7 +79,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                     height: 49,
                     leftMargin: 16,
                     label: 'Entrar em contato',
-                  )
+                  ),
                 ],
               ),
             ),
@@ -88,7 +89,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
       Container(
         height: 0.4,
         decoration: const BoxDecoration(color: AppColors.grey5),
-      )
+      ),
     ],
   );
 
@@ -105,14 +106,14 @@ class _TopBarWidgetState extends State<TopBarWidget> {
               height: 49,
               leftMargin: 16,
               label: 'Entrar em contato',
-            )
+            ),
           ],
         ),
       ),
       Container(
         height: 0.4,
         decoration: const BoxDecoration(color: AppColors.grey5),
-      )
+      ),
     ],
   );
 
@@ -129,55 +130,51 @@ class _TopBarWidgetState extends State<TopBarWidget> {
               height: 49,
               leftMargin: 8,
               label: 'Contato',
-            )
+            ),
           ],
         ),
       ),
       Container(
         height: 0.4,
         decoration: const BoxDecoration(color: AppColors.grey5),
-      )
+      ),
     ],
   );
 
-  Image logo() => const Image(
-    width: 100,
-    image: AssetImage(AppImages.logo),
-  );
+  Image logo() => const Image(width: 100, image: AssetImage(AppImages.logo));
 
   SizedBox contactButton({
     required double width,
     required double height,
     required double leftMargin,
     required String label,
-  }) =>
-      SizedBox(
-        width: width,
-        height: height,
-        child: ButtonWidget(
-          foregroundColor: isPressed ? AppColors.grey12 : AppColors.white,
-          shadowColor: AppColors.grey6,
-          backgroundColor:
-          isPressed ? AppColors.highlightGreen : AppColors.darkGreen,
-          action: _onContactPressed,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(label),
-              Container(
-                margin: EdgeInsets.only(left: leftMargin),
-                child: Image.asset(
-                  isPressed
-                      ? AppIcons.contactIconDarkGreen
-                      : AppIcons.contactIcon,
-                  width: 24,
-                  height: 24,
-                ),
-              ),
-            ],
+  }) => SizedBox(
+    width: width,
+    height: height,
+    child: ButtonWidget(
+      style: AppFonts.defaultFont(fontWeight: FontWeight.w500),
+      foregroundColor: isPressed ? AppColors.grey12 : AppColors.white,
+      shadowColor: AppColors.grey6,
+      backgroundColor: isPressed
+          ? AppColors.highlightGreen
+          : AppColors.darkGreen,
+      action: _onContactPressed,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(label),
+          Container(
+            margin: EdgeInsets.only(left: leftMargin),
+            child: Image.asset(
+              isPressed ? AppIcons.contactIconDarkGreen : AppIcons.contactIcon,
+              width: 24,
+              height: 24,
+            ),
           ),
-        ),
-      );
+        ],
+      ),
+    ),
+  );
 
   EdgeInsets upperMargin({required double value}) => EdgeInsets.only(
     top: value,

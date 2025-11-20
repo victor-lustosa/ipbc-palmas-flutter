@@ -68,9 +68,13 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                                         ? AdaptiveButtonType.elevated
                                         : AdaptiveButtonType.outlined,
                                     fixedSize: Size(73, 30),
+                                    style: AppFonts.defaultFont(
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(16),
                                     ),
+
                                     sideColor: controller.isPix
                                         ? null
                                         : AppColors.grey4,
@@ -89,6 +93,9 @@ class _OffersViewState extends State<OffersView> with ClipboardMixin {
                                       ? AdaptiveButtonType.outlined
                                       : AdaptiveButtonType.elevated,
                                   fixedSize: Size(219, 30),
+                                  style: AppFonts.defaultFont(
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                   sideColor: controller.isPix
                                       ? AppColors.grey4
                                       : null,
