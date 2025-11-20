@@ -48,46 +48,53 @@ class AuthCircleAvatarWidgetState extends State<AuthCircleAvatarWidget>
 
     _overlayEntry = OverlayEntry(
       builder: (context) {
-        return Positioned(
-          top: offset.dy + size.height + 1,
-          left: offset.dx + size.width - 83,
-          child: Material(
-            color: AppColors.white,
-            elevation: 4,
-            shadowColor: Colors.black38,
-            borderRadius: BorderRadius.circular(8),
-            child: InkWell(
-              onTap: () {
-                _store.logout();
-                _removeLogoutMenu();
-              },
-              child: SizedBox(
-                width: 83,
-                height: 44,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Sair",
-                      style: AppFonts.defaultFont(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                        color: AppColors.darkGreen,
-                      ),
+        return Stack(
+          children: [
+            Positioned.fill(child: GestureDetector(onTap: _removeLogoutMenu,
+              behavior: HitTestBehavior.translucent,
+              child: Container(color: Colors.transparent),)),
+            Positioned(
+              top: offset.dy + size.height + 1,
+              left: offset.dx + size.width - 83,
+              child: Material(
+                color: AppColors.white,
+                elevation: 4,
+                shadowColor: Colors.black38,
+                borderRadius: BorderRadius.circular(8),
+                child: InkWell(
+                  onTap: () {
+                    _store.logout();
+                    _removeLogoutMenu();
+                  },
+                  child: SizedBox(
+                    width: 83,
+                    height: 44,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Sair",
+                          style: AppFonts.defaultFont(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            color: AppColors.darkGreen,
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(left: 8),
+                          child: IconWidget(
+                            iconFormat: IconFormat.svg,
+                            size: const Size(16, 16),
+                            iconName: AppIcons.logoutSvg,
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 8),
-                      child: IconWidget(
-                        iconFormat: IconFormat.svg,
-                        size: const Size(16, 16),
-                        iconName: AppIcons.logoutSvg,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
         );
       },
     );

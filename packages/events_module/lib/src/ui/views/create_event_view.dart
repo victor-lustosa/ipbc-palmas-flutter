@@ -19,7 +19,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
   void initState() {
     super.initState();
     _store = Modular.get<CreateEventStore>();
-      _store.init();
+    _store.init();
 
   }
   @override
