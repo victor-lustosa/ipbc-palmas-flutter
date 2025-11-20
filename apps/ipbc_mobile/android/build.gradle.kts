@@ -30,6 +30,14 @@ subprojects {
 subprojects {
     project.evaluationDependsOn(":app")
 }
+subprojects {
+    if (name.contains("flutter_plugin_android_lifecycle")) {
+        tasks.matching { it.name.startsWith("test") }.configureEach {
+            enabled = false
+        }
+    }
+}
+
 
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)

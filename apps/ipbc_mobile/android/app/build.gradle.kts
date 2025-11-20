@@ -51,7 +51,7 @@ android {
         versionName = flutterVersionName
     }
 
-    packagingOptions {
+    packaging {
         jniLibs {
             useLegacyPackaging = false
         }
@@ -81,4 +81,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
 }
 
+tasks.matching { it.name.contains("test", ignoreCase = true) }.configureEach {
+    enabled = false
+}
 

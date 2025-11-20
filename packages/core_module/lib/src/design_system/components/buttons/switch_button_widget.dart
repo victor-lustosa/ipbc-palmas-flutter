@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 
 class SwitchButtonWidget extends StatefulWidget {
   final bool value;
+  final ValueNotifier<bool> isSubmitted;
   final ValueChanged<bool> onChanged;
 
   const SwitchButtonWidget({
     super.key,
     required this.value,
     required this.onChanged,
+    required this.isSubmitted,
   });
 
   @override
@@ -21,9 +23,7 @@ class _SwitchButtonWidgetState extends State<SwitchButtonWidget> {
     final bool isOn = widget.value;
 
     return GestureDetector(
-      onTap: () {
-        widget.onChanged(!isOn);
-      },
+      onTap: widget.isSubmitted.value ? () {} : () => widget.onChanged(!isOn),
       child: SizedBox(
         width: 32, 
         height: 20,

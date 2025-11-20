@@ -273,7 +273,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
         value = FetchedImageState();
         changeValue(isCoverImageValid, true);
       } else {
-        if (coverImage.path.isEmpty) {
+        if (coverImage.path.isEmpty && !isEditing ) {
           value = InitialState<CreateEventState>();
           changeValue(isCoverImageValid, false);
         } else {
