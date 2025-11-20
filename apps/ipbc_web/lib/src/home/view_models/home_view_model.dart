@@ -31,12 +31,11 @@ class HomeViewModel extends ValueNotifier<GenericState<HomeViewState>>
   ValueNotifier<bool> isSubmitted = ValueNotifier(false);
   ValueNotifier<int> messageLength = ValueNotifier<int>(0);
 
-  formValidation(bool validation, ValueNotifier<bool> isValid) {
+  void formValidation(bool validation, ValueNotifier<bool> isValid) {
     Future.delayed(Duration.zero, () async {
       isValid.value = validation;
       value = UpdateFormFieldState();
     });
-    return null;
   }
 
   void submit(BuildContext context) async {

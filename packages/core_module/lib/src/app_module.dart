@@ -3,6 +3,8 @@ import 'package:core_module/src/events/infra/use_cases/event_use_cases.dart';
 
 import '../core_module.dart';
 import 'auth/infra/use_cases/auth_use_cases.dart';
+import 'core/overall_states/generic_event_bus.dart';
+import 'design_system/stores/search_store.dart';
 
 class CoreModule extends Module {
   static BindConfig<T> blocConfig<T extends Bloc>() {
@@ -26,7 +28,11 @@ class CoreModule extends Module {
           UseCases<SupabaseRepository>(repository: i.get<SupabaseRepository>()),
     );
 
-    i.addLazySingleton<LyricsListStore>(LyricsListStore.new);
+    i.addLazySingleton<LyricsListStore>(
+      () => LyricsListStore(
+        eventBus: i.get<GenericEventBus<GenericState<SearchState>>>(),
+      ),
+    );
     i.addLazySingleton<ManageLyricStore>(
       () => ManageLyricStore(
         useCases: i.get<UseCases<SupabaseRepository>>(),
@@ -69,11 +75,24 @@ class CoreModule extends Module {
     );
     i.addLazySingleton<SearchLyricsStore>(
       () => SearchLyricsStore(
+        eventBus: i.get<GenericEventBus<GenericState<SearchState>>>(),
         lyricsListStore: i.get<LyricsListStore>(),
         manageLyricStore: i.get<ManageLyricStore>(),
+      ),
+    );
+    i.addLazySingleton<SearchStore>(
+      () => SearchStore(
+        eventBus: i.get<GenericEventBus<GenericState<SearchState>>>(),
         useCases: i.get<UseCases<SupabaseRepository>>(),
       ),
     );
+
+    //event bus of search lyrics view
+    i.addSingleton<GenericEventBus<GenericState<SearchState>>>(
+      () => GenericEventBus<GenericState<SearchState>>(),
+      config: BindConfig(onDispose: (bus) => bus.dispose()),
+    );
+
     i.addLazySingleton<SlideCardsStore>(SlideCardsStore.new);
   }
 }

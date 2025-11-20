@@ -378,10 +378,8 @@ class EventsDetailViewState extends State<EventsDetailView>
                   _createEventStore.updateEventListViewCallback!();
                 }
               }
-              int count = 0;
-              nativePopUntil((_) => count++ >= _createEventStore.popNumber, context);
+              nativePopToast(_createEventStore.popNumber, context);
               _createEventStore.popNumber = 2;
-
             };
             await pushNamed(
               AppRoutes.eventRoute +

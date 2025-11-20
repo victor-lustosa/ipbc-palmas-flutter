@@ -21,7 +21,7 @@ class BackButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButtonWidget(
       height: height ?? 33,
-      sizeIcon: sizeIcon ?? 23,
+      sizeIcon: sizeIcon ?? 20.5,
       width: width ?? 33,
       color: color ?? AppColors.darkGreen,
       iconFormat: IconFormat.svg,

@@ -125,7 +125,7 @@ class SupabaseRepository implements IRepository {
           .from(bucketName)
           .getPublicUrl(fileName);
     } catch (e) {
-      print('Erro ao fazer upload: $e');
+      //print('Erro ao fazer upload: $e');
       return null;
     }
   }

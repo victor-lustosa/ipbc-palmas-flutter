@@ -1,6 +1,6 @@
 name: ipbc_monorepo
 environment:
-  sdk: '>=3.8.1 <4.0.0'
+  sdk: '>=3.10.0 <4.0.0'
 
 workspace:
   - apps/ipbc_mobile

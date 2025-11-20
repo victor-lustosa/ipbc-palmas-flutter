@@ -21,27 +21,29 @@ class ServicesCollectionBloc
     required this.onlineUseCases,
     required ServiceStore serviceStore,
     required LyricsListStore lyricsListStore,
-  }) : _serviceStore = serviceStore,_lyricsListStore = lyricsListStore,
+  }) : _serviceStore = serviceStore,
+       _lyricsListStore = lyricsListStore,
        super(LoadingState()) {
     on<GetDataEvent<ServicesCollectionEvent>>(_getInSupa);
     on<LoadingEvent<ServicesCollectionEvent>>(_loading);
     on<DeleteItemEvent>(_deleteItem);
   }
+
   final LyricsListStore _lyricsListStore;
   final ServiceStore _serviceStore;
 
   ServiceStore get serviceStore => _serviceStore;
 
-  _updateServicesCollectionCallback(BuildContext context) {
+  void _updateServicesCollectionCallback(BuildContext context) {
     add(GetDataEvent(context: context));
   }
 
-  _updateCallBack() {
+  void _updateCallBack() {
     _serviceStore.isChanged.value = true;
     popAndPushNamed(AppRoutes.servicesRoute + AppRoutes.serviceRoute);
   }
 
-  Future<void> _getInSupa(event, emit) async {
+  Future<void> _getInSupa(dynamic event, emit) async {
     final response = await isConnected(context: event.context);
     if (response) {
       List<String> pathList = path.split('/');
@@ -65,18 +67,21 @@ class ServicesCollectionBloc
     }
   }
 
-  Future<void> _deleteItem(event, emit) async {
+  Future<void> _deleteItem(dynamic event, emit) async {
     final service = entitiesList[event.index];
     final response = await manageServiceStore.delete(service);
+    popToast(2);
+
     if (response != null) {
       entitiesList.remove(service);
     }
-      showCustomMessageDialog(
-        type: DialogType.success,
-        context: event.context,
-        title: 'Sucesso!',
-        message: 'Música deletada com sucesso.',
-      );
+
+    showCustomMessageDialog(
+      type: DialogType.success,
+      context: event.context,
+      title: 'Sucesso!',
+      message: 'Música deletada com sucesso.',
+    );
     emit(DataFetchedState<ServicesCollectionState>());
   }
 
@@ -91,12 +96,13 @@ class ServicesCollectionBloc
 
   Future<void> addItem() async {
     manageServiceStore.isEditing = false;
-    _serviceStore.updateServicesCollectionCallback = _updateServicesCollectionCallback;
+    _serviceStore.updateServicesCollectionCallback =
+        _updateServicesCollectionCallback;
     manageServiceStore.updateCallbackParam = _updateCallBack;
     pushNamed(AppRoutes.servicesRoute + AppRoutes.manageServicesRoute);
   }
 
-  void _loading(_, emit) async {
+  void _loading(_, dynamic emit) async {
     emit(LoadingState<ServicesCollectionState>());
   }
 
@@ -107,7 +113,8 @@ class ServicesCollectionBloc
     Modular.get<ServiceStore>().servicesEntity = servicesEntityParam;
     Modular.get<ServiceStore>().serviceEntity = serviceEntityParam;
     _lyricsListStore.entitiesList = [];
-    if (serviceEntityParam.lyricsList != null && serviceEntityParam.lyricsList!.isNotEmpty) {
+    if (serviceEntityParam.lyricsList != null &&
+        serviceEntityParam.lyricsList!.isNotEmpty) {
       _lyricsListStore.entitiesList = serviceEntityParam.lyricsList!;
     }
     pushNamed(AppRoutes.servicesRoute + AppRoutes.serviceRoute);
@@ -118,7 +125,8 @@ class ServicesCollectionBloc
 abstract class ServicesCollectionEvent {}
 
 class DeleteItemEvent extends GenericEvent<ServicesCollectionEvent> {
-  DeleteItemEvent({ required this.context, required this.index});
+  DeleteItemEvent({required this.context, required this.index});
+
   final BuildContext context;
   final int index;
 }

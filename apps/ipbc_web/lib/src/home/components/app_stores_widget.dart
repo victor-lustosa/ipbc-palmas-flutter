@@ -37,7 +37,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
     }
   }
 
-  web() => Container(
+  Container web() => Container(
         height: 734,
         width: width,
         decoration: const BoxDecoration(color: AppColors.darkGreen),
@@ -93,7 +93,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         ),
       );
 
-  tablet() => Container(
+  Container tablet() => Container(
         height: 780,
         width: width,
         decoration: const BoxDecoration(color: AppColors.darkGreen),
@@ -148,7 +148,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         ),
       );
 
-  mobile() => Container(
+  Container mobile() => Container(
         height: 780,
         width: width,
         decoration: const BoxDecoration(color: AppColors.darkGreen),
@@ -193,7 +193,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         ),
       );
 
-  title({required double fontSize}) => Text(
+  Text title({required double fontSize}) => Text(
         'Baixe o IPBC App',
         style: AppFonts.defaultFont(
           fontSize: fontSize,
@@ -202,7 +202,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         ),
       );
 
-  subtitle({required TextAlign textAlign}) => Text(
+  Text subtitle({required TextAlign textAlign}) => Text(
         textAlign: textAlign,
         'Acompanhe a liturgia dos cultos, as letras das músicas cantadas e em breve, comunicações, eventos e mensagens pregadas.',
         style: AppFonts.defaultFont(
@@ -211,7 +211,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         ),
       );
 
-  playButton() => StoreButton(
+  StoreButton playButton() => StoreButton(
         iconPath: AppIcons.playIcon,
         labelStore: 'Baixe na PlayStore',
         onPressed: () {
@@ -219,7 +219,7 @@ class _AppStoresWidgetState extends State<AppStoresWidget> with LaunchUrlMixin {
         },
       );
 
-  appButton() => StoreButton(
+  StoreButton appButton() => StoreButton(
         iconPath: AppIcons.appleIcon,
         labelStore: 'Baixe na App Store',
         onPressed: () {

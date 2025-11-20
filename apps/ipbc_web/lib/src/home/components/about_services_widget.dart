@@ -84,7 +84,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
     }
   }
 
-  web() => Container(
+  Container web() => Container(
         decoration: const BoxDecoration(color: AppColors.white),
         child: Column(
           children: [
@@ -116,7 +116,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  tablet() => Container(
+  Container tablet() => Container(
         decoration: const BoxDecoration(color: AppColors.white),
         child: Column(
           children: [
@@ -148,7 +148,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  mobile() => Container(
+  Container mobile() => Container(
         decoration: const BoxDecoration(color: AppColors.white),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -180,7 +180,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  descriptionServices(
+  Container descriptionServices(
           {CrossAxisAlignment? crossAxisAlignment,
           MainAxisAlignment? mainAxisAlignment,
           required double width,
@@ -258,7 +258,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  title({required double fontSize}) => Text(
+  Text title({required double fontSize}) => Text(
         'Programação',
         style: AppFonts.defaultFont(
           fontSize: fontSize,
@@ -267,7 +267,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  horizontalCards() => Container(
+  Container horizontalCards() => Container(
         margin: const EdgeInsets.only(bottom: 80, top: 50),
         child: CarouselWidget(
           shimmerController: widget.shimmerController,
@@ -288,7 +288,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
         ),
       );
 
-  verticalCards() => SingleChildScrollView(
+  SingleChildScrollView verticalCards() => SingleChildScrollView(
         child: SizedBox(
           width: vWidth > 1100 ? 618 : 457,
           height: vWidth > 1100 ? 1350 : 1370,
@@ -314,7 +314,7 @@ class _AboutServicesWidgetState extends State<AboutServicesWidget> {
           ),
         ),
       );
-  Widget placeholder({child, border}) => ShimmerWidget(
+  Widget placeholder({Widget? child, BorderRadiusGeometry? border}) => ShimmerWidget(
     animation: widget.shimmerController,
     child:
     child ??

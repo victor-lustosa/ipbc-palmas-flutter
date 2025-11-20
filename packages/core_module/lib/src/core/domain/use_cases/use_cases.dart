@@ -17,15 +17,15 @@ abstract class IGetUseCases {
 }
 
 abstract class IUpsertUseCases {
-  Future<dynamic> upsert({required data, Map<String, dynamic>? params});
+  Future<dynamic> upsert({required dynamic data, Map<String, dynamic>? params});
 }
 
 abstract class IAddUseCases {
-  Future<dynamic> add({required data, Map<String, dynamic>? params});
+  Future<dynamic> add({required dynamic data, Map<String, dynamic>? params});
 }
 
 abstract class IUpdateUseCases {
-  Future<void> update({required data, Map<String, dynamic>? params});
+  Future<void> update({required dynamic data, Map<String, dynamic>? params});
 }
 
 abstract class IDeleteUseCases {

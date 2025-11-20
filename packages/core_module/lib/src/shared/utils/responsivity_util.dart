@@ -6,20 +6,20 @@ class ResponsivityUtil<T> {
 
   final T? df;
   final T? sm;
-  final T? m;
+  final T? md;
   final T? xl;
 
   const ResponsivityUtil._internal({
     this.df,
     this.sm,
-    this.m,
+    this.md,
     this.xl,
   });
 
   factory ResponsivityUtil({
     dynamic df,
     dynamic sm,
-    dynamic m,
+    dynamic md,
     dynamic xl,
   }) {
     assert(
@@ -31,7 +31,7 @@ class ResponsivityUtil<T> {
       return ResponsivityUtil._internal(
         df: (df as num?)?.toDouble(),
         sm: (sm as num?)?.toDouble(),
-        m: (m as num?)?.toDouble(),
+        md: (md as num?)?.toDouble(),
         xl: (xl as num?)?.toDouble(),
       ) as ResponsivityUtil<T>;
     }
@@ -39,7 +39,7 @@ class ResponsivityUtil<T> {
     return ResponsivityUtil._internal(
       df: df as T?,
       sm: sm as T?,
-      m: m as T?,
+      md: md as T?,
       xl: xl as T?,
     );
   }
@@ -49,7 +49,7 @@ class ResponsivityUtil<T> {
       return df!;
     }
 
-    final T mValue = m ?? sm!;
+    final T mValue = md ?? sm!;
     final T xlValue = xl ?? mValue;
 
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -68,7 +68,7 @@ class ResponsivityUtil<T> {
     return sm!;
   }
 
-  static isSmallDevice(BuildContext context) {
+  static bool isSmallDevice(BuildContext context) {
     double vWidth = context.sizeOf.width;
     return ResponsivityUtil.smallDeviceWidth >= vWidth;
   }

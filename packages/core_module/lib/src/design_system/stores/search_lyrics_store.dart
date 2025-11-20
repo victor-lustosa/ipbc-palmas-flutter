@@ -1,68 +1,31 @@
+//import 'dart:async';
 import 'dart:math';
 
 import 'package:core_module/core_module.dart';
+import 'package:core_module/src/design_system/stores/search_store.dart';
 import 'package:flutter/cupertino.dart';
 
-enum SearchParameters {
-  title(label: 'título', column: 'title'),
-  artist(label: 'artista', column: 'group');
-
-  final String label;
-  final String column;
-
-  const SearchParameters({
-    required this.label,
-    required this.column,
-  });
-}
+import '../../core/overall_states/generic_event_bus.dart';
 
 class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
   SearchLyricsStore({
     required ManageLyricStore manageLyricStore,
     required LyricsListStore lyricsListStore,
-    required IUseCases useCases,
+    required GenericEventBus<GenericState<SearchState>> eventBus,
   }) : _manageLyricStore = manageLyricStore,
        _lyricsListStore = lyricsListStore,
-       _useCases = useCases,
+     //   _eventBus = eventBus,
        super(InitialState());
   final ManageLyricStore _manageLyricStore;
   final LyricsListStore _lyricsListStore;
+ // final GenericEventBus<GenericState<SearchState>> _eventBus;
+ // late final StreamSubscription _subscription;
   late ServicesEntity servicesEntity;
-  final IUseCases _useCases;
-  final TextEditingController _searchController = TextEditingController();
-
-  TextEditingController get searchController => _searchController;
+  final TextEditingController searchController = TextEditingController();
   ManageLyricStore get manageLyricStore => _manageLyricStore;
   LyricsListStore get lyricsListStore => _lyricsListStore;
 
-  bool isSelected = false;
-  int selectedIndex = 0;
-
-  init(){
-    _searchController.text = '';
-  }
-  selectOptions(int index) {
-    selectedIndex = index;
-  }
-
-  void searchLyrics(String valueParam) async {
-    value = LoadingState();
-    List<LyricEntity> lyrics = await _useCases.get(
-      params: {
-        'table': 'lyrics',
-        'orderBy': 'create_at',
-        'likeColumn': SearchParameters.values[selectedIndex].column,
-        'likeValue': valueParam,
-        'ascending': false,
-        'selectFields': 'id, title, group, album_cover, create_at, verses',
-      },
-      converter: LyricAdapter.fromMapList,
-    );
-    _lyricsListStore.entitiesList = lyrics;
-    value = SearchSuccessState();
-  }
-
-  convertTextInLyric(String text) {
+  LyricEntity convertTextInLyric(String text) {
     final List<String> rawVerseBlocks = text.split(RegExp(r'\n\s*\n+'));
 
     final List<VerseEntity> parsedVerseEntities = [];
@@ -112,8 +75,4 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
 @immutable
 abstract class SearchLyricsState {}
 
-class SearchSuccessState extends GenericState<SearchLyricsState> {}
 
-class SearchErrorState extends GenericState<SearchLyricsState> {}
-
-class NotFoundState extends GenericState<SearchLyricsState> {}

@@ -122,7 +122,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     }
   }
 
-  formValidation(String? data, ValueNotifier<bool> isValid) {
+  Null formValidation(String? data, ValueNotifier<bool> isValid) {
     if (isEmptyData(data)) {
       changeValue(isValid, false);
       return null;
@@ -132,14 +132,14 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     }
   }
 
-  changeValue(ValueNotifier<bool> valueNotifier, bool newValue) {
+  void changeValue(ValueNotifier<bool> valueNotifier, bool newValue) {
     Future.delayed(Duration.zero, () async {
       valueNotifier.value = newValue;
       value = UpdateFormFieldState();
     });
   }
 
-  locationValidation(String? data, ValueNotifier<bool> isValid) {
+  Null locationValidation(String? data, ValueNotifier<bool> isValid) {
     if (!isLocationLinkValid(data)) {
       changeValue(isValid, false);
       return null;
@@ -172,7 +172,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     return (isEmptyData(data) || (isValidGoogleMapsLink(data!)));
   }
 
-  fillFormWithEvent(EventEntity event) {
+  void fillFormWithEvent(EventEntity event) {
     eventEntity = event;
     eventTitleController.text = event.title;
     eventSubtitleController.text = event.subtitle;
@@ -264,7 +264,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     return (data == null || data.trim().isEmpty);
   }
 
-  getImage(BuildContext context) async {
+  Future<void> getImage(BuildContext context) async {
     value = LoadingImageState();
     final result = await getGalleryImage(context);
     result.fold((l) {
@@ -426,7 +426,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     return Future.value(response[0]);
   }
 
-  resetValidationFields() {
+  void resetValidationFields() {
     isFormValid.value = true;
     isEventTitleValid.value = true;
     isEventSubtitleValid.value = true;

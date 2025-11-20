@@ -96,12 +96,11 @@ class CreateAccountStore
     value = InitialState<CreateAccountState>();
   }
 
-  formValidation(bool validation, ValueNotifier<bool> isValid) {
+  void formValidation(bool validation, ValueNotifier<bool> isValid) {
     Future.delayed(Duration.zero, () async {
       isValid.value = validation;
       value = UpdateFormFieldState();
     });
-    return null;
   }
 
   void clear() {

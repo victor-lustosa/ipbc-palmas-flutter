@@ -80,7 +80,7 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: widget.valueListenable ?? ValueNotifier(true),
-      builder: (_, value, ___) {
+      builder: (_, value, _) {
         return FormFieldWidget(
           onChanged: widget.onChanged,
           horizontalSymmetric:
@@ -117,19 +117,19 @@ class _TemplateFormWidgetState extends State<TemplateFormWidget> {
     );
   }
 
-  _fieldDecoration({required isValid, Color? color, Color? errorColor}) =>
+  BoxDecoration _fieldDecoration({required bool? isValid, Color? color, Color? errorColor}) =>
       BoxDecoration(
         color: AppColors.white,
         border: Border.all(
           color:
               color ??
-              (isValid ? AppColors.secondaryGrey : errorColor ?? Colors.red),
+              ((isValid ?? true) ? AppColors.secondaryGrey : errorColor ?? Colors.red),
         ),
         borderRadius: BorderRadius.circular(16),
       );
 }
 
-fieldInputDecoration({
+InputDecoration fieldInputDecoration({
   required bool isValid,
   required hintText,
   Widget? suffixIcon,

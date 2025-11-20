@@ -12,7 +12,7 @@ class EventsListBloc
   List<EventEntity> eventsList = [];
   late final SlideCardsStore _slideCardsStore;
   late final CreateEventStore _createEventStore;
-  get slideCardsStore => _slideCardsStore;
+  SlideCardsStore get slideCardsStore => _slideCardsStore;
    CreateEventStore get createEventStore => _createEventStore;
 
   EventsListBloc({
@@ -54,7 +54,7 @@ class EventsListBloc
     }
   }
 
-  Future<void> _loading(_, emit) async {
+  Future<void> _loading(_, dynamic emit) async {
     emit(LoadingState<EventsListState>());
   }
 
@@ -62,8 +62,7 @@ class EventsListBloc
   Future<void> _deleteItem(DeleteItemEvent event, emit) async {
     final eventEntity = eventsList[slideCardsStore.index];
     final response = await _createEventStore.delete(eventEntity, event.context);
-      int count = 0;
-      popUntil((_) => count++ >= _createEventStore.popNumber);
+    popToast(_createEventStore.popNumber);
     if (response != null) {
       eventsList.remove(eventEntity);
     }

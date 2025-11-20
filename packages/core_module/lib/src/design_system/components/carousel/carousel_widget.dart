@@ -249,7 +249,7 @@ class CarouselWidgetState extends State<CarouselWidget> {
           );
   }
 
-  button({required String image, required VoidCallback onPressed}) =>
+  SizedBox button({required String image, required VoidCallback onPressed}) =>
       SizedBox(
     width: 35,
     height: 35,

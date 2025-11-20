@@ -109,7 +109,9 @@ class _OptionsDialogWidgetState extends State<OptionsDialogWidget> {
       width: widget.popupWidth ?? 170,
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.dividerModal.withValues(alpha: .1)),
-        color: widget.isBackgroundSolid ? AppColors.white :  AppColors.dividerModal.withValues(alpha: .1),
+        color: widget.isBackgroundSolid
+            ? AppColors.white
+            : AppColors.dividerModal.withValues(alpha: .1),
         borderRadius: BorderRadius.circular(16),
       ),
       child: widget.buttons,
@@ -161,7 +163,7 @@ class _OptionsDialogWidgetState extends State<OptionsDialogWidget> {
   }
 }
 
-actionButton({
+ButtonWidget actionButton({
   required BuildContext context,
   final Function(bool?)? callback,
   required String icon,

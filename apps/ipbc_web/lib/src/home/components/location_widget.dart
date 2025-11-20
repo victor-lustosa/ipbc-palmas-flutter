@@ -31,7 +31,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
     }
   }
 
-  web() => Container(
+  Container web() => Container(
         width: vWidth,
         margin: const EdgeInsets.only(
           top: 100,
@@ -67,7 +67,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ),
       );
 
-  tablet() => Container(
+  Container tablet() => Container(
         width: vWidth,
         margin: const EdgeInsets.only(
           top: 80,
@@ -84,8 +84,8 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
             Container(
               decoration: imageShadow(),
               child: ClipRRect(
-                child: locationImage(width: 573.26),
                 borderRadius: BorderRadius.circular(20),
+                child: locationImage(width: 573.26),
               ),
             ),
             Container(
@@ -106,7 +106,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ),
       );
 
-  mobile() => Container(
+  Container mobile() => Container(
         width: vWidth,
         margin: const EdgeInsets.only(
           top: 60,
@@ -124,8 +124,8 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
               margin: const EdgeInsets.symmetric(horizontal: 24),
               decoration: imageShadow(),
               child: ClipRRect(
-                child: locationImage(),
                 borderRadius: BorderRadius.circular(20),
+                child: locationImage(),
               ),
             ),
             Container(
@@ -148,13 +148,13 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ),
       );
 
-  locationImage({double? width}) => Image(
+  Image locationImage({double? width}) => Image(
         width: width,
         fit: BoxFit.cover,
         image: const AssetImage(AppImages.churchLocation),
       );
 
-  title({required double fontSize}) => Container(
+  Container title({required double fontSize}) => Container(
         margin: const EdgeInsets.only(bottom: 24),
         child: Text(
           'Localização',
@@ -166,7 +166,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ),
       );
 
-  subtitle({required TextAlign textAlign, double? width}) => Container(
+  Container subtitle({required TextAlign textAlign, double? width}) => Container(
         width: width,
         margin: const EdgeInsets.only(bottom: 24),
         child: Text(
@@ -179,7 +179,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ),
       );
 
-  address({double? width}) => SizedBox(
+  SizedBox address({double? width}) => SizedBox(
         width: width,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,7 +205,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ),
       );
 
-  imageShadow() => BoxDecoration(
+  BoxDecoration imageShadow() => BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         boxShadow: const [
           BoxShadow(
@@ -217,7 +217,7 @@ class _LocationWidgetState extends State<LocationWidget> with LaunchUrlMixin {
         ],
       );
 
-  locationButton({required double size}) => Container(
+  Container locationButton({required double size}) => Container(
         margin: const EdgeInsets.only(top: 40),
         child: ButtonWidget(
           adaptiveButtonType: AdaptiveButtonType.outlined,

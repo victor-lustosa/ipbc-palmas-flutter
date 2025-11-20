@@ -51,7 +51,7 @@ class CardOffer extends StatelessWidget {
     );
   }
 
-  withPrice() => RichText(
+  RichText withPrice() => RichText(
         textAlign: TextAlign.start,
         text: TextSpan(
           style: AppFonts.defaultFont(
@@ -76,7 +76,7 @@ class CardOffer extends StatelessWidget {
           ],
         ),
       );
-  withoutPrice() => Text(
+  Text withoutPrice() => Text(
         softWrap: true,
         description!,
         style: AppFonts.defaultFont(

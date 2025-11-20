@@ -97,7 +97,7 @@ mixin DateMixin {
     return TimeOfDay(hour: hour, minute: minute);
   }
 
-  initDate({
+  void initDate({
     TimeOfDay? startTimeParam,
     TimeOfDay? endTimeParam,
     DateTime? startDateParam,
