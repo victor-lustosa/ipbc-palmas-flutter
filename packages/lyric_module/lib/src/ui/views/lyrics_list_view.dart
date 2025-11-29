@@ -26,6 +26,10 @@ class _LyricsListViewState extends State<LyricsListView>
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
@@ -71,9 +75,8 @@ class _LyricsListViewState extends State<LyricsListView>
                             child: const Text('Paginação')),*/
                         Visibility(
                           visible:
-                              _bloc.entitiesList.isNotEmpty,
+                              _bloc.lyricsListStore.entitiesList.isNotEmpty,
                           child: LyricsListWidget(
-                            entitiesList: _bloc.entitiesList,
                             title: "Adicionados recentemente",
                             onLongPressStart: (details) async {
                               await showOptionsDialog(

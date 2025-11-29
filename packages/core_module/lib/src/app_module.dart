@@ -72,6 +72,7 @@ class CoreModule extends Module {
     );
     i.add<SearchLyricsStore>(
       () => SearchLyricsStore(
+        searchStore: i.get<SearchStore>(),
         eventBus: i.get<GenericEventBus<GenericState<SearchState>>>(),
         lyricsListStore: i.get<LyricsListStore>(),
         manageLyricStore: i.get<ManageLyricStore>(),

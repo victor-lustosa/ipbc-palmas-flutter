@@ -20,23 +20,6 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     on<FilterEvent<LyricEvent, LyricEntity>>(_filter);
     on<LoadingEvent<LyricEvent>>(_loading);
     on<GetPaginationEvent<LyricEvent, LyricEntity>>(_getPaginationInSupa);
-    _subscription = _eventBus.stream.listen((state) {
-      if (state.id != viewHashCode) {
-        return;
-      }
-      if (state is LoadingState) {
-      }
-
-      if (state is NotFoundState) {
-      }
-
-      if (state is DataFetchedState<SearchState>) {
-        if (state.entities != null && state.entities!.isNotEmpty) {
-          entitiesList = state.entities! as List<LyricEntity>;
-          emit(DataFetchedState<LyricState>());
-        }
-      }});
-
   }
   List<LyricEntity> entitiesList = [];
   BuildContext? _currentContext;
@@ -44,7 +27,6 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
   final GenericEventBus<GenericState<SearchState>> _eventBus;
-  late final StreamSubscription _subscription;
   bool isSelected = false;
 
   String selectedValue = '';
@@ -91,7 +73,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
         params: lyricParams,
         converter: LyricAdapter.fromMapList,
       );
-      entitiesList = lyricsList;
+      _lyricsListStore.entitiesList = lyricsList;
       if (emit.isDone) return;
       emit(DataFetchedState<LyricState>());
     } else {
@@ -160,9 +142,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
       popToast(2);
     }
   }
-  void dispose() {
-    _subscription.cancel();
-  }
+
 }
 
 @immutable

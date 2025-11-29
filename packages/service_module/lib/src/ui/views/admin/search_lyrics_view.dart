@@ -18,7 +18,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
   void initState() {
     super.initState();
     _store = Modular.get<SearchLyricsStore>();
-    _store.viewHashCode = hashCode;
+    _store.init(hashCode);
   }
 
   @override

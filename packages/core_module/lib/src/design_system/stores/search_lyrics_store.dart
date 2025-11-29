@@ -8,9 +8,11 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
   SearchLyricsStore({
     required ManageLyricStore manageLyricStore,
     required LyricsListStore lyricsListStore,
+    required SearchStore searchStore,
     required GenericEventBus<GenericState<SearchState>> eventBus,
   }) : _manageLyricStore = manageLyricStore,
        _lyricsListStore = lyricsListStore,
+        _searchStore = searchStore,
        _eventBus = eventBus,
        super(InitialState()) {
     _subscription = _eventBus.stream.listen((state) {
@@ -27,6 +29,7 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
 
   final ManageLyricStore _manageLyricStore;
   final LyricsListStore _lyricsListStore;
+  final SearchStore _searchStore;
   final GenericEventBus<GenericState<SearchState>> _eventBus;
   late final StreamSubscription _subscription;
   late ServicesEntity servicesEntity;
@@ -37,9 +40,16 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
   LyricsListStore get lyricsListStore => _lyricsListStore;
   ValueNotifier<bool> isAddEventPressed = ValueNotifier(false);
 
+  void init(int hashCode){
+    _lyricsListStore.entitiesList = [];
+    _searchStore.limit = 10;
+    viewHashCode = hashCode;
+  }
+
   @override
   dispose() {
     _subscription.cancel();
+    _searchStore.limit = 0;
     super.dispose();
   }
 

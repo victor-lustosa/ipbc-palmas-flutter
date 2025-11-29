@@ -33,10 +33,7 @@ class _SearchWidgetState extends State<SearchWidget> {
               child: SearchBarWidget(
                 controller: _store.searchController,
                 onChange: (value) {
-                  _store.searchField = value;
-                  if (value.isNotEmpty) {
-                    _store.searchLyrics();
-                  }
+                    _store.searchLyrics(value);
                 },
               ),
             ),

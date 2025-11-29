@@ -24,9 +24,9 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
   final GenericEventBus<GenericState<SearchState>> _eventBus;
 
   final TextEditingController searchController = TextEditingController();
-  String searchField = '';
   bool isSelected = false;
   int selectedIndex = 0;
+  int limit = 0;
 
   void init(int storeId) {
     searchController.text = '';
@@ -37,7 +37,7 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
     selectedIndex = index;
   }
 
-  void searchLyrics() async {
+  void searchLyrics(String searchField) async {
     _eventBus.emit(LoadingState<SearchState>(id: _currentStoreId));
     List<LyricEntity> lyrics = await _useCases.get(
       params: {
@@ -47,6 +47,7 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
         'likeValue': searchField,
         'ascending': false,
         'selectFields': 'id, title, group, album_cover, create_at, verses',
+        if(limit > 0) 'limit': limit
       },
       converter: LyricAdapter.fromMapList,
     );
