@@ -82,6 +82,7 @@ export 'src/services/components/stores/service_store.dart';
 export 'src/design_system/stores/search_lyrics_store.dart';
 export 'src/lyrics/components/stores/lyrics_list_store.dart';
 export 'src/design_system/stores/slide_cards_store.dart';
+export 'src/design_system/stores/search_store.dart';
 
 export 'src/core/domain/use_cases/use_cases.dart';
 export 'src/lyrics/domain/entities/lyric_entity.dart';
@@ -116,6 +117,7 @@ export 'src/shared/mixins/connectivity_mixin.dart';
 export 'src/shared/mixins/device_info_mixin.dart';
 export 'src/shared/mixins/image_mixin.dart';
 export 'src/core/overall_states/generics.dart';
+export 'src/core/overall_states/generic_event_bus.dart';
 export 'src/shared/utils/supa_services_util.dart';
 export 'src/shared/utils/responsivity_util.dart';
 export 'src/shared/utils/analytics_util.dart';

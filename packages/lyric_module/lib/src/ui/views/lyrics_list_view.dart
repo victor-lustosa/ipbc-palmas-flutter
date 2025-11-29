@@ -21,6 +21,7 @@ class _LyricsListViewState extends State<LyricsListView>
     _bloc = Modular.get<LyricBloc>();
     WidgetsBinding.instance.addPostFrameCallback((frameCallback) {
       _bloc.init(context: context);
+      _bloc.viewHashCode = hashCode;
     });
   }
 
@@ -57,7 +58,7 @@ class _LyricsListViewState extends State<LyricsListView>
                         const TitleTopBarWidget(title: "Músicas"),
                         Container(
                           margin: const EdgeInsets.only(top: 37),
-                          child: SearchWidget(),
+                          child: SearchWidget(storeId: _bloc.viewHashCode,),
                         ),
 
                         /*Text(state.entities.length.toString()),
@@ -70,8 +71,9 @@ class _LyricsListViewState extends State<LyricsListView>
                             child: const Text('Paginação')),*/
                         Visibility(
                           visible:
-                              _bloc.lyricsListStore.entitiesList.isNotEmpty,
+                              _bloc.entitiesList.isNotEmpty,
                           child: LyricsListWidget(
+                            entitiesList: _bloc.entitiesList,
                             title: "Adicionados recentemente",
                             onLongPressStart: (details) async {
                               await showOptionsDialog(

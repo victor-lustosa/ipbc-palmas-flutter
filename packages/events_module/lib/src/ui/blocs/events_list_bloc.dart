@@ -30,7 +30,7 @@ class EventsListBloc
   }
 
   Future<void> _getInSupa(GetDataEvent event, emit) async {
-    final response = await isConnected(context: event.context);
+    final response = await isConnected(context: event.context!);
     if (response) {
       Future.delayed(Duration.zero, () {
         if (emit.isDone) return;

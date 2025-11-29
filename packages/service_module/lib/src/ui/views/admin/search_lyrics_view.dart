@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import '../../components/dialogs/admin/add_lyrics_dialog_widget.dart';
 
 class SearchLyricsView extends StatefulWidget {
-  const SearchLyricsView({super.key});
-
+  const SearchLyricsView({super.key, required this.servicesEntity});
+  final ServicesEntity servicesEntity;
   @override
   State<SearchLyricsView> createState() => _SearchLyricsViewState();
 }
@@ -18,6 +18,13 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
   void initState() {
     super.initState();
     _store = Modular.get<SearchLyricsStore>();
+    _store.viewHashCode = hashCode;
+  }
+
+  @override
+  void dispose() {
+    _store.dispose();
+    super.dispose();
   }
 
   @override
@@ -41,7 +48,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ServiceTopBarWidget(
-                          image: _store.servicesEntity.image,
+                          image: widget.servicesEntity.image,
                           title: "Voltar para liturgia",
                         ),
                         Container(
@@ -59,7 +66,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                             ),
                           ),
                         ),
-                        SearchWidget(),
+                        SearchWidget(storeId: hashCode,),
                         Container(
                           margin: const EdgeInsets.only(top: 14),
                           child: LyricsListWidget(

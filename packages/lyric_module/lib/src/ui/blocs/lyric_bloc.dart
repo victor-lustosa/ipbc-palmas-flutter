@@ -10,19 +10,41 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     required this.onlineUseCases,
     this.offlineUseCases,
     required LyricsListStore lyricsListStore,
+    required GenericEventBus<GenericState<SearchState>> eventBus,
     required ManageLyricStore manageLyricStore,
   }) : _lyricsListStore = lyricsListStore,
        _manageLyricStore = manageLyricStore,
+        _eventBus = eventBus,
        super(LoadingState<LyricState>()) {
     on<GetDataEvent<LyricEvent>>(_getInSupa);
     on<FilterEvent<LyricEvent, LyricEntity>>(_filter);
     on<LoadingEvent<LyricEvent>>(_loading);
     on<GetPaginationEvent<LyricEvent, LyricEntity>>(_getPaginationInSupa);
-  }
+    _subscription = _eventBus.stream.listen((state) {
+      if (state.id != viewHashCode) {
+        return;
+      }
+      if (state is LoadingState) {
+      }
 
+      if (state is NotFoundState) {
+      }
+
+      if (state is DataFetchedState<SearchState>) {
+        if (state.entities != null && state.entities!.isNotEmpty) {
+          entitiesList = state.entities! as List<LyricEntity>;
+          emit(DataFetchedState<LyricState>());
+        }
+      }});
+
+  }
+  List<LyricEntity> entitiesList = [];
+  BuildContext? _currentContext;
+  int viewHashCode = 0;
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
-
+  final GenericEventBus<GenericState<SearchState>> _eventBus;
+  late final StreamSubscription _subscription;
   bool isSelected = false;
 
   String selectedValue = '';
@@ -46,6 +68,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   };
 
   Future<void> init({required BuildContext context}) async {
+    _currentContext = context;
     add(GetDataEvent<LyricEvent>(context: context));
     _manageLyricStore.buttonCallback = () {
       add(GetDataEvent<LyricEvent>(context: context));
@@ -61,13 +84,14 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   }
 
   Future<void> _getInSupa(GetDataEvent<LyricEvent> event, emit) async {
+    _currentContext = event.context;
     final response = await isConnected(context: event.context);
     if (response) {
       final lyricsList = await onlineUseCases.get(
         params: lyricParams,
         converter: LyricAdapter.fromMapList,
       );
-      _lyricsListStore.entitiesList = lyricsList;
+      entitiesList = lyricsList;
       if (emit.isDone) return;
       emit(DataFetchedState<LyricState>());
     } else {
@@ -79,6 +103,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     GetPaginationEvent<LyricEvent, LyricEntity> event,
     emit,
   ) async {
+
     List<LyricEntity> lyricsListAux = [];
     int offset = _lyricsListStore.entitiesList.length;
     final Map<String, Object> paginationParams = {
@@ -134,6 +159,9 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
       });
       popToast(2);
     }
+  }
+  void dispose() {
+    _subscription.cancel();
   }
 }
 

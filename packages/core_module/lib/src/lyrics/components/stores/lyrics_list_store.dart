@@ -3,9 +3,6 @@ import 'dart:async';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../core/overall_states/generic_event_bus.dart';
-import '../../../design_system/stores/search_store.dart';
-
 class LyricsListStore extends ValueNotifier<GenericState<LyricsListState>> {
   final GenericEventBus<GenericState<SearchState>> _eventBus;
   late final StreamSubscription _subscription;
