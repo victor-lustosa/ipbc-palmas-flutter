@@ -19,7 +19,8 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
       if (state.id != viewHashCode) {
         return;
       }
-      if (state is LoadingState) {}
+      if (state is LoadingState) {
+      }
 
       if (state is NotFoundState) {}
 

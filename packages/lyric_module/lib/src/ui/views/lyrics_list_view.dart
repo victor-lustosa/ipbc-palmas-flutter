@@ -26,10 +26,6 @@ class _LyricsListViewState extends State<LyricsListView>
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-  @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,

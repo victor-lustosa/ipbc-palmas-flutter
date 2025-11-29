@@ -23,6 +23,7 @@ class LyricsListStore extends ValueNotifier<GenericState<LyricsListState>> {
       }
 
       if (state is LoadingState) {
+        tappedIndex.value = null;
         value = LoadingState();
       }
 

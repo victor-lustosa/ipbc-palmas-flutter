@@ -137,7 +137,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                                   ? AppColors.white
                                   : AppColors.darkGreen,
                               action: value != null
-                                  ? () {}
+                                  ? () async {}
                                   : () async {
                                       showAddLyricsDialog(
                                         context: context,
