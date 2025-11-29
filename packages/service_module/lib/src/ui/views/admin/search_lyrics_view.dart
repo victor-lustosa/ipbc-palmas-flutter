@@ -63,6 +63,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                         Container(
                           margin: const EdgeInsets.only(top: 14),
                           child: LyricsListWidget(
+                            title: "Resultados encontrados",
                             onTap: () async{
                               FocusScope.of(context).unfocus();
                               await Future.delayed(Duration.zero);

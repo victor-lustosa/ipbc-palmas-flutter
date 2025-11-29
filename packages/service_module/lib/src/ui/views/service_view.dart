@@ -157,6 +157,7 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                                         visible: lyricsList
                                             .isNotEmpty,
                                         child: LyricsListWidget(
+                                          isTitleVisible: false,
                                           onLongPressStart: (details) async {
                                             await showOptionsDialog(
                                               context: context,
