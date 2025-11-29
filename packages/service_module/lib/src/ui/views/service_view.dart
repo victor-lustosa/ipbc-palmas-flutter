@@ -134,12 +134,11 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                               child: ValueListenableBuilder(
                                 valueListenable: _store.manageLyricStore,
                                 builder: (context, state, child) {
-                                 List<LyricEntity> lyricsList = _store.lyricsListStore.entitiesList;
                                   return Column(
                                     children: [
                                       Visibility(
                                         visible:
-                                        lyricsList
+                                        _store.entitiesList
                                             .isEmpty &&
                                             _store.isAdmin.value,
                                         child: SizedBox(
@@ -154,9 +153,10 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                                         ),
                                       ),
                                       Visibility(
-                                        visible: lyricsList
-                                            .isNotEmpty,
+                                        visible: _store.entitiesList.isNotEmpty,
                                         child: LyricsListWidget(
+                                          entitiesList: _store.entitiesList,
+                                          isTitleVisible: false,
                                           onLongPressStart: (details) async {
                                             await showOptionsDialog(
                                               context: context,

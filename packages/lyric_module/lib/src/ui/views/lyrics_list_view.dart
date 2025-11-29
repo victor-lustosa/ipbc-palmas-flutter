@@ -21,6 +21,7 @@ class _LyricsListViewState extends State<LyricsListView>
     _bloc = Modular.get<LyricBloc>();
     WidgetsBinding.instance.addPostFrameCallback((frameCallback) {
       _bloc.init(context: context);
+      _bloc.viewHashCode = hashCode;
     });
   }
 
@@ -55,7 +56,11 @@ class _LyricsListViewState extends State<LyricsListView>
                     child: Column(
                       children: [
                         const TitleTopBarWidget(title: "Músicas"),
-                       SearchWidget(),
+                        Container(
+                          margin: const EdgeInsets.only(top: 37),
+                          child: SearchWidget(storeId: _bloc.viewHashCode,),
+                        ),
+
                         /*Text(state.entities.length.toString()),
                         ElevatedButton(
                             onPressed: () {
@@ -64,148 +69,68 @@ class _LyricsListViewState extends State<LyricsListView>
                               );
                             },
                             child: const Text('Paginação')),*/
-                        /*Container(
-                          margin: const EdgeInsets.only(top: 30, bottom: 13),
-                          child: SearchBarWidget(
-                            controller: _bloc.controller,
-                            onChange: (value) {
-                              bool writing = value.length > 1;
-                              _bloc.add(
-                                FilterEvent<LyricEvent, LyricEntity>(
-                                  _bloc.controller.text,
-                                  writing,
-                                  _bloc.selectedIndex == 0
-                                      ? TitleFilter()
-                                      : ArtistFilter(),
-                                  // FilterFactory<LyricEvent,List<LyricEntity>>(index: selectedIndex),
-                                  _bloc.selectedIndex,
+                        Visibility(
+                          visible:
+                              _bloc.lyricsListStore.entitiesList.isNotEmpty,
+                          child: LyricsListWidget(
+                            title: "Adicionados recentemente",
+                            onLongPressStart: (details) async {
+                              await showOptionsDialog(
+                                context: context,
+                                itemKey: _bloc.lyricsListStore.itemKey,
+                                popupHeightParam: 110,
+                                popupWidthParam: 160,
+                                popupWidthPositionParam: 160,
+                                verticalMarginParam: 3,
+                                buttons: Column(
+                                  children: [
+                                    actionButton(
+                                      context: context,
+                                      top: 12,
+                                      bottom: 12,
+                                      icon: AppIcons.edit,
+                                      label: 'Editar',
+                                      action: () {
+                                        _bloc.editLyric(context);
+                                      },
+                                    ),
+                                    Divider(
+                                      height: 1,
+                                      color: AppColors.dividerModal.withValues(
+                                        alpha: .3,
+                                      ),
+                                    ),
+                                    actionButton(
+                                      context: context,
+                                      top: 12,
+                                      bottom: 12,
+                                      icon: AppIcons.trash,
+                                      label: 'Deletar',
+                                      action: () async {
+                                        await showConfirmationDialog(
+                                          confirmAction: () async {
+                                            _bloc.deleteLyric(context: context);
+                                          },
+                                          title: "Deletar Letra",
+                                          message:
+                                              "A letra será deletada permanentemente. Tem certeza?",
+                                          context: context,
+                                        );
+                                      },
+                                    ),
+                                  ],
                                 ),
                               );
+                              _bloc.lyricsListStore.tappedIndex.value = null;
                             },
-                            action: () {
-                              // _bloc.add(
-                              //     FilterEvent(controller.text, selectedIndex));
+                            onTap: () {
+                              pushNamed(
+                                AppRoutes.lyricsRoute + AppRoutes.lyricRoute,
+                                arguments: _bloc.lyricsListStore.lyricEntity,
+                              );
                             },
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 21.5),
-                          child: OwnChoiceChipsWidget(
-                            options: SearchParameters.values,
-                            action: _bloc.selectOptions,
-                          ),
-                        ),*/
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            _bloc.lyricsListStore.entitiesList.isEmpty
-                                ? Container(
-                                    margin: const EdgeInsets.only(top: 150),
-                                    child: SizedBox(
-                                      width: context.sizeOf.width,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            width: 26,
-                                            height: 26,
-                                            child: Image.asset(
-                                              AppIcons.info,
-                                              color: Colors.blueAccent,
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(top: 8),
-                                            width: context.sizeOf.width * .6,
-                                            child: Text(
-                                              textAlign: TextAlign.center,
-                                              style: AppFonts.defaultFont(
-                                                fontSize: 13,
-                                                color: AppColors.grey9,
-                                              ),
-                                              'Nenhuma música cadastrada foi encontrada.',
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                : Container(
-                                    margin: const EdgeInsets.only(
-                                      top: 24,
-                                      left: 17,
-                                    ),
-                                    child: Text(
-                                      "Adicionados recentemente",
-                                      style: AppFonts.defaultFont(
-                                        color: AppColors.grey12,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 17,
-                                      ),
-                                    ),
-                                  ),
-                          ],
-                        ),
-                    Visibility(
-                      visible: _bloc.lyricsListStore.entitiesList.isNotEmpty,
-                      child: LyricsListWidget(
-                        onLongPressStart: (details) async {
-                          await showOptionsDialog(
-                            context: context,
-                            itemKey: _bloc.lyricsListStore.itemKey,
-                            popupHeightParam: 110,
-                            popupWidthParam: 160,
-                            popupWidthPositionParam: 160,
-                            verticalMarginParam: 3,
-                            buttons: Column(
-                              children: [
-                                actionButton(
-                                  context: context,
-                                  top: 12,
-                                  bottom: 12,
-                                  icon: AppIcons.edit,
-                                  label: 'Editar',
-                                  action: () {
-                                    _bloc.editLyric(context);
-                                  },
-                                ),
-                                Divider(
-                                  height: 1,
-                                  color: AppColors.dividerModal
-                                      .withValues(alpha: .3),
-                                ),
-                                actionButton(
-                                  context: context,
-                                  top: 12,
-                                  bottom: 12,
-                                  icon: AppIcons.trash,
-                                  label: 'Deletar',
-                                  action: () async {
-                                    await showConfirmationDialog(
-                                    confirmAction: () async {
-                                      _bloc.deleteLyric(context: context);
-                                    },
-                                    title: "Deletar Letra",
-                                    message: "A letra será deletada permanentemente. Tem certeza?",
-                                    context: context,);
-                                  },
-                                ),
-                              ],
-                            ),
-                          );
-                          _bloc.lyricsListStore.tappedIndex.value = null;
-                        },
-                        onTap: () {
-                          pushNamed(
-                            AppRoutes.lyricsRoute +
-                                AppRoutes.lyricRoute,
-                            arguments:
-                            _bloc.lyricsListStore.lyricEntity,
-                          );
-                        },
-                       ),
-                      ),
                       ],
                     ),
                   ),

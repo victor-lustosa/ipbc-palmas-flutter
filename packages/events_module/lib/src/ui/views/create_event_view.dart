@@ -19,7 +19,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
   void initState() {
     super.initState();
     _store = Modular.get<CreateEventStore>();
-      _store.init();
+    _store.init();
 
   }
   @override
@@ -102,7 +102,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                       ),
                                     ),
                                     child: InkWell(
-                                      onTap: () async => await _store.getImage(),
+                                      onTap: _store.isAddEventPressed.value ? (){} : () async => await _store.getImage(context),
                                       child:
                                           state is FetchedImageState ||
                                               (state is UpdateFormFieldState &&
@@ -301,6 +301,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                     ],
                                   ),
                                   SwitchButtonWidget(
+                                    isSubmitted: _store.isAddEventPressed,
                                     value: _store.isSwitchOn,
                                     onChanged: (bool newValue) {
                                       setState(() {
@@ -330,7 +331,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                         ),
                                       ),
                                       InkWell(
-                                        onTap: () => setDateTime(
+                                        onTap: _store.isAddEventPressed.value ? (){} : () => setDateTime(
                                           selectedDate: _store.startDate!,
                                           onDatePicked: (newDate) {
                                             setState(() {
@@ -353,7 +354,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                   Visibility(
                                     visible: ((!_store.isSwitchOn)),
                                     child: InkWell(
-                                      onTap: () => _store.pickTime(
+                                      onTap: _store.isAddEventPressed.value ? (){} : () => _store.pickTime(
                                         selectedTime: _store.startTime!,
                                         context: context,
                                         onTimePicked: (newTime) {
@@ -392,7 +393,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                         ),
                                       ),
                                       InkWell(
-                                        onTap: () => setDateTime(
+                                        onTap: _store.isAddEventPressed.value ? (){} :() => setDateTime(
                                           selectedDate: _store.endDate!,
                                           onDatePicked: (newDate) {
                                             setState(() {
@@ -416,7 +417,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                   Visibility(
                                     visible: ((!_store.isSwitchOn)),
                                     child: InkWell(
-                                      onTap: () => _store.pickTime(
+                                      onTap: _store.isAddEventPressed.value ? (){} : () => _store.pickTime(
                                         selectedTime: _store.endTime!,
                                         context: context,
                                         onTimePicked: (newTime) {

@@ -1,29 +1,58 @@
-//import 'dart:async';
+import 'dart:async';
 import 'dart:math';
 
 import 'package:core_module/core_module.dart';
-import 'package:core_module/src/design_system/stores/search_store.dart';
 import 'package:flutter/cupertino.dart';
-
-import '../../core/overall_states/generic_event_bus.dart';
 
 class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
   SearchLyricsStore({
     required ManageLyricStore manageLyricStore,
     required LyricsListStore lyricsListStore,
+    required SearchStore searchStore,
     required GenericEventBus<GenericState<SearchState>> eventBus,
   }) : _manageLyricStore = manageLyricStore,
        _lyricsListStore = lyricsListStore,
-     //   _eventBus = eventBus,
-       super(InitialState());
+        _searchStore = searchStore,
+       _eventBus = eventBus,
+       super(InitialState()) {
+    _subscription = _eventBus.stream.listen((state) {
+      if (state.id != viewHashCode) {
+        return;
+      }
+      if (state is LoadingState) {
+      }
+
+      if (state is NotFoundState) {}
+
+      if (state is DataFetchedState<SearchState>) {}
+    });
+  }
+
   final ManageLyricStore _manageLyricStore;
   final LyricsListStore _lyricsListStore;
- // final GenericEventBus<GenericState<SearchState>> _eventBus;
- // late final StreamSubscription _subscription;
+  final SearchStore _searchStore;
+  final GenericEventBus<GenericState<SearchState>> _eventBus;
+  late final StreamSubscription _subscription;
   late ServicesEntity servicesEntity;
   final TextEditingController searchController = TextEditingController();
+  int viewHashCode = 0;
   ManageLyricStore get manageLyricStore => _manageLyricStore;
+
   LyricsListStore get lyricsListStore => _lyricsListStore;
+  ValueNotifier<bool> isAddEventPressed = ValueNotifier(false);
+
+  void init(int hashCode){
+    _lyricsListStore.entitiesList = [];
+    _searchStore.limit = 10;
+    viewHashCode = hashCode;
+  }
+
+  @override
+  dispose() {
+    _subscription.cancel();
+    _searchStore.limit = 0;
+    super.dispose();
+  }
 
   LyricEntity convertTextInLyric(String text) {
     final List<String> rawVerseBlocks = text.split(RegExp(r'\n\s*\n+'));
@@ -74,5 +103,3 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
 
 @immutable
 abstract class SearchLyricsState {}
-
-

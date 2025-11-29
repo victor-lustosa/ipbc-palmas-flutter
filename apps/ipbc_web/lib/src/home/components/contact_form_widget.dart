@@ -16,15 +16,15 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
   bool isBrowserDevice = false;
 
   @override
-   initState() {
+  initState() {
     super.initState();
     viewModel = Modular.get<HomeViewModel>();
     getBrowserType();
   }
 
   Future<void> getBrowserType() async {
-      isBrowserDevice = await isBrowserOnDevice();
-      viewModel.value = UpdateFormFieldState();
+    isBrowserDevice = await isBrowserOnDevice();
+    viewModel.value = UpdateFormFieldState();
   }
 
   @override
@@ -248,11 +248,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
       border: InputBorder.none,
       contentPadding:
           contentPadding ??
-          EdgeInsets.only(
-            left: 10,
-            right: 10,
-            top: isBrowserDevice ? 8 : 12,
-          ),
+          EdgeInsets.only(left: 10, right: 10, top: isBrowserDevice ? 8 : 12),
       counterStyle: AppFonts.defaultFont(
         fontSize: 10,
         color: isValid ? const Color(0xff979797) : AppColors.delete,
@@ -289,6 +285,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
       foregroundColor: viewModel.isSubmitted.value
           ? AppColors.grey12
           : AppColors.white,
+      style: AppFonts.defaultFont(fontWeight: FontWeight.w500),
       action: () {
         viewModel.submit(context);
       },

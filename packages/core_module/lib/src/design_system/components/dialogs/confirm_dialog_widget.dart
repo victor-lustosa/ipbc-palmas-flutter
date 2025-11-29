@@ -125,7 +125,6 @@ class _ConfirmDialogWidgetState extends State<ConfirmDialogWidget> {
                                   'Cancelar',
                                   style: AppFonts.defaultFont(
                                     color: AppColors.grey10,
-                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ),
@@ -142,7 +141,6 @@ class _ConfirmDialogWidgetState extends State<ConfirmDialogWidget> {
                                   'Deletar',
                                   style: TextStyle(
                                     color: AppColors.cancelDeleteModal,
-                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ),

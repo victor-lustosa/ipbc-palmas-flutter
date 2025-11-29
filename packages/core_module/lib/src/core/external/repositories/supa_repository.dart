@@ -46,7 +46,7 @@ class SupabaseRepository implements IRepository {
     required data,
     Map<String, dynamic>? params,
   }) async {
-    dynamic query = _supaClient.from(params?['table']).upsert(data);
+    dynamic query  = _supaClient.from(params?['table']).upsert(data);
 
     if (params?['selectFields'] != null) {
       query = query.select(params?['selectFields'] ?? '*');

@@ -5,18 +5,16 @@ class ServiceStore extends ValueNotifier<GenericState<ServiceState>> {
   ServiceStore({
     required ManageLyricStore manageLyricStore,
     required LyricsListStore lyricsListStore,
-    required SearchLyricsStore searchLyricsStore,
     required ManageServiceStore manageServiceStore,
   }) : _manageLyricStore = manageLyricStore,
        _lyricsListStore = lyricsListStore,
-       _searchLyricsStore = searchLyricsStore,
        _manageServiceStore = manageServiceStore,
        super(InitialState());
 
   final ManageLyricStore _manageLyricStore;
-  final SearchLyricsStore _searchLyricsStore;
   final LyricsListStore _lyricsListStore;
   final ManageServiceStore _manageServiceStore;
+  List<LyricEntity> entitiesList = [];
   Function? updateServicesCollectionCallback;
   ValueNotifier<bool> isChanged = ValueNotifier(false);
 
@@ -46,8 +44,7 @@ class ServiceStore extends ValueNotifier<GenericState<ServiceState>> {
 
   void addLyric() {
     manageLyricStore.serviceId = serviceEntity.id!;
-    _searchLyricsStore.servicesEntity = servicesEntity;
-    pushNamed(AppRoutes.servicesRoute + AppRoutes.searchLyricsRoute);
+    pushNamed(AppRoutes.servicesRoute + AppRoutes.searchLyricsRoute, arguments: servicesEntity);
   }
 
   void editLyric(BuildContext context) {

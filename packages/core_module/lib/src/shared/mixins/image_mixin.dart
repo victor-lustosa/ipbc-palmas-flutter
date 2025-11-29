@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import '../../../core_module.dart';
+
 mixin ImageMixin {
-  Future<File?> getGalleryImage() async {
-    final int maxSizeInBytes = 4 * 1024 * 1024; // 4MB em bytes
+  Future<Either<File?,void >> getGalleryImage(BuildContext context) async {
+    final int maxSizeInBytes = 1 * 1024 * 1024; // 4MB em bytes
     File? imageFile;
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -15,9 +18,20 @@ mixin ImageMixin {
       int fileSize = await imageFile.length();
 
       if (fileSize > maxSizeInBytes) {
-        throw Exception("A imagem deve ter no máximo 4MB.");
+        if (context.mounted) {
+          showCustomMessageDialog(
+            type: DialogType.error,
+            context: context,
+            title: 'Erro',
+            duration: const Duration(milliseconds: 2000),
+            message:
+            'A imagem deve ter no máximo 4MB.',
+          );
+        }
+
+        return Right(null);
       }
     }
-    return imageFile;
+    return Left(imageFile);
   }
 }

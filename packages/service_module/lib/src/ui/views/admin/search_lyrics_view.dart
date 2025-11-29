@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import '../../components/dialogs/admin/add_lyrics_dialog_widget.dart';
 
 class SearchLyricsView extends StatefulWidget {
-  const SearchLyricsView({super.key});
+  const SearchLyricsView({super.key, required this.servicesEntity});
+
+  final ServicesEntity servicesEntity;
 
   @override
   State<SearchLyricsView> createState() => _SearchLyricsViewState();
@@ -18,6 +20,13 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
   void initState() {
     super.initState();
     _store = Modular.get<SearchLyricsStore>();
+    _store.init(hashCode);
+  }
+
+  @override
+  void dispose() {
+    _store.dispose();
+    super.dispose();
   }
 
   @override
@@ -30,63 +39,127 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
             behavior: HitTestBehavior.opaque,
             onTap: () {
               FocusScope.of(context).unfocus();
+              _store.lyricsListStore.tappedIndex.value = null;
             },
-            child: SingleChildScrollView(
-              child: Container(
-                color: AppColors.white,
-                width: context.sizeOf.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ServiceTopBarWidget(
-                      image: _store.servicesEntity.image,
-                      title: "Voltar para liturgia",
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                        left: 16,
-                        top: 24.7,
-                        bottom: 16,
-                      ),
-                      child: Text(
-                        'Selecione a música do culto:',
-                        style: AppFonts.defaultFont(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17,
-                          color: AppColors.grey10,
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Container(
+                    color: AppColors.white,
+                    width: context.sizeOf.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ServiceTopBarWidget(
+                          image: widget.servicesEntity.image,
+                          title: "Voltar para liturgia",
                         ),
-                      ),
+                        Container(
+                          margin: const EdgeInsets.only(
+                            left: 16,
+                            top: 24.7,
+                            bottom: 16,
+                          ),
+                          child: Text(
+                            'Selecione a música do culto:',
+                            style: AppFonts.defaultFont(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 17,
+                              color: AppColors.grey10,
+                            ),
+                          ),
+                        ),
+                        SearchWidget(storeId: hashCode),
+                        Container(
+                          margin: const EdgeInsets.only(top: 14),
+                          child: LyricsListWidget(
+                            isLongPressEnabled: false,
+                            keepSelection: true,
+                            title: "Resultados encontrados",
+                            onTap: () async {
+                              FocusScope.of(context).unfocus();
+                              await Future.delayed(Duration.zero);
+
+                              /*if (!context.mounted) return;
+                              pushNamed(
+                                AppRoutes.lyricsRoute + AppRoutes.lyricRoute,
+                                arguments: _store.lyricsListStore.lyricEntity,
+                              );*/
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    SearchWidget(),
-                    Container(
-                      margin: const EdgeInsets.only(top: 14),
-                      child: LyricsListWidget(
-                        onTap: () {
-                          pushNamed(
-                            AppRoutes.lyricsRoute + AppRoutes.lyricRoute,
-                            arguments: _store.lyricsListStore.lyricEntity,
+                  ),
+                ),
+
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      width: context.sizeOf.width,
+                      color: AppColors.white,
+                      padding: const EdgeInsets.only(bottom: 10, top: 20),
+                      child: ValueListenableBuilder(
+                        valueListenable: _store.lyricsListStore.tappedIndex,
+                        builder: (context, value, _) {
+                          return Visibility(
+                            visible: true,
+                            child: LoadingButtonWidget(
+                              margin: EdgeInsets.symmetric(horizontal: 16),
+                              isPressed: value != null
+                                  ? _store.isAddEventPressed
+                                  : _store.isAddEventPressed,
+                              adaptiveButtonType: value != null
+                                  ? AdaptiveButtonType.elevated
+                                  : AdaptiveButtonType.outlined,
+                              sideColor: value != null
+                                  ? null
+                                  : AppColors.darkGreen,
+                              outlinedBorderWidth: value != null ? null : 1,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              backgroundColor: value != null
+                                  ? AppColors.darkGreen
+                                  : AppColors.white,
+                              overlayColor: value != null
+                                  ? AppColors.darkGreen
+                                  : AppColors.white,
+                              sideHoveredColor: value != null
+                                  ? null
+                                  : AppColors.highlightGreen,
+                              foregroundHoveredColor: value != null
+                                  ? null
+                                  : AppColors.darkGreen,
+                              foregroundColor: value != null
+                                  ? AppColors.white
+                                  : AppColors.darkGreen,
+                              action: value != null
+                                  ? () async {}
+                                  : () async {
+                                      showAddLyricsDialog(
+                                        context: context,
+                                        callback: (text) {
+                                          _store.newLyric(text, context);
+                                        },
+                                      );
+                                    },
+                              label: value != null
+                                  ? "Adicionar música"
+                                  : "Adicionar nova música",
+                              isValid: ValueNotifier(true),
+                            ),
                           );
                         },
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
-        ),
-        floatingActionButton: FloatingButtonWidget(
-          iconColor: AppColors.white,
-          backgroundColor: AppColors.add,
-          icon: Icons.add,
-          action: () {
-            showAddLyricsDialog(
-              context: context,
-              callback: (text) {
-                _store.newLyric(text, context);
-              },
-            );
-          },
         ),
       ),
     );

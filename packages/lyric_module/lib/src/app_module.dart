@@ -8,7 +8,7 @@ import 'ui/views/lyric_view.dart';
 class LyricModule extends Module {
   @override
   void exportedBinds(i) {
-    i.addSingleton<LyricBloc>(
+    i.add<LyricBloc>(
       () => LyricBloc(
         lyricsListStore: Modular.get<LyricsListStore>(),
         manageLyricStore: Modular.get<ManageLyricStore>(),

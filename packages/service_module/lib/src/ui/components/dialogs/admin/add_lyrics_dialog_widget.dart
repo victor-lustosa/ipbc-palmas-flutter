@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,12 +30,15 @@ Future<void> showAddLyricsDialog({
         curve: Curves.easeOutCubic,
         reverseCurve: Curves.easeInCubic,
       );
-      return SlideTransition(
-        position: Tween<Offset>(
-          begin: const Offset(0, 0.1),
-          end: Offset.zero,
-        ).animate(curved),
-        child: child,
+      return FadeTransition(
+        opacity: animation,
+        child: SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 0.1),
+            end: Offset.zero,
+          ).animate(curved),
+          child: child,
+        ),
       );
     },
   );
@@ -73,9 +77,7 @@ class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
             width: context.sizeOf.width,
-            constraints: BoxConstraints(
-              maxHeight: context.sizeOf.height * .9,
-            ),
+            constraints: BoxConstraints(maxHeight: context.sizeOf.height * .9),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
               child: Dialog(
@@ -104,9 +106,7 @@ class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(color: AppColors.grey3),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8),
-                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
                           ),
                           child: Material(
                             color: Colors.transparent,
@@ -114,17 +114,17 @@ class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
                               data: Theme.of(context).copyWith(
                                 textSelectionTheme: TextSelectionThemeData(
                                   cursorColor: AppColors.grey7,
-                                  selectionColor:
-                                  AppColors.grey7.withValues(alpha: .30),
+                                  selectionColor: AppColors.grey7.withValues(
+                                    alpha: .30,
+                                  ),
                                   selectionHandleColor: AppColors.grey7,
                                 ),
-                                colorScheme: Theme.of(context)
-                                    .colorScheme
+                                colorScheme: Theme.of(context).colorScheme
                                     .copyWith(primary: AppColors.grey7),
                               ),
                               child: TextFormField(
                                 selectionControls:
-                                MaterialTextSelectionControls(),
+                                    MaterialTextSelectionControls(),
                                 controller: _lyricsController,
                                 minLines: 10,
                                 maxLines: 40,

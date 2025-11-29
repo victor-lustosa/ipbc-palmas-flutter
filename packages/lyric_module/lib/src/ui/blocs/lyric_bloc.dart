@@ -19,10 +19,10 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     on<LoadingEvent<LyricEvent>>(_loading);
     on<GetPaginationEvent<LyricEvent, LyricEntity>>(_getPaginationInSupa);
   }
-
+  List<LyricEntity> entitiesList = [];
+  int viewHashCode = 0;
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
-
   bool isSelected = false;
 
   String selectedValue = '';
@@ -79,6 +79,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     GetPaginationEvent<LyricEvent, LyricEntity> event,
     emit,
   ) async {
+
     List<LyricEntity> lyricsListAux = [];
     int offset = _lyricsListStore.entitiesList.length;
     final Map<String, Object> paginationParams = {
@@ -135,6 +136,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
       popToast(2);
     }
   }
+
 }
 
 @immutable
