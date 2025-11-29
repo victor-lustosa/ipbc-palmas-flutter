@@ -6,7 +6,9 @@ import '../../components/dialogs/admin/add_lyrics_dialog_widget.dart';
 
 class SearchLyricsView extends StatefulWidget {
   const SearchLyricsView({super.key, required this.servicesEntity});
+
   final ServicesEntity servicesEntity;
+
   @override
   State<SearchLyricsView> createState() => _SearchLyricsViewState();
 }
@@ -37,6 +39,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
             behavior: HitTestBehavior.opaque,
             onTap: () {
               FocusScope.of(context).unfocus();
+              _store.lyricsListStore.tappedIndex.value = null;
             },
             child: CustomScrollView(
               slivers: [
@@ -66,20 +69,22 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                             ),
                           ),
                         ),
-                        SearchWidget(storeId: hashCode,),
+                        SearchWidget(storeId: hashCode),
                         Container(
                           margin: const EdgeInsets.only(top: 14),
                           child: LyricsListWidget(
+                            isLongPressEnabled: false,
+                            keepSelection: true,
                             title: "Resultados encontrados",
-                            onTap: () async{
+                            onTap: () async {
                               FocusScope.of(context).unfocus();
                               await Future.delayed(Duration.zero);
 
-                              if (!context.mounted) return;
+                              /*if (!context.mounted) return;
                               pushNamed(
                                 AppRoutes.lyricsRoute + AppRoutes.lyricRoute,
                                 arguments: _store.lyricsListStore.lyricEntity,
-                              );
+                              );*/
                             },
                           ),
                         ),
@@ -96,33 +101,58 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                       width: context.sizeOf.width,
                       color: AppColors.white,
                       padding: const EdgeInsets.only(bottom: 10, top: 20),
-                      child: Visibility(
-                        visible: true,
-                        child: LoadingButtonWidget(
-                          margin: EdgeInsets.symmetric(horizontal: 16),
-                          isPressed: _store.isAddEventPressed,
-                          adaptiveButtonType: AdaptiveButtonType.outlined,
-                          sideColor: AppColors.darkGreen,
-                          outlinedBorderWidth: 1,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          backgroundColor: AppColors.white,
-                          shadowColor: AppColors.grey0,
-                          sideHoveredColor: AppColors.highlightGreen,
-                          foregroundHoveredColor: AppColors.darkGreen,
-                          foregroundColor: AppColors.darkGreen,
-                          action: () async {
-                            showAddLyricsDialog(
-                              context: context,
-                              callback: (text) {
-                                _store.newLyric(text, context);
-                              },
-                            );
-                          },
-                          label: "Adicionar nova música",
-                          isValid: ValueNotifier(true),
-                        ),
+                      child: ValueListenableBuilder(
+                        valueListenable: _store.lyricsListStore.tappedIndex,
+                        builder: (context, value, _) {
+                          return Visibility(
+                            visible: true,
+                            child: LoadingButtonWidget(
+                              margin: EdgeInsets.symmetric(horizontal: 16),
+                              isPressed: value != null
+                                  ? _store.isAddEventPressed
+                                  : _store.isAddEventPressed,
+                              adaptiveButtonType: value != null
+                                  ? AdaptiveButtonType.elevated
+                                  : AdaptiveButtonType.outlined,
+                              sideColor: value != null
+                                  ? null
+                                  : AppColors.darkGreen,
+                              outlinedBorderWidth: value != null ? null : 1,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              backgroundColor: value != null
+                                  ? AppColors.darkGreen
+                                  : AppColors.white,
+                              overlayColor: value != null
+                                  ? AppColors.darkGreen
+                                  : AppColors.white,
+                              sideHoveredColor: value != null
+                                  ? null
+                                  : AppColors.highlightGreen,
+                              foregroundHoveredColor: value != null
+                                  ? null
+                                  : AppColors.darkGreen,
+                              foregroundColor: value != null
+                                  ? AppColors.white
+                                  : AppColors.darkGreen,
+                              action: value != null
+                                  ? () {}
+                                  : () async {
+                                      showAddLyricsDialog(
+                                        context: context,
+                                        callback: (text) {
+                                          _store.newLyric(text, context);
+                                        },
+                                      );
+                                    },
+                              label: value != null
+                                  ? "Adicionar música"
+                                  : "Adicionar nova música",
+                              isValid: ValueNotifier(true),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),

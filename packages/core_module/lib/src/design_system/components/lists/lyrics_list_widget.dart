@@ -8,10 +8,15 @@ class LyricsListWidget extends StatefulWidget {
     this.onTap,
     this.margin,
     this.isTitleVisible,
-    this.title, this.entitiesList,
+    this.title,
+    this.entitiesList,
+    this.isLongPressEnabled = true,
+    this.keepSelection = false,
   });
 
   final void Function(LongPressStartDetails)? onLongPressStart;
+  final bool isLongPressEnabled;
+  final bool keepSelection;
   final void Function()? onTap;
   final EdgeInsetsGeometry? margin;
   final bool? isTitleVisible;
@@ -29,6 +34,11 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
   void initState() {
     super.initState();
     _store = Modular.get<LyricsListStore>();
+    if (widget.entitiesList != null) {
+      _store.hasFixedData = widget.entitiesList!.isNotEmpty;
+    } else {
+      _store.hasFixedData = false;
+    }
   }
 
   @override
@@ -40,9 +50,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
           return Visibility(
             visible: (widget.entitiesList ?? _store.entitiesList).isNotEmpty,
             child: Container(
-              margin:
-              widget.margin ??
-                  EdgeInsets.only(bottom: 24, left: 16, right: 16),
+              margin: widget.margin ?? EdgeInsets.only(bottom: 24, left: 16, right: 16),
               child: Column(
                 children: [
                   Visibility(
@@ -71,17 +79,17 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                     separatorBuilder: (_, _) {
                       return const SizedBox(height: 8);
                     },
-                    padding: EdgeInsets.zero,
-                    scrollDirection: Axis.vertical,
+                    padding: .zero,
+                    scrollDirection: .vertical,
                     shrinkWrap: true,
-                    itemCount:  (widget.entitiesList ?? _store.entitiesList).length,
+                    itemCount: (widget.entitiesList ?? _store.entitiesList).length,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (_, index) {
                       final GlobalKey itemKey = GlobalKey();
                       final Widget itemContent = AspectRatio(
                         aspectRatio: 343 / 63,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: .spaceBetween,
                           children: [
                             Expanded(
                               child: Row(
@@ -92,8 +100,10 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                                       left: 8,
                                     ),
                                     child: AlbumCoverWidget(
-                                      albumCover: (widget.entitiesList ?? _store.entitiesList)[index]
-                                          .albumCover,
+                                      albumCover:
+                                          (widget.entitiesList ??
+                                                  _store.entitiesList)[index]
+                                              .albumCover,
                                       height: ResponsivityUtil<double>(
                                         sm: 48,
                                         xl: 52,
@@ -106,20 +116,17 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                                   ),
                                   Expanded(
                                     child: Column(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                      mainAxisAlignment: .center,
+                                      crossAxisAlignment: .start,
                                       children: [
                                         Text(
                                           maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
+                                          overflow: .ellipsis,
                                           (widget.entitiesList ?? _store.entitiesList)[index].title,
                                           style: AppFonts.subhead(
-                                            fontWeight: FontWeight.w500,
+                                            fontWeight: .w500,
                                             color: AppColors.grey9,
-                                            fontSize:
-                                            ResponsivityUtil<double>(
+                                            fontSize: ResponsivityUtil<double>(
                                               sm: 15,
                                               xl: 16,
                                             ).get(context),
@@ -129,8 +136,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                                           (widget.entitiesList ?? _store.entitiesList)[index].group,
                                           style: AppFonts.description(
                                             color: AppColors.grey9,
-                                            fontSize:
-                                            ResponsivityUtil<double>(
+                                            fontSize: ResponsivityUtil<double>(
                                               sm: 13,
                                               xl: 14,
                                             ).get(context),
@@ -153,7 +159,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                                 width: 33,
                                 sizeIcon: 21,
                                 color: AppColors.darkGreen,
-                                iconFormat: IconFormat.svg,
+                                iconFormat: .svg,
                                 splashColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 iconPath: AppIcons.arrowForward,
@@ -171,8 +177,8 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                         borderRadius: BorderRadius.circular(16),
                         gradient: const LinearGradient(
                           colors: [Color(0xFF92E9D9), Color(0x54B6F6EA)],
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
+                          begin: .centerLeft,
+                          end: .centerRight,
                         ),
                       );
 
@@ -190,27 +196,30 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                             child: GestureDetector(
                               key: itemKey,
                               onLongPressStart: (details) async {
-                                _store.index = index;
-                                _store.itemKey = itemKey;
-                                _store.tappedIndex.value = index;
-                                _store.lyricEntity =
-                                (widget.entitiesList ?? _store.entitiesList)[index];
-                                widget.onLongPressStart?.call(details);
+                                if (widget.isLongPressEnabled) {
+                                  _store.index = index;
+                                  _store.itemKey = itemKey;
+                                  _store.tappedIndex.value = index;
+                                  _store.lyricEntity = (widget.entitiesList ?? _store.entitiesList)[index];
+                                  widget.onLongPressStart?.call(details);
+                                }
                               },
                               child: InkWell(
                                 onTap: () {
-                                  _store.lyricEntity =
-                                  (widget.entitiesList ?? _store.entitiesList)[index];
-                                  _store.tappedIndex.value = index;
-                                  Future.delayed(
-                                    const Duration(milliseconds: 300),
-                                        () {
-                                      widget.onTap?.call();
-                                      if (mounted) {
+                                  _store.lyricEntity = (widget.entitiesList ?? _store.entitiesList)[index];
+                                  if (_store.tappedIndex.value == index && widget.keepSelection) {
+                                    _store.tappedIndex.value = null;
+                                  } else {
+                                    _store.tappedIndex.value = index;
+                                  }
+                                  widget.onTap?.call();
+                                  if (!widget.keepSelection) {
+                                    Future.delayed(const Duration(milliseconds: 300), () {
+                                      if (mounted && _store.tappedIndex.value == index) {
                                         _store.tappedIndex.value = null;
                                       }
-                                    },
-                                  );
+                                    });
+                                  }
                                 },
                                 child: itemContent,
                               ),
@@ -230,7 +239,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
             child: SizedBox(
               width: context.sizeOf.width,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: .center,
                 children: [
                   SizedBox(
                     width: 26,
@@ -241,7 +250,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                     margin: EdgeInsets.only(top: 8),
                     width: context.sizeOf.width * .6,
                     child: Text(
-                      textAlign: TextAlign.center,
+                      textAlign: .center,
                       style: AppFonts.defaultFont(
                         fontSize: ResponsivityUtil<double>(
                           sm: 13,

@@ -10,11 +10,9 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     required this.onlineUseCases,
     this.offlineUseCases,
     required LyricsListStore lyricsListStore,
-    required GenericEventBus<GenericState<SearchState>> eventBus,
     required ManageLyricStore manageLyricStore,
   }) : _lyricsListStore = lyricsListStore,
        _manageLyricStore = manageLyricStore,
-        _eventBus = eventBus,
        super(LoadingState<LyricState>()) {
     on<GetDataEvent<LyricEvent>>(_getInSupa);
     on<FilterEvent<LyricEvent, LyricEntity>>(_filter);
@@ -22,11 +20,9 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     on<GetPaginationEvent<LyricEvent, LyricEntity>>(_getPaginationInSupa);
   }
   List<LyricEntity> entitiesList = [];
-  BuildContext? _currentContext;
   int viewHashCode = 0;
   final IUseCases onlineUseCases;
   final IUseCases? offlineUseCases;
-  final GenericEventBus<GenericState<SearchState>> _eventBus;
   bool isSelected = false;
 
   String selectedValue = '';
@@ -50,7 +46,6 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   };
 
   Future<void> init({required BuildContext context}) async {
-    _currentContext = context;
     add(GetDataEvent<LyricEvent>(context: context));
     _manageLyricStore.buttonCallback = () {
       add(GetDataEvent<LyricEvent>(context: context));
@@ -66,7 +61,6 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   }
 
   Future<void> _getInSupa(GetDataEvent<LyricEvent> event, emit) async {
-    _currentContext = event.context;
     final response = await isConnected(context: event.context);
     if (response) {
       final lyricsList = await onlineUseCases.get(

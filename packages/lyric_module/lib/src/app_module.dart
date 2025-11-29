@@ -10,7 +10,6 @@ class LyricModule extends Module {
   void exportedBinds(i) {
     i.add<LyricBloc>(
       () => LyricBloc(
-        eventBus: i.get<GenericEventBus<GenericState<SearchState>>>(),
         lyricsListStore: Modular.get<LyricsListStore>(),
         manageLyricStore: Modular.get<ManageLyricStore>(),
         onlineUseCases: i.get<UseCases<SupabaseRepository>>(),
