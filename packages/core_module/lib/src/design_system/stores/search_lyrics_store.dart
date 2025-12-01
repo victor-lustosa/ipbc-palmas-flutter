@@ -9,10 +9,12 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
     required ManageLyricStore manageLyricStore,
     required LyricsListStore lyricsListStore,
     required SearchStore searchStore,
+    required ServiceStore serviceStore,
     required GenericEventBus<GenericState<SearchState>> eventBus,
   }) : _manageLyricStore = manageLyricStore,
        _lyricsListStore = lyricsListStore,
         _searchStore = searchStore,
+        _serviceStore = serviceStore,
        _eventBus = eventBus,
        super(InitialState()) {
     _subscription = _eventBus.stream.listen((state) {
@@ -30,6 +32,7 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
 
   final ManageLyricStore _manageLyricStore;
   final LyricsListStore _lyricsListStore;
+  final ServiceStore _serviceStore;
   final SearchStore _searchStore;
   final GenericEventBus<GenericState<SearchState>> _eventBus;
   late final StreamSubscription _subscription;
@@ -89,15 +92,27 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
       manageLyricStore.isEditing = true;
       manageLyricStore.serviceId = serviceId;
       manageLyricStore.buttonCallback = () {
+
+        final index = _serviceStore.entitiesList.indexWhere(
+              (item) => item.id == manageLyricStore.lyric.value.id,
+        );
+        if (index != -1) {
+          _serviceStore.entitiesList[index] = manageLyricStore.lyric.value;
+        } else {
+          _serviceStore.entitiesList.add(manageLyricStore.lyric.value);
+        }
         popUntil(
               (route) =>
           route.settings.name ==
               AppRoutes.servicesRoute + AppRoutes.serviceRoute,
         );
       };
-      lyricsListStore.tappedIndex.value = null;
+      Future.delayed(Duration(milliseconds: 100), (){
+        lyricsListStore.tappedIndex.value = null;
+      });
       pop(context);
       pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);
+
   }
 
   void newLyric(String? text, BuildContext context) {

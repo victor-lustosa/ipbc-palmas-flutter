@@ -173,15 +173,16 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
     }
   }
 
-  void toastException(
+  void toast(
     BuildContext context,
     String message,
-    String title, [
+    String title, {
     Function()? onDelayedAction,
-  ]) {
+    ToastType? type,
+  }) {
     if (context.mounted) {
       showCustomToast(
-        type: .error,
+        type: type ?? ToastType.error,
         context: context,
         duration: const Duration(seconds: 1),
         title: title,
@@ -191,7 +192,10 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
     }
   }
 
-  Future<LyricEntity?> saveLyric(BuildContext context) async {
+  Future<LyricEntity?> saveLyric(
+    BuildContext context, {
+    bool isAttached = false,
+  }) async {
     isSavePressed.value = true;
     if (await isConnected(context: context)) {
       final response = await _useCases.upsert(
@@ -213,13 +217,15 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
                 id: lyricsResponse[0]['id'].toString(),
               );
 
-              final index = _lyricsListStore.entitiesList.indexWhere(
-                (item) => item.id == lyric.value.id,
-              );
-              if (index != -1) {
-                _lyricsListStore.entitiesList[index] = lyric.value;
-              } else {
-                _lyricsListStore.entitiesList.add(lyric.value);
+              if (!isAttached) {
+                final index = _lyricsListStore.entitiesList.indexWhere(
+                  (item) => item.id == lyric.value.id,
+                );
+                if (index != -1) {
+                  _lyricsListStore.entitiesList[index] = lyric.value;
+                } else {
+                  _lyricsListStore.entitiesList.add(lyric.value);
+                }
               }
 
               if (context.mounted) {
@@ -236,13 +242,18 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
                 );
               }
             },
-            (_) {
+            (GenericException r) {
               return right(
-                toastException(
+                toast(
                   context,
-                  'Ocorreu um erro ao salvar a música. Verifique a internet e tente novamente.',
-                  'Erro ao salvar!',
-                  () {
+                  type: (r.code == '23505') ? ToastType.warning : null,
+                  (r.code == '23505')
+                      ? 'Essa letra já existe na lista de letras do culto.'
+                      : 'Ocorreu um erro ao salvar a música. Verifique a internet e tente novamente.',
+                  (r.code == '23505')
+                      ? 'Letra duplicada!'
+                      : 'Problema ao salvar!',
+                  onDelayedAction: () {
                     isSavePressed.value = false;
                     value = RefreshingState();
                   },
@@ -253,11 +264,11 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
         },
         (_) {
           return right(
-            toastException(
+            toast(
               context,
               'Ocorreu um erro ao salvar a música. Verifique a internet e tente novamente.',
               'Erro ao salvar!',
-              () {
+              onDelayedAction: () {
                 isSavePressed.value = false;
                 value = RefreshingState();
               },
@@ -271,54 +282,28 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
     }
   }
 
-  Future<void> deleteAttachedLyric({
-    required BuildContext context,
-    required String lyricId,
-    required String serviceId,
-  }) async {
-    final response = await _useCases.delete(
-      params: {
-        'table': 'service_lyrics',
-        'match': {
-          'service_id': int.parse(serviceId),
-          'lyric_id': int.parse(lyricId),
-        },
-      },
-    );
-    response.fold(
-      (_) {
-        if (context.mounted) {
-          showCustomToast(
-            context: context,
-            title: 'Sucesso!',
-            message: 'Música deletada com sucesso.',
-          );
-        }
-      },
-      (_) => toastException(
-        context,
-        'Ocorreu um erro ao deletar a música. Verifique a internet e tente novamente.',
-        'Erro ao deletar!',
-      ),
-    );
-  }
-
   Future<void> deleteLyric({
     required BuildContext context,
-    required String lyricId,
+    String lyricId = '',
+    Map<String, dynamic>? params,
+    bool isAttached = false,
   }) async {
     final response = await _useCases.delete(
-      params: {
-        'table': 'lyrics',
-        'whereClause': 'id',
-        'referenceValue': int.parse(lyricId),
-      },
+      params:
+          params ??
+          {
+            'table': 'lyrics',
+            'whereClause': 'id',
+            'referenceValue': int.parse(lyricId),
+          },
     );
     response.fold(
       (_) {
-        _lyricsListStore.entitiesList.remove(
-          _lyricsListStore.entitiesList.firstWhere((e) => e.id == lyricId),
-        );
+        if (!isAttached) {
+          _lyricsListStore.entitiesList.remove(
+            _lyricsListStore.entitiesList.firstWhere((e) => e.id == lyricId),
+          );
+        }
         if (context.mounted) {
           showCustomToast(
             context: context,
@@ -327,7 +312,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
           );
         }
       },
-      (_) => toastException(
+      (_) => toast(
         context,
         'Ocorreu um erro ao deletar a música. Verifique a internet e tente novamente.',
         'Erro ao deletar!',

@@ -28,25 +28,40 @@ class ServiceModule extends Module {
       AppRoutes.manageLyricsRoute,
       transition: TransitionType.custom,
       child: (_) => ManageLyricView(),
-      customTransition: ModularSlideTransition(),
+      customTransition: UniversalModularTransition(
+        enterType: AnimationType.slideRight,
+        exitType: AnimationType.fade,
+      ),
     );
     r.child(
       AppRoutes.manageServicesRoute,
       transition: TransitionType.custom,
       child: (_) => ManageServiceView(),
-      customTransition: ModularFadeTransition(),
+      customTransition: UniversalModularTransition(
+        enterType: .fade,
+        duration: Duration(milliseconds: 150),
+        reverseDuration: Duration(milliseconds: 150),
+      ),
     );
     r.child(
       AppRoutes.serviceRoute,
       transition: TransitionType.custom,
       child: (_) => ServiceView(),
-      customTransition: ModularFadeTransition(),
+      customTransition: UniversalModularTransition(
+        enterType: .fade,
+        duration: Duration(milliseconds: 150),
+        reverseDuration: Duration(milliseconds: 150),
+      ),
     );
     r.child(
       AppRoutes.searchLyricsRoute,
       transition: TransitionType.custom,
       child: (_) => SearchLyricsView(dto: r.args.data as SearchLyricsDTO),
-      customTransition: ModularFadeTransition(),
+      customTransition: UniversalModularTransition(
+        enterType: .fade,
+        duration: Duration(milliseconds: 150),
+        reverseDuration: Duration(milliseconds: 150),
+      ),
     );
   }
 }

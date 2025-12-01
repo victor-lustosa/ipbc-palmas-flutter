@@ -26,13 +26,21 @@ class EventModule extends Module {
       AppRoutes.createEventRoute,
       transition: TransitionType.custom,
       child: (_) => const CreateEventView(),
-      customTransition: ModularFadeTransition(),
+      customTransition: UniversalModularTransition(
+        enterType: .fade,
+        duration: Duration(milliseconds: 150),
+        reverseDuration: Duration(milliseconds: 150),
+      ),
     );
     r.child(
       AppRoutes.detailEventRoute,
       transition: TransitionType.custom,
       child: (_) => EventsDetailView(eventEntity: r.args.data as EventEntity),
-      customTransition: ModularFadeTransition(),
+      customTransition: UniversalModularTransition(
+        enterType: .fade,
+        duration: Duration(milliseconds: 150),
+        reverseDuration: Duration(milliseconds: 150),
+      ),
     );
   }
 }

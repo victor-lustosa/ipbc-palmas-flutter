@@ -33,14 +33,15 @@ class AuthModule extends Module {
 
   @override
   void routes(r) {
-    r.child(
-      AppRoutes.loginRoute,
-      child: (_) => const LoginView(),
-    );
+    r.child(AppRoutes.loginRoute, child: (_) => const LoginView());
     r.child(
       AppRoutes.createAccountRoute,
       transition: TransitionType.custom,
-      customTransition: ModularFadeTransition(),
+      customTransition: UniversalModularTransition(
+        enterType: .fade,
+        duration: Duration(milliseconds: 150),
+        reverseDuration: Duration(milliseconds: 150),
+      ),
       child: (_) => const CreateAccountView(),
     );
     r.child(
@@ -70,7 +71,11 @@ class AuthModule extends Module {
     r.child(
       AppRoutes.accountCreatedRoute,
       transition: TransitionType.custom,
-      customTransition: ModularFadeTransition(),
+      customTransition: UniversalModularTransition(
+        enterType: .fade,
+        duration: Duration(milliseconds: 150),
+        reverseDuration: Duration(milliseconds: 150),
+      ),
       child: (_) => const AccountCreatedSuccessfullyView(),
     );
   }

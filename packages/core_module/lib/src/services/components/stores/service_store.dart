@@ -58,16 +58,22 @@ class ServiceStore extends ValueNotifier<GenericState<ServiceState>> {
 
   void deleteLyric(BuildContext context) async {
     lyricsListStore.tappedIndex.value = null;
-    manageLyricStore.deleteAttachedLyric(
+    manageLyricStore.deleteLyric(
       context: context,
-      lyricId: lyricsListStore.selectedLyric.id!,
-      serviceId: serviceEntity.id!
+      params: {
+        'table': 'service_lyrics',
+        'match': {
+          'service_id': int.parse(serviceEntity.id!),
+          'lyric_id': int.parse(lyricsListStore.selectedLyric.id!),
+        },
+      },
+      isAttached: true,
     );
     entitiesList.remove(
       entitiesList.firstWhere((e) => e.id == lyricsListStore.selectedLyric.id!),
     );
     manageLyricStore.value = RefreshingState();
-    pop(context);
+    nativePopToast(2, context);
   }
 }
 
