@@ -100,6 +100,7 @@ export 'src/events/infra/adapters/event_adapter.dart';
 export 'src/lyrics/infra/adapters/liturgy_adapter.dart';
 export 'src/lyrics/infra/adapters/verse_adapter.dart';
 export 'src/lyrics/infra/adapters/lyric_adapter.dart';
+export 'src/lyrics/infra/dtos/search_lyrics_dto.dart';
 export 'src/services/infra/adapters/service_adapter.dart';
 export 'src/auth/infra/hive_dtos/hive_credentials_dto.dart';
 export 'src/auth/infra/hive_dtos/hive_user_dto.dart';

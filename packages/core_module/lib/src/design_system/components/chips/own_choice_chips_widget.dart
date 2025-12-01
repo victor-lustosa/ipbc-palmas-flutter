@@ -1,8 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-import '../../stores/search_store.dart';
-
 class OwnChoiceChipsWidget extends StatefulWidget {
   final Function(int)? action;
   final bool? isInitWithoutSelection;

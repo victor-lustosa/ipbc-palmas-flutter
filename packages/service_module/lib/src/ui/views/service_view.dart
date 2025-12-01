@@ -204,7 +204,7 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                                                   AppRoutes.lyricRoute,
                                               arguments: _store
                                                   .lyricsListStore
-                                                  .lyricEntity,
+                                                  .selectedLyric,
                                             );
                                           },
                                         ),

@@ -200,13 +200,13 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                                   _store.index = index;
                                   _store.itemKey = itemKey;
                                   _store.tappedIndex.value = index;
-                                  _store.lyricEntity = (widget.entitiesList ?? _store.entitiesList)[index];
+                                  _store.selectedLyric = (widget.entitiesList ?? _store.entitiesList)[index];
                                   widget.onLongPressStart?.call(details);
                                 }
                               },
                               child: InkWell(
                                 onTap: () {
-                                  _store.lyricEntity = (widget.entitiesList ?? _store.entitiesList)[index];
+                                  _store.selectedLyric = (widget.entitiesList ?? _store.entitiesList)[index];
                                   if (_store.tappedIndex.value == index && widget.keepSelection) {
                                     _store.tappedIndex.value = null;
                                   } else {

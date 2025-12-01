@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 import '../../components/dialogs/admin/add_lyrics_dialog_widget.dart';
 
 class SearchLyricsView extends StatefulWidget {
-  const SearchLyricsView({super.key, required this.servicesEntity});
+  const SearchLyricsView({super.key, required this.dto});
 
-  final ServicesEntity servicesEntity;
+  final SearchLyricsDTO dto;
 
   @override
   State<SearchLyricsView> createState() => _SearchLyricsViewState();
@@ -51,7 +51,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ServiceTopBarWidget(
-                          image: widget.servicesEntity.image,
+                          image: widget.dto.servicesEntity.image,
                           title: "Voltar para liturgia",
                         ),
                         Container(
@@ -79,12 +79,6 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                             onTap: () async {
                               FocusScope.of(context).unfocus();
                               await Future.delayed(Duration.zero);
-
-                              /*if (!context.mounted) return;
-                              pushNamed(
-                                AppRoutes.lyricsRoute + AppRoutes.lyricRoute,
-                                arguments: _store.lyricsListStore.lyricEntity,
-                              );*/
                             },
                           ),
                         ),
@@ -100,7 +94,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                     child: Container(
                       width: context.sizeOf.width,
                       color: AppColors.white,
-                      padding: const EdgeInsets.only(bottom: 10, top: 20),
+                      padding: const EdgeInsets.only(bottom: 10, top: 2),
                       child: ValueListenableBuilder(
                         valueListenable: _store.lyricsListStore.tappedIndex,
                         builder: (context, value, _) {
@@ -137,7 +131,9 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                                   ? AppColors.white
                                   : AppColors.darkGreen,
                               action: value != null
-                                  ? () async {}
+                                  ? () async {
+                                   _store.attachLyric(widget.dto.serviceId!, context);
+                                  }
                                   : () async {
                                       showAddLyricsDialog(
                                         context: context,

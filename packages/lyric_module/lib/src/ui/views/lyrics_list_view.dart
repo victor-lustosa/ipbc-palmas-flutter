@@ -126,7 +126,7 @@ class _LyricsListViewState extends State<LyricsListView>
                             onTap: () {
                               pushNamed(
                                 AppRoutes.lyricsRoute + AppRoutes.lyricRoute,
-                                arguments: _bloc.lyricsListStore.lyricEntity,
+                                arguments: _bloc.lyricsListStore.selectedLyric,
                               );
                             },
                           ),

@@ -45,7 +45,7 @@ class ServiceModule extends Module {
     r.child(
       AppRoutes.searchLyricsRoute,
       transition: TransitionType.custom,
-      child: (_) => SearchLyricsView(servicesEntity: r.args.data as ServicesEntity),
+      child: (_) => SearchLyricsView(dto: r.args.data as SearchLyricsDTO),
       customTransition: ModularFadeTransition(),
     );
   }

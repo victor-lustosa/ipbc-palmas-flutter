@@ -33,12 +33,12 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
   final SearchStore _searchStore;
   final GenericEventBus<GenericState<SearchState>> _eventBus;
   late final StreamSubscription _subscription;
-  late ServicesEntity servicesEntity;
   final TextEditingController searchController = TextEditingController();
   int viewHashCode = 0;
-  ManageLyricStore get manageLyricStore => _manageLyricStore;
 
+  ManageLyricStore get manageLyricStore => _manageLyricStore;
   LyricsListStore get lyricsListStore => _lyricsListStore;
+
   ValueNotifier<bool> isAddEventPressed = ValueNotifier(false);
 
   void init(int hashCode){
@@ -82,6 +82,22 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
       createAt: DateTime.now().toIso8601String(),
       verses: parsedVerseEntities,
     );
+  }
+
+  void attachLyric(String serviceId, BuildContext context) {
+      manageLyricStore.lyric.value = lyricsListStore.selectedLyric;
+      manageLyricStore.isEditing = true;
+      manageLyricStore.serviceId = serviceId;
+      manageLyricStore.buttonCallback = () {
+        popUntil(
+              (route) =>
+          route.settings.name ==
+              AppRoutes.servicesRoute + AppRoutes.serviceRoute,
+        );
+      };
+      lyricsListStore.tappedIndex.value = null;
+      pop(context);
+      pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);
   }
 
   void newLyric(String? text, BuildContext context) {

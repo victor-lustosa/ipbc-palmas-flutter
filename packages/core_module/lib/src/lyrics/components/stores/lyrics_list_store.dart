@@ -10,7 +10,7 @@ class LyricsListStore extends ValueNotifier<GenericState<LyricsListState>> {
   List<LyricEntity> entitiesList = [];
   late GlobalKey itemKey;
   int index = 0;
-  late LyricEntity lyricEntity;
+  late LyricEntity selectedLyric;
   bool hasFixedData = false;
 
   LyricsListStore({

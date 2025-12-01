@@ -43,27 +43,30 @@ class ServiceStore extends ValueNotifier<GenericState<ServiceState>> {
   }
 
   void addLyric() {
-    manageLyricStore.serviceId = serviceEntity.id!;
-    pushNamed(AppRoutes.servicesRoute + AppRoutes.searchLyricsRoute, arguments: servicesEntity);
+    pushNamed(
+      AppRoutes.servicesRoute + AppRoutes.searchLyricsRoute,
+      arguments: SearchLyricsDTO(servicesEntity: servicesEntity, serviceId: serviceEntity.id!),
+    );
   }
 
   void editLyric(BuildContext context) {
     manageLyricStore.isEditing = true;
-    manageLyricStore.lyric.value = lyricsListStore.lyricEntity;
-    pushNamed(
-      AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute,
-    );
+    manageLyricStore.lyric.value = lyricsListStore.selectedLyric;
+    pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);
     pop(context);
   }
 
-  void deleteLyric(BuildContext context) async{
-    manageLyricStore.deleteLyric(
+  void deleteLyric(BuildContext context) async {
+    lyricsListStore.tappedIndex.value = null;
+    manageLyricStore.deleteAttachedLyric(
       context: context,
-      lyricId: lyricsListStore.lyricEntity.id!,
+      lyricId: lyricsListStore.selectedLyric.id!,
+      serviceId: serviceEntity.id!
     );
-    Future.delayed(const Duration(seconds: 1), () {
-      manageLyricStore.value = RefreshingState();
-    });
+    entitiesList.remove(
+      entitiesList.firstWhere((e) => e.id == lyricsListStore.selectedLyric.id!),
+    );
+    manageLyricStore.value = RefreshingState();
     pop(context);
   }
 }
