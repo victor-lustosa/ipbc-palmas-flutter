@@ -67,15 +67,14 @@ class ServicesCollectionBloc
 
   Future<void> _deleteItem(dynamic event, emit) async {
     final service = entitiesList[event.index];
-    final response = await manageServiceStore.delete(service);
+    final response = await manageServiceStore.delete(service, event.context);
     popToast(2);
 
     if (response != null) {
       entitiesList.remove(service);
     }
 
-    showCustomMessageDialog(
-      type: DialogType.success,
+    showCustomToast(
       context: event.context,
       title: 'Sucesso!',
       message: 'Música deletada com sucesso.',

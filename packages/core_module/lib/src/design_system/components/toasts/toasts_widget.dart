@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-enum DialogType { success, error, warning }
+enum ToastType { success, error, warning }
 
 OverlayEntry? _currentOverlayEntry;
 
-void showCustomMessageDialog({
+void showCustomToast({
   required BuildContext context,
   required String title,
   Alignment? alignment,
@@ -15,7 +15,7 @@ void showCustomMessageDialog({
   required String message,
   Duration? duration,
   Function()? onDelayedAction,
-  required DialogType type,
+  ToastType? type = ToastType.success,
 }) async {
   if (_currentOverlayEntry != null) {
     _currentOverlayEntry!.remove();
@@ -29,10 +29,10 @@ void showCustomMessageDialog({
       return ToastAnimation(
         child: Align(
           alignment: Alignment.bottomCenter,
-          child: MessageDialogWidget(
+          child: ToastWidget(
             title: title,
             message: message,
-            type: type,
+            type: type!,
             alignment: alignment,
             width: width,
             onDelayedAction: onDelayedAction,
@@ -105,15 +105,15 @@ class _ToastAnimationState extends State<ToastAnimation>
   }
 }
 
-class MessageDialogWidget extends StatelessWidget {
+class ToastWidget extends StatelessWidget {
   final String title;
   final String message;
   final Alignment? alignment;
   final double? width;
   final Function()? onDelayedAction;
-  final DialogType type;
+  final ToastType type;
 
-  const MessageDialogWidget({
+  const ToastWidget({
     super.key,
     required this.title,
     required this.message,
@@ -129,15 +129,15 @@ class MessageDialogWidget extends StatelessWidget {
     late final Widget icon;
 
     switch (type) {
-      case DialogType.success:
+      case ToastType.success:
         backgroundColor = AppColors.darkGreen;
         icon = const SuccessIconWidget();
         break;
-      case DialogType.error:
+      case ToastType.error:
         backgroundColor = AppColors.modalRed;
         icon = const ErrorIconWidget();
         break;
-      case DialogType.warning:
+      case ToastType.warning:
         backgroundColor = AppColors.modalWarning;
         icon = const WarningIconWidget();
         break;

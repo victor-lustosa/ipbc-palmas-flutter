@@ -60,8 +60,8 @@ class LoginStore extends ValueNotifier<GenericState<LoginState>>
         if (message == null) {
           toHome(context);
         } else {
-          showCustomMessageDialog(
-            type: DialogType.error,
+          showCustomToast(
+            type: .error,
             context: context,
             title: 'Email ou senha incorretos!',
             message: message,

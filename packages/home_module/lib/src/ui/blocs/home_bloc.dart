@@ -67,8 +67,8 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
   }
 
   void toastException(BuildContext context, String message, String title) =>
-      showCustomMessageDialog(
-        type: DialogType.error,
+      showCustomToast(
+        type: .error,
         context: context,
         title: title,
         message: message,
