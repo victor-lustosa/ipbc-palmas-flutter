@@ -63,11 +63,10 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   Future<void> _getInSupa(GetDataEvent<LyricEvent> event, emit) async {
     final response = await isConnected(context: event.context);
     if (response) {
-      final lyricsList = await onlineUseCases.get(
+      final response = await onlineUseCases.get(
         params: lyricParams,
-        converter: LyricAdapter.fromMapList,
       );
-      _lyricsListStore.entitiesList = lyricsList;
+      response.fold((l) => _lyricsListStore.entitiesList = LyricAdapter.fromMapList(l), (r)=>null);
       if (emit.isDone) return;
       emit(DataFetchedState<LyricState>());
     } else {
@@ -87,10 +86,10 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
       'limit': event.limit,
       'offset': offset,
     };
-    lyricsListAux = await onlineUseCases.get(
+    final response = await onlineUseCases.get(
       params: paginationParams,
-      converter: LyricAdapter.fromMapList,
     );
+    response.fold((l) => lyricsListAux = LyricAdapter.fromMapList(l), (r) => null);
     //Verificando se tem novos itens retornados se sim eu adiciona lista principal
     if (lyricsListAux.isNotEmpty) {
       _lyricsListStore.entitiesList.addAll(lyricsListAux);
@@ -118,7 +117,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
 
   void editLyric(BuildContext context) {
     manageLyricStore.isEditing = true;
-    manageLyricStore.lyric.value = lyricsListStore.lyricEntity;
+    manageLyricStore.lyric.value = lyricsListStore.selectedLyric;
     pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);
     Future.delayed(Duration(seconds: 1), () {
       _lyricsListStore.value = RefreshingState();
@@ -127,7 +126,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   }
 
   void deleteLyric({required BuildContext context}) async {
-    String? lyricIdParam = lyricsListStore.lyricEntity.id;
+    String? lyricIdParam = lyricsListStore.selectedLyric.id;
     if (lyricIdParam != null) {
       manageLyricStore.deleteLyric(context: context, lyricId: lyricIdParam);
       Future.delayed(Duration(seconds: 1), () {

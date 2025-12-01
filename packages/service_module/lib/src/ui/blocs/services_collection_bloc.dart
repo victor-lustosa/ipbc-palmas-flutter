@@ -55,10 +55,10 @@ class ServicesCollectionBloc
             'id, create_at, image, title, theme, preacher, service_date, heading, type, guide_is_visible, liturgies, service_lyrics (lyrics(id, title, group, album_cover, create_at, verses)))',
       };
       add(LoadingEvent<ServicesCollectionEvent>());
-      entitiesList = await onlineUseCases.get(
+      final response = await onlineUseCases.get(
         params: servicesCollectionParams,
-        converter: ServiceAdapter.fromMapList,
       );
+      response.fold((l) => entitiesList = ServiceAdapter.fromMapList(l),(r) => null);
       emit(DataFetchedState<ServicesCollectionState>());
     } else {
       emit(NoConnectionState<ServicesCollectionState>());

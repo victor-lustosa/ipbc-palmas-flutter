@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:core_module/core_module.dart';
+import 'package:core_module/src/core/infra/exceptions/generic_exception.dart';
 
 class UseCases<T> implements IUseCases {
   final IRepository repository;
@@ -9,12 +10,8 @@ class UseCases<T> implements IUseCases {
 
   @override
   Future<dynamic> get({
-    Map<String, dynamic>? params,
-    required Function converter,
-  }) async {
-    var result = await repository.get(params: params);
-    return converter(result);
-  }
+    Map<String, dynamic>? params
+  }) async => repository.get(params: params);
 
   @override
   Future<dynamic> add({required data, Map<String, dynamic>? params}) async =>
@@ -33,7 +30,7 @@ class UseCases<T> implements IUseCases {
       repository.upsert(data: data, params: params);
 
   @override
-  Future<String?> saveImage({
+  Future<Either<String?, GenericException>> saveImage({
     required File coverImage,
     required String fileName,
     required String bucketName,

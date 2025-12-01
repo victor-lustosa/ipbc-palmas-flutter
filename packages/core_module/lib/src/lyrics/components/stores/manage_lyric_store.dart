@@ -172,7 +172,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
     }
   }
 
-  void saveLyric(BuildContext context) async {
+  Future<Either<LyricEntity, void>> saveLyric(BuildContext context) async {
     isSavePressed.value = true;
     try {
       final lyricsResponse = await _useCases.upsert(
@@ -189,7 +189,6 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
       lyric.value = lyric.value.copyWith(
         id: lyricsResponse[0]['id'].toString(),
       );
-
 
       final index = _lyricsListStore.entitiesList.indexWhere(
         (item) => item.id == lyric.value.id,
@@ -214,7 +213,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
           }
         );
       }
-
+      return left(lyric.value);
     } catch (e) {
       if (context.mounted) {
         showCustomMessageDialog(
@@ -229,6 +228,28 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
           }
         );
       }
+      return right(null);
+    }
+  }
+
+  Future<void> deleteAttachedLyric({required BuildContext context, required String lyricId, required String serviceId}) async {
+    await _useCases.delete(
+      params: {
+        'table': 'service_lyrics',
+        'match': {
+          'service_id': int.parse(serviceId),
+          'lyric_id': int.parse(lyricId),
+        },
+      },
+    );
+
+    if (context.mounted) {
+      showCustomMessageDialog(
+        type: DialogType.success,
+        context: context,
+        title: 'Sucesso!',
+        message: 'Música deletada com sucesso.',
+      );
     }
   }
 

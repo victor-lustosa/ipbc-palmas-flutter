@@ -39,7 +39,8 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
 
   void searchLyrics(String searchField) async {
     _eventBus.emit(LoadingState<SearchState>(id: _currentStoreId));
-    List<LyricEntity> lyrics = await _useCases.get(
+    List<LyricEntity> lyrics = [];
+     final response = await _useCases.get(
       params: {
         'table': 'lyrics',
         'orderBy': 'create_at',
@@ -49,8 +50,8 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
         'selectFields': 'id, title, group, album_cover, create_at, verses',
         if(limit > 0) 'limit': limit
       },
-      converter: LyricAdapter.fromMapList,
     );
+    response.fold((l)=> lyrics = LyricAdapter.fromMapList(l), (r) => null);
     if (lyrics.isNotEmpty) {
       _eventBus.emit(DataFetchedState<SearchState>(entities: lyrics, id: _currentStoreId));
     } else {

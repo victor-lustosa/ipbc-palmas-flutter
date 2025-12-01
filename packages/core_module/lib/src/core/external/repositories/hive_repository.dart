@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import '../../../../core_module.dart';
+import '../../infra/exceptions/generic_exception.dart';
 
 class HiveRepository implements IRepository {
   static const String userHiveBox = 'user';
@@ -19,15 +20,20 @@ class HiveRepository implements IRepository {
   }
 
   @override
-  Future<dynamic> get<T>({Map<String, dynamic>? params}) async {
+  Future<Either<dynamic, GenericException>> get<T>({Map<String, dynamic>? params}) async {
     final Box<T> box = _getBoxForType<T>();
-    switch (params?['type']) {
-      case credentialsHiveBox:
-        var value = box.get(credentialsHiveBox);
-        return value != null ? AuthCredentials.fromHive(value as HiveCredentialsDTO) : null;
-      case userHiveBox:
-        var value = box.get(userHiveBox);
-        return value != null ? UserEntity.fromHive(value as HiveUserDTO) : null;
+    try{
+      switch (params?['type']) {
+        case credentialsHiveBox:
+          var value = box.get(credentialsHiveBox);
+          return left(value != null ? AuthCredentials.fromHive(value as HiveCredentialsDTO) : null);
+        case userHiveBox:
+          var value = box.get(userHiveBox);
+          return left(value != null ? UserEntity.fromHive(value as HiveUserDTO) : null);
+      }
+      return left(null);
+    } on HiveException catch (e) {
+      return right(GenericException(message: e.message));
     }
   }
 
@@ -37,56 +43,70 @@ class HiveRepository implements IRepository {
     } else if (T == HiveCredentialsDTO) {
       return Hive.box<T>(credentialsHiveBox);
     }
-    throw Exception('Hive box for type $T not found');
+    throw HiveException(message: 'Hive box for type $T not found');
   }
 
   @override
-  Future<dynamic> update<T>({
+  Future<Either<dynamic, GenericException>> update<T>({
     required data,
     Map<String, dynamic>? params,
   }) async {
-    final Box box = _getBoxForType<T>();
-    switch (params?['type']) {
-      case credentialsHiveBox:
-        box.put(credentialsHiveBox, HiveCredentialsDTO.create(data as AuthCredentials));
-        break;
-      case userHiveBox:
-        box.put(userHiveBox, HiveUserDTO.create(data as UserEntity));
-        break;
+    try{
+      final Box box = _getBoxForType<T>();
+      switch (params?['type']) {
+        case credentialsHiveBox:
+          box.put(credentialsHiveBox, HiveCredentialsDTO.create(data as AuthCredentials));
+          break;
+        case userHiveBox:
+          box.put(userHiveBox, HiveUserDTO.create(data as UserEntity));
+          break;
+      }
+      return left(null);
+    } on HiveException catch (e) {
+      return right(GenericException(message: e.message));
     }
   }
 
   @override
-  Future<dynamic> delete<T>({Map<String, dynamic>? params}) async {
-    final Box box = _getBoxForType<T>();
-    final key = params?['key'];
-    if (key != null) {
-      await box.delete(key);
-    } else {
-      await box.clear();
+  Future<Either<dynamic, GenericException>> delete<T>({Map<String, dynamic>? params}) async {
+    try{
+      final Box box = _getBoxForType<T>();
+      final key = params?['key'];
+      if (key != null) {
+        await box.delete(key);
+      } else {
+        await box.clear();
+      }
+      return left(null);
+    }on PostgrestException catch (e){
+      return right(GenericException(details: e.details, message: e.message, code: e.code));
     }
   }
 
   @override
-  Future<dynamic> add<T>({required data, Map<String, dynamic>? params}) =>
+  Future<Either<dynamic, GenericException>>  add<T>({required data, Map<String, dynamic>? params}) =>
       update<T>(data: data, params: params);
 
   @override
-  Future<List<T>> getByPagination<T>({Map<String, dynamic>? params}) async {
-    final Box box = _getBoxForType<T>();
-    final int page = params?["page"] ?? 1;
-    final int pageSize = params?["pageSize"] ?? 10;
+  Future<Either<List<T>, GenericException>> getByPagination<T>({Map<String, dynamic>? params}) async {
+   try{
+     final Box box = _getBoxForType<T>();
+     final int page = params?["page"] ?? 1;
+     final int pageSize = params?["pageSize"] ?? 10;
 
-    final items = box.values
-        .skip((page - 1) * pageSize)
-        .take(pageSize)
-        .toList();
+     final items = box.values
+         .skip((page - 1) * pageSize)
+         .take(pageSize)
+         .toList();
 
-    return items as List<T>;
+     return left(items as List<T>);
+   } catch(e){
+     return right(GenericException(message: 'Erro ao buscar dados: $e'));
+   }
   }
 
   @override
-  Future<String?> saveImage({
+  Future<Either<String?, GenericException>> saveImage({
     required File coverImage,
     required String fileName,
     required String bucketName,
@@ -95,7 +115,7 @@ class HiveRepository implements IRepository {
   }
 
   @override
-  Future upsert<T>({required data, Map<String, dynamic>? params}) {
+  Future<Either<dynamic, GenericException>> upsert<T>({required data, Map<String, dynamic>? params}) {
     throw UnimplementedError();
   }
 }

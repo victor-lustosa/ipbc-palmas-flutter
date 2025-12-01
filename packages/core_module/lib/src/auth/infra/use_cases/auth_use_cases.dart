@@ -22,10 +22,7 @@ class AuthUseCases implements IAuthUseCases {
     final response = await _onlineRepository.signInWithEmail(email, password);
     return response.fold(
       (authUserDTO) async {
-        await _saveUserAndCredentials(
-          authUserDTO.user,
-          authUserDTO.auth
-        );
+        await _saveUserAndCredentials(authUserDTO.user, authUserDTO.auth);
         return Future.value(null);
       },
       (exception) {
@@ -77,17 +74,23 @@ class AuthUseCases implements IAuthUseCases {
 
   @override
   Future<String?> getCredentials() async {
-    HiveCredentialsDTO? entity = await _offlineRepository
-        .get<HiveCredentialsDTO>();
-    if (entity != null) {
-      return entity.token;
-    } else {
-      return null;
-    }
+    final response = await _offlineRepository.get<HiveCredentialsDTO>();
+    return response.fold((entity) {
+      if (entity != null) {
+        return entity.token;
+      } else {
+        return null;
+      }
+    }, (exception) => null);
   }
 
   @override
-  Future<UserEntity?> getLocalUser() async => await _offlineRepository.get<HiveUserDTO>(params: {'type': HiveRepository.userHiveBox});
+  Future<UserEntity?> getLocalUser() async {
+    final response = await _offlineRepository.get<HiveUserDTO>(
+      params: {'type': HiveRepository.userHiveBox},
+    );
+    return response.fold((userEntity) => userEntity, (r) => null);
+  }
 
   @override
   dynamic saveCredentials(AuthCredentials auth) =>

@@ -1,5 +1,9 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
+
+import '../../infra/exceptions/generic_exception.dart';
+
 abstract class IUseCases
     implements
         IGetUseCases,
@@ -11,8 +15,7 @@ abstract class IUseCases
 
 abstract class IGetUseCases {
   Future<dynamic> get({
-    Map<String, dynamic>? params,
-    required Function converter,
+    Map<String, dynamic>? params
   });
 }
 
@@ -33,7 +36,7 @@ abstract class IDeleteUseCases {
 }
 
 abstract class ISaveImageUseCases {
-  Future<String?> saveImage({
+  Future<Either<String?, GenericException>> saveImage({
     required File coverImage,
     required String fileName,
     required String bucketName,

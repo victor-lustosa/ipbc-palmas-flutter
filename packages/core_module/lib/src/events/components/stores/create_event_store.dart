@@ -150,10 +150,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     }
   }
 
-   dynamic nameLocationValidation(
-      String? data,
-      ValueNotifier<bool> isValid,
-      ) {
+  dynamic nameLocationValidation(String? data, ValueNotifier<bool> isValid) {
     if (isEmptyData(eventLocationController.text)) {
       changeValue(isValid, true);
       return true;
@@ -194,8 +191,6 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
     contactLinkController.text = event.contactLink ?? '';
     isSwitchOn = event.isAllDay;
   }
-
-
 
   Future<bool> validateDateTime(BuildContext context) async {
     if (startDate!.isAfter(endDate!)) {
@@ -244,8 +239,10 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       allTextValid = false;
     }
 
-    if (!nameLocationValidation(eventLocationNameController.text,
-        isEventLocationNameValid)) {
+    if (!nameLocationValidation(
+      eventLocationNameController.text,
+      isEventLocationNameValid,
+    )) {
       allTextValid = false;
     }
 
@@ -267,27 +264,29 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   Future<void> getImage(BuildContext context) async {
     value = LoadingImageState();
     final result = await getGalleryImage(context);
-    result.fold((l) {
-      if (l != null) {
-        coverImage = l;
-        value = FetchedImageState();
-        changeValue(isCoverImageValid, true);
-      } else {
-        if (coverImage.path.isEmpty && !isEditing ) {
-          value = InitialState<CreateEventState>();
-          changeValue(isCoverImageValid, false);
-        } else {
+    result.fold(
+      (l) {
+        if (l != null) {
+          coverImage = l;
           value = FetchedImageState();
           changeValue(isCoverImageValid, true);
+        } else {
+          if (coverImage.path.isEmpty && !isEditing) {
+            value = InitialState<CreateEventState>();
+            changeValue(isCoverImageValid, false);
+          } else {
+            value = FetchedImageState();
+            changeValue(isCoverImageValid, true);
+          }
         }
-      }
-    }, (_){
-      if (coverImage.path.isEmpty) {
-        changeValue(isCoverImageValid, false);
-      }
-      value = FetchedImageState();
-
-    });
+      },
+      (_) {
+        if (coverImage.path.isEmpty) {
+          changeValue(isCoverImageValid, false);
+        }
+        value = FetchedImageState();
+      },
+    );
   }
 
   EventEntity fillEventEntity(String resultUrl, Map<String, double>? latLong) {
@@ -353,11 +352,21 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
           String? resultUrl;
           bool isImageUpdated = (isEditing && coverImage.path.isNotEmpty);
           if (isImageUpdated || !isEditing) {
-            resultUrl = await _useCases.saveImage(
+            final response = await _useCases.saveImage(
               coverImage: coverImage,
               bucketName: 'covers',
               fileName:
                   'mobile_event_covers/${formatText(eventTitleController.text)}_${DateTime.now().toIso8601String()}.jpg',
+            );
+            response.fold(
+              (res) => resultUrl = res,
+              (exception) => showCustomMessageDialog(
+                type: DialogType.error,
+                context: context,
+                title: 'Erro ao Salvar imagem',
+                message: 'Houve um erro ao salvar a imagem, verifique sua conexão e tente novamente.',
+                duration: const Duration(seconds: 1),
+              ),
             );
           }
 
