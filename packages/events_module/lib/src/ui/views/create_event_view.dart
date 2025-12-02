@@ -539,7 +539,7 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(top: 16, bottom: 32),
+                          margin: const EdgeInsets.only(top: 16),
                           child: TemplateFormWidget(
                             horizontalSymmetric: EdgeInsets.zero,
                             valueListenable: _store.isContactLinkValid,
@@ -554,6 +554,22 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                               prefixIcon: prefixLocationIcon,
                               isValid: _store.isContactLinkValid.value,
                               hintText: 'Link do contato',
+                            ),
+                            validator: (_) => null,
+                          ),
+                        ),Container(
+                          margin: const EdgeInsets.only(top: 16, bottom: 32),
+                          child: TemplateFormWidget(
+                            horizontalSymmetric: EdgeInsets.zero,
+                            controller: _store.mediaLinkController,
+                            title: 'Link drive mídia',
+                            globalKey: _store.mediaLinkKey,
+                            isPressed: _store.isAddEventPressed,
+                            inputDecoration: fieldInputDecoration(
+                              prefixIconConstraints: const BoxConstraints(),
+                              prefixIcon: prefixLocationIcon,
+                              isValid: ValueNotifier(true).value,
+                              hintText: 'Link drive mídia',
                             ),
                             validator: (_) => null,
                           ),

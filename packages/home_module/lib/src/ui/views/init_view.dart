@@ -12,9 +12,43 @@ class InitView extends StatefulWidget {
 }
 
 class _InitViewState extends State<InitView> {
+  late final AppLinksUtil appLinks;
   int selectedIndex = 0;
 
   final _controller = PageController();
+  @override
+  void initState() {
+    super.initState();
+    appLinks = Modular.get<AppLinksUtil>();
+
+
+    appLinks.getInitialLink().then((link) {
+      if (link != null) {
+        _handleDeepLink(link);
+      }
+    });
+
+    /// Deep link enquanto o app está aberto
+    appLinks.linkStream.listen((link) {
+      _handleDeepLink(link);
+    });
+  }
+
+  void _handleDeepLink(String link) {
+    print("🔗 Deep Link recebido: $link");
+
+    // Exemplo de link: https://meusite.com/evento/123
+    Uri uri = Uri.parse(link);
+
+    if (uri.pathSegments.contains("evento")) {
+      String id = uri.pathSegments.last;
+
+      // Exemplo de navegação
+      Navigator.pushNamed(context, '/eventDetails', arguments: id);
+    }
+  }
+  
+
 
   void _onItemTapped(int index) {
     selectedIndex = index;

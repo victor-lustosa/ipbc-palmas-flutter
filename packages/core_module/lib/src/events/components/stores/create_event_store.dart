@@ -44,6 +44,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       TextEditingController();
   final TextEditingController eventLinkController = TextEditingController();
   final TextEditingController contactLinkController = TextEditingController();
+  final TextEditingController mediaLinkController = TextEditingController();
   final TextEditingController eventLinkDescriptionController =
       TextEditingController();
   final TextEditingController eventDescriptionController =
@@ -67,6 +68,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
   final eventTitleKey = GlobalKey<FormState>();
   final eventSubtitleKey = GlobalKey<FormState>();
   final contactLinkKey = GlobalKey<FormState>();
+  final mediaLinkKey = GlobalKey<FormState>();
   final eventLinkKey = GlobalKey<FormState>();
   final eventLinkDescriptionKey = GlobalKey<FormState>();
   final eventLocationKey = GlobalKey<FormState>();
@@ -311,6 +313,9 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
       createAt: isEditing ? eventEntity.createAt : DateTime.now(),
       latitude: latLong?['lat'],
       longitude: latLong?['lng'],
+      mediaLink: mediaLinkController.text.isEmpty
+          ? null
+          : mediaLinkController.text,
     );
     eventEntity = entity;
     return entity;

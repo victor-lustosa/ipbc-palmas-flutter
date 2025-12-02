@@ -17,6 +17,7 @@ class EventEntity {
     this.contactLink,
     this.latitude,
     this.longitude,
+    this.mediaLink,
   });
 
   final String? id;
@@ -34,6 +35,8 @@ class EventEntity {
   final DateTime createAt;
   final double? latitude;
   final double? longitude;
+  final String? mediaLink;
+
 
   @override
   bool operator ==(Object other) {
@@ -64,6 +67,8 @@ class EventEntity {
     contactLink: '',
     latitude: 0.0,
     longitude: 0.0,
+    mediaLink: '',
+
   );
 
   EventEntity copyWith({
@@ -82,6 +87,7 @@ class EventEntity {
     DateTime? createAt,
     double? latitude,
     double? longitude,
+    String? mediaLink,
   }) {
     return EventEntity(
       id: id ?? this.id,
@@ -99,6 +105,7 @@ class EventEntity {
       contactLink: contactLink ?? this.contactLink,
       latitude: this.latitude,
       longitude: this.longitude,
+      mediaLink: this.mediaLink,
     );
   }
 }

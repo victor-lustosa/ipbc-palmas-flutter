@@ -19,6 +19,7 @@ class EventsDetailViewState extends State<EventsDetailView>
   Future<void>? locationLink;
   Future<void>? signUpLink;
   Future<void>? contactLink;
+  Future<void>? mediaLink;
   ValueNotifier<bool> isChanged = ValueNotifier(false);
   late final CreateEventStore _createEventStore;
   late EventEntity event;
@@ -312,7 +313,6 @@ class EventsDetailViewState extends State<EventsDetailView>
                             child: Container(
                               margin: const EdgeInsets.only(
                                 top: 16,
-                                bottom: 40,
                               ),
                               child: ButtonWidget(
                                 action: () {
@@ -334,6 +334,38 @@ class EventsDetailViewState extends State<EventsDetailView>
                                 shadowColor: AppColors.grey0,
                                 foregroundColor: AppColors.darkGreen,
                                 child: const Text("Contato"),
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible:
+                            event.mediaLink != null &&
+                                event.mediaLink!.isNotEmpty,
+                            child: Container(
+                              margin: const EdgeInsets.only(
+                                top: 16,
+                                bottom: 40,
+                              ),
+                              child: ButtonWidget(
+                                action: () {
+                                  mediaLink = launchInBrowser(
+                                      Uri.parse(
+                                        event.mediaLink ?? '',
+
+                                      ),
+                                      context
+                                  );
+                                },
+                                adaptiveButtonType: AdaptiveButtonType.outlined,
+                                sideColor: AppColors.darkGreen,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                fixedSize: Size(context.sizeOf.width, 48),
+                                backgroundColor: AppColors.white,
+                                shadowColor: AppColors.grey0,
+                                foregroundColor: AppColors.darkGreen,
+                                child: const Text("Mídia"),
                               ),
                             ),
                           ),

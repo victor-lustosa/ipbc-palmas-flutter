@@ -120,6 +120,8 @@ export 'src/shared/utils/supa_services_util.dart';
 export 'src/shared/utils/responsivity_util.dart';
 export 'src/shared/utils/analytics_util.dart';
 export 'src/shared/utils/mock_util.dart';
+export 'src/shared/utils/app_links_util.dart';
+
 
 export 'src/auth/domain/use_cases/auth_use_cases.dart';
 export 'src/auth/external/repositories/supa_auth_repository.dart';

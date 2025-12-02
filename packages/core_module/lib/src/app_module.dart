@@ -1,5 +1,6 @@
 import 'package:core_module/src/events/external/repositories/event_repository.dart';
 import 'package:core_module/src/events/infra/use_cases/event_use_cases.dart';
+import 'package:core_module/src/shared/utils/app_links_util.dart';
 
 import '../core_module.dart';
 import 'auth/infra/use_cases/auth_use_cases.dart';
@@ -21,7 +22,8 @@ class CoreModule extends Module {
       () => SupabaseRepository(supabaseClient: i.get<SupabaseClient>()),
     );
 
-    i.addLazySingleton<HiveRepository>(() => HiveRepository());
+    i.addLazySingleton<HiveRepository>(HiveRepository.new);
+    i.addLazySingleton<AppLinksUtil>(AppLinksUtil.new);
 
     i.addSingleton(
       () =>

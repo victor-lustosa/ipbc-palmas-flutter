@@ -27,6 +27,7 @@ class EventAdapter {
       contactLink: json['contact_link'],
       latitude: json['latitude'],
       longitude: json['longitude'],
+      mediaLink: json['media_link'],
     );
   }
 
@@ -49,6 +50,7 @@ class EventAdapter {
             'create_at': e.createAt,
             'latitude': e.latitude,
             'longitude': e.longitude,
+            'media_link': e.mediaLink,
           },
         )
         .toList();
@@ -71,6 +73,7 @@ class EventAdapter {
       'create_at': data.createAt.toIso8601String(),
       'latitude': data.latitude,
       'longitude': data.longitude,
+      'media_link': data.mediaLink,
     };
   }
 
@@ -97,6 +100,7 @@ class EventAdapter {
           subtitle: entity['subtitle'],
           latitude: entity['latitude'],
           longitude: entity['longitude'],
+          mediaLink: entity['media_link'],
         ),
       );
     }
