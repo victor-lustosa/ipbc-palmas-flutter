@@ -4,8 +4,6 @@ import 'package:core_module/src/shared/utils/app_links_util.dart';
 
 import '../core_module.dart';
 import 'auth/infra/use_cases/auth_use_cases.dart';
-import 'core/overall_states/generic_event_bus.dart';
-import 'design_system/stores/search_store.dart';
 
 class CoreModule extends Module {
   static BindConfig<T> blocConfig<T extends Bloc>() {
@@ -68,15 +66,16 @@ class CoreModule extends Module {
       () => ServiceStore(
         manageLyricStore: i.get<ManageLyricStore>(),
         lyricsListStore: i.get<LyricsListStore>(),
-        searchLyricsStore: i.get<SearchLyricsStore>(),
         manageServiceStore: i.get<ManageServiceStore>(),
       ),
     );
     i.addLazySingleton<ManageServiceStore>(
       () => ManageServiceStore(useCases: i.get<UseCases<SupabaseRepository>>()),
     );
-    i.addLazySingleton<SearchLyricsStore>(
+    i.add<SearchLyricsStore>(
       () => SearchLyricsStore(
+        searchStore: i.get<SearchStore>(),
+        serviceStore: i.get<ServiceStore>(),
         eventBus: i.get<GenericEventBus<GenericState<SearchState>>>(),
         lyricsListStore: i.get<LyricsListStore>(),
         manageLyricStore: i.get<ManageLyricStore>(),

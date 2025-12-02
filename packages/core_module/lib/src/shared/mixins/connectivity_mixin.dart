@@ -16,14 +16,14 @@ mixin ConnectivityMixin {
       final connectivityResult = await Connectivity().checkConnectivity();
       if (connectivityResult.contains(ConnectivityResult.none)) {
         if (context.mounted) {
-          showCustomMessageDialog(
+          showCustomToast(
             width: width,
             alignment: alignment,
             context: context,
             duration: duration,
             title: 'Sem conexão',
             message: 'Verifique sua conexão com a internet e tente novamente.',
-            type: DialogType.warning,
+            type: .warning,
             onDelayedAction: onDelayedAction,
           );
         }
@@ -34,11 +34,11 @@ mixin ConnectivityMixin {
     } on PlatformException catch (e, st) {
       AnalyticsUtil.recordError(error: e, st: st, name: 'lyric view model');
       if (context.mounted) {
-        showCustomMessageDialog(
+        showCustomToast(
           context: context,
           title: 'Erro ao verificar conexão',
           message: 'Verifique sua conexão com a internet e tente novamente.',
-          type: DialogType.warning,
+          type: .warning,
           onDelayedAction: onDelayedAction,
         );
       }

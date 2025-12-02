@@ -162,12 +162,15 @@ class _CreateEventViewState extends State<CreateEventView> with DateMixin {
                                                           height: 21.33,
                                                         ),
                                                 ),
-                                                Text(
-                                                  'Suba um arquivo PNG ou JPG com dimensões de até 343x144 e 4MB',
-                                                  textAlign: TextAlign.center,
-                                                  style: AppFonts.defaultFont(
-                                                    fontSize: 13,
-                                                    color: AppColors.grey6,
+                                                Padding(
+                                                  padding: const EdgeInsets.only(left: 16,right: 16),
+                                                  child: Text(
+                                                    'Suba um arquivo PNG ou JPG com dimensões de até 343x144 e 4MB',
+                                                    textAlign: TextAlign.center,
+                                                    style: AppFonts.defaultFont(
+                                                      fontSize: 13,
+                                                      color: AppColors.grey6,
+                                                    ),
                                                   ),
                                                 ),
                                               ],

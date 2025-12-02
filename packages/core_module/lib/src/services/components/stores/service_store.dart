@@ -5,18 +5,16 @@ class ServiceStore extends ValueNotifier<GenericState<ServiceState>> {
   ServiceStore({
     required ManageLyricStore manageLyricStore,
     required LyricsListStore lyricsListStore,
-    required SearchLyricsStore searchLyricsStore,
     required ManageServiceStore manageServiceStore,
   }) : _manageLyricStore = manageLyricStore,
        _lyricsListStore = lyricsListStore,
-       _searchLyricsStore = searchLyricsStore,
        _manageServiceStore = manageServiceStore,
        super(InitialState());
 
   final ManageLyricStore _manageLyricStore;
-  final SearchLyricsStore _searchLyricsStore;
   final LyricsListStore _lyricsListStore;
   final ManageServiceStore _manageServiceStore;
+  List<LyricEntity> entitiesList = [];
   Function? updateServicesCollectionCallback;
   ValueNotifier<bool> isChanged = ValueNotifier(false);
 
@@ -45,29 +43,37 @@ class ServiceStore extends ValueNotifier<GenericState<ServiceState>> {
   }
 
   void addLyric() {
-    manageLyricStore.serviceId = serviceEntity.id!;
-    _searchLyricsStore.servicesEntity = servicesEntity;
-    pushNamed(AppRoutes.servicesRoute + AppRoutes.searchLyricsRoute);
+    pushNamed(
+      AppRoutes.servicesRoute + AppRoutes.searchLyricsRoute,
+      arguments: SearchLyricsDTO(servicesEntity: servicesEntity, serviceId: serviceEntity.id!),
+    );
   }
 
   void editLyric(BuildContext context) {
     manageLyricStore.isEditing = true;
-    manageLyricStore.lyric.value = lyricsListStore.lyricEntity;
-    pushNamed(
-      AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute,
-    );
+    manageLyricStore.lyric.value = lyricsListStore.selectedLyric;
+    pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);
     pop(context);
   }
 
-  void deleteLyric(BuildContext context) async{
+  void deleteLyric(BuildContext context) async {
+    lyricsListStore.tappedIndex.value = null;
     manageLyricStore.deleteLyric(
       context: context,
-      lyricId: lyricsListStore.lyricEntity.id!,
+      params: {
+        'table': 'service_lyrics',
+        'match': {
+          'service_id': int.parse(serviceEntity.id!),
+          'lyric_id': int.parse(lyricsListStore.selectedLyric.id!),
+        },
+      },
+      isAttached: true,
     );
-    Future.delayed(const Duration(seconds: 1), () {
-      manageLyricStore.value = RefreshingState();
-    });
-    pop(context);
+    entitiesList.remove(
+      entitiesList.firstWhere((e) => e.id == lyricsListStore.selectedLyric.id!),
+    );
+    manageLyricStore.value = RefreshingState();
+    nativePopToast(2, context);
   }
 }
 

@@ -1,12 +1,11 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../../core_module.dart';
 
 class AppRoutes {
-
   //Init
   static const String initialRoute = '/init';
 
@@ -45,7 +44,6 @@ class AppRoutes {
   static const String lyricRoute = "/lyric";
   static const String lyricsRoute = "/lyrics";
   static const String lyricsListRoute = "/lyrics-list";
-
 }
 
 Future<void> nativePushReplacementNamed(
@@ -72,7 +70,11 @@ void navigate(String route, {Object? arguments}) {
   Modular.to.navigate(route, arguments: arguments);
 }
 
-Future<void> nativePushNamed(String route, BuildContext context, {Object? arguments}) async {
+Future<void> nativePushNamed(
+  String route,
+  BuildContext context, {
+  Object? arguments,
+}) async {
   Navigator.pushNamed(context, route, arguments: arguments);
 }
 
@@ -84,17 +86,20 @@ void popUntil(bool Function(Route<dynamic>) predicate) {
   Modular.to.popUntil(predicate);
 }
 
-void popToast(int popNumber){
+void popToast(int popNumber) {
   int count = 0;
   popUntil((_) => count++ >= popNumber);
 }
 
-void nativePopToast(int popNumber, BuildContext context){
+void nativePopToast(int popNumber, BuildContext context) {
   int count = 0;
   nativePopUntil((_) => count++ >= popNumber, context);
 }
 
-void nativePopUntil(bool Function(Route<dynamic>) predicate, BuildContext context) {
+void nativePopUntil(
+  bool Function(Route<dynamic>) predicate,
+  BuildContext context,
+) {
   Navigator.popUntil(context, predicate);
 }
 
@@ -117,15 +122,11 @@ Future<void> nativePopAndPushNamed(
 }
 
 Future<void> popAndPushNamed(
-    String routeName, {
-      dynamic result,
-      Object? arguments,
-    }) async {
-  Modular.to.popAndPushNamed(
-    routeName,
-    result: result,
-    arguments: arguments,
-  );
+  String routeName, {
+  dynamic result,
+  Object? arguments,
+}) async {
+  Modular.to.popAndPushNamed(routeName, result: result, arguments: arguments);
 }
 
 void pop([BuildContext? context]) {
@@ -185,7 +186,7 @@ class CustomSlideTransition extends PageRouteBuilder {
   /*FadeTransition(opacity: animation, child: child);*/
 }
 
-class ModularFadeTransition extends CustomTransition {
+/*class ModularFadeTransition extends CustomTransition {
   ModularFadeTransition({
     Duration? transitionDuration,
     Duration? reverseTransitionDuration,
@@ -200,7 +201,7 @@ class ModularFadeTransition extends CustomTransition {
              reverseTransitionDuration ?? const Duration(milliseconds: 150),
          opaque: opaque ?? true,
        );
-}
+}*/
 
 class ModularSlideTransition extends CustomTransition {
   ModularSlideTransition({
@@ -212,31 +213,156 @@ class ModularSlideTransition extends CustomTransition {
     bool? opaque,
     Offset? secondaryBegin,
   }) : super(
-    transitionBuilder: (context, anim1, anim2, child) {
-      // Vai da direita (Offset(1,0)) para o centro (Offset.zero)
-      final inTween = Tween(
-        begin: begin ?? const Offset(1, 0),
-        end: end ?? Offset.zero,
-      ).chain(CurveTween(curve: curve ?? Curves.easeOut));
-      // Vai do centro (Offset.zero) para um pouco à esquerda (Offset(-0.3, 0))
-      // O valor -0.3 é um bom valor visual, mas você pode ajustar.
-      final outTween = Tween(
-        begin: Offset.zero,
-        end: secondaryBegin ?? const Offset(-0.3, 0),
-      ).chain(CurveTween(curve: curve ?? Curves.easeOut));
-      return SlideTransition(
-        position: anim2.drive(outTween),
-        child: SlideTransition(
-          position: anim1.drive(inTween),
-          child: child,
-        ),
+         transitionDuration:
+             transitionDuration ?? const Duration(milliseconds: 300),
+         reverseTransitionDuration:
+             reverseTransitionDuration ?? const Duration(milliseconds: 300),
+         transitionBuilder: (context, anim1, anim2, child) {
+           // Vai da direita (Offset(1,0)) para o centro (Offset.zero)
+           final inTween = Tween(
+             begin: begin ?? const Offset(1, 0),
+             end: end ?? Offset.zero,
+           ).chain(CurveTween(curve: curve ?? Curves.easeOut));
+           // Vai do centro (Offset.zero) para um pouco à esquerda (Offset(-0.3, 0))
+           // O valor -0.3 é um bom valor visual, mas você pode ajustar.
+           final outTween = Tween(
+             begin: Offset.zero,
+             end: secondaryBegin ?? const Offset(-0.3, 0),
+           ).chain(CurveTween(curve: curve ?? Curves.easeOut));
+           return SlideTransition(
+             position: anim2.drive(outTween),
+             child: SlideTransition(
+               position: anim1.drive(inTween),
+               child: child,
+             ),
+           );
+         },
+       );
+}
+/*
+class UniversalPageRoute extends PageRouteBuilder {
+  final Widget child;
+  final AnimationType enterType;
+  final AnimationType? exitType;
+
+  UniversalPageRoute({
+    required this.child,
+    required this.enterType,
+    this.exitType,
+    Duration duration = const Duration(milliseconds: 300),
+  }) : super(
+    pageBuilder: (context, animation, secondaryAnimation) => child,
+    transitionDuration: duration,
+    reverseTransitionDuration: duration,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      final bool isPopping = animation.status == AnimationStatus.reverse;
+      final type = (isPopping && exitType != null) ? exitType : enterType;
+
+      return UniversalModularTransition._applyAnimation(
+          type,
+          animation,
+          child,
+          Curves.easeInOut
       );
     },
-    transitionDuration:
-    transitionDuration ?? const Duration(milliseconds: 300),
-    reverseTransitionDuration:
-    reverseTransitionDuration ?? const Duration(milliseconds: 300),
   );
+}*/
+
+enum AnimationType { slideRight, slideUp, fade, scale, none }
+
+class UniversalModularTransition extends CustomTransition {
+  UniversalModularTransition({
+    required AnimationType enterType,
+    AnimationType? exitType,
+    Duration? duration,
+    Duration? reverseDuration,
+    Curve curve = Curves.easeOut,
+    Offset? begin,
+    Offset? end,
+    bool? opaque,
+    Offset? secondaryBegin,
+  }) : super(
+         transitionDuration: duration ?? const Duration(milliseconds: 300),
+         reverseTransitionDuration: reverseDuration ?? const Duration(milliseconds: 300),
+          opaque: opaque ?? true,
+         transitionBuilder: (context, animation, secondaryAnimation, child) {
+           final bool isPopping = animation.status == AnimationStatus.reverse;
+
+           final AnimationType activeType = (isPopping && exitType != null)
+               ? exitType
+               : enterType;
+
+           return _applyAnimation(
+             activeType,
+             animation,
+             secondaryAnimation,
+             child,
+             curve,
+             begin,
+             end,
+             opaque,
+             secondaryBegin,
+           );
+         },
+       );
+
+  static Widget _applyAnimation(
+    AnimationType type,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+    Curve curve,
+    Offset? begin,
+    Offset? end,
+    bool? opaque,
+    Offset? secondaryBegin,
+  ) {
+    switch (type) {
+
+      case AnimationType.slideRight:
+        final inTween = Tween(
+          begin: begin ?? const Offset(1, 0),
+          end: end ?? Offset.zero,
+        ).chain(CurveTween(curve: curve));
+        // Vai do centro (Offset.zero) para um pouco à esquerda (Offset(-0.3, 0))
+        // O valor -0.3 é um bom valor visual, mas você pode ajustar.
+        final outTween = Tween(
+          begin: Offset.zero,
+          end: secondaryBegin ?? const Offset(-1, 0),
+        ).chain(CurveTween(curve: curve));
+        return SlideTransition(
+          position: animation.drive(outTween),
+          child: SlideTransition(
+            position: secondaryAnimation.drive(inTween),
+            child: child,
+          ),
+        );
+
+      case AnimationType.slideUp:
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0.0, 1.0),
+            end: Offset.zero,
+          ).chain(CurveTween(curve: curve)).animate(animation),
+          child: child,
+        );
+
+      case AnimationType.fade:
+        return FadeTransition(
+          opacity: CurvedAnimation(parent: animation, curve: curve),
+          child: child,
+        );
+
+      case AnimationType.scale:
+        return ScaleTransition(
+          scale: CurvedAnimation(parent: animation, curve: curve),
+          child: child,
+        );
+
+      case AnimationType.none:
+        return child;
+    }
+  }
 }
 
 class CustomFadeTransition extends PageRouteBuilder {

@@ -1,8 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../core/overall_states/generic_event_bus.dart';
-
 enum SearchParameters {
   title(label: 'título', column: 'title'),
   artist(label: 'artista', column: 'group');
@@ -20,27 +18,29 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
   }) : _useCases = useCases,
        _eventBus = eventBus,
        super(InitialState());
-
+  int? _currentStoreId;
   late ServicesEntity servicesEntity;
   final IUseCases _useCases;
   final GenericEventBus<GenericState<SearchState>> _eventBus;
 
   final TextEditingController searchController = TextEditingController();
-  String searchField = '';
   bool isSelected = false;
   int selectedIndex = 0;
+  int limit = 0;
 
-  void init() {
+  void init(int storeId) {
     searchController.text = '';
+    _currentStoreId = storeId;
   }
 
   void selectOptions(int index) {
     selectedIndex = index;
   }
 
-  void searchLyrics() async {
-    _eventBus.emit(LoadingState<SearchState>());
-    List<LyricEntity> lyrics = await _useCases.get(
+  void searchLyrics(String searchField) async {
+    _eventBus.emit(LoadingState<SearchState>(id: _currentStoreId));
+    List<LyricEntity> lyrics = [];
+     final response = await _useCases.get(
       params: {
         'table': 'lyrics',
         'orderBy': 'create_at',
@@ -48,13 +48,14 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
         'likeValue': searchField,
         'ascending': false,
         'selectFields': 'id, title, group, album_cover, create_at, verses',
+        if(limit > 0) 'limit': limit
       },
-      converter: LyricAdapter.fromMapList,
     );
+    response.fold((l)=> lyrics = LyricAdapter.fromMapList(l), (r) => null);
     if (lyrics.isNotEmpty) {
-      _eventBus.emit(DataFetchedState<SearchState>(entities: lyrics));
+      _eventBus.emit(DataFetchedState<SearchState>(entities: lyrics, id: _currentStoreId));
     } else {
-      _eventBus.emit(NotFoundState<SearchState>());
+      _eventBus.emit(NotFoundState<SearchState>(id: _currentStoreId));
     }
   }
 }

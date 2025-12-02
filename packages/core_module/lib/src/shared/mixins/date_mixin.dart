@@ -75,8 +75,8 @@ mixin DateMixin {
 
      if (pickedOnly.isBefore(todayOnly)) {
        if (context.mounted) {
-         showCustomMessageDialog(
-           type: DialogType.error,
+         showCustomToast(
+           type: .error,
            context: context,
            title: 'Data inválida',
            message: 'Selecione uma data igual ou posterior a hoje.',

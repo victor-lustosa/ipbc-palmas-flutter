@@ -1,7 +1,8 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
+class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
+    with ConnectivityMixin {
   ManageLyricStore({
     required IUseCases useCases,
     required LyricsListStore lyricsListStore,
@@ -172,88 +173,153 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>> {
     }
   }
 
-  void saveLyric(BuildContext context) async {
-    isSavePressed.value = true;
-    try {
-      final lyricsResponse = await _useCases.upsert(
-        params: {'table': 'lyrics', 'selectFields': 'id'},
-        data: LyricAdapter.toMap(lyric.value),
+  void toast(
+    BuildContext context,
+    String message,
+    String title, {
+    Function()? onDelayedAction,
+    ToastType? type,
+  }) {
+    if (context.mounted) {
+      showCustomToast(
+        type: type ?? ToastType.error,
+        context: context,
+        duration: const Duration(seconds: 1),
+        title: title,
+        message: message,
+        onDelayedAction: onDelayedAction,
       );
-      await _useCases.upsert(
-        params: {'table': 'service_lyrics'},
-        data: {
-          'service_id': int.parse(serviceId),
-          'lyric_id': lyricsResponse[0]['id'],
-        },
-      );
-      lyric.value = lyric.value.copyWith(
-        id: lyricsResponse[0]['id'].toString(),
-      );
-
-
-      final index = _lyricsListStore.entitiesList.indexWhere(
-        (item) => item.id == lyric.value.id,
-      );
-      if (index != -1) {
-        _lyricsListStore.entitiesList[index] = lyric.value;
-      } else {
-        _lyricsListStore.entitiesList.add(lyric.value);
-      }
-
-      if (context.mounted) {
-        showCustomMessageDialog(
-          type: DialogType.success,
-          context: context,
-          title: 'Sucesso!',
-          message: 'Musica salva com sucesso.',
-          duration: const Duration(seconds: 1),
-          onDelayedAction: (){
-            isSavePressed.value = false;
-            value = RefreshingState();
-            buttonCallback();
-          }
-        );
-      }
-
-    } catch (e) {
-      if (context.mounted) {
-        showCustomMessageDialog(
-          type: DialogType.error,
-          context: context,
-          duration: const Duration(seconds: 1),
-          title: 'Erro ao salvar!',
-          message: 'Ocorreu um erro ao salvar a música. Verifique a internet e tente novamente.',
-          onDelayedAction: (){
-            isSavePressed.value = false;
-            value = RefreshingState();
-          }
-        );
-      }
     }
   }
 
-  Future<void> deleteLyric({required BuildContext context, required String lyricId}) async {
-    await _useCases.delete(
-      params: {
-        'table': 'lyrics',
-        'whereClause': 'id',
-        'referenceValue': int.parse(lyricId),
-      },
-    );
-    _lyricsListStore.entitiesList.remove(
-      _lyricsListStore.entitiesList.firstWhere((e) => e.id == lyricId),
-    );
-    if (context.mounted) {
-       showCustomMessageDialog(
-        type: DialogType.success,
-        context: context,
-        title: 'Sucesso!',
-        message: 'Música deletada com sucesso.',
+  Future<LyricEntity?> saveLyric(
+    BuildContext context, {
+    bool isAttached = false,
+  }) async {
+    isSavePressed.value = true;
+    if (await isConnected(context: context)) {
+      final response = await _useCases.upsert(
+        params: {'table': 'lyrics', 'selectFields': 'id'},
+        data: LyricAdapter.toMap(lyric.value),
       );
+      response.fold(
+        (lyricsResponse) async {
+          final response = await _useCases.upsert(
+            params: {'table': 'service_lyrics'},
+            data: {
+              'service_id': int.parse(serviceId),
+              'lyric_id': lyricsResponse[0]['id'],
+            },
+          );
+          response.fold(
+            (_) {
+              lyric.value = lyric.value.copyWith(
+                id: lyricsResponse[0]['id'].toString(),
+              );
+
+              if (!isAttached) {
+                final index = _lyricsListStore.entitiesList.indexWhere(
+                  (item) => item.id == lyric.value.id,
+                );
+                if (index != -1) {
+                  _lyricsListStore.entitiesList[index] = lyric.value;
+                } else {
+                  _lyricsListStore.entitiesList.add(lyric.value);
+                }
+              }
+
+              if (context.mounted) {
+                showCustomToast(
+                  context: context,
+                  title: 'Sucesso!',
+                  message: 'Musica salva com sucesso.',
+                  duration: const Duration(seconds: 1),
+                  onDelayedAction: () {
+                    isSavePressed.value = false;
+                    value = RefreshingState();
+                    buttonCallback();
+                  },
+                );
+              }
+            },
+            (GenericException r) {
+              return right(
+                toast(
+                  context,
+                  type: (r.code == '23505') ? ToastType.warning : null,
+                  (r.code == '23505')
+                      ? 'Essa letra já existe na lista de letras do culto.'
+                      : 'Ocorreu um erro ao salvar a música. Verifique a internet e tente novamente.',
+                  (r.code == '23505')
+                      ? 'Letra duplicada!'
+                      : 'Problema ao salvar!',
+                  onDelayedAction: () {
+                    isSavePressed.value = false;
+                    value = RefreshingState();
+                  },
+                ),
+              );
+            },
+          );
+        },
+        (_) {
+          return right(
+            toast(
+              context,
+              'Ocorreu um erro ao salvar a música. Verifique a internet e tente novamente.',
+              'Erro ao salvar!',
+              onDelayedAction: () {
+                isSavePressed.value = false;
+                value = RefreshingState();
+              },
+            ),
+          );
+        },
+      );
+      return lyric.value;
+    } else {
+      return null;
     }
+  }
+
+  Future<void> deleteLyric({
+    required BuildContext context,
+    String lyricId = '',
+    Map<String, dynamic>? params,
+    bool isAttached = false,
+  }) async {
+    final response = await _useCases.delete(
+      params:
+          params ??
+          {
+            'table': 'lyrics',
+            'whereClause': 'id',
+            'referenceValue': int.parse(lyricId),
+          },
+    );
+    response.fold(
+      (_) {
+        if (!isAttached) {
+          _lyricsListStore.entitiesList.remove(
+            _lyricsListStore.entitiesList.firstWhere((e) => e.id == lyricId),
+          );
+        }
+        if (context.mounted) {
+          showCustomToast(
+            context: context,
+            title: 'Sucesso!',
+            message: 'Música deletada com sucesso.',
+          );
+        }
+      },
+      (_) => toast(
+        context,
+        'Ocorreu um erro ao deletar a música. Verifique a internet e tente novamente.',
+        'Erro ao deletar!',
+      ),
+    );
   }
 }
 
 @immutable
 abstract class ManageLyricState {}
-

@@ -3,9 +3,6 @@ import 'dart:async';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../core/overall_states/generic_event_bus.dart';
-import '../../../design_system/stores/search_store.dart';
-
 class LyricsListStore extends ValueNotifier<GenericState<LyricsListState>> {
   final GenericEventBus<GenericState<SearchState>> _eventBus;
   late final StreamSubscription _subscription;
@@ -13,14 +10,20 @@ class LyricsListStore extends ValueNotifier<GenericState<LyricsListState>> {
   List<LyricEntity> entitiesList = [];
   late GlobalKey itemKey;
   int index = 0;
-  late LyricEntity lyricEntity;
+  late LyricEntity selectedLyric;
+  bool hasFixedData = false;
 
   LyricsListStore({
     required GenericEventBus<GenericState<SearchState>> eventBus,
   }) : _eventBus = eventBus,
        super(InitialState()) {
     _subscription = _eventBus.stream.listen((state) {
+      if (hasFixedData) {
+        return;
+      }
+
       if (state is LoadingState) {
+        tappedIndex.value = null;
         value = LoadingState();
       }
 

@@ -37,8 +37,8 @@ class ResetPasswordStore
           } else {
             notifyBorderError(value: true);
             if (context.mounted) {
-              showCustomMessageDialog(
-                type: DialogType.error,
+              showCustomToast(
+                type: .error,
                 context: context,
                 title: 'Código Inválido!',
                 message: 'Por favor, verifique o código, e tente novamente.',
@@ -48,8 +48,8 @@ class ResetPasswordStore
         } else {
           notifyBorderError(value: true);
           if (context.mounted) {
-            showCustomMessageDialog(
-              type: DialogType.error,
+            showCustomToast(
+              type: .error,
               context: context,
               title: 'Código não Preenchidos!',
               message:

@@ -15,13 +15,13 @@ mixin LaunchUrlMixin {
       mode: launchMode ?? LaunchMode.externalApplication,
     )) {
       if (context.mounted) {
-        showCustomMessageDialog(
+        showCustomToast(
             context: context,
             alignment: alignment,
             width: width,
             title: 'Erro ao redirecionar',
             message: 'Verifique sua conexão com a internet e tente novamente.',
-            type: DialogType.error,
+            type: .error,
         );
       }
     }

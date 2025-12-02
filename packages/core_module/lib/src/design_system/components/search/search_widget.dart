@@ -2,12 +2,11 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../stores/search_store.dart';
 import 'search_bar_widget.dart';
 
 class SearchWidget extends StatefulWidget {
-  const SearchWidget({super.key});
-
+  const SearchWidget({super.key, required this.storeId});
+  final int storeId;
   @override
   State<SearchWidget> createState() => _SearchWidgetState();
 }
@@ -19,7 +18,7 @@ class _SearchWidgetState extends State<SearchWidget> {
   void initState() {
     super.initState();
     _store = Modular.get<SearchStore>();
-    _store.init();
+    _store.init(widget.storeId);
   }
 
   @override
@@ -34,10 +33,7 @@ class _SearchWidgetState extends State<SearchWidget> {
               child: SearchBarWidget(
                 controller: _store.searchController,
                 onChange: (value) {
-                  _store.searchField = value;
-                  if (value.isNotEmpty) {
-                    _store.searchLyrics();
-                  }
+                    _store.searchLyrics(value);
                 },
               ),
             ),

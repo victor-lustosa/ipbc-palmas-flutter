@@ -19,8 +19,8 @@ mixin ImageMixin {
 
       if (fileSize > maxSizeInBytes) {
         if (context.mounted) {
-          showCustomMessageDialog(
-            type: DialogType.error,
+          showCustomToast(
+            type: .error,
             context: context,
             title: 'Erro',
             duration: const Duration(milliseconds: 2000),

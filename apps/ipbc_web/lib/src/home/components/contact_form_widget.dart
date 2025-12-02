@@ -268,8 +268,7 @@ class _ContactFormWidgetState extends State<ContactFormWidget>
     );
   }
 
-  TextStyle? get _titleStyle =>
-      AppFonts.defaultFont(fontSize: 14, color: AppColors.grey8);
+  TextStyle? get _titleStyle => AppFonts.defaultFont(fontSize: 14, color: AppColors.grey8);
 
   Container sendButton({required double width}) => Container(
     width: width,

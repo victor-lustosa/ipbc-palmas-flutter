@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
-
 class EventsListBloc
     extends Bloc<GenericEvent<EventsListEvent>, GenericState<EventsListState>>
     with ConnectivityMixin {
@@ -12,8 +11,10 @@ class EventsListBloc
   List<EventEntity> eventsList = [];
   late final SlideCardsStore _slideCardsStore;
   late final CreateEventStore _createEventStore;
+
   SlideCardsStore get slideCardsStore => _slideCardsStore;
-   CreateEventStore get createEventStore => _createEventStore;
+
+  CreateEventStore get createEventStore => _createEventStore;
 
   EventsListBloc({
     required this.onlineUseCases,
@@ -26,7 +27,6 @@ class EventsListBloc
     on<GetDataEvent<EventsListEvent>>(_getInSupa);
     on<LoadingEvent<EventsListEvent>>(_loading);
     on<DeleteItemEvent>(_deleteItem);
-
   }
 
   Future<void> _getInSupa(GetDataEvent event, emit) async {
@@ -36,13 +36,13 @@ class EventsListBloc
         if (emit.isDone) return;
         emit(LoadingEventsState());
       });
-      List<EventEntity> events = await onlineUseCases.get(
-        params: {
-          'table': 'event',
-          'orderBy': 'create_at',
-          'ascending': false,
-        },
-        converter: EventAdapter.fromMapList,
+      List<EventEntity> events = [];
+      final response = await onlineUseCases.get(
+        params: {'table': 'event', 'orderBy': 'create_at', 'ascending': false},
+      );
+      response.fold(
+        (eventsResponse) => events = EventAdapter.fromMapList(eventsResponse),
+        (exception) => null,
       );
       await Future.delayed(const Duration(milliseconds: 2300));
       eventsList = events;
@@ -58,7 +58,6 @@ class EventsListBloc
     emit(LoadingState<EventsListState>());
   }
 
-
   Future<void> _deleteItem(DeleteItemEvent event, emit) async {
     final eventEntity = eventsList[slideCardsStore.index];
     final response = await _createEventStore.delete(eventEntity, event.context);
@@ -69,7 +68,6 @@ class EventsListBloc
     if (emit.isDone) return;
     emit(DataFetchedState<EventsListState>());
   }
-
 }
 
 @immutable
@@ -79,11 +77,13 @@ abstract class EventsListEvent {}
 abstract class EventsListState {}
 
 class DeleteItemEvent extends GenericEvent<EventsListEvent> {
-  DeleteItemEvent({ required this.context, this.index});
+  DeleteItemEvent({required this.context, this.index});
+
   final BuildContext context;
   final int? index;
 }
 
+@immutable
 class LoadingEventsState extends GenericState<EventsListState> {
-  LoadingEventsState();
+  const LoadingEventsState();
 }

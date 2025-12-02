@@ -1,10 +1,6 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
-//import 'package:flutter/services.dart';
-//import 'package:google_maps_flutter/google_maps_flutter.dart';
-//import '../../app_module.dart';
-
 class EventsDetailView extends StatefulWidget {
   final EventEntity eventEntity;
 
@@ -34,10 +30,7 @@ class EventsDetailViewState extends State<EventsDetailView>
 
   @override
   Widget build(BuildContext context) {
-    final LatLng position = LatLng(
-      event.latitude ?? 0,
-      event.longitude ?? 0,
-    );
+    final LatLng position = LatLng(event.latitude ?? 0, event.longitude ?? 0);
     return Scaffold(
       body: SafeArea(
         child: LayoutBuilder(
@@ -61,14 +54,17 @@ class EventsDetailViewState extends State<EventsDetailView>
                           BackAuthTopBarWidget(
                             margin: const EdgeInsets.only(top: 22),
                             action: () {
-                              if(_createEventStore.fromCalled == 'home'){
-                                if(_createEventStore.updateHomeViewCallback != null && isChanged.value){
+                              if (_createEventStore.fromCalled == 'home') {
+                                if (_createEventStore.updateHomeViewCallback !=
+                                        null &&
+                                    isChanged.value) {
                                   isChanged.value = false;
                                   _createEventStore.updateHomeViewCallback!();
                                 }
                               }
-                              if(_createEventStore.fromCalled == 'eventList'){
-                                if(_createEventStore.updateEventListViewCallback != null && isChanged.value){
+                              if (_createEventStore.fromCalled == 'eventList') {
+                                if (_createEventStore.updateEventListViewCallback != null
+                                    && isChanged.value) {
                                   isChanged.value = false;
                                   _createEventStore.updateEventListViewCallback!();
                                 }
@@ -78,29 +74,27 @@ class EventsDetailViewState extends State<EventsDetailView>
                           ),
                           Container(
                             margin: const EdgeInsets.only(top: 20, bottom: 16),
-                            child: CachedNetworkImage(
-                              imageUrl: event.image,
-                              height: 144,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) =>
-                                  Container(color: AppColors.grey4),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                              color: const Color.fromRGBO(0, 66, 46, 0.40),
-                              colorBlendMode: BlendMode.color,
-                              imageBuilder: (context, imageProvider) =>
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(16),
-                                      ),
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover,
+                            child: AspectRatio(
+                              aspectRatio: 343 / 144,
+                              child: CachedNetworkImage(
+                                imageUrl: event.image,
+                                placeholder: (context, url) =>
+                                    Container(color: AppColors.grey4),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(16),
+                                        ),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
-                                  ),
+                              ),
                             ),
                           ),
                           Container(
@@ -115,8 +109,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                             ),
                           ),
 
-                          ((isEqualDate) ||
-                                  (!isEqualDate && event.isAllDay))
+                          ((isEqualDate) || (!isEqualDate && event.isAllDay))
                               ? Row(
                                   children: [
                                     Text(
@@ -265,7 +258,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                                           Uri.parse(
                                             "https://www.google.com/maps/search/?api=1&query=${event.latitude!},${event.longitude!}",
                                           ),
-                                          context
+                                          context,
                                         ),
                                       },
                                     ),
@@ -289,10 +282,8 @@ class EventsDetailViewState extends State<EventsDetailView>
                               child: ButtonWidget(
                                 action: () {
                                   signUpLink = launchInBrowser(
-                                    Uri.parse(
-                                      event.signUpLink ?? '',
-                                    ),
-                                    context
+                                    Uri.parse(event.signUpLink ?? ''),
+                                    context,
                                   );
                                 },
                                 shape: RoundedRectangleBorder(
@@ -317,11 +308,8 @@ class EventsDetailViewState extends State<EventsDetailView>
                               child: ButtonWidget(
                                 action: () {
                                   contactLink = launchInBrowser(
-                                    Uri.parse(
-                                      event.contactLink ?? '',
-
-                                    ),
-                                    context
+                                    Uri.parse(event.contactLink ?? ''),
+                                    context,
                                   );
                                 },
                                 adaptiveButtonType: AdaptiveButtonType.outlined,
@@ -389,15 +377,12 @@ class EventsDetailViewState extends State<EventsDetailView>
           action: () async {
             _createEventStore.isEditing = true;
             _createEventStore.eventEntity = event;
-            _createEventStore
-                .updateCallbackParam = () {
-                    setState(() {
-                      event = _createEventStore.eventEntity;
-                       isChanged.value = true;
-
-                    });
-                      pop();
-
+            _createEventStore.updateCallbackParam = () {
+              setState(() {
+                event = _createEventStore.eventEntity;
+                isChanged.value = true;
+              });
+              pop();
             };
 
             _createEventStore.deleteCallback = () {
@@ -413,10 +398,7 @@ class EventsDetailViewState extends State<EventsDetailView>
               nativePopToast(_createEventStore.popNumber, context);
               _createEventStore.popNumber = 2;
             };
-            await pushNamed(
-              AppRoutes.eventRoute +
-                  AppRoutes.createEventRoute,
-            );
+            await pushNamed(AppRoutes.eventRoute + AppRoutes.createEventRoute);
           },
         ),
       ),

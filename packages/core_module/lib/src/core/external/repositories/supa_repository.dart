@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import '../../../../core_module.dart';
+import '../../infra/exceptions/generic_exception.dart';
 
 class SupabaseRepository implements IRepository {
   SupabaseRepository({required SupabaseClient supabaseClient})
@@ -16,90 +17,135 @@ class SupabaseRepository implements IRepository {
   }
 
   @override
-  Future<dynamic> get<T>({Map<String, dynamic>? params}) async {
-    dynamic query = _supaClient.from(params?['table']).select(params?['selectFields'] ?? '*');
+  Future<Either<dynamic, GenericException>> get<T>({
+    Map<String, dynamic>? params,
+  }) async {
+    try {
+      dynamic query = _supaClient
+          .from(params?['table'])
+          .select(params?['selectFields'] ?? '*');
 
-    if (params?['filterColumn'] != null && params?['filterValue'] != null) {
-      query = query.eq(params?['filterColumn'], params?['filterValue']);
-    }
+      if (params?['filterColumn'] != null && params?['filterValue'] != null) {
+        query = query.eq(params?['filterColumn'], params?['filterValue']);
+      }
 
-    if (params?['likeColumn'] != null && params?['likeValue'] != null) {
-      query = query.ilike(params?['likeColumn'], '%${params?['likeValue']}%');
-    }
+      if (params?['likeColumn'] != null && params?['likeValue'] != null) {
+        query = query.ilike(params?['likeColumn'], '%${params?['likeValue']}%');
+      }
 
-    if (params?['orderBy'] != null) {
-      query = query.order(
-        params?['orderBy'],
-        ascending: params?['ascending'] ?? true,
+      if (params?['orderBy'] != null) {
+        query = query.order(
+          params?['orderBy'],
+          ascending: params?['ascending'] ?? true,
+        );
+      }
+
+      if (params?['limit'] != null) {
+        query = query.limit(params?['limit']);
+      }
+
+      return left(await query);
+    } on PostgrestException catch (e) {
+      return right(
+        GenericException(details: e.details, message: e.message, code: e.code),
       );
     }
-
-    if (params?['limit'] != null) {
-      query = query.limit(params?['limit']);
-    }
-
-    return await query;
   }
 
   @override
-  Future<dynamic> upsert<T>({
+  Future<Either<dynamic, GenericException>> upsert<T>({
     required data,
     Map<String, dynamic>? params,
   }) async {
-    dynamic query  = _supaClient.from(params?['table']).upsert(data);
+    try {
+      dynamic query = _supaClient.from(params?['table']).upsert(data);
 
-    if (params?['selectFields'] != null) {
-      query = query.select(params?['selectFields'] ?? '*');
+      if (params?['selectFields'] != null) {
+        query = query.select(params?['selectFields'] ?? '*');
+      }
+
+      return left(await query);
+    } on PostgrestException catch (e) {
+      return right(
+        GenericException(details: e.details, message: e.message, code: e.code),
+      );
     }
-
-    return await query;
   }
 
   @override
-  Future<dynamic> add<T>({required data, Map<String, dynamic>? params}) async {
-    dynamic query = _supaClient.from(params?['table']).insert(data);
+  Future<Either<dynamic, GenericException>> add<T>({
+    required data,
+    Map<String, dynamic>? params,
+  }) async {
+    try {
+      dynamic query = _supaClient.from(params?['table']).insert(data);
 
-    if (params?['selectFields'] != null) {
-      query = query.select(params?['selectFields'] ?? '*');
+      if (params?['selectFields'] != null) {
+        query = query.select(params?['selectFields'] ?? '*');
+      }
+
+      return left(await query);
+    } on PostgrestException catch (e) {
+      return right(
+        GenericException(details: e.details, message: e.message, code: e.code),
+      );
     }
-
-    return await query;
   }
 
   @override
-  Future<void> update<T>({required data, Map<String, dynamic>? params}) async {
-    dynamic query = _supaClient.from(params?['table']).update(data);
+  Future<Either<dynamic, GenericException>> update<T>({
+    required data,
+    Map<String, dynamic>? params,
+  }) async {
+    try {
+      dynamic query = _supaClient.from(params?['table']).update(data);
 
-    if (params?['referenceField'] != null && params?['referenceValue'] != null) {
-      query = query.eq(params?['referenceField'], params?['referenceValue']);
+      if (params?['referenceField'] != null &&
+          params?['referenceValue'] != null) {
+        query = query.eq(params?['referenceField'], params?['referenceValue']);
+      }
+
+      if (params?['selectFields'] != null) {
+        query = query.select(params?['selectFields'] ?? '*');
+      }
+
+      return left(await query);
+    } on PostgrestException catch (e) {
+      return right(
+        GenericException(details: e.details, message: e.message, code: e.code),
+      );
     }
-
-    if (params?['selectFields'] != null) {
-      query = query.select(params?['selectFields'] ?? '*');
-    }
-
-    return await query;
   }
 
   @override
-  Future<dynamic> delete<T>({Map<String, dynamic>? params}) async {
-    dynamic query = _supaClient.from(params?['table']).delete();
+  Future<Either<dynamic, GenericException>> delete<T>({
+    Map<String, dynamic>? params,
+  }) async {
+    try {
+      dynamic query = _supaClient.from(params?['table']).delete();
 
-    if (params?['whereClause'] != null && params?['referenceValue'] != null) {
-      query = query.eq(params?['whereClause'], params?['referenceValue']);
-    } else {
-      throw ArgumentError("A exclusão em massa não é permitida. Forneça uma cláusula 'where' ou id.");
+      if (params?['match'] != null &&
+          params!['match'] is Map<String, dynamic>) {
+        query = query.match(params['match']);
+      } else if (params?['whereClause'] != null &&
+          params?['referenceValue'] != null) {
+        query = query.eq(params?['whereClause'], params?['referenceValue']);
+      }
+      if (params?['selectFields'] != null) {
+        query = query.select(params?['selectFields'] ?? '*');
+      }
+      return left(await query);
+    } on PostgrestException catch (e) {
+      return right(
+        GenericException(details: e.details, message: e.message, code: e.code),
+      );
     }
-
-    if (params?['selectFields'] != null) {
-      query = query.select(params?['selectFields'] ?? '*');
-    }
-
-    return await query;
   }
 
   @override
-  Future getByPagination<T>({Map<String, dynamic>? params}) async {
+  Future<Either<List<T>, GenericException>> getByPagination<T>({
+    Map<String, dynamic>? params,
+  }) async {
     // int limit = int.parse(params[1]);
     //int offset = params.length > 1 ? int.parse(params[2]) : 0;
     final dynamic data = await _supaClient
@@ -111,7 +157,7 @@ class SupabaseRepository implements IRepository {
   }
 
   @override
-  Future<String?> saveImage({
+  Future<Either<String?, GenericException>> saveImage({
     required File coverImage,
     required String fileName,
     required String bucketName,
@@ -121,12 +167,30 @@ class SupabaseRepository implements IRepository {
           .from(bucketName)
           .upload(fileName, coverImage);
 
-      return Supabase.instance.client.storage
-          .from(bucketName)
-          .getPublicUrl(fileName);
+      return left(
+        Supabase.instance.client.storage
+            .from(bucketName)
+            .getPublicUrl(fileName),
+      );
     } catch (e) {
-      //print('Erro ao fazer upload: $e');
-      return null;
+      if (e is StorageException) {
+        return right(
+          GenericException(
+            message: e.message,
+            code: e.statusCode,
+            details: e.error,
+          ),
+        );
+      } else if (e is SocketException) {
+        return right(
+          GenericException(
+            message: e.message,
+            code: 'NO_INTERNET',
+            details: e.osError?.toString(),
+          ),
+        );
+      }
+      return right(GenericException(message: "Erro desconhecido: $e"));
     }
   }
 }

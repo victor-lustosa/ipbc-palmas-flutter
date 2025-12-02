@@ -209,39 +209,70 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
           heading: servicesEntity.heading,
         );
 
-       final response = await _useCases.upsert(
+        final response = await _useCases.upsert(
           params: {'table': 'service', 'selectFields': 'id'},
           data: ServiceAdapter.toMap(serviceEntity!),
         );
+        response.fold(
+          (serviceResponse) {
+            Modular.get<ServiceStore>().servicesEntity = servicesEntity;
+            Modular.get<ServiceStore>().serviceEntity = serviceEntity!.copyWith(
+              id: serviceResponse[0]['id'].toString(),
+            );
 
-        Modular.get<ServiceStore>().servicesEntity = servicesEntity;
-        Modular.get<ServiceStore>().serviceEntity = serviceEntity!.copyWith(id: response[0]['id'].toString());
-
-        if (context.mounted) {
-          showCustomMessageDialog(
-            context: context,
-            title: 'Sucesso!',
-            message: 'Culto salvo',
-            type: DialogType.success,
-            duration: const Duration(seconds: 1),
-            onDelayedAction: () {
-              if (updateCallbackParam != null && context.mounted) {
-                updateCallbackParam!();
-              }
+            if (context.mounted) {
+              showCustomToast(
+                context: context,
+                title: 'Sucesso!',
+                message: 'Culto salvo',
+                duration: const Duration(seconds: 1),
+                onDelayedAction: () {
+                  if (updateCallbackParam != null && context.mounted) {
+                    updateCallbackParam!();
+                  }
+                },
+              );
             }
-          );
-        }
+            Modular.get<LyricsListStore>().entitiesList = [];
+            isSavePressed.value = false;
+            value = DataAddedState<ManageServiceState>();
+          },
+          (_) {
+            toastException(
+              context,
+              'Error ao salvar',
+              'Ocorreu um problema ao tentar salvar o culto, verifique sua conexão e tente novamente.',
+              ToastType.error,
+            );
+          },
+        );
+      } else {
+        isSavePressed.value = false;
+        value = NoConnectionState<ManageServiceState>();
       }
-      Modular.get<LyricsListStore>().entitiesList = [];
-      isSavePressed.value = false;
-      value = DataAddedState<ManageServiceState>();
-    } else {
-      isSavePressed.value = false;
-      value = NoConnectionState<ManageServiceState>();
     }
   }
 
-  Future<dynamic> delete(ServiceEntity entitiesList) async {
+  void toastException(
+    BuildContext context,
+    String message,
+    String title,
+    ToastType type) {
+    if (context.mounted) {
+      showCustomToast(
+        type: type,
+        context: context,
+        duration: const Duration(seconds: 1),
+        title: title,
+        message: message,
+      );
+    }
+  }
+
+  Future<dynamic> delete(
+    ServiceEntity entitiesList,
+    BuildContext context,
+  ) async {
     final response = await _useCases.delete(
       params: {
         'table': 'service',
@@ -250,8 +281,20 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
         'selectFields': 'id',
       },
     );
-    value = UpdateFormFieldState();
-      return Future.value(response[0]);
+    response.fold(
+      (l) {
+        value = UpdateFormFieldState();
+        return Future.value(response[0]);
+      },
+      (r) {
+        toastException(
+          context,
+          'Error ao deletar',
+          'Ocorreu um problema ao tentar deletar o culto, verifique sua conexão e tente novamente.',
+          ToastType.error,
+        );
+      },
+    );
   }
 
   void fillItems() {

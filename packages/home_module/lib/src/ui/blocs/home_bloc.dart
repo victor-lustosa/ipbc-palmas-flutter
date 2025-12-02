@@ -44,20 +44,36 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
       Future.delayed(Duration.zero, () {
         emit(LoadingServicesState());
       });
-      final List<ServicesEntity> servicesResponse = await _useCases.get(
+      final response = await _useCases.get(
         params: {
           'table': 'services',
           'orderBy': 'create_at',
           'ascending': false,
         },
-        converter: ServicesAdapter.fromMapList,
       );
-      servicesList = servicesResponse;
+      response.fold(
+        (servicesResponse) =>
+            servicesList = ServicesAdapter.fromMapList(servicesResponse),
+        (exception) => toastException(
+          event.context,
+          'Erro ao Salvar imagem',
+          'Houve um erro ao salvar a imagem, verifique sua conexão e tente novamente.',
+        ),
+      );
       emit(DataFetchedState<HomeState>());
     } else {
       emit(NoConnectionState<HomeState>());
     }
   }
+
+  void toastException(BuildContext context, String message, String title) =>
+      showCustomToast(
+        type: .error,
+        context: context,
+        title: title,
+        message: message,
+        duration: const Duration(seconds: 1),
+      );
 
   Future<void> _getEventsData(dynamic event, emit) async {
     final response = await isConnected(context: event.context);
@@ -65,16 +81,23 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
       Future.delayed(Duration.zero, () {
         emit(LoadingEventsState());
       });
-      final List<EventEntity> eventsResponse = await _useCases.get(
+      final response = await _useCases.get(
         params: {
           'table': 'event',
           'orderBy': 'create_at',
           'ascending': false,
           'limit': 5,
         },
-        converter: EventAdapter.fromMapList,
       );
-      eventsList = eventsResponse;
+      response.fold(
+        (eventsResponse) =>
+            eventsList = EventAdapter.fromMapList(eventsResponse),
+        (exception) => toastException(
+          event.context,
+          'Erro ao Salvar imagem',
+          'Houve um erro ao salvar a imagem, verifique sua conexão e tente novamente.',
+        ),
+      );
       emit(DataFetchedState<HomeState>());
     } else {
       emit(NoConnectionState<HomeState>());
@@ -93,9 +116,9 @@ class GetEventsDataEvent extends GenericEvent<HomeEvent> {
 }
 
 class LoadingServicesState extends GenericState<HomeState> {
-  LoadingServicesState();
+  const LoadingServicesState();
 }
 
 class LoadingEventsState extends GenericState<HomeState> {
-  LoadingEventsState();
+  const LoadingEventsState();
 }

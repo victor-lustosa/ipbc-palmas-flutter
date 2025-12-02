@@ -1,4 +1,3 @@
-//import 'dart:io';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
@@ -51,11 +50,9 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
             return loadingWidget;
           } else if (state is NoConnectionState<ServicesCollectionState>) {
             return NoConnectionView(
-              action: () =>
-                  nativePushReplacementNamed(AppRoutes.homeRoute, context),
+              action: () => nativePushReplacementNamed(AppRoutes.homeRoute, context),
             );
-          } else if (state is DataFetchedState<ServicesCollectionState> ||
-              state is UpdateServicesListState) {
+          } else if (state is DataFetchedState<ServicesCollectionState> || state is UpdateServicesListState) {
             final currentIds = _bloc.entitiesList.map((e) => e.id!).toSet();
             _gestureKeys.removeWhere((key, _) => !currentIds.contains(key));
 
@@ -96,8 +93,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                   itemCount: _bloc.entitiesList.length,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
-                                    final ServiceEntity service =
-                                        _bloc.entitiesList[index];
+                                    final ServiceEntity service = _bloc.entitiesList[index];
                                     final Key itemKey = Key(service.id!);
                                     final GlobalKey gestureKey = _gestureKeys
                                         .putIfAbsent(

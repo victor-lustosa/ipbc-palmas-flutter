@@ -45,7 +45,9 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                                           null &&
                                       _store.isChanged.value) {
                                     _store.isChanged.value = false;
-                                    _store.updateServicesCollectionCallback!(context);
+                                    _store.updateServicesCollectionCallback!(
+                                      context,
+                                    );
                                   }
                                   nativePop(context);
                                 },
@@ -134,13 +136,11 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                               child: ValueListenableBuilder(
                                 valueListenable: _store.manageLyricStore,
                                 builder: (context, state, child) {
-                                 List<LyricEntity> lyricsList = _store.lyricsListStore.entitiesList;
                                   return Column(
                                     children: [
                                       Visibility(
                                         visible:
-                                        lyricsList
-                                            .isEmpty &&
+                                            _store.entitiesList.isEmpty &&
                                             _store.isAdmin.value,
                                         child: SizedBox(
                                           width: context.sizeOf.width * .86,
@@ -154,14 +154,16 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                                         ),
                                       ),
                                       Visibility(
-                                        visible: lyricsList
-                                            .isNotEmpty,
+                                        visible: _store.entitiesList.isNotEmpty,
                                         child: LyricsListWidget(
+                                          entitiesList: _store.entitiesList,
+                                          isTitleVisible: false,
                                           onLongPressStart: (details) async {
                                             await showOptionsDialog(
                                               context: context,
-                                              itemKey:
-                                                  _store.lyricsListStore.itemKey,
+                                              itemKey: _store
+                                                  .lyricsListStore
+                                                  .itemKey,
                                               popupHeightParam: 110,
                                               popupWidthParam: 160,
                                               popupWidthPositionParam: 160,
@@ -180,7 +182,8 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                                                   ),
                                                   Divider(
                                                     height: 1,
-                                                    color: AppColors.dividerModal
+                                                    color: AppColors
+                                                        .dividerModal
                                                         .withValues(alpha: .3),
                                                   ),
                                                   actionButton(
@@ -189,13 +192,25 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                                                     bottom: 12,
                                                     icon: AppIcons.trash,
                                                     label: 'Deletar',
-                                                    action: () {
-                                                      _store.deleteLyric(context);
+                                                    action: () async {
+                                                      await showConfirmationDialog(
+                                                        confirmAction: () async {
+                                                              _store.deleteLyric(context);
+                                                            },
+                                                        title: "Deletar Letra",
+                                                        message: "O item será deletado da lista. Tem certeza?",
+                                                        context: context,
+                                                      );
                                                     },
                                                   ),
                                                 ],
                                               ),
                                             );
+                                            _store
+                                                    .lyricsListStore
+                                                    .tappedIndex
+                                                    .value =
+                                                null;
                                           },
                                           margin: EdgeInsets.zero,
                                           onTap: () {
@@ -204,7 +219,7 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                                                   AppRoutes.lyricRoute,
                                               arguments: _store
                                                   .lyricsListStore
-                                                  .lyricEntity,
+                                                  .selectedLyric,
                                             );
                                           },
                                         ),

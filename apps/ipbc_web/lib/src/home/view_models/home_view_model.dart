@@ -51,7 +51,7 @@ class HomeViewModel extends ValueNotifier<GenericState<HomeViewState>>
         alignment: Alignment.bottomRight,
       );
       if (response) {
-        await _useCases.upsert(
+       final response = await _useCases.upsert(
           data: {
             'name': nameController.text,
             'email': emailController.text,
@@ -59,27 +59,38 @@ class HomeViewModel extends ValueNotifier<GenericState<HomeViewState>>
           },
           params: {'table': 'form_website'},
         );
-        if (context.mounted) {
-          showCustomMessageDialog(
-            width: 350,
-            alignment: Alignment.bottomRight,
-            type: DialogType.success,
-            context: context,
-            title: 'Sucesso!',
-            message: 'Evento salvo',
-            duration: const Duration(seconds: 1),
-          );
-        }
-        isSubmitted.value = true;
-        messageLength.value = 0;
-        nameController.clear();
-        messageController.clear();
-        emailController.clear();
-        value = UpdateFormFieldState();
-        Future.delayed(const Duration(seconds: 1), () {
-          isSubmitted.value = false;
-          value = UpdateFormFieldState();
-        });
+       response.fold((_){
+         if (context.mounted) {
+           showCustomToast(
+             width: 350,
+             alignment: Alignment.bottomRight,
+             context: context,
+             title: 'Sucesso!',
+             message: 'Evento salvo',
+             duration: const Duration(seconds: 1),
+           );
+         }
+         isSubmitted.value = true;
+         messageLength.value = 0;
+         nameController.clear();
+         messageController.clear();
+         emailController.clear();
+         value = UpdateFormFieldState();
+         Future.delayed(const Duration(seconds: 1), () {
+           isSubmitted.value = false;
+           value = UpdateFormFieldState();
+         });
+       },(_){
+         if (context.mounted) {
+           showCustomToast(
+             type: .error,
+             context: context,
+             duration: const Duration(seconds: 1),
+             title: 'Erro ao salvar',
+             message: 'Verifique a internet e tente novamente.',
+           );
+         }
+       });
       }
     } else {
       formValidation(!isEmptyData(nameController.text), isNameValid);
