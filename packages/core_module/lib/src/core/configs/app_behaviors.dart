@@ -1,5 +1,24 @@
-// ignore_for_file: avoid_print
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:core_module/core_module.dart';
+
+void hideKeyboard(BuildContext context){
+  if (View.of(context).viewInsets.bottom > 0.0) {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+  }
+}
+
+class NoGlowBehavior extends ScrollBehavior {
+  @override
+  Widget buildOverscrollIndicator(
+      BuildContext context,
+      Widget child,
+      ScrollableDetails details,
+      ) {
+    return child;
+  }
+}
+
 
 class GenericBlocObserver extends BlocObserver {
   @override
@@ -16,10 +35,10 @@ class GenericBlocObserver extends BlocObserver {
 
   @override
   Future<void> onError(
-    BlocBase bloc,
-    Object error,
-    StackTrace stackTrace,
-  ) async {
+      BlocBase bloc,
+      Object error,
+      StackTrace stackTrace,
+      ) async {
     print('onError -- bloc: ${bloc.runtimeType}, error: $error');
     super.onError(bloc, error, stackTrace);
   }

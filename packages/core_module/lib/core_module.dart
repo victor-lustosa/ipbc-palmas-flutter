@@ -21,8 +21,7 @@ export 'src/core/infra/exceptions/generic_exception.dart';
 export 'src/core/configs/app_configs.dart';
 export 'src/core/configs/app_routes.dart';
 export 'src/core/configs/api_keys.dart';
-export 'src/core/configs/no_glow_behavior.dart';
-export 'src/core/configs/generic_bloc_observer.dart';
+export 'src/core/configs/app_behaviors.dart';
 
 export 'src/design_system/themes.dart';
 export 'src/design_system/configs/app_images.dart';

@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
-
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 Future<void> showAddLyricsDialog({
   required BuildContext context,
@@ -54,10 +52,14 @@ class AddLyricsDialogWidget extends StatefulWidget {
 }
 
 class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _artistController = TextEditingController();
   final TextEditingController _lyricsController = TextEditingController();
 
   @override
   void dispose() {
+    _titleController.dispose();
+    _artistController.dispose();
     _lyricsController.dispose();
     super.dispose();
   }
@@ -66,9 +68,7 @@ class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (View.of(context).viewInsets.bottom > 0.0) {
-          SystemChannels.textInput.invokeMethod('TextInput.hide');
-        }
+        hideKeyboard(context);
         FocusScope.of(context).unfocus();
       },
       child: Column(
@@ -103,52 +103,114 @@ class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
                       ),
                       const SizedBox(height: 16),
                       Flexible(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.grey3),
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                          ),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: Theme(
-                              data: Theme.of(context).copyWith(
-                                textSelectionTheme: TextSelectionThemeData(
-                                  cursorColor: AppColors.grey7,
-                                  selectionColor: AppColors.grey7.withValues(
-                                    alpha: .30,
-                                  ),
-                                  selectionHandleColor: AppColors.grey7,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: Theme(
+                            data: Theme.of(context).copyWith(
+                              textSelectionTheme: TextSelectionThemeData(
+                                cursorColor: AppColors.grey7,
+                                selectionColor: AppColors.grey7.withValues(
+                                  alpha: .30,
                                 ),
-                                colorScheme: Theme.of(context).colorScheme
-                                    .copyWith(primary: AppColors.grey7),
+                                selectionHandleColor: AppColors.grey7,
                               ),
-                              child: TextFormField(
-                                selectionControls:
-                                    MaterialTextSelectionControls(),
-                                controller: _lyricsController,
-                                minLines: 10,
-                                maxLines: 40,
-                                keyboardType: TextInputType.multiline,
-                                decoration: InputDecoration(
-                                  hintText: 'Cole ou digite a letra aqui...',
-                                  hintStyle: AppFonts.defaultFont(
-                                    color: AppColors.grey5,
-                                    fontSize: 16,
+                              colorScheme: Theme.of(context).colorScheme
+                                  .copyWith(primary: AppColors.grey7),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: AppColors.grey3),
+                                    borderRadius: BorderRadius.all(Radius.circular(8)),
                                   ),
-                                  fillColor: AppColors.white,
-                                  border: InputBorder.none,
-                                  contentPadding: const EdgeInsets.all(12),
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  child: TextFormField(
+                                    selectionControls: MaterialTextSelectionControls(),
+                                    controller: _titleController,
+                                    minLines: 1,
+                                    maxLines: 2,
+                                    keyboardType: TextInputType.multiline,
+                                    decoration: InputDecoration(
+                                      hintText: 'Digite o título',
+                                      hintStyle: AppFonts.defaultFont(
+                                        color: AppColors.grey5,
+                                        fontSize: 16,
+                                      ),
+                                      fillColor: AppColors.white,
+                                      border: InputBorder.none,
+                                      contentPadding: const EdgeInsets.all(12),
+                                    ),
+                                    style: AppFonts.defaultFont(
+                                      color: AppColors.grey10,
+                                      fontSize: 17,
+                                    ),
+                                  ),
                                 ),
-                                style: AppFonts.defaultFont(
-                                  color: AppColors.grey10,
-                                  fontSize: 17,
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: AppColors.grey3),
+                                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                                  ),
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  child: TextFormField(
+                                    selectionControls: MaterialTextSelectionControls(),
+                                    controller: _artistController,
+                                    minLines: 1,
+                                    maxLines: 2,
+                                    keyboardType: TextInputType.multiline,
+                                    decoration: InputDecoration(
+                                      hintText: 'Digite o Artista',
+                                      hintStyle: AppFonts.defaultFont(
+                                        color: AppColors.grey5,
+                                        fontSize: 16,
+                                      ),
+                                      fillColor: AppColors.white,
+                                      border: InputBorder.none,
+                                      contentPadding: const EdgeInsets.all(12),
+                                    ),
+                                    style: AppFonts.defaultFont(
+                                      color: AppColors.grey10,
+                                      fontSize: 17,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: AppColors.grey3),
+                                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                                  ),
+                                  child: SizedBox(
+                                    height: context.sizeOf.height * .551,
+                                    child: TextFormField(
+                                      selectionControls: MaterialTextSelectionControls(),
+                                      controller: _lyricsController,
+                                      minLines: null,
+                                      maxLines: null,
+                                      expands: true,
+                                      keyboardType: TextInputType.multiline,
+                                      decoration: InputDecoration(
+                                        hintText: 'Cole ou digite a letra aqui...',
+                                        hintStyle: AppFonts.defaultFont(
+                                          color: AppColors.grey5,
+                                          fontSize: 16,
+                                        ),
+                                        fillColor: AppColors.white,
+                                        border: InputBorder.none,
+                                        contentPadding: const EdgeInsets.all(12),
+                                      ),
+                                      style: AppFonts.defaultFont(
+                                        color: AppColors.grey10,
+                                        fontSize: 17,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
