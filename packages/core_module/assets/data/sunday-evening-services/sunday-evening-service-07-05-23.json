@@ -65,7 +65,7 @@
     {
       "id": "",
       "title": "Vem Está É A Hora",
-      "group": "Vineyard",
+      "artist": "Vineyard",
       "albumCover": "",
       "createAt": "",
       "verses": []
@@ -73,7 +73,7 @@
     {
       "id": "",
       "title": "Maravilhosa Graça",
-      "group": "Comunidade da Graça",
+      "artist": "Comunidade da Graça",
       "albumCover": "",
       "createAt": "",
       "verses": []
@@ -81,7 +81,7 @@
     {
       "id": "",
       "title": "Vinho E Pão",
-      "group": "Vencedores Por Cristo",
+      "artist": "Vencedores Por Cristo",
       "albumCover": "",
       "createAt": "",
       "verses": []

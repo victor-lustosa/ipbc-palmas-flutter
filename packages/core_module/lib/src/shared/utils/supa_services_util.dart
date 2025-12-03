@@ -46,7 +46,7 @@ class SupaServicesUtil {
     List<LyricEntity> results = [];
     for (int i = 0; lyricsList.length > i; i++) {
       // aqui vai o codigo para pegar a letra da musica
-     // Map result = await _getLyric(lyricsList[i].title, lyricsList[i].group);
+     // Map result = await _getLyric(lyricsList[i].title, lyricsList[i].artist);
       results.add(
         LyricEntity.empty().copyWith(
           // aqui vai o codigo que converte a letra da musica
@@ -59,9 +59,9 @@ class SupaServicesUtil {
   }
 
   /*
-  static Future<dynamic> _getLyric(String title, String group) async {
+  static Future<dynamic> _getLyric(String title, String artist) async {
     String titleParam = title.replaceAll(' ', '%20');
-    String groupParam = group.replaceAll(' ', '%20');
+    String artistParam = artist.replaceAll(' ', '%20');
     String apikey = 'a34faccfb8ad3edc6ddcc978e34802ef';
     try {
       final response = await Uno().get(

@@ -88,7 +88,7 @@ class _LyricViewState extends State<LyricView> with LaunchUrlMixin {
                                     Text(
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      widget.entity.group,
+                                      widget.entity.artist,
                                       style: AppFonts.defaultFont(
                                         color: AppColors.grey9,
                                         fontSize: context.sizeOf.width >

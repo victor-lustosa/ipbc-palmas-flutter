@@ -65,7 +65,7 @@
     {
       "id": "",
       "title": "Nosso General",
-      "group": "Adhemar de Campos",
+      "artist": "Adhemar de Campos",
       "albumCover": "",
       "createAt": "",
       "verses": []
@@ -73,7 +73,7 @@
     {
       "id": "",
       "title": "Compromisso",
-      "group": "Kadoshi",
+      "artist": "Kadoshi",
       "albumCover": "",
       "createAt": "",
       "verses": []

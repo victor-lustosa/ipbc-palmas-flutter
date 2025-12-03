@@ -13,7 +13,7 @@
     {
       "id": "",
       "title": "Vem Está É A Hora",
-      "group": "Vineyard",
+      "artist": "Vineyard",
       "albumCover": "",
       "createAt": "",
       "verses": []
@@ -21,7 +21,7 @@
     {
       "id": "",
       "title": "Eu te quero",
-      "group": "adoração e adoradores",
+      "artist": "adoração e adoradores",
       "albumCover": "",
       "createAt": "",
       "verses": []
@@ -29,7 +29,7 @@
     {
       "id": "",
       "title": "Tua graça me basta",
-      "group": "Rachel Novaes",
+      "artist": "Rachel Novaes",
       "albumCover": "",
       "createAt": "",
       "verses": []

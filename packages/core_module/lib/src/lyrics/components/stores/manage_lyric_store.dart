@@ -25,10 +25,10 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
   ValueNotifier<bool> isSavePressed = ValueNotifier(false);
   final Map<String, TextEditingController> _controllers = {};
   final TextEditingController titleController = TextEditingController();
-  final TextEditingController groupController = TextEditingController();
+  final TextEditingController artistController = TextEditingController();
   final Map<String, FocusNode> _focusNodes = {};
   final FocusNode titleFocusNode = FocusNode();
-  final FocusNode groupFocusNode = FocusNode();
+  final FocusNode artistFocusNode = FocusNode();
 
   bool isAnyTextFieldFocused = false;
 
@@ -52,7 +52,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
   void init() {
     initializeControllersAndFocusNodes();
     titleController.text = lyric.value.title;
-    groupController.text = lyric.value.group;
+    artistController.text = lyric.value.artist;
     _rootFocusNode = FocusScopeNode();
     rootFocusNode.addListener(_handleRootFocusChange);
   }
@@ -75,8 +75,44 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
     }
   }
 
+  String _removeDiacritics(String str) {
+    var withDia =
+        'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+    var withoutDia =
+        'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
+
+    for (int i = 0; i < withDia.length; i++) {
+      str = str.replaceAll(withDia[i], withoutDia[i]);
+    }
+    return str;
+  }
+
+  bool _checkIsHymn(String value) {
+    final String cleanTitle = _removeDiacritics(value.toLowerCase());
+
+    final List<String> hymnKeywords = [
+      'hino',
+      'hinario',
+      'harpa',
+      'cantor',
+      'novo cantico',
+      'hcc',
+      'salmo',
+    ];
+
+    for (final keyword in hymnKeywords) {
+      if (cleanTitle.contains(keyword)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   LyricEntity convertTextInLyric(Map<String, String> map) {
-    final List<String> rawVerseBlocks = map['lyrics']!.split(RegExp(r'\n\s*\n+'));
+    final List<String> rawVerseBlocks = map['lyrics']!.split(
+      RegExp(r'\n\s*\n+'),
+    );
 
     final List<VerseEntity> parsedVerseEntities = [];
 
@@ -97,18 +133,18 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
       }
     }
     return LyricEntity(
-      title: map['title']!.isNotEmpty? map['title']! : 'Título Padrão',
-      group: map['artist']!.isNotEmpty? map['artist']! : 'Grupo Padrão',
+      title: map['title']!.isNotEmpty ? map['title']! : 'Título Padrão',
+      artist: map['artist']!.isNotEmpty ? map['artist']! : 'Grupo Padrão',
       albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
       createAt: DateTime.now().toIso8601String(),
       verses: parsedVerseEntities,
+      isHymn: map['title']!.isNotEmpty || map['artist']!.isNotEmpty
+          ? _checkIsHymn(map['title']!) || _checkIsHymn(map['artist']!)
+          : false,
     );
   }
 
-  void attachLyric({
-    required BuildContext context,
-    Map<String,String>? map,
-  }) {
+  void attachLyric({required BuildContext context, Map<String, String>? map}) {
     if (map != null && map.values.isNotEmpty) {
       lyric.value = convertTextInLyric(map);
       isEditing = false;
@@ -121,21 +157,23 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
     }
   }
 
-  Future<List<LyricEntity>> getOnlineLyrics({
+  Future<List<LyricEntity>?> getOnlineLyrics({
     required Map<String, Object> params,
     required BuildContext context,
   }) async {
     final response = await _onlineUseCases.get(params: params);
     return response.fold(
       (l) => LyricAdapter.fromMapList(l),
-      (GenericException r) => showCustomToast(
-        type: .error,
-        context: context,
-        duration: const Duration(seconds: 1),
-        title: 'Erro ao Carregar Letras',
-        message:
-            'Ocorreu um erro ao carregar as letras. Verifique a internet e tente novamente.',
-      ),
+      (GenericException r) {
+       showCustomToast(
+          type: .error,
+          context: context,
+          duration: const Duration(seconds: 1),
+          title: 'Erro ao Carregar Letras',
+          message:
+          'Ocorreu um erro ao carregar as letras. Verifique a internet e tente novamente.',
+        );
+      },
     );
   }
 
@@ -218,8 +256,8 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
   }) {
     if (focusNode == titleFocusNode) {
       lyric.value = lyric.value.copyWith(title: newValue);
-    } else if (focusNode == groupFocusNode) {
-      lyric.value = lyric.value.copyWith(group: newValue);
+    } else if (focusNode == artistFocusNode) {
+      lyric.value = lyric.value.copyWith(artist: newValue);
     }
   }
 

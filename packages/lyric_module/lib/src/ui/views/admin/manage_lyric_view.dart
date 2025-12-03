@@ -119,8 +119,8 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                             focusNode: _store.titleFocusNode,
                           ),
                           formField(
-                            controller: _store.groupController,
-                            focusNode: _store.groupFocusNode,
+                            controller: _store.artistController,
+                            focusNode: _store.artistFocusNode,
                           ),
                           Container(
                             margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
@@ -374,6 +374,7 @@ class _ManageLyricViewState extends State<ManageLyricView> {
             ),
           ),
           floatingActionButton: FloatingButtonWidget(
+            heroTag: 'manage_lyric-fab',
             icon: Icons.check_rounded,
             backgroundColor: AppColors.confirmation,
             iconColor: AppColors.grey10,

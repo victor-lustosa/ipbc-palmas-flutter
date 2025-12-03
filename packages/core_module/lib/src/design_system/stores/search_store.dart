@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 
 enum SearchParameters {
   title(label: 'título', column: 'title'),
-  artist(label: 'artista', column: 'group'),
-  hino(label: 'hino', column: 'group');
+  artist(label: 'artista', column: 'artist'),
+  hymns(label: 'hino', column: 'is_hymn');
 
   final String label;
   final String column;
@@ -52,24 +52,20 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
       _lyricsListStore.isNotSearch = false;
     }
     _eventBus.emit(LoadingState<LyricsListState>(id: _currentStoreId));
-    List<LyricEntity> lyrics = await _manageLyricStore.getOnlineLyrics(
+    bool isHymn = (SearchParameters.values[selectedIndex].column == SearchParameters.hymns.column);
+    List<LyricEntity>? lyrics = await _manageLyricStore.getOnlineLyrics(
       context: context,
       params: {
         'table': 'lyrics',
         'orderBy': 'create_at',
         'likeColumn': SearchParameters.values[selectedIndex].column,
-        'likeValue':
-            (SearchParameters.values[selectedIndex].column ==
-                    SearchParameters.hino.column) &&
-                searchField.isEmpty
-            ? '%hino%'
-            : searchField,
+        'likeValue': isHymn ? true : searchField,
         'ascending': false,
-        'selectFields': 'id, title, group, album_cover, create_at, verses',
+        'selectFields': 'id, title, artist, album_cover, create_at, verses, is_hymn',
         if (limit > 0) 'limit': limit,
       },
     );
-    if (lyrics.isNotEmpty) {
+    if (lyrics!= null && lyrics.isNotEmpty) {
       _eventBus.emit(
         DataFetchedState<LyricsListState>(
           entities: lyrics,

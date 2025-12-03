@@ -17,9 +17,13 @@ class FloatingButtonWidget extends StatelessWidget {
     this.loadingIndicatorColor,
     this.iconFormat,
     this.padding,
-    this.fit, this.width, this.height,
+    this.fit,
+    this.width,
+    this.height,
+    required this.heroTag,
   });
 
+  final Object heroTag;
   final Color? loadingIndicatorColor;
   final Duration? duration;
   final ValueNotifier<bool>? isPressed;

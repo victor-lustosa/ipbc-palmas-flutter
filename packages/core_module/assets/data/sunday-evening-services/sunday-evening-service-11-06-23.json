@@ -65,7 +65,7 @@
     {
       "id": "",
       "title": "Confiarei",
-      "group": "Ministério Ame",
+      "artist": "Ministério Ame",
       "albumCover": "",
       "createAt": "2023-06-11",
       "verses": []
@@ -73,7 +73,7 @@
     {
       "id": "",
       "title": "Primeiro Amor",
-      "group": "Aline Barros",
+      "artist": "Aline Barros",
       "albumCover": "",
       "createAt": "2023-06-11",
       "verses": []
@@ -81,7 +81,7 @@
     {
       "id": "",
       "title": "Quao Grande É o Meu Deus",
-      "group": "Corinhos Evangélicos",
+      "artist": "Corinhos Evangélicos",
       "albumCover": "",
       "createAt": "2023-06-11",
       "verses": []

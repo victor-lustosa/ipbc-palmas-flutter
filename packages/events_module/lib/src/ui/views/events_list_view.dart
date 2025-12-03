@@ -186,6 +186,7 @@ class EventsListViewState extends State<EventsListView>
           ),
         ),
         floatingActionButton: FloatingButtonWidget(
+          heroTag: 'events-list-fab',
           action: () async {
             _bloc.createEventStore.isEditing = false;
             _bloc.createEventStore.updateCallbackParam = () {

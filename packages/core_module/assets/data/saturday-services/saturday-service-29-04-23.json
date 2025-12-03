@@ -13,7 +13,7 @@
     {
       "id": "",
       "title": "Me derramar",
-      "group": "diante do trono",
+      "artist": "diante do trono",
       "albumCover": "",
       "createAt": "",
       "verses": []
@@ -21,7 +21,7 @@
     {
       "id": "",
       "title": "Galhos Secos",
-      "group": "Para Nossa Alegria",
+      "artist": "Para Nossa Alegria",
       "albumCover": "",
       "createAt": "",
       "verses": []
@@ -29,7 +29,7 @@
     {
       "id": "",
       "title": "Perto Quero Estar",
-      "group": "Ministério Toque No Altar",
+      "artist": "Ministério Toque No Altar",
       "albumCover": "",
       "createAt": "",
       "verses": []

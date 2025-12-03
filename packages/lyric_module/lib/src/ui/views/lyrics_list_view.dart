@@ -133,6 +133,7 @@ class _LyricsListViewState extends State<LyricsListView>
           ),
         ),
         floatingActionButton: FloatingButtonWidget(
+          heroTag: 'lyrics-list-fab',
           iconColor: AppColors.white,
           backgroundColor: AppColors.add,
           icon: Icons.add,

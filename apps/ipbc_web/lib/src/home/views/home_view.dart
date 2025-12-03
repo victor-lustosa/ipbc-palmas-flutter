@@ -82,6 +82,7 @@ class _HomeViewState extends State<HomeView>
           right: floatingActionRightPadding(),
         ),
         child: FloatingButtonWidget(
+          heroTag: 'whatsapp-fab',
           iconPath: AppIcons.whatsappIcon,
           iconFormat: IconFormat.svg,
           backgroundColor: AppColors.whatsappButton,

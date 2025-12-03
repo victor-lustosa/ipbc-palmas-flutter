@@ -64,7 +64,7 @@
     {
       "id": "",
       "title": "A Luz do Teu Rosto",
-      "group": "Comunidade Evangélica de Maringá",
+      "artist": "Comunidade Evangélica de Maringá",
       "albumCover": "",
       "createAt": "",
       "verses": []
@@ -72,7 +72,7 @@
     {
       "id": "",
       "title": "Teu Santo Nome",
-      "group": "Adoradores Novo Tempo",
+      "artist": "Adoradores Novo Tempo",
       "albumCover": "",
       "createAt": "",
       "verses": []
@@ -80,7 +80,7 @@
     {
       "id": "",
       "title": "Ao único",
-      "group": "Aline Barros",
+      "artist": "Aline Barros",
       "albumCover": "",
       "createAt": "",
       "verses": []

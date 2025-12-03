@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import '../../../../core_module.dart';
-import '../../infra/exceptions/generic_exception.dart';
 
 class SupabaseRepository implements IRepository {
   SupabaseRepository({required SupabaseClient supabaseClient})

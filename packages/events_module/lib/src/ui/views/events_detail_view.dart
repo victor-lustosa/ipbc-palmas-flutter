@@ -370,6 +370,7 @@ class EventsDetailViewState extends State<EventsDetailView>
       floatingActionButton: Visibility(
         visible: true,
         child: FloatingButtonWidget(
+          heroTag: 'events-detail-fab',
           iconColor: AppColors.white,
           backgroundColor: AppColors.warning,
           iconPath: AppIcons.editIcon,

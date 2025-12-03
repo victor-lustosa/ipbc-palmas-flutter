@@ -319,6 +319,7 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
         },
       ),
       floatingActionButton: FloatingButtonWidget(
+        heroTag: 'services-collection-fab',
         iconColor: AppColors.white,
         backgroundColor: AppColors.add,
         icon: Icons.add,

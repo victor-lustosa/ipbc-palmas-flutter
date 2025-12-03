@@ -3,17 +3,19 @@ import 'package:core_module/core_module.dart';
 class LyricEntity {
   final String? id;
   final String title;
-  final String group;
+  final String artist;
   final String albumCover;
   final String createAt;
+  final bool isHymn;
   final List<VerseEntity> verses;
   LyricEntity({
     this.id,
     required this.title,
     required this.createAt,
     required this.albumCover,
-    required this.group,
+    required this.artist,
     required this.verses,
+    required this.isHymn,
   });
 
   @override
@@ -32,8 +34,9 @@ class LyricEntity {
   factory LyricEntity.empty() => LyricEntity(
     createAt: '',
     title: '',
-    group: '',
+    artist: '',
     albumCover: '',
+    isHymn: false,
     verses: [],
   );
 
@@ -41,8 +44,9 @@ class LyricEntity {
     String? id,
     String? title,
     String? createAt,
-    String? group,
+    String? artist,
     String? albumCover,
+    bool? isHymn,
     List<VerseEntity>? verses,
   }) {
     return LyricEntity(
@@ -50,7 +54,8 @@ class LyricEntity {
       title: title ?? this.title,
       createAt: createAt ?? this.createAt,
       albumCover: albumCover ?? this.albumCover,
-      group: group ?? this.group,
+      artist: artist ?? this.artist,
+      isHymn: isHymn ?? this.isHymn,
       verses: verses ?? this.verses,
     );
   }

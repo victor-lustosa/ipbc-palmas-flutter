@@ -10,7 +10,7 @@ void main() {
     Map entity = {
       'id': 'dfsdfsd',
       'title': 'agua viva',
-      'group': 'oficina g3',
+      'artist': 'oficina g3',
       'albumCover':
           'http://coverartarchive.org/release/ce82afc5-f866-400e-adcd-4a23c01dd877/4433492734-500.jpg',
       'createAt': timestamp,

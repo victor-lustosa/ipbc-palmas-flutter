@@ -4,7 +4,7 @@
     "title": "NEle a gente pode confiar",
     "createAt": "2023-06-16 00:00:00.000",
     "albumCover": "assets/images/default_cover_2.png",
-    "group": "Rebanhão",
+    "artist": "Rebanhão",
     "verses": [
       {
         "id": 0,
@@ -31,7 +31,7 @@
     "title": "Sonda-me",
     "createAt": "2023-06-16 00:00:00.000",
     "albumCover": "assets/images/default_cover_1.png",
-    "group": "Aline Barros",
+    "artist": "Aline Barros",
     "verses": [
       {
         "id": 0,
@@ -70,7 +70,7 @@
     "title": "Hino 4 - Culto a trindade",
     "createAt": "2023-06-16 00:00:00.000",
     "albumCover": "assets/images/default_cover_2.png",
-    "group": "Hinário Novo Cântico",
+    "artist": "Hinário Novo Cântico",
     "verses": [
       {
         "id": 0,
@@ -121,7 +121,7 @@
     "title": "Hino 395 - Amor no lar",
     "createAt": "2023-06-11 00:00:00.000",
     "albumCover": "assets/images/default_cover_3.png",
-    "group": "Hinário Novo Cântico",
+    "artist": "Hinário Novo Cântico",
     "verses": [
       {
         "id": 0,
@@ -180,7 +180,7 @@
     "title": "Hino 320 - Bilha no viver",
     "createAt": "2023-06-11 00:00:00.000",
     "albumCover": "assets/images/default_cover_4.png",
-    "group": "Hinário Novo Cântico",
+    "artist": "Hinário Novo Cântico",
     "verses": [
       {
         "id": 0,
@@ -229,7 +229,7 @@
     "title": "Quao Grande É o Meu Deus",
     "createAt": "2023-06-11 00:00:00.000",
     "albumCover": "assets/images/default_cover_4.png",
-    "group": "Corinhos Evangélicos",
+    "artist": "Corinhos Evangélicos",
     "verses": [
       {
         "id": 0,
@@ -277,7 +277,7 @@
     "title": "Primeiro Amor",
     "createAt": "2023-06-11 00:00:00.000",
     "albumCover": "assets/images/default_cover_3.png",
-    "group": "Aline Barros",
+    "artist": "Aline Barros",
     "verses": [
       {
         "id": 0,
@@ -317,7 +317,7 @@
     "createAt": "2023-06-11 00:00:00.000",
     "title": "Confiarei",
     "albumCover": "assets/images/default_cover_4.png",
-    "group": "Ministério Ame",
+    "artist": "Ministério Ame",
     "verses": [
       {
         "id": 0,
@@ -355,7 +355,7 @@
     "title": "Hino 28 - Coroação",
     "createAt": "2023-06-06 00:00:00.000",
     "albumCover": "assets/images/default_cover_1.png",
-    "group": "Hinário Novo Cântico",
+    "artist": "Hinário Novo Cântico",
     "verses": [
       {
         "id": 0,
@@ -406,7 +406,7 @@
     "title": "Compromisso",
     "createAt": "2023-05-28 00:00:00.000",
     "albumCover": "assets/images/default_cover_2.png",
-    "group": "Kadoshi",
+    "artist": "Kadoshi",
     "verses": [
       {
         "id": 0,
@@ -475,7 +475,7 @@
     "title": "Nosso General",
     "createAt": "2023-05-28 00:00:00.000",
     "albumCover": "assets/images/default_cover_2.png",
-    "group": "Adhemar de Campos",
+    "artist": "Adhemar de Campos",
     "verses": [
       {
         "id": 0,

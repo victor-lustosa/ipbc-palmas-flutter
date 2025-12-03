@@ -22,7 +22,7 @@ void main() {
         {
           "id": "",
           "title": "Quem e",
-          "group": "diante do trono",
+          "artist": "diante do trono",
           "albumCover": "",
           "createAt": timestamp,
           "verses": []
@@ -30,7 +30,7 @@ void main() {
         {
           "id": "",
           "title": "Eu me rendo",
-          "group": "Renascer Praise",
+          "artist": "Renascer Praise",
           "albumCover": "",
           "createAt": timestamp,
           "verses": []
@@ -38,7 +38,7 @@ void main() {
         {
           "id": "",
           "title": "Te louvarei",
-          "group": "Toque no altar",
+          "artist": "Toque no altar",
           "albumCover": "",
           "createAt": timestamp,
           "verses": []

@@ -39,7 +39,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     'table': 'lyrics',
     'orderBy': 'create_at',
     'ascending': false,
-    'selectFields': 'id, title, group, album_cover, create_at, verses',
+    'selectFields': 'id, title, artist, album_cover, is_hymn, create_at, verses',
   };
 
   Future<void> init({required BuildContext context}) async {
@@ -91,12 +91,12 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     if (response) {
       if (event.context.mounted) {
         _eventBus.emit(LoadingState());
-        List entities = await _manageLyricStore.getOnlineLyrics(
+        List? entities = await _manageLyricStore.getOnlineLyrics(
           context: event.context,
           params: lyricParams,
         );
-        if (entities.isEmpty) {
-          _eventBus.emit(NotFoundState());
+        if (entities != null && entities.isEmpty) {
+          _eventBus.emit(NotFoundState()); //mudar para exception em caso de entidade ser nula
         } else {
           _eventBus.emit(DataFetchedState(entities: entities));
         }
@@ -141,6 +141,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
 
   void editLyric(BuildContext context) {
     _manageLyricStore.isEditing = true;
+    _manageLyricStore.hasAttached = false;
     _manageLyricStore.lyric.value = lyricsListStore.selectedLyric;
     pushNamed(AppRoutes.lyricsRoute + AppRoutes.manageLyricsFadeRoute);
     Future.delayed(Duration(seconds: 1), () {
@@ -213,7 +214,7 @@ class ArtistFilter extends Filter<LyricEntity, FilterEvent> {
 
     filterList = list!
         .where(
-          (element) => element.group.toLowerCase().contains(event.searchText.toLowerCase()),
+          (element) => element.artist.toLowerCase().contains(event.searchText.toLowerCase()),
         )
         .toList();
 

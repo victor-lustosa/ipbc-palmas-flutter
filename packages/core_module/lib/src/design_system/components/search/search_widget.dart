@@ -5,7 +5,12 @@ import 'package:flutter/material.dart';
 import 'search_bar_widget.dart';
 
 class SearchWidget extends StatefulWidget {
-  const SearchWidget({super.key, required this.storeId, this.startsEmpty = true});
+  const SearchWidget({
+    super.key,
+    required this.storeId,
+    this.startsEmpty = true,
+  });
+
   final int storeId;
   final bool startsEmpty;
 
@@ -21,7 +26,6 @@ class _SearchWidgetState extends State<SearchWidget> {
     super.initState();
     _store = Modular.get<SearchStore>();
     _store.init(widget.storeId, widget.startsEmpty, context);
-
   }
 
   @override
@@ -47,6 +51,9 @@ class _SearchWidgetState extends State<SearchWidget> {
                 options: SearchParameters.values,
                 action: (value) {
                   _store.selectOptions(value);
+                  if (SearchParameters.values[value].column == SearchParameters.hymns.column) {
+                    _store.searchLyrics('', context);
+                  }
                 },
               ),
             ),

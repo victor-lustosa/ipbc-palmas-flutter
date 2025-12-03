@@ -259,6 +259,7 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
         floatingActionButton: Visibility(
           visible: _store.isAdmin.value,
           child: FloatingButtonWidget(
+            heroTag: 'service-fab',
             iconColor: AppColors.white,
             backgroundColor: AppColors.warning,
             iconPath: AppIcons.editIcon,

@@ -136,7 +136,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                                           ),
                                         ),
                                         Text(
-                                          (widget.entitiesList ?? _store.entitiesList)[index].group,
+                                          (widget.entitiesList ?? _store.entitiesList)[index].artist,
                                           style: AppFonts.description(
                                             color: AppColors.grey9,
                                             fontSize: ResponsivityUtil<double>(
@@ -259,7 +259,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                       ).get(context),
                       color: AppColors.grey9,
                     ),
-                    'Nenhuma música encontrada.',
+                    'Nenhuma letra encontrada.',
                   ),
                 ),
               ],

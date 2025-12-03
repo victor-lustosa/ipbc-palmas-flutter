@@ -12,7 +12,7 @@ void main() {
           {
             'id': 'dfsdfsd',
             'title': 'agua viva',
-            'group': 'oficina g3',
+            'artist': 'oficina g3',
             'verses': [
               {
                 'id': 0,

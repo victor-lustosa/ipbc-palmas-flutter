@@ -51,7 +51,7 @@ class FireServiceUtil {
       List<LyricEntity> lyricsList) async {
     List<LyricEntity> results = [];
     for (int i = 0; lyricsList.length > i; i++) {
-      Map result = await getLyric(lyricsList[i].title, lyricsList[i].group);
+      Map result = await getLyric(lyricsList[i].title, lyricsList[i].artist);
       results.add(
         LyricModel.empty().copyWith(
           verses: VerseAdapter.fromVagalume(result),
@@ -62,9 +62,9 @@ class FireServiceUtil {
     return results;
   }
 
-  static Future<dynamic> getLyric(String title, String group) async {
+  static Future<dynamic> getLyric(String title, String artist) async {
     String titleParam = title.replaceAll(' ', '%20');
-    String groupParam = group.replaceAll(' ', '%20');
+    String artistParam = artist.replaceAll(' ', '%20');
     String apikey = 'a34faccfb8ad3edc6ddcc978e34802ef';
     try {
       final response = await Uno().get(
