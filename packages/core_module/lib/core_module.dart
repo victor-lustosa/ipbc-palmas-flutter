@@ -31,7 +31,10 @@ export 'src/design_system/configs/app_icons.dart';
 export 'src/design_system/configs/app_colors.dart';
 
 export 'src/design_system/components/search/search_widget.dart';
+export 'src/design_system/components/custom_behaviors/custom_reload_scroll_widget.dart';
 export 'src/design_system/components/loading/loading_widget.dart';
+export 'src/design_system/components/loading/cupertino_sliver_widget.dart';
+export 'src/design_system/components/loading/refresh_indicator_widget.dart';
 export 'src/design_system/components/guideline/guideline_widget.dart';
 export 'src/design_system/components/slide_cards/slide_cards_widget.dart';
 export 'src/design_system/components/shimmer/shimmer_widget.dart';
@@ -66,6 +69,7 @@ export 'src/auth/components/stores/auth_circle_avatar_store.dart';
 export 'src/design_system/components/bottom_bar/material_bottom_bar_widget.dart';
 export 'src/design_system/components/dialogs/options_dialog_widget.dart';
 export 'src/design_system/components/dialogs/confirm_dialog_widget.dart';
+export 'src/design_system/components/dialogs/add_lyrics_dialog_widget.dart';
 export 'src/design_system/components/toasts/toasts_widget.dart';
 export 'src/design_system/components/side_bar/side_bar_widget.dart';
 export 'src/design_system/components/top_bar/back_auth_top_bar_widget.dart';

@@ -14,12 +14,17 @@ abstract class GenericState<R> {
 class LoadingEvent<R> extends GenericEvent<R> {
   LoadingEvent();
 }
-
 @immutable
-class AddDataEvent<R> extends GenericState<R> {
+class AddDataEvent<R> extends GenericEvent<R> {
+  final dynamic entity;
+  final BuildContext context;
+  AddDataEvent({this.entity, required this.context});
+}
+@immutable
+class AddDataState<R> extends GenericState<R> {
   final dynamic entity;
 
-  const AddDataEvent({this.entity, super.id});
+  const AddDataState({this.entity, super.id});
 }
 
 @immutable

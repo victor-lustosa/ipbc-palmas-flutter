@@ -7,30 +7,27 @@ import 'package:lyric_module/src/ui/blocs/type_filter.dart';
 class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     with ConnectivityMixin {
   LyricBloc({
-    required this.onlineUseCases,
-    this.offlineUseCases,
     required LyricsListStore lyricsListStore,
+    required GenericEventBus<GenericState<LyricsListState>> eventBus,
     required ManageLyricStore manageLyricStore,
   }) : _lyricsListStore = lyricsListStore,
        _manageLyricStore = manageLyricStore,
-       super(LoadingState<LyricState>()) {
+       _eventBus = eventBus,
+       super(InitialState<LyricState>()) {
     on<GetDataEvent<LyricEvent>>(_getInSupa);
+    on<AddDataEvent<LyricEvent>>(_addInSupa);
     on<FilterEvent<LyricEvent, LyricEntity>>(_filter);
-    on<LoadingEvent<LyricEvent>>(_loading);
     on<GetPaginationEvent<LyricEvent, LyricEntity>>(_getPaginationInSupa);
   }
-  List<LyricEntity> entitiesList = [];
+  final GenericEventBus<GenericState<LyricsListState>> _eventBus;
   int viewHashCode = 0;
-  final IUseCases onlineUseCases;
-  final IUseCases? offlineUseCases;
   bool isSelected = false;
-
   String selectedValue = '';
+  final LyricsListStore _lyricsListStore;
+  final ManageLyricStore _manageLyricStore;
 
   final TextEditingController _controller = TextEditingController();
 
-  final LyricsListStore _lyricsListStore;
-  final ManageLyricStore _manageLyricStore;
 
   LyricsListStore get lyricsListStore => _lyricsListStore;
 
@@ -60,13 +57,24 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     return selectedIndex;
   }
 
-  Future<void> _getInSupa(GetDataEvent<LyricEvent> event, emit) async {
+  Future<void> _addInSupa(AddDataEvent<LyricEvent> event, emit) async {
     final response = await isConnected(context: event.context);
     if (response) {
-      final response = await onlineUseCases.get(
-        params: lyricParams,
-      );
-      response.fold((l) => _lyricsListStore.entitiesList = LyricAdapter.fromMapList(l), (r)=>null);
+      if(event.context.mounted){
+        showAddLyricsDialog(
+          context: event.context,
+          callback: (text) async {
+            _manageLyricStore.hasAttached = false;
+            _manageLyricStore.attachLyric(context: event.context, text: text);
+            pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);
+            /*final lyric = await _manageLyricStore.saveLyric(event.context);
+            if(lyric != null) {
+              _lyricsListStore.updateList(lyric);
+            }
+            _manageLyricStore.hasAttached = true;*/
+          },
+        );
+      }
       if (emit.isDone) return;
       emit(DataFetchedState<LyricState>());
     } else {
@@ -74,22 +82,38 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     }
   }
 
+  Future<void> _getInSupa(GetDataEvent<LyricEvent> event, emit) async {
+    final response = await isConnected(context: event.context);
+    if (response) {
+      if(event.context.mounted) {
+        _eventBus.emit(LoadingState());
+        List entities = await _manageLyricStore.getOnlineLyrics(
+          context: event.context,
+          params: lyricParams,
+        );
+       if(entities.isEmpty) {
+          _eventBus.emit(NotFoundState());
+        } else {
+         _eventBus.emit(DataFetchedState(entities: entities));
+        }
+      }
+      if (emit.isDone) return;
+      emit(DataFetchedState<LyricState>());
+    } else {
+      _eventBus.emit(NoConnectionState());
+    }
+  }
+
   Future<void> _getPaginationInSupa(
     GetPaginationEvent<LyricEvent, LyricEntity> event,
     emit,
   ) async {
-
     List<LyricEntity> lyricsListAux = [];
     int offset = _lyricsListStore.entitiesList.length;
-    final Map<String, Object> paginationParams = {
-      'table': 'lyrics',
-      'limit': event.limit,
-      'offset': offset,
-    };
-    final response = await onlineUseCases.get(
-      params: paginationParams,
+    lyricsListAux = await _manageLyricStore.getOnlineLyricsPagination(
+      context: event.context,
+      params: {'table': 'lyrics', 'limit': event.limit, 'offset': offset},
     );
-    response.fold((l) => lyricsListAux = LyricAdapter.fromMapList(l), (r) => null);
     //Verificando se tem novos itens retornados se sim eu adiciona lista principal
     if (lyricsListAux.isNotEmpty) {
       _lyricsListStore.entitiesList.addAll(lyricsListAux);
@@ -97,10 +121,6 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     } else {
       emit(NoMoreDataState<LyricState, List<LyricEntity>>());
     }
-  }
-
-  Future<void> _loading(_, dynamic emit) async {
-    emit(LoadingState<LyricState>());
   }
 
   Future<void> _filter(FilterEvent<LyricEvent, LyricEntity> event, emit) async {
@@ -116,8 +136,8 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   }
 
   void editLyric(BuildContext context) {
-    manageLyricStore.isEditing = true;
-    manageLyricStore.lyric.value = lyricsListStore.selectedLyric;
+    _manageLyricStore.isEditing = true;
+    _manageLyricStore.lyric.value = lyricsListStore.selectedLyric;
     pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);
     Future.delayed(Duration(seconds: 1), () {
       _lyricsListStore.value = RefreshingState();
@@ -128,14 +148,13 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   void deleteLyric({required BuildContext context}) async {
     String? lyricIdParam = lyricsListStore.selectedLyric.id;
     if (lyricIdParam != null) {
-      manageLyricStore.deleteLyric(context: context, lyricId: lyricIdParam);
+      _manageLyricStore.deleteLyric(context: context, lyricId: lyricIdParam);
       Future.delayed(Duration(seconds: 1), () {
         _lyricsListStore.value = RefreshingState();
       });
-      popToast(2);
+      popToast(1);
     }
   }
-
 }
 
 @immutable
@@ -147,8 +166,8 @@ abstract class LyricState {}
 @immutable
 class GetPaginationEvent<R, T> extends GenericEvent<R> {
   final int limit;
-
-  GetPaginationEvent(this.limit);
+  final BuildContext context;
+  GetPaginationEvent(this.limit, {required this.context});
 }
 
 @immutable

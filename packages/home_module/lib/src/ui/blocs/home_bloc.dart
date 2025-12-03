@@ -13,7 +13,7 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
        _createEventStore = createEventStore,
 
        _authCircleAvatarStore = authCircleAvatarStore,
-       super(LoadingState()) {
+       super(InitialState<HomeState>()) {
     on<GetDataEvent<HomeEvent>>(_getData);
     on<GetEventsDataEvent>(_getEventsData);
   }

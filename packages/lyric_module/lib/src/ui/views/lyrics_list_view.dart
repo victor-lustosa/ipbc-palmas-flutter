@@ -35,44 +35,35 @@ class _LyricsListViewState extends State<LyricsListView>
           child: BlocBuilder<LyricBloc, GenericState<LyricState>>(
             bloc: _bloc,
             builder: (context, state) {
-              if (state is LoadingState<LyricState>) {
-                return const LoadingWidget(
-                  androidRadius: 3,
-                  iosRadius: 14,
-                  color: AppColors.darkGreen,
-                );
-              } else if (state is NoConnectionState<LyricState>) {
-                return NoConnectionView(
-                  action: () =>
-                      nativePushReplacementNamed(AppRoutes.rootRoute, context),
-                );
-              } else if (state is DataFetchedState<LyricState>) {
-                return RefreshIndicator(
-                  color: AppColors.darkGreen,
-                  onRefresh: () async {
-                    _bloc.add(GetDataEvent(context: context));
+              if (state is InitialState ||
+                  state is DataFetchedState<LyricState>) {
+                return GestureDetector(
+                  behavior: .opaque,
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
                   },
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        const TitleTopBarWidget(title: "Músicas"),
-                        Container(
-                          margin: const EdgeInsets.only(top: 37),
-                          child: SearchWidget(storeId: _bloc.viewHashCode,),
-                        ),
-
-                        /*Text(state.entities.length.toString()),
-                        ElevatedButton(
-                            onPressed: () {
-                              _bloc.add(
-                                GetPaginationEvent<LyricEvent, LyricEntity>(10),
-                              );
-                            },
-                            child: const Text('Paginação')),*/
-                        Visibility(
-                          visible:
-                              _bloc.lyricsListStore.entitiesList.isNotEmpty,
-                          child: LyricsListWidget(
+                  child: CustomReloadScrollWidget(
+                    action: () async {
+                      _bloc.add(GetDataEvent(context: context));
+                    },
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const TitleTopBarWidget(title: "Músicas"),
+                          Container(
+                            margin: const EdgeInsets.only(top: 37),
+                            child: SearchWidget(storeId: _bloc.viewHashCode),
+                          ),
+                          /*Text(state.entities.length.toString()),
+                          ElevatedButton(
+                              onPressed: () {
+                                _bloc.add(
+                                  GetPaginationEvent<LyricEvent, LyricEntity>(10),
+                                );
+                              },
+                          child: const Text('Paginação')),*/
+                          LyricsListWidget(
+                            isListVisible: true,
                             title: "Adicionados recentemente",
                             onLongPressStart: (details) async {
                               await showOptionsDialog(
@@ -130,8 +121,8 @@ class _LyricsListViewState extends State<LyricsListView>
                               );
                             },
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -140,6 +131,14 @@ class _LyricsListViewState extends State<LyricsListView>
               }
             },
           ),
+        ),
+        floatingActionButton: FloatingButtonWidget(
+          iconColor: AppColors.white,
+          backgroundColor: AppColors.add,
+          icon: Icons.add,
+          action: () {
+            _bloc.add(AddDataEvent(context: context));
+          },
         ),
       ),
     );

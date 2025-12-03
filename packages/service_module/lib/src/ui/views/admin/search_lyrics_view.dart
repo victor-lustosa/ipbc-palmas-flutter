@@ -2,8 +2,6 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../components/dialogs/admin/add_lyrics_dialog_widget.dart';
-
 class SearchLyricsView extends StatefulWidget {
   const SearchLyricsView({super.key, required this.dto});
 
@@ -36,7 +34,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
       child: Scaffold(
         body: SafeArea(
           child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
+            behavior: .opaque,
             onTap: () {
               FocusScope.of(context).unfocus();
               _store.lyricsListStore.tappedIndex.value = null;
@@ -48,11 +46,12 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                     color: AppColors.white,
                     width: context.sizeOf.width,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: .start,
                       children: [
                         ServiceTopBarWidget(
                           image: widget.dto.servicesEntity.image,
                           title: "Voltar para liturgia",
+
                         ),
                         Container(
                           margin: const EdgeInsets.only(
@@ -63,13 +62,13 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                           child: Text(
                             'Selecione a música do culto:',
                             style: AppFonts.defaultFont(
-                              fontWeight: FontWeight.w500,
+                              fontWeight: .w500,
                               fontSize: 17,
                               color: AppColors.grey10,
                             ),
                           ),
                         ),
-                        SearchWidget(storeId: hashCode),
+                        SearchWidget(storeId: hashCode, startsEmpty: false),
                         Container(
                           margin: const EdgeInsets.only(top: 14),
                           child: LyricsListWidget(
@@ -78,7 +77,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                             title: "Resultados encontrados",
                             onTap: () async {
                               FocusScope.of(context).unfocus();
-                              await Future.delayed(Duration.zero);
+                              await Future.delayed(.zero);
                             },
                           ),
                         ),
@@ -90,7 +89,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                 SliverFillRemaining(
                   hasScrollBody: false,
                   child: Align(
-                    alignment: Alignment.bottomCenter,
+                    alignment: .bottomCenter,
                     child: Container(
                       width: context.sizeOf.width,
                       color: AppColors.white,
@@ -106,8 +105,8 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                                   ? _store.isAddEventPressed
                                   : _store.isAddEventPressed,
                               adaptiveButtonType: value != null
-                                  ? AdaptiveButtonType.elevated
-                                  : AdaptiveButtonType.outlined,
+                                  ? .elevated
+                                  : .outlined,
                               sideColor: value != null
                                   ? null
                                   : AppColors.darkGreen,
@@ -138,7 +137,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                                       showAddLyricsDialog(
                                         context: context,
                                         callback: (text) {
-                                          _store.newLyric(text, context);
+                                         // _store.attachLyric(widget.dto.serviceId!, context, text);
                                         },
                                       );
                                     },

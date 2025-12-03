@@ -42,10 +42,28 @@ class ServiceStore extends ValueNotifier<GenericState<ServiceState>> {
     pushNamed(AppRoutes.servicesRoute + AppRoutes.manageServicesRoute);
   }
 
-  void addLyric() {
+  Future<void> addLyric() async {
+    _manageLyricStore.buttonCallback = () {
+      final index = entitiesList.indexWhere(
+        (item) => item.id == _manageLyricStore.lyric.value.id,
+      );
+      if (index != -1) {
+        entitiesList[index] = _manageLyricStore.lyric.value;
+      } else {
+        entitiesList.add(_manageLyricStore.lyric.value);
+      }
+      popUntil(
+        (route) =>
+            route.settings.name ==
+            AppRoutes.servicesRoute + AppRoutes.serviceRoute,
+      );
+    };
     pushNamed(
       AppRoutes.servicesRoute + AppRoutes.searchLyricsRoute,
-      arguments: SearchLyricsDTO(servicesEntity: servicesEntity, serviceId: serviceEntity.id!),
+      arguments: SearchLyricsDTO(
+        servicesEntity: servicesEntity,
+        serviceId: serviceEntity.id!,
+      ),
     );
   }
 

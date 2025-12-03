@@ -1,21 +1,27 @@
+import 'dart:math';
+
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
 class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
     with ConnectivityMixin {
   ManageLyricStore({
-    required IUseCases useCases,
+    required IUseCases onlineUseCases,
     required LyricsListStore lyricsListStore,
-  }) : _useCases = useCases,
+    // IUseCases? offlineUseCases,
+  }) : _onlineUseCases = onlineUseCases,
+       // _offlineUseCases = offlineUseCases,
        _lyricsListStore = lyricsListStore,
        super(InitialState());
+  final IUseCases _onlineUseCases;
 
-  final IUseCases _useCases;
+  //final IUseCases? _offlineUseCases;
   final LyricsListStore _lyricsListStore;
   late void Function() buttonCallback;
   late ValueNotifier<LyricEntity> lyric = ValueNotifier(LyricEntity.empty());
   bool isEditing = false;
   late String serviceId;
+  bool hasAttached = true;
   ValueNotifier<bool> isSavePressed = ValueNotifier(false);
   final Map<String, TextEditingController> _controllers = {};
   final TextEditingController titleController = TextEditingController();
@@ -67,6 +73,89 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
         _focusNodes[key] = FocusNode();
       }
     }
+  }
+
+  LyricEntity convertTextInLyric(String text) {
+    final List<String> rawVerseBlocks = text.split(RegExp(r'\n\s*\n+'));
+
+    final List<VerseEntity> parsedVerseEntities = [];
+
+    for (int i = 0; i < rawVerseBlocks.length; i++) {
+      final String block = rawVerseBlocks[i].trim();
+      if (block.isEmpty) continue;
+
+      final List<String> versesInBlock = block
+          .split('\n')
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty)
+          .toList();
+
+      if (versesInBlock.isNotEmpty) {
+        parsedVerseEntities.add(
+          VerseEntity(id: i, isChorus: false, versesList: versesInBlock),
+        );
+      }
+    }
+    return LyricEntity(
+      title: 'Título Padrão',
+      group: 'Grupo Padrão',
+      albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
+      createAt: DateTime.now().toIso8601String(),
+      verses: parsedVerseEntities,
+    );
+  }
+
+  void attachLyric({
+    required BuildContext context,
+    String? serviceId,
+    String? text,
+  }) {
+    if (text != null && text.isNotEmpty) {
+      lyric.value = convertTextInLyric(text);
+      isEditing = false;
+    } else {
+      lyric.value = _lyricsListStore.selectedLyric;
+      isEditing = true;
+      Future.delayed(Duration(milliseconds: 100), () {
+        _lyricsListStore.tappedIndex.value = null;
+      });
+    }
+  }
+
+  Future<List<LyricEntity>> getOnlineLyrics({
+    required Map<String, Object> params,
+    required BuildContext context,
+  }) async {
+    final response = await _onlineUseCases.get(params: params);
+    return response.fold(
+      (l) => LyricAdapter.fromMapList(l),
+      (GenericException r) => showCustomToast(
+        type: .error,
+        context: context,
+        duration: const Duration(seconds: 1),
+        title: 'Erro ao Carregar Letras',
+        message:
+            'Ocorreu um erro ao carregar as letras. Verifique a internet e tente novamente.',
+      ),
+    );
+  }
+
+  Future<List<LyricEntity>> getOnlineLyricsPagination({
+    required Map<String, Object> params,
+    required BuildContext context,
+  }) async {
+    final response = await _onlineUseCases.get(params: params);
+    return response.fold(
+      (l) => LyricAdapter.fromMapList(l),
+      (GenericException r) => showCustomToast(
+        type: .error,
+        context: context,
+        duration: const Duration(seconds: 1),
+        title: 'Erro ao Carregar Letras',
+        message:
+            'Ocorreu um erro ao carregar as letras. Verifique a internet e tente novamente.',
+      ),
+    );
   }
 
   void toggleChorusStatus(int verseIndex) {
@@ -192,75 +281,59 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
     }
   }
 
-  Future<LyricEntity?> saveLyric(
-    BuildContext context, {
-    bool isAttached = false,
-  }) async {
+  Future<LyricEntity?> saveLyric(BuildContext context) async {
     isSavePressed.value = true;
     if (await isConnected(context: context)) {
-      final response = await _useCases.upsert(
+      final response = await _onlineUseCases.upsert(
         params: {'table': 'lyrics', 'selectFields': 'id'},
         data: LyricAdapter.toMap(lyric.value),
       );
       response.fold(
         (lyricsResponse) async {
-          final response = await _useCases.upsert(
-            params: {'table': 'service_lyrics'},
-            data: {
-              'service_id': int.parse(serviceId),
-              'lyric_id': lyricsResponse[0]['id'],
-            },
-          );
-          response.fold(
-            (_) {
-              lyric.value = lyric.value.copyWith(
-                id: lyricsResponse[0]['id'].toString(),
-              );
-
-              if (!isAttached) {
-                final index = _lyricsListStore.entitiesList.indexWhere(
-                  (item) => item.id == lyric.value.id,
-                );
-                if (index != -1) {
-                  _lyricsListStore.entitiesList[index] = lyric.value;
-                } else {
-                  _lyricsListStore.entitiesList.add(lyric.value);
-                }
-              }
-
-              if (context.mounted) {
-                showCustomToast(
-                  context: context,
-                  title: 'Sucesso!',
-                  message: 'Musica salva com sucesso.',
-                  duration: const Duration(seconds: 1),
-                  onDelayedAction: () {
-                    isSavePressed.value = false;
-                    value = RefreshingState();
-                    buttonCallback();
-                  },
-                );
-              }
-            },
-            (GenericException r) {
+          if (hasAttached) {
+            final response = await _onlineUseCases.upsert(
+              params: {'table': 'service_lyrics'},
+              data: {
+                'service_id': int.parse(serviceId),
+                'lyric_id': lyricsResponse[0]['id'],
+              },
+            );
+            response.fold((_) {}, (GenericException r) {
+              bool isDuplicated = (r.code == '23505');
               return right(
                 toast(
                   context,
-                  type: (r.code == '23505') ? ToastType.warning : null,
-                  (r.code == '23505')
+                  type: isDuplicated ? ToastType.warning : null,
+                  isDuplicated
                       ? 'Essa letra já existe na lista de letras do culto.'
                       : 'Ocorreu um erro ao salvar a música. Verifique a internet e tente novamente.',
-                  (r.code == '23505')
-                      ? 'Letra duplicada!'
-                      : 'Problema ao salvar!',
+                  isDuplicated ? 'Letra duplicada!' : 'Problema ao salvar!',
                   onDelayedAction: () {
                     isSavePressed.value = false;
                     value = RefreshingState();
                   },
                 ),
               );
-            },
+            });
+          }
+
+          lyric.value = lyric.value.copyWith(
+            id: lyricsResponse[0]['id'].toString(),
           );
+
+          if (context.mounted) {
+            showCustomToast(
+              context: context,
+              title: 'Sucesso!',
+              message: 'Musica salva com sucesso.',
+              duration: const Duration(seconds: 1),
+              onDelayedAction: () {
+                isSavePressed.value = false;
+                value = RefreshingState();
+                buttonCallback();
+              },
+            );
+          }
         },
         (_) {
           return right(
@@ -288,7 +361,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
     Map<String, dynamic>? params,
     bool isAttached = false,
   }) async {
-    final response = await _useCases.delete(
+    final response = await _onlineUseCases.delete(
       params:
           params ??
           {

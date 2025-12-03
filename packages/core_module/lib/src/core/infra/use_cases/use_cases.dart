@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:core_module/core_module.dart';
-import 'package:core_module/src/core/infra/exceptions/generic_exception.dart';
 
 class UseCases<T> implements IUseCases {
   final IRepository repository;

@@ -13,34 +13,35 @@ enum SearchParameters {
 
 class SearchStore extends ValueNotifier<GenericState<SearchState>> {
   SearchStore({
-    required IUseCases useCases,
-    required GenericEventBus<GenericState<SearchState>> eventBus,
-  }) : _useCases = useCases,
-       _eventBus = eventBus,
+    required ManageLyricStore manageLyricStore,
+    required GenericEventBus<GenericState<LyricsListState>> eventBus,
+  }) : _eventBus = eventBus,
+       _manageLyricStore = manageLyricStore,
        super(InitialState());
   int? _currentStoreId;
-  late ServicesEntity servicesEntity;
-  final IUseCases _useCases;
-  final GenericEventBus<GenericState<SearchState>> _eventBus;
 
+  late ServicesEntity servicesEntity;
+  final GenericEventBus<GenericState<LyricsListState>> _eventBus;
+  final ManageLyricStore _manageLyricStore;
   final TextEditingController searchController = TextEditingController();
   bool isSelected = false;
   int selectedIndex = 0;
   int limit = 0;
 
-  void init(int storeId) {
+  void init(int storeId, bool startsEmpty, BuildContext context) {
     searchController.text = '';
     _currentStoreId = storeId;
+    if(!startsEmpty) searchLyrics('', context);
   }
 
   void selectOptions(int index) {
     selectedIndex = index;
   }
 
-  void searchLyrics(String searchField) async {
-    _eventBus.emit(LoadingState<SearchState>(id: _currentStoreId));
-    List<LyricEntity> lyrics = [];
-     final response = await _useCases.get(
+  void searchLyrics(String searchField, BuildContext context) async {
+    _eventBus.emit(LoadingState<LyricsListState>(id: _currentStoreId));
+    List<LyricEntity> lyrics = await _manageLyricStore.getOnlineLyrics(
+      context: context,
       params: {
         'table': 'lyrics',
         'orderBy': 'create_at',
@@ -48,14 +49,15 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
         'likeValue': searchField,
         'ascending': false,
         'selectFields': 'id, title, group, album_cover, create_at, verses',
-        if(limit > 0) 'limit': limit
+        if (limit > 0) 'limit': limit,
       },
     );
-    response.fold((l)=> lyrics = LyricAdapter.fromMapList(l), (r) => null);
     if (lyrics.isNotEmpty) {
-      _eventBus.emit(DataFetchedState<SearchState>(entities: lyrics, id: _currentStoreId));
+      _eventBus.emit(
+        DataFetchedState<LyricsListState>(entities: lyrics, id: _currentStoreId),
+      );
     } else {
-      _eventBus.emit(NotFoundState<SearchState>(id: _currentStoreId));
+      _eventBus.emit(NotFoundState<LyricsListState>(id: _currentStoreId));
     }
   }
 }

@@ -30,12 +30,12 @@ class CoreModule extends Module {
 
     i.addLazySingleton<LyricsListStore>(
       () => LyricsListStore(
-        eventBus: i.get<GenericEventBus<GenericState<SearchState>>>(),
+        eventBus: i.get<GenericEventBus<GenericState<LyricsListState>>>(),
       ),
     );
     i.addLazySingleton<ManageLyricStore>(
       () => ManageLyricStore(
-        useCases: i.get<UseCases<SupabaseRepository>>(),
+        onlineUseCases: i.get<UseCases<SupabaseRepository>>(),
         lyricsListStore: i.get<LyricsListStore>(),
       ),
     );
@@ -74,23 +74,22 @@ class CoreModule extends Module {
     );
     i.add<SearchLyricsStore>(
       () => SearchLyricsStore(
-        searchStore: i.get<SearchStore>(),
-        serviceStore: i.get<ServiceStore>(),
-        eventBus: i.get<GenericEventBus<GenericState<SearchState>>>(),
-        lyricsListStore: i.get<LyricsListStore>(),
         manageLyricStore: i.get<ManageLyricStore>(),
+        searchStore: i.get<SearchStore>(),
+        eventBus: i.get<GenericEventBus<GenericState<LyricsListState>>>(),
+        lyricsListStore: i.get<LyricsListStore>(),
       ),
     );
     i.addLazySingleton<SearchStore>(
       () => SearchStore(
-        eventBus: i.get<GenericEventBus<GenericState<SearchState>>>(),
-        useCases: i.get<UseCases<SupabaseRepository>>(),
+        manageLyricStore: i.get<ManageLyricStore>(),
+        eventBus: i.get<GenericEventBus<GenericState<LyricsListState>>>(),
       ),
     );
 
     //event bus of search lyrics view
-    i.addSingleton<GenericEventBus<GenericState<SearchState>>>(
-      () => GenericEventBus<GenericState<SearchState>>(),
+    i.addSingleton<GenericEventBus<GenericState<LyricsListState>>>(
+      () => GenericEventBus<GenericState<LyricsListState>>(),
       config: BindConfig(onDispose: (bus) => bus.dispose()),
     );
 

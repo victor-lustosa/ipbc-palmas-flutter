@@ -179,7 +179,7 @@ class ManageServiceStore extends ValueNotifier<GenericState<ManageServiceState>>
       final response = await isConnected(context: context);
       if (response) {
         final typeList = servicesEntity.path.split('/');
-        value = AddDataEvent<ManageServiceState>();
+        value = AddDataState<ManageServiceState>();
         bool isServiceNotNull = serviceEntity != null;
         serviceEntity = ServiceEntity(
           id: (isEditing && isServiceNotNull) ? serviceEntity!.id : null,

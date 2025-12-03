@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -49,165 +46,112 @@ class _HomeViewState extends State<HomeView>
           child: BlocBuilder<HomeBloc, GenericState<HomeState>>(
             bloc: _bloc,
             builder: (context, state) {
-              if (state is LoadingState<HomeState>) {
-                return const LoadingWidget(
-                  androidRadius: 3,
-                  iosRadius: 14,
-                  color: AppColors.darkGreen,
-                );
-              } else if (state is NoConnectionState<HomeState>) {
-                return NoConnectionView(
-                  action: () => nativePushNamed(AppRoutes.homeRoute, context),
-                );
-              } else if (state is DataFetchedState<HomeState> ||
+              if (state is DataFetchedState<HomeState> ||
+                  state is InitialState<HomeState> ||
                   state is LoadingEventsState ||
                   state is LoadingServicesState) {
-                Widget scrollView = CustomScrollView(
-                  physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics(),
-                  ),
-                  slivers: [
-                    if (Platform.isIOS)
-                      CupertinoSliverRefreshControl(
-                        onRefresh: () async {
-                          _bloc.add(GetDataEvent(context: context));
-                        },
-                        builder: (_, _, pulledExtent, _, _) {
-                          return Center(
-                            child: Opacity(
-                              opacity: (pulledExtent / 100.0).clamp(0.0, 1.0),
-                              child: const CupertinoActivityIndicator(
-                                color: AppColors.darkGreen,
-                                radius: 14,
+                return CustomReloadScrollWidget(
+                  action: () async {
+                    _bloc.add(GetDataEvent(context: context));
+                  },
+                  child: Stack(
+                    children: [
+                      SizedBox(
+                        width: context.sizeOf.width,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(height: 78),
+                            InkWell(
+                              onTap: () {
+                                nativePushNamed(
+                                  AppRoutes.servicesListRoute,
+                                  context,
+                                  arguments: {
+                                    'servicesList': _bloc.servicesList,
+                                    'shimmerController': _shimmerController,
+                                  },
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  const _TitleWidget(text: "Cultos"),
+                                  const _SubtitleWidget(
+                                    right: 17,
+                                    text:
+                                        "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
+                                  ),
+                                ],
                               ),
                             ),
-                          );
-                        },
-                      ),
-                    SliverToBoxAdapter(
-                      child: Stack(
-                        children: [
-                          SizedBox(
-                            width: context.sizeOf.width,
-                            child: Column(
+                            CarouselWidget(
+                              shimmerController: _shimmerController,
+                              fontStyle: AppFonts.defaultFont(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.white,
+                              ),
+                              margin: const EdgeInsets.only(left: 6, right: 6),
+                              route: AppRoutes.servicesCollectionRoute,
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const SizedBox(height: 78),
-                                InkWell(
-                                  onTap: () {
-                                    nativePushNamed(
-                                      AppRoutes.servicesListRoute,
-                                      context,
-                                      arguments: {
-                                        'servicesList': _bloc.servicesList,
-                                        'shimmerController': _shimmerController,
-                                      },
-                                    );
-                                  },
-                                  child: Column(
-                                    children: [
-                                      const _TitleWidget(text: "Cultos"),
-                                      const _SubtitleWidget(
-                                        right: 17,
-                                        text:
-                                            "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                CarouselWidget(
-                                  shimmerController: _shimmerController,
-                                  fontStyle: AppFonts.defaultFont(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.white,
-                                  ),
-                                  margin: const EdgeInsets.only(
-                                    left: 6,
-                                    right: 6,
-                                  ),
-                                  route: AppRoutes.servicesCollectionRoute,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  width: context.sizeOf.width,
-                                  services: _bloc.servicesList,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    _bloc.createEventStore.fromCalled =
-                                        'eventsList';
-                                    nativePushNamed(
-                                      AppRoutes.eventRoute +
-                                          AppRoutes.eventsListRoute,
-                                      context,
-                                    );
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          top: _bloc.servicesList.isEmpty
-                                              ? 29
-                                              : 15,
-                                        ),
-                                        child: const _TitleWidget(
-                                          text: "Eventos",
-                                        ),
-                                      ),
-                                      const _SubtitleWidget(
-                                        right: 18,
-                                        text:
-                                            "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  margin: const EdgeInsets.only(
-                                    top: 12,
-                                  ),
-                                  child: SlideCardsWidget(
-                                    isLoading: state is LoadingEventsState,
-                                    action: () {
-                                      _bloc.createEventStore.fromCalled =
-                                          'home';
-                                      pushNamed(
-                                        AppRoutes.eventRoute +
-                                            AppRoutes.detailEventRoute,
-                                        arguments:
-                                            Modular.get<SlideCardsStore>()
-                                                .eventEntity,
-                                      );
-                                    },
-                                    shimmerController: _shimmerController,
-                                    width: context.sizeOf.width * .742,
-                                    scrollDirection: Axis.horizontal,
-                                    route:
-                                        AppRoutes.eventRoute +
-                                        AppRoutes.detailEventRoute,
-                                    entities: _bloc.eventsList,
-                                  ),
-                                ),
-                              ],
+                              width: context.sizeOf.width,
+                              services: _bloc.servicesList,
                             ),
-                          ),
-                          BackAuthTopBarWidget(isHome: true),
-                        ],
+                            InkWell(
+                              onTap: () {
+                                _bloc.createEventStore.fromCalled =
+                                    'eventsList';
+                                nativePushNamed(
+                                  AppRoutes.eventRoute +
+                                      AppRoutes.eventsListRoute,
+                                  context,
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      top: _bloc.servicesList.isEmpty ? 29 : 15,
+                                    ),
+                                    child: const _TitleWidget(text: "Eventos"),
+                                  ),
+                                  const _SubtitleWidget(
+                                    right: 18,
+                                    text:
+                                        "Proximos cultos, conferências, acompanhe todos os eventos da IPBC Palmas!",
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 12),
+                              child: SlideCardsWidget(
+                                isLoading: state is LoadingEventsState,
+                                action: () {
+                                  _bloc.createEventStore.fromCalled = 'home';
+                                  pushNamed(
+                                    AppRoutes.eventRoute +
+                                        AppRoutes.detailEventRoute,
+                                    arguments: Modular.get<SlideCardsStore>()
+                                        .eventEntity,
+                                  );
+                                },
+                                shimmerController: _shimmerController,
+                                width: context.sizeOf.width * .742,
+                                scrollDirection: Axis.horizontal,
+                                route:
+                                    AppRoutes.eventRoute +
+                                    AppRoutes.detailEventRoute,
+                                entities: _bloc.eventsList,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      BackAuthTopBarWidget(isHome: true),
+                    ],
+                  ),
                 );
-                if (Platform.isAndroid) {
-                  return RefreshIndicator(
-                    elevation: .7,
-                    backgroundColor: AppColors.white,
-                    color: AppColors.darkGreen,
-                    onRefresh: () async {
-                      _bloc.add(GetDataEvent(context: context));
-                    },
-                    child: scrollView,
-                  );
-                }
-                return scrollView;
               } else {
                 return const GenericErrorView();
               }

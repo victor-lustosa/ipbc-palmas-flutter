@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'search_bar_widget.dart';
 
 class SearchWidget extends StatefulWidget {
-  const SearchWidget({super.key, required this.storeId});
+  const SearchWidget({super.key, required this.storeId, this.startsEmpty = true});
   final int storeId;
+  final bool startsEmpty;
+
   @override
   State<SearchWidget> createState() => _SearchWidgetState();
 }
@@ -18,7 +20,8 @@ class _SearchWidgetState extends State<SearchWidget> {
   void initState() {
     super.initState();
     _store = Modular.get<SearchStore>();
-    _store.init(widget.storeId);
+    _store.init(widget.storeId, widget.startsEmpty, context);
+
   }
 
   @override
@@ -33,7 +36,7 @@ class _SearchWidgetState extends State<SearchWidget> {
               child: SearchBarWidget(
                 controller: _store.searchController,
                 onChange: (value) {
-                    _store.searchLyrics(value);
+                  _store.searchLyrics(value, context);
                 },
               ),
             ),

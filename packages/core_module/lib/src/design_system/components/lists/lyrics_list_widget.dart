@@ -12,6 +12,7 @@ class LyricsListWidget extends StatefulWidget {
     this.entitiesList,
     this.isLongPressEnabled = true,
     this.keepSelection = false,
+    this.isListVisible = false,
   });
 
   final void Function(LongPressStartDetails)? onLongPressStart;
@@ -20,6 +21,7 @@ class LyricsListWidget extends StatefulWidget {
   final void Function()? onTap;
   final EdgeInsetsGeometry? margin;
   final bool? isTitleVisible;
+  final bool isListVisible;
   final String? title;
   final List<LyricEntity>? entitiesList;
 
@@ -39,6 +41,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
     } else {
       _store.hasFixedData = false;
     }
+
   }
 
   @override
@@ -46,9 +49,9 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
     return ValueListenableBuilder(
       valueListenable: _store,
       builder: (_, state, child) {
-        if (state is DataFetchedState || state is InitialState) {
+        if (state is DataFetchedState || state is InitialState || state is RefreshingState) {
           return Visibility(
-            visible: (widget.entitiesList ?? _store.entitiesList).isNotEmpty,
+            visible: (widget.entitiesList ?? _store.entitiesList).isNotEmpty || widget.isListVisible,
             child: Container(
               margin: widget.margin ?? EdgeInsets.only(bottom: 24, left: 16, right: 16),
               child: Column(
@@ -234,12 +237,42 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
             ),
           );
         } else if (state is NotFoundState) {
-          return Container(
-            margin: const EdgeInsets.only(top: 150),
+          return SizedBox(
+            width: context.sizeOf.width,
+            height: context.sizeOf.height * .45,
+            child: Column(
+              mainAxisAlignment: .center,
+              children: [
+                SizedBox(
+                  width: 26,
+                  height: 26,
+                  child: Image.asset(AppIcons.info, color: Colors.blueAccent),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 8),
+                  child: Text(
+                    textAlign: .center,
+                    style: AppFonts.defaultFont(
+                      fontSize: ResponsivityUtil<double>(
+                        sm: 13,
+                        xl: 14,
+                      ).get(context),
+                      color: AppColors.grey9,
+                    ),
+                    'Nenhuma música encontrada.',
+                  ),
+                ),
+              ],
+            ),
+          );
+        }  else if (state is NoConnectionState) {
+          return Center(
             child: SizedBox(
               width: context.sizeOf.width,
+              height: context.sizeOf.width * .6,
               child: Column(
                 crossAxisAlignment: .center,
+                mainAxisAlignment: .center,
                 children: [
                   SizedBox(
                     width: 26,
@@ -248,7 +281,6 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 8),
-                    width: context.sizeOf.width * .6,
                     child: Text(
                       textAlign: .center,
                       style: AppFonts.defaultFont(
@@ -258,7 +290,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                         ).get(context),
                         color: AppColors.grey9,
                       ),
-                      'Nenhuma música encontrada.',
+                      'Sem conexão.',
                     ),
                   ),
                 ],
@@ -267,7 +299,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
           );
         } else {
           return SizedBox(
-            height: context.sizeOf.height * .345,
+            height: context.sizeOf.height * .42,
             width: context.sizeOf.width,
             child: const LoadingWidget(
               androidRadius: 3,

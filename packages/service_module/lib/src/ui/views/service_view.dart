@@ -236,8 +236,8 @@ class _ServiceViewState extends State<ServiceView> with DateMixin {
                                   borderRadius: BorderRadius.circular(16),
                                 ),
                                 fixedSize: Size(context.sizeOf.width, 48),
-                                action: () {
-                                  _store.addLyric();
+                                action: () async {
+                                  await _store.addLyric();
                                 },
                                 backgroundColor: AppColors.darkGreen,
                                 shadowColor: AppColors.grey0,

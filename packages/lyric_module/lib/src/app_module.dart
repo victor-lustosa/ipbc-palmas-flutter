@@ -12,7 +12,7 @@ class LyricModule extends Module {
       () => LyricBloc(
         lyricsListStore: Modular.get<LyricsListStore>(),
         manageLyricStore: Modular.get<ManageLyricStore>(),
-        onlineUseCases: i.get<UseCases<SupabaseRepository>>(),
+        eventBus: i.get<GenericEventBus<GenericState<LyricsListState>>>(),
       ),
       config: CoreModule.blocConfig(),
     );

@@ -353,7 +353,7 @@ class CreateEventStore extends ValueNotifier<GenericState<CreateEventState>>
               return;
             }
           }
-          value = AddDataEvent<CreateEventState>();
+          value = AddDataState<CreateEventState>();
           String? resultUrl;
           bool isImageUpdated = (isEditing && coverImage.path.isNotEmpty);
           if (isImageUpdated || !isEditing) {
