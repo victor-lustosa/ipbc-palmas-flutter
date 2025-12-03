@@ -52,7 +52,7 @@ class ServicesCollectionBloc
         'filterValue': pathList[2],
         'ascending': bool.parse(pathList[4]),
         'selectFields':
-            'id, create_at, image, title, theme, preacher, service_date, heading, type, guide_is_visible, liturgies, service_lyrics (lyrics(id, title, artist, is_hymn, album_cover, create_at, verses)))',
+            'id, create_at, image, title, theme, preacher, service_date, heading, type, guide_is_visible, liturgies, service_lyrics (lyrics(id, title, artist, is_hymn, album_cover, create_at, verses, hymn_number)))',
       };
       add(LoadingEvent<ServicesCollectionEvent>());
       final response = await onlineUseCases.get(

@@ -41,7 +41,6 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
     } else {
       _store.hasFixedData = false;
     }
-
   }
 
   @override
@@ -49,11 +48,17 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
     return ValueListenableBuilder(
       valueListenable: _store,
       builder: (_, state, child) {
-        if (state is DataFetchedState || state is InitialState || state is RefreshingState) {
+        if (state is DataFetchedState ||
+            state is InitialState ||
+            state is RefreshingState) {
           return Visibility(
-            visible: (widget.entitiesList ?? _store.entitiesList).isNotEmpty || widget.isListVisible,
+            visible:
+                (widget.entitiesList ?? _store.entitiesList).isNotEmpty ||
+                widget.isListVisible,
             child: Container(
-              margin: widget.margin ?? EdgeInsets.only(bottom: 24, left: 16, right: 16),
+              margin:
+                  widget.margin ??
+                  EdgeInsets.only(bottom: 24, left: 16, right: 16),
               child: Column(
                 children: [
                   Visibility(
@@ -85,7 +90,8 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                     padding: .zero,
                     scrollDirection: .vertical,
                     shrinkWrap: true,
-                    itemCount: (widget.entitiesList ?? _store.entitiesList).length,
+                    itemCount:
+                        (widget.entitiesList ?? _store.entitiesList).length,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (_, index) {
                       final GlobalKey itemKey = GlobalKey();
@@ -125,7 +131,9 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                                         Text(
                                           maxLines: 2,
                                           overflow: .ellipsis,
-                                          (widget.entitiesList ?? _store.entitiesList)[index].title,
+                                          (widget.entitiesList ??
+                                                  _store.entitiesList)[index]
+                                              .title,
                                           style: AppFonts.subhead(
                                             fontWeight: .w500,
                                             color: AppColors.grey9,
@@ -136,7 +144,9 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                                           ),
                                         ),
                                         Text(
-                                          (widget.entitiesList ?? _store.entitiesList)[index].artist,
+                                          (widget.entitiesList ??
+                                                  _store.entitiesList)[index]
+                                              .artist,
                                           style: AppFonts.description(
                                             color: AppColors.grey9,
                                             fontSize: ResponsivityUtil<double>(
@@ -203,25 +213,34 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                                   _store.index = index;
                                   _store.itemKey = itemKey;
                                   _store.tappedIndex.value = index;
-                                  _store.selectedLyric = (widget.entitiesList ?? _store.entitiesList)[index];
+                                  _store.selectedLyric =
+                                      (widget.entitiesList ??
+                                      _store.entitiesList)[index];
                                   widget.onLongPressStart?.call(details);
                                 }
                               },
                               child: InkWell(
                                 onTap: () {
-                                  _store.selectedLyric = (widget.entitiesList ?? _store.entitiesList)[index];
-                                  if (_store.tappedIndex.value == index && widget.keepSelection) {
+                                  _store.selectedLyric =
+                                      (widget.entitiesList ??
+                                      _store.entitiesList)[index];
+                                  if (_store.tappedIndex.value == index &&
+                                      widget.keepSelection) {
                                     _store.tappedIndex.value = null;
                                   } else {
                                     _store.tappedIndex.value = index;
                                   }
                                   widget.onTap?.call();
                                   if (!widget.keepSelection) {
-                                    Future.delayed(const Duration(milliseconds: 300), () {
-                                      if (mounted && _store.tappedIndex.value == index) {
-                                        _store.tappedIndex.value = null;
-                                      }
-                                    });
+                                    Future.delayed(
+                                      const Duration(milliseconds: 300),
+                                      () {
+                                        if (mounted &&
+                                            _store.tappedIndex.value == index) {
+                                          _store.tappedIndex.value = null;
+                                        }
+                                      },
+                                    );
                                   }
                                 },
                                 child: itemContent,
@@ -236,7 +255,17 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
               ),
             ),
           );
-        } else if (state is NotFoundState) {
+        } else if (state is NotFoundState ||
+            state is NoConnectionState ||
+            state is ExceptionState) {
+          String message = '';
+          if (state is NotFoundState) {
+            message = 'Nenhuma letra encontrada.';
+          } else if (state is NoConnectionState) {
+            message = 'Sem conexão com a internet';
+          } else {
+            message = 'Erro ao carregar letras, tente atualizar a página.';
+          }
           return SizedBox(
             width: context.sizeOf.width,
             height: context.sizeOf.height * .45,
@@ -246,7 +275,12 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                 SizedBox(
                   width: 26,
                   height: 26,
-                  child: Image.asset(AppIcons.info, color: Colors.blueAccent),
+                  child: Image.asset(
+                    AppIcons.info,
+                    color: state is ExceptionState
+                        ? AppColors.modalRed
+                        : Colors.blueAccent,
+                  ),
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 8),
@@ -259,42 +293,10 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                       ).get(context),
                       color: AppColors.grey9,
                     ),
-                    'Nenhuma letra encontrada.',
+                    message,
                   ),
                 ),
               ],
-            ),
-          );
-        }  else if (state is NoConnectionState) {
-          return Center(
-            child: SizedBox(
-              width: context.sizeOf.width,
-              height: context.sizeOf.width * .6,
-              child: Column(
-                crossAxisAlignment: .center,
-                mainAxisAlignment: .center,
-                children: [
-                  SizedBox(
-                    width: 26,
-                    height: 26,
-                    child: Image.asset(AppIcons.info, color: Colors.blueAccent),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 8),
-                    child: Text(
-                      textAlign: .center,
-                      style: AppFonts.defaultFont(
-                        fontSize: ResponsivityUtil<double>(
-                          sm: 13,
-                          xl: 14,
-                        ).get(context),
-                        color: AppColors.grey9,
-                      ),
-                      'Sem conexão.',
-                    ),
-                  ),
-                ],
-              ),
             ),
           );
         } else {

@@ -21,6 +21,7 @@ class LyricAdapter with FlattenMixin{
       title: json['title'],
       artist: json['artist'],
       isHymn: json['is_hymn'],
+      hymnNumber: json['hymn_number'],
       verses:
           (json.containsKey('verses'))
               ? VerseAdapter.fromMapList(json['verses'])
@@ -36,6 +37,7 @@ class LyricAdapter with FlattenMixin{
       'album_cover': data.albumCover,
       'artist': data.artist,
       'is_hymn': data.isHymn,
+      'hymn_number': data.hymnNumber,
       'verses': VerseAdapter.toMapList(data.verses),
     };
   }
@@ -52,6 +54,7 @@ class LyricAdapter with FlattenMixin{
           ).format(DateTime.parse(lyric['create_at'])),
           title: lyric['title'],
           artist: lyric['artist'],
+          hymnNumber: lyric['hymn_number'],
           isHymn: lyric['is_hymn'],
           verses:
               (lyric['verses'] != null)
@@ -74,6 +77,7 @@ class LyricAdapter with FlattenMixin{
             'artist': entity.artist,
             'verses': VerseAdapter.toMapList(entity.verses),
             'is_hymn': entity.isHymn,
+            'hymn_number': entity.hymnNumber,
           },
         )
         .toList();

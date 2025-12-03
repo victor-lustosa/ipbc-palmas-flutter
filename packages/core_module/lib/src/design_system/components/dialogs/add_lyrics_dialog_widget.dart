@@ -253,9 +253,9 @@ class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
                             action: () {
                               if (widget.callback != null) {
                                 widget.callback!({
-                                  'lyrics': _lyricsController.text,
-                                  'title': _titleController.text,
-                                  'artist': _artistController.text,
+                                  'lyrics': _lyricsController.text.trim(),
+                                  'title': _titleController.text.trim(),
+                                  'artist': _artistController.text.trim(),
                                 });
                               }
                             },

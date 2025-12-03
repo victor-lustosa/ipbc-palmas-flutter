@@ -61,7 +61,7 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
         'likeColumn': SearchParameters.values[selectedIndex].column,
         'likeValue': isHymn ? true : searchField,
         'ascending': false,
-        'selectFields': 'id, title, artist, album_cover, create_at, verses, is_hymn',
+        'selectFields': 'id, title, artist, album_cover, create_at, verses, is_hymn, hymn_number',
         if (limit > 0) 'limit': limit,
       },
     );

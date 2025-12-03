@@ -7,9 +7,13 @@ class LyricEntity {
   final String albumCover;
   final String createAt;
   final bool isHymn;
+  final int? hymnNumber;
+
   final List<VerseEntity> verses;
+
   LyricEntity({
     this.id,
+    this.hymnNumber,
     required this.title,
     required this.createAt,
     required this.albumCover,
@@ -36,6 +40,7 @@ class LyricEntity {
     title: '',
     artist: '',
     albumCover: '',
+    hymnNumber: null,
     isHymn: false,
     verses: [],
   );
@@ -46,6 +51,7 @@ class LyricEntity {
     String? createAt,
     String? artist,
     String? albumCover,
+    int? hymnNumber,
     bool? isHymn,
     List<VerseEntity>? verses,
   }) {
@@ -57,6 +63,7 @@ class LyricEntity {
       artist: artist ?? this.artist,
       isHymn: isHymn ?? this.isHymn,
       verses: verses ?? this.verses,
+      hymnNumber: hymnNumber ?? this.hymnNumber,
     );
   }
 }

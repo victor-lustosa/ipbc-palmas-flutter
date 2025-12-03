@@ -3,8 +3,10 @@ import 'dart:math';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../shared/mixins/flatten_mixin.dart';
+
 class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
-    with ConnectivityMixin {
+    with ConnectivityMixin, FlattenMixin {
   ManageLyricStore({
     required IUseCases onlineUseCases,
     required LyricsListStore lyricsListStore,
@@ -75,30 +77,10 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
     }
   }
 
-  String _removeDiacritics(String str) {
-    var withDia =
-        'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
-    var withoutDia =
-        'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
-
-    for (int i = 0; i < withDia.length; i++) {
-      str = str.replaceAll(withDia[i], withoutDia[i]);
-    }
-    return str;
-  }
-
   bool _checkIsHymn(String value) {
-    final String cleanTitle = _removeDiacritics(value.toLowerCase());
+    final String cleanTitle = removeDiacritics(value.toLowerCase());
 
-    final List<String> hymnKeywords = [
-      'hino',
-      'hinario',
-      'harpa',
-      'cantor',
-      'novo cantico',
-      'hcc',
-      'salmo',
-    ];
+    final List<String> hymnKeywords = ['hino', 'hinario', 'novo cantico'];
 
     for (final keyword in hymnKeywords) {
       if (cleanTitle.contains(keyword)) {
@@ -107,6 +89,14 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
     }
 
     return false;
+  }
+
+  int? _extractHymnNumber(String title) {
+    final match = RegExp(r'\d+').firstMatch(title);
+    if (match != null) {
+      return int.tryParse(match.group(0)!);
+    }
+    return null;
   }
 
   LyricEntity convertTextInLyric(Map<String, String> map) {
@@ -138,6 +128,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
       albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
       createAt: DateTime.now().toIso8601String(),
       verses: parsedVerseEntities,
+      hymnNumber: _extractHymnNumber(map['title']!),
       isHymn: map['title']!.isNotEmpty || map['artist']!.isNotEmpty
           ? _checkIsHymn(map['title']!) || _checkIsHymn(map['artist']!)
           : false,
@@ -162,19 +153,18 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
     required BuildContext context,
   }) async {
     final response = await _onlineUseCases.get(params: params);
-    return response.fold(
-      (l) => LyricAdapter.fromMapList(l),
-      (GenericException r) {
-       showCustomToast(
-          type: .error,
-          context: context,
-          duration: const Duration(seconds: 1),
-          title: 'Erro ao Carregar Letras',
-          message:
-          'Ocorreu um erro ao carregar as letras. Verifique a internet e tente novamente.',
-        );
-      },
-    );
+    return response.fold((l) => LyricAdapter.fromMapList(l), (
+      GenericException r,
+    ) {
+      showCustomToast(
+        type: .error,
+        context: context,
+        duration: const Duration(seconds: 1),
+        title: 'Erro ao Carregar Letras',
+        message:
+            'Ocorreu um erro ao carregar as letras. Verifique a internet e tente novamente.',
+      );
+    });
   }
 
   Future<List<LyricEntity>> getOnlineLyricsPagination({

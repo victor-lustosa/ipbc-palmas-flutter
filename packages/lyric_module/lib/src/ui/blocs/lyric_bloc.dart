@@ -39,7 +39,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     'table': 'lyrics',
     'orderBy': 'create_at',
     'ascending': false,
-    'selectFields': 'id, title, artist, album_cover, is_hymn, create_at, verses',
+    'selectFields': 'id, title, artist, album_cover, is_hymn, create_at, verses, hymn_number',
   };
 
   Future<void> init({required BuildContext context}) async {
@@ -68,10 +68,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
             _manageLyricStore.buttonCallback = () {
               _lyricsListStore.updateList(_manageLyricStore.lyric.value);
               _manageLyricStore.hasAttached = true;
-              popUntil(
-                    (route) =>
-                route.settings.name == AppRoutes.initialRoute,
-              );
+              popUntil((route) => route.settings.name == AppRoutes.initialRoute);
               _eventBus.emit(DataFetchedState());
             };
             _manageLyricStore.attachLyric(context: event.context, map: map);
