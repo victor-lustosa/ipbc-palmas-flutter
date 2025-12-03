@@ -25,12 +25,22 @@ class LyricModule extends Module {
   @override
   void routes(r) {
     r.child(
-      AppRoutes.manageLyricsRoute,
+      AppRoutes.manageLyricsFadeRoute,
       transition: TransitionType.custom,
       child: (_) => ManageLyricView(),
       customTransition: UniversalModularTransition(
         enterType: AnimationType.slideRight,
         exitType: AnimationType.fade,
+      ),
+    );
+    r.child(
+      AppRoutes.manageLyricsSlideRoute,
+      transition: TransitionType.custom,
+      child: (_) => ManageLyricView(),
+      customTransition: UniversalModularTransition(
+        enterType: AnimationType.slideRight,
+        duration: const Duration(milliseconds: 250),
+        reverseDuration: const Duration(milliseconds: 250),
       ),
     );
     r.child(

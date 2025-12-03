@@ -67,7 +67,7 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
                             bottom: 16,
                           ),
                           child: Text(
-                            widget.title ?? '',
+                            _store.title,
                             style: AppFonts.defaultFont(
                               color: AppColors.grey12,
                               fontWeight: FontWeight.w500,

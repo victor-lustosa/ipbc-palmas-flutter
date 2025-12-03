@@ -107,7 +107,6 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
 
   void attachLyric({
     required BuildContext context,
-    String? serviceId,
     Map<String,String>? map,
   }) {
     if (map != null && map.values.isNotEmpty) {

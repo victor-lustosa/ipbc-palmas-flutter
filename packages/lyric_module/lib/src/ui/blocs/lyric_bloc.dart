@@ -19,6 +19,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     on<FilterEvent<LyricEvent, LyricEntity>>(_filter);
     on<GetPaginationEvent<LyricEvent, LyricEntity>>(_getPaginationInSupa);
   }
+
   final GenericEventBus<GenericState<LyricsListState>> _eventBus;
   int viewHashCode = 0;
   bool isSelected = false;
@@ -27,7 +28,6 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   final ManageLyricStore _manageLyricStore;
 
   final TextEditingController _controller = TextEditingController();
-
 
   LyricsListStore get lyricsListStore => _lyricsListStore;
 
@@ -60,18 +60,22 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   Future<void> _addInSupa(AddDataEvent<LyricEvent> event, emit) async {
     final response = await isConnected(context: event.context);
     if (response) {
-      if(event.context.mounted){
+      if (event.context.mounted) {
         showAddLyricsDialog(
           context: event.context,
-          callback: (Map<String,String>? map) async {
+          callback: (Map<String, String>? map) async {
             _manageLyricStore.hasAttached = false;
+            _manageLyricStore.buttonCallback = () {
+              _lyricsListStore.updateList(_manageLyricStore.lyric.value);
+              _manageLyricStore.hasAttached = true;
+              popUntil(
+                    (route) =>
+                route.settings.name == AppRoutes.initialRoute,
+              );
+              _eventBus.emit(DataFetchedState());
+            };
             _manageLyricStore.attachLyric(context: event.context, map: map);
-            pushNamed(AppRoutes.lyricsRoute + AppRoutes.manageLyricsRoute);
-            /*final lyric = await _manageLyricStore.saveLyric(event.context);
-            if(lyric != null) {
-              _lyricsListStore.updateList(lyric);
-            }
-            _manageLyricStore.hasAttached = true;*/
+            pushNamed(AppRoutes.lyricsRoute + AppRoutes.manageLyricsSlideRoute);
           },
         );
       }
@@ -85,16 +89,16 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   Future<void> _getInSupa(GetDataEvent<LyricEvent> event, emit) async {
     final response = await isConnected(context: event.context);
     if (response) {
-      if(event.context.mounted) {
+      if (event.context.mounted) {
         _eventBus.emit(LoadingState());
         List entities = await _manageLyricStore.getOnlineLyrics(
           context: event.context,
           params: lyricParams,
         );
-       if(entities.isEmpty) {
+        if (entities.isEmpty) {
           _eventBus.emit(NotFoundState());
         } else {
-         _eventBus.emit(DataFetchedState(entities: entities));
+          _eventBus.emit(DataFetchedState(entities: entities));
         }
       }
       if (emit.isDone) return;
@@ -138,7 +142,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   void editLyric(BuildContext context) {
     _manageLyricStore.isEditing = true;
     _manageLyricStore.lyric.value = lyricsListStore.selectedLyric;
-    pushNamed(AppRoutes.lyricsRoute + AppRoutes.manageLyricsRoute);
+    pushNamed(AppRoutes.lyricsRoute + AppRoutes.manageLyricsFadeRoute);
     Future.delayed(Duration(seconds: 1), () {
       _lyricsListStore.value = RefreshingState();
     });
@@ -167,6 +171,7 @@ abstract class LyricState {}
 class GetPaginationEvent<R, T> extends GenericEvent<R> {
   final int limit;
   final BuildContext context;
+
   GetPaginationEvent(this.limit, {required this.context});
 }
 
@@ -192,9 +197,7 @@ class TitleFilter extends Filter<LyricEntity, FilterEvent> {
 
     filterList = list!
         .where(
-          (element) => element.title.toLowerCase().contains(
-            event.searchText.toLowerCase(),
-          ),
+          (element) => element.title.toLowerCase().contains(event.searchText.toLowerCase()),
         )
         .toList();
 
@@ -210,9 +213,7 @@ class ArtistFilter extends Filter<LyricEntity, FilterEvent> {
 
     filterList = list!
         .where(
-          (element) => element.group.toLowerCase().contains(
-            event.searchText.toLowerCase(),
-          ),
+          (element) => element.group.toLowerCase().contains(event.searchText.toLowerCase()),
         )
         .toList();
 

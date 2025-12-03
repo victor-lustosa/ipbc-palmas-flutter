@@ -27,47 +27,45 @@ class _ManageLyricViewState extends State<ManageLyricView> {
     super.dispose();
   }
 
-  Align formField({
-    required TextEditingController controller,
-    required FocusNode focusNode,
-  }) => Align(
-    alignment: Alignment.center,
-    child: Container(
-      width: context.sizeOf.width,
-      margin: const EdgeInsets.only(bottom: 16),
-      child: TextFormField(
-        buildCounter:
-            (
-              BuildContext context, {
-              required int currentLength,
-              required int? maxLength,
-              required bool isFocused,
-            }) => null,
-        controller: controller,
-        focusNode: focusNode,
-        maxLength: 40,
-        textAlign: TextAlign.center,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          isDense: true,
-          contentPadding: EdgeInsets.zero,
-        ),
-        style: AppFonts.defaultFont(
-          fontWeight: FontWeight.w500,
-          color: AppColors.grey9,
-          fontSize: 17,
-        ),
-        keyboardType: TextInputType.multiline,
-        onChanged: (newValue) {
-          _store.attributeFocusToFormField(
-            focusNode: focusNode,
+  Align formField({required TextEditingController controller, required FocusNode focusNode}) =>
+      Align(
+        alignment: Alignment.center,
+        child: Container(
+          width: context.sizeOf.width,
+          margin: const EdgeInsets.only(bottom: 16),
+          child: TextFormField(
+            buildCounter:
+                (
+                  BuildContext context, {
+                  required int currentLength,
+                  required int? maxLength,
+                  required bool isFocused,
+                }) => null,
             controller: controller,
-            newValue: newValue,
-          );
-        },
-      ),
-    ),
-  );
+            focusNode: focusNode,
+            maxLength: 40,
+            textAlign: TextAlign.center,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              isDense: true,
+              contentPadding: EdgeInsets.zero,
+            ),
+            style: AppFonts.defaultFont(
+              fontWeight: FontWeight.w500,
+              color: AppColors.grey9,
+              fontSize: 17,
+            ),
+            keyboardType: TextInputType.multiline,
+            onChanged: (newValue) {
+              _store.attributeFocusToFormField(
+                focusNode: focusNode,
+                controller: controller,
+                newValue: newValue,
+              );
+            },
+          ),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -105,10 +103,7 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                           Align(
                             alignment: Alignment.center,
                             child: Container(
-                              margin: const EdgeInsets.only(
-                                top: 16,
-                                bottom: 30,
-                              ),
+                              margin: const EdgeInsets.only(top: 16, bottom: 30),
                               child: Text(
                                 'Confira a letra e a ordem das estrofes:',
                                 style: AppFonts.defaultFont(
@@ -128,11 +123,7 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                             focusNode: _store.groupFocusNode,
                           ),
                           Container(
-                            margin: const EdgeInsets.only(
-                              left: 16,
-                              right: 16,
-                              bottom: 16,
-                            ),
+                            margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                             child: ReorderableListView.builder(
                               shrinkWrap: true,
                               itemCount: _store.lyric.value.verses.length,
@@ -149,40 +140,29 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                     color: verse.isChorus
                                         ? AppColors.badgeGreen
                                         : AppColors.secondaryGrey2,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(16),
-                                    ),
+                                    borderRadius: BorderRadius.all(Radius.circular(16)),
                                   ),
-                                  margin: const EdgeInsets.symmetric(
-                                    vertical: 8,
-                                  ),
+                                  margin: const EdgeInsets.symmetric(vertical: 8),
                                   child: GestureDetector(
                                     key: gestureKey,
                                     child: IntrinsicHeight(
                                       child: Row(
                                         children: [
                                           IgnorePointer(
-                                            ignoring:
-                                                _store.isAnyTextFieldFocused,
+                                            ignoring: _store.isAnyTextFieldFocused,
                                             child: GestureDetector(
                                               onLongPressStart: (_) async {
-                                                FocusScope.of(
-                                                  context,
-                                                ).unfocus();
+                                                FocusScope.of(context).unfocus();
                                                 HapticFeedback.lightImpact();
                                               },
-                                              child:
-                                                  ReorderableDelayedDragStartListener(
-                                                    index: index,
-                                                    child: SizedBox(
-                                                      width: 32,
-                                                      height: 50,
-                                                      child:
-                                                          GridBallsTileWidget(
-                                                            index: index,
-                                                          ),
-                                                    ),
-                                                  ),
+                                              child: ReorderableDelayedDragStartListener(
+                                                index: index,
+                                                child: SizedBox(
+                                                  width: 32,
+                                                  height: 50,
+                                                  child: GridBallsTileWidget(index: index),
+                                                ),
+                                              ),
                                             ),
                                           ),
                                           Expanded(
@@ -194,13 +174,11 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                                 right: 8,
                                               ),
                                               child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: List.generate(
                                                   verse.versesList.length,
                                                   (position) {
-                                                    final lineKey =
-                                                        '${verse.id}_$position';
+                                                    final lineKey = '${verse.id}_$position';
 
                                                     _store.updateTiles(
                                                       verse: verse,
@@ -212,44 +190,30 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                                       padding: EdgeInsets.only(
                                                         bottom:
                                                             position ==
-                                                                verse
-                                                                        .versesList
-                                                                        .length -
-                                                                    1
+                                                                verse.versesList.length - 1
                                                             ? 0
                                                             : 6,
                                                       ),
                                                       child: TextFormField(
-                                                        controller: _store
-                                                            .controllers[lineKey],
-                                                        focusNode: _store
-                                                            .focusNodes[lineKey],
-                                                        decoration:
-                                                            InputDecoration(
-                                                              border:
-                                                                  InputBorder
-                                                                      .none,
-                                                              isDense: true,
-                                                              contentPadding:
-                                                                  EdgeInsets
-                                                                      .zero,
-                                                            ),
+                                                        controller:
+                                                            _store.controllers[lineKey],
+                                                        focusNode: _store.focusNodes[lineKey],
+                                                        decoration: InputDecoration(
+                                                          border: InputBorder.none,
+                                                          isDense: true,
+                                                          contentPadding: EdgeInsets.zero,
+                                                        ),
                                                         style: AppFonts.defaultFont(
-                                                          color:
-                                                              AppColors.grey10,
+                                                          color: AppColors.grey10,
                                                           fontSize:
-                                                              context
-                                                                      .sizeOf
-                                                                      .width >
+                                                              context.sizeOf.width >
                                                                   ResponsivityUtil
                                                                       .smallDeviceWidth
                                                               ? 16
                                                               : 14,
                                                         ),
                                                         maxLines: null,
-                                                        keyboardType:
-                                                            TextInputType
-                                                                .multiline,
+                                                        keyboardType: TextInputType.multiline,
                                                         onChanged: (newValue) {
                                                           verse.versesList[position] =
                                                               newValue;
@@ -265,10 +229,8 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                             margin: EdgeInsets.only(bottom: 10),
                                             width: 30,
                                             child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 InkWell(
                                                   onTap: () async {
@@ -277,8 +239,7 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                                       itemKey: gestureKey,
                                                       popupHeightParam: 110,
                                                       popupWidthParam: 160,
-                                                      popupWidthPositionParam:
-                                                          160,
+                                                      popupWidthPositionParam: 160,
                                                       verticalMarginParam: 3,
                                                       buttons: Column(
                                                         children: [
@@ -286,71 +247,52 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                                             context: context,
                                                             top: 12,
                                                             bottom: 12,
-                                                            icon: AppIcons
-                                                                .addNotes,
-                                                            label:
-                                                                verse.isChorus
+                                                            icon: AppIcons.addNotes,
+                                                            label: verse.isChorus
                                                                 ? 'Retirar Refrão'
                                                                 : 'Tornar Refrão',
                                                             fontSize: 15,
                                                             action: () {
-                                                              _store
-                                                                  .toggleChorusStatus(
-                                                                    index,
-                                                                  );
-                                                              Navigator.of(
-                                                                context,
-                                                              ).pop();
+                                                              _store.toggleChorusStatus(index);
+                                                              Navigator.of(context).pop();
                                                             },
                                                           ),
                                                           Divider(
                                                             height: 1,
-                                                            color: AppColors
-                                                                .dividerModal
-                                                                .withValues(
-                                                                  alpha: .3,
-                                                                ),
+                                                            color: AppColors.dividerModal
+                                                                .withValues(alpha: .3),
                                                           ),
                                                           actionButton(
                                                             context: context,
                                                             top: 12,
                                                             bottom: 12,
-                                                            icon: AppIcons
-                                                                .addNotes,
+                                                            icon: AppIcons.addNotes,
                                                             label: 'Add Box',
                                                             action: () {},
                                                           ),
                                                           Divider(
                                                             height: 1,
-                                                            color: AppColors
-                                                                .dividerModal
-                                                                .withValues(
-                                                                  alpha: .3,
-                                                                ),
+                                                            color: AppColors.dividerModal
+                                                                .withValues(alpha: .3),
                                                           ),
                                                           actionButton(
                                                             context: context,
                                                             top: 12,
                                                             bottom: 12,
-                                                            icon: AppIcons
-                                                                .contentCopy,
+                                                            icon: AppIcons.contentCopy,
                                                             label: 'Duplicar',
                                                             action: () {},
                                                           ),
                                                           Divider(
                                                             height: 1,
-                                                            color: AppColors
-                                                                .dividerModal
-                                                                .withValues(
-                                                                  alpha: .3,
-                                                                ),
+                                                            color: AppColors.dividerModal
+                                                                .withValues(alpha: .3),
                                                           ),
                                                           actionButton(
                                                             context: context,
                                                             top: 12,
                                                             bottom: 12,
-                                                            icon:
-                                                                AppIcons.trash,
+                                                            icon: AppIcons.trash,
                                                             label: 'Deletar',
                                                             action: () {},
                                                           ),
@@ -359,15 +301,12 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                                     );
                                                   },
                                                   child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
+                                                    mainAxisAlignment: MainAxisAlignment.end,
                                                     children: [
                                                       IconWidget(
-                                                        iconFormat:
-                                                            IconFormat.svg,
+                                                        iconFormat: IconFormat.svg,
                                                         size: Size(18, 18),
-                                                        iconName: AppIcons
-                                                            .popoverIcon,
+                                                        iconName: AppIcons.popoverIcon,
                                                       ),
                                                     ],
                                                   ),
@@ -383,10 +322,7 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                               },
                               onReorder: (int oldIndex, int newIndex) {
                                 setState(() {
-                                  _store.newOrder(
-                                    oldIndex: oldIndex,
-                                    newIndex: newIndex,
-                                  );
+                                  _store.newOrder(oldIndex: oldIndex, newIndex: newIndex);
                                 });
                               },
                               proxyDecorator: (Widget child, int index, animation) {
@@ -395,13 +331,10 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                   child: AnimatedBuilder(
                                     animation: animation,
                                     builder: (BuildContext context, Widget? _) {
-                                      final animValue = Curves.easeInOut
-                                          .transform(animation.value);
-                                      final scale = lerpDouble(
-                                        1,
-                                        1.05,
-                                        animValue,
-                                      )!;
+                                      final animValue = Curves.easeInOut.transform(
+                                        animation.value,
+                                      );
+                                      final scale = lerpDouble(1, 1.05, animValue)!;
 
                                       return LayoutBuilder(
                                         builder: (innerContext, constraints) {
@@ -419,13 +352,9 @@ class _ManageLyricViewState extends State<ManageLyricView> {
                                           return Transform.translate(
                                             offset: Offset(
                                               0,
-                                              -scaleCompensationOffset +
-                                                  gapCompensationOffset,
+                                              -scaleCompensationOffset + gapCompensationOffset,
                                             ),
-                                            child: Transform.scale(
-                                              scale: scale,
-                                              child: child,
-                                            ),
+                                            child: Transform.scale(scale: scale, child: child),
                                           );
                                         },
                                       );
@@ -451,9 +380,7 @@ class _ManageLyricViewState extends State<ManageLyricView> {
             size: 33,
             isValid: _store.lyric.value.verses.isNotEmpty,
             isPressed: _store.isSavePressed,
-            action: _store.isSavePressed.value
-                ? null
-                : () => _store.saveLyric(context),
+            action: _store.isSavePressed.value ? null : () async => _store.saveLyric(context),
           ),
         ),
       ),

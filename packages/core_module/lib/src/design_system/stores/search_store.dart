@@ -15,16 +15,22 @@ enum SearchParameters {
 class SearchStore extends ValueNotifier<GenericState<SearchState>> {
   SearchStore({
     required ManageLyricStore manageLyricStore,
+    required LyricsListStore lyricsListStore,
     required GenericEventBus<GenericState<LyricsListState>> eventBus,
   }) : _eventBus = eventBus,
+        _lyricsListStore = lyricsListStore,
        _manageLyricStore = manageLyricStore,
        super(InitialState());
   int? _currentStoreId;
 
+  final LyricsListStore _lyricsListStore;
   late ServicesEntity servicesEntity;
   final GenericEventBus<GenericState<LyricsListState>> _eventBus;
   final ManageLyricStore _manageLyricStore;
   final TextEditingController searchController = TextEditingController();
+
+  LyricsListStore get lyricsListStore => _lyricsListStore;
+
   bool isSelected = false;
   int selectedIndex = 0;
   int limit = 0;
@@ -39,7 +45,12 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
     selectedIndex = index;
   }
 
-  void searchLyrics(String searchField, BuildContext context) async {
+  Future<void> searchLyrics(String searchField, BuildContext context) async {
+    if(searchField.isEmpty) {
+      _lyricsListStore.isNotSearch = true;
+    } else {
+      _lyricsListStore.isNotSearch = false;
+    }
     _eventBus.emit(LoadingState<LyricsListState>(id: _currentStoreId));
     List<LyricEntity> lyrics = await _manageLyricStore.getOnlineLyrics(
       context: context,

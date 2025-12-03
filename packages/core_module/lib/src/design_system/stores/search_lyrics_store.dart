@@ -38,7 +38,7 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
   ValueNotifier<bool> isAddEventPressed = ValueNotifier(false);
 
   void init(int hashCode) {
-    _searchStore.limit = 10;
+    _searchStore.limit = 6;
     viewHashCode = hashCode;
   }
 
@@ -53,7 +53,7 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
     _manageLyricStore.serviceId = serviceId ?? '';
     _manageLyricStore.attachLyric(context: context, map: map);
     pop(context);
-    pushNamed(AppRoutes.lyricsRoute + AppRoutes.manageLyricsRoute);
+    pushNamed(AppRoutes.lyricsRoute + AppRoutes.manageLyricsFadeRoute);
   }
 }
 

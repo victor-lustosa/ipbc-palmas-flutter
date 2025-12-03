@@ -82,6 +82,7 @@ class CoreModule extends Module {
     );
     i.addLazySingleton<SearchStore>(
       () => SearchStore(
+        lyricsListStore: i.get<LyricsListStore>(),
         manageLyricStore: i.get<ManageLyricStore>(),
         eventBus: i.get<GenericEventBus<GenericState<LyricsListState>>>(),
       ),

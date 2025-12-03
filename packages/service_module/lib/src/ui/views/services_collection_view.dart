@@ -1,4 +1,3 @@
-
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,13 +45,9 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
       body: BlocBuilder<ServicesCollectionBloc, GenericState<ServicesCollectionState>>(
         bloc: _bloc,
         builder: (context, state) {
-          if (state is LoadingState<ServicesCollectionState>) {
-            return loadingWidget;
-          } else if (state is NoConnectionState<ServicesCollectionState>) {
-            return NoConnectionView(
-              action: () => nativePushReplacementNamed(AppRoutes.homeRoute, context),
-            );
-          } else if (state is DataFetchedState<ServicesCollectionState> || state is UpdateServicesListState) {
+          if (state is DataFetchedState<ServicesCollectionState> ||
+              state is UpdateServicesListState ||
+              state is LoadingState) {
             final currentIds = _bloc.entitiesList.map((e) => e.id!).toSet();
             _gestureKeys.removeWhere((key, _) => !currentIds.contains(key));
 
@@ -69,7 +64,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                           image: widget.entity.image,
                           title: "Cultos de ${widget.entity.heading}",
                         ),
-                        (state is UpdateServicesListState)
+                        (state is UpdateServicesListState ||
+                                state is LoadingState)
                             ? SizedBox(
                                 height: context.sizeOf.height * .6,
                                 child: loadingWidget,
@@ -93,7 +89,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                   itemCount: _bloc.entitiesList.length,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
-                                    final ServiceEntity service = _bloc.entitiesList[index];
+                                    final ServiceEntity service =
+                                        _bloc.entitiesList[index];
                                     final Key itemKey = Key(service.id!);
                                     final GlobalKey gestureKey = _gestureKeys
                                         .putIfAbsent(
@@ -129,7 +126,8 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                               ),
                                               Divider(
                                                 height: 1,
-                                                color: AppColors.dividerModal.withValues(alpha: .3),
+                                                color: AppColors.dividerModal
+                                                    .withValues(alpha: .3),
                                               ),
                                               actionButton(
                                                 context: context,
@@ -138,18 +136,20 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                                 icon: AppIcons.trash,
                                                 label: 'Deletar',
                                                 action: () async {
-                                                    await showConfirmationDialog(
-                                                      confirmAction: () async {
-                                                        _bloc.add(
-                                                          DeleteItemEvent(
-                                                            index: index,
-                                                            context: context,
-                                                          ),
-                                                        );
-                                                      },
-                                                      title: "Deletar Culto",
-                                                      message: "O culto será deletado permanentemente. Tem certeza?",
-                                                      context: context,);
+                                                  await showConfirmationDialog(
+                                                    confirmAction: () async {
+                                                      _bloc.add(
+                                                        DeleteItemEvent(
+                                                          index: index,
+                                                          context: context,
+                                                        ),
+                                                      );
+                                                    },
+                                                    title: "Deletar Culto",
+                                                    message:
+                                                        "O culto será deletado permanentemente. Tem certeza?",
+                                                    context: context,
+                                                  );
                                                 },
                                               ),
                                             ],
@@ -159,13 +159,17 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                       child: Container(
                                         key: itemKey,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(16),
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
                                           color: index == 0
-                                              ? AppColors.highlightGreen.withValues(alpha: .1)
+                                              ? AppColors.highlightGreen
+                                                    .withValues(alpha: .1)
                                               : AppColors.grey0,
                                         ),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
                                               margin: const EdgeInsets.only(
@@ -173,19 +177,30 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                                 top: 16,
                                                 bottom: 16,
                                               ),
-                                              width: ResponsivityUtil(sm:context.sizeOf.width * .76, xl:context.sizeOf.width * .8).get(context),
+                                              width: ResponsivityUtil(
+                                                sm: context.sizeOf.width * .76,
+                                                xl: context.sizeOf.width * .8,
+                                              ).get(context),
                                               child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    overflow: TextOverflow.ellipsis,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                     maxLines: 1,
                                                     '${_bloc.entitiesList[index].title} ${formatDateToString(_bloc.entitiesList[index].serviceDate)} | ${formatHourToString(date: _bloc.entitiesList[index].serviceDate)}',
                                                     style: AppFonts.defaultFont(
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                       color: AppColors.grey9,
-                                                      fontSize: ResponsivityUtil<double>(sm: 15, xl: 16).get(context),
+                                                      fontSize:
+                                                          ResponsivityUtil<
+                                                                double
+                                                              >(sm: 15, xl: 16)
+                                                              .get(context),
                                                     ),
                                                   ),
                                                   Container(
@@ -195,25 +210,42 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                                           top: 4,
                                                         ),
                                                     child: Text(
-                                                      overflow: TextOverflow.ellipsis,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                       maxLines: 2,
                                                       'Mensagem: ${_bloc.entitiesList[index].theme}',
                                                       style:
                                                           AppFonts.description(
-                                                            color: AppColors.grey8,
-                                                            fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context),
+                                                            color:
+                                                                AppColors.grey8,
+                                                            fontSize:
+                                                                ResponsivityUtil<
+                                                                      double
+                                                                    >(
+                                                                      sm: 13,
+                                                                      xl: 14,
+                                                                    )
+                                                                    .get(
+                                                                      context,
+                                                                    ),
                                                           ),
                                                     ),
                                                   ),
                                                   Text(
                                                     maxLines: 1,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    _bloc.entitiesList[index].preacher,
-                                                    style:
-                                                        AppFonts.description(
-                                                          color: AppColors.grey8,
-                                                          fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context),
-                                                        ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    _bloc
+                                                        .entitiesList[index]
+                                                        .preacher,
+                                                    style: AppFonts.description(
+                                                      color: AppColors.grey8,
+                                                      fontSize:
+                                                          ResponsivityUtil<
+                                                                double
+                                                              >(sm: 13, xl: 14)
+                                                              .get(context),
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -223,7 +255,11 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                                 right: 16,
                                               ),
                                               child: IconButtonWidget(
-                                                sizeIcon: ResponsivityUtil<double>(sm: 21, xl: 23).get(context),
+                                                sizeIcon:
+                                                    ResponsivityUtil<double>(
+                                                      sm: 21,
+                                                      xl: 23,
+                                                    ).get(context),
                                                 color: AppColors.darkGreen,
                                                 iconFormat: IconFormat.svg,
                                                 iconPath: AppIcons.arrowForward,
@@ -258,7 +294,10 @@ class _ServicesCollectionViewState extends State<ServicesCollectionView>
                                         child: Text(
                                           textAlign: TextAlign.center,
                                           style: AppFonts.defaultFont(
-                                            fontSize: ResponsivityUtil<double>(sm: 13, xl: 14).get(context),
+                                            fontSize: ResponsivityUtil<double>(
+                                              sm: 13,
+                                              xl: 14,
+                                            ).get(context),
                                             color: AppColors.grey9,
                                           ),
                                           'Não há cultos cadastrados.',

@@ -70,7 +70,7 @@ class ServiceStore extends ValueNotifier<GenericState<ServiceState>> {
   void editLyric(BuildContext context) {
     manageLyricStore.isEditing = true;
     manageLyricStore.lyric.value = lyricsListStore.selectedLyric;
-    pushNamed(AppRoutes.lyricsRoute + AppRoutes.manageLyricsRoute);
+    pushNamed(AppRoutes.lyricsRoute + AppRoutes.manageLyricsFadeRoute);
     pop(context);
   }
 

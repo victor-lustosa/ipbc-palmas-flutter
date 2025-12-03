@@ -51,7 +51,6 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                         ServiceTopBarWidget(
                           image: widget.dto.servicesEntity.image,
                           title: "Voltar para liturgia",
-
                         ),
                         Container(
                           margin: const EdgeInsets.only(
@@ -74,7 +73,6 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                           child: LyricsListWidget(
                             isLongPressEnabled: false,
                             keepSelection: true,
-                            title: "Resultados encontrados",
                             onTap: () async {
                               FocusScope.of(context).unfocus();
                               await Future.delayed(.zero);
@@ -131,13 +129,20 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                                   : AppColors.darkGreen,
                               action: value != null
                                   ? () async {
-                                   _store.attachLyric(context: context, serviceId: widget.dto.serviceId!);
-                                  }
+                                      _store.attachLyric(
+                                        context: context,
+                                        serviceId: widget.dto.serviceId!,
+                                      );
+                                    }
                                   : () async {
                                       showAddLyricsDialog(
                                         context: context,
                                         callback: (Map<String, String>? map) {
-                                          _store.attachLyric(map: map, context: context, serviceId: widget.dto.serviceId!);
+                                          _store.attachLyric(
+                                            map: map,
+                                            context: context,
+                                            serviceId: widget.dto.serviceId!,
+                                          );
                                         },
                                       );
                                     },
