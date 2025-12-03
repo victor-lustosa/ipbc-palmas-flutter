@@ -54,8 +54,7 @@ class ServiceStore extends ValueNotifier<GenericState<ServiceState>> {
       }
       popUntil(
         (route) =>
-            route.settings.name ==
-            AppRoutes.servicesRoute + AppRoutes.serviceRoute,
+            route.settings.name == AppRoutes.servicesRoute + AppRoutes.serviceRoute,
       );
     };
     pushNamed(

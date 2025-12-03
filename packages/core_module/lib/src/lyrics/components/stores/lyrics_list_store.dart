@@ -44,15 +44,6 @@ class LyricsListStore extends ValueNotifier<GenericState<LyricsListState>> {
     });
   }
 
- void updateList(LyricEntity lyric) {
-    final index = entitiesList.indexWhere((item) => item.id == lyric.id);
-    if (index != -1) {
-      entitiesList[index] = lyric;
-    } else {
-      entitiesList.add(lyric);
-    }
-  }
-
   @override
   void dispose() {
     _subscription.cancel();

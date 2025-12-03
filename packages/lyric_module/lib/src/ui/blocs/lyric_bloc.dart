@@ -66,10 +66,9 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
           callback: (Map<String, String>? map) async {
             _manageLyricStore.hasAttached = false;
             _manageLyricStore.buttonCallback = () {
-              _lyricsListStore.updateList(_manageLyricStore.lyric.value);
+              add(GetDataEvent(context: event.context));
               _manageLyricStore.hasAttached = true;
               popUntil((route) => route.settings.name == AppRoutes.initialRoute);
-              _eventBus.emit(DataFetchedState());
             };
             _manageLyricStore.attachLyric(context: event.context, map: map);
             pushNamed(AppRoutes.lyricsRoute + AppRoutes.manageLyricsSlideRoute);
@@ -92,8 +91,10 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
           context: event.context,
           params: lyricParams,
         );
-        if (entities != null && entities.isEmpty) {
-          _eventBus.emit(NotFoundState()); //mudar para exception em caso de entidade ser nula
+        if (entities == null) {
+          _eventBus.emit(ExceptionState());
+        } else if (entities.isEmpty) {
+          _eventBus.emit(NotFoundState());
         } else {
           _eventBus.emit(DataFetchedState(entities: entities));
         }

@@ -1,5 +1,5 @@
 import 'package:core_module/core_module.dart';
-import 'package:service_module/src/ui/views/admin/search_lyrics_view.dart';
+import 'package:lyric_module/src/ui/views/admin/search_lyrics_view.dart';
 
 import '../service_module.dart';
 import 'ui/blocs/services_collection_bloc.dart';

@@ -71,9 +71,9 @@ class NoConnectionState<R> extends GenericState<R> {
 
 @immutable
 class ExceptionState<R> extends GenericState<R> {
-  final String message;
+  final String? message;
 
-  const ExceptionState({required this.message, super.id});
+  const ExceptionState({this.message, super.id});
 }
 
 @immutable
