@@ -1,6 +1,7 @@
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:lyric_module/src/ui/blocs/lyric_bloc.dart';
+import 'package:lyric_module/src/ui/views/admin/manage_lyric_view.dart';
 
 import '../lyric_module.dart';
 import 'ui/views/lyric_view.dart';
@@ -23,6 +24,15 @@ class LyricModule extends Module {
 
   @override
   void routes(r) {
+    r.child(
+      AppRoutes.manageLyricsRoute,
+      transition: TransitionType.custom,
+      child: (_) => ManageLyricView(),
+      customTransition: UniversalModularTransition(
+        enterType: AnimationType.slideRight,
+        exitType: AnimationType.fade,
+      ),
+    );
     r.child(
       AppRoutes.lyricRoute,
       transition: TransitionType.custom,

@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:ui';
+
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 Future<void> showAddLyricsDialog({
   required BuildContext context,
-  Function(String?)? callback,
+  Function(Map<String, String>?)? callback,
 }) {
   return showGeneralDialog(
     context: context,
@@ -45,7 +46,7 @@ Future<void> showAddLyricsDialog({
 class AddLyricsDialogWidget extends StatefulWidget {
   const AddLyricsDialogWidget({super.key, required this.callback});
 
-  final Function(String?)? callback;
+  final Function(Map<String, String>?)? callback;
 
   @override
   State<AddLyricsDialogWidget> createState() => _AddLyricsDialogWidgetState();
@@ -114,19 +115,23 @@ class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
                                 ),
                                 selectionHandleColor: AppColors.grey7,
                               ),
-                              colorScheme: Theme.of(context).colorScheme
-                                  .copyWith(primary: AppColors.grey7),
+                              colorScheme: Theme.of(
+                                context,
+                              ).colorScheme.copyWith(primary: AppColors.grey7),
                             ),
                             child: Column(
                               children: [
                                 Container(
                                   decoration: BoxDecoration(
                                     border: Border.all(color: AppColors.grey3),
-                                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(8),
+                                    ),
                                   ),
                                   margin: EdgeInsets.only(bottom: 10),
                                   child: TextFormField(
-                                    selectionControls: MaterialTextSelectionControls(),
+                                    selectionControls:
+                                        MaterialTextSelectionControls(),
                                     controller: _titleController,
                                     minLines: 1,
                                     maxLines: 2,
@@ -150,11 +155,14 @@ class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
                                 Container(
                                   decoration: BoxDecoration(
                                     border: Border.all(color: AppColors.grey3),
-                                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(8),
+                                    ),
                                   ),
                                   margin: EdgeInsets.only(bottom: 10),
                                   child: TextFormField(
-                                    selectionControls: MaterialTextSelectionControls(),
+                                    selectionControls:
+                                        MaterialTextSelectionControls(),
                                     controller: _artistController,
                                     minLines: 1,
                                     maxLines: 2,
@@ -178,26 +186,36 @@ class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
                                 Container(
                                   decoration: BoxDecoration(
                                     border: Border.all(color: AppColors.grey3),
-                                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(8),
+                                    ),
                                   ),
                                   child: SizedBox(
-                                    height: context.sizeOf.height * .551,
+                                    height: ResponsivityUtil(
+                                      sm: context.sizeOf.height * .551,
+                                      md: context.sizeOf.height * .575,
+                                      xl: context.sizeOf.height * .62,
+                                    ).get(context),
                                     child: TextFormField(
-                                      selectionControls: MaterialTextSelectionControls(),
+                                      selectionControls:
+                                          MaterialTextSelectionControls(),
                                       controller: _lyricsController,
                                       minLines: null,
                                       maxLines: null,
                                       expands: true,
                                       keyboardType: TextInputType.multiline,
                                       decoration: InputDecoration(
-                                        hintText: 'Cole ou digite a letra aqui...',
+                                        hintText:
+                                            'Cole ou digite a letra aqui...',
                                         hintStyle: AppFonts.defaultFont(
                                           color: AppColors.grey5,
                                           fontSize: 16,
                                         ),
                                         fillColor: AppColors.white,
                                         border: InputBorder.none,
-                                        contentPadding: const EdgeInsets.all(12),
+                                        contentPadding: const EdgeInsets.all(
+                                          12,
+                                        ),
                                       ),
                                       style: AppFonts.defaultFont(
                                         color: AppColors.grey10,
@@ -234,7 +252,11 @@ class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
                             fixedSize: const Size(132, 28),
                             action: () {
                               if (widget.callback != null) {
-                                widget.callback!(_lyricsController.text);
+                                widget.callback!({
+                                  'lyrics': _lyricsController.text,
+                                  'title': _titleController.text,
+                                  'artist': _artistController.text,
+                                });
                               }
                             },
                             backgroundColor: AppColors.darkGreen,

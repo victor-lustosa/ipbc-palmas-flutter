@@ -75,8 +75,8 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
     }
   }
 
-  LyricEntity convertTextInLyric(String text) {
-    final List<String> rawVerseBlocks = text.split(RegExp(r'\n\s*\n+'));
+  LyricEntity convertTextInLyric(Map<String, String> map) {
+    final List<String> rawVerseBlocks = map['lyrics']!.split(RegExp(r'\n\s*\n+'));
 
     final List<VerseEntity> parsedVerseEntities = [];
 
@@ -97,8 +97,8 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
       }
     }
     return LyricEntity(
-      title: 'Título Padrão',
-      group: 'Grupo Padrão',
+      title: map['title']!.isNotEmpty? map['title']! : 'Título Padrão',
+      group: map['artist']!.isNotEmpty? map['artist']! : 'Grupo Padrão',
       albumCover: AppImages.defaultCoversList[Random().nextInt(4)],
       createAt: DateTime.now().toIso8601String(),
       verses: parsedVerseEntities,
@@ -108,10 +108,10 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
   void attachLyric({
     required BuildContext context,
     String? serviceId,
-    String? text,
+    Map<String,String>? map,
   }) {
-    if (text != null && text.isNotEmpty) {
-      lyric.value = convertTextInLyric(text);
+    if (map != null && map.values.isNotEmpty) {
+      lyric.value = convertTextInLyric(map);
       isEditing = false;
     } else {
       lyric.value = _lyricsListStore.selectedLyric;

@@ -32,8 +32,6 @@ export 'src/design_system/configs/app_colors.dart';
 export 'src/design_system/components/search/search_widget.dart';
 export 'src/design_system/components/custom_behaviors/custom_reload_scroll_widget.dart';
 export 'src/design_system/components/loading/loading_widget.dart';
-export 'src/design_system/components/loading/cupertino_sliver_widget.dart';
-export 'src/design_system/components/loading/refresh_indicator_widget.dart';
 export 'src/design_system/components/guideline/guideline_widget.dart';
 export 'src/design_system/components/slide_cards/slide_cards_widget.dart';
 export 'src/design_system/components/shimmer/shimmer_widget.dart';

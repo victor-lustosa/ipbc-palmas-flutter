@@ -63,10 +63,10 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
       if(event.context.mounted){
         showAddLyricsDialog(
           context: event.context,
-          callback: (text) async {
+          callback: (Map<String,String>? map) async {
             _manageLyricStore.hasAttached = false;
-            _manageLyricStore.attachLyric(context: event.context, text: text);
-            pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);
+            _manageLyricStore.attachLyric(context: event.context, map: map);
+            pushNamed(AppRoutes.lyricsRoute + AppRoutes.manageLyricsRoute);
             /*final lyric = await _manageLyricStore.saveLyric(event.context);
             if(lyric != null) {
               _lyricsListStore.updateList(lyric);
@@ -138,7 +138,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   void editLyric(BuildContext context) {
     _manageLyricStore.isEditing = true;
     _manageLyricStore.lyric.value = lyricsListStore.selectedLyric;
-    pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);
+    pushNamed(AppRoutes.lyricsRoute + AppRoutes.manageLyricsRoute);
     Future.delayed(Duration(seconds: 1), () {
       _lyricsListStore.value = RefreshingState();
     });

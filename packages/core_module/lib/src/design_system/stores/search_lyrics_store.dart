@@ -49,10 +49,11 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
     super.dispose();
   }
 
-  void attachLyric(String? text, BuildContext context) {
-    _manageLyricStore.attachLyric(context: context,text: text);
+  void attachLyric({Map<String, String>? map, required BuildContext context, String? serviceId}) {
+    _manageLyricStore.serviceId = serviceId ?? '';
+    _manageLyricStore.attachLyric(context: context, map: map);
     pop(context);
-    pushNamed(AppRoutes.servicesRoute + AppRoutes.manageLyricsRoute);
+    pushNamed(AppRoutes.lyricsRoute + AppRoutes.manageLyricsRoute);
   }
 }
 

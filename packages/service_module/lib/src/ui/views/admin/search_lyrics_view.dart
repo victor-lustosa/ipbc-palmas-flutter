@@ -131,13 +131,13 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                                   : AppColors.darkGreen,
                               action: value != null
                                   ? () async {
-                                   _store.attachLyric(widget.dto.serviceId!, context);
+                                   _store.attachLyric(context: context, serviceId: widget.dto.serviceId!);
                                   }
                                   : () async {
                                       showAddLyricsDialog(
                                         context: context,
-                                        callback: (text) {
-                                         // _store.attachLyric(widget.dto.serviceId!, context, text);
+                                        callback: (Map<String, String>? map) {
+                                          _store.attachLyric(map: map, context: context, serviceId: widget.dto.serviceId!);
                                         },
                                       );
                                     },

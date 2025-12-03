@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 
 enum SearchParameters {
   title(label: 'título', column: 'title'),
-  artist(label: 'artista', column: 'group');
+  artist(label: 'artista', column: 'group'),
+  hino(label: 'hino', column: 'group');
 
   final String label;
   final String column;
@@ -31,7 +32,7 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
   void init(int storeId, bool startsEmpty, BuildContext context) {
     searchController.text = '';
     _currentStoreId = storeId;
-    if(!startsEmpty) searchLyrics('', context);
+    if (!startsEmpty) searchLyrics('', context);
   }
 
   void selectOptions(int index) {
@@ -46,7 +47,12 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
         'table': 'lyrics',
         'orderBy': 'create_at',
         'likeColumn': SearchParameters.values[selectedIndex].column,
-        'likeValue': searchField,
+        'likeValue':
+            (SearchParameters.values[selectedIndex].column ==
+                    SearchParameters.hino.column) &&
+                searchField.isEmpty
+            ? '%hino%'
+            : searchField,
         'ascending': false,
         'selectFields': 'id, title, group, album_cover, create_at, verses',
         if (limit > 0) 'limit': limit,
@@ -54,7 +60,10 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
     );
     if (lyrics.isNotEmpty) {
       _eventBus.emit(
-        DataFetchedState<LyricsListState>(entities: lyrics, id: _currentStoreId),
+        DataFetchedState<LyricsListState>(
+          entities: lyrics,
+          id: _currentStoreId,
+        ),
       );
     } else {
       _eventBus.emit(NotFoundState<LyricsListState>(id: _currentStoreId));

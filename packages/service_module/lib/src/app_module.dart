@@ -3,7 +3,6 @@ import 'package:service_module/src/ui/views/admin/search_lyrics_view.dart';
 
 import '../service_module.dart';
 import 'ui/blocs/services_collection_bloc.dart';
-import 'ui/views/admin/manage_lyric_view.dart';
 
 class ServiceModule extends Module {
   @override
@@ -24,15 +23,6 @@ class ServiceModule extends Module {
 
   @override
   void routes(r) {
-    r.child(
-      AppRoutes.manageLyricsRoute,
-      transition: TransitionType.custom,
-      child: (_) => ManageLyricView(),
-      customTransition: UniversalModularTransition(
-        enterType: AnimationType.slideRight,
-        exitType: AnimationType.fade,
-      ),
-    );
     r.child(
       AppRoutes.manageServicesRoute,
       transition: TransitionType.custom,
