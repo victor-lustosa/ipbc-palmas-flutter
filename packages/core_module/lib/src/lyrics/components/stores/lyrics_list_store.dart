@@ -13,7 +13,8 @@ class LyricsListStore extends ValueNotifier<GenericState<LyricsListState>> {
   late LyricEntity selectedLyric;
   bool hasFixedData = false;
   String title = '';
-  bool isNotSearch = false;
+  bool isNotSearch = true;
+  bool isHymn = false;
   LyricsListStore({
     required GenericEventBus<GenericState<LyricsListState>> eventBus,
   }) : _eventBus = eventBus,
@@ -37,7 +38,7 @@ class LyricsListStore extends ValueNotifier<GenericState<LyricsListState>> {
         if (state.entities != null && state.entities!.isNotEmpty) {
           entitiesList = state.entities! as List<LyricEntity>;
         }
-        title = isNotSearch ? 'Adicionados Recentemente' : 'Resultados encontrados';
+        title = isNotSearch && !isHymn ? 'Adicionados Recentemente' : 'Resultados encontrados';
         value = DataFetchedState<LyricsListState>();
       }
     });

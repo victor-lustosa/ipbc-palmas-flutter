@@ -18,7 +18,7 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
     required LyricsListStore lyricsListStore,
     required GenericEventBus<GenericState<LyricsListState>> eventBus,
   }) : _eventBus = eventBus,
-        _lyricsListStore = lyricsListStore,
+       _lyricsListStore = lyricsListStore,
        _manageLyricStore = manageLyricStore,
        super(InitialState());
   int? _currentStoreId;
@@ -46,26 +46,33 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
   }
 
   Future<void> searchLyrics(String searchField, BuildContext context) async {
-    if(searchField.isEmpty) {
-      _lyricsListStore.isNotSearch = true;
-    } else {
-      _lyricsListStore.isNotSearch = false;
-    }
+
     _eventBus.emit(LoadingState<LyricsListState>(id: _currentStoreId));
+
     bool isHymn = (SearchParameters.values[selectedIndex].column == SearchParameters.hymns.column);
+
+    _lyricsListStore.isHymn = isHymn ? true : false;
+
+    _lyricsListStore.isNotSearch = searchField.isEmpty ? true : false;
+
     List<LyricEntity>? lyrics = await _manageLyricStore.getOnlineLyrics(
       context: context,
       params: {
         'table': 'lyrics',
-        'orderBy': 'create_at',
-        'likeColumn': SearchParameters.values[selectedIndex].column,
-        'likeValue': isHymn ? true : searchField,
-        'ascending': false,
-        'selectFields': 'id, title, artist, album_cover, create_at, verses, is_hymn, hymn_number',
+        'orderBy': isHymn ? 'hymn_number' : 'create_at',
+        'likeColumn': isHymn
+            ? SearchParameters.title.column
+            : SearchParameters.values[selectedIndex].column,
+        'likeValue': searchField,
+        'ascending': isHymn ? true : false,
+        if (isHymn) 'filterColumn': 'is_hymn',
+        if (isHymn) 'filterValue': true,
+        'selectFields':
+            'id, title, artist, album_cover, create_at, verses, is_hymn, hymn_number',
         if (limit > 0) 'limit': limit,
       },
     );
-    if (lyrics!= null && lyrics.isNotEmpty) {
+    if (lyrics != null && lyrics.isNotEmpty) {
       _eventBus.emit(
         DataFetchedState<LyricsListState>(
           entities: lyrics,

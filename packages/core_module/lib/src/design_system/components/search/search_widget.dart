@@ -50,10 +50,10 @@ class _SearchWidgetState extends State<SearchWidget> {
                 hasEmptyOption: false,
                 options: SearchParameters.values,
                 action: (value) {
+                  bool needsUpdate = ((SearchParameters.values[value].column == SearchParameters.hymns.column)
+                      || _store.selectedIndex == SearchParameters.values.indexOf(SearchParameters.hymns));
                   _store.selectOptions(value);
-                  if (SearchParameters.values[value].column == SearchParameters.hymns.column) {
-                    _store.searchLyrics('', context);
-                  }
+                  if (needsUpdate) _store.searchLyrics('', context);
                 },
               ),
             ),
