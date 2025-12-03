@@ -90,15 +90,21 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
         },
       );
       response.fold(
-        (eventsResponse) =>
-            eventsList = EventAdapter.fromMapList(eventsResponse),
+        (eventsResponse) {
+          eventsList = EventAdapter.fromMapList(eventsResponse);
+          if(eventsList.isEmpty){
+            emit(NotFoundState<HomeState>());
+          } else {
+            emit(DataFetchedState<HomeState>());
+          }
+        },
         (exception) => toastException(
           event.context,
           'Erro ao Salvar imagem',
           'Houve um erro ao salvar a imagem, verifique sua conexão e tente novamente.',
         ),
       );
-      emit(DataFetchedState<HomeState>());
+
     } else {
       emit(NoConnectionState<HomeState>());
     }

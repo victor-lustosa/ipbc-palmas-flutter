@@ -9,7 +9,7 @@ class SlideCardsWidget extends StatefulWidget {
   final ScrollPhysics? physics;
   final Axis scrollDirection;
   final bool? shrinkWrap;
-  final bool isLoading;
+  final GenericState state;
   final AnimationController shimmerController;
   final void Function(LongPressStartDetails)? onLongPressStart;
   final Function()? action;
@@ -25,7 +25,7 @@ class SlideCardsWidget extends StatefulWidget {
     this.physics,
     this.margin,
     this.shrinkWrap,
-    required this.isLoading,
+    required this.state,
     this.action,
   });
 
@@ -302,7 +302,6 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
   @override
   Widget build(BuildContext context) {
     bool isHorizontal = widget.scrollDirection == Axis.horizontal;
-    bool isLoading = widget.isLoading && widget.entities.isEmpty;
     Widget emptyList = Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -327,9 +326,9 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
       ],
     );
     if (widget.scrollDirection == Axis.horizontal) {
-      return isLoading
+      return widget.state is !DataFetchedState
           ? _buildPlaceholder(context, isHorizontal, widget.shrinkWrap)
-          : !widget.isLoading && widget.entities.isEmpty
+          : widget.state is NotFoundState
           ? emptyList
           : SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -348,9 +347,9 @@ class SlideCardsWidgetState extends State<SlideCardsWidget> with DateMixin {
               ),
             );
     } else {
-      return isLoading
+      return widget.state is !DataFetchedState
           ? _buildPlaceholder(context, isHorizontal, widget.shrinkWrap)
-          : !widget.isLoading && widget.entities.isEmpty
+          : widget.state is NotFoundState
           ? Container(
               margin: EdgeInsets.only(top: context.sizeOf.height * .15),
               child: emptyList,

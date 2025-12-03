@@ -100,7 +100,7 @@ class EventsListViewState extends State<EventsListView>
                       Container(
                         margin: const EdgeInsets.only(bottom: 40),
                         child: SlideCardsWidget(
-                          isLoading: state is LoadingEventsState,
+                          state: state,
                           shimmerController: _shimmerController,
                           onLongPressStart: (details) async {
                             await showOptionsDialog(

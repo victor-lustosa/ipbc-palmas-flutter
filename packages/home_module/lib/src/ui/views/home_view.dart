@@ -126,7 +126,7 @@ class _HomeViewState extends State<HomeView>
                             Container(
                               margin: const EdgeInsets.only(top: 12),
                               child: SlideCardsWidget(
-                                isLoading: state is LoadingEventsState,
+                                state: state,
                                 action: () {
                                   _bloc.createEventStore.fromCalled = 'home';
                                   pushNamed(
