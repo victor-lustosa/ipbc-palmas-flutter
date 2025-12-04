@@ -20,8 +20,7 @@ class _HomeViewState extends State<HomeView>
   void initState() {
     super.initState();
     _bloc = Modular.get<HomeBloc>();
-    _bloc.createEventStore.updateHomeViewCallback = () =>
-        _bloc.add(GetEventsDataEvent());
+
     _shimmerController = AnimationController.unbounded(vsync: this)
       ..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1200));
     _bloc.add(GetDataEvent(context: context));
@@ -128,6 +127,9 @@ class _HomeViewState extends State<HomeView>
                               child: SlideCardsWidget(
                                 state: state,
                                 action: () {
+                                  _bloc.createEventStore.updateHomeViewCallback = () {
+                                      _bloc.add(GetEventsDataEvent(context));
+                                  };
                                   _bloc.createEventStore.fromCalled = 'home';
                                   pushNamed(
                                     AppRoutes.eventRoute +

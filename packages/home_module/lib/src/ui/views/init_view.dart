@@ -22,7 +22,7 @@ class _InitViewState extends State<InitView> {
     super.initState();
     appLinks = Modular.get<AppLinksUtil>();
 
-
+    /// Deep link ao abrir o app
     appLinks.getInitialLink().then((link) {
       if (link != null) {
         _handleDeepLink(link);

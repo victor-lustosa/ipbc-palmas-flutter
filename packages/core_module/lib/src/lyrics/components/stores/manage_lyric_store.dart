@@ -318,7 +318,7 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
       response.fold(
         (lyricsResponse) async {
           if (hasAttached) {
-            final attachResponse = await _onlineUseCases.upsert(
+            final attachResponse = await _onlineUseCases.add(
               params: {'table': 'service_lyrics'},
               data: {
                 'service_id': int.parse(serviceId),

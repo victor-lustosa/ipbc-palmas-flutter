@@ -62,7 +62,7 @@ class EventsDetailViewState extends State<EventsDetailView>
                                   _createEventStore.updateHomeViewCallback!();
                                 }
                               }
-                              if (_createEventStore.fromCalled == 'eventList') {
+                              if (_createEventStore.fromCalled == 'eventsList') {
                                 if (_createEventStore.updateEventListViewCallback != null
                                     && isChanged.value) {
                                   isChanged.value = false;

@@ -118,7 +118,8 @@ abstract class HomeEvent {}
 abstract class HomeState {}
 
 class GetEventsDataEvent extends GenericEvent<HomeEvent> {
-  GetEventsDataEvent();
+  final BuildContext context;
+  GetEventsDataEvent(this.context);
 }
 
 class LoadingServicesState extends GenericState<HomeState> {
