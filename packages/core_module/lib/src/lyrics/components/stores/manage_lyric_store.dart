@@ -318,16 +318,18 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
       response.fold(
         (lyricsResponse) async {
           if (hasAttached) {
-            final response = await _onlineUseCases.upsert(
+            final attachResponse = await _onlineUseCases.upsert(
               params: {'table': 'service_lyrics'},
               data: {
                 'service_id': int.parse(serviceId),
                 'lyric_id': lyricsResponse[0]['id'],
               },
             );
-            response.fold((_) {}, (GenericException r) {
-              bool isDuplicated = (r.code == '23505');
-              return right(
+            final bool hasError = attachResponse.fold(
+                  (success) => false,
+                  (GenericException r) {
+                bool isDuplicated = (r.code == '23505');
+
                 toast(
                   context,
                   type: isDuplicated ? ToastType.warning : null,
@@ -339,11 +341,12 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
                     isSavePressed.value = false;
                     value = RefreshingState();
                   },
-                ),
-              );
-            });
+                );
+                return true;
+              },
+            );
+            if (hasError) return;
           }
-
           lyric.value = lyric.value.copyWith(
             id: lyricsResponse[0]['id'].toString(),
           );
@@ -362,17 +365,15 @@ class ManageLyricStore extends ValueNotifier<GenericState<ManageLyricState>>
             );
           }
         },
-        (_) {
-          return right(
-            toast(
-              context,
-              'Ocorreu um erro ao salvar a música. Verifique a internet e tente novamente.',
-              'Erro ao salvar!',
-              onDelayedAction: () {
-                isSavePressed.value = false;
-                value = RefreshingState();
-              },
-            ),
+            (_) {
+          toast(
+            context,
+            'Ocorreu um erro ao salvar a música. Verifique a internet e tente novamente.',
+            'Erro ao salvar!',
+            onDelayedAction: () {
+              isSavePressed.value = false;
+              value = RefreshingState();
+            },
           );
         },
       );
