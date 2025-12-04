@@ -51,6 +51,10 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                         ServiceTopBarWidget(
                           image: widget.dto.servicesEntity.image,
                           title: "Voltar para liturgia",
+                          backAction: () {
+                            _store.resetList();
+                            nativePop(context);
+                          },
                         ),
                         Container(
                           margin: const EdgeInsets.only(left: 16, top: 24.7, bottom: 16),

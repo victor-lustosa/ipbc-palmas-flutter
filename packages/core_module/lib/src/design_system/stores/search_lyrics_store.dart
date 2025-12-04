@@ -42,6 +42,10 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
     viewHashCode = hashCode;
   }
 
+  void resetList() {
+    _eventBus.emit(RefreshingState());
+  }
+
   @override
   dispose() {
     _subscription.cancel();

@@ -15,6 +15,7 @@ class LyricsListStore extends ValueNotifier<GenericState<LyricsListState>> {
   String title = '';
   bool isNotSearch = true;
   bool isHymn = false;
+
   LyricsListStore({
     required GenericEventBus<GenericState<LyricsListState>> eventBus,
   }) : _eventBus = eventBus,
@@ -22,6 +23,22 @@ class LyricsListStore extends ValueNotifier<GenericState<LyricsListState>> {
     _subscription = _eventBus.stream.listen((state) {
       if (hasFixedData) {
         return;
+      }
+
+      if (state is InitialState) {
+        value = InitialState();
+      }
+
+      if (state is RefreshingState) {
+        value = RefreshingState();
+      }
+
+      if (state is NoConnectionState) {
+        value = NoConnectionState();
+      }
+
+      if (state is ExceptionState) {
+        value = ExceptionState();
       }
 
       if (state is LoadingState) {
