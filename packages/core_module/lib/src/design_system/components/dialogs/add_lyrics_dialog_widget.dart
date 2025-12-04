@@ -183,19 +183,14 @@ class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: AppColors.grey3),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(8),
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: AppColors.grey3),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(8),
+                                      ),
                                     ),
-                                  ),
-                                  child: SizedBox(
-                                    height: ResponsivityUtil(
-                                      sm: context.sizeOf.height * .551,
-                                      md: context.sizeOf.height * .575,
-                                      xl: context.sizeOf.height * .62,
-                                    ).get(context),
                                     child: TextFormField(
                                       selectionControls:
                                           MaterialTextSelectionControls(),
@@ -229,42 +224,45 @@ class _AddLyricsDialogWidgetState extends State<AddLyricsDialogWidget> {
                           ),
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          ButtonWidget(
-                            adaptiveButtonType: AdaptiveButtonType.text,
-                            action: () {
-                              Navigator.of(context).pop();
-                            },
-                            fixedSize: const Size(132, 28),
-                            overlayColor: Colors.white,
-                            backgroundColor: AppColors.white,
-                            foregroundColor: AppColors.darkGreen,
-                            foregroundHoveredColor: AppColors.darkGreen,
-                            child: Text("Cancelar"),
-                          ),
-                          const SizedBox(width: 8),
-                          ButtonWidget(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            ButtonWidget(
+                              adaptiveButtonType: AdaptiveButtonType.text,
+                              action: () {
+                                Navigator.of(context).pop();
+                              },
+                              fixedSize: const Size(132, 28),
+                              overlayColor: Colors.white,
+                              backgroundColor: AppColors.white,
+                              foregroundColor: AppColors.darkGreen,
+                              foregroundHoveredColor: AppColors.darkGreen,
+                              child: Text("Cancelar"),
                             ),
-                            fixedSize: const Size(132, 28),
-                            action: () {
-                              if (widget.callback != null) {
-                                widget.callback!({
-                                  'lyrics': _lyricsController.text.trim(),
-                                  'title': _titleController.text.trim(),
-                                  'artist': _artistController.text.trim(),
-                                });
-                              }
-                            },
-                            backgroundColor: AppColors.darkGreen,
-                            shadowColor: AppColors.grey0,
-                            foregroundColor: AppColors.white,
-                            child: Text("Adicionar"),
-                          ),
-                        ],
+                            const SizedBox(width: 8),
+                            ButtonWidget(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              fixedSize: const Size(132, 28),
+                              action: () {
+                                if (widget.callback != null) {
+                                  widget.callback!({
+                                    'lyrics': _lyricsController.text.trim(),
+                                    'title': _titleController.text.trim(),
+                                    'artist': _artistController.text.trim(),
+                                  });
+                                }
+                              },
+                              backgroundColor: AppColors.darkGreen,
+                              shadowColor: AppColors.grey0,
+                              foregroundColor: AppColors.white,
+                              child: Text("Adicionar"),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

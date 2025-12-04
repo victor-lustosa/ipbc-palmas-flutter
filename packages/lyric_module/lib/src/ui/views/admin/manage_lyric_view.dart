@@ -374,7 +374,7 @@ class _ManageLyricViewState extends State<ManageLyricView> {
             ),
           ),
           floatingActionButton: FloatingButtonWidget(
-            heroTag: 'manage_lyric-fab',
+            heroTag: 'manage-lyric-fab',
             icon: Icons.check_rounded,
             backgroundColor: AppColors.confirmation,
             iconColor: AppColors.grey10,

@@ -53,11 +53,7 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                           title: "Voltar para liturgia",
                         ),
                         Container(
-                          margin: const EdgeInsets.only(
-                            left: 16,
-                            top: 24.7,
-                            bottom: 16,
-                          ),
+                          margin: const EdgeInsets.only(left: 16, top: 24.7, bottom: 16),
                           child: Text(
                             'Selecione a música do culto:',
                             style: AppFonts.defaultFont(
@@ -102,12 +98,8 @@ class _SearchLyricsViewState extends State<SearchLyricsView> {
                               isPressed: value != null
                                   ? _store.isAddEventPressed
                                   : _store.isAddEventPressed,
-                              adaptiveButtonType: value != null
-                                  ? .elevated
-                                  : .outlined,
-                              sideColor: value != null
-                                  ? null
-                                  : AppColors.darkGreen,
+                              adaptiveButtonType: value != null ? .elevated : .outlined,
+                              sideColor: value != null ? null : AppColors.darkGreen,
                               outlinedBorderWidth: value != null ? null : 1,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),

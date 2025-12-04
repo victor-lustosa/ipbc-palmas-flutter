@@ -52,7 +52,7 @@ class SearchLyricsStore extends ValueNotifier<GenericState<SearchLyricsState>> {
   void attachLyric({Map<String, String>? map, required BuildContext context, String? serviceId}) {
     _manageLyricStore.serviceId = serviceId ?? '';
     _manageLyricStore.attachLyric(context: context, map: map);
-    pop(context);
+    if(map != null) pop(context);
     pushNamed(AppRoutes.lyricsRoute + AppRoutes.manageLyricsFadeRoute);
   }
 }
