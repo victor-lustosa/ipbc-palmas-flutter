@@ -79,6 +79,7 @@ export 'src/design_system/components/icons/hide_icon_widget.dart';
 
 export 'src/lyrics/components/stores/manage_lyric_store.dart';
 export 'src/events/components/stores/create_event_store.dart';
+export 'src/events/components/stores/detail_event_store.dart';
 export 'src/services/components/stores/manage_service_store.dart';
 export 'src/services/components/stores/service_store.dart';
 export 'src/design_system/stores/search_lyrics_store.dart';

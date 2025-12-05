@@ -33,11 +33,16 @@ class HomeModule extends Module {
 
   @override
   void binds(Injector i) {
+    i.addLazySingleton<DetailEventStore>(() => DetailEventStore(
+          useCases: i.get<UseCases<SupabaseRepository>>(),
+        ),
+    );
     i.addLazySingleton<HomeBloc>(
       () => HomeBloc(
         useCases: i.get<UseCases<SupabaseRepository>>(),
         createEventStore: i.get<CreateEventStore>(),
         authCircleAvatarStore: i.get<AuthCircleAvatarStore>(),
+        detailEventStore: i.get<DetailEventStore>()
       ),
       config: CoreModule.blocConfig(),
     );

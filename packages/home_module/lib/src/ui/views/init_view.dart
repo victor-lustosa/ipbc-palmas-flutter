@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:offers_module/offers_module.dart';
 
 import '../../../home_module.dart';
+import '../blocs/home_bloc.dart';
 import '../native_home_routes.dart';
 
 class InitView extends StatefulWidget {
@@ -14,12 +15,14 @@ class InitView extends StatefulWidget {
 
 class _InitViewState extends State<InitView> {
   late final AppLinksUtil appLinks;
+  late final HomeBloc _homeBloc;
   int selectedIndex = 0;
 
   final _controller = PageController();
   @override
   void initState() {
     super.initState();
+    _homeBloc = Modular.get<HomeBloc>();
     appLinks = Modular.get<AppLinksUtil>();
 
     /// Deep link ao abrir o app
@@ -44,8 +47,7 @@ class _InitViewState extends State<InitView> {
     if (uri.pathSegments.contains("evento")) {
       String id = uri.pathSegments.last;
 
-      // Exemplo de navegação
-      Navigator.pushNamed(context, '/eventDetails', arguments: id);
+      _homeBloc.add(DeepLinkDetailEvent(context: context, id: int.parse(id)));
     }
   }
   

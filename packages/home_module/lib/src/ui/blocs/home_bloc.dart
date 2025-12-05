@@ -8,13 +8,15 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
   HomeBloc({
     required IUseCases useCases,
     required CreateEventStore createEventStore,
+    required DetailEventStore detailEventStore,
     required AuthCircleAvatarStore authCircleAvatarStore,
   }) : _useCases = useCases,
        _createEventStore = createEventStore,
-
+        _detailEventStore = detailEventStore,
        _authCircleAvatarStore = authCircleAvatarStore,
        super(InitialState<HomeState>()) {
     on<GetDataEvent<HomeEvent>>(_getData);
+    on<DeepLinkDetailEvent>(_callToEventDetail);
     on<GetEventsDataEvent>(_getEventsData);
   }
 
@@ -23,6 +25,7 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
   List<ServicesEntity> servicesList = [];
   List<EventEntity> eventsList = [];
   final CreateEventStore _createEventStore;
+  final DetailEventStore _detailEventStore;
 
   final AuthCircleAvatarStore _authCircleAvatarStore;
 
@@ -38,6 +41,9 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
     });
   }
 
+  Future<void> _callToEventDetail(DeepLinkDetailEvent event, emit) async {
+    _detailEventStore.getInSupa(event.context, event.id);
+  }
   Future<void> _getServicesData(dynamic event, emit) async {
     final response = await isConnected(context: event.context);
     if (response) {
@@ -111,6 +117,11 @@ abstract class HomeState {}
 class GetEventsDataEvent extends GenericEvent<HomeEvent> {
   final BuildContext context;
   GetEventsDataEvent(this.context);
+}
+class DeepLinkDetailEvent extends GenericEvent<HomeEvent> {
+  final int id;
+  final BuildContext context;
+  DeepLinkDetailEvent( {required this.context, required this.id});
 }
 
 class LoadingServicesState extends GenericState<HomeState> {
