@@ -33,7 +33,7 @@ class EventsDetailBloc
       });
       List<EventEntity> events = [];
       final response = await onlineUseCases.get(
-        params: {'table': 'event', 'filterColumn': 'id', 'filterValue': id, 'limit': 1},
+        params: SchemaUtil.eventParams(extra: {'filterColumn': 'id', 'filterValue': id, 'limit': 1}),
       );
       response.fold(
         (eventsResponse) => events = EventAdapter.fromMapList(eventsResponse),

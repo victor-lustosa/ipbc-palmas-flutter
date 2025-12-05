@@ -122,6 +122,7 @@ export 'src/shared/mixins/image_mixin.dart';
 export 'src/core/overall_states/generics.dart';
 export 'src/core/overall_states/generic_event_bus.dart';
 export 'src/shared/utils/supa_services_util.dart';
+export 'src/shared/utils/schema_util.dart';
 export 'src/shared/utils/responsivity_util.dart';
 export 'src/shared/utils/analytics_util.dart';
 export 'src/shared/utils/mock_util.dart';

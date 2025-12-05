@@ -38,7 +38,7 @@ class EventsListBloc
       });
       List<EventEntity> events = [];
       final response = await onlineUseCases.get(
-        params: {'table': 'event', 'orderBy': 'create_at', 'ascending': false},
+        params: SchemaUtil.eventParams(),
       );
       response.fold(
         (eventsResponse) => events = EventAdapter.fromMapList(eventsResponse),

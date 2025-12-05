@@ -29,6 +29,11 @@ class _SearchWidgetState extends State<SearchWidget> {
   }
 
   @override
+  void dispose() {
+    _store.dispose();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _store,

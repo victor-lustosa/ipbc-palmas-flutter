@@ -45,11 +45,7 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
         emit(LoadingServicesState());
       });
       final response = await _useCases.get(
-        params: {
-          'table': 'services',
-          'orderBy': 'create_at',
-          'ascending': false,
-        },
+        params: SchemaUtil.servicesParams(),
       );
       response.fold(
         (servicesResponse) =>
@@ -82,12 +78,7 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
         emit(LoadingEventsState());
       });
       final response = await _useCases.get(
-        params: {
-          'table': 'event',
-          'orderBy': 'create_at',
-          'ascending': false,
-          'limit': 5,
-        },
+        params: SchemaUtil.eventParams(extra: {'limit': 5}),
       );
       response.fold(
         (eventsResponse) {

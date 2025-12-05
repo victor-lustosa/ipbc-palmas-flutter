@@ -45,20 +45,21 @@ class ServicesCollectionBloc
     final response = await isConnected(context: event.context);
     if (response) {
       List<String> pathList = path.split('/');
-      servicesCollectionParams = {
-        'table': 'service',
-        'orderBy': 'create_at',
-        'filterColumn': pathList[1],
-        'filterValue': pathList[2],
-        'ascending': bool.parse(pathList[4]),
-        'selectFields':
-            'id, create_at, image, title, theme, preacher, service_date, heading, type, guide_is_visible, liturgies, service_lyrics (lyrics(id, title, artist, is_hymn, album_cover, create_at, verses, hymn_number)))',
-      };
+      servicesCollectionParams = SchemaUtil.servicesCollectionParams(
+        extra: {
+          'filterColumn': pathList[1],
+          'filterValue': pathList[2],
+          'ascending': bool.parse(pathList[4]),
+        },
+      );
       add(LoadingEvent<ServicesCollectionEvent>());
       final response = await onlineUseCases.get(
         params: servicesCollectionParams,
       );
-      response.fold((l) => entitiesList = ServiceAdapter.fromMapList(l),(r) => null);
+      response.fold(
+        (l) => entitiesList = ServiceAdapter.fromMapList(l),
+        (r) => null,
+      );
       emit(DataFetchedState<ServicesCollectionState>());
     } else {
       emit(NoConnectionState<ServicesCollectionState>());

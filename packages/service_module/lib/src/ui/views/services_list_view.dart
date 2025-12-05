@@ -2,7 +2,12 @@ import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 
 class ServicesListView extends StatefulWidget {
-  const ServicesListView({super.key, required this.entities, required this.shimmerController});
+  const ServicesListView({
+    super.key,
+    required this.entities,
+    required this.shimmerController,
+  });
+
   final AnimationController shimmerController;
   final List<ServicesEntity> entities;
 
@@ -10,10 +15,8 @@ class ServicesListView extends StatefulWidget {
   State<ServicesListView> createState() => _ServicesListViewState();
 }
 
-class _ServicesListViewState extends State<ServicesListView>
-    with DateMixin {
-
-  double proportion = 343/92;
+class _ServicesListViewState extends State<ServicesListView> with DateMixin {
+  double proportion = 343 / 92;
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +40,7 @@ class _ServicesListViewState extends State<ServicesListView>
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  BackAuthTopBarWidget(
-                    action: () => nativePop(context),
-                  ),
+                  BackAuthTopBarWidget(action: () => nativePop(context)),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
@@ -50,7 +51,11 @@ class _ServicesListViewState extends State<ServicesListView>
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      margin: const EdgeInsets.only(left: 20, top: 8, right: 20),
+                      margin: const EdgeInsets.only(
+                        left: 20,
+                        top: 8,
+                        right: 20,
+                      ),
                       child: Text(
                         "Acompanhe a liturgia e as letras das músicas cantadas nos cultos.",
                         style: AppFonts.defaultFont(
@@ -102,7 +107,8 @@ class _ServicesListViewState extends State<ServicesListView>
                                   ),
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       margin: const EdgeInsets.only(left: 16),
@@ -137,7 +143,7 @@ class _ServicesListViewState extends State<ServicesListView>
             ),
           ),
         );
-      }
+      },
     );
   }
 }

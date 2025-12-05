@@ -46,41 +46,36 @@ class SearchStore extends ValueNotifier<GenericState<SearchState>> {
   }
 
   Future<void> searchLyrics(String searchField, BuildContext context) async {
-
     _eventBus.emit(LoadingState<LyricsListState>(id: _currentStoreId));
 
     bool isHymn = (SearchParameters.values[selectedIndex].column == SearchParameters.hymns.column);
 
-    _lyricsListStore.isHymn = isHymn ? true : false;
+    _lyricsListStore.isHymn = isHymn;
 
-    _lyricsListStore.isNotSearch = searchField.isEmpty ? true : false;
+    _lyricsListStore.isNotSearch = searchField.isEmpty;
 
     List<LyricEntity>? lyrics = await _manageLyricStore.getOnlineLyrics(
       context: context,
-      params: {
-        'table': 'lyrics',
-        'orderBy': isHymn ? 'hymn_number' : 'create_at',
-        'likeColumn': isHymn
-            ? SearchParameters.title.column
-            : SearchParameters.values[selectedIndex].column,
-        'likeValue': searchField,
-        'ascending': isHymn ? true : false,
-        if (isHymn) 'filterColumn': 'is_hymn',
-        if (isHymn) 'filterValue': true,
-        'selectFields':
-            'id, title, artist, album_cover, create_at, verses, is_hymn, hymn_number',
-        if (limit > 0) 'limit': limit,
-      },
+      params: isHymn
+          ? SchemaUtil.hymnSearchScheme(searchField: searchField, limit: limit)
+          : SchemaUtil.generalSearchScheme(
+              searchField: searchField,
+              limit: limit,
+              selectedIndex: selectedIndex,
+            ),
     );
-    if (lyrics != null && lyrics.isNotEmpty) {
+
+    if (lyrics == null) {
+      _eventBus.emit(ExceptionState<LyricsListState>(id: _currentStoreId));
+    } else if (lyrics.isEmpty) {
+      _eventBus.emit(NotFoundState<LyricsListState>(id: _currentStoreId));
+    } else {
       _eventBus.emit(
         DataFetchedState<LyricsListState>(
           entities: lyrics,
           id: _currentStoreId,
         ),
       );
-    } else {
-      _eventBus.emit(NotFoundState<LyricsListState>(id: _currentStoreId));
     }
   }
 }

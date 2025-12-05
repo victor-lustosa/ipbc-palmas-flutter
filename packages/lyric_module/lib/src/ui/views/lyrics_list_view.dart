@@ -54,14 +54,6 @@ class _LyricsListViewState extends State<LyricsListView>
                             margin: const EdgeInsets.only(top: 37),
                             child: SearchWidget(storeId: _bloc.viewHashCode),
                           ),
-                          /*Text(state.entities.length.toString()),
-                          ElevatedButton(
-                              onPressed: () {
-                                _bloc.add(
-                                  GetPaginationEvent<LyricEvent, LyricEntity>(10),
-                                );
-                              },
-                          child: const Text('Paginação')),*/
                           LyricsListWidget(
                             isListVisible: true,
                             title: "Adicionados recentemente",
@@ -121,6 +113,11 @@ class _LyricsListViewState extends State<LyricsListView>
                               );
                             },
                           ),
+                          ElevatedButton(
+                              onPressed: () {
+                                //_bloc.add(GetPaginationEvent<LyricEvent, LyricEntity>(10));
+                              },
+                          child: const Text('Paginação')),
                         ],
                       ),
                     ),

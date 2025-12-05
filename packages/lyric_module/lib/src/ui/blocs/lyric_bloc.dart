@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:lyric_module/src/ui/blocs/type_filter.dart';
 
 class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     with ConnectivityMixin {
@@ -16,7 +15,6 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
        super(InitialState<LyricState>()) {
     on<GetDataEvent<LyricEvent>>(_getInSupa);
     on<AddDataEvent<LyricEvent>>(_addInSupa);
-    on<FilterEvent<LyricEvent, LyricEntity>>(_filter);
     on<GetPaginationEvent<LyricEvent, LyricEntity>>(_getPaginationInSupa);
   }
 
@@ -34,13 +32,6 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
   ManageLyricStore get manageLyricStore => _manageLyricStore;
 
   TextEditingController get controller => _controller;
-
-  final Map<String, Object> lyricParams = {
-    'table': 'lyrics',
-    'orderBy': 'create_at',
-    'ascending': false,
-    'selectFields': 'id, title, artist, album_cover, is_hymn, create_at, verses, hymn_number',
-  };
 
   Future<void> init({required BuildContext context}) async {
     add(GetDataEvent<LyricEvent>(context: context));
@@ -89,7 +80,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
         _eventBus.emit(LoadingState());
         List? entities = await _manageLyricStore.getOnlineLyrics(
           context: event.context,
-          params: lyricParams,
+          params: _lyricsListStore.isHymn ? SchemaUtil.hymnSearchScheme(): SchemaUtil.lyricParams(),
         );
         if (entities == null) {
           _eventBus.emit(ExceptionState());
@@ -116,24 +107,11 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
       context: event.context,
       params: {'table': 'lyrics', 'limit': event.limit, 'offset': offset},
     );
-    //Verificando se tem novos itens retornados se sim eu adiciona lista principal
     if (lyricsListAux.isNotEmpty) {
       _lyricsListStore.entitiesList.addAll(lyricsListAux);
       emit(DataFetchedState<LyricState>());
     } else {
       emit(NoMoreDataState<LyricState, List<LyricEntity>>());
-    }
-  }
-
-  Future<void> _filter(FilterEvent<LyricEvent, LyricEntity> event, emit) async {
-    if (event.writing) {
-      _lyricsListStore.entitiesList = event.typeFilter.filterListing(
-        event,
-        _lyricsListStore.entitiesList,
-      );
-      emit(DataFetchedState<LyricState>());
-    } else {
-      emit(DataFetchedState<LyricState>());
     }
   }
 
@@ -143,7 +121,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     _manageLyricStore.lyric.value = lyricsListStore.selectedLyric;
     pushNamed(AppRoutes.lyricsRoute + AppRoutes.manageLyricsFadeRoute);
     Future.delayed(Duration(seconds: 1), () {
-      _lyricsListStore.value = RefreshingState();
+      _eventBus.emit(RefreshingState());
     });
     pop(context);
   }
@@ -153,7 +131,7 @@ class LyricBloc extends Bloc<GenericEvent<LyricEvent>, GenericState<LyricState>>
     if (lyricIdParam != null) {
       _manageLyricStore.deleteLyric(context: context, lyricId: lyricIdParam);
       Future.delayed(Duration(seconds: 1), () {
-        _lyricsListStore.value = RefreshingState();
+        _eventBus.emit(RefreshingState());
       });
       popToast(1);
     }
@@ -177,45 +155,4 @@ class GetPaginationEvent<R, T> extends GenericEvent<R> {
 @immutable
 class NoMoreDataState<R, T> extends GenericEvent<R> {
   NoMoreDataState();
-}
-
-@immutable
-class FilterEvent<R, T> extends GenericEvent<R> {
-  final String searchText;
-  final bool writing;
-  final Filter<T, FilterEvent> typeFilter;
-  final int selectIndex;
-
-  FilterEvent(this.searchText, this.writing, this.typeFilter, this.selectIndex);
-}
-
-class TitleFilter extends Filter<LyricEntity, FilterEvent> {
-  @override
-  List<LyricEntity> filterListing(FilterEvent event, List<LyricEntity>? list) {
-    List<LyricEntity> filterList;
-
-    filterList = list!
-        .where(
-          (element) => element.title.toLowerCase().contains(event.searchText.toLowerCase()),
-        )
-        .toList();
-
-    return filterList;
-  }
-}
-//My artist filter
-
-class ArtistFilter extends Filter<LyricEntity, FilterEvent> {
-  @override
-  List<LyricEntity> filterListing(FilterEvent event, List<LyricEntity>? list) {
-    late List<LyricEntity> filterList;
-
-    filterList = list!
-        .where(
-          (element) => element.artist.toLowerCase().contains(event.searchText.toLowerCase()),
-        )
-        .toList();
-
-    return filterList;
-  }
 }

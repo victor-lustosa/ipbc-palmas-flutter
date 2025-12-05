@@ -44,6 +44,11 @@ class _LyricsListWidgetState extends State<LyricsListWidget> {
   }
 
   @override
+  void dispose() {
+    _store.isHymn = false;
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _store,
