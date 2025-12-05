@@ -26,9 +26,9 @@ class DetailEventStore extends ValueNotifier<GenericState<DetailEventState>>
       response.fold(
               (eventsResponse) {
             eventEntity = EventAdapter.fromMapList(eventsResponse).firstOrNull;
-            if(eventEntity == null){
+            if(eventEntity == null) {
               toastException(context);
-            } else{
+            } else {
               pushNamed(
                 AppRoutes.eventRoute +
                     AppRoutes.detailEventRoute,

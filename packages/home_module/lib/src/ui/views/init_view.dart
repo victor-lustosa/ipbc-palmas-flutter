@@ -17,7 +17,6 @@ class _InitViewState extends State<InitView> {
   late final AppLinksUtil appLinks;
   late final HomeBloc _homeBloc;
   int selectedIndex = 0;
-
   final _controller = PageController();
   @override
   void initState() {
@@ -25,33 +24,25 @@ class _InitViewState extends State<InitView> {
     _homeBloc = Modular.get<HomeBloc>();
     appLinks = Modular.get<AppLinksUtil>();
 
-    /// Deep link ao abrir o app
     appLinks.getInitialLink().then((link) {
       if (link != null) {
         _handleDeepLink(link);
       }
     });
 
-    /// Deep link enquanto o app está aberto
     appLinks.linkStream.listen((link) {
       _handleDeepLink(link);
     });
   }
 
   void _handleDeepLink(String link) {
-    print("🔗 Deep Link recebido: $link");
-
-    // Exemplo de link: https://meusite.com/evento/123
     Uri uri = Uri.parse(link);
 
-    if (uri.pathSegments.contains("evento")) {
+    if (uri.path.contains(AppRoutes.eventRoute)) {
       String id = uri.pathSegments.last;
-
       _homeBloc.add(DeepLinkDetailEvent(context: context, id: int.parse(id)));
     }
   }
-  
-
 
   void _onItemTapped(int index) {
     selectedIndex = index;

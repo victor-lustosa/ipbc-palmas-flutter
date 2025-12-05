@@ -24,6 +24,7 @@ class InitModule extends Module {
     r.module(AppRoutes.lyricsRoute, module: LyricModule());
     r.module(AppRoutes.servicesRoute, module: ServiceModule());
     r.module(AppRoutes.eventRoute, module: EventModule());
+    r.wildcard(child: (_) => const InitView());
   }
 }
 

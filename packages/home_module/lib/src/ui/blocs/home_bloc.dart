@@ -44,6 +44,7 @@ class HomeBloc extends Bloc<GenericEvent<HomeEvent>, GenericState<HomeState>>
   Future<void> _callToEventDetail(DeepLinkDetailEvent event, emit) async {
     _detailEventStore.getInSupa(event.context, event.id);
   }
+
   Future<void> _getServicesData(dynamic event, emit) async {
     final response = await isConnected(context: event.context);
     if (response) {
